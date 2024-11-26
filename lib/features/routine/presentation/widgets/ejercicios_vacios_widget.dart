@@ -1,0 +1,90 @@
+import 'package:gymaster/core/generated/assets.gen.dart';
+import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
+import 'package:gymaster/features/routine/presentation/pages/agregar_ejercicios_page.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+class EjerciciosVaciosWidget extends StatelessWidget {
+  final String rutinaId;
+
+  const EjerciciosVaciosWidget({
+    super.key,
+    required this.rutinaId,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return FractionallySizedBox(
+      heightFactor: 0.9,
+      widthFactor: 1,
+      alignment: Alignment.topCenter,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            Assets.imagenes.otros.personaConPesaNegro.path,
+            width: 200,
+            height: 200,
+          ),
+          const SizedBox(height: 10),
+          const Text(
+            'No hay ejercicios aún',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+              fontStyle: FontStyle.normal,
+            ),
+          ),
+          const SizedBox(height: 10),
+          const Text(
+            'Agrega ejercicios para comenzar tu rutina',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.black54,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 30),
+          Container(
+            padding: const EdgeInsets.all(5),
+            child: TextButton.icon(
+              onPressed: () {
+                Navigator.of(context)
+                    .push(
+                  MaterialPageRoute(
+                    builder: (context) => AgregarEjerciciosPage(
+                      rutinaid: rutinaId,
+                    ),
+                  ),
+                )
+                    .then((_) {
+                  // Llama a getAllEjercicios después de que se cierra la pantalla AgregarEjerciciosPage
+                  BlocProvider.of<EjerciciosByRutinaCubit>(context,
+                          listen: false)
+                      .getAllEjercicios(idRutina: rutinaId);
+                });
+              },
+              label: const Text('Agregar Ejercicio'),
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.red,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 15,
+                  vertical: 15,
+                ),
+                textStyle: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

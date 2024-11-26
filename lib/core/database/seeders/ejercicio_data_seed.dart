@@ -3,7 +3,7 @@ import 'package:gymaster/core/database/models/ejercicio.dart';
 import 'package:gymaster/core/database/models/ejercicio_musculo.dart';
 import 'package:gymaster/core/database/models/musculo.dart';
 import 'package:gymaster/core/generated/assets.gen.dart';
-import 'package:gymaster/utils/logger.dart';
+import 'package:gymaster/shared/utils/logger.dart';
 
 class EjercicioDataSeed {
   List<Ejercicio> trapecio = [

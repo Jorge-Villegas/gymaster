@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:gymaster/core/database/database_helper.dart';
 import 'package:gymaster/core/database/models/musculo.dart';
 import 'package:gymaster/core/generated/assets.gen.dart';
-import 'package:gymaster/utils/logger.dart';
+import 'package:gymaster/shared/utils/logger.dart';
 
 class MusculosDataSeed {
   final DatabaseHelper _databaseHelper = DatabaseHelper.instance;

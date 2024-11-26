@@ -1,5 +1,5 @@
 import 'package:gymaster/core/database/database_helper.dart';
-import 'package:gymaster/utils/logger.dart';
+import 'package:gymaster/shared/utils/logger.dart';
 
 class EjerciciosService {
   eliminarEjercicios() async {

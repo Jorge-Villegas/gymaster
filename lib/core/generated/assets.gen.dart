@@ -6594,8 +6594,12 @@ class $AssetsImagenesMusculosTricepsGen {
 class Assets {
   Assets._();
 
+  static const String aEnv = '.env';
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagenesGen imagenes = $AssetsImagenesGen();
+
+  /// List of all assets
+  static List<String> get values => [aEnv];
 }
 
 class AssetGenImage {

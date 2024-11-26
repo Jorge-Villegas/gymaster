@@ -1,0 +1,296 @@
+import 'package:gymaster/core/database/database_helper.dart';
+import 'package:gymaster/core/database/models/rutina.dart';
+import 'package:gymaster/core/database/seeders/database_seeder.dart';
+import 'package:gymaster/core/error/exceptions.dart';
+import 'package:gymaster/core/error/failures.dart';
+import 'package:gymaster/features/routine/data/datasources/routine_local_data_source.dart';
+import 'package:gymaster/features/routine/data/models/ejercicios_de_rutina_model.dart'
+    as ejercicioDeRutina;
+import 'package:gymaster/features/routine/data/models/ejercicios_por_musculo.dart';
+import 'package:gymaster/features/routine/data/models/musculo_model.dart';
+import 'package:gymaster/features/routine/data/models/routine_model.dart';
+import 'package:gymaster/features/routine/data/models/rutina_data_model.dart';
+import 'package:gymaster/features/routine/data/models/serie_model.dart';
+import 'package:gymaster/features/routine/domain/entities/ejercicio.dart'
+    as ejericicioEntity;
+import 'package:gymaster/features/routine/domain/entities/ejercicios_de_rutina.dart';
+import 'package:gymaster/features/routine/domain/entities/routine.dart';
+import 'package:gymaster/features/routine/domain/entities/rutina_data.dart';
+import 'package:gymaster/features/routine/domain/repositories/rutine_repository.dart';
+import 'package:gymaster/features/routine/domain/usecases/add_ejercicio_rutina_usecase.dart';
+import 'package:fpdart/fpdart.dart';
+import 'package:gymaster/shared/utils/uuid_generator.dart';
+import 'package:gymaster/core/database/models/serie.dart' as serieEntity;
+
+class RoutineRepositoryImpl implements RoutineRepository {
+  final RoutineLocalDataSource localDataSource;
+  final IdGenerator idGenerator;
+
+  RoutineRepositoryImpl({
+    required this.localDataSource,
+    required this.idGenerator,
+  });
+
+  @override
+  Future<Either<Failure, List<Routine>>> getAllRoutine() async {
+    try {
+      List<Rutina> result = await localDataSource.getAllRutinas();
+      List<Routine> routines = [];
+
+      for (var rutina in result) {
+        final cantEjercicio =
+            await localDataSource.getCantidadEjerciciosPorRutinaId(rutina.id);
+        routines.add(Routine(
+          id: rutina.id,
+          name: rutina.nombre,
+          description: rutina.descripcion,
+          fechaCreacion: DateTime.parse(rutina.fechaCreacion),
+          echo: rutina.realizado == 1,
+          color: rutina.color,
+          cantidadEjercicios: cantEjercicio,
+        ));
+      }
+
+      print('getAllRoutine() -> $routineToJson(routines)');
+      print('getAllRoutine() -> $routines');
+      return right(routines);
+    } on LocalFailure {
+      return Left(LocalFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, RoutineModel>> addRoutine({
+    required String name,
+    String? description,
+    required DateTime creationDate,
+    required bool done,
+    required int color,
+  }) async {
+    try {
+      final rutina = Rutina(
+        id: idGenerator.generateId(),
+        nombre: name,
+        descripcion: description,
+        fechaCreacion: creationDate.toString(),
+        realizado: done ? 1 : 0,
+        color: color,
+        estado: 1,
+      );
+      final result = await localDataSource.createRutina(rutina: rutina);
+
+      if (result == 0) {
+        return left(Failure());
+      }
+      return right(RoutineModel(
+        id: rutina.id,
+        name: rutina.nombre,
+        description: rutina.descripcion,
+        fechaCreacion: DateTime.parse(rutina.fechaCreacion),
+        cantidadEjercicios: 0,
+        color: rutina.color,
+        echo: rutina.realizado == 1,
+      ));
+    } on LocalFailure {
+      return Left(LocalFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<MusculoModel>>> getAllMusculos() async {
+    try {
+      final result = await localDataSource.getAllMusculos();
+
+      if (result.isEmpty) {
+        await DatabaseSeeder().seedGenerateDatabase();
+        final musculos = result
+            .map((musculo) => MusculoModel(
+                  id: musculo.id,
+                  nombre: musculo.nombre,
+                  imagenDirecion: musculo.imagenDireccion ?? '',
+                ))
+            .toList();
+        print('getAllMusculos -> $musculos');
+        return right(musculos);
+      }
+      return right(result
+          .map((musculo) => MusculoModel(
+                id: musculo.id,
+                nombre: musculo.nombre,
+                imagenDirecion: musculo.imagenDireccion ?? '',
+              ))
+          .toList());
+    } on LocalFailure {
+      return Left(LocalFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<EjerciciosPorMusculoModel>>>
+      getAllEjerciciosByMusculo({
+    required String musculoId,
+  }) async {
+    try {
+      final ejercicios = await localDataSource.getEjerciciosPorMusculo(
+        musculoId,
+      );
+      return right(ejercicios
+          .map((ejercicio) => EjerciciosPorMusculoModel(
+                id: ejercicio.id,
+                nombre: ejercicio.nombre,
+                descripcion: ejercicio.descripcion,
+                imagenDireccion: ejercicio.imagenDireccion ?? '',
+                musculos: ejercicio.musculos,
+              ))
+          .toList());
+    } on LocalFailure {
+      return Left(LocalFailure());
+    }
+  }
+
+  //TODO: Implementando
+  @override
+  Future<Either<Failure, void>> addEjericioRutina({
+    required String idRutina,
+    required String idEjercicio,
+    required List<DataSerie> dataSeries,
+  }) async {
+    try {
+      //obtener rutina y verificar si existe
+      final rutina = await localDataSource.getRutinaById(idRutina);
+
+      //obtener ejercicios y verificar si existe
+      final ejercicio = await localDataSource.getEjercicioById(idEjercicio);
+
+      final series = dataSeries.map((dataSerie) {
+        return serieEntity.Serie(
+          id: idGenerator.generateId(),
+          rutinaId: rutina.id,
+          ejercicioId: ejercicio.id,
+          repeticiones: dataSerie.numeroRepeticon,
+          peso: dataSerie.peso,
+          realizado: 0,
+          tiempoDescanso: 0,
+        );
+      }).toList();
+
+      for (var serie in series) {
+        await localDataSource.createSerie(serie: serie);
+      }
+
+      return left(Failure());
+    } on LocalFailure {
+      return Left(LocalFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, EjerciciosDeRutina>> getAllEjercicioByRutinaId({
+    required String rutinaId,
+  }) async {
+    try {
+      return left(Failure());
+    } on LocalFailure {
+      return Left(LocalFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<SerieModel>>> getSeriesByRoutineId({
+    required String rutinaId,
+  }) async {
+    try {
+      return left(Failure());
+    } on LocalFailure {
+      return Left(LocalFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> deleteRoutine({required String id}) async {
+    try {
+      return left(Failure());
+    } on LocalFailure {
+      return Left(LocalFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> updateRoutine({
+    required String id,
+    String? name,
+    DateTime? creationDate,
+    bool? done,
+    int? color,
+  }) async {
+    try {
+      return left(Failure());
+    } on LocalFailure {
+      return Left(LocalFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, Routine>> getRoutineById({required String id}) async {
+    try {
+      return left(Failure());
+    } on LocalFailure {
+      return Left(LocalFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Routine>>> getRoutineByName({
+    required String name,
+  }) async {
+    try {
+      return left(Failure());
+    } on LocalFailure {
+      return Left(LocalFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, SerieModel>> updateSerie({
+    required String id,
+    double? peso,
+    int? repeticiones,
+    bool? realizado,
+    int? tiempoDescanso,
+  }) async {
+    try {
+      return left(Failure());
+    } on LocalFailure {
+      return Left(LocalFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, SerieModel>> getSerieById(String id) async {
+    try {
+      return left(Failure());
+    } on LocalFailure {
+      return Left(LocalFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, RutinaDataModel>> getRutina(int id) async {
+    try {
+      return left(Failure());
+    } on LocalFailure {
+      return Left(LocalFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, RutinaData>> obtenerRutinaDetalles({
+    required String idRutina,
+  }) async {
+    try {
+      return left(Failure());
+    } on LocalFailure {
+      return Left(LocalFailure());
+    }
+  }
+}
