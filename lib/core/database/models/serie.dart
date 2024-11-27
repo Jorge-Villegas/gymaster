@@ -1,3 +1,11 @@
+import 'dart:convert';
+
+Serie serieFromJson(String str) => Serie.fromJson(json.decode(str));
+
+String serieToJson(Serie data) => json.encode(data.toJson());
+
+String seriesListToJson(List<Serie> data) => json.encode(data.map((e) => e.toJson()).toList());
+
 class Serie {
   final String id;
   final double peso;

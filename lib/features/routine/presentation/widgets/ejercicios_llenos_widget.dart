@@ -19,6 +19,8 @@ class EjerciciosLlenosWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    print('Ejercicios de rutina: ${ejerciciosDeRutina.ejercicios.length}');
     return Column(
       children: [
         InkWell(
@@ -83,6 +85,9 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                 mainAxisExtent: 300, // Altura fija para cada tarjeta
               ),
               itemBuilder: (context, i) {
+                
+
+                print('Ejercicio $i ---> ${ejerciciosDeRutina.ejercicios[i].nombre}');
                 final ejercicio = ejerciciosDeRutina.ejercicios[i];
 
                 // Verificar si el ejercicio está completado a través de sus series y si está completado cambiar el estado de la serie

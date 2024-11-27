@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 import 'package:gymaster/core/database/database_helper.dart';
 import 'package:gymaster/core/database/models/ejercicio.dart';
 import 'package:gymaster/core/database/models/musculo.dart';
@@ -28,23 +31,6 @@ class RoutineLocalDataSource {
       final db = await DatabaseHelper.instance.database;
       final id = await db.insert(DatabaseHelper.tableRutina, rutina.toJson());
       return id > 0;
-    } catch (e) {
-      throw LocalFailure();
-    }
-  }
-
-  //obtener numero de ejercicios por id de rutina
-  Future<int> getCantidadEjerciciosPorRutinaId(String idRutina) async {
-    try {
-      final db = await DatabaseHelper.instance.database;
-      final result = Sqflite.firstIntValue(await db.rawQuery('''
-          SELECT COUNT(E.id) AS numeroEjercicios
-          FROM ${DatabaseHelper.tableRutina} r
-          JOIN ${DatabaseHelper.tableSerie} S ON r.id = S.rutinaId
-          JOIN ${DatabaseHelper.tableEjercicio} E ON S.ejercicioId = E.id
-          WHERE r.id = ?
-        ''', [idRutina]));
-      return result ?? 0;
     } catch (e) {
       throw LocalFailure();
     }
@@ -83,7 +69,6 @@ class RoutineLocalDataSource {
         [musculoId],
       );
       return List.generate(ejercicios.length, (i) {
-        print(ejercicios[i]);
         return EjerciciosPorMusculoModel.fromJson(ejercicios[i]);
       });
     } catch (e) {
@@ -126,6 +111,66 @@ class RoutineLocalDataSource {
       final db = await DatabaseHelper.instance.database;
       final id = await db.insert(DatabaseHelper.tableSerie, serie.toJson());
       return id > 0 ? serie : throw LocalFailure();
+    } catch (e) {
+      throw LocalFailure();
+    }
+  }
+
+  Future<List<Ejercicio>> getEjerciciosByRutinaId(String rutinaId) async {
+    try {
+      final db = await DatabaseHelper.instance.database;
+      final ejercicios = await db.rawQuery('''
+          SELECT e.id, e.nombre, e.descripcion, e.imagenDireccion
+          FROM  ${DatabaseHelper.tableEjercicio} e
+          JOIN  ${DatabaseHelper.tableSerie} s ON e.id = s.ejercicioId
+          JOIN  ${DatabaseHelper.tableRutina} r ON s.rutinaId = r.id
+          WHERE s.rutinaId = ?
+          GROUP BY e.nombre;
+        ''', [rutinaId]);
+
+      final result =
+          ejercicios.map((json) => Ejercicio.fromJson(json)).toList();
+      // Convierte la lista de Ejercicio a JSON y lo imprime
+      debugPrint(ejerciciosToJson(result));
+      return result;
+    } catch (e) {
+      throw LocalFailure();
+    }
+  }
+
+  Future<List<Serie>> getSeriesByEjercicioId(String ejercicioId) async {
+    try {
+      final db = await DatabaseHelper.instance.database;
+      final series = await db.rawQuery('''
+          SELECT s.* 
+          FROM ${DatabaseHelper.tableSerie} s
+          JOIN ${DatabaseHelper.tableEjercicio} e ON e.id = s.ejercicioId
+          JOIN ${DatabaseHelper.tableRutina} r ON r.id = s.rutinaId
+          WHERE e.id = ?;
+        ''', [ejercicioId]);
+
+      final result= List.generate(series.length, (i) {
+        return Serie.fromJson(series[i]);
+      });
+      print("getSeriesByEjercicioId -> ${seriesListToJson(result)}");
+      return result;
+    } catch (e) {
+      throw LocalFailure();
+    }
+  }
+
+  Future<List<Musculo>> getMusculosByEjercicioId(String ejercicioId) async {
+    try {
+      final db = await DatabaseHelper.instance.database;
+      final musculos = await db.rawQuery('''
+          SELECT m.id,m.nombre
+          FROM ${DatabaseHelper.tableMusculo} m
+          JOIN ${DatabaseHelper.tableEjercicioMusculo} em ON m.id = em.musculoId
+          JOIN ${DatabaseHelper.tableEjercicio} e ON e.id = em.ejercicioId
+          WHERE e.id = ?;
+        ''', [ejercicioId]);
+
+      return musculos.map((json) => Musculo.fromJson(json)).toList();
     } catch (e) {
       throw LocalFailure();
     }

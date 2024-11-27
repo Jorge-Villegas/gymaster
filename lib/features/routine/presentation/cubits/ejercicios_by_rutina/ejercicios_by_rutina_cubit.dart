@@ -72,9 +72,13 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
         () => getAllEjerciciosByRutinaUseCase(
             GetAllEjerciciosByRutinaParams(id: idRutina)),
       );
+
       result.fold(
         (l) => emit(EjerciciosByRutinaError('Error al obtener los ejercicios')),
-        (r) => _handleEjerciciosResult(r),
+        (r) {
+          print('Ejercicios obtenidos: $r');
+          _handleEjerciciosResult(r);
+        },
       );
     } catch (e) {
       emit(EjerciciosByRutinaError(e.toString()));

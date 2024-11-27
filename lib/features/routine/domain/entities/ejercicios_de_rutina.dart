@@ -52,6 +52,22 @@ class EjerciciosDeRutina extends Equatable {
     );
   }
 
+  //tojson
+  Map<String, dynamic> toJson() {
+    return {
+      'rutinaId': rutinaId,
+      'ejercicios': ejercicios.map((e) => e.toJson()).toList(),
+      'nombre': nombre,
+      'id': id,
+      'descripcion': descripcion,
+      'fechaCreacion': fechaCreacion.toIso8601String(),
+      'realizado': realizado,
+      'color': color,
+      'fechaRealizacion': fechaRealizacion?.toIso8601String(),
+      'estado': estado,
+    };
+  }
+
   @override
   List<Object?> get props => [rutinaId, ejercicios, nombre];
 
@@ -77,6 +93,19 @@ class Ejercicio extends Equatable {
     required this.series,
     this.musculos,
   }) : cantidadSeries = series.length;
+
+
+//tojson
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'nombre': nombre,
+      'imagenDireccion': imagenDireccion,
+      'descripcion': descripcion,
+      'series': series.map((e) => e.toJson()).toList(),
+      'musculos': musculos?.map((e) => e.toJson()).toList(),
+    };
+  }
 
   Ejercicio copyWith({
     String? id,
@@ -128,6 +157,17 @@ class Serie extends Equatable {
     required this.realizado,
   });
 
+  //tojson
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'peso': peso,
+      'repeticiones': repeticiones,
+      'tiempoDescanso': timpoDescanso,
+      'realizado': realizado,
+    };
+  }
+
   Serie copyWith({
     String? id,
     double? peso,
@@ -163,6 +203,15 @@ class Musculo extends Equatable {
     this.nombre,
     this.imagenDireccion,
   });
+
+  //tojson
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'nombre': nombre,
+      'imagenDireccion': imagenDireccion,
+    };
+  }
 
   Musculo copyWith({
     String? id,

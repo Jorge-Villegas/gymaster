@@ -66,6 +66,8 @@ class Routine {
         "cantidadEjercicios": cantidadEjercicios,
     };
 
+    
+
     @override
   String toString() {
     return 'Routine(id: $id, name: $name, description: $description, fechaCreacion: $fechaCreacion, echo: $echo, color: $color, cantidadEjercicios: $cantidadEjercicios)';
