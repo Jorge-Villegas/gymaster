@@ -8,12 +8,12 @@ class DatabaseHelper {
   static const _databaseVersion = 1;
 
   // Nombres de las tablas
-  static const tableMusculo = 'Musculo';
-  static const tableEjercicio = 'Ejercicio';
-  static const tableSerie = 'Serie';
-  static const tableRutina = 'Rutina';
-  static const tableUsuario = 'Usuario';
-  static const tableEjercicioMusculo = 'EjercicioMusculo';
+  static const tableMusculo = 'musculo';
+  static const tableEjercicio = 'rjercicio';
+  static const tableSerie = 'serie';
+  static const tableRutina = 'rutina';
+  static const tableUsuario = 'usuario';
+  static const tableEjercicioMusculo = 'ejercicioMusculo';
 
   // Singleton
   DatabaseHelper._privateConstructor();
