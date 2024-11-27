@@ -13,8 +13,7 @@ class GetAllEjerciciosByRutinaUseCase
   @override
   Future<Either<Failure, EjerciciosDeRutina>> call(
       GetAllEjerciciosByRutinaParams params) async {
-    final result = await repository.getAllEjercicioByRutinaId(rutinaId: params.id);
-    return result;
+    return await repository.getAllEjercicioByRutinaId(rutinaId: params.id);
   }
 }
 

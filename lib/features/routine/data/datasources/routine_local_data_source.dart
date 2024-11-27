@@ -105,6 +105,20 @@ class RoutineLocalDataSource {
     }
   }
 
+  Future<Serie> getSerieById(String id) async {
+    try {
+      final db = await DatabaseHelper.instance.database;
+      final serie = await db.query(
+        DatabaseHelper.tableSerie,
+        where: 'id = ?',
+        whereArgs: [id],
+      );
+      return Serie.fromJson(serie.first);
+    } catch (e) {
+      throw LocalFailure();
+    }
+  }
+
   //crear serie
   Future<Serie> createSerie({required Serie serie}) async {
     try {
@@ -149,7 +163,7 @@ class RoutineLocalDataSource {
           WHERE e.id = ?;
         ''', [ejercicioId]);
 
-      final result= List.generate(series.length, (i) {
+      final result = List.generate(series.length, (i) {
         return Serie.fromJson(series[i]);
       });
       print("getSeriesByEjercicioId -> ${seriesListToJson(result)}");
@@ -171,6 +185,22 @@ class RoutineLocalDataSource {
         ''', [ejercicioId]);
 
       return musculos.map((json) => Musculo.fromJson(json)).toList();
+    } catch (e) {
+      throw LocalFailure();
+    }
+  }
+
+  // Actualiza una serie en la base de datos
+  Future<bool> updateSerie(Serie serie) async {
+    try {
+      final db = await DatabaseHelper.instance.database;
+      final result = await db.update(
+        DatabaseHelper.tableSerie,
+        serie.toJson(),
+        where: 'id = ?',
+        whereArgs: [serie.id],
+      );
+      return result > 0;
     } catch (e) {
       throw LocalFailure();
     }

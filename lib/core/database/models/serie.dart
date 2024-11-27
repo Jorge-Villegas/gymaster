@@ -51,6 +51,26 @@ class Serie {
     };
   }
 
+  Serie copyWith({
+    String? id,
+    double? peso,
+    int? repeticiones,
+    int? realizado,
+    int? tiempoDescanso,
+    String? rutinaId,
+    String? ejercicioId,
+  }) {
+    return Serie(
+      id: id ?? this.id,
+      peso: peso ?? this.peso,
+      repeticiones: repeticiones ?? this.repeticiones,
+      realizado: realizado ?? this.realizado,
+      tiempoDescanso: tiempoDescanso ?? this.tiempoDescanso,
+      rutinaId: rutinaId ?? this.rutinaId,
+      ejercicioId: ejercicioId ?? this.ejercicioId,
+    );
+  }
+
   @override
   String toString() {
     return 'Serie(id: $id, peso: $peso, repeticiones: $repeticiones, realizado: $realizado, tiempoDescanso: $tiempoDescanso, rutinaId: $rutinaId, ejercicioId: $ejercicioId)';

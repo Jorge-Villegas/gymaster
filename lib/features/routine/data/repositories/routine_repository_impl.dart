@@ -139,10 +139,8 @@ class RoutineRepositoryImpl implements RoutineRepository {
     required List<DataSerie> dataSeries,
   }) async {
     try {
-      //obtener rutina y verificar si existe
       final rutina = await localDataSource.getRutinaById(idRutina);
 
-      //obtener ejercicios y verificar si existe
       final ejercicio = await localDataSource.getEjercicioById(idEjercicio);
 
       final series = dataSeries.map((dataSerie) {
@@ -166,7 +164,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
       return Left(LocalFailure());
     }
   }
-  
+
   @override
   Future<Either<Failure, ejercicioDeRutina.EjerciciosDeRutinaModel>>
       getAllEjercicioByRutinaId({
@@ -190,7 +188,8 @@ class RoutineRepositoryImpl implements RoutineRepository {
             await localDataSource.getMusculosByEjercicioId(ejercicio.id);
 
         for (var serie in seriesDB) {
-          series.add(ejercicioDeRutina.SeriesDelEjercicioModel.fromDatabase(serie));
+          series.add(
+              ejercicioDeRutina.SeriesDelEjercicioModel.fromDatabase(serie));
         }
 
         for (var musculo in musculosDB) {
@@ -217,6 +216,38 @@ class RoutineRepositoryImpl implements RoutineRepository {
           'getAllEjercicioByRutinaId() -> ${ejercicioDeRutina.ejerciciosDeRutinaModelToJson(ejerciciosDeRutinaConDetalles)}');
 
       return Right(ejerciciosDeRutinaConDetalles);
+    } on LocalFailure {
+      return Left(LocalFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, SerieModel>> updateSerie({
+    required String id,
+    double? peso,
+    int? repeticiones,
+    bool? realizado,
+    int? tiempoDescanso,
+  }) async {
+    try {
+      final serieDB = await localDataSource.getSerieById(id);
+
+      final updatedSerie = serieDB.copyWith(
+        peso: peso,
+        repeticiones: repeticiones,
+        realizado: realizado != null ? (realizado ? 1 : 0) : null,
+        tiempoDescanso: tiempoDescanso,
+      );
+
+      final success = await localDataSource.updateSerie(updatedSerie);
+
+
+      final result  = SerieModel.fromDatabase(serieDB: updatedSerie);  
+      if (success) {
+        return Right(result);
+      } else {
+        return Left(Failure());
+      }
     } on LocalFailure {
       return Left(LocalFailure());
     }
@@ -269,21 +300,6 @@ class RoutineRepositoryImpl implements RoutineRepository {
   @override
   Future<Either<Failure, List<Routine>>> getRoutineByName({
     required String name,
-  }) async {
-    try {
-      return left(Failure());
-    } on LocalFailure {
-      return Left(LocalFailure());
-    }
-  }
-
-  @override
-  Future<Either<Failure, SerieModel>> updateSerie({
-    required String id,
-    double? peso,
-    int? repeticiones,
-    bool? realizado,
-    int? tiempoDescanso,
   }) async {
     try {
       return left(Failure());
