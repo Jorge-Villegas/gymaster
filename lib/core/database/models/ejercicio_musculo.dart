@@ -6,15 +6,15 @@ class EjercicioMusculo {
 
   factory EjercicioMusculo.fromJson(Map<String, dynamic> json) {
     return EjercicioMusculo(
-      ejercicioId: json['ejercicioId'],
-      musculoId: json['musculoId'],
+      ejercicioId: json['ejercicio_id'],
+      musculoId: json['musculo_id'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'ejercicioId': ejercicioId,
-      'musculoId': musculoId,
+      'ejercicio_id': ejercicioId,
+      'musculo_id': musculoId,
     };
   }
 

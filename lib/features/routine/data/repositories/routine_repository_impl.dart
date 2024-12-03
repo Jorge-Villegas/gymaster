@@ -1,4 +1,5 @@
 import 'package:gymaster/core/database/database_helper.dart';
+import 'package:gymaster/core/database/models/detalle_rutina.dart';
 import 'package:gymaster/core/database/models/rutina.dart';
 import 'package:gymaster/core/database/seeders/database_seeder.dart';
 import 'package:gymaster/core/error/exceptions.dart';
@@ -139,25 +140,34 @@ class RoutineRepositoryImpl implements RoutineRepository {
     required List<DataSerie> dataSeries,
   }) async {
     try {
-      final rutina = await localDataSource.getRutinaById(idRutina);
+      await localDataSource.getRutinaById(idRutina);
 
-      final ejercicio = await localDataSource.getEjercicioById(idEjercicio);
+      await localDataSource.getEjercicioById(idEjercicio);
+
+      final detalleRutina = await localDataSource.createDetalleEjercicio(
+        DetalleRutina(
+          id: idGenerator.generateId(),
+          rutinaId: idRutina,
+          ejercicioId: idEjercicio,
+        ),
+      );
 
       final series = dataSeries.map((dataSerie) {
         return serieDB.Serie(
           id: idGenerator.generateId(),
-          rutinaId: rutina.id,
-          ejercicioId: ejercicio.id,
           repeticiones: dataSerie.numeroRepeticon,
           peso: dataSerie.peso,
           realizado: 0,
           tiempoDescanso: 0,
+          detalleRutinaId: detalleRutina.id,
         );
       }).toList();
 
       for (var serie in series) {
         await localDataSource.createSerie(serie: serie);
       }
+
+
 
       return left(Failure());
     } on LocalFailure {
@@ -183,7 +193,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
         List<ejercicioDeRutina.MusculoModel> musculos = [];
 
         final seriesDB =
-            await localDataSource.getSeriesByEjercicioId(ejercicio.id);
+            await localDataSource.getSeriesByEjercicioIdAndRutinaId(ejercicio.id, rutinaId);
         final musculosDB =
             await localDataSource.getMusculosByEjercicioId(ejercicio.id);
 

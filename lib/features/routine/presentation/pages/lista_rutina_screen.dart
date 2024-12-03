@@ -104,10 +104,10 @@ class _ListaRutinasPageState extends State<ListaRutinasPage> {
                 ],
               ),
               const SizedBox(height: 20),
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     'Rutinas',
                     style: TextStyle(
                       fontSize: 20,
@@ -115,14 +115,19 @@ class _ListaRutinasPageState extends State<ListaRutinasPage> {
                       color: Color(0xFF2D2A2A),
                     ),
                   ),
-                  Text(
-                    'Todo',
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w200,
-                      color: Color(0xFF2D2A2A),
-                    ),
-                  )
+                  //agregar boton para nueva rutina
+                  IconButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => const AgregarRutinaPage(),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.add),
+                    iconSize: 30,
+                    tooltip: 'Agregar nueva rutina',
+                  ),
                 ],
               ),
               const SizedBox(height: 10),

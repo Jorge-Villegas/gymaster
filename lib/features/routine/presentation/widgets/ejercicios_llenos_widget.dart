@@ -82,7 +82,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                 crossAxisCount: 1,
                 crossAxisSpacing: 10.0, // Espacio vertical entre las columnas
                 mainAxisSpacing: 10.0, // Espacio horizontal entre las filas
-                mainAxisExtent: 300, // Altura fija para cada tarjeta
+                mainAxisExtent: 150, // Altura fija para cada tarjeta
               ),
               itemBuilder: (context, i) {
                 
@@ -93,7 +93,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                 // Verificar si el ejercicio está completado a través de sus series y si está completado cambiar el estado de la serie
                 final estadoEjercicio =
                     ejercicio.series.every((serie) => serie.realizado);
-
+                final pesos = ejercicio.series.map((serie) => serie.peso).toList();
                 return CustomCard(
                   colorFondo: Colors.white,
                   ejercicioId: ejercicio.id,
@@ -101,6 +101,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                   nombreEjercicio: ejercicio.nombre,
                   numeroSeries: ejercicio.series.length,
                   imagenDireccion: ejercicio.imagenDireccion,
+                  pesos: pesos,
                   onDismissed: () {
                     // TODO: Implementar lógica al eliminar una serie
                   },

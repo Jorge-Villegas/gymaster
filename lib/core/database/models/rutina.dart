@@ -19,28 +19,30 @@ class Rutina {
     required this.estado,
   });
 
+  // Convierte un JSON a un objeto Rutina
   factory Rutina.fromJson(Map<String, dynamic> json) {
     return Rutina(
       id: json['id'],
       nombre: json['nombre'],
       descripcion: json['descripcion'],
-      fechaCreacion: json['fechaCreacion'],
+      fechaCreacion: json['fecha_creacion'],
       realizado: json['realizado'],
       color: json['color'],
-      fechaRealizacion: json['fechaRealizacion'],
+      fechaRealizacion: json['fecha_realizacion'],
       estado: json['estado'],
     );
   }
 
+  // Convierte un objeto Rutina a un JSON
   Map<String, dynamic> toJson() {
     return {
       'id': id,
       'nombre': nombre,
       'descripcion': descripcion,
-      'fechaCreacion': fechaCreacion,
+      'fecha_creacion': fechaCreacion,
       'realizado': realizado,
       'color': color,
-      'fechaRealizacion': fechaRealizacion,
+      'fecha_realizacion': fechaRealizacion,
       'estado': estado,
     };
   }

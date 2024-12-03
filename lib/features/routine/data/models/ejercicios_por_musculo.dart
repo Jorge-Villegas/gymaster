@@ -1,4 +1,3 @@
-
 import 'package:gymaster/features/routine/domain/entities/ejercicios_por_musculo.dart';
 
 class EjerciciosPorMusculoModel extends EjerciciosPorMusculo {
@@ -15,7 +14,7 @@ class EjerciciosPorMusculoModel extends EjerciciosPorMusculo {
       id: json['id'],
       nombre: json['nombre'],
       descripcion: json['descripcion'],
-      imagenDireccion: json['imagenDireccion'],
+      imagenDireccion: json['imagen_direccion'],
       musculos: json['musculos'].toString().split(','),
     );
   }
@@ -25,18 +24,17 @@ class EjerciciosPorMusculoModel extends EjerciciosPorMusculo {
       id: map['id'],
       nombre: map['nombre'],
       descripcion: map['descripcion'],
-      imagenDireccion: map['imagenDireccion'],
+      imagenDireccion: map['imagen_direccion'],
       musculos: map['musculos'].toString().split(','),
     );
   }
 
-  @override
   Map<String, dynamic> toJson() {
     return {
       'id': id,
       'nombre': nombre,
       'descripcion': descripcion,
-      'imagenDireccion': imagenDireccion,
+      'imagen_direccion': imagenDireccion,
       'musculos': musculos.join(','),
     };
   }

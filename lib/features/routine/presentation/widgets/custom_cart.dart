@@ -10,6 +10,7 @@ class CustomCard extends StatelessWidget {
   final bool estadoSerie;
   final int numeroSeries;
   final Color colorFondo;
+  final List<double> pesos;
   final VoidCallback onDismissed;
   final VoidCallback onTap;
 
@@ -21,6 +22,7 @@ class CustomCard extends StatelessWidget {
     required this.estadoSerie,
     required this.numeroSeries,
     required this.onDismissed,
+    required this.pesos,
     required this.onTap,
     required this.colorFondo,
   });
@@ -48,54 +50,75 @@ class CustomCard extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
+          child: Row(
             children: [
               ///
               /// Imagen del ejercicio
               ///
               Expanded(
+                flex: 1,
                 child: ClipRRect(
-                  borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(10.0),
+                  borderRadius: const BorderRadius.horizontal(
+                    left: Radius.circular(10.0),
                   ),
-                  child: _buildImageWidget(imagenDireccion),
+                  child: Stack(
+                    children: [
+                      _buildImageWidget(imagenDireccion),
+                      if (estadoSerie)
+                        Positioned.fill(
+                          child: Container(
+                            color: Colors.green.withOpacity(0.3),
+                            child: const Center(
+                              child:  Icon(
+                                Icons.check_circle,
+                                color: Colors.green,
+                                size: 50.0,
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
                 ),
               ),
 
               ///
               /// Nombre del ejercicio y numero de series
               ///
-              Container(
-                height: 100,
-                alignment: Alignment.center,
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      TextFormatter.capitalize(nombreEjercicio),
-                      style: const TextStyle(
-                        fontSize: 14.0,
-                        //fontWeight: FontWeight.bold
+              Expanded(
+                flex: 2,
+                child: Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        TextFormatter.capitalize(nombreEjercicio),
+                        style: const TextStyle(
+                          fontSize: 14.0,
+                          //fontWeight: FontWeight.bold
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 4.0),
-                    Text(
-                      _formatoNumeroSeries(numeroSeries),
-                      style: const TextStyle(
-                        fontSize: 12.0,
-                        color: Colors.grey,
+                      const SizedBox(height: 4.0),
+                      Text(
+                        _formatoNumeroSeries(
+                            numeroSeries, numeroSeries, pesos),
+                        style: const TextStyle(
+                          fontSize: 12.0,
+                          color: Colors.grey,
+                        ),
                       ),
-                    ),
-                    Text(
-                      estadoSerie ? 'Completado' : 'En proceso',
-                      style: TextStyle(
-                        fontSize: 12.0,
-                        color: estadoSerie ? Colors.grey : Colors.green,
-                      ),
-                    )
-                  ],
+                      Text(
+                        estadoSerie ? 'Completado' : 'En proceso',
+                        style: TextStyle(
+                          fontSize: 12.0,
+                          color: estadoSerie ? Colors.grey : Colors.green,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -105,8 +128,9 @@ class CustomCard extends StatelessWidget {
     );
   }
 
-  String _formatoNumeroSeries(int numeroSeries) {
-    return numeroSeries == 1 ? '1 serie' : '$numeroSeries series';
+  String _formatoNumeroSeries(int numeroSeries, int series, List<double> peso) {
+    String pesoString = peso.join(', ');
+    return 'Series $series, Peso $pesoString';
   }
 
   // Método privado para construir el widget de imagen

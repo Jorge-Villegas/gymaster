@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:uuid/uuid.dart';
 
 class DatabaseHelper {
@@ -8,12 +9,13 @@ class DatabaseHelper {
   static const _databaseVersion = 1;
 
   // Nombres de las tablas
-  static const tableMusculo = 'musculo';
-  static const tableEjercicio = 'rjercicio';
-  static const tableSerie = 'serie';
-  static const tableRutina = 'rutina';
-  static const tableUsuario = 'usuario';
-  static const tableEjercicioMusculo = 'ejercicioMusculo';
+  static const tbMusculo = 'musculo';
+  static const tbEjercicio = 'ejercicio';
+  static const tbSerie = 'serie';
+  static const tbRutina = 'rutina';
+  static const tbUsuario = 'usuario';
+  static const tbEjercicioMusculo = 'ejercicio_musculo';
+  static const tbDetalleRutina = 'detalle_rutina';
 
   // Singleton
   DatabaseHelper._privateConstructor();
@@ -29,6 +31,11 @@ class DatabaseHelper {
 
   // Inicializa la base de datos
   Future<Database> _initDatabase() async {
+    // Inicializa FFI si es necesario
+    // sqfliteFfiInit();
+
+    // // Cambia la fábrica de base de datos predeterminada
+    // databaseFactory = databaseFactoryFfi;
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, _databaseName);
 
@@ -45,56 +52,54 @@ class DatabaseHelper {
   // Crea las tablas de la base de datos
   Future<void> _onCreate(Database db, int version) async {
     await db.execute('''
-      CREATE TABLE $tableMusculo (
+      CREATE TABLE $tbMusculo (
         id TEXT PRIMARY KEY,
         nombre TEXT NOT NULL UNIQUE,
-        imagenDireccion TEXT
+        imagen_direccion TEXT
       );
     ''');
 
     await db.execute('''
-      CREATE TABLE $tableEjercicio (
+      CREATE TABLE $tbEjercicio (
         id TEXT PRIMARY KEY,
         nombre TEXT NOT NULL UNIQUE,
         descripcion TEXT,
-        imagenDireccion TEXT
+        imagen_direccion TEXT
       );
     ''');
 
     await db.execute('''
-      CREATE TABLE $tableSerie (
+      CREATE TABLE $tbSerie (
         id TEXT PRIMARY KEY,
         peso REAL NOT NULL,
         repeticiones INTEGER NOT NULL,
         realizado INTEGER NOT NULL,
-        tiempoDescanso INTEGER NOT NULL,
-        rutinaId TEXT NOT NULL,
-        ejercicioId TEXT NOT NULL,
-        FOREIGN KEY (rutinaId) REFERENCES $tableRutina (id),
-        FOREIGN KEY (ejercicioId) REFERENCES $tableEjercicio (id)
+        tiempo_descanso INTEGER NOT NULL,
+        detalle_rutina_id TEXT NOT NULL,
+        FOREIGN KEY (detalle_rutina_id) REFERENCES $tbDetalleRutina (id)
       );
     ''');
 
     await db.execute('''
-      CREATE TABLE $tableRutina (
+      CREATE TABLE $tbRutina (
         id TEXT PRIMARY KEY,
         nombre TEXT NOT NULL UNIQUE,
         descripcion TEXT,
-        fechaCreacion TEXT NOT NULL,
+        fecha_creacion TEXT NOT NULL,
         realizado INTEGER NOT NULL,
         color INTEGER NOT NULL,
-        fechaRealizacion TEXT,
+        fecha_realizacion TEXT,
         estado INTEGER NOT NULL
       );
     ''');
 
     await db.execute('''
-      CREATE TABLE $tableUsuario (
+      CREATE TABLE $tbUsuario (
         id TEXT PRIMARY KEY,
         nombre TEXT NOT NULL UNIQUE,
         correo TEXT NOT NULL UNIQUE,
         contrasenia TEXT NOT NULL,
-        fechaNacimiento TEXT,
+        fecha_nacimiento TEXT,
         estatura REAL,
         peso REAL,
         activo INTEGER
@@ -102,12 +107,22 @@ class DatabaseHelper {
     ''');
 
     await db.execute('''
-      CREATE TABLE $tableEjercicioMusculo (
-        ejercicioId TEXT NOT NULL,
-        musculoId TEXT NOT NULL,
-        PRIMARY KEY (ejercicioId, musculoId),
-        FOREIGN KEY (ejercicioId) REFERENCES $tableEjercicio (id),
-        FOREIGN KEY (musculoId) REFERENCES $tableMusculo (id)
+      CREATE TABLE $tbEjercicioMusculo (
+        ejercicio_id TEXT NOT NULL,
+        musculo_id TEXT NOT NULL,
+        PRIMARY KEY (ejercicio_id, musculo_id),
+        FOREIGN KEY (ejercicio_id) REFERENCES $tbEjercicio (id),
+        FOREIGN KEY (musculo_id) REFERENCES $tbMusculo (id)
+      );
+    ''');
+
+    await db.execute('''
+      CREATE TABLE $tbDetalleRutina (
+        id TEXT PRIMARY KEY,
+        rutina_id TEXT NOT NULL,
+        ejercicio_id TEXT NOT NULL,
+        FOREIGN KEY (rutina_id) REFERENCES $tbRutina (id),
+        FOREIGN KEY (ejercicio_id) REFERENCES $tbEjercicio (id)
       );
     ''');
   }

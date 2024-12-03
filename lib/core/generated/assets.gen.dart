@@ -4503,12 +4503,16 @@ class $AssetsIconsIconsaxGen {
 class $AssetsImagenesFondosGen {
   const $AssetsImagenesFondosGen();
 
+  /// File path: assets/imagenes/fondos/imagen_predeterminada.jpg
+  AssetGenImage get imagenPredeterminada =>
+      const AssetGenImage('assets/imagenes/fondos/imagen_predeterminada.jpg');
+
   /// File path: assets/imagenes/fondos/login3.jpg
   AssetGenImage get login3 =>
       const AssetGenImage('assets/imagenes/fondos/login3.jpg');
 
   /// List of all assets
-  List<AssetGenImage> get values => [login3];
+  List<AssetGenImage> get values => [imagenPredeterminada, login3];
 }
 
 class $AssetsImagenesMusculosGen {

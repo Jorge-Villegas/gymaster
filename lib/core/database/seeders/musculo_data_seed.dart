@@ -79,7 +79,7 @@ class MusculosDataSeed {
     try {
       final database = await _databaseHelper.database;
       for (final musculo in musculos) {
-        await database.insert('Musculo', musculo.toJson());
+        await database.insert(DatabaseHelper.tbMusculo, musculo.toJson());
         debugPrint('musculo guardado: ${musculo.nombre}');
       }
     } catch (e) {

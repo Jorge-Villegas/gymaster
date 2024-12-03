@@ -1,26 +1,19 @@
-import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:gymaster/core/database/database_helper.dart';
+import 'package:gymaster/core/database/models/detalle_rutina.dart';
 import 'package:gymaster/core/database/models/ejercicio.dart';
 import 'package:gymaster/core/database/models/musculo.dart';
 import 'package:gymaster/core/database/models/rutina.dart';
 import 'package:gymaster/core/database/models/serie.dart';
 import 'package:gymaster/core/error/failures.dart';
 import 'package:gymaster/features/routine/data/models/ejercicios_por_musculo.dart';
-import 'package:sqflite/sqflite.dart';
 
 class RoutineLocalDataSource {
-  // Obtener todas las rutinas
   Future<List<Rutina>> getAllRutinas() async {
     try {
       final db = await DatabaseHelper.instance.database;
-      final rutinas = await db.query(DatabaseHelper.tableRutina);
-
-      // Convertir los mapas a una lista de objetos Rutina usando el método de fábrica fromJson
-      return List.generate(rutinas.length, (i) {
-        return Rutina.fromJson(rutinas[i]);
-      });
+      final rutinas = await db.query(DatabaseHelper.tbRutina,orderBy: 'fecha_creacion');
+      return rutinas.map((rutina) => Rutina.fromJson(rutina)).toList();
     } catch (e) {
       throw LocalFailure();
     }
@@ -29,7 +22,7 @@ class RoutineLocalDataSource {
   Future<bool> createRutina({required Rutina rutina}) async {
     try {
       final db = await DatabaseHelper.instance.database;
-      final id = await db.insert(DatabaseHelper.tableRutina, rutina.toJson());
+      final id = await db.insert(DatabaseHelper.tbRutina, rutina.toJson());
       return id > 0;
     } catch (e) {
       throw LocalFailure();
@@ -39,7 +32,7 @@ class RoutineLocalDataSource {
   Future<List<Musculo>> getAllMusculos() async {
     try {
       final db = await DatabaseHelper.instance.database;
-      final musculos = await db.query(DatabaseHelper.tableMusculo);
+      final musculos = await db.query(DatabaseHelper.tbMusculo);
       return List.generate(musculos.length, (i) {
         return Musculo.fromJson(musculos[i]);
       });
@@ -54,18 +47,12 @@ class RoutineLocalDataSource {
       final db = await DatabaseHelper.instance.database;
       final ejercicios = await db.rawQuery(
         '''
-        SELECT e.id, e.nombre, e.descripcion, e.imagenDireccion, json_group_array(m.nombre) AS musculos
-        FROM ${DatabaseHelper.tableEjercicio} e
-        JOIN ${DatabaseHelper.tableEjercicioMusculo}  em ON e.id = em.ejercicioId
-        JOIN ${DatabaseHelper.tableMusculo}  m ON m.id = em.musculoId
-        WHERE e.id IN (
-            SELECT e.id
-            FROM ${DatabaseHelper.tableEjercicio}  e
-            JOIN ${DatabaseHelper.tableEjercicioMusculo} em ON e.id = em.ejercicioId
-            WHERE em.musculoId = ?
-        )
-        GROUP BY e.id, e.nombre;
-      ''',
+          SELECT e.*
+          FROM ${DatabaseHelper.tbEjercicio} e
+          JOIN ${DatabaseHelper.tbEjercicioMusculo} em ON e.id = em.ejercicio_id
+          JOIN ${DatabaseHelper.tbMusculo} m ON em.musculo_id = m.id
+            WHERE m.id = ?;
+          ''',
         [musculoId],
       );
       return List.generate(ejercicios.length, (i) {
@@ -80,7 +67,7 @@ class RoutineLocalDataSource {
     try {
       final db = await DatabaseHelper.instance.database;
       final rutina = await db.query(
-        DatabaseHelper.tableRutina,
+        DatabaseHelper.tbRutina,
         where: 'id = ?',
         whereArgs: [id],
       );
@@ -95,7 +82,7 @@ class RoutineLocalDataSource {
     try {
       final db = await DatabaseHelper.instance.database;
       final ejercicio = await db.query(
-        DatabaseHelper.tableEjercicio,
+        DatabaseHelper.tbEjercicio,
         where: 'id = ?',
         whereArgs: [id],
       );
@@ -109,7 +96,7 @@ class RoutineLocalDataSource {
     try {
       final db = await DatabaseHelper.instance.database;
       final serie = await db.query(
-        DatabaseHelper.tableSerie,
+        DatabaseHelper.tbSerie,
         where: 'id = ?',
         whereArgs: [id],
       );
@@ -119,12 +106,25 @@ class RoutineLocalDataSource {
     }
   }
 
-  //crear serie
   Future<Serie> createSerie({required Serie serie}) async {
     try {
       final db = await DatabaseHelper.instance.database;
-      final id = await db.insert(DatabaseHelper.tableSerie, serie.toJson());
+      final id = await db.insert(DatabaseHelper.tbSerie, serie.toJson());
       return id > 0 ? serie : throw LocalFailure();
+    } catch (e) {
+      throw LocalFailure();
+    }
+  }
+
+  Future<DetalleRutina> createDetalleEjercicio(
+      DetalleRutina detalleRutina) async {
+    try {
+      final db = await DatabaseHelper.instance.database;
+      final id = await db.insert(
+        DatabaseHelper.tbDetalleRutina,
+        detalleRutina.toJson(),
+      );
+      return id > 0 ? detalleRutina : throw LocalFailure();
     } catch (e) {
       throw LocalFailure();
     }
@@ -134,12 +134,11 @@ class RoutineLocalDataSource {
     try {
       final db = await DatabaseHelper.instance.database;
       final ejercicios = await db.rawQuery('''
-          SELECT e.id, e.nombre, e.descripcion, e.imagenDireccion
-          FROM  ${DatabaseHelper.tableEjercicio} e
-          JOIN  ${DatabaseHelper.tableSerie} s ON e.id = s.ejercicioId
-          JOIN  ${DatabaseHelper.tableRutina} r ON s.rutinaId = r.id
-          WHERE s.rutinaId = ?
-          GROUP BY e.nombre;
+          SELECT e.*
+          FROM ${DatabaseHelper.tbEjercicio} e
+          join ${DatabaseHelper.tbDetalleRutina} dr on e.id = dr.ejercicio_id
+          join ${DatabaseHelper.tbRutina} r on dr.rutina_id = r.id
+          WHERE r.id = ?;
         ''', [rutinaId]);
 
       final result =
@@ -152,16 +151,18 @@ class RoutineLocalDataSource {
     }
   }
 
-  Future<List<Serie>> getSeriesByEjercicioId(String ejercicioId) async {
+  Future<List<Serie>> getSeriesByEjercicioIdAndRutinaId(
+      String ejercicioId, String rutinaId,) async {
     try {
       final db = await DatabaseHelper.instance.database;
       final series = await db.rawQuery('''
-          SELECT s.* 
-          FROM ${DatabaseHelper.tableSerie} s
-          JOIN ${DatabaseHelper.tableEjercicio} e ON e.id = s.ejercicioId
-          JOIN ${DatabaseHelper.tableRutina} r ON r.id = s.rutinaId
-          WHERE e.id = ?;
-        ''', [ejercicioId]);
+          SELECT s.* FROM serie s
+          JOIN detalle_rutina dr on dr.id = s.detalle_rutina_id
+          JOIN ejercicio e on e.id = dr.ejercicio_id
+          JOIN rutina r on r.id = dr.rutina_id
+          WHERE r.id = ?
+          AND e.id = ?;
+        ''', [rutinaId, ejercicioId]);
 
       final result = List.generate(series.length, (i) {
         return Serie.fromJson(series[i]);
@@ -178,9 +179,9 @@ class RoutineLocalDataSource {
       final db = await DatabaseHelper.instance.database;
       final musculos = await db.rawQuery('''
           SELECT m.id,m.nombre
-          FROM ${DatabaseHelper.tableMusculo} m
-          JOIN ${DatabaseHelper.tableEjercicioMusculo} em ON m.id = em.musculoId
-          JOIN ${DatabaseHelper.tableEjercicio} e ON e.id = em.ejercicioId
+          FROM ${DatabaseHelper.tbMusculo} m
+          JOIN ${DatabaseHelper.tbEjercicioMusculo} em ON m.id = em.musculo_id
+          JOIN ${DatabaseHelper.tbEjercicio} e ON e.id = em.ejercicio_id
           WHERE e.id = ?;
         ''', [ejercicioId]);
 
@@ -195,7 +196,7 @@ class RoutineLocalDataSource {
     try {
       final db = await DatabaseHelper.instance.database;
       final result = await db.update(
-        DatabaseHelper.tableSerie,
+        DatabaseHelper.tbSerie,
         serie.toJson(),
         where: 'id = ?',
         whereArgs: [serie.id],

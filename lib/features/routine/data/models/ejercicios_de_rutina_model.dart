@@ -33,7 +33,7 @@ class EjerciciosDeRutinaModel extends EjerciciosDeRutina {
       rutinaId: json['rutinaId'],
       nombre: json['nombre'],
       descripcion: json['descripcion'],
-      fechaCreacion: DateTime.parse(json['fechaCreacion']),
+      fechaCreacion: DateTime.parse(json['fecha_creacion']),
       color: json['color'],
       ejercicios: (json['ejercicios'] as List)
           .map((e) => EjercicioModel.fromJson(e))
@@ -41,8 +41,8 @@ class EjerciciosDeRutinaModel extends EjerciciosDeRutina {
       estado: json['estado'],
       id: json['id'],
       realizado: json['realizado'],
-      fechaRealizacion: json['fechaRealizacion'] != null
-          ? DateTime.parse(json['fechaRealizacion'])
+      fechaRealizacion: json['fecha_realizacion'] != null
+          ? DateTime.parse(json['fecha_realizacion'])
           : null,
     );
   }
@@ -96,7 +96,7 @@ class EjercicioModel extends Ejercicio {
   factory EjercicioModel.fromJson(Map<String, dynamic> json) => EjercicioModel(
         id: json["id"],
         nombre: json["nombre"],
-        imagenDireccion: json["imagenDireccion"],
+        imagenDireccion: json["imagen_direccion"],
         descripcion: json["descripcion"],
         series: List<SeriesDelEjercicioModel>.from(
             json["series"].map((x) => SeriesDelEjercicioModel.fromJson(x))),
@@ -107,7 +107,7 @@ class EjercicioModel extends Ejercicio {
   Map<String, dynamic> toJson() => {
         "id": id,
         "nombre": nombre,
-        "imagenDireccion": imagenDireccion,
+        "imagen_direccion": imagenDireccion,
         "descripcion": descripcion,
         "series": List<dynamic>.from(series.map((x) => x.toJson())),
         "musculos": List<dynamic>.from(musculos!.map((x) => x.toJson())),
@@ -128,7 +128,7 @@ class SeriesDelEjercicioModel extends Serie {
         id: json['id'],
         peso: json['peso'],
         repeticiones: json['repeticiones'],
-        timpoDescanso: json['timpoDescanso'],
+        timpoDescanso: json['timpo_descanso'],
         realizado: json['realizado'],
       );
 
@@ -136,7 +136,7 @@ class SeriesDelEjercicioModel extends Serie {
         'id': id,
         'peso': peso,
         'repeticiones': repeticiones,
-        'timpoDescanso': timpoDescanso,
+        'timpo_descanso': timpoDescanso,
         'realizado': realizado,
       };
 
@@ -170,7 +170,7 @@ class MusculoModel extends Musculo {
     return MusculoModel(
       id: json['id'],
       nombre: json['nombre'],
-      imagenDireccion: json['imagenDireccion'],
+      imagenDireccion: json['imagen_direccion'],
     );
   }
 
@@ -178,7 +178,7 @@ class MusculoModel extends Musculo {
     return {
       'id': id,
       'nombre': nombre,
-      'imagenDireccion': imagenDireccion,
+      'imagen_direccion': imagenDireccion,
     };
   }
 }

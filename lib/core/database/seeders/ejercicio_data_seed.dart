@@ -2556,15 +2556,14 @@ class EjercicioDataSeed {
 
       // Verificar si el ejercicio ya existe
       final existingEjercicio = await db.query(
-        DatabaseHelper.tableEjercicio,
+        DatabaseHelper.tbEjercicio,
         where: 'nombre = ?',
         whereArgs: [ejercicio.nombre],
       );
 
       if (existingEjercicio.isEmpty) {
         // Agregamos el ejercicio si no existe
-        res +=
-            await db.insert(DatabaseHelper.tableEjercicio, ejercicio.toJson());
+        res += await db.insert(DatabaseHelper.tbEjercicio, ejercicio.toJson());
       } else {
         // Si el ejercicio ya existe, actualizamos su ID
         ejercicio.id = existingEjercicio.first['id'] as String;
@@ -2610,7 +2609,7 @@ class EjercicioDataSeed {
         musculoId: musculoId,
       );
       final result = await db.insert(
-        DatabaseHelper.tableEjercicioMusculo,
+        DatabaseHelper.tbEjercicioMusculo,
         ejercicioMusculo.toJson(),
       );
       return result != -1;
@@ -2624,7 +2623,7 @@ class EjercicioDataSeed {
     try {
       final db = await DatabaseHelper.instance.database;
       final res = await db.query(
-        DatabaseHelper.tableMusculo,
+        DatabaseHelper.tbMusculo,
         where: 'nombre = ?',
         whereArgs: [nombreMusculo],
       );
@@ -2643,7 +2642,7 @@ class EjercicioDataSeed {
   Future<String?> insertarMusculo(Musculo musculo) async {
     try {
       final db = await DatabaseHelper.instance.database;
-      await db.insert(DatabaseHelper.tableMusculo, musculo.toJson());
+      await db.insert(DatabaseHelper.tbMusculo, musculo.toJson());
       return musculo.id;
     } catch (e) {
       print('Error al insertar el músculo: $e');

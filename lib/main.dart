@@ -15,7 +15,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 /// Punto de entrada principal de la aplicación.
 Future<void> main() async {
@@ -24,11 +23,8 @@ Future<void> main() async {
 
   await initDependencies();
 
-  // Inicializa sqflite_common_ffi
-  sqfliteFfiInit();
-  
-  // Asigna databaseFactory a databaseFactoryFfi
-  databaseFactory = databaseFactoryFfi;
+  // Inicializa la base de datos
+  await DatabaseHelper.instance.database;
 
   // Ejecuta la aplicación
   runApp(const Proveedores());
@@ -37,7 +33,6 @@ Future<void> main() async {
 /// Widget que proporciona los proveedores de Bloc a la aplicación.
 class Proveedores extends StatelessWidget {
   const Proveedores({super.key});
-
   @override
   Widget build(BuildContext context) {
     DatabaseHelper.instance.database;

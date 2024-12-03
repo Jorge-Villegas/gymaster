@@ -29,7 +29,7 @@ class SerieModel extends Serie {
     return SerieModel(
       id: map['id'],
       realizado: map['realizado'],
-      tiempoDescanso: map['tiempoDescanso'],
+      tiempoDescanso: map['tiempo_descanso'],
       ejercicios: map['ejercicios'],
     );
   }
@@ -38,7 +38,7 @@ class SerieModel extends Serie {
     return <String, dynamic>{
       'id': id,
       'realizado': realizado,
-      'tiempoDescanso': tiempoDescanso,
+      'tiempo_descanso': tiempoDescanso,
     };
   }
 

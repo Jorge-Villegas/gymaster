@@ -8,15 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
-import 'package:animate_do/animate_do.dart';
-import 'package:gymaster/core/config/app_config.dart';
-import 'package:gymaster/core/utils/text_formatter.dart';
-import 'package:gymaster/core/utils/verificador_tipo_archivo.dart';
-import 'package:gymaster/features/routine/presentation/cubits/ejercicio/ejercicio_cubit.dart';
-import 'package:gymaster/features/routine/presentation/pages/agregar_ejercicios_rutina_page.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 
 class ListarEjerciciosPage extends StatelessWidget {
   final String musculoId;

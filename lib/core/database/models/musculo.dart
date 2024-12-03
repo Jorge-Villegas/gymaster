@@ -13,7 +13,7 @@ class Musculo {
     return Musculo(
       id: json['id'],
       nombre: json['nombre'],
-      imagenDireccion: json['imagenDireccion'],
+      imagenDireccion: json['imagen_direccion'],
     );
   }
 
@@ -21,9 +21,10 @@ class Musculo {
     return {
       'id': id,
       'nombre': nombre,
-      'imagenDireccion': imagenDireccion,
+      'imagen_direccion': imagenDireccion,
     };
   }
+
   @override
   String toString() {
     return 'Musculo{id: $id, nombre: $nombre, imagenDireccion: $imagenDireccion}';
