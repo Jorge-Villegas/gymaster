@@ -32,10 +32,10 @@ class DatabaseHelper {
   // Inicializa la base de datos
   Future<Database> _initDatabase() async {
     // Inicializa FFI si es necesario
-    // sqfliteFfiInit();
+    sqfliteFfiInit();
 
-    // // Cambia la fábrica de base de datos predeterminada
-    // databaseFactory = databaseFactoryFfi;
+    // Cambia la fábrica de base de datos predeterminada
+    databaseFactory = databaseFactoryFfi;
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, _databaseName);
 

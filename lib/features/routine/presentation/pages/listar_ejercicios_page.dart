@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
-
 class ListarEjerciciosPage extends StatelessWidget {
   final String musculoId;
   final String nombreMusculo;
@@ -23,7 +22,9 @@ class ListarEjerciciosPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<EjercicioCubit>().setEjercicio(musculoId: musculoId);
+    context
+        .read<EjercicioCubit>()
+        .setEjercicio(musculoId: musculoId, rutinaId: rutinaId);
     return Scaffold(
       appBar: AppBar(
         title: Text(TextFormatter.capitalize(nombreMusculo)),
@@ -39,39 +40,70 @@ class ListarEjerciciosPage extends StatelessWidget {
                 // Limita el retraso máximo a 1500 milisegundos (10 * 100)
                 final delay = Duration(milliseconds: 100 * (i < 10 ? i : 10));
                 final ejercicio = state.ejercicios[i];
-                final imagenDireccion = ejercicio.imagenDireccion?.isNotEmpty == true
-                    ? ejercicio.imagenDireccion!
-                    : AppConfig.defaultImagePath;
+                final imagenDireccion =
+                    ejercicio.imagenDireccion?.isNotEmpty == true
+                        ? ejercicio.imagenDireccion!
+                        : AppConfig.defaultImagePath;
                 return FadeInLeft(
                   duration: delay,
                   child: Container(
                     margin: const EdgeInsets.symmetric(vertical: 2.5),
+                    decoration: BoxDecoration(
+                      color: ejercicio.seleccionado
+                          ? Colors.green.withOpacity(0.2)
+                          : Colors.transparent,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                     child: ListTile(
-                      leading: Container(
-                        width: 60,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          shape: BoxShape.circle,
-                        ),
-                        child: ClipOval(
-                          child: VerificadorTipoArchivo.esSvg(imagenDireccion)
-                              ? SvgPicture.asset(
-                                  imagenDireccion,
-                                  width: 60,
-                                  height: 60,
-                                  fit: BoxFit.cover,
-                                )
-                              : Image.asset(
-                                  imagenDireccion,
-                                  width: 60,
-                                  height: 60,
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return const Icon(Icons.error);
-                                  },
+                      leading: Stack(
+                        children: [
+                          Container(
+                            width: 50,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              shape: BoxShape.circle,
+                            ),
+                            child: ClipOval(
+                              child:
+                                  VerificadorTipoArchivo.esSvg(imagenDireccion)
+                                      ? SvgPicture.asset(
+                                          imagenDireccion,
+                                          width: 50,
+                                          height: 50,
+                                          fit: BoxFit.cover,
+                                        )
+                                      : Image.asset(
+                                          imagenDireccion,
+                                          width: 50,
+                                          height: 50,
+                                          fit: BoxFit.cover,
+                                          errorBuilder:
+                                              (context, error, stackTrace) {
+                                            return const Icon(Icons.error);
+                                          },
+                                        ),
+                            ),
+                          ),
+                          if (ejercicio.seleccionado)
+                            Positioned.fill(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.green.withOpacity(
+                                      0.9), // Fondo semitransparente
+                                  shape: BoxShape.circle,
                                 ),
-                        ),
+                                child: const Align(
+                                  alignment: Alignment.center,
+                                  child: Icon(
+                                    Icons.check,
+                                    color: Colors.white,
+                                    size: 24,
+                                  ),
+                                ),
+                              ),
+                            ),
+                        ],
                       ),
                       title: Text(ejercicio.nombre),
                       onTap: () {
@@ -80,7 +112,8 @@ class ListarEjerciciosPage extends StatelessWidget {
                           MaterialPageRoute(
                             builder: (_) => AgregarEjercicioRutinaPage(
                               ejercicioId: ejercicio.id,
-                              ejercicioImagenDireccion: ejercicio.imagenDireccion,
+                              ejercicioImagenDireccion:
+                                  ejercicio.imagenDireccion,
                               ejercicioNombre: ejercicio.nombre,
                               rutinaId: rutinaId,
                             ),

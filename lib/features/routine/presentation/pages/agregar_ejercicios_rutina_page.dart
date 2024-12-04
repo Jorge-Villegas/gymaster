@@ -2,6 +2,7 @@ import 'package:gymaster/core/config/app_config.dart';
 import 'package:gymaster/core/utils/text_formatter.dart';
 import 'package:gymaster/features/routine/presentation/cubits/agregar_series/agregar_series_cubit.dart';
 import 'package:gymaster/features/routine/presentation/cubits/agregar_series/agregar_series_state.dart';
+import 'package:gymaster/features/routine/presentation/cubits/ejercicio/ejercicio_cubit.dart';
 import 'package:gymaster/features/routine/presentation/widgets/encabezado_ejercicio_widget.dart';
 import 'package:gymaster/features/routine/presentation/widgets/lista_series_widget.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,8 @@ class AgregarEjercicioRutinaPage extends StatefulWidget {
     String? ejercicioImagenDireccion,
     required this.ejercicioId,
     required this.rutinaId,
-  }) : ejercicioImagenDireccion = ejercicioImagenDireccion ?? AppConfig.defaultImagePath;
+  }) : ejercicioImagenDireccion =
+            ejercicioImagenDireccion ?? AppConfig.defaultImagePath;
 
   @override
   State<AgregarEjercicioRutinaPage> createState() =>
@@ -65,10 +67,10 @@ class _AgregarEjercicioRutinaPageState
     super.dispose();
   }
 
-  void _guardarDatos() {
-    FocusScope.of(context).unfocus(); //Ocultar teclado
+  void _guardarDatos() async {
+    FocusScope.of(context).unfocus(); // Ocultar teclado
 
-    //verificamos si existe al menos una serie
+    // Verificamos si existe al menos una serie
     if (_pesoControllers.isEmpty || _repeticionesControllers.isEmpty) {
       showCustomSnackBar(
         context,
@@ -78,7 +80,7 @@ class _AgregarEjercicioRutinaPageState
       return;
     }
 
-    //validamos si la validación pasa
+    // Validamos si la validación pasa
     if (!_formKey.currentState!.validate()) {
       showCustomSnackBar(
         context,
@@ -104,19 +106,37 @@ class _AgregarEjercicioRutinaPageState
       return;
     }
 
-    context.read<AgregarSeriesCubit>().guardarDatos(
+    // Guardar los datos de forma asíncrona
+    final resul = await context.read<AgregarSeriesCubit>().guardarDatos(
           rutinaId: widget.rutinaId,
           ejercicioId: widget.ejercicioId,
           pesos: pesos.cast<double>(),
           repeticiones: repeticiones.cast<int>(),
         );
-    Navigator.of(context).pop();
 
-    showCustomSnackBar(
-      context,
-      'El ejercicio ha sido guardado',
-      SnackBarType.success,
-    );
+    // Verificar si el widget sigue montado antes de usar el contexto
+    if (!mounted) return;
+
+    if (resul) {
+
+      
+      // Llamar al EjercicioCubit para actualizar el estado
+      context.read<EjercicioCubit>().ejercicioAgregado(id: widget.ejercicioId);
+
+      Navigator.of(context).pop();
+
+      showCustomSnackBar(
+        context,
+        'El ejercicio ha sido guardado',
+        SnackBarType.success,
+      );
+    } else {
+      showCustomSnackBar(
+        context,
+        'Error al guardar el ejercicio',
+        SnackBarType.error,
+      );
+    }
   }
 
   @override

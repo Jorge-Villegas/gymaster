@@ -1131,7 +1131,7 @@ class EjercicioDataSeed {
     ),
     Ejercicio(
       id: DatabaseHelper.instance.generateUUID(),
-      nombre: 'Abdominales Parciales Laterales con Hyperextension',
+      nombre: 'Abdominales Parciales Laterales con Hiperextension',
       descripcion:
           'Acuéstate de lado con las piernas flexionadas y los brazos cruzados sobre el pecho. Eleva el torso hacia las piernas contrayendo los músculos abdominales laterales y realiza una hiperextensión hacia atrás. Luego, baja el torso controladamente de vuelta a la posición inicial y repite el ejercicio en el otro lado.',
       imagenDireccion: Assets.imagenes.musculos.abdomen

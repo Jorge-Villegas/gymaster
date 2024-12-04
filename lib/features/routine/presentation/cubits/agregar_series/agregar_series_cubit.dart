@@ -78,14 +78,8 @@ class AgregarSeriesCubit extends Cubit<AgregarSeriesState> {
       );
 
       final resul = await _addEjercicioRutinaUsecase(ejercicioRutina);
-
+    
       return resul.fold((l) => true, (r) => false);
-
-      // Aquí puedes llamar a la función que guarda el EjercicioRutina en la base de datos
-      // Por ejemplo: _routineRepository.saveEjercicioRutina(ejercicioRutina);
-
-      // Resetear el estado o emitir un estado de éxito
-      //emit(AgregarSeriesInitial());
     }
     return false;
   }

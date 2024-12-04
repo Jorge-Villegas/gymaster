@@ -3,6 +3,7 @@ class EjerciciosPorMusculo {
   final String nombre;
   String? descripcion;
   String? imagenDireccion;
+  bool seleccionado;
   final List<String> musculos;
 
   EjerciciosPorMusculo({
@@ -11,6 +12,7 @@ class EjerciciosPorMusculo {
     this.descripcion,
     this.imagenDireccion,
     required this.musculos,
+    this.seleccionado = false,
   });
 
   EjerciciosPorMusculo copyWith({
@@ -19,6 +21,7 @@ class EjerciciosPorMusculo {
     String? descripcion,
     String? imagenDireccion,
     List<String>? musculos,
+    bool? seleccionado,
   }) =>
       EjerciciosPorMusculo(
         id: id ?? this.id,
@@ -26,6 +29,7 @@ class EjerciciosPorMusculo {
         descripcion: descripcion ?? this.descripcion,
         imagenDireccion: imagenDireccion ?? this.imagenDireccion,
         musculos: musculos ?? this.musculos,
+        seleccionado: seleccionado ?? this.seleccionado,
       );
 
   @override

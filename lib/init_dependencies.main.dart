@@ -49,6 +49,7 @@ void _initRoutine() {
         ))
     ..registerFactory(() => EjercicioCubit(
           getAllEjerciciosByMusculoUseCase: serviceLocator(),
+          getAllEjerciciosByRutinaUseCase: serviceLocator(),
         ))
     ..registerFactory(() => AgregarSeriesCubit(serviceLocator()))
     ..registerFactory(() => EjerciciosByRutinaCubit(
