@@ -1,28 +1,22 @@
-import 'package:gymaster/core/database/database_helper.dart';
 import 'package:gymaster/core/database/models/detalle_rutina.dart';
 import 'package:gymaster/core/database/models/rutina.dart';
 import 'package:gymaster/core/database/seeders/database_seeder.dart';
-import 'package:gymaster/core/error/exceptions.dart';
 import 'package:gymaster/core/error/failures.dart';
 import 'package:gymaster/features/routine/data/datasources/routine_local_data_source.dart';
 import 'package:gymaster/features/routine/data/models/ejercicios_de_rutina_model.dart'
-    as ejercicioDeRutina;
+    as ejercicio_de_rutina;
 import 'package:gymaster/features/routine/data/models/ejercicios_por_musculo.dart';
 import 'package:gymaster/features/routine/data/models/musculo_model.dart';
 import 'package:gymaster/features/routine/data/models/routine_model.dart';
 import 'package:gymaster/features/routine/data/models/rutina_data_model.dart';
 import 'package:gymaster/features/routine/data/models/serie_model.dart';
-import 'package:gymaster/features/routine/domain/entities/datos_ejercicios_realizando.dart';
-import 'package:gymaster/features/routine/domain/entities/ejercicio.dart'
-    as ejericicioEntity;
-import 'package:gymaster/features/routine/domain/entities/ejercicios_de_rutina.dart';
 import 'package:gymaster/features/routine/domain/entities/routine.dart';
 import 'package:gymaster/features/routine/domain/entities/rutina_data.dart';
 import 'package:gymaster/features/routine/domain/repositories/rutine_repository.dart';
 import 'package:gymaster/features/routine/domain/usecases/add_ejercicio_rutina_usecase.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:gymaster/shared/utils/uuid_generator.dart';
-import 'package:gymaster/core/database/models/serie.dart' as serieDB;
+import 'package:gymaster/core/database/models/serie.dart' as serie_db;
 
 class RoutineRepositoryImpl implements RoutineRepository {
   final RoutineLocalDataSource localDataSource;
@@ -72,7 +66,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
       );
       final result = await localDataSource.createRutina(rutina: rutina);
 
-      if (result == 0) {
+      if (result == false) {
         return left(Failure());
       }
       return right(RoutineModel.fromDatabase(serieDB: rutina));
@@ -153,7 +147,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
       );
 
       final series = dataSeries.map((dataSerie) {
-        return serieDB.Serie(
+        return serie_db.Serie(
           id: idGenerator.generateId(),
           repeticiones: dataSerie.numeroRepeticon,
           peso: dataSerie.peso,
@@ -176,7 +170,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
   }
 
   @override
-  Future<Either<Failure, ejercicioDeRutina.EjerciciosDeRutinaModel>>
+  Future<Either<Failure, ejercicio_de_rutina.EjerciciosDeRutinaModel>>
       getAllEjercicioByRutinaId({
     required String rutinaId,
   }) async {
@@ -186,11 +180,11 @@ class RoutineRepositoryImpl implements RoutineRepository {
       final ejerciciosDB =
           await localDataSource.getEjerciciosByRutinaId(rutinaId);
 
-      List<ejercicioDeRutina.EjercicioModel> ejerciciosConDetalles = [];
+      List<ejercicio_de_rutina.EjercicioModel> ejerciciosConDetalles = [];
 
       for (var ejercicio in ejerciciosDB) {
-        List<ejercicioDeRutina.SeriesDelEjercicioModel> series = [];
-        List<ejercicioDeRutina.MusculoModel> musculos = [];
+        List<ejercicio_de_rutina.SeriesDelEjercicioModel> series = [];
+        List<ejercicio_de_rutina.MusculoModel> musculos = [];
 
         final seriesDB =
             await localDataSource.getSeriesByEjercicioIdAndRutinaId(ejercicio.id, rutinaId);
@@ -199,15 +193,15 @@ class RoutineRepositoryImpl implements RoutineRepository {
 
         for (var serie in seriesDB) {
           series.add(
-              ejercicioDeRutina.SeriesDelEjercicioModel.fromDatabase(serie));
+              ejercicio_de_rutina.SeriesDelEjercicioModel.fromDatabase(serie));
         }
 
         for (var musculo in musculosDB) {
-          musculos.add(ejercicioDeRutina.MusculoModel.fromDatabase(musculo));
+          musculos.add(ejercicio_de_rutina.MusculoModel.fromDatabase(musculo));
         }
 
         final ejercicioConDetalles =
-            ejercicioDeRutina.EjercicioModel.fromDatabase(
+            ejercicio_de_rutina.EjercicioModel.fromDatabase(
           ejercicioDB: ejercicio,
           series: series,
           musculos: musculos,
@@ -217,13 +211,13 @@ class RoutineRepositoryImpl implements RoutineRepository {
       }
 
       final ejerciciosDeRutinaConDetalles =
-          ejercicioDeRutina.EjerciciosDeRutinaModel.fromDatabase(
+          ejercicio_de_rutina.EjerciciosDeRutinaModel.fromDatabase(
         rutinaDB,
         ejerciciosConDetalles,
       );
 
       print(
-          'getAllEjercicioByRutinaId() -> ${ejercicioDeRutina.ejerciciosDeRutinaModelToJson(ejerciciosDeRutinaConDetalles)}');
+          'getAllEjercicioByRutinaId() -> ${ejercicio_de_rutina.ejerciciosDeRutinaModelToJson(ejerciciosDeRutinaConDetalles)}');
 
       return Right(ejerciciosDeRutinaConDetalles);
     } on LocalFailure {
@@ -263,7 +257,6 @@ class RoutineRepositoryImpl implements RoutineRepository {
     }
   }
 
-  @override
   Future<Either<Failure, List<SerieModel>>> getSeriesByRoutineId({
     required String rutinaId,
   }) async {

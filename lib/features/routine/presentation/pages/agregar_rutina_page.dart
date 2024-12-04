@@ -47,8 +47,8 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
       name: rutina.name,
       description: rutina.description ?? '',
       creationDate: rutina.fechaCreacion,
-      done: rutina.echo ?? false,
-      color: rutina.color ?? 0,
+      done: rutina.echo,
+      color: rutina.color,
     );
 
     if (routineCubit.state is RoutineAddSuccess) {

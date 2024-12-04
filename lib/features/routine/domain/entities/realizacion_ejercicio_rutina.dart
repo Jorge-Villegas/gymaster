@@ -6,7 +6,7 @@ class Ejercicio extends Equatable {
   final String imagenDireccion;
   final String descripcion;
 
-  Ejercicio({
+  const Ejercicio({
     required this.id,
     required this.nombre,
     required this.imagenDireccion,
@@ -38,7 +38,7 @@ class Serie extends Equatable {
   final int timpoDescanso;
   final bool realizado;
 
-  Serie({
+  const Serie({
     required this.id,
     required this.peso,
     required this.repeticiones,

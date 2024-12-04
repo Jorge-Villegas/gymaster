@@ -11,7 +11,7 @@ class RutinaData extends Equatable {
   final bool estado;
   final List<EjercicioData>? ejercicios;
 
-  RutinaData({
+  const RutinaData({
     required this.id,
     required this.nombre,
     this.descripcion,
@@ -68,7 +68,7 @@ class EjercicioData extends Equatable {
   final List<SerieData>? series;
   final List<MusculoData>? musculos;
 
-  EjercicioData({
+  const EjercicioData({
     required this.id,
     this.nombre,
     this.imagenDireccion,
@@ -110,7 +110,7 @@ class MusculoData extends Equatable {
   final String? nombre;
   final String? imagenDireccion;
 
-  MusculoData({
+  const MusculoData({
     required this.id,
     this.nombre,
     this.imagenDireccion,
@@ -138,7 +138,7 @@ class SerieData extends Equatable {
   final bool realizado;
   final int tiempoDescanso;
 
-  SerieData({
+  const SerieData({
     required this.id,
     required this.peso,
     required this.repeticiones,

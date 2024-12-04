@@ -1,5 +1,5 @@
 import 'package:gymaster/features/routine/domain/entities/routine.dart';
-import 'package:gymaster/core/database/models/rutina.dart' as rutinaDB;
+import 'package:gymaster/core/database/models/rutina.dart' as rutina_db;
 
 class RoutineModel extends Routine {
   RoutineModel({
@@ -24,6 +24,7 @@ class RoutineModel extends Routine {
     );
   }
 
+  @override
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'id': id,
@@ -37,7 +38,7 @@ class RoutineModel extends Routine {
   }
 
   factory RoutineModel.fromDatabase({
-    required rutinaDB.Rutina serieDB,
+    required rutina_db.Rutina serieDB,
     int? cantidadEjercicios,
   }) {
     return RoutineModel(

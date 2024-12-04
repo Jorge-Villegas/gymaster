@@ -8,13 +8,13 @@ class CustomElevatedButton extends StatelessWidget {
   final Icon? icon;
 
   const CustomElevatedButton({
-    Key? key,
+    super.key,
     this.text,
     required this.onPressed,
     this.backgroundColor,
     this.textColor,
     this.icon,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

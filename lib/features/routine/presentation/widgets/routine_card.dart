@@ -1,7 +1,5 @@
 import 'package:gymaster/core/utils/text_formatter.dart';
 import 'package:flutter/material.dart';
-import 'dart:math';
-
 class RoutineCard extends StatelessWidget {
   final Function onTap;
   final String cantidadEjerciciosPorSeries;
@@ -75,9 +73,8 @@ class _PinkBox extends StatelessWidget {
   final Color color;
 
   const _PinkBox({
-    Key? key,
     required this.color,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

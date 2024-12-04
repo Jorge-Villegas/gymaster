@@ -27,7 +27,7 @@ class _ListaRutinasPageState extends State<ListaRutinasPage> {
     routineCubit.getAllRoutine();
   }
 
-  Future<void> _goToAgregarRutina() async {
+  Future<void> goToAgregarRutina() async {
     final result = await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => const AgregarRutinaPage(),
@@ -170,7 +170,7 @@ class _ListaRutinasPageState extends State<ListaRutinasPage> {
                                     '${rutina.cantidadEjercicios} Ejercicios';
                               }
 
-                              final r = Routine(
+                              Routine(
                                 cantidadEjercicios: rutina.cantidadEjercicios,
                                 id: rutina.id,
                                 name: rutina.name,

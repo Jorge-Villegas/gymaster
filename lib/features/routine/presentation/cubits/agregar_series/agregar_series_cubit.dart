@@ -1,7 +1,6 @@
 import 'package:gymaster/features/routine/domain/usecases/add_ejercicio_rutina_usecase.dart';
 import 'package:gymaster/features/routine/presentation/cubits/agregar_series/agregar_series_state.dart';
 import 'package:bloc/bloc.dart';
-import 'package:flutter/cupertino.dart';
 
 class AgregarSeriesCubit extends Cubit<AgregarSeriesState> {
   final AddEjercicioRutinaUsecase _addEjercicioRutinaUsecase;

@@ -13,7 +13,7 @@ class EjerciciosDeRutina extends Equatable {
   final String nombre;
   final List<Ejercicio> ejercicios;
 
-  EjerciciosDeRutina({
+  const EjerciciosDeRutina({
     required this.rutinaId,
     required this.ejercicios,
     required this.nombre,
@@ -85,7 +85,7 @@ class Ejercicio extends Equatable {
   final List<Musculo>? musculos;
   final int cantidadSeries;
 
-  Ejercicio({
+  const Ejercicio({
     required this.id,
     required this.nombre,
     required this.imagenDireccion,
@@ -149,7 +149,7 @@ class Serie extends Equatable {
   final int timpoDescanso;
   final bool realizado;
 
-  Serie({
+  const Serie({
     required this.id,
     required this.peso,
     required this.repeticiones,
@@ -198,7 +198,7 @@ class Musculo extends Equatable {
   final String? nombre;
   final String? imagenDireccion;
 
-  Musculo({
+  const Musculo({
     required this.id,
     this.nombre,
     this.imagenDireccion,

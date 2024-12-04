@@ -1,8 +1,6 @@
 import 'package:gymaster/core/error/failures.dart';
-import 'package:gymaster/features/routine/domain/entities/ejercicio.dart'
-    as ejericicioEntity;
 import 'package:gymaster/features/routine/domain/entities/ejercicios_de_rutina.dart'
-    as ejerciciosDeRutina;
+    as ejercicios_de_rutina;
 import 'package:gymaster/features/routine/domain/entities/ejercicios_por_musculo.dart';
 import 'package:gymaster/features/routine/domain/entities/musculo.dart';
 import 'package:gymaster/features/routine/domain/entities/routine.dart';
@@ -54,7 +52,7 @@ abstract interface class RoutineRepository {
     required List<DataSerie> dataSeries,
   });
 
-  Future<Either<Failure, ejerciciosDeRutina.EjerciciosDeRutina>>
+  Future<Either<Failure, ejercicios_de_rutina.EjerciciosDeRutina>>
       getAllEjercicioByRutinaId({
     required String rutinaId,
   });

@@ -1,6 +1,5 @@
 part of 'realizar_ejercicio_rutina_cubit.dart';
 
-@immutable
 sealed class RealizarEjercicioRutinaState extends Equatable {}
 
 final class RealizarEjercicioRutinaInitial

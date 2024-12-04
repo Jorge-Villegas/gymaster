@@ -1,8 +1,8 @@
 import 'package:gymaster/features/routine/domain/entities/ejercicios_de_rutina.dart';
-import 'package:gymaster/core/database/models/musculo.dart' as musculoDB;
-import 'package:gymaster/core/database/models/rutina.dart' as rutinaDB;
-import 'package:gymaster/core/database/models/serie.dart' as serieDB;
-import 'package:gymaster/core/database/models/ejercicio.dart' as ejercicioDB;
+import 'package:gymaster/core/database/models/musculo.dart' as musculo_db;
+import 'package:gymaster/core/database/models/rutina.dart' as rutina_db;
+import 'package:gymaster/core/database/models/serie.dart' as serie_db;
+import 'package:gymaster/core/database/models/ejercicio.dart' as ejercicio_db;
 import 'dart:convert';
 
 EjerciciosDeRutinaModel ejerciciosDeRutinaModelFromJson(String str) =>
@@ -15,7 +15,7 @@ String ejerciciosDeRutinaModelListToJson(List<EjerciciosDeRutinaModel> data) =>
     json.encode(data.map((e) => e.toJson()).toList());
 
 class EjerciciosDeRutinaModel extends EjerciciosDeRutina {
-  EjerciciosDeRutinaModel({
+  const EjerciciosDeRutinaModel({
     required super.rutinaId,
     required super.ejercicios,
     required super.nombre,
@@ -48,7 +48,7 @@ class EjerciciosDeRutinaModel extends EjerciciosDeRutina {
   }
 
   factory EjerciciosDeRutinaModel.fromDatabase(
-    rutinaDB.Rutina rutinaDB,
+    rutina_db.Rutina rutinaDB,
     List<EjercicioModel> ejercicios,
   ) {
     return EjerciciosDeRutinaModel(
@@ -69,7 +69,7 @@ class EjerciciosDeRutinaModel extends EjerciciosDeRutina {
 }
 
 class EjercicioModel extends Ejercicio {
-  EjercicioModel({
+  const EjercicioModel({
     required super.id,
     required super.nombre,
     required super.imagenDireccion,
@@ -79,7 +79,7 @@ class EjercicioModel extends Ejercicio {
   });
 
   factory EjercicioModel.fromDatabase({
-    required ejercicioDB.Ejercicio ejercicioDB,
+    required ejercicio_db.Ejercicio ejercicioDB,
     List<SeriesDelEjercicioModel>? series,
     List<MusculoModel>? musculos,
   }) {
@@ -104,6 +104,7 @@ class EjercicioModel extends Ejercicio {
             json["musculos"].map((x) => MusculoModel.fromJson(x))),
       );
 
+  @override
   Map<String, dynamic> toJson() => {
         "id": id,
         "nombre": nombre,
@@ -115,7 +116,7 @@ class EjercicioModel extends Ejercicio {
 }
 
 class SeriesDelEjercicioModel extends Serie {
-  SeriesDelEjercicioModel({
+  const SeriesDelEjercicioModel({
     required super.id,
     required super.peso,
     required super.repeticiones,
@@ -132,6 +133,7 @@ class SeriesDelEjercicioModel extends Serie {
         realizado: json['realizado'],
       );
 
+  @override
   Map<String, dynamic> toJson() => {
         'id': id,
         'peso': peso,
@@ -140,7 +142,7 @@ class SeriesDelEjercicioModel extends Serie {
         'realizado': realizado,
       };
 
-  factory SeriesDelEjercicioModel.fromDatabase(serieDB.Serie serieDB) {
+  factory SeriesDelEjercicioModel.fromDatabase(serie_db.Serie serieDB) {
     return SeriesDelEjercicioModel(
       id: serieDB.id,
       peso: serieDB.peso,
@@ -152,13 +154,13 @@ class SeriesDelEjercicioModel extends Serie {
 }
 
 class MusculoModel extends Musculo {
-  MusculoModel({
+ const  MusculoModel({
     required super.id,
     required super.nombre,
     required super.imagenDireccion,
   });
 
-  factory MusculoModel.fromDatabase(musculoDB.Musculo musculoDB) {
+  factory MusculoModel.fromDatabase(musculo_db.Musculo musculoDB) {
     return MusculoModel(
       id: musculoDB.id,
       nombre: musculoDB.nombre,
@@ -173,7 +175,8 @@ class MusculoModel extends Musculo {
       imagenDireccion: json['imagen_direccion'],
     );
   }
-
+  
+  @override
   Map<String, dynamic> toJson() {
     return {
       'id': id,

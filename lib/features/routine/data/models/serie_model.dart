@@ -1,6 +1,6 @@
 import 'package:gymaster/features/routine/domain/entities/serie.dart';
-import 'package:gymaster/core/database/models/serie.dart' as serieDB;
-import 'package:gymaster/core/database/models/ejercicio.dart' as ejercicioDB;
+import 'package:gymaster/core/database/models/serie.dart' as serie_db;
+import 'package:gymaster/core/database/models/ejercicio.dart' as ejercicio_db;
 
 class SerieModel extends Serie {
   const SerieModel({
@@ -43,7 +43,7 @@ class SerieModel extends Serie {
   }
 
   factory SerieModel.fromDatabase({
-    required serieDB.Serie serieDB,
+    required serie_db.Serie serieDB,
     List<EjercicioModel>? ejercicios,
   }) {
     return SerieModel(
@@ -71,7 +71,7 @@ class EjercicioModel extends Ejercicio {
     );
   }
 
-  factory EjercicioModel.fromDatabase(ejercicioDB.Ejercicio ejercicioDB) {
+  factory EjercicioModel.fromDatabase(ejercicio_db.Ejercicio ejercicioDB) {
     return EjercicioModel(
       id: ejercicioDB.id,
       nombre: ejercicioDB.nombre,

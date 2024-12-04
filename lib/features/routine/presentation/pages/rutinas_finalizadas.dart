@@ -18,7 +18,7 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final routineCubit = BlocProvider.of<RoutineCubit>(context);
+    BlocProvider.of<RoutineCubit>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Perfil de usuario'),

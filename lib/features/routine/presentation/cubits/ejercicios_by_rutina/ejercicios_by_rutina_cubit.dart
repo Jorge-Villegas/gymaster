@@ -124,7 +124,7 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
     final serie = ejercicio.series[currentState.serieIndex];
     updateSerieUseCase(UpdateSerieParams(id: serie.id, realizado: true));
     serie.copyWith(realizado: true);
-    print('Serie realizada: ${serie}');
+    print('Serie realizada: $serie');
     return serie.copyWith(realizado: true);
   }
 

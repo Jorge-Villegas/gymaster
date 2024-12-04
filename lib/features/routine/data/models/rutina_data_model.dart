@@ -1,7 +1,7 @@
 import 'package:gymaster/features/routine/domain/entities/rutina_data.dart';
 
 class RutinaDataModel extends RutinaData {
-  RutinaDataModel({
+  const RutinaDataModel({
     required super.id,
     required super.nombre,
     super.descripcion,
@@ -44,7 +44,7 @@ class RutinaDataModel extends RutinaData {
 }
 
 class EjercicioDataModel extends EjercicioData {
-  EjercicioDataModel({
+  const EjercicioDataModel({
     required super.id,
     super.nombre,
     super.imagenDireccion,
@@ -78,7 +78,7 @@ class EjercicioDataModel extends EjercicioData {
 }
 
 class MusculoDataModel extends MusculoData {
-  MusculoDataModel({
+  const MusculoDataModel({
     required super.id,
     super.nombre,
     super.imagenDireccion,
@@ -104,7 +104,7 @@ class MusculoDataModel extends MusculoData {
 }
 
 class SerieDataModel extends SerieData {
-  SerieDataModel({
+  const SerieDataModel({
     required super.id,
     required super.peso,
     required super.repeticiones,

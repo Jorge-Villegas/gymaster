@@ -2,7 +2,6 @@ import 'package:gymaster/features/routine/domain/entities/ejercicios_de_rutina.d
 import 'package:gymaster/features/routine/domain/usecases/update_serie.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
 
 part 'realizar_ejercicio_rutina_state.dart';
 

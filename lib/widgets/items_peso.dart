@@ -1,12 +1,11 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 class ItemsPesosWidget extends StatefulWidget {
-  int items;
-  ItemsPesosWidget({
-    Key? key,
+  final int items;
+  const ItemsPesosWidget({
+    super.key,
     required this.items,
-  }) : super(key: key);
+  });
 
   @override
   State<ItemsPesosWidget> createState() => _ItemsPesosWidgetState();
