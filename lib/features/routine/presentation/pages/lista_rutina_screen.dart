@@ -112,7 +112,7 @@ class _ListaRutinasPageState extends State<ListaRutinasPage> {
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w400,
-                      color: Color(0xFF2D2A2A),
+                      color: Color(0xE137FA),
                     ),
                   ),
                   //agregar boton para nueva rutina

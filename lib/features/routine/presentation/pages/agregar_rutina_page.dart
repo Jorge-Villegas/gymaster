@@ -15,6 +15,42 @@ class AgregarRutinaPage extends StatefulWidget {
 }
 
 class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
+  List<int> colors = [
+    0xFFF48FB1,
+    0xFFB39DDB,
+    0xFF90CAF9,
+    0xFF80DEEA,
+    0xFFA5D6A7,
+    0xFFE6EE9C,
+    0xFFFFE082,
+    0xFFFFAB91,
+    0xFFB0BEC5,
+    0xFFBCAAA4,
+    0xFFFFCC80,
+    0xFFFFF59D,
+    0xFFC5E1A5,
+    0xFF80CBC4,
+    0xFF81D4FA,
+    0xFFEF9A9A,
+    0xFF9FA8DA,
+    0xFFCE93D8,
+    0xFFD1C4E9,
+    0xFFBBDEFB,
+    0xFFB2EBF2,
+    0xFFAED581,
+    0xFFFFF176,
+    0xFFCFD8DC,
+    0xFFE1BEE7,
+    0xFFD7CCC8,
+    0xFFFFE0B2,
+    0xFFFFF9C4,
+    0xFFDCEDC8,
+    0xFFC5CAE9,
+    0xFFB3E5FC,
+    0xFFB2DFDB,
+    0xFFFFCDD2,
+  ];
+
   Color selectedColor = Colors.primaries.first.shade200;
   final textController = TextEditingController();
   String? errorMessage;
@@ -86,7 +122,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
       ),
       body: SizedBox(
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height / 1.5,
+        height: MediaQuery.of(context).size.height / 1,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -154,27 +190,30 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                   ),
                   Expanded(
                     child: GridView.builder(
-                      scrollDirection: Axis.horizontal,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
+                        crossAxisCount: 5,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
                       ),
-                      itemCount: Colors.primaries.length,
+                      itemCount: colors.length,
                       itemBuilder: (context, index) {
-                        final color = Colors.primaries[index].shade200;
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 15,
-                            vertical: 5,
-                          ),
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                selectedColor = color;
-                              });
-                            },
-                            child: CircleAvatar(
-                              backgroundColor: color,
+                        final color = Color(colors[index]);
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selectedColor = color;
+                            });
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: color,
+                              borderRadius: BorderRadius.circular(
+                                  10), // Bordes redondeados
+                            ),
+                            child: const Icon(
+                              Icons.color_lens,
+                              color: Colors.white,
                             ),
                           ),
                         );
@@ -186,7 +225,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                       horizontal: 20,
                       vertical: 15,
                     ),
-                    child: TextButton(
+                    child: ElevatedButton(
                       onPressed: () {
                         if (textController.text.isEmpty) {
                           setState(() {
@@ -197,15 +236,35 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                           _onSave();
                         }
                       },
-                      child: const Text(
-                        'Agregar',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF8870FF),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 15,
+                          vertical: 15,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
                         ),
                       ),
+                      child: const Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.add,
+                            color: Colors.white,
+                          ), // Icono del botón
+                          SizedBox(width: 10),
+                          Text(
+                            'Agregar',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
+                  )
                 ],
               ),
             ),

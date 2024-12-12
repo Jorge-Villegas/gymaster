@@ -1,5 +1,5 @@
 import 'package:gymaster/features/routine/domain/entities/musculo.dart';
-
+import 'package:gymaster/core/database/models/musculo.dart' as musculo_db;
 class MusculoModel extends Musculo {
   MusculoModel({
     required super.id,
@@ -34,4 +34,13 @@ class MusculoModel extends Musculo {
       imagenDirecion: json['imagenDirecion'],
     );
   }
+
+  factory MusculoModel.fromEntity(musculo_db.Musculo musculo) {
+    return MusculoModel(
+      id: musculo.id,
+      nombre: musculo.nombre,
+      imagenDirecion: musculo.imagenDireccion ?? '',
+    );
+  }
+
 }

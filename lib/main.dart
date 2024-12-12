@@ -13,13 +13,11 @@ import 'package:gymaster/features/routine/presentation/pages/lista_rutina_screen
 import 'package:gymaster/init_dependencies.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 /// Punto de entrada principal de la aplicación.
 Future<void> main() async {
-  // Carga las variables de entorno desde el archivo .env
-  await dotenv.load(fileName: ".env");
+  WidgetsFlutterBinding.ensureInitialized();
 
   await initDependencies();
 
@@ -88,7 +86,7 @@ class MyApp extends StatelessWidget {
           centerTitle: true,
           elevation: 0,
         ),
-        fontFamily: dotenv.env['DEFAULT_FONT'],
+        fontFamily: 'ZonaPro',
         // fontFamily: 'Roboto',
         primaryColor: AppColors.primary,
       ),

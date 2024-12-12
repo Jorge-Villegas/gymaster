@@ -82,6 +82,8 @@ class DetalleEjercicioScreen extends StatelessWidget {
           );
         }
         return const Center(
+          //volver al home con gorouter
+           context.go('/home');
           child: Text('Ha ocurrido un error inesperado'),
         );
       },

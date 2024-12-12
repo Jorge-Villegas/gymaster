@@ -1,4 +1,7 @@
 import 'package:flutter/foundation.dart';
+import 'package:gymaster/core/database/seeders/database_seeder.dart';
+import 'package:gymaster/core/database/seeders/ejercicio_rutina_seeder.dart';
+import 'package:gymaster/core/database/seeders/rutina_data_seeder.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';

@@ -1,3 +1,10 @@
+import 'package:gymaster/core/database/services/rutina_service.dart';
+
+/// Convierte una lista de mapas a una lista de objetos Rutina
+List<Rutina> listaRutinasFromMapList(List<Map<String, dynamic>> mapList) {
+  return mapList.map((map) => Rutina.fromJson(map)).toList();
+}
+
 class Rutina {
   String id;
   String nombre;
@@ -51,4 +58,6 @@ class Rutina {
   String toString() {
     return 'Rutina{id: $id, nombre: $nombre, descripcion: $descripcion, fechaCreacion: $fechaCreacion, realizado: $realizado, color: $color, fechaRealizacion: $fechaRealizacion, estado: $estado}';
   }
+
+
 }

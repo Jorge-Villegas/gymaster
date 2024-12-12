@@ -1,6 +1,9 @@
+import 'package:gymaster/core/database/database_helper.dart';
 import 'package:gymaster/core/database/models/detalle_rutina.dart';
 import 'package:gymaster/core/database/models/rutina.dart';
 import 'package:gymaster/core/database/seeders/database_seeder.dart';
+import 'package:gymaster/core/database/seeders/ejercicio_rutina_seeder.dart';
+import 'package:gymaster/core/database/seeders/rutina_data_seeder.dart';
 import 'package:gymaster/core/error/failures.dart';
 import 'package:gymaster/features/routine/data/datasources/routine_local_data_source.dart';
 import 'package:gymaster/features/routine/data/models/ejercicios_de_rutina_model.dart'
@@ -78,27 +81,20 @@ class RoutineRepositoryImpl implements RoutineRepository {
   @override
   Future<Either<Failure, List<MusculoModel>>> getAllMusculos() async {
     try {
-      final result = await localDataSource.getAllMusculos();
+      var result = await localDataSource.getAllMusculos();
 
       if (result.isEmpty) {
         await DatabaseSeeder().seedGenerateDatabase();
-        final musculos = result
-            .map((musculo) => MusculoModel(
-                  id: musculo.id,
-                  nombre: musculo.nombre,
-                  imagenDirecion: musculo.imagenDireccion ?? '',
-                ))
-            .toList();
-        print('getAllMusculos -> $musculos');
-        return right(musculos);
+        result = await localDataSource.getAllMusculos();
+
+        await generateFakeRutinas(DatabaseHelper.instance);
+        
+        await generateData(DatabaseHelper.instance);
+        // await generateData(DatabaseHelper.instance);
       }
-      return right(result
-          .map((musculo) => MusculoModel(
-                id: musculo.id,
-                nombre: musculo.nombre,
-                imagenDirecion: musculo.imagenDireccion ?? '',
-              ))
-          .toList());
+
+      final musculos = result.map(MusculoModel.fromEntity).toList();
+      return right(musculos);
     } on LocalFailure {
       return Left(LocalFailure());
     }
@@ -161,8 +157,6 @@ class RoutineRepositoryImpl implements RoutineRepository {
         await localDataSource.createSerie(serie: serie);
       }
 
-
-
       return left(Failure());
     } on LocalFailure {
       return Left(LocalFailure());
@@ -186,8 +180,8 @@ class RoutineRepositoryImpl implements RoutineRepository {
         List<ejercicio_de_rutina.SeriesDelEjercicioModel> series = [];
         List<ejercicio_de_rutina.MusculoModel> musculos = [];
 
-        final seriesDB =
-            await localDataSource.getSeriesByEjercicioIdAndRutinaId(ejercicio.id, rutinaId);
+        final seriesDB = await localDataSource
+            .getSeriesByEjercicioIdAndRutinaId(ejercicio.id, rutinaId);
         final musculosDB =
             await localDataSource.getMusculosByEjercicioId(ejercicio.id);
 
@@ -245,8 +239,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
 
       final success = await localDataSource.updateSerie(updatedSerie);
 
-
-      final result  = SerieModel.fromDatabase(serieDB: updatedSerie);  
+      final result = SerieModel.fromDatabase(serieDB: updatedSerie);
       if (success) {
         return Right(result);
       } else {
