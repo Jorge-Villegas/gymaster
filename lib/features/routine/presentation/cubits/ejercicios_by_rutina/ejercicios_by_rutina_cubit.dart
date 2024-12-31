@@ -114,7 +114,7 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
     final currentState = state as EjerciciosByRutinaSuccess;
     final updatedSerie = _markSerieAsCompleted(currentState);
     _updateSerie(currentState, updatedSerie);
-    _emitNextSerieState(currentState);
+    _emitNextSerieState();
     print(currentState.ejerciciosDeRutina.ejercicios);
   }
 
@@ -128,7 +128,9 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
     return serie.copyWith(realizado: true);
   }
 
-  void _emitNextSerieState(EjerciciosByRutinaSuccess currentState) {
+  void _emitNextSerieState() {
+    if (state is! EjerciciosByRutinaSuccess) return;
+    final currentState = state as EjerciciosByRutinaSuccess;
     final ejercicios = currentState.ejerciciosDeRutina.ejercicios;
     int ejercicioIndex = currentState.ejercicioIndex;
     int serieIndex = currentState.serieIndex;
