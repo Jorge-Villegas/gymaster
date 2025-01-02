@@ -1,10 +1,11 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/generated/assets.gen.dart';
 import 'package:gymaster/core/utils/text_formatter.dart';
 import 'package:gymaster/core/utils/verificador_tipo_archivo.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class DetalleEjercicioScreen extends StatelessWidget {
   const DetalleEjercicioScreen({super.key});
@@ -22,6 +23,9 @@ class DetalleEjercicioScreen extends StatelessWidget {
           return Center(
             child: Text(state.message),
           );
+        }
+        if (state is EjerciciosByRutinaCompleted) {
+          Future.microtask(() => context.go('/'));
         }
         if (state is EjerciciosByRutinaSuccess) {
           final ejercicio =
@@ -83,7 +87,6 @@ class DetalleEjercicioScreen extends StatelessWidget {
         }
         return const Center(
           //volver al home con gorouter
-           context.go('/home');
           child: Text('Ha ocurrido un error inesperado'),
         );
       },
@@ -114,193 +117,209 @@ class DetalleEjercicioScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              TextButton.icon(
-                onPressed: () {},
-                icon: SvgPicture.asset(
-                  Assets.icons.iconsax.timer.path,
-                  color: Colors.black,
-                  height: 15,
-                  width: 15,
-                ),
-                label: Text(
-                  '120 seg',
-                  style: textTheme.bodySmall!.copyWith(color: Colors.black),
-                ),
-              ),
-              TextButton.icon(
-                onPressed: () {},
-                icon: SvgPicture.asset(
-                  Assets.icons.iconsax.timer1.path,
-                  color: Colors.black,
-                  height: 15,
-                  width: 15,
-                ),
-                label: Text(
-                  '20 min',
-                  style: textTheme.bodySmall!.copyWith(
-                    color: Colors.black,
+          Expanded(
+            flex: 2,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                TextButton.icon(
+                  onPressed: () {},
+                  icon: SvgPicture.asset(
+                    Assets.icons.iconsax.timer.path,
+                    colorFilter: const ColorFilter.mode(
+                      Colors.black,
+                      BlendMode.srcIn,
+                    ),
+                    height: 15,
+                    width: 15,
+                  ),
+                  label: Text(
+                    '120 seg',
+                    style: textTheme.bodySmall!.copyWith(color: Colors.black),
                   ),
                 ),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
-                child: _construirWidgetImagen(imagenDireccion),
-              ),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                child: DataTable(
-                  columnSpacing: 10.0,
-                  dataRowHeight: 30.0,
-                  dividerThickness: 0.0,
-                  columns: const <DataColumn>[
-                    DataColumn(
-                      label: Expanded(
-                        child: Text(
-                          'Serie',
-                          style: TextStyle(
-                            fontSize: 12,
-                          ),
-                        ),
-                      ),
+                TextButton.icon(
+                  onPressed: () {},
+                  icon: SvgPicture.asset(
+                    Assets.icons.iconsax.timer1.path,
+                    colorFilter: const ColorFilter.mode(
+                      Colors.black,
+                      BlendMode.srcIn,
                     ),
-                    DataColumn(
-                      label: Expanded(
-                        child: Text(
-                          'Peso',
-                          style: TextStyle(
-                            fontSize: 12,
-                          ),
-                        ),
-                      ),
+                    height: 15,
+                    width: 15,
+                  ),
+                  label: Text(
+                    '20 min',
+                    style: textTheme.bodySmall!.copyWith(
+                      color: Colors.black,
                     ),
-                    DataColumn(
-                      label: Expanded(
-                        child: Text(
-                          'Rep..',
-                          style: TextStyle(
-                            fontSize: 12,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                  rows: ejercicio.series.asMap().entries.map((entry) {
-                    int index = entry.key;
-                    final serie = entry.value;
-                    final isCurrentSerie = index == serieActualIndex;
-                    print('isCurrentSerie: $isCurrentSerie');
-                    print('Estado de la serie ------- ${serie.realizado}');
-
-                    final textStyle = TextStyle(
-                      fontSize: 10,
-                      color: isCurrentSerie
-                          ? Colors.blueAccent
-                          : (serie.realizado ? Colors.black : Colors.grey),
-                    );
-
-                    return DataRow(
-                      color: MaterialStateProperty.resolveWith<Color?>(
-                        (Set<MaterialState> states) {
-                          if (isCurrentSerie) {
-                            return Colors.grey.withOpacity(0.1);
-                          }
-                          return null;
-                        },
-                      ),
-                      cells: <DataCell>[
-                        DataCell(
-                          AnimatedSwitcher(
-                            duration: const Duration(milliseconds: 300),
-                            transitionBuilder: (
-                              Widget child,
-                              Animation<double> animation,
-                            ) {
-                              return ScaleTransition(
-                                scale: animation,
-                                child: child,
-                              );
-                            },
-                            child: Text(
-                              '${index + 1}',
-                              key: ValueKey<int>(index + 1),
-                              style: textStyle,
-                            ),
-                          ),
-                        ),
-                        DataCell(
-                          AnimatedSwitcher(
-                            duration: const Duration(milliseconds: 300),
-                            transitionBuilder: (
-                              Widget child,
-                              Animation<double> animation,
-                            ) {
-                              return ScaleTransition(
-                                scale: animation,
-                                child: child,
-                              );
-                            },
-                            child: Text(
-                              serie.peso.toString(),
-                              key: ValueKey<double>(serie.peso),
-                              style: textStyle,
-                            ),
-                          ),
-                        ),
-                        DataCell(
-                          AnimatedSwitcher(
-                            duration: const Duration(milliseconds: 300),
-                            transitionBuilder: (
-                              Widget child,
-                              Animation<double> animation,
-                            ) {
-                              return ScaleTransition(
-                                scale: animation,
-                                child: child,
-                              );
-                            },
-                            child: Text(
-                              serie.repeticiones.toString(),
-                              key: ValueKey<int>(serie.repeticiones),
-                              style: textStyle,
-                            ),
-                          ),
-                        ),
-                      ],
-                    );
-                  }).toList(),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(ejercicios.length, (index) {
-              final ejercicio = ejercicios[index];
-              final isRealizado =
-                  ejercicio.series.every((serie) => serie.realizado);
-              final color = isRealizado
-                  ? Colors.green
-                  : (index == ejercicioIndex ? Colors.brown : Colors.grey);
-
-              return Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: CircleAvatar(
-                  radius: 5,
-                  backgroundColor: color,
+          Expanded(
+            flex: 6,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
+                  child: _construirWidgetImagen(imagenDireccion),
                 ),
-              );
-            }),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  child: DataTable(
+                    columnSpacing: 10.0,
+                    dataRowMinHeight: 30.0,
+                    dataRowMaxHeight: 30.0,
+                    dividerThickness: 0.0,
+                    columns: const <DataColumn>[
+                      DataColumn(
+                        label: Expanded(
+                          child: Text(
+                            'Serie',
+                            style: TextStyle(
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                      ),
+                      DataColumn(
+                        label: Expanded(
+                          child: Text(
+                            'Peso',
+                            style: TextStyle(
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                      ),
+                      DataColumn(
+                        label: Expanded(
+                          child: Text(
+                            'Rep..',
+                            style: TextStyle(
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                    rows: ejercicio.series.asMap().entries.map((entry) {
+                      int index = entry.key;
+                      final serie = entry.value;
+                      final isCurrentSerie = index == serieActualIndex;
+
+                      final textStyle = TextStyle(
+                        fontSize: 10,
+                        color: isCurrentSerie
+                            ? Colors.blueAccent
+                            : (serie.realizado ? Colors.black : Colors.grey),
+                      );
+
+                      return DataRow(
+                        color: WidgetStateProperty.resolveWith<Color?>(
+                          (Set<WidgetState> states) {
+                            if (isCurrentSerie) {
+                              return Colors.grey.withOpacity(0.1);
+                            }
+                            return null;
+                          },
+                        ),
+                        cells: <DataCell>[
+                          DataCell(
+                            AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 300),
+                              transitionBuilder: (
+                                Widget child,
+                                Animation<double> animation,
+                              ) {
+                                return ScaleTransition(
+                                  scale: animation,
+                                  child: child,
+                                );
+                              },
+                              child: Text(
+                                '${index + 1}',
+                                key: ValueKey<int>(index + 1),
+                                style: textStyle,
+                              ),
+                            ),
+                          ),
+                          DataCell(
+                            AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 300),
+                              transitionBuilder: (
+                                Widget child,
+                                Animation<double> animation,
+                              ) {
+                                return ScaleTransition(
+                                  scale: animation,
+                                  child: child,
+                                );
+                              },
+                              child: Text(
+                                serie.peso.toString(),
+                                key: ValueKey<double>(serie.peso),
+                                style: textStyle,
+                              ),
+                            ),
+                          ),
+                          DataCell(
+                            AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 300),
+                              transitionBuilder: (
+                                Widget child,
+                                Animation<double> animation,
+                              ) {
+                                return ScaleTransition(
+                                  scale: animation,
+                                  child: child,
+                                );
+                              },
+                              child: Text(
+                                serie.repeticiones.toString(),
+                                key: ValueKey<int>(serie.repeticiones),
+                                style: textStyle,
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    }).toList(),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(ejercicios.length, (index) {
+                final ejercicio = ejercicios[index];
+                final isRealizado =
+                    ejercicio.series.every((serie) => serie.realizado);
+                final isCurrent = index == ejercicioIndex;
+                final color = isRealizado
+                    ? Colors.green
+                    : (isCurrent ? Colors.indigo : Colors.white);
+                final radius = isCurrent ? 5.0 : 4.5;
+
+                return Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: CircleAvatar(
+                    radius: radius,
+                    backgroundColor: color,
+                  ),
+                );
+              }),
+            ),
           ),
         ],
       ),
