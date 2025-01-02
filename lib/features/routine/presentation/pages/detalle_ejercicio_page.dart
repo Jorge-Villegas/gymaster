@@ -118,7 +118,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Expanded(
-            flex: 2,
+            flex: 1,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
@@ -160,7 +160,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
             ),
           ),
           Expanded(
-            flex: 6,
+            flex: 8,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -218,7 +218,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
                       final textStyle = TextStyle(
                         fontSize: 10,
                         color: isCurrentSerie
-                            ? Colors.blueAccent
+                            ? Colors.indigo
                             : (serie.realizado ? Colors.black : Colors.grey),
                       );
 
@@ -298,7 +298,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
             ),
           ),
           Expanded(
-            flex: 2,
+            flex: 1,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(ejercicios.length, (index) {
@@ -309,10 +309,10 @@ class DetalleEjercicioScreen extends StatelessWidget {
                 final color = isRealizado
                     ? Colors.green
                     : (isCurrent ? Colors.indigo : Colors.white);
-                final radius = isCurrent ? 5.0 : 4.5;
+                final radius = isCurrent ? 4.0 : 3.5;
 
                 return Padding(
-                  padding: const EdgeInsets.all(4.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 2.5),
                   child: CircleAvatar(
                     radius: radius,
                     backgroundColor: color,

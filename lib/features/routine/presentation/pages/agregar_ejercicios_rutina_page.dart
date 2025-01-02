@@ -1,3 +1,4 @@
+import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/config/app_config.dart';
 import 'package:gymaster/core/utils/text_formatter.dart';
 import 'package:gymaster/features/routine/presentation/cubits/agregar_series/agregar_series_cubit.dart';
@@ -15,12 +16,12 @@ class AgregarEjercicioRutinaPage extends StatefulWidget {
   final String ejercicioId;
   final String rutinaId;
 
-  AgregarEjercicioRutinaPage({
+  const AgregarEjercicioRutinaPage({
     super.key,
     required this.ejercicioNombre,
-    String? ejercicioImagenDireccion,
     required this.ejercicioId,
     required this.rutinaId,
+    String? ejercicioImagenDireccion,
   }) : ejercicioImagenDireccion =
             ejercicioImagenDireccion ?? AppConfig.defaultImagePath;
 
@@ -123,7 +124,7 @@ class _AgregarEjercicioRutinaPageState
       // Llamar al EjercicioCubit para actualizar el estado
       context.read<EjercicioCubit>().ejercicioAgregado(id: widget.ejercicioId);
 
-      Navigator.of(context).pop();
+      context.pop();
 
       showCustomSnackBar(
         context,

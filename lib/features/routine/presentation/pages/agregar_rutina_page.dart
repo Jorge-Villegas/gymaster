@@ -1,8 +1,7 @@
+import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/generated/assets.gen.dart';
 import 'package:gymaster/features/routine/domain/entities/routine.dart';
 import 'package:gymaster/features/routine/presentation/cubits/rutina/routine_cubit.dart';
-import 'package:gymaster/features/routine/presentation/pages/detalle_rutina_page.dart';
-import 'package:gymaster/features/routine/presentation/pages/lista_rutina_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -88,14 +87,8 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
     );
 
     if (routineCubit.state is RoutineAddSuccess) {
-      debugPrint((routineCubit.state as RoutineAddSuccess).rutina.id!);
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => DetalleRutinaScreen(
-            rutinaId: (routineCubit.state as RoutineAddSuccess).rutina.id!,
-          ),
-        ),
-      );
+      final rutinaId = (routineCubit.state as RoutineAddSuccess).rutina.id!;
+      context.push('/rutina/detalle/$rutinaId');
     }
     if (routineCubit.state is RoutineError) {
       setState(() {
@@ -111,11 +104,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
         leading: IconButton(
           icon: SvgPicture.asset(Assets.icons.flechaIzquierda.path),
           onPressed: () {
-            // Navega a la pantalla de lista de rutinas y elimina la pantalla actual de la pila de navegación.
-            Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => const ListaRutinasPage()),
-              (Route<dynamic> route) => false,
-            );
+            context.pop();
           },
         ),
         title: const Text('Agregar Rutina'),

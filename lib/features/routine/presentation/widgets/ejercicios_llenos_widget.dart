@@ -37,20 +37,20 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                   padding: const EdgeInsets.all(15),
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color(0xFF57AD1C), // Fondo blanco para el círculo
+                    color: Color(0xFF57AD1C),
                   ),
                   child: SvgPicture.asset(
-                    Assets.icons.iconsax.play.path, // Asegúrate de que esta ruta sea correcta
+                    Assets.icons.iconsax.play.path,
                     width: 15,
                     height: 15,
                     color: Colors.white,
                   ),
                 ),
-                const SizedBox(width: 10), // Espacio entre el icono y el texto
+                const SizedBox(width: 10),
                 const Text(
                   'Iniciar entrenamiento',
                   style: TextStyle(
-                    color: Color(0xFF57AD1C), // Color del texto 57AD1C
+                    color: Color(0xFF57AD1C),
                     fontWeight: FontWeight.bold,
                   ),
                 ),

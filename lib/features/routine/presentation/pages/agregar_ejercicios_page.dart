@@ -1,3 +1,4 @@
+import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/utils/verificador_tipo_archivo.dart';
 import 'package:gymaster/features/routine/presentation/cubits/musculo/musculo_cubit.dart';
 import 'package:gymaster/features/routine/presentation/pages/listar_ejercicios_page.dart';
@@ -60,16 +61,7 @@ class AgregarEjerciciosPage extends StatelessWidget {
                     ),
                     title: Text(musculo.nombre),
                     onTap: () {
-                      // Le mandamos el musculo al proveedor de ejercicios
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => ListarEjerciciosPage(
-                            musculoId: musculo.id,
-                            nombreMusculo: musculo.nombre,
-                            rutinaId: rutinaid,
-                          ),
-                        ),
-                      );
+                      context.push('/listar-ejercicios/${musculo.id}/${musculo.nombre}/$rutinaid');
                     },
                   ),
                 );

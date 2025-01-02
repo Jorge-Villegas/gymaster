@@ -1,7 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:gymaster/core/database/seeders/database_seeder.dart';
-import 'package:gymaster/core/database/seeders/ejercicio_rutina_seeder.dart';
-import 'package:gymaster/core/database/seeders/rutina_data_seeder.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -35,10 +32,10 @@ class DatabaseHelper {
   // Inicializa la base de datos
   Future<Database> _initDatabase() async {
     // Inicializa FFI si es necesario
-    sqfliteFfiInit();
+    //sqfliteFfiInit();
 
     // Cambia la fábrica de base de datos predeterminada
-    databaseFactory = databaseFactoryFfi;
+    //databaseFactory = databaseFactoryFfi;
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, _databaseName);
 

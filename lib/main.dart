@@ -9,11 +9,11 @@ import 'package:gymaster/features/routine/presentation/cubits/realizacion_ejerci
 import 'package:gymaster/features/routine/presentation/cubits/realizar_ejercicio_rutina/realizar_ejercicio_rutina_cubit.dart';
 import 'package:gymaster/features/routine/presentation/cubits/rutina/routine_cubit.dart';
 import 'package:gymaster/features/routine/presentation/cubits/serie/serie_cubit.dart';
-import 'package:gymaster/features/routine/presentation/pages/lista_rutina_screen.dart';
 import 'package:gymaster/init_dependencies.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:gymaster/app_router.dart';
 
 /// Punto de entrada principal de la aplicación.
 Future<void> main() async {
@@ -60,7 +60,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       // Configuración de localización de la aplicación
       locale: const Locale('es', 'US'),
       localizationsDelegates: const [
@@ -76,7 +76,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'GyMaster',
       // Pantalla principal de la aplicación
-      home: const ListaRutinasPage(),
+      routerConfig: router,
+      // home: const ListaRutinasPage(),
       // Configuración del tema de la aplicación
       theme: ThemeData(
         useMaterial3: true,

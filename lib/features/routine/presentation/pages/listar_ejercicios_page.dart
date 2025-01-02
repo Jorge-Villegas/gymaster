@@ -3,10 +3,10 @@ import 'package:gymaster/core/config/app_config.dart';
 import 'package:gymaster/core/utils/text_formatter.dart';
 import 'package:gymaster/core/utils/verificador_tipo_archivo.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicio/ejercicio_cubit.dart';
-import 'package:gymaster/features/routine/presentation/pages/agregar_ejercicios_rutina_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 
 class ListarEjerciciosPage extends StatelessWidget {
   final String musculoId;
@@ -107,17 +107,10 @@ class ListarEjerciciosPage extends StatelessWidget {
                       ),
                       title: Text(ejercicio.nombre),
                       onTap: () {
-                        // Aquí podrías manejar la lógica de navegación o detalle del ejercicio
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) => AgregarEjercicioRutinaPage(
-                              ejercicioId: ejercicio.id,
-                              ejercicioImagenDireccion:
-                                  ejercicio.imagenDireccion,
-                              ejercicioNombre: ejercicio.nombre,
-                              rutinaId: rutinaId,
-                            ),
-                          ),
+                        context.push(
+                          '/agregar-ejercicio-rutina/$rutinaId/${ejercicio.id}/${ejercicio.nombre}',extra: {
+                            'ejercicioImagenDireccion': ejercicio.imagenDireccion,
+                          },
                         );
                       },
                     ),

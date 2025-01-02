@@ -1,13 +1,13 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/widgets/loader.dart';
 import 'package:gymaster/features/routine/domain/entities/routine.dart';
 import 'package:gymaster/features/routine/presentation/cubits/rutina/routine_cubit.dart';
 import 'package:gymaster/features/routine/presentation/pages/agregar_rutina_page.dart';
-import 'package:gymaster/features/routine/presentation/pages/detalle_rutina_page.dart';
 import 'package:gymaster/features/routine/presentation/widgets/routine_card.dart';
 import 'package:flutter/material.dart';
+import 'package:gymaster/app_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gymaster/shared/utils/logger.dart';
 
 class ListaRutinasPage extends StatefulWidget {
   static route() => MaterialPageRoute(
@@ -27,49 +27,10 @@ class _ListaRutinasPageState extends State<ListaRutinasPage> {
     routineCubit.getAllRoutine();
   }
 
-  Future<void> goToAgregarRutina() async {
-    final result = await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => const AgregarRutinaPage(),
-      ),
-    );
-    if (result != null) {
-      debugPrint('result => $result');
-
-      final routineCubit = BlocProvider.of<RoutineCubit>(context);
-
-      routineCubit.addRoutine(
-        name: result.name,
-        description: result.description ?? '',
-        creationDate: result.fechaCreacion,
-        done: result.echo ?? false,
-        color: result.color ?? 0,
-      );
-    } else {
-      logger.t('No result from AgregarRutinaScreen');
-    }
-    _cargarRutinas();
-  }
-
   @override
   void initState() {
     super.initState();
     BlocProvider.of<RoutineCubit>(context).getAllRoutine();
-  }
-
-  Future<void> _goToDetalleRutina(String rutinaId) async {
-    //TODO: ARRREGLAR EL PASO DE LA RUTINA AL CAMBIAR LA BASE DE DATOS
-    await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => DetalleRutinaScreen(
-          rutinaId: rutinaId,
-        ),
-      ),
-    );
-    // setState(() {
-    //   _cargarRutinas();
-    //   _cantidadEjerciciosPorSeries(rutina);
-    // });
   }
 
   @override
@@ -92,7 +53,7 @@ class _ListaRutinasPageState extends State<ListaRutinasPage> {
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF2D2A2A),
+                      color: Color.fromARGB(255, 3, 3, 3),
                     ),
                   ),
                   IconButton(
@@ -112,17 +73,13 @@ class _ListaRutinasPageState extends State<ListaRutinasPage> {
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w400,
-                      color: Color(0xE137FA),
+                      color: Colors.black,
                     ),
                   ),
                   //agregar boton para nueva rutina
                   IconButton(
                     onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => const AgregarRutinaPage(),
-                        ),
-                      );
+                      context.push('/rutina/create');
                     },
                     icon: const Icon(Icons.add),
                     iconSize: 30,
@@ -182,7 +139,7 @@ class _ListaRutinasPageState extends State<ListaRutinasPage> {
 
                               // Limita el retraso máximo a 1500 milisegundos (15 * 100)
                               final delay = Duration(
-                                  milliseconds: 100 * (i < 15 ? i : 15));
+                                  milliseconds: 50 * (i < 5 ? i : 5));
 
                               return FadeInLeft(
                                 delay: delay,
@@ -191,7 +148,8 @@ class _ListaRutinasPageState extends State<ListaRutinasPage> {
                                   title: rutina.name,
                                   cantidadEjerciciosPorSeries: cantidadTexto,
                                   onTap: () {
-                                    _goToDetalleRutina(rutina.id!);
+                                    context
+                                        .push('/rutina/detalle/${rutina.id!}');
                                   },
                                 ),
                               );

@@ -1,3 +1,4 @@
+import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/generated/assets.gen.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
 import 'package:gymaster/features/routine/presentation/pages/agregar_ejercicios_page.dart';
@@ -50,19 +51,13 @@ class EjerciciosVaciosWidget extends StatelessWidget {
             padding: const EdgeInsets.all(5),
             child: TextButton.icon(
               onPressed: () {
-                Navigator.of(context)
-                    .push(
-                  MaterialPageRoute(
-                    builder: (context) => AgregarEjerciciosPage(
-                      rutinaid: rutinaId,
-                    ),
-                  ),
-                )
-                    .then((_) {
-                  // Llama a getAllEjercicios después de que se cierra la pantalla AgregarEjerciciosPage
-                  BlocProvider.of<EjerciciosByRutinaCubit>(context,
-                          listen: false)
-                      .getAllEjercicios(idRutina: rutinaId);
+                context.push('/agregar-ejercicios/$rutinaId').then((_) {
+                  if (context.mounted) {
+                    // Llama a getAllEjercicios después de que se cierra la pantalla AgregarEjerciciosPage
+                    BlocProvider.of<EjerciciosByRutinaCubit>(context,
+                            listen: false)
+                        .getAllEjercicios(idRutina: rutinaId);
+                  }
                 });
               },
               label: const Text('Agregar Ejercicio'),

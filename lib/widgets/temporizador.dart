@@ -1,5 +1,6 @@
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class Temporizador extends StatefulWidget {
   const Temporizador({super.key});
@@ -94,7 +95,7 @@ class _TemporizadorState extends State<Temporizador> {
             debugPrint('Cuenta atrás terminada');
 
             //regresar a la pantalla anterior
-            Navigator.of(context).pop();
+            context.pop();
           },
 
           // Esta devolución de llamada se ejecutará cuando cambie la cuenta regresiva.
@@ -133,7 +134,7 @@ class _TemporizadorState extends State<Temporizador> {
           ),
           _button(
             title: "Avanzar",
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () => GoRouter.of(context).go('/'),
           ),
         ],
       ),

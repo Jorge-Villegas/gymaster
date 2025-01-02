@@ -1,10 +1,8 @@
+import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/generated/assets.gen.dart';
 import 'package:gymaster/core/utils/text_formatter.dart';
 import 'package:gymaster/features/routine/domain/entities/ejercicios_de_rutina.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
-import 'package:gymaster/features/routine/presentation/pages/agregar_ejercicios_page.dart';
-import 'package:gymaster/features/routine/presentation/pages/detalle_ejercicio_page.dart';
-import 'package:gymaster/features/routine/presentation/pages/lista_rutina_screen.dart';
 import 'package:gymaster/features/routine/presentation/widgets/ejercicios_llenos_widget.dart';
 import 'package:gymaster/features/routine/presentation/widgets/ejercicios_vacios_widget.dart';
 import 'package:flutter/material.dart';
@@ -26,11 +24,7 @@ class DetalleRutinaScreen extends StatelessWidget {
     BuildContext context,
     EjerciciosDeRutina ejerciciosDeRutina,
   ) async {
-    await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const DetalleEjercicioScreen(),
-      ),
-    );
+    context.push('/detalle-ejercicio');
   }
 
   // Método que construye la interfaz de usuario de la pantalla.
@@ -47,11 +41,7 @@ class DetalleRutinaScreen extends StatelessWidget {
         leading: IconButton(
           icon: SvgPicture.asset(Assets.icons.flechaIzquierda.path),
           onPressed: () {
-            // Navega a la pantalla de lista de rutinas y elimina la pantalla actual de la pila de navegación.
-            Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => const ListaRutinasPage()),
-              (Route<dynamic> route) => false,
-            );
+            context.go('/');
           },
         ),
         title: BlocBuilder<EjerciciosByRutinaCubit, EjerciciosByRutinaState>(
@@ -72,20 +62,15 @@ class DetalleRutinaScreen extends StatelessWidget {
                 return IconButton(
                   icon: SvgPicture.asset(Assets.icons.iconsax.addCircle.path),
                   onPressed: () {
-                    Navigator.of(context)
-                        .push(
-                      MaterialPageRoute(
-                        builder: (context) => AgregarEjerciciosPage(
-                          rutinaid: rutinaId,
-                        ),
-                      ),
-                    )
-                        .then((_) {
-                      // Llama a getAllEjercicios después de que se cierra la pantalla AgregarEjerciciosPage
-                      // cuando se vuelve de la pantalla de agregar, al regresar a la pantalla de detalle de la rutina
-                      BlocProvider.of<EjerciciosByRutinaCubit>(context,
-                              listen: false)
-                          .getAllEjercicios(idRutina: rutinaId);
+                    context.push('/agregar-ejercicios/$rutinaId').then((_) {
+                      if (context.mounted) {
+                        // Llama a getAllEjercicios después de que se cierra la pantalla AgregarEjerciciosPage
+                        // cuando se vuelve de la pantalla de agregar, al regresar a la pantalla de detalle de la rutina
+                        BlocProvider.of<EjerciciosByRutinaCubit>(
+                          context,
+                          listen: false,
+                        ).getAllEjercicios(idRutina: rutinaId);
+                      }
                     });
                   },
                 );
