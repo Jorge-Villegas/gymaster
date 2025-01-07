@@ -1,5 +1,6 @@
-import 'package:gymaster/core/utils/text_formatter.dart';
 import 'package:flutter/material.dart';
+import 'package:gymaster/shared/utils/text_formatter.dart';
+
 class RoutineCard extends StatelessWidget {
   final Function onTap;
   final String cantidadEjerciciosPorSeries;

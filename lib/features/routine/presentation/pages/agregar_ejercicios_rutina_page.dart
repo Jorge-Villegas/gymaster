@@ -1,13 +1,13 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/config/app_config.dart';
-import 'package:gymaster/core/utils/text_formatter.dart';
 import 'package:gymaster/features/routine/presentation/cubits/agregar_series/agregar_series_cubit.dart';
 import 'package:gymaster/features/routine/presentation/cubits/agregar_series/agregar_series_state.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicio/ejercicio_cubit.dart';
 import 'package:gymaster/features/routine/presentation/widgets/encabezado_ejercicio_widget.dart';
 import 'package:gymaster/features/routine/presentation/widgets/lista_series_widget.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gymaster/shared/utils/text_formatter.dart';
 import 'package:gymaster/shared/widgets/show_custom_snack_bar.dart';
 
 class AgregarEjercicioRutinaPage extends StatefulWidget {
@@ -119,8 +119,6 @@ class _AgregarEjercicioRutinaPageState
     if (!mounted) return;
 
     if (resul) {
-
-      
       // Llamar al EjercicioCubit para actualizar el estado
       context.read<EjercicioCubit>().ejercicioAgregado(id: widget.ejercicioId);
 

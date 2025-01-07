@@ -1,7 +1,7 @@
-import 'package:gymaster/core/utils/text_formatter.dart';
-import 'package:gymaster/core/utils/verificador_tipo_archivo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:gymaster/shared/utils/text_formatter.dart';
+import 'package:gymaster/shared/utils/verificador_tipo_archivo.dart';
 
 class EncabezadoEjercicioWidget extends StatelessWidget {
   final String nombreEjercicio;

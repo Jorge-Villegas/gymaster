@@ -1,11 +1,10 @@
-import 'package:go_router/go_router.dart';
-import 'package:gymaster/core/utils/verificador_tipo_archivo.dart';
-import 'package:gymaster/features/routine/presentation/cubits/musculo/musculo_cubit.dart';
-import 'package:gymaster/features/routine/presentation/pages/listar_ejercicios_page.dart';
-import 'package:gymaster/widgets/custom_search_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:gymaster/features/routine/presentation/cubits/musculo/musculo_cubit.dart';
+import 'package:gymaster/shared/utils/verificador_tipo_archivo.dart';
+import 'package:gymaster/widgets/custom_search_delegate.dart';
 
 class AgregarEjerciciosPage extends StatelessWidget {
   final String rutinaid;
@@ -61,7 +60,8 @@ class AgregarEjerciciosPage extends StatelessWidget {
                     ),
                     title: Text(musculo.nombre),
                     onTap: () {
-                      context.push('/listar-ejercicios/${musculo.id}/${musculo.nombre}/$rutinaid');
+                      context.push(
+                          '/listar-ejercicios/${musculo.id}/${musculo.nombre}/$rutinaid');
                     },
                   ),
                 );

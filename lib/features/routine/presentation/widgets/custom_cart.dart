@@ -1,7 +1,7 @@
-import 'package:gymaster/core/utils/text_formatter.dart';
-import 'package:gymaster/core/utils/verificador_tipo_archivo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:gymaster/shared/utils/text_formatter.dart';
+import 'package:gymaster/shared/utils/verificador_tipo_archivo.dart';
 
 class CustomCard extends StatelessWidget {
   final String ejercicioId;
@@ -69,7 +69,7 @@ class CustomCard extends StatelessWidget {
                           child: Container(
                             color: Colors.green.withOpacity(0.3),
                             child: const Center(
-                              child:  Icon(
+                              child: Icon(
                                 Icons.check_circle,
                                 color: Colors.green,
                                 size: 50.0,
@@ -103,8 +103,7 @@ class CustomCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 4.0),
                       Text(
-                        _formatoNumeroSeries(
-                            numeroSeries, numeroSeries, pesos),
+                        _formatoNumeroSeries(numeroSeries, numeroSeries, pesos),
                         style: const TextStyle(
                           fontSize: 12.0,
                           color: Colors.grey,

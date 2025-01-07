@@ -1,13 +1,13 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gymaster/core/widgets/loader.dart';
 import 'package:gymaster/features/routine/domain/entities/routine.dart';
 import 'package:gymaster/features/routine/presentation/cubits/rutina/routine_cubit.dart';
 import 'package:gymaster/features/routine/presentation/pages/agregar_rutina_page.dart';
 import 'package:gymaster/features/routine/presentation/widgets/routine_card.dart';
-import 'package:flutter/material.dart';
-import 'package:gymaster/app_router.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gymaster/shared/widgets/barra_navegacion.dart';
+import 'package:gymaster/shared/widgets/loader.dart';
 
 class ListaRutinasPage extends StatefulWidget {
   static route() => MaterialPageRoute(
@@ -21,6 +21,8 @@ class ListaRutinasPage extends StatefulWidget {
 }
 
 class _ListaRutinasPageState extends State<ListaRutinasPage> {
+  int _currentIndex = 0;
+
   _cargarRutinas() async {
     final routineCubit = BlocProvider.of<RoutineCubit>(context);
 
@@ -31,6 +33,12 @@ class _ListaRutinasPageState extends State<ListaRutinasPage> {
   void initState() {
     super.initState();
     BlocProvider.of<RoutineCubit>(context).getAllRoutine();
+  }
+
+  void _onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
   }
 
   @override
@@ -138,8 +146,8 @@ class _ListaRutinasPageState extends State<ListaRutinasPage> {
                               );
 
                               // Limita el retraso máximo a 1500 milisegundos (15 * 100)
-                              final delay = Duration(
-                                  milliseconds: 50 * (i < 5 ? i : 5));
+                              final delay =
+                                  Duration(milliseconds: 50 * (i < 5 ? i : 5));
 
                               return FadeInLeft(
                                 delay: delay,
@@ -185,6 +193,9 @@ class _ListaRutinasPageState extends State<ListaRutinasPage> {
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: BarraNavegacion(
+        currentIndex: _onTabTapped,
       ),
     );
   }

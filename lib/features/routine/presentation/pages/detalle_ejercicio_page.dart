@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/generated/assets.gen.dart';
-import 'package:gymaster/core/utils/text_formatter.dart';
-import 'package:gymaster/core/utils/verificador_tipo_archivo.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
+import 'package:gymaster/shared/utils/text_formatter.dart';
+import 'package:gymaster/shared/utils/verificador_tipo_archivo.dart';
 
 class DetalleEjercicioScreen extends StatelessWidget {
   const DetalleEjercicioScreen({super.key});
@@ -101,7 +101,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
     final state = context.watch<EjerciciosByRutinaCubit>().state;
 
     if (state is! EjerciciosByRutinaSuccess) {
-      return Container(); // O cualquier otro widget que desees mostrar mientras se carga
+      return Container();
     }
 
     final ejercicios = state.ejerciciosDeRutina.ejercicios;
@@ -331,16 +331,16 @@ class DetalleEjercicioScreen extends StatelessWidget {
     if (VerificadorTipoArchivo.esSvg(direccionImagen)) {
       return SvgPicture.asset(
         direccionImagen,
-        width: 100,
-        height: 100,
+        width: 150,
+        height: 150,
         semanticsLabel: 'Ejercicio de pectoral',
       );
     }
     if (VerificadorTipoArchivo.esImagen(direccionImagen)) {
       return Image.asset(
         direccionImagen,
-        width: 100,
-        height: 100,
+        width: 150,
+        height: 150,
         semanticLabel: 'Ejercicio de pectoral',
       );
     }

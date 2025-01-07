@@ -1,12 +1,12 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:gymaster/core/config/app_config.dart';
-import 'package:gymaster/core/utils/text_formatter.dart';
-import 'package:gymaster/core/utils/verificador_tipo_archivo.dart';
-import 'package:gymaster/features/routine/presentation/cubits/ejercicio/ejercicio_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:gymaster/core/config/app_config.dart';
+import 'package:gymaster/features/routine/presentation/cubits/ejercicio/ejercicio_cubit.dart';
+import 'package:gymaster/shared/utils/text_formatter.dart';
+import 'package:gymaster/shared/utils/verificador_tipo_archivo.dart';
 
 class ListarEjerciciosPage extends StatelessWidget {
   final String musculoId;
@@ -108,8 +108,10 @@ class ListarEjerciciosPage extends StatelessWidget {
                       title: Text(ejercicio.nombre),
                       onTap: () {
                         context.push(
-                          '/agregar-ejercicio-rutina/$rutinaId/${ejercicio.id}/${ejercicio.nombre}',extra: {
-                            'ejercicioImagenDireccion': ejercicio.imagenDireccion,
+                          '/agregar-ejercicio-rutina/$rutinaId/${ejercicio.id}/${ejercicio.nombre}',
+                          extra: {
+                            'ejercicioImagenDireccion':
+                                ejercicio.imagenDireccion,
                           },
                         );
                       },

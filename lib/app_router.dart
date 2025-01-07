@@ -1,15 +1,14 @@
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/features/routine/presentation/pages/agregar_ejercicios_page.dart';
 import 'package:gymaster/features/routine/presentation/pages/agregar_ejercicios_rutina_page.dart';
+import 'package:gymaster/features/routine/presentation/pages/agregar_rutina_page.dart';
 import 'package:gymaster/features/routine/presentation/pages/detalle_ejercicio_page.dart';
 import 'package:gymaster/features/routine/presentation/pages/detalle_rutina_page.dart';
 import 'package:gymaster/features/routine/presentation/pages/lista_rutina_screen.dart';
 import 'package:gymaster/features/routine/presentation/pages/listar_ejercicios_page.dart';
-import 'package:gymaster/features/routine/presentation/pages/agregar_rutina_page.dart';
-import 'package:go_router/go_router.dart';
 
 /// Configuración de GoRouter
-final GoRouter router = GoRouter( 
+final GoRouter router = GoRouter(
   initialLocation: '/',
   routes: [
     GoRoute(
@@ -21,21 +20,18 @@ final GoRouter router = GoRouter(
       path: '/agregar-ejercicios/:rutinaId',
       name: 'agregarEjercicios',
       builder: (context, state) {
-        final rutinaId = state.pathParameters['rutinaId']!;
-        return AgregarEjerciciosPage(rutinaid: rutinaId);
+        return AgregarEjerciciosPage(
+            rutinaid: state.pathParameters['rutinaId']!);
       },
     ),
     GoRoute(
       path: '/listar-ejercicios/:musculoId/:nombreMusculo/:rutinaId',
       name: 'listarEjercicios',
       builder: (context, state) {
-        final musculoId = state.pathParameters['musculoId']!;
-        final nombreMusculo = state.pathParameters['nombreMusculo']!;
-        final rutinaId = state.pathParameters['rutinaId']!;
         return ListarEjerciciosPage(
-          musculoId: musculoId,
-          nombreMusculo: nombreMusculo,
-          rutinaId: rutinaId,
+          musculoId: state.pathParameters['musculoId']!,
+          nombreMusculo: state.pathParameters['nombreMusculo']!,
+          rutinaId: state.pathParameters['rutinaId']!,
         );
       },
     ),
@@ -62,9 +58,8 @@ final GoRouter router = GoRouter(
         return AgregarEjercicioRutinaPage(
           ejercicioId: state.pathParameters['ejercicioId']!,
           rutinaId: state.pathParameters['rutinaId']!,
-          ejercicioNombre: state.pathParameters['ejercicioNombre']!, 
-          ejercicioImagenDireccion:
-              data?['ejercicioImagenDireccion'],
+          ejercicioNombre: state.pathParameters['ejercicioNombre']!,
+          ejercicioImagenDireccion: data?['ejercicioImagenDireccion'],
         );
       },
     ),
