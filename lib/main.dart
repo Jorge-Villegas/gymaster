@@ -18,7 +18,6 @@ import 'package:gymaster/features/setting/presentation/cubit/setting_state.dart'
 import 'package:gymaster/init_dependencies.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// Punto de entrada principal de la aplicación.
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
