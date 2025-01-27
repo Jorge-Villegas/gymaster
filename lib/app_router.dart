@@ -6,15 +6,26 @@ import 'package:gymaster/features/routine/presentation/pages/detalle_ejercicio_p
 import 'package:gymaster/features/routine/presentation/pages/detalle_rutina_page.dart';
 import 'package:gymaster/features/routine/presentation/pages/lista_rutina_screen.dart';
 import 'package:gymaster/features/routine/presentation/pages/listar_ejercicios_page.dart';
+import 'package:gymaster/features/setting/presentation/pages/setting_page.dart';
+import 'package:gymaster/shared/widgets/barra_navegacion.dart';
+import 'package:gymaster/theme_preview_page.dart';
 
 /// Configuración de GoRouter
 final GoRouter router = GoRouter(
   initialLocation: '/',
   routes: [
+    //-----------------------------------------
+    //                Rutinas
+    //-----------------------------------------
+    GoRoute(
+      path: '/theme-preview',
+      name: 'themePreview',
+      builder: (context, state) => ThemePreviewPage(),
+    ),
     GoRoute(
       path: '/',
       name: 'listaRutinas',
-      builder: (context, state) => const ListaRutinasPage(),
+      builder: (context, state) => BottomNavigationBarExampleApp(),
     ),
     GoRoute(
       path: '/agregar-ejercicios/:rutinaId',
@@ -76,6 +87,33 @@ final GoRouter router = GoRouter(
           rutinaId: state.pathParameters['rutinaId']!,
         );
       },
+    ),
+
+    //-----------------------------------------
+    //                Pruebas
+    //-----------------------------------------
+    GoRoute(
+      path: '/settings',
+      builder: (context, state) => SettingPage(),
+    ),
+    //-----------------------------------------
+    //                Setting
+    //-----------------------------------------
+    GoRoute(
+      path: '/home',
+      builder: (context, state) => HomePage(),
+    ),
+    GoRoute(
+      path: '/business',
+      builder: (context, state) => BusinessPage(),
+    ),
+    GoRoute(
+      path: '/school',
+      builder: (context, state) => SchoolPage(),
+    ),
+    GoRoute(
+      path: '/settings',
+      builder: (context, state) => SettingsPage(),
     ),
   ],
 );

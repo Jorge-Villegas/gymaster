@@ -21,10 +21,10 @@ class RoutineCard extends StatelessWidget {
     Color colorSubtitle = Colors.black45;
 
     return Container(
-      // margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(16),
         shape: BoxShape.rectangle,
+        backgroundBlendMode: BlendMode.srcOver,
         color: Color(color),
         // gradient: LinearGradient(
         //   begin: Alignment.topLeft,

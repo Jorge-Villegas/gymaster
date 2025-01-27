@@ -33,12 +33,15 @@ class $AssetsIconsGen {
   /// Directory path: assets/icons/iconsax
   $AssetsIconsIconsaxGen get iconsax => const $AssetsIconsIconsaxGen();
 
+  /// File path: assets/icons/logo.svg
+  SvgGenImage get logo => const SvgGenImage('assets/icons/logo.svg');
+
   /// File path: assets/icons/pesa.svg
   SvgGenImage get pesa => const SvgGenImage('assets/icons/pesa.svg');
 
   /// List of all assets
   List<dynamic> get values =>
-      [desktop, flechaDerecha, flechaIzquierda, icFacebook, pesa];
+      [desktop, flechaDerecha, flechaIzquierda, icFacebook, logo, pesa];
 }
 
 class $AssetsImagenesGen {
@@ -6598,12 +6601,8 @@ class $AssetsImagenesMusculosTricepsGen {
 class Assets {
   Assets._();
 
-  static const String aEnv = '.env';
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagenesGen imagenes = $AssetsImagenesGen();
-
-  /// List of all assets
-  static List<String> get values => [aEnv];
 }
 
 class AssetGenImage {

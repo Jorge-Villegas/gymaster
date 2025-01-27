@@ -109,6 +109,7 @@ class CustomCard extends StatelessWidget {
                           color: Colors.grey,
                         ),
                       ),
+                      /*
                       Text(
                         estadoSerie ? 'Completado' : 'En proceso',
                         style: TextStyle(
@@ -116,6 +117,7 @@ class CustomCard extends StatelessWidget {
                           color: estadoSerie ? Colors.grey : Colors.green,
                         ),
                       )
+                        */
                     ],
                   ),
                 ),

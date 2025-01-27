@@ -40,38 +40,45 @@ class EncabezadoEjercicioWidget extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 10),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              'Series: ',
-              style: TextStyle(fontSize: 18),
-            ),
-            SizedBox(
-              width: 40,
-              child: Text(
-                cantidadSeries.toString(),
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+        ClipRRect(
+          borderRadius: BorderRadius.circular(10.0),
+          child: Container(
+            height: 60,
+            color: const Color.fromRGBO(232, 238, 241, 1.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'Series: ',
+                  style: TextStyle(fontSize: 18),
                 ),
-              ),
+                SizedBox(
+                  width: 40,
+                  child: Text(
+                    cantidadSeries.toString(),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                IconButton(
+                  onPressed: onIncrement,
+                  icon: const Icon(Icons.add_circle),
+                  color: Colors.green,
+                  iconSize: 30,
+                ),
+                IconButton(
+                  onPressed: onDecrement,
+                  icon: const Icon(Icons.remove_circle),
+                  color: Colors.red,
+                  iconSize: 30,
+                ),
+              ],
             ),
-            IconButton(
-              onPressed: onIncrement,
-              icon: const Icon(Icons.add_circle),
-              color: Colors.green,
-              iconSize: 30,
-            ),
-            IconButton(
-              onPressed: onDecrement,
-              icon: const Icon(Icons.remove_circle),
-              color: Colors.red,
-              iconSize: 30,
-            ),
-          ],
-        ),
+          ),
+        )
       ],
     );
   }

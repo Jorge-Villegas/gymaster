@@ -5,13 +5,12 @@ final serviceLocator = GetIt.instance;
 Future<void> initDependencies() async {
   _initRoutine();
   _initIdGenerator();
-  // _initSettings();
+  _initSettings();
 }
 
 void _initIdGenerator() {
   serviceLocator.registerLazySingleton<IdGenerator>(() => UuidGenerator());
 }
-
 
 void _initRoutine() {
   serviceLocator
@@ -60,15 +59,26 @@ void _initRoutine() {
     ..registerFactory(() => RealizarEjercicioRutinaCubit(serviceLocator()));
 }
 
-// void _initSettings() {
-//   serviceLocator
-//     //DataSource
-//     ..registerFactory<SettingLocalDataSource>(() => SettingLocalDataSource())
-//     // Repository
-//     ..registerFactory<SettingRepository>(
-//         () => SettingsRepositoryImpl(serviceLocator()))
-//     //Use Case
-//     ..registerFactory(() => LlenarDataBaseUseCase(serviceLocator()))
-//     //Cubit
-//     ..registerFactory(() => ConfiguracionCubit(serviceLocator()));
-// }
+void _initSettings() {
+  serviceLocator
+    // Data Source
+    ..registerFactory<SettingLocalDataSource>(() => SettingLocalDataSource())
+
+    // Repository
+    ..registerFactory<SettingRepository>(
+      () => SettingRepositoryImp(localDataSource: serviceLocator()),
+    )
+    // Use Case
+    ..registerFactory(() => SetThemeModeUseCase(repository: serviceLocator()))
+    ..registerFactory(() => GetThemeModeUseCase(repository: serviceLocator()))
+    ..registerFactory(() => SetLanguageUseCase(repository: serviceLocator()))
+    ..registerFactory(() => GetLanguageUseCase(repository: serviceLocator()))
+
+    // Cubit
+    ..registerFactory(() => SettingCubit(
+          getLanguageUseCase: serviceLocator(),
+          getThemeModeUseCase: serviceLocator(),
+          setLanguageUseCase: serviceLocator(),
+          setThemeModeUseCase: serviceLocator(),
+        ));
+}

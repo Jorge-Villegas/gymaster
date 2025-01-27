@@ -1,124 +1,155 @@
 import 'package:flutter/material.dart';
+import 'package:gymaster/features/routine/presentation/pages/lista_rutina_screen.dart';
+import 'package:gymaster/features/setting/presentation/pages/setting_page.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 
-class BarraNavegacion extends StatefulWidget {
-  final Function currentIndex;
+void main() => runApp(const BottomNavigationBarExampleApp());
 
-  const BarraNavegacion({
-    super.key,
-    required this.currentIndex,
-  });
-
-  @override
-  State<BarraNavegacion> createState() => _BarraNavegacionState();
-}
-
-class _BarraNavegacionState extends State<BarraNavegacion> {
-  int _index = 0;
-
-  static const double selectedHeight = 50.0;
-  static const double unselectedHeight = 40.0;
-
-  static const double selectedPaddingHorizontal = 16.0;
-  static const double unselectedPaddingHorizontal = 8.0;
-
-  static const double selectedPaddingVertical = 8.0;
-  static const double unselectedPaddingVertical = 4.0;
-
-  static const double borderRadius = 30.0;
+class BottomNavigationBarExampleApp extends StatelessWidget {
+  const BottomNavigationBarExampleApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      selectedItemColor: Theme.of(context).primaryColor,
-      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-      unselectedItemColor: const Color.fromARGB(255, 0, 0, 0),
-      onTap: (index) {
-        setState(() {
-          _index = index;
-          widget.currentIndex(index);
-        });
-      },
-      currentIndex: _index,
-      items: <BottomNavigationBarItem>[
-        _buildBottomNavigationBarItem(
-          icon: IconsaxPlusLinear.home_1,
-          label: 'Inicio',
-          isSelected: _index == 0,
-          iconSelected: IconsaxPlusBold.home_1,
-          color: Colors.blue,
-        ),
-        _buildBottomNavigationBarItem(
-          icon: IconsaxPlusLinear.activity,
-          label: 'Rutinas finalizadas',
-          isSelected: _index == 1,
-          iconSelected: IconsaxPlusBold.activity,
-          color: Colors.green,
-        ),
-        _buildBottomNavigationBarItem(
-          icon: Icons.add,
-          label: 'Prueba',
-          isSelected: _index == 2,
-          iconSelected: Icons.add,
-          color: Colors.red,
-        ),
-        _buildBottomNavigationBarItem(
-          icon: Icons.list,
-          label: 'Data',
-          isSelected: _index == 3,
-          iconSelected: IconsaxPlusBold.like_shapes,
-          color: Colors.orange,
-        ),
-      ],
+    return const MaterialApp(
+      home: BottomNavigationBarExample(),
     );
   }
+}
 
-  BottomNavigationBarItem _buildBottomNavigationBarItem({
-    required IconData icon,
-    required IconData iconSelected,
-    required String label,
-    required bool isSelected,
-    required Color color,
-  }) {
-    return BottomNavigationBarItem(
-      icon: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: isSelected
-              ? selectedPaddingHorizontal
-              : unselectedPaddingHorizontal,
-          vertical:
-              isSelected ? selectedPaddingVertical : unselectedPaddingVertical,
-        ),
-        height: isSelected ? selectedHeight : unselectedHeight,
-        decoration: isSelected
-            ? BoxDecoration(
-                color: color.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(borderRadius),
-              )
-            : null,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(isSelected ? iconSelected : icon,
-                color: isSelected ? color : null),
-            if (isSelected)
-              Flexible(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: Text(
-                    label,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: color,
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
-                ),
-              ),
-          ],
-        ),
+class BottomNavigationBarExample extends StatefulWidget {
+  const BottomNavigationBarExample({super.key});
+
+  @override
+  State<BottomNavigationBarExample> createState() =>
+      _BottomNavigationBarExampleState();
+}
+
+class _BottomNavigationBarExampleState
+    extends State<BottomNavigationBarExample> {
+  int _selectedIndex = 0;
+
+  final List<Widget> _pages = <Widget>[
+    const ListaRutinasPage(),
+    BusinessPage(),
+    SchoolPage(),
+    SettingPage(),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _pages[_selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(IconsaxPlusLinear.home_1),
+            label: 'Home',
+            activeIcon: Icon(IconsaxPlusBold.home_1),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(IconsaxPlusLinear.user),
+            label: 'User',
+            activeIcon: Icon(IconsaxPlusBold.user),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(IconsaxPlusLinear.book),
+            label: 'School',
+            activeIcon: Icon(IconsaxPlusBold.book),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(IconsaxPlusLinear.setting_2),
+            label: 'Settings',
+            activeIcon: Icon(IconsaxPlusBold.setting_2),
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+        selectedItemColor:
+            Theme.of(context).primaryColor, // Usar el color primario del tema
+        unselectedItemColor: Theme.of(context)
+            .textTheme
+            .bodyMedium
+            ?.color
+            ?.withOpacity(0.6), // Color del texto con opacidad
+        backgroundColor: Theme.of(context)
+            .scaffoldBackgroundColor, // Fondo de acuerdo al tema
+        selectedFontSize: 14,
+        unselectedFontSize: 14,
+        iconSize: 24,
+        type: BottomNavigationBarType.fixed,
+        selectedLabelStyle: const TextStyle(height: 1.5),
+        unselectedLabelStyle: const TextStyle(height: 1.5),
       ),
-      label: '',
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Home Page'),
+      ),
+      body: const Center(
+        child: Text('Home Page Content'),
+      ),
+    );
+  }
+}
+
+class BusinessPage extends StatelessWidget {
+  const BusinessPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Business Page'),
+      ),
+      body: const Center(
+        child: Text('Business Page Content'),
+      ),
+    );
+  }
+}
+
+class SchoolPage extends StatelessWidget {
+  const SchoolPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('School Page'),
+      ),
+      body: const Center(
+        child: Text('School Page Content'),
+      ),
+    );
+  }
+}
+
+class SettingsPage extends StatelessWidget {
+  const SettingsPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Settings Page'),
+      ),
+      body: const Center(
+        child: Text('Settings Page Content'),
+      ),
     );
   }
 }

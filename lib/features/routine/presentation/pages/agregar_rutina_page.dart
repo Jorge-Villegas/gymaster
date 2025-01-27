@@ -1,10 +1,10 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/generated/assets.gen.dart';
 import 'package:gymaster/features/routine/domain/entities/routine.dart';
 import 'package:gymaster/features/routine/presentation/cubits/rutina/routine_cubit.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 
 class AgregarRutinaPage extends StatefulWidget {
   const AgregarRutinaPage({super.key});
@@ -123,22 +123,32 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(
-                      Icons.group,
-                      size: 60,
+                    SvgPicture.asset(
+                      Assets.icons.logo.path,
+                      colorFilter: const ColorFilter.mode(
+                        Colors.black,
+                        BlendMode.srcIn,
+                      ),
+                      width: 100,
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: TextField(
                         controller: textController,
                         textAlign: TextAlign.center,
+                        autofocus: true,
                         style: const TextStyle(
+                          color: Colors.black,
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
                         ),
                         decoration: const InputDecoration(
                           hintText: 'Nombre de la rutina',
                           border: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none,
                         ),
                       ),
                     ),

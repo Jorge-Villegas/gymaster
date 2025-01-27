@@ -1,9 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/generated/assets.gen.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
-import 'package:gymaster/features/routine/presentation/pages/agregar_ejercicios_page.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class EjerciciosVaciosWidget extends StatelessWidget {
   final String rutinaId;
@@ -28,22 +27,14 @@ class EjerciciosVaciosWidget extends StatelessWidget {
             height: 200,
           ),
           const SizedBox(height: 10),
-          const Text(
+          Text(
             'No hay ejercicios aún',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-              fontStyle: FontStyle.normal,
-            ),
+            style: Theme.of(context).textTheme.labelLarge,
           ),
           const SizedBox(height: 10),
-          const Text(
+          Text(
             'Agrega ejercicios para comenzar tu rutina',
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.black54,
-            ),
+            style: Theme.of(context).textTheme.labelSmall,
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 30),

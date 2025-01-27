@@ -141,11 +141,12 @@ class _AgregarEjercicioRutinaPageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromRGBO(244, 248, 252, 1.0),
       appBar: AppBar(
         title: const Text('Agregar Ejercicio a Rutina'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: BlocBuilder<AgregarSeriesCubit, AgregarSeriesState>(
           builder: (context, state) {
             if (state is AgregarSeriesLoaded) {
@@ -171,6 +172,14 @@ class _AgregarEjercicioRutinaPageState
                       pesoControllers: _pesoControllers,
                       repeticionesControllers: _repeticionesControllers,
                     ),
+                    const SizedBox(height: 20),
+                    Center(
+                      child: FloatingActionButton.extended(
+                        onPressed: _guardarDatos,
+                        label: const Text('Guardar'),
+                        icon: const Icon(Icons.save),
+                      ),
+                    ),
                   ],
                 ),
               );
@@ -179,11 +188,6 @@ class _AgregarEjercicioRutinaPageState
             }
           },
         ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _guardarDatos,
-        label: const Text('Guardar'),
-        icon: const Icon(Icons.save),
       ),
     );
   }

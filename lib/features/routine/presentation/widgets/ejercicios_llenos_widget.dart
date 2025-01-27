@@ -1,8 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gymaster/core/generated/assets.gen.dart';
 import 'package:gymaster/features/routine/domain/entities/ejercicios_de_rutina.dart';
 import 'package:gymaster/features/routine/presentation/widgets/custom_cart.dart';
-import 'package:flutter/material.dart';
 
 class EjerciciosLlenosWidget extends StatelessWidget {
   final EjerciciosDeRutina ejerciciosDeRutina;
@@ -19,8 +19,9 @@ class EjerciciosLlenosWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
 
-    print('Ejercicios de rutina: ${ejerciciosDeRutina.ejercicios.length}');
     return Column(
       children: [
         InkWell(
@@ -28,8 +29,10 @@ class EjerciciosLlenosWidget extends StatelessWidget {
             goToIniciarRutina(context, ejerciciosDeRutina);
           },
           child: Container(
-            padding: const EdgeInsets.all(10),
-            color: const Color(0xFFE2EAE1), // Fondo color E2EAE1
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+            color: isDarkTheme
+                ? const Color.fromRGBO(40, 44, 48, 1)
+                : const Color.fromRGBO(216, 235, 224, 1),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -37,21 +40,25 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                   padding: const EdgeInsets.all(15),
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color(0xFF57AD1C),
+                    color: Color.fromRGBO(86, 170, 27, 1),
                   ),
                   child: SvgPicture.asset(
                     Assets.icons.iconsax.play.path,
                     width: 15,
                     height: 15,
-                    color: Colors.white,
+                    colorFilter: const ColorFilter.mode(
+                      Colors.white,
+                      BlendMode.srcIn,
+                    ),
                   ),
                 ),
                 const SizedBox(width: 10),
-                const Text(
+                Text(
                   'Iniciar entrenamiento',
-                  style: TextStyle(
-                    color: Color(0xFF57AD1C),
-                    fontWeight: FontWeight.bold,
+                  style: textTheme.labelMedium?.copyWith(
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.white
+                        : const Color.fromRGBO(86, 170, 27, 1),
                   ),
                 ),
               ],
@@ -59,41 +66,40 @@ class EjerciciosLlenosWidget extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
+              Text(
                 'Ejercicios',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
+                style: textTheme.bodyMedium?.copyWith(
+                  color: isDarkTheme ? Colors.white : Colors.black,
                 ),
               ),
-              Text(ejerciciosDeRutina.ejercicios.length.toString()),
+              Text(
+                ejerciciosDeRutina.ejercicios.length.toString(),
+                style: textTheme.labelMedium,
+              ),
             ],
           ),
         ),
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             child: GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 1,
-                crossAxisSpacing: 10.0, // Espacio vertical entre las columnas
+                crossAxisSpacing: 5.0, // Espacio vertical entre las columnas
                 mainAxisSpacing: 10.0, // Espacio horizontal entre las filas
-                mainAxisExtent: 150, // Altura fija para cada tarjeta
+                mainAxisExtent: 125, // Altura fija para cada tarjeta
               ),
               itemBuilder: (context, i) {
-                
-
-                print('Ejercicio $i ---> ${ejerciciosDeRutina.ejercicios[i].nombre}');
                 final ejercicio = ejerciciosDeRutina.ejercicios[i];
 
-                // Verificar si el ejercicio está completado a través de sus series y si está completado cambiar el estado de la serie
                 final estadoEjercicio =
                     ejercicio.series.every((serie) => serie.realizado);
-                final pesos = ejercicio.series.map((serie) => serie.peso).toList();
+                final pesos =
+                    ejercicio.series.map((serie) => serie.peso).toList();
                 return CustomCard(
                   colorFondo: Colors.white,
                   ejercicioId: ejercicio.id,

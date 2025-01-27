@@ -6,7 +6,6 @@ import 'package:gymaster/features/routine/domain/entities/routine.dart';
 import 'package:gymaster/features/routine/presentation/cubits/rutina/routine_cubit.dart';
 import 'package:gymaster/features/routine/presentation/pages/agregar_rutina_page.dart';
 import 'package:gymaster/features/routine/presentation/widgets/routine_card.dart';
-import 'package:gymaster/shared/widgets/barra_navegacion.dart';
 import 'package:gymaster/shared/widgets/loader.dart';
 
 class ListaRutinasPage extends StatefulWidget {
@@ -47,6 +46,7 @@ class _ListaRutinasPageState extends State<ListaRutinasPage> {
     // final rp = Provider.of<RutinaProvider>(context);
     final routineCubit = BlocProvider.of<RoutineCubit>(context);
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
         child: SafeArea(
@@ -98,6 +98,7 @@ class _ListaRutinasPageState extends State<ListaRutinasPage> {
               const SizedBox(height: 10),
               Expanded(
                 child: Scaffold(
+                  backgroundColor: Colors.grey[200],
                   body: BlocBuilder<RoutineCubit, RoutineState>(
                     builder: (context, state) {
                       if (state is RoutineLoading) {
@@ -120,8 +121,10 @@ class _ListaRutinasPageState extends State<ListaRutinasPage> {
                         }
                         return ListView.separated(
                             itemCount: state.routines.length,
-                            separatorBuilder: (_, __) =>
-                                const SizedBox(height: 10),
+                            separatorBuilder: (_, __) => Container(
+                                  height: 10,
+                                  color: Colors.grey[200],
+                                ),
                             itemBuilder: (context, i) {
                               final rutina = state.routines[i];
                               String cantidadTexto;
@@ -173,6 +176,7 @@ class _ListaRutinasPageState extends State<ListaRutinasPage> {
                       FloatingActionButtonLocation.centerFloat,
                   floatingActionButton: FloatingActionButton.extended(
                     elevation: 10,
+                    backgroundColor: Theme.of(context).primaryColor,
                     onPressed: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
@@ -180,11 +184,12 @@ class _ListaRutinasPageState extends State<ListaRutinasPage> {
                         ),
                       );
                     },
-                    label: const Text(
+                    label: Text(
                       'Nueva Rutina',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
+                        color: Theme.of(context).textTheme.bodyMedium?.color,
                       ),
                     ),
                   ),
@@ -193,9 +198,6 @@ class _ListaRutinasPageState extends State<ListaRutinasPage> {
             ],
           ),
         ),
-      ),
-      bottomNavigationBar: BarraNavegacion(
-        currentIndex: _onTabTapped,
       ),
     );
   }
