@@ -56,6 +56,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
     required DateTime creationDate,
     required bool done,
     required int color,
+    required String imagenDireccion,
   }) async {
     try {
       final rutina = Rutina(
@@ -66,6 +67,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
         realizado: done ? 1 : 0,
         color: color,
         estado: 1,
+        imageDireccion: imagenDireccion,
       );
       final result = await localDataSource.createRutina(rutina: rutina);
 
@@ -88,7 +90,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
         result = await localDataSource.getAllMusculos();
 
         await generateFakeRutinas(DatabaseHelper.instance);
-        
+
         await generateData(DatabaseHelper.instance);
         // await generateData(DatabaseHelper.instance);
       }

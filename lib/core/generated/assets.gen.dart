@@ -36,6 +36,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/logo.svg
   SvgGenImage get logo => const SvgGenImage('assets/icons/logo.svg');
 
+  /// Directory path: assets/icons/otros
+  $AssetsIconsOtrosGen get otros => const $AssetsIconsOtrosGen();
+
   /// File path: assets/icons/pesa.svg
   SvgGenImage get pesa => const SvgGenImage('assets/icons/pesa.svg');
 
@@ -4500,6 +4503,55 @@ class $AssetsIconsIconsaxGen {
         wind2,
         wind,
         woman
+      ];
+}
+
+class $AssetsIconsOtrosGen {
+  const $AssetsIconsOtrosGen();
+
+  /// File path: assets/icons/otros/biceps.svg
+  SvgGenImage get biceps => const SvgGenImage('assets/icons/otros/biceps.svg');
+
+  /// File path: assets/icons/otros/bicicleta-de-spinning.svg
+  SvgGenImage get bicicletaDeSpinning =>
+      const SvgGenImage('assets/icons/otros/bicicleta-de-spinning.svg');
+
+  /// File path: assets/icons/otros/estirar.svg
+  SvgGenImage get estirar =>
+      const SvgGenImage('assets/icons/otros/estirar.svg');
+
+  /// File path: assets/icons/otros/gym-equipamiento.svg
+  SvgGenImage get gymEquipamiento =>
+      const SvgGenImage('assets/icons/otros/gym-equipamiento.svg');
+
+  /// File path: assets/icons/otros/manos-con-opesas.svg
+  SvgGenImage get manosConOpesas =>
+      const SvgGenImage('assets/icons/otros/manos-con-opesas.svg');
+
+  /// File path: assets/icons/otros/pantorrillas.svg
+  SvgGenImage get pantorrillas =>
+      const SvgGenImage('assets/icons/otros/pantorrillas.svg');
+
+  /// File path: assets/icons/otros/pesas.svg
+  SvgGenImage get pesas => const SvgGenImage('assets/icons/otros/pesas.svg');
+
+  /// File path: assets/icons/otros/pesas1.svg
+  SvgGenImage get pesas1 => const SvgGenImage('assets/icons/otros/pesas1.svg');
+
+  /// File path: assets/icons/otros/pierna.svg
+  SvgGenImage get pierna => const SvgGenImage('assets/icons/otros/pierna.svg');
+
+  /// List of all assets
+  List<SvgGenImage> get values => [
+        biceps,
+        bicicletaDeSpinning,
+        estirar,
+        gymEquipamiento,
+        manosConOpesas,
+        pantorrillas,
+        pesas,
+        pesas1,
+        pierna
       ];
 }
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gymaster/features/record/presentation/pages/pages.dart';
+import 'package:gymaster/features/record/presentation/pages/historial_ejercicios_page.dart';
 import 'package:gymaster/features/routine/presentation/pages/lista_rutina_screen.dart';
 import 'package:gymaster/features/setting/presentation/pages/setting_page.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
@@ -32,7 +32,7 @@ class _BottomNavigationBarExampleState
   final List<Widget> _pages = <Widget>[
     const ListaRutinasPage(),
     const BusinessPage(),
-    HistorialScreen(),
+    HistorialEjerciciosPage(),
     SettingPage(),
   ];
 

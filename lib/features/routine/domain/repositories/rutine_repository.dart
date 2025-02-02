@@ -17,6 +17,7 @@ abstract interface class RoutineRepository {
     required DateTime creationDate,
     required bool done,
     required int color,
+    required String imagenDireccion,
   });
 
   Future<Either<Failure, void>> deleteRoutine({
@@ -41,9 +42,9 @@ abstract interface class RoutineRepository {
 
   Future<Either<Failure, List<Musculo>>> getAllMusculos();
 
-  Future<Either<Failure, List<EjerciciosPorMusculo>>> 
+  Future<Either<Failure, List<EjerciciosPorMusculo>>>
       getAllEjerciciosByMusculo({
-     required String musculoId,
+    required String musculoId,
   });
 
   Future<Either<Failure, void>> addEjericioRutina({

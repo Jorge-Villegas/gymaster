@@ -27,6 +27,7 @@ class RoutineCubit extends Cubit<RoutineState> {
     required DateTime creationDate,
     required bool done,
     required int color,
+    required String imagenDireccion,
   }) async {
     emit(RoutineLoading());
     final result = await addRoutineUseCase(
@@ -36,6 +37,7 @@ class RoutineCubit extends Cubit<RoutineState> {
         creationDate: creationDate,
         done: done,
         color: color,
+        imagenDireccion: imagenDireccion,
       ),
     );
     result.fold(
@@ -50,6 +52,7 @@ class RoutineCubit extends Cubit<RoutineState> {
     required DateTime creationDate,
     required bool done,
     required int color,
+    required String imagenDireccion,
   }) async {
     emit(RoutineLoading());
 
@@ -60,6 +63,7 @@ class RoutineCubit extends Cubit<RoutineState> {
         creationDate: creationDate,
         done: done,
         color: color,
+        imagenDireccion: imagenDireccion,
       ),
     );
     result.fold(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gymaster/features/record/presentation/pages/pages.dart';
+import 'package:gymaster/features/record/presentation/pages/historial_ejercicios_page.dart';
 import 'package:gymaster/features/routine/presentation/widgets/lista_series_widget.dart';
 import 'package:gymaster/shared/utils/snackbar_helper.dart';
 import 'package:gymaster/shared/widgets/reusable_table.dart';
@@ -64,7 +64,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
 
   void handleRowSelected(int index) {
     setState(() {
-      selectedRowIndex = index; // Actualizar la fila seleccionada
+      selectedRowIndex = index;
     });
   }
 
@@ -83,9 +83,9 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
             headers: const ['Serie', 'Peso', 'Reps', 'Acciones'],
             data: tableData,
             onRemoveRow: removeRow,
-            enableRowSelection: true, // Habilitar selección de filas
-            onRowSelected: handleRowSelected, // Manejar selección de filas
-            selectedRowIndex: selectedRowIndex, // Pasar el índice seleccionado
+            enableRowSelection: true,
+            onRowSelected: handleRowSelected,
+            selectedRowIndex: selectedRowIndex,
             bodyTextColor: Colors.black,
             headerColor: Theme.of(context).primaryColor,
             selectionColor: Theme.of(context).primaryColor.withOpacity(0.2),
@@ -247,7 +247,6 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                   ],
                 ),
               )
-          // ...existing code...
         ],
       ),
     );

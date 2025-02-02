@@ -17,6 +17,7 @@ class AddRoutineUseCase implements UseCase<Routine, AddRoutineParams> {
       creationDate: params.creationDate,
       done: params.done,
       color: params.color,
+      imagenDireccion: params.imagenDireccion,
     );
   }
 }
@@ -27,6 +28,7 @@ class AddRoutineParams {
   final DateTime creationDate;
   final bool done;
   final int color;
+  final String imagenDireccion;
 
   AddRoutineParams({
     required this.name,
@@ -34,5 +36,6 @@ class AddRoutineParams {
     required this.creationDate,
     required this.done,
     required this.color,
+    required this.imagenDireccion,
   });
 }

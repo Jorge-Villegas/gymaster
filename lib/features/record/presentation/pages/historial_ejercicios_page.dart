@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gymaster/core/generated/assets.gen.dart';
-import 'package:gymaster/features/record/presentation/pages/detalle_ejercicio.dart';
+import 'package:gymaster/features/record/presentation/pages/detalle_ejercicio_page.dart';
 import 'package:gymaster/shared/utils/snackbar_helper.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class HistorialScreen extends StatefulWidget {
+class HistorialEjerciciosPage extends StatefulWidget {
   @override
-  _HistorialScreenState createState() => _HistorialScreenState();
+  _HistorialEjerciciosPageState createState() =>
+      _HistorialEjerciciosPageState();
 }
 
-class _HistorialScreenState extends State<HistorialScreen>
+class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
     with SingleTickerProviderStateMixin {
   DateTime selectedDate = DateTime.now();
   CalendarFormat _calendarFormat = CalendarFormat.month;

@@ -93,6 +93,7 @@ class DatabaseHelper {
         fecha_creacion TEXT NOT NULL,
         realizado INTEGER NOT NULL,
         color INTEGER NOT NULL,
+        imagen_direccion TEXT,
         fecha_realizacion TEXT,
         estado INTEGER NOT NULL
       );

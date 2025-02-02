@@ -146,6 +146,7 @@ class _ListaRutinasPageState extends State<ListaRutinasPage> {
                                 fechaCreacion: rutina.fechaCreacion,
                                 echo: rutina.echo,
                                 color: rutina.color,
+                                imagenDireccion: rutina.imagenDireccion,
                               );
 
                               // Limita el retraso máximo a 1500 milisegundos (15 * 100)
@@ -158,6 +159,7 @@ class _ListaRutinasPageState extends State<ListaRutinasPage> {
                                   color: rutina.color,
                                   title: rutina.name,
                                   cantidadEjerciciosPorSeries: cantidadTexto,
+                                  imagenDireccion: rutina.imagenDireccion,
                                   onTap: () {
                                     context
                                         .push('/rutina/detalle/${rutina.id!}');

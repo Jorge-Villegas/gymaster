@@ -11,6 +11,7 @@ class Rutina {
   int realizado;
   int color;
   String? fechaRealizacion;
+  String imageDireccion;
   int estado;
 
   Rutina({
@@ -22,6 +23,7 @@ class Rutina {
     required this.color,
     this.fechaRealizacion,
     required this.estado,
+    required this.imageDireccion,
   });
 
   // Convierte un JSON a un objeto Rutina
@@ -35,6 +37,7 @@ class Rutina {
       color: json['color'],
       fechaRealizacion: json['fecha_realizacion'],
       estado: json['estado'],
+      imageDireccion: json['imagen_direccion'],
     );
   }
 
@@ -49,11 +52,12 @@ class Rutina {
       'color': color,
       'fecha_realizacion': fechaRealizacion,
       'estado': estado,
+      'imagen_direccion': imageDireccion,
     };
   }
 
   @override
   String toString() {
-    return 'Rutina{id: $id, nombre: $nombre, descripcion: $descripcion, fechaCreacion: $fechaCreacion, realizado: $realizado, color: $color, fechaRealizacion: $fechaRealizacion, estado: $estado}';
+    return 'Rutina{id: $id, nombre: $nombre, descripcion: $descripcion, fechaCreacion: $fechaCreacion, realizado: $realizado, color: $color, fechaRealizacion: $fechaRealizacion, estado: $estado, imagen_direccion: $imageDireccion}';
   }
 }

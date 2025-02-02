@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gymaster/shared/utils/text_formatter.dart';
 
 class RoutineCard extends StatelessWidget {
-  final Function onTap;
+  final VoidCallback onTap;
   final String cantidadEjerciciosPorSeries;
   final String title;
   final int color;
+  final String? imagenDireccion;
 
   const RoutineCard({
     super.key,
@@ -13,56 +15,45 @@ class RoutineCard extends StatelessWidget {
     required this.title,
     required this.onTap,
     required this.cantidadEjerciciosPorSeries,
+    this.imagenDireccion,
   });
 
   @override
   Widget build(BuildContext context) {
-    Color colorTitle = Colors.black;
-    Color colorSubtitle = Colors.black45;
+    const Color colorTitle = Colors.black;
+    const Color colorSubtitle = Colors.black45;
 
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        shape: BoxShape.rectangle,
-        backgroundBlendMode: BlendMode.srcOver,
-        color: Color(color),
-        // gradient: LinearGradient(
-        //   begin: Alignment.topLeft,
-        //   end: Alignment.bottomRight,
-        //   colors: [
-        //     Color.lerp(Color(color), Colors.black, 0.2)!,
-        //     Color.lerp(Color(color), Colors.black, 0.2)!,
-        //   ],
-        // ),
-      ),
+    return GestureDetector(
+      onTap: () => onTap(),
       child: Stack(
-        children: [
-          Positioned(
-            top: 0,
-            right: 0,
-            child: _PinkBox(color: Color(color)),
+        children: <Widget>[
+          _BotonGordoBackground(
+            imagenDireccion ?? 'assets/default.svg',
+            Color(color),
+            Color(color),
           ),
-          ListTile(
-            contentPadding: const EdgeInsets.all(20),
-            title: Text(
-              TextFormatter.capitalize(title),
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: colorTitle,
+          Positioned.fill(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    TextFormatter.capitalize(title),
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: colorTitle,
+                    ),
+                  ),
+                  Text(
+                    cantidadEjerciciosPorSeries,
+                    style: const TextStyle(color: colorSubtitle, fontSize: 18),
+                  ),
+                ],
               ),
             ),
-            subtitle: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5),
-              child: Text(
-                cantidadEjerciciosPorSeries,
-                style: TextStyle(
-                  fontSize: 15,
-                  color: colorSubtitle,
-                ),
-              ),
-            ),
-            onTap: () => onTap(),
           ),
         ],
       ),
@@ -70,36 +61,50 @@ class RoutineCard extends StatelessWidget {
   }
 }
 
-class _PinkBox extends StatelessWidget {
-  final Color color;
+class _BotonGordoBackground extends StatelessWidget {
+  final String imagenDireccion;
+  final Color color1;
+  final Color color2;
 
-  const _PinkBox({
-    required this.color,
-  });
+  const _BotonGordoBackground(this.imagenDireccion, this.color1, this.color2);
 
   @override
   Widget build(BuildContext context) {
-    double size = 110;
-    return Transform.rotate(
-      angle: 0.5,
-      child: Container(
-        width: size * 1.618033988,
-        height: size * 1.618033988,
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.only(
-            topRight: Radius.circular(50),
-            bottomRight: Radius.circular(50),
-            bottomLeft: Radius.circular(50),
-            topLeft: Radius.circular(50),
+    return Container(
+      width: double.infinity,
+      height: 100,
+      margin: const EdgeInsets.all(0),
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            offset: const Offset(4, 6),
+            blurRadius: 10,
           ),
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              color.withOpacity(0.75),
-              Colors.white.withOpacity(0.5),
-            ],
-          ),
+        ],
+        borderRadius: BorderRadius.circular(15),
+        gradient: LinearGradient(
+          colors: [color1, color2],
+        ),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(15),
+        child: Stack(
+          children: [
+            Positioned(
+              right: -20,
+              top: -20,
+              child: SvgPicture.asset(
+                imagenDireccion,
+                width: 150,
+                height: 150,
+                colorFilter: ColorFilter.mode(
+                  color1.withOpacity(0.8),
+                  BlendMode.srcATop,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

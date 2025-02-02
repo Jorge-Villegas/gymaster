@@ -29,7 +29,6 @@ Future<void> main() async {
   runApp(const Proveedores());
 }
 
-/// Widget que proporciona los proveedores de Bloc a la aplicación.
 class Proveedores extends StatelessWidget {
   const Proveedores({super.key});
   @override
@@ -56,7 +55,6 @@ class Proveedores extends StatelessWidget {
   }
 }
 
-/// Widget principal de la aplicación.
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 

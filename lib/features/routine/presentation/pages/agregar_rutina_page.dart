@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/generated/assets.gen.dart';
 import 'package:gymaster/features/routine/domain/entities/routine.dart';
 import 'package:gymaster/features/routine/presentation/cubits/rutina/routine_cubit.dart';
+import 'package:gymaster/shared/utils/snackbar_helper.dart';
 
 class AgregarRutinaPage extends StatefulWidget {
   const AgregarRutinaPage({super.key});
@@ -14,6 +15,18 @@ class AgregarRutinaPage extends StatefulWidget {
 }
 
 class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
+  String selectedSvg = Assets.icons.otros.biceps.path;
+  List<String> svgIcons = [
+    Assets.icons.otros.biceps.path,
+    Assets.icons.otros.bicicletaDeSpinning.path,
+    Assets.icons.otros.estirar.path,
+    Assets.icons.otros.gymEquipamiento.path,
+    Assets.icons.otros.pantorrillas.path,
+    Assets.icons.otros.pierna.path,
+    Assets.icons.otros.pesas.path,
+    Assets.icons.otros.pesas1.path,
+    Assets.icons.otros.manosConOpesas.path,
+  ];
   List<int> colors = [
     0xFFF48FB1,
     0xFFB39DDB,
@@ -57,14 +70,12 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
   void _onSave() async {
     final nombre = textController.text.trim();
     if (nombre.isEmpty) {
-      setState(() {
-        errorMessage = 'El nombre de la rutina es requerido';
-      });
+      SnackbarHelper().showCustomSnackBar(
+        context,
+        "El nombre de la rutina es requerido",
+        SnackBarType.error,
+      );
       return;
-    } else {
-      // setState(() {
-      //   errorMessage = null;
-      // });
     }
 
     final rutina = Routine(
@@ -74,6 +85,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
       color: selectedColor.value,
       description: '',
       cantidadEjercicios: 0,
+      imagenDireccion: selectedSvg,
     );
 
     final routineCubit = BlocProvider.of<RoutineCubit>(context);
@@ -84,6 +96,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
       creationDate: rutina.fechaCreacion,
       done: rutina.echo,
       color: rutina.color,
+      imagenDireccion: selectedSvg,
     );
 
     if (routineCubit.state is RoutineAddSuccess) {
@@ -109,161 +122,176 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
         ),
         title: const Text('Agregar Rutina'),
       ),
-      body: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height / 1,
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Expanded(
-              child: Container(
-                color: selectedColor,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      Assets.icons.logo.path,
-                      colorFilter: const ColorFilter.mode(
-                        Colors.black,
-                        BlendMode.srcIn,
-                      ),
-                      width: 100,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: TextField(
-                        controller: textController,
-                        textAlign: TextAlign.center,
-                        autofocus: true,
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        decoration: const InputDecoration(
-                          hintText: 'Nombre de la rutina',
-                          border: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          errorBorder: InputBorder.none,
-                          disabledBorder: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Expanded(
+            Container(
+              height: 300,
+              color: selectedColor,
               child: Column(
-                mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  SizedBox(
-                    height: 20,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: Text(
-                        errorMessage ?? '',
-                        style: const TextStyle(
-                          color: Colors.red,
-                        ),
-                      ),
+                  SvgPicture.asset(
+                    Assets.icons.logo.path,
+                    colorFilter: const ColorFilter.mode(
+                      Colors.black,
+                      BlendMode.srcIn,
                     ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 15,
-                    ),
-                    child: Text(
-                      'SELECCIONE UN COLOR',
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.deepPurple,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: GridView.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 5,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                      ),
-                      itemCount: colors.length,
-                      itemBuilder: (context, index) {
-                        final color = Color(colors[index]);
-                        return GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              selectedColor = color;
-                            });
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: color,
-                              borderRadius: BorderRadius.circular(
-                                  10), // Bordes redondeados
-                            ),
-                            child: const Icon(
-                              Icons.color_lens,
-                              color: Colors.white,
-                            ),
-                          ),
-                        );
-                      },
-                    ),
+                    width: 100,
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 15,
-                    ),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (textController.text.isEmpty) {
-                          setState(() {
-                            errorMessage =
-                                'El nombre de la rutina no puede estar vacio';
-                          });
-                        } else {
-                          _onSave();
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF8870FF),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 15,
-                          vertical: 15,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: TextField(
+                      controller: textController,
+                      textAlign: TextAlign.center,
+                      autofocus: true,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
                       ),
-                      child: const Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            Icons.add,
-                            color: Colors.white,
-                          ), // Icono del botón
-                          SizedBox(width: 10),
-                          Text(
-                            'Agregar',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
+                      decoration: const InputDecoration(
+                        hintText: 'Nombre de la rutina',
+                        border: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              errorMessage ?? '',
+              style: const TextStyle(
+                color: Colors.red,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 20),
+            const Text(
+              'SELECCIONE UN COLOR',
+              style: TextStyle(
+                fontSize: 15,
+                color: Colors.deepPurple,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 10),
+            Expanded(
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 5,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                ),
+                itemCount: colors.length,
+                itemBuilder: (context, index) {
+                  final color = Color(colors[index]);
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selectedColor = color;
+                      });
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: color,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Icon(
+                        Icons.color_lens,
+                        color: Colors.white,
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+            const SizedBox(height: 20),
+            const Text(
+              'SELECCIONE UN ICONO',
+              style: TextStyle(
+                fontSize: 15,
+                color: Colors.deepPurple,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 10),
+            Expanded(
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 5,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                ),
+                itemCount: svgIcons.length,
+                itemBuilder: (context, index) {
+                  final svgPath = svgIcons[index];
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selectedSvg = svgPath;
+                      });
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: selectedSvg == svgPath
+                            ? Colors.deepPurple
+                            : Colors.grey[200],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Center(
+                        child: SvgPicture.asset(
+                          svgPath,
+                          width: 40,
+                          height: 40,
+                          colorFilter: ColorFilter.mode(
+                            selectedSvg == svgPath
+                                ? Colors.white
+                                : Colors.black54,
+                            BlendMode.srcIn,
                           ),
-                        ],
+                        ),
                       ),
                     ),
-                  )
+                  );
+                },
+              ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _onSave,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF8870FF),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 15,
+                  vertical: 15,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              child: const Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                  SizedBox(width: 10),
+                  Text(
+                    'Agregar',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ],
               ),
             ),

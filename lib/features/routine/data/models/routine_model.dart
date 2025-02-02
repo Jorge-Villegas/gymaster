@@ -10,6 +10,7 @@ class RoutineModel extends Routine {
     required super.echo,
     required super.color,
     required super.cantidadEjercicios,
+    required super.imagenDireccion,
   });
 
   factory RoutineModel.fromJson(Map<String, dynamic> map) {
@@ -21,6 +22,7 @@ class RoutineModel extends Routine {
       echo: map['done'],
       color: map['color'],
       cantidadEjercicios: 0,
+      imagenDireccion: map['imagenDireccion'],
     );
   }
 
@@ -34,6 +36,7 @@ class RoutineModel extends Routine {
       'done': echo,
       'color': color,
       'cantidadEjercicios': cantidadEjercicios,
+      'imagenDireccion': imagenDireccion,
     };
   }
 
@@ -49,6 +52,7 @@ class RoutineModel extends Routine {
       echo: serieDB.estado == 1,
       color: serieDB.color,
       cantidadEjercicios: cantidadEjercicios ?? 0,
+      imagenDireccion: serieDB.imageDireccion,
     );
   }
 }
