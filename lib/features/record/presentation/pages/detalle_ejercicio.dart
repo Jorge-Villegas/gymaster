@@ -3,7 +3,6 @@ import 'package:gymaster/features/record/presentation/pages/pages.dart';
 import 'package:gymaster/features/routine/presentation/widgets/lista_series_widget.dart';
 import 'package:gymaster/shared/utils/snackbar_helper.dart';
 import 'package:gymaster/shared/widgets/reusable_table.dart';
-import 'package:iconsax_plus/iconsax_plus.dart';
 
 class DetalleEjercicioPage extends StatefulWidget {
   final RecordEjercicios recordEjercicios;

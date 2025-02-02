@@ -20,7 +20,6 @@ class _HistorialScreenState extends State<HistorialScreen>
 
   // Variables para controlar mensajes y clics
   bool _isMessageShown = false; // Evita mensajes repetidos
-  DateTime? _lastClickTime; // Controla el debouncing de clics
 
   final List<RecordRutina> _rutinas = [
     RecordRutina(
@@ -632,7 +631,6 @@ class _HistorialScreenState extends State<HistorialScreen>
     }
 
      */
-    _lastClickTime = now;
 
     DateTime nextDate = selectedDate.add(const Duration(days: 1));
     bool foundNextRoutine = false;
@@ -669,7 +667,6 @@ class _HistorialScreenState extends State<HistorialScreen>
       return; // Ignorar clics rápidos
     }
      */
-    _lastClickTime = now;
 
     DateTime previousDate = selectedDate.subtract(const Duration(days: 1));
     bool foundPreviousRoutine = false;

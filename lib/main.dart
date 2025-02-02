@@ -16,7 +16,6 @@ import 'package:gymaster/features/routine/presentation/cubits/serie/serie_cubit.
 import 'package:gymaster/features/setting/presentation/cubit/setting_cubit.dart';
 import 'package:gymaster/features/setting/presentation/cubit/setting_state.dart';
 import 'package:gymaster/init_dependencies.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,8 +24,6 @@ Future<void> main() async {
 
   // Inicializa la base de datos
   await DatabaseHelper.instance.database;
-
-  final sharedPreferences = await SharedPreferences.getInstance();
 
   // Ejecuta la aplicación
   runApp(const Proveedores());

@@ -110,7 +110,6 @@ class DetalleEjercicioScreen extends StatelessWidget {
     final ejercicioIndex = state.ejercicioIndex;
     final ejercicio = state.ejerciciosDeRutina.ejercicios[state.ejercicioIndex];
     final textTheme = Theme.of(context).textTheme;
-    final serieActualIndex = state.serieIndex;
 
     // Preparar los datos para la tabla genérica
     final tableData = ejercicio.series.map((serie) {
