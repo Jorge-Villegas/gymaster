@@ -6,6 +6,8 @@ import 'package:gymaster/core/generated/assets.gen.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
 import 'package:gymaster/shared/utils/text_formatter.dart';
 import 'package:gymaster/shared/utils/verificador_tipo_archivo.dart';
+import 'package:gymaster/shared/widgets/custom_icon_button.dart';
+import 'package:gymaster/shared/widgets/reusable_table.dart';
 
 class DetalleEjercicioScreen extends StatelessWidget {
   const DetalleEjercicioScreen({super.key});
@@ -106,14 +108,22 @@ class DetalleEjercicioScreen extends StatelessWidget {
 
     final ejercicios = state.ejerciciosDeRutina.ejercicios;
     final ejercicioIndex = state.ejercicioIndex;
-
     final ejercicio = state.ejerciciosDeRutina.ejercicios[state.ejercicioIndex];
     final textTheme = Theme.of(context).textTheme;
     final serieActualIndex = state.serieIndex;
 
+    // Preparar los datos para la tabla genérica
+    final tableData = ejercicio.series.map((serie) {
+      return [
+        '${ejercicio.series.indexOf(serie) + 1}', // Serie
+        '${serie.peso} kg', // Peso
+        '${serie.repeticiones} x', // Repeticiones
+      ];
+    }).toList();
+
     return Container(
       color: const Color.fromARGB(255, 240, 240, 240),
-      height: 300,
+      height: 300, // Altura fija para el contenedor
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
@@ -160,138 +170,39 @@ class DetalleEjercicioScreen extends StatelessWidget {
             ),
           ),
           Expanded(
-            flex: 8,
+            flex: 8, // Ocupa la mayor parte del espacio disponible
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
+                // Contenedor para la imagen
                 Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
                   child: _construirWidgetImagen(imagenDireccion),
                 ),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                  child: DataTable(
-                    columnSpacing: 10.0,
-                    dataRowMinHeight: 30.0,
-                    dataRowMaxHeight: 30.0,
-                    dividerThickness: 0.0,
-                    columns: const <DataColumn>[
-                      DataColumn(
-                        label: Expanded(
-                          child: Text(
-                            'Serie',
-                            style: TextStyle(
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
-                      ),
-                      DataColumn(
-                        label: Expanded(
-                          child: Text(
-                            'Peso',
-                            style: TextStyle(
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
-                      ),
-                      DataColumn(
-                        label: Expanded(
-                          child: Text(
-                            'Rep..',
-                            style: TextStyle(
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                    rows: ejercicio.series.asMap().entries.map((entry) {
-                      int index = entry.key;
-                      final serie = entry.value;
-                      final isCurrentSerie = index == serieActualIndex;
-
-                      final textStyle = TextStyle(
-                        fontSize: 10,
-                        color: isCurrentSerie
-                            ? Colors.indigo
-                            : (serie.realizado ? Colors.black : Colors.grey),
-                      );
-
-                      return DataRow(
-                        color: WidgetStateProperty.resolveWith<Color?>(
-                          (Set<WidgetState> states) {
-                            if (isCurrentSerie) {
-                              return Colors.grey.withOpacity(0.1);
-                            }
-                            return null;
-                          },
-                        ),
-                        cells: <DataCell>[
-                          DataCell(
-                            AnimatedSwitcher(
-                              duration: const Duration(milliseconds: 300),
-                              transitionBuilder: (
-                                Widget child,
-                                Animation<double> animation,
-                              ) {
-                                return ScaleTransition(
-                                  scale: animation,
-                                  child: child,
-                                );
-                              },
-                              child: Text(
-                                '${index + 1}',
-                                key: ValueKey<int>(index + 1),
-                                style: textStyle,
-                              ),
-                            ),
-                          ),
-                          DataCell(
-                            AnimatedSwitcher(
-                              duration: const Duration(milliseconds: 300),
-                              transitionBuilder: (
-                                Widget child,
-                                Animation<double> animation,
-                              ) {
-                                return ScaleTransition(
-                                  scale: animation,
-                                  child: child,
-                                );
-                              },
-                              child: Text(
-                                serie.peso.toString(),
-                                key: ValueKey<double>(serie.peso),
-                                style: textStyle,
-                              ),
-                            ),
-                          ),
-                          DataCell(
-                            AnimatedSwitcher(
-                              duration: const Duration(milliseconds: 300),
-                              transitionBuilder: (
-                                Widget child,
-                                Animation<double> animation,
-                              ) {
-                                return ScaleTransition(
-                                  scale: animation,
-                                  child: child,
-                                );
-                              },
-                              child: Text(
-                                serie.repeticiones.toString(),
-                                key: ValueKey<int>(serie.repeticiones),
-                                style: textStyle,
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    }).toList(),
+                // Contenedor para la tabla
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 10,
+                    ),
+                    child: CustomDataTable(
+                      headers: const ['Serie', 'Peso', 'Reps'],
+                      data: tableData,
+                      showActions: false,
+                      backgroundColor: Colors.transparent,
+                      headerColor: Colors.transparent,
+                      bodyTextColor: Colors.black,
+                      headerTextColor: Colors.black,
+                      cellTextAlign: TextAlign.center,
+                      rowHeight: 20.0,
+                      rowColors: ejercicio.series
+                          .map((serie) =>
+                              serie.realizado ? Colors.black : Colors.grey)
+                          .toList(),
+                    ),
                   ),
                 ),
               ],
@@ -507,37 +418,6 @@ class DetalleEjercicioScreen extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class CustomIconButton extends StatelessWidget {
-  final Widget icon;
-  final Color borderColor;
-  final Color backgroundColor;
-  final VoidCallback onPressed;
-
-  const CustomIconButton({
-    super.key,
-    required this.icon,
-    required this.borderColor,
-    required this.backgroundColor,
-    required this.onPressed,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return OutlinedButton(
-      onPressed: onPressed,
-      style: OutlinedButton.styleFrom(
-        side: BorderSide(color: borderColor, width: 2),
-        backgroundColor: backgroundColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
-        ),
-        padding: const EdgeInsets.all(16),
-      ),
-      child: icon,
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:gymaster/features/record/presentation/pages/pages.dart';
 import 'package:gymaster/features/routine/presentation/pages/agregar_ejercicios_page.dart';
 import 'package:gymaster/features/routine/presentation/pages/agregar_ejercicios_rutina_page.dart';
 import 'package:gymaster/features/routine/presentation/pages/agregar_rutina_page.dart';
@@ -114,6 +115,13 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/settings',
       builder: (context, state) => SettingsPage(),
+    ),
+    //-----------------------------------------
+    //                Historial
+    //-----------------------------------------
+    GoRoute(
+      path: '/record',
+      builder: (context, state) => HistorialScreen(),
     ),
   ],
 );

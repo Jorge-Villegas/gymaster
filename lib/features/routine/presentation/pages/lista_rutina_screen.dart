@@ -20,7 +20,7 @@ class ListaRutinasPage extends StatefulWidget {
 }
 
 class _ListaRutinasPageState extends State<ListaRutinasPage> {
-  int _currentIndex = 0;
+  int currentIndex = 0;
 
   _cargarRutinas() async {
     final routineCubit = BlocProvider.of<RoutineCubit>(context);
@@ -36,7 +36,7 @@ class _ListaRutinasPageState extends State<ListaRutinasPage> {
 
   void _onTabTapped(int index) {
     setState(() {
-      _currentIndex = index;
+      currentIndex = index;
     });
   }
 

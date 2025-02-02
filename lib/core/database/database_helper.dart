@@ -30,11 +30,17 @@ class DatabaseHelper {
 
   // Inicializa la base de datos
   Future<Database> _initDatabase() async {
-    // Inicializa FFI si es necesario
-    //sqfliteFfiInit();
+    /*
+    if (kIsWeb) {
+      // Usa sqflite_common_ffi_web para la web
+      databaseFactory = databaseFactoryFfiWeb;
+    } else {
+      // Usa sqflite_common_ffi para móvil y escritorio
+      sqfliteFfiInit();
+      databaseFactory = databaseFactoryFfi;
+    }
+     */
 
-    // Cambia la fábrica de base de datos predeterminada
-    //databaseFactory = databaseFactoryFfi;
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, _databaseName);
 

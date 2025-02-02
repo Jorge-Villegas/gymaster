@@ -12,7 +12,8 @@ class RoutineLocalDataSource {
   Future<List<Rutina>> getAllRutinas() async {
     try {
       final db = await DatabaseHelper.instance.database;
-      final rutinas = await db.query(DatabaseHelper.tbRutina,orderBy: 'fecha_creacion');
+      final rutinas =
+          await db.query(DatabaseHelper.tbRutina, orderBy: 'fecha_creacion');
       return rutinas.map((rutina) => Rutina.fromJson(rutina)).toList();
     } catch (e) {
       throw LocalFailure();
@@ -152,7 +153,9 @@ class RoutineLocalDataSource {
   }
 
   Future<List<Serie>> getSeriesByEjercicioIdAndRutinaId(
-      String ejercicioId, String rutinaId,) async {
+    String ejercicioId,
+    String rutinaId,
+  ) async {
     try {
       final db = await DatabaseHelper.instance.database;
       final series = await db.rawQuery('''

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gymaster/features/record/presentation/pages/pages.dart';
 import 'package:gymaster/features/routine/presentation/pages/lista_rutina_screen.dart';
 import 'package:gymaster/features/setting/presentation/pages/setting_page.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
@@ -30,8 +31,8 @@ class _BottomNavigationBarExampleState
 
   final List<Widget> _pages = <Widget>[
     const ListaRutinasPage(),
-    BusinessPage(),
-    SchoolPage(),
+    const BusinessPage(),
+    HistorialScreen(),
     SettingPage(),
   ];
 
@@ -59,7 +60,7 @@ class _BottomNavigationBarExampleState
           ),
           BottomNavigationBarItem(
             icon: Icon(IconsaxPlusLinear.book),
-            label: 'School',
+            label: 'Historial',
             activeIcon: Icon(IconsaxPlusBold.book),
           ),
           BottomNavigationBarItem(
