@@ -97,6 +97,7 @@ class RoutineCubit extends Cubit<RoutineState> {
 
   void searchRoutineByName(String name) async {
     emit(RoutineLoading());
+    await Future.delayed(const Duration(seconds: 5));
     final result = await getRoutineByNameUseCase(RoutineNameParams(name: name));
     result.fold(
       (failure) => emit(RoutineError('Error al buscar rutinas')),
