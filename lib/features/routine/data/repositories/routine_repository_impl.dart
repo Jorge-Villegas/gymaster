@@ -296,11 +296,24 @@ class RoutineRepositoryImpl implements RoutineRepository {
   }
 
   @override
-  Future<Either<Failure, List<Routine>>> getRoutineByName({
+  Future<Either<Failure, List<RoutineModel>>> getRoutineByName({
     required String name,
   }) async {
     try {
-      return left(Failure());
+      final result = await localDataSource.getRutinasByNombre(name);
+      if (result.isEmpty) {
+        return left(Failure());
+      }
+      List<RoutineModel> routines = [];
+      for (var rutina in result) {
+        final cantEjercicio =
+            await localDataSource.getEjerciciosByRutinaId(rutina.id!);
+        routines.add(RoutineModel.fromDatabase(
+          serieDB: rutina,
+          cantidadEjercicios: cantEjercicio.length,
+        ));
+      }
+      return right(routines);
     } on LocalFailure {
       return Left(LocalFailure());
     }

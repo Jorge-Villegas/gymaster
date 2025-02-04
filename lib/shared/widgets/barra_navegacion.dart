@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gymaster/features/record/presentation/pages/historial_ejercicios_page.dart';
-import 'package:gymaster/features/routine/presentation/pages/lista_rutina_screen.dart';
+import 'package:gymaster/features/routine/presentation/pages/lista_rutina_page.dart';
 import 'package:gymaster/features/setting/presentation/pages/setting_page.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 

@@ -34,3 +34,9 @@ final class RoutineError extends RoutineState {
 
   RoutineError(this.message);
 }
+
+final class RoutineGetByNameSuccess extends RoutineState {
+  final List<Routine> routines;
+
+  RoutineGetByNameSuccess(this.routines);
+}

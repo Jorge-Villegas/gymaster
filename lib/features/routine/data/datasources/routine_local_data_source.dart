@@ -7,6 +7,7 @@ import 'package:gymaster/core/database/models/rutina.dart';
 import 'package:gymaster/core/database/models/serie.dart';
 import 'package:gymaster/core/error/failures.dart';
 import 'package:gymaster/features/routine/data/models/ejercicios_por_musculo.dart';
+import 'package:gymaster/features/routine/data/models/routine_model.dart';
 
 class RoutineLocalDataSource {
   Future<List<Rutina>> getAllRutinas() async {
@@ -205,6 +206,19 @@ class RoutineLocalDataSource {
         whereArgs: [serie.id],
       );
       return result > 0;
+    } catch (e) {
+      throw LocalFailure();
+    }
+  }
+
+  Future<List<Rutina>> getRutinasByNombre(String nombre) async {
+    try {
+      final db = await DatabaseHelper.instance.database;
+      final rutinas = await db.rawQuery('''
+            SELECT * FROM ${DatabaseHelper.tbRutina}
+            WHERE nombre LIKE ?;
+          ''', ['%$nombre%']);
+      return rutinas.map((rutina) => Rutina.fromJson(rutina)).toList();
     } catch (e) {
       throw LocalFailure();
     }

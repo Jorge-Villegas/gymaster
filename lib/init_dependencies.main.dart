@@ -33,12 +33,14 @@ void _initRoutine() {
     ..registerFactory(() => AddEjercicioRutinaUsecase(serviceLocator()))
     ..registerFactory(() => GetAllEjerciciosByRutinaUseCase(serviceLocator()))
     ..registerFactory(() => UpdateSerieUseCase(serviceLocator()))
+    ..registerFactory(() => GetRoutineByNameUseCase(serviceLocator()))
 
     //Cubit
     ..registerFactory(() => RoutineCubit(
           addRoutineUseCase: serviceLocator(),
           getAllRoutineUseCase: serviceLocator(),
           deleteRoutineUseCase: serviceLocator(),
+          getRoutineByNameUseCase: serviceLocator(),
         ))
     ..registerFactory(() => MusculoCubit(
           getAllMusculoUsecase: serviceLocator(),

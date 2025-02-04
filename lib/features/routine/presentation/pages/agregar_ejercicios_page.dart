@@ -44,7 +44,6 @@ class AgregarEjerciciosPage extends StatelessWidget {
                 final musculo = state.musculos[i];
                 final isSvg =
                     VerificadorTipoArchivo.esSvg(musculo.imagenDirecion);
-                debugPrint('----------------->  ${isSvg.toString()}');
                 return Container(
                   margin: const EdgeInsets.symmetric(vertical: 2.5),
                   child: ListTile(

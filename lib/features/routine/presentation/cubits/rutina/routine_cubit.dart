@@ -5,6 +5,7 @@ import 'package:gymaster/features/routine/domain/usecases/delete_routine_usecase
 import 'package:gymaster/features/routine/domain/usecases/get_all_routine_usecase.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:gymaster/features/routine/domain/usecases/get_routine_by_name_usecase.dartget_routine_by_name_usecase.dart';
 
 part 'routine_state.dart';
 
@@ -12,11 +13,13 @@ class RoutineCubit extends Cubit<RoutineState> {
   final AddRoutineUseCase addRoutineUseCase;
   final GetAllRoutineUsecase getAllRoutineUseCase;
   final DeleteRoutineUseCase deleteRoutineUseCase;
+  final GetRoutineByNameUseCase getRoutineByNameUseCase;
 
   RoutineCubit({
     required this.addRoutineUseCase,
     required this.getAllRoutineUseCase,
     required this.deleteRoutineUseCase,
+    required this.getRoutineByNameUseCase,
   }) : super(RoutineInitial()) {
     getAllRoutine();
   }
@@ -89,6 +92,15 @@ class RoutineCubit extends Cubit<RoutineState> {
     result.fold(
       (l) => emit(RoutineError('Error al eliminar rutina')),
       (r) => emit(RoutineDeleteSuccess()),
+    );
+  }
+
+  void searchRoutineByName(String name) async {
+    emit(RoutineLoading());
+    final result = await getRoutineByNameUseCase(RoutineNameParams(name: name));
+    result.fold(
+      (failure) => emit(RoutineError('Error al buscar rutinas')),
+      (routines) => emit(RoutineGetByNameSuccess(routines)),
     );
   }
 }

@@ -5,7 +5,7 @@ import 'package:gymaster/features/routine/presentation/pages/agregar_ejercicios_
 import 'package:gymaster/features/routine/presentation/pages/agregar_rutina_page.dart';
 import 'package:gymaster/features/routine/presentation/pages/detalle_ejercicio_page.dart';
 import 'package:gymaster/features/routine/presentation/pages/detalle_rutina_page.dart';
-import 'package:gymaster/features/routine/presentation/pages/lista_rutina_screen.dart';
+import 'package:gymaster/features/routine/presentation/pages/lista_rutina_page.dart';
 import 'package:gymaster/features/routine/presentation/pages/listar_ejercicios_page.dart';
 import 'package:gymaster/features/setting/presentation/pages/setting_page.dart';
 import 'package:gymaster/shared/widgets/barra_navegacion.dart';
