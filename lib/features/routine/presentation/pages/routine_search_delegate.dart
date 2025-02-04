@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:gymaster/features/routine/presentation/cubits/rutina/routine_cubit.dart';
 import 'package:gymaster/features/routine/domain/entities/routine.dart';
 import 'package:gymaster/features/routine/presentation/widgets/routine_card.dart';
+import 'package:shimmer/shimmer.dart';
 
 class RoutineSearchDelegate extends SearchDelegate<Routine> {
   @override
@@ -78,7 +79,26 @@ class RoutineSearchDelegate extends SearchDelegate<Routine> {
     return BlocBuilder<RoutineCubit, RoutineState>(
       builder: (context, state) {
         if (state is RoutineLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return Shimmer.fromColors(
+            baseColor: Colors.grey[300]!,
+            highlightColor: Colors.grey[100]!,
+            period: const Duration(seconds: 2),
+            child: ListView.builder(
+              itemCount: 5, // Número de elementos de carga
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Container(
+                    height: 100,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                );
+              },
+            ),
+          );
         }
         if (state is RoutineError) {
           return Center(child: Text(state.message));

@@ -8,6 +8,7 @@ import 'package:gymaster/features/routine/presentation/pages/routine_search_dele
 import 'package:gymaster/features/routine/presentation/widgets/routine_card.dart';
 import 'package:gymaster/shared/widgets/loader.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ListaRutinasPage extends StatelessWidget {
   const ListaRutinasPage({super.key});
@@ -94,7 +95,26 @@ class ListaRutinasPage extends StatelessWidget {
         body: BlocBuilder<RoutineCubit, RoutineState>(
           builder: (context, state) {
             if (state is RoutineLoading) {
-              return const Loader();
+              return Shimmer.fromColors(
+                baseColor: Colors.grey[300]!,
+                highlightColor: Colors.grey[100]!,
+                period: const Duration(seconds: 1),
+                child: ListView.builder(
+                  itemCount: 5, // Número de elementos de carga
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Container(
+                        height: 100,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              );
             }
             if (state is RoutineError) {
               debugPrint(state.message);
