@@ -1,4 +1,14 @@
 import 'package:get_it/get_it.dart';
+import 'package:gymaster/core/database/database_helper.dart';
+import 'package:gymaster/features/record/data/implements/implements.dart';
+import 'package:gymaster/features/record/data/sources/record_local_data_source.dart';
+import 'package:gymaster/features/record/domain/repositories/repositories.dart';
+import 'package:gymaster/features/record/domain/usecases/delete_rutina_usecase.dart';
+import 'package:gymaster/features/record/domain/usecases/get_all_completed_routines_with_exercises.dart';
+import 'package:gymaster/features/record/domain/usecases/get_all_rutinas_usecase.dart';
+import 'package:gymaster/features/record/domain/usecases/get_rutina_by_id_usecase.dart';
+import 'package:gymaster/features/record/domain/usecases/save_rutina_usecase.dart';
+import 'package:gymaster/features/record/presentation/cubit/record_cubit.dart';
 import 'package:gymaster/features/routine/data/datasources/routine_local_data_source.dart';
 import 'package:gymaster/features/routine/data/repositories/routine_repository_impl.dart';
 import 'package:gymaster/features/routine/domain/repositories/rutine_repository.dart';

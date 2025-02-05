@@ -5,6 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:gymaster/app_router.dart';
 import 'package:gymaster/core/database/database_helper.dart';
 import 'package:gymaster/core/theme/app_theme.dart';
+import 'package:gymaster/features/record/presentation/cubit/record_cubit.dart';
 import 'package:gymaster/features/routine/presentation/cubits/agregar_series/agregar_series_cubit.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicio/ejercicio_cubit.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
@@ -49,6 +50,7 @@ class Proveedores extends StatelessWidget {
         BlocProvider(
             create: (_) => serviceLocator<RealizarEjercicioRutinaCubit>()),
         BlocProvider(create: (_) => serviceLocator<SettingCubit>()),
+        BlocProvider(create: (_) => serviceLocator<RecordCubit>()),
       ],
       child: const MyApp(),
     );

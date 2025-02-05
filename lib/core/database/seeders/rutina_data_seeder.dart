@@ -148,8 +148,63 @@ Future<List<Rutina>> generateFakeRutinas(DatabaseHelper dbHelper) async {
     0xFFB2EBF2
   ];
 
+  List<DateTime> fechasCreacion = [
+    DateTime(2024, 11, 5),
+    DateTime(2024, 11, 10),
+    DateTime(2024, 11, 15),
+    DateTime(2024, 11, 20),
+    DateTime(2024, 11, 25),
+    DateTime(2024, 11, 30),
+    DateTime(2024, 12, 5),
+    DateTime(2024, 12, 10),
+    DateTime(2024, 12, 15),
+    DateTime(2024, 12, 20),
+    DateTime(2024, 12, 25),
+    DateTime(2024, 12, 30),
+    DateTime(2025, 1, 4),
+    DateTime(2025, 1, 9),
+    DateTime(2025, 1, 14),
+    DateTime(2025, 1, 19),
+    DateTime(2025, 1, 24),
+    DateTime(2025, 1, 29),
+    DateTime(2024, 11, 6),
+    DateTime(2024, 11, 11),
+    DateTime(2024, 11, 16),
+    DateTime(2024, 11, 21),
+    DateTime(2024, 11, 26),
+    DateTime(2024, 12, 1),
+    DateTime(2024, 12, 6),
+    DateTime(2024, 12, 11),
+    DateTime(2024, 12, 16),
+    DateTime(2024, 12, 21),
+    DateTime(2024, 12, 26),
+    DateTime(2024, 12, 31),
+    DateTime(2025, 1, 5),
+    DateTime(2025, 1, 10),
+    DateTime(2025, 1, 15),
+    DateTime(2025, 1, 20),
+    DateTime(2025, 1, 25),
+    DateTime(2024, 11, 7),
+    DateTime(2024, 11, 12),
+    DateTime(2024, 11, 17),
+    DateTime(2024, 11, 22),
+    DateTime(2024, 11, 27),
+    DateTime(2024, 12, 2),
+    DateTime(2024, 12, 7),
+    DateTime(2024, 12, 12),
+    DateTime(2024, 12, 17),
+    DateTime(2024, 12, 22),
+    DateTime(2024, 12, 27),
+    DateTime(2025, 1, 1),
+    DateTime(2025, 1, 6),
+    DateTime(2025, 1, 11),
+    DateTime(2025, 1, 16),
+    DateTime(2025, 1, 21),
+    DateTime(2025, 1, 26)
+  ];
+
   for (int i = 0; i < nombresRutinas.length; i++) {
-    DateTime fechaCreacion = faker.date.dateTime();
+    DateTime fechaCreacion = fechasCreacion[i];
     DateTime fechaRealizacion = fechaCreacion
         .add(Duration(days: faker.randomGenerator.integer(30, min: 1)));
 

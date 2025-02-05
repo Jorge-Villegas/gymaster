@@ -7,7 +7,7 @@ import 'package:gymaster/shared/utils/language.dart';
 class GetLanguageUseCase extends UseCase<String, NoParams> {
   final SettingRepository repository;
 
-  GetLanguageUseCase({required this.repository});
+  GetLanguageUseCase(this.repository);
 
   @override
   Future<Either<Failure, String>> call(NoParams params) async {

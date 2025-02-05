@@ -3,9 +3,16 @@ part of 'init_dependencies.dart';
 final serviceLocator = GetIt.instance;
 
 Future<void> initDependencies() async {
+  _initDatabaseHelper();
   _initRoutine();
   _initIdGenerator();
   _initSettings();
+  _initRecord();
+}
+
+void _initDatabaseHelper() {
+  serviceLocator
+      .registerLazySingleton<DatabaseHelper>(() => DatabaseHelper.instance);
 }
 
 void _initIdGenerator() {
@@ -71,10 +78,12 @@ void _initSettings() {
       () => SettingRepositoryImp(localDataSource: serviceLocator()),
     )
     // Use Case
-    ..registerFactory(() => SetThemeModeUseCase(repository: serviceLocator()))
-    ..registerFactory(() => GetThemeModeUseCase(repository: serviceLocator()))
-    ..registerFactory(() => SetLanguageUseCase(repository: serviceLocator()))
-    ..registerFactory(() => GetLanguageUseCase(repository: serviceLocator()))
+    ..registerFactory(() => SetThemeModeUseCase(serviceLocator()))
+    ..registerFactory(() => GetThemeModeUseCase(serviceLocator()))
+    ..registerFactory(() => SetLanguageUseCase(serviceLocator()))
+    ..registerFactory(() => GetLanguageUseCase(serviceLocator()))
+    ..registerCachedFactory(
+        () => GetAllCompletedRoutinesWithExercises(serviceLocator()))
 
     // Cubit
     ..registerFactory(() => SettingCubit(
@@ -83,4 +92,35 @@ void _initSettings() {
           setLanguageUseCase: serviceLocator(),
           setThemeModeUseCase: serviceLocator(),
         ));
+}
+
+void _initRecord() {
+  serviceLocator
+    // Data sources
+    ..registerFactory<RecordLocalDataSource>(
+        () => RecordLocalDataSource(databaseHelper: serviceLocator()))
+
+    // Cubit
+    ..registerFactory(() => RecordCubit(
+          getAllCompletedRoutinesWithExercises: serviceLocator(),
+          getAllRutinasUseCase: serviceLocator(),
+          getRutinaByIdUseCase: serviceLocator(),
+          saveRutinaUseCase: serviceLocator(),
+          deleteRutinaUseCase: serviceLocator(),
+        ))
+
+    // Use cases
+    ..registerLazySingleton(
+        () => GetAllRutinasUseCase(repository: serviceLocator()))
+    ..registerLazySingleton(
+        () => GetRutinaByIdUseCase(repository: serviceLocator()))
+    ..registerLazySingleton(
+        () => SaveRutinaUseCase(repository: serviceLocator()))
+    ..registerLazySingleton(
+        () => DeleteRutinaUseCase(repository: serviceLocator()))
+
+    // Repository
+    ..registerLazySingleton<RecordRepository>(
+      () => RecordRepositoryImpl(localDataSource: serviceLocator()),
+    );
 }

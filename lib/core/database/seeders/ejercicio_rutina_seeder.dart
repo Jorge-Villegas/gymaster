@@ -19,8 +19,11 @@ Future<void> generateData(DatabaseHelper dbHelper) async {
   for (var rutina in rutinasdb) {
     int cantidadEjercicios = faker.randomGenerator.integer(12, min: 8);
 
+    // Determinar si la rutina tendrá todos los ejercicios terminados o no terminados
+    bool rutinaTerminada = faker.randomGenerator.boolean();
+
     for (int i = 0; i < cantidadEjercicios; i++) {
-      //contar todas los ejercicio y escoger solo un ejercio aleatoreamente
+      // Contar todos los ejercicios y escoger solo un ejercicio aleatoriamente
       int totalEjercicios = ejercicios.length;
       int index = faker.randomGenerator.integer(totalEjercicios - 1, min: 0);
       var ejercicio = ejerciciosdb[index];
@@ -35,7 +38,7 @@ Future<void> generateData(DatabaseHelper dbHelper) async {
 
       int cantidadSeries = faker.randomGenerator.integer(5, min: 3);
 
-      for (int i = 0; i < cantidadSeries; i++) {
+      for (int j = 0; j < cantidadSeries; j++) {
         await db.insert(
           DatabaseHelper.tbSerie,
           {
@@ -43,7 +46,8 @@ Future<void> generateData(DatabaseHelper dbHelper) async {
             'peso': double.parse(
                 (faker.randomGenerator.decimal(scale: 50)).toStringAsFixed(2)),
             'repeticiones': faker.randomGenerator.integer(12, min: 1),
-            'realizado': faker.randomGenerator.integer(2), // 0 o 1
+            'realizado':
+                rutinaTerminada ? 1 : 0, // Todos terminados o no terminados
             'tiempo_descanso': faker.randomGenerator.integer(300, min: 30),
             'detalle_rutina_id': detalleRutinaId,
           },

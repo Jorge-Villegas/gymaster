@@ -6,7 +6,7 @@ import 'package:gymaster/features/setting/domain/repositories/repositories.dart'
 class GetThemeModeUseCase extends UseCase<bool, NoParams> {
   final SettingRepository repository;
 
-  GetThemeModeUseCase({required this.repository});
+  GetThemeModeUseCase(this.repository);
 
   @override
   Future<Either<Failure, bool>> call(NoParams params) async {

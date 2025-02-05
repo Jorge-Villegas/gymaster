@@ -7,7 +7,6 @@ import 'package:gymaster/core/database/models/rutina.dart';
 import 'package:gymaster/core/database/models/serie.dart';
 import 'package:gymaster/core/error/failures.dart';
 import 'package:gymaster/features/routine/data/models/ejercicios_por_musculo.dart';
-import 'package:gymaster/features/routine/data/models/routine_model.dart';
 
 class RoutineLocalDataSource {
   Future<List<Rutina>> getAllRutinas() async {

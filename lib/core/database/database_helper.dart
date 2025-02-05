@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:path/path.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -30,16 +32,10 @@ class DatabaseHelper {
 
   // Inicializa la base de datos
   Future<Database> _initDatabase() async {
-    /*
-    if (kIsWeb) {
-      // Usa sqflite_common_ffi_web para la web
-      databaseFactory = databaseFactoryFfiWeb;
-    } else {
-      // Usa sqflite_common_ffi para móvil y escritorio
+    if (Platform.isWindows) {
       sqfliteFfiInit();
       databaseFactory = databaseFactoryFfi;
     }
-     */
 
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, _databaseName);

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:gymaster/core/generated/assets.gen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:gymaster/features/record/presentation/cubit/record_cubit.dart';
+import 'package:gymaster/features/record/presentation/cubit/record_state.dart';
 import 'package:gymaster/features/record/presentation/pages/detalle_ejercicio_page.dart';
 import 'package:gymaster/shared/utils/snackbar_helper.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
@@ -18,347 +20,14 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
   DateTime selectedDate = DateTime.now();
   CalendarFormat _calendarFormat = CalendarFormat.month;
   bool _isCalendarVisible = false;
+  bool _isMessageShown = false;
 
-  // Variables para controlar mensajes y clics
-  bool _isMessageShown = false; // Evita mensajes repetidos
-
-  final List<RecordRutina> _rutinas = [
-    RecordRutina(
-      nombre: 'Rutina de Pecho',
-      fechaRealizada: DateTime(2025, 1, 8),
-      tiempoRealizado: '1h 30m',
-      color: 0xFFF48FB1,
-      ejercicios: [
-        RecordEjercicios(
-          nombre: 'Press de Pecho Plano con Barra de Pesas',
-          series: ['20x8', '25x8', '30x8', '35x8'],
-          iconoPath: Assets.imagenes.musculos.trapecio
-              .encogimientoDeHombrosConBarraDePesas.path,
-          seriesDelEjercicio: [
-            SeriesDelEjercicio(peso: 20, repeticiones: 8),
-            SeriesDelEjercicio(peso: 25, repeticiones: 8),
-            SeriesDelEjercicio(peso: 30, repeticiones: 8),
-            SeriesDelEjercicio(peso: 35, repeticiones: 8),
-          ],
-        ),
-        RecordEjercicios(
-          nombre: 'Cruzadas con Cable-Polea (de pie)',
-          series: ['30x8', '35x8', '40x8', '45x8', '50x8'],
-          iconoPath: Assets.imagenes.musculos.trapecio
-              .encogimientoDeHombrosConBarraDePesas.path,
-          seriesDelEjercicio: [
-            SeriesDelEjercicio(peso: 30, repeticiones: 8),
-            SeriesDelEjercicio(peso: 35, repeticiones: 8),
-            SeriesDelEjercicio(peso: 40, repeticiones: 8),
-            SeriesDelEjercicio(peso: 45, repeticiones: 8),
-            SeriesDelEjercicio(peso: 50, repeticiones: 8),
-          ],
-        ),
-      ],
-    ),
-    RecordRutina(
-      nombre: 'Rutina de Piernas',
-      fechaRealizada: DateTime(2025, 1, 15),
-      tiempoRealizado: '1h 45m',
-      color: 0xFFB39DDB,
-      ejercicios: [
-        RecordEjercicios(
-          nombre: 'Sentadillas con Barra',
-          series: ['50x8', '55x8', '60x8', '65x8'],
-          iconoPath: Assets.imagenes.musculos.trapecio
-              .encogimientoDeHombrosConBarraDePesas.path,
-          seriesDelEjercicio: [
-            SeriesDelEjercicio(peso: 50, repeticiones: 8),
-            SeriesDelEjercicio(peso: 55, repeticiones: 8),
-            SeriesDelEjercicio(peso: 60, repeticiones: 8),
-            SeriesDelEjercicio(peso: 65, repeticiones: 8),
-          ],
-        ),
-        RecordEjercicios(
-          nombre: 'Peso Muerto',
-          series: ['60x8', '65x8', '70x8', '75x8'],
-          iconoPath: Assets.imagenes.musculos.trapecio
-              .encogimientoDeHombrosConBarraDePesas.path,
-          seriesDelEjercicio: [
-            SeriesDelEjercicio(peso: 60, repeticiones: 8),
-            SeriesDelEjercicio(peso: 65, repeticiones: 8),
-            SeriesDelEjercicio(peso: 70, repeticiones: 8),
-            SeriesDelEjercicio(peso: 75, repeticiones: 8),
-          ],
-        ),
-      ],
-    ),
-    RecordRutina(
-      nombre: 'Rutina full body',
-      fechaRealizada: DateTime(2025, 1, 16),
-      tiempoRealizado: '2h 00m',
-      color: 0xFFF48FB1,
-      ejercicios: [
-        RecordEjercicios(
-          nombre: 'Press de Pecho Plano con Barra de Pesas',
-          series: ['20x8', '25x8', '30x8', '35x8'],
-          iconoPath: Assets.imagenes.musculos.trapecio
-              .encogimientoDeHombrosConBarraDePesas.path,
-          seriesDelEjercicio: [
-            SeriesDelEjercicio(peso: 20, repeticiones: 8),
-            SeriesDelEjercicio(peso: 25, repeticiones: 8),
-            SeriesDelEjercicio(peso: 30, repeticiones: 8),
-            SeriesDelEjercicio(peso: 35, repeticiones: 8),
-          ],
-        ),
-        RecordEjercicios(
-          nombre: 'Cruzadas con Cable-Polea (de pie)',
-          series: ['30x8', '35x8', '40x8', '45x8', '50x8'],
-          iconoPath: Assets.imagenes.musculos.trapecio
-              .encogimientoDeHombrosConBarraDePesas.path,
-          seriesDelEjercicio: [
-            SeriesDelEjercicio(peso: 30, repeticiones: 8),
-            SeriesDelEjercicio(peso: 35, repeticiones: 8),
-            SeriesDelEjercicio(peso: 40, repeticiones: 8),
-            SeriesDelEjercicio(peso: 45, repeticiones: 8),
-            SeriesDelEjercicio(peso: 50, repeticiones: 8),
-            SeriesDelEjercicio(peso: 30, repeticiones: 8),
-            SeriesDelEjercicio(peso: 35, repeticiones: 8),
-            SeriesDelEjercicio(peso: 40, repeticiones: 8),
-            SeriesDelEjercicio(peso: 45, repeticiones: 8),
-            SeriesDelEjercicio(peso: 50, repeticiones: 8),
-          ],
-        ),
-        RecordEjercicios(
-          nombre: 'Sentadillas con Barra',
-          series: ['50x8', '55x8', '60x8', '65x8'],
-          iconoPath: Assets.imagenes.musculos.trapecio
-              .encogimientoDeHombrosConBarraDePesas.path,
-          seriesDelEjercicio: [
-            SeriesDelEjercicio(peso: 50, repeticiones: 8),
-            SeriesDelEjercicio(peso: 55, repeticiones: 8),
-            SeriesDelEjercicio(peso: 60, repeticiones: 8),
-            SeriesDelEjercicio(peso: 65, repeticiones: 8),
-            SeriesDelEjercicio(peso: 50, repeticiones: 8),
-            SeriesDelEjercicio(peso: 55, repeticiones: 8),
-            SeriesDelEjercicio(peso: 60, repeticiones: 8),
-            SeriesDelEjercicio(peso: 65, repeticiones: 8),
-            SeriesDelEjercicio(peso: 50, repeticiones: 8),
-            SeriesDelEjercicio(peso: 55, repeticiones: 8),
-            SeriesDelEjercicio(peso: 60, repeticiones: 8),
-            SeriesDelEjercicio(peso: 65, repeticiones: 8),
-            SeriesDelEjercicio(peso: 50, repeticiones: 8),
-            SeriesDelEjercicio(peso: 55, repeticiones: 8),
-            SeriesDelEjercicio(peso: 60, repeticiones: 8),
-            SeriesDelEjercicio(peso: 65, repeticiones: 8),
-          ],
-        ),
-        RecordEjercicios(
-          nombre: 'Peso Muerto',
-          series: ['60x8', '65x8', '70x8', '75x8'],
-          iconoPath: Assets.imagenes.musculos.trapecio
-              .encogimientoDeHombrosConBarraDePesas.path,
-          seriesDelEjercicio: [
-            SeriesDelEjercicio(peso: 60, repeticiones: 8),
-            SeriesDelEjercicio(peso: 65, repeticiones: 8),
-            SeriesDelEjercicio(peso: 70, repeticiones: 8),
-            SeriesDelEjercicio(peso: 75, repeticiones: 8),
-          ],
-        ),
-      ],
-    ),
-    RecordRutina(
-      nombre: 'Rutina full body',
-      fechaRealizada: DateTime(2025, 1, 28),
-      tiempoRealizado: '2h 00m',
-      color: 0xFF90CAF9,
-      ejercicios: [
-        RecordEjercicios(
-          nombre: 'Press de Pecho Plano con Barra de Pesas',
-          series: ['20x8', '25x8', '30x8', '35x8'],
-          iconoPath: Assets.imagenes.musculos.trapecio
-              .encogimientoDeHombrosConBarraDePesas.path,
-          seriesDelEjercicio: [
-            SeriesDelEjercicio(peso: 20, repeticiones: 8),
-            SeriesDelEjercicio(peso: 25, repeticiones: 8),
-            SeriesDelEjercicio(peso: 30, repeticiones: 8),
-            SeriesDelEjercicio(peso: 35, repeticiones: 8),
-          ],
-        ),
-        RecordEjercicios(
-          nombre: 'Cruzadas con Cable-Polea (de pie)',
-          series: ['30x8', '35x8', '40x8', '45x8', '50x8'],
-          iconoPath: Assets.imagenes.musculos.trapecio
-              .encogimientoDeHombrosConBarraDePesas.path,
-          seriesDelEjercicio: [
-            SeriesDelEjercicio(peso: 30, repeticiones: 8),
-            SeriesDelEjercicio(peso: 35, repeticiones: 8),
-            SeriesDelEjercicio(peso: 40, repeticiones: 8),
-            SeriesDelEjercicio(peso: 45, repeticiones: 8),
-            SeriesDelEjercicio(peso: 50, repeticiones: 8),
-          ],
-        ),
-        RecordEjercicios(
-          nombre: 'Sentadillas con Barra',
-          series: ['50x8', '55x8', '60x8', '65x8'],
-          iconoPath: Assets.imagenes.musculos.trapecio
-              .encogimientoDeHombrosConBarraDePesas.path,
-          seriesDelEjercicio: [
-            SeriesDelEjercicio(peso: 50, repeticiones: 8),
-            SeriesDelEjercicio(peso: 55, repeticiones: 8),
-            SeriesDelEjercicio(peso: 60, repeticiones: 8),
-            SeriesDelEjercicio(peso: 65, repeticiones: 8),
-          ],
-        ),
-        RecordEjercicios(
-          nombre: 'Peso Muerto',
-          series: ['60x8', '65x8', '70x8', '75x8'],
-          iconoPath: Assets.imagenes.musculos.trapecio
-              .encogimientoDeHombrosConBarraDePesas.path,
-          seriesDelEjercicio: [
-            SeriesDelEjercicio(peso: 60, repeticiones: 8),
-            SeriesDelEjercicio(peso: 65, repeticiones: 8),
-            SeriesDelEjercicio(peso: 70, repeticiones: 8),
-            SeriesDelEjercicio(peso: 75, repeticiones: 8),
-          ],
-        ),
-        RecordEjercicios(
-          nombre: 'Press de Pecho Plano con Barra de Pesas',
-          series: ['60x8', '65x8', '70x8', '75x8'],
-          iconoPath: Assets.imagenes.musculos.pecho
-              .pressDePechoPlanoConBarraDePesasAgarreAmplioDeclinado.path,
-          seriesDelEjercicio: [
-            SeriesDelEjercicio(peso: 60, repeticiones: 8),
-            SeriesDelEjercicio(peso: 65, repeticiones: 8),
-            SeriesDelEjercicio(peso: 70, repeticiones: 8),
-            SeriesDelEjercicio(peso: 75, repeticiones: 8),
-          ],
-        ),
-        RecordEjercicios(
-          nombre:
-              'Press de pecho plano con barra de pesas, agarre amplio (inclinado)',
-          series: ['20x8', '25x8', '30x8', '35x8'],
-          iconoPath: Assets.imagenes.musculos.pecho
-              .pressDePechoPlanoConBarraDePesasAgarreAmplioInclinado.path,
-          seriesDelEjercicio: [
-            SeriesDelEjercicio(peso: 20, repeticiones: 8),
-            SeriesDelEjercicio(peso: 25, repeticiones: 8),
-            SeriesDelEjercicio(peso: 30, repeticiones: 8),
-            SeriesDelEjercicio(peso: 35, repeticiones: 8),
-          ],
-        ),
-        RecordEjercicios(
-          nombre: 'Press de pecho plano con maquina smith',
-          series: [],
-          iconoPath: Assets
-              .imagenes.musculos.pecho.pressDePechoPlanoConMaquinaSmith.path,
-          seriesDelEjercicio: [
-            SeriesDelEjercicio(peso: 20, repeticiones: 8),
-            SeriesDelEjercicio(peso: 25, repeticiones: 8),
-            SeriesDelEjercicio(peso: 30, repeticiones: 8),
-            SeriesDelEjercicio(peso: 35, repeticiones: 8),
-          ],
-        ),
-        RecordEjercicios(
-          nombre: 'Abdominales Parciales Laterales con Hiperextension',
-          series: [],
-          iconoPath: Assets.imagenes.musculos.abdomen
-              .abdominalesParcialesLateralesConHyperextension.path,
-          seriesDelEjercicio: [
-            SeriesDelEjercicio(peso: 20, repeticiones: 8),
-            SeriesDelEjercicio(peso: 25, repeticiones: 8),
-            SeriesDelEjercicio(peso: 30, repeticiones: 8),
-            SeriesDelEjercicio(peso: 35, repeticiones: 8),
-          ],
-        ),
-        RecordEjercicios(
-          nombre: 'Abdominales Parciales Sostenidos (acostado)',
-          series: [],
-          iconoPath: Assets.imagenes.musculos.abdomen
-              .abdominalesParcialesSostenidosAcostado.path,
-          seriesDelEjercicio: [
-            SeriesDelEjercicio(peso: 20, repeticiones: 8),
-            SeriesDelEjercicio(peso: 25, repeticiones: 8),
-            SeriesDelEjercicio(peso: 30, repeticiones: 8),
-            SeriesDelEjercicio(peso: 35, repeticiones: 8),
-          ],
-        ),
-        RecordEjercicios(
-          nombre: 'Abdominales Parciales Sostenidos Laterales (acostado)',
-          series: [],
-          iconoPath: Assets.imagenes.musculos.abdomen
-              .abdominalesParcialesSostenidosLateralesAcostado.path,
-          seriesDelEjercicio: [
-            SeriesDelEjercicio(peso: 20, repeticiones: 8),
-            SeriesDelEjercicio(peso: 25, repeticiones: 8),
-            SeriesDelEjercicio(peso: 30, repeticiones: 8),
-            SeriesDelEjercicio(peso: 35, repeticiones: 8),
-          ],
-        ),
-      ],
-    ),
-    RecordRutina(
-      nombre: 'Rutina de Espalda',
-      fechaRealizada: DateTime(2025, 1, 20),
-      tiempoRealizado: '1h 30m',
-      color: 0xFF80DEEA,
-      ejercicios: [
-        RecordEjercicios(
-          nombre: 'Dominadas',
-          series: ['10x8', '15x8', '20x8', '25x8'],
-          iconoPath: Assets.imagenes.musculos.trapecio
-              .encogimientoDeHombrosConBarraDePesas.path,
-          seriesDelEjercicio: [
-            SeriesDelEjercicio(peso: 10, repeticiones: 8),
-            SeriesDelEjercicio(peso: 15, repeticiones: 8),
-            SeriesDelEjercicio(peso: 20, repeticiones: 8),
-            SeriesDelEjercicio(peso: 25, repeticiones: 8),
-          ],
-        ),
-        RecordEjercicios(
-          nombre: 'Remo con Barra',
-          series: ['30x8', '35x8', '40x8', '45x8', '50x8'],
-          iconoPath: Assets.imagenes.musculos.trapecio
-              .encogimientoDeHombrosConBarraDePesas.path,
-          seriesDelEjercicio: [
-            SeriesDelEjercicio(peso: 30, repeticiones: 8),
-            SeriesDelEjercicio(peso: 35, repeticiones: 8),
-            SeriesDelEjercicio(peso: 40, repeticiones: 8),
-            SeriesDelEjercicio(peso: 45, repeticiones: 8),
-            SeriesDelEjercicio(peso: 50, repeticiones: 8),
-          ],
-        ),
-      ],
-    ),
-    RecordRutina(
-      nombre: 'Rutina de Hombros',
-      fechaRealizada: DateTime(2025, 1, 22),
-      tiempoRealizado: '1h 30m',
-      color: 0xFFA5D6A7,
-      ejercicios: [
-        RecordEjercicios(
-          nombre: 'Press Militar',
-          series: ['20x8', '25x8', '30x8', '35x8'],
-          iconoPath: Assets.imagenes.musculos.trapecio
-              .encogimientoDeHombrosConBarraDePesas.path,
-          seriesDelEjercicio: [
-            SeriesDelEjercicio(peso: 20, repeticiones: 8),
-            SeriesDelEjercicio(peso: 25, repeticiones: 8),
-            SeriesDelEjercicio(peso: 30, repeticiones: 8),
-            SeriesDelEjercicio(peso: 35, repeticiones: 8),
-          ],
-        ),
-        RecordEjercicios(
-          nombre: 'Elevaciones Laterales',
-          series: ['10x8', '15x8', '20x8', '25x8', '30x8'],
-          iconoPath: Assets.imagenes.musculos.trapecio
-              .encogimientoDeHombrosConBarraDePesas.path,
-          seriesDelEjercicio: [
-            SeriesDelEjercicio(peso: 10, repeticiones: 8),
-            SeriesDelEjercicio(peso: 15, repeticiones: 8),
-            SeriesDelEjercicio(peso: 20, repeticiones: 8),
-            SeriesDelEjercicio(peso: 25, repeticiones: 8),
-            SeriesDelEjercicio(peso: 30, repeticiones: 8),
-          ],
-        ),
-      ],
-    ),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    // Fetch all rutinas when the page is initialized
+    BlocProvider.of<RecordCubit>(context).fetchAllRutinas();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -479,21 +148,24 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                 },
                 calendarBuilders: CalendarBuilders(
                   defaultBuilder: (context, date, _) {
-                    bool hasRutina = _rutinas.any(
-                        (rutina) => isSameDay(rutina.fechaRealizada, date));
-                    if (hasRutina) {
-                      return Container(
-                        margin: const EdgeInsets.all(6.0),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Text(
-                          '${date.day}',
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                      );
+                    final state = context.read<RecordCubit>().state;
+                    if (state is RecordLoaded) {
+                      bool hasRutina = state.rutinas.any(
+                          (rutina) => isSameDay(rutina.fechaRealizada, date));
+                      if (hasRutina) {
+                        return Container(
+                          margin: const EdgeInsets.all(6.0),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColor,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Text(
+                            '${date.day}',
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        );
+                      }
                     }
                     return null;
                   },
@@ -506,120 +178,151 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
   }
 
   Widget _buildRoutineInfoSection() {
-    final rutinasDelDia = _rutinas
-        .where((rutina) => isSameDay(rutina.fechaRealizada, selectedDate))
-        .toList();
+    return BlocBuilder<RecordCubit, RecordState>(
+      builder: (context, state) {
+        if (state is RecordLoading) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (state is RecordLoaded) {
+          final rutinasDelDia = state.rutinas
+              .where((rutina) => isSameDay(rutina.fechaRealizada, selectedDate))
+              .toList();
 
-    if (rutinasDelDia.isEmpty) {
-      return const Center(
-        child: Text(
-          'No hay rutinas registradas para esta fecha.',
-          style: TextStyle(fontSize: 16, color: Colors.grey),
-        ),
-      );
-    }
-    return ListView.builder(
-      padding: const EdgeInsets.all(16),
-      itemCount: rutinasDelDia.length,
-      itemBuilder: (context, index) {
-        final rutina = rutinasDelDia[index];
-        return Card(
-          elevation: 8,
-          margin: const EdgeInsets.only(bottom: 16),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ListTile(
-                leading: Container(
-                  width: 50,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: Color(rutina.color), // Background color
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
-                    Icons.fitness_center,
-                    color: Colors.white,
-                  ),
-                ),
-                title: Text(
-                  rutina.nombre,
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Color(rutina.color),
-                  ),
-                ),
-                subtitle: Text(
-                  'Tiempo: ${rutina.tiempoRealizado}',
-                  style: const TextStyle(fontSize: 16, color: Colors.black54),
-                ),
-                trailing: IconButton(
-                  icon: const Icon(IconsaxPlusLinear.edit),
-                  onPressed: () {},
-                ),
+          if (rutinasDelDia.isEmpty) {
+            return const Center(
+              child: Text(
+                'No hay rutinas registradas para esta fecha.',
+                style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
-              const SizedBox(height: 8),
-              ...rutina.ejercicios.map(
-                (ejercicio) => ListTile(
-                  leading: Container(
-                    width: 50,
-                    height: 50,
-                    decoration: const BoxDecoration(
-                      color: Color.fromRGBO(230, 234, 236, 1),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(0), // Optional padding
-                      child: ejercicio.iconoPath.endsWith('.svg')
-                          ? SvgPicture.asset(
-                              ejercicio.iconoPath,
-                              width: 32,
-                              height: 32,
-                              color: Colors.deepPurple,
-                            )
-                          : Image.asset(
-                              ejercicio.iconoPath,
-                              width: 32,
-                              height: 32,
-                              fit: BoxFit.cover,
-                            ),
-                    ),
-                  ),
-                  title: Text(
-                    ejercicio.nombre,
-                    style: const TextStyle(fontSize: 16, color: Colors.black87),
-                  ),
-                  subtitle: Text(
-                    ejercicio.seriesDelEjercicio.map((serie) {
-                      return '${serie.peso.toInt()}x${serie.repeticiones}';
-                    }).join(', '),
-                    style: const TextStyle(fontSize: 14, color: Colors.black54),
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => DetalleEjercicioPage(
-                          recordEjercicios:
-                              ejercicio, // Pass the required parameter here
+            );
+          }
+          return ListView.builder(
+            padding: const EdgeInsets.all(16),
+            itemCount: rutinasDelDia.length,
+            itemBuilder: (context, index) {
+              final rutina = rutinasDelDia[index];
+              return Card(
+                elevation: 8,
+                margin: const EdgeInsets.only(bottom: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ListTile(
+                      leading: Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: Color(rutina.color), // Background color
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.fitness_center,
+                          color: Colors.white,
                         ),
                       ),
-                    );
-                  },
+                      title: Text(
+                        rutina.nombre,
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Color(rutina.color),
+                        ),
+                      ),
+                      subtitle: Text(
+                        'Tiempo: ${rutina.tiempoRealizado}',
+                        style: const TextStyle(
+                            fontSize: 16, color: Colors.black54),
+                      ),
+                      trailing: IconButton(
+                        icon: const Icon(IconsaxPlusLinear.edit),
+                        onPressed: () {},
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    ...rutina.ejercicios.map(
+                      (ejercicio) => ListTile(
+                        leading: Container(
+                          width: 50,
+                          height: 50,
+                          decoration: const BoxDecoration(
+                            color: Color.fromRGBO(230, 234, 236, 1),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.all(0), // Optional padding
+                            child: ejercicio.iconoPath.endsWith('.svg')
+                                ? SvgPicture.asset(
+                                    ejercicio.iconoPath,
+                                    width: 32,
+                                    height: 32,
+                                    color: Colors.deepPurple,
+                                  )
+                                : Image.asset(
+                                    ejercicio.iconoPath,
+                                    width: 32,
+                                    height: 32,
+                                    fit: BoxFit.cover,
+                                  ),
+                          ),
+                        ),
+                        title: Text(
+                          ejercicio.nombre,
+                          style: const TextStyle(
+                              fontSize: 16, color: Colors.black87),
+                        ),
+                        subtitle: Text(
+                          ejercicio.seriesDelEjercicio.map((serie) {
+                            return '${serie.peso.toInt()}x${serie.repeticiones}';
+                          }).join(', '),
+                          style: const TextStyle(
+                              fontSize: 14, color: Colors.black54),
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DetalleEjercicioPage(
+                                recordEjercicios:
+                                    ejercicio, // Pass the required parameter here
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
-        );
+              );
+            },
+          );
+        } else if (state is RecordError) {
+          return Center(
+            child: Text(
+              state.message,
+              style: const TextStyle(fontSize: 16, color: Colors.red),
+            ),
+          );
+        } else {
+          return const Center(
+            child: Text(
+              'No se pudo cargar el historial de ejercicios.',
+              style: TextStyle(fontSize: 16, color: Colors.grey),
+            ),
+          );
+        }
       },
     );
   }
 
   bool _hasRutina(DateTime date) {
-    return _rutinas.any((rutina) => isSameDay(rutina.fechaRealizada, date));
+    final state = context.read<RecordCubit>().state;
+    if (state is RecordLoaded) {
+      return state.rutinas
+          .any((rutina) => isSameDay(rutina.fechaRealizada, date));
+    }
+    return false;
   }
 
   void _navigateToNextRoutine() {
@@ -692,85 +395,5 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
         SnackBarType.info,
       );
     }
-  }
-}
-
-class RecordRutina {
-  final String nombre;
-  final DateTime fechaRealizada;
-  final String tiempoRealizado;
-  final int color;
-  final List<RecordEjercicios> ejercicios;
-
-  RecordRutina({
-    required this.nombre,
-    required this.fechaRealizada,
-    required this.tiempoRealizado,
-    required this.color,
-    required this.ejercicios,
-  });
-
-  RecordRutina copyWith({
-    String? nombre,
-    DateTime? fechaRealizada,
-    String? tiempoRealizado,
-    int? color,
-    List<RecordEjercicios>? ejercicios,
-  }) {
-    return RecordRutina(
-      nombre: nombre ?? this.nombre,
-      fechaRealizada: fechaRealizada ?? this.fechaRealizada,
-      tiempoRealizado: tiempoRealizado ?? this.tiempoRealizado,
-      color: color ?? this.color,
-      ejercicios: ejercicios ?? this.ejercicios,
-    );
-  }
-}
-
-class RecordEjercicios {
-  final String nombre;
-  final List<String> series;
-  final String iconoPath;
-  final List<SeriesDelEjercicio> seriesDelEjercicio;
-
-  RecordEjercicios({
-    required this.nombre,
-    required this.series,
-    required this.iconoPath,
-    required this.seriesDelEjercicio,
-  });
-
-  RecordEjercicios copyWith({
-    String? nombre,
-    List<String>? series,
-    String? iconoPath,
-    List<SeriesDelEjercicio>? seriesDelEjercicio,
-  }) {
-    return RecordEjercicios(
-      nombre: nombre ?? this.nombre,
-      series: series ?? this.series,
-      iconoPath: iconoPath ?? this.iconoPath,
-      seriesDelEjercicio: seriesDelEjercicio ?? this.seriesDelEjercicio,
-    );
-  }
-}
-
-class SeriesDelEjercicio {
-  final double peso;
-  final int repeticiones;
-
-  SeriesDelEjercicio({
-    required this.peso,
-    required this.repeticiones,
-  });
-
-  SeriesDelEjercicio copyWith({
-    double? peso,
-    int? repeticiones,
-  }) {
-    return SeriesDelEjercicio(
-      peso: peso ?? this.peso,
-      repeticiones: repeticiones ?? this.repeticiones,
-    );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gymaster/features/record/presentation/pages/historial_ejercicios_page.dart';
+import 'package:gymaster/features/record/domain/entities/record_rutina.dart';
 import 'package:gymaster/features/routine/presentation/widgets/lista_series_widget.dart';
 import 'package:gymaster/shared/utils/snackbar_helper.dart';
 import 'package:gymaster/shared/widgets/reusable_table.dart';
