@@ -22,7 +22,8 @@ void _initIdGenerator() {
 void _initRoutine() {
   serviceLocator
     // Data source
-    ..registerFactory<RoutineLocalDataSource>(() => RoutineLocalDataSource())
+    ..registerFactory<RoutineLocalDataSource>(
+        () => RoutineLocalDataSource(serviceLocator()))
 
     // Repository
     ..registerFactory<RoutineRepository>(() => RoutineRepositoryImpl(
@@ -71,7 +72,8 @@ void _initRoutine() {
 void _initSettings() {
   serviceLocator
     // Data Source
-    ..registerFactory<SettingLocalDataSource>(() => SettingLocalDataSource())
+    ..registerFactory<SettingLocalDataSource>(
+        () => SettingLocalDataSource(serviceLocator()))
 
     // Repository
     ..registerFactory<SettingRepository>(

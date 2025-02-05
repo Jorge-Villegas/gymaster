@@ -1,6 +1,11 @@
+import 'package:gymaster/core/database/database_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingLocalDataSource {
+  final DatabaseHelper databaseHelper;
+
+  SettingLocalDataSource(this.databaseHelper);
+
   static const _themeKey = 'theme_mode';
   static const _languageKey = 'language';
 

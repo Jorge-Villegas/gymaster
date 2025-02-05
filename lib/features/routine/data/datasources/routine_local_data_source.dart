@@ -9,6 +9,10 @@ import 'package:gymaster/core/error/failures.dart';
 import 'package:gymaster/features/routine/data/models/ejercicios_por_musculo.dart';
 
 class RoutineLocalDataSource {
+  final DatabaseHelper databaseHelper;
+
+  RoutineLocalDataSource(this.databaseHelper);
+
   Future<List<Rutina>> getAllRutinas() async {
     try {
       final db = await DatabaseHelper.instance.database;
