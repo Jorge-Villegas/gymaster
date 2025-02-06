@@ -8,7 +8,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 class RecordLocalDataSource {
   final DatabaseHelper databaseHelper;
 
-  RecordLocalDataSource({required this.databaseHelper});
+  RecordLocalDataSource(this.databaseHelper);
 
   Future<List<Rutina>> getCompletedRoutines() async {
     final db = await databaseHelper.database;

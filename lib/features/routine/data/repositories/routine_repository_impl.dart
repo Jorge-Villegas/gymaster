@@ -307,7 +307,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
       List<RoutineModel> routines = [];
       for (var rutina in result) {
         final cantEjercicio =
-            await localDataSource.getEjerciciosByRutinaId(rutina.id!);
+            await localDataSource.getEjerciciosByRutinaId(rutina.id);
         routines.add(RoutineModel.fromDatabase(
           serieDB: rutina,
           cantidadEjercicios: cantEjercicio.length,

@@ -15,7 +15,7 @@ class RoutineLocalDataSource {
 
   Future<List<Rutina>> getAllRutinas() async {
     try {
-      final db = await DatabaseHelper.instance.database;
+      final db = await databaseHelper.database;
       final rutinas =
           await db.query(DatabaseHelper.tbRutina, orderBy: 'fecha_creacion');
       return rutinas.map((rutina) => Rutina.fromJson(rutina)).toList();
@@ -26,7 +26,7 @@ class RoutineLocalDataSource {
 
   Future<bool> createRutina({required Rutina rutina}) async {
     try {
-      final db = await DatabaseHelper.instance.database;
+      final db = await databaseHelper.database;
       final id = await db.insert(DatabaseHelper.tbRutina, rutina.toJson());
       return id > 0;
     } catch (e) {
@@ -36,7 +36,7 @@ class RoutineLocalDataSource {
 
   Future<List<Musculo>> getAllMusculos() async {
     try {
-      final db = await DatabaseHelper.instance.database;
+      final db = await databaseHelper.database;
       final musculos = await db.query(DatabaseHelper.tbMusculo);
       return List.generate(musculos.length, (i) {
         return Musculo.fromJson(musculos[i]);
@@ -49,7 +49,7 @@ class RoutineLocalDataSource {
   Future<List<EjerciciosPorMusculoModel>> getEjerciciosPorMusculo(
       String musculoId) async {
     try {
-      final db = await DatabaseHelper.instance.database;
+      final db = await databaseHelper.database;
       final ejercicios = await db.rawQuery(
         '''
           SELECT e.*
@@ -70,7 +70,7 @@ class RoutineLocalDataSource {
 
   Future<Rutina> getRutinaById(String id) async {
     try {
-      final db = await DatabaseHelper.instance.database;
+      final db = await databaseHelper.database;
       final rutina = await db.query(
         DatabaseHelper.tbRutina,
         where: 'id = ?',
@@ -85,7 +85,7 @@ class RoutineLocalDataSource {
   //obtener ejercicio por su id
   Future<Ejercicio> getEjercicioById(String id) async {
     try {
-      final db = await DatabaseHelper.instance.database;
+      final db = await databaseHelper.database;
       final ejercicio = await db.query(
         DatabaseHelper.tbEjercicio,
         where: 'id = ?',
@@ -99,7 +99,7 @@ class RoutineLocalDataSource {
 
   Future<Serie> getSerieById(String id) async {
     try {
-      final db = await DatabaseHelper.instance.database;
+      final db = await databaseHelper.database;
       final serie = await db.query(
         DatabaseHelper.tbSerie,
         where: 'id = ?',
@@ -113,7 +113,7 @@ class RoutineLocalDataSource {
 
   Future<Serie> createSerie({required Serie serie}) async {
     try {
-      final db = await DatabaseHelper.instance.database;
+      final db = await databaseHelper.database;
       final id = await db.insert(DatabaseHelper.tbSerie, serie.toJson());
       return id > 0 ? serie : throw LocalFailure();
     } catch (e) {
@@ -124,7 +124,7 @@ class RoutineLocalDataSource {
   Future<DetalleRutina> createDetalleEjercicio(
       DetalleRutina detalleRutina) async {
     try {
-      final db = await DatabaseHelper.instance.database;
+      final db = await databaseHelper.database;
       final id = await db.insert(
         DatabaseHelper.tbDetalleRutina,
         detalleRutina.toJson(),
@@ -137,7 +137,7 @@ class RoutineLocalDataSource {
 
   Future<List<Ejercicio>> getEjerciciosByRutinaId(String rutinaId) async {
     try {
-      final db = await DatabaseHelper.instance.database;
+      final db = await databaseHelper.database;
       final ejercicios = await db.rawQuery('''
           SELECT e.*
           FROM ${DatabaseHelper.tbEjercicio} e
@@ -161,7 +161,7 @@ class RoutineLocalDataSource {
     String rutinaId,
   ) async {
     try {
-      final db = await DatabaseHelper.instance.database;
+      final db = await databaseHelper.database;
       final series = await db.rawQuery('''
           SELECT s.* FROM serie s
           JOIN detalle_rutina dr on dr.id = s.detalle_rutina_id
@@ -183,7 +183,7 @@ class RoutineLocalDataSource {
 
   Future<List<Musculo>> getMusculosByEjercicioId(String ejercicioId) async {
     try {
-      final db = await DatabaseHelper.instance.database;
+      final db = await databaseHelper.database;
       final musculos = await db.rawQuery('''
           SELECT m.id,m.nombre
           FROM ${DatabaseHelper.tbMusculo} m
@@ -201,7 +201,7 @@ class RoutineLocalDataSource {
   // Actualiza una serie en la base de datos
   Future<bool> updateSerie(Serie serie) async {
     try {
-      final db = await DatabaseHelper.instance.database;
+      final db = await databaseHelper.database;
       final result = await db.update(
         DatabaseHelper.tbSerie,
         serie.toJson(),
@@ -216,7 +216,7 @@ class RoutineLocalDataSource {
 
   Future<List<Rutina>> getRutinasByNombre(String nombre) async {
     try {
-      final db = await DatabaseHelper.instance.database;
+      final db = await databaseHelper.database;
       final rutinas = await db.rawQuery('''
             SELECT * FROM ${DatabaseHelper.tbRutina}
             WHERE nombre LIKE ?;

@@ -100,20 +100,17 @@ void _initRecord() {
   serviceLocator
     // Data sources
     ..registerFactory<RecordLocalDataSource>(
-        () => RecordLocalDataSource(databaseHelper: serviceLocator()))
+        () => RecordLocalDataSource(serviceLocator()))
 
     // Cubit
     ..registerFactory(() => RecordCubit(
           getAllCompletedRoutinesWithExercises: serviceLocator(),
-          getAllRutinasUseCase: serviceLocator(),
           getRutinaByIdUseCase: serviceLocator(),
           saveRutinaUseCase: serviceLocator(),
           deleteRutinaUseCase: serviceLocator(),
         ))
 
     // Use cases
-    ..registerLazySingleton(
-        () => GetAllRutinasUseCase(repository: serviceLocator()))
     ..registerLazySingleton(
         () => GetRutinaByIdUseCase(repository: serviceLocator()))
     ..registerLazySingleton(

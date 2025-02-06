@@ -26,7 +26,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
   void initState() {
     super.initState();
     // Fetch all rutinas when the page is initialized
-    BlocProvider.of<RecordCubit>(context).fetchAllRutinas();
+    BlocProvider.of<RecordCubit>(context).getAllRutinas();
   }
 
   @override
@@ -105,7 +105,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                 ),
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.deepPurple[400], // Background color
+                    color: Colors.deepPurple[400],
                     borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(8),
                       bottomRight: Radius.circular(8),
@@ -114,7 +114,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                   child: IconButton(
                     icon: const Icon(
                       IconsaxPlusLinear.arrow_right_3,
-                      color: Colors.white, // Icon color
+                      color: Colors.white,
                     ),
                     onPressed: () {
                       _navigateToNextRoutine();
@@ -125,7 +125,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
             ),
             if (_isCalendarVisible)
               TableCalendar(
-                locale: 'es_ES', // Set the locale to Spanish
+                locale: 'es_ES',
                 focusedDay: selectedDate,
                 firstDay: DateTime(2020),
                 lastDay: DateTime(2030),
@@ -257,7 +257,10 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                                     ejercicio.iconoPath,
                                     width: 32,
                                     height: 32,
-                                    color: Colors.deepPurple,
+                                    colorFilter: const ColorFilter.mode(
+                                      Colors.purple,
+                                      BlendMode.srcIn,
+                                    ),
                                   )
                                 : Image.asset(
                                     ejercicio.iconoPath,

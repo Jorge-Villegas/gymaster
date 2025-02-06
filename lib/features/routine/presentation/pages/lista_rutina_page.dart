@@ -6,7 +6,6 @@ import 'package:gymaster/features/routine/presentation/cubits/rutina/routine_cub
 import 'package:gymaster/features/routine/presentation/pages/agregar_rutina_page.dart';
 import 'package:gymaster/features/routine/presentation/pages/routine_search_delegate.dart';
 import 'package:gymaster/features/routine/presentation/widgets/routine_card.dart';
-import 'package:gymaster/shared/widgets/loader.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:shimmer/shimmer.dart';
 

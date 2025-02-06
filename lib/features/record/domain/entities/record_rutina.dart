@@ -3,6 +3,7 @@ import 'package:gymaster/core/database/models/rutina.dart';
 import 'package:gymaster/core/database/models/serie.dart';
 
 class RecordRutina {
+  final String id;
   final String nombre;
   final DateTime fechaRealizada;
   final String tiempoRealizado;
@@ -10,6 +11,7 @@ class RecordRutina {
   final List<RecordEjercicios> ejercicios;
 
   RecordRutina({
+    required this.id,
     required this.nombre,
     required this.fechaRealizada,
     required this.tiempoRealizado,
@@ -18,6 +20,7 @@ class RecordRutina {
   });
 
   RecordRutina copyWith({
+    String? id,
     String? nombre,
     DateTime? fechaRealizada,
     String? tiempoRealizado,
@@ -25,6 +28,7 @@ class RecordRutina {
     List<RecordEjercicios>? ejercicios,
   }) {
     return RecordRutina(
+      id: id ?? this.id,
       nombre: nombre ?? this.nombre,
       fechaRealizada: fechaRealizada ?? this.fechaRealizada,
       tiempoRealizado: tiempoRealizado ?? this.tiempoRealizado,
@@ -38,6 +42,7 @@ class RecordRutina {
     int? cantidadEjercicios,
   }) {
     return RecordRutina(
+      id: rutinaDB.id,
       nombre: rutinaDB.nombre,
       fechaRealizada: DateTime.parse(rutinaDB.fechaCreacion),
       tiempoRealizado: 'no hay tiempo',
@@ -48,12 +53,14 @@ class RecordRutina {
 }
 
 class RecordEjercicios {
+  final String id;
   final String nombre;
   final List<String> series;
   final String iconoPath;
   final List<SeriesDelEjercicio> seriesDelEjercicio;
 
   RecordEjercicios({
+    required this.id,
     required this.nombre,
     required this.series,
     required this.iconoPath,
@@ -61,12 +68,14 @@ class RecordEjercicios {
   });
 
   RecordEjercicios copyWith({
+    String? id,
     String? nombre,
     List<String>? series,
     String? iconoPath,
     List<SeriesDelEjercicio>? seriesDelEjercicio,
   }) {
     return RecordEjercicios(
+      id: id ?? this.id,
       nombre: nombre ?? this.nombre,
       series: series ?? this.series,
       iconoPath: iconoPath ?? this.iconoPath,
@@ -79,6 +88,7 @@ class RecordEjercicios {
     required List<SeriesDelEjercicio> seriesDelEjercicio,
   }) {
     return RecordEjercicios(
+      id: ejercicioDB.id,
       nombre: ejercicioDB.nombre,
       series: [],
       iconoPath: ejercicioDB.imagenDireccion ?? '',
@@ -88,19 +98,23 @@ class RecordEjercicios {
 }
 
 class SeriesDelEjercicio {
+  final String id;
   final double peso;
   final int repeticiones;
 
   SeriesDelEjercicio({
+    required this.id,
     required this.peso,
     required this.repeticiones,
   });
 
   SeriesDelEjercicio copyWith({
+    String? id,
     double? peso,
     int? repeticiones,
   }) {
     return SeriesDelEjercicio(
+      id: id ?? this.id,
       peso: peso ?? this.peso,
       repeticiones: repeticiones ?? this.repeticiones,
     );
@@ -110,6 +124,7 @@ class SeriesDelEjercicio {
     required Serie serieDB,
   }) {
     return SeriesDelEjercicio(
+      id: serieDB.id,
       peso: serieDB.peso,
       repeticiones: serieDB.repeticiones,
     );

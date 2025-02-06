@@ -2,6 +2,7 @@ import 'package:gymaster/features/record/domain/entities/record_rutina.dart';
 
 class RecordRutinaModel extends RecordRutina {
   RecordRutinaModel({
+    required super.id,
     required super.nombre,
     required super.fechaRealizada,
     required super.tiempoRealizado,
@@ -11,6 +12,7 @@ class RecordRutinaModel extends RecordRutina {
 
   factory RecordRutinaModel.fromMap(Map<String, dynamic> map) {
     return RecordRutinaModel(
+      id: map['id'],
       nombre: map['nombre'],
       fechaRealizada:
           map['fechaRealizada'] != null && map['fechaRealizada'].isNotEmpty
@@ -26,6 +28,7 @@ class RecordRutinaModel extends RecordRutina {
 
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'nombre': nombre,
       'fechaRealizada': fechaRealizada.toIso8601String(),
       'tiempoRealizado': tiempoRealizado,
@@ -38,6 +41,7 @@ class RecordRutinaModel extends RecordRutina {
 
 class RecordEjerciciosModel extends RecordEjercicios {
   RecordEjerciciosModel({
+    required super.id,
     required super.nombre,
     required super.series,
     required super.iconoPath,
@@ -46,6 +50,7 @@ class RecordEjerciciosModel extends RecordEjercicios {
 
   factory RecordEjerciciosModel.fromMap(Map<String, dynamic> map) {
     return RecordEjerciciosModel(
+      id: map['id'],
       nombre: map['nombre'],
       series: List<String>.from(map['series']),
       iconoPath: map['iconoPath'],
@@ -57,6 +62,7 @@ class RecordEjerciciosModel extends RecordEjercicios {
 
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'nombre': nombre,
       'series': series,
       'iconoPath': iconoPath,
@@ -69,12 +75,14 @@ class RecordEjerciciosModel extends RecordEjercicios {
 
 class SeriesDelEjercicioModel extends SeriesDelEjercicio {
   SeriesDelEjercicioModel({
+    required super.id,
     required super.peso,
     required super.repeticiones,
   });
 
   factory SeriesDelEjercicioModel.fromMap(Map<String, dynamic> map) {
     return SeriesDelEjercicioModel(
+      id: map['id'],
       peso: map['peso'],
       repeticiones: map['repeticiones'],
     );
@@ -82,6 +90,7 @@ class SeriesDelEjercicioModel extends SeriesDelEjercicio {
 
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'peso': peso,
       'repeticiones': repeticiones,
     };
