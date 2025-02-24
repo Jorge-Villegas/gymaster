@@ -1,6 +1,5 @@
-import 'package:gymaster/core/database/models/ejercicio.dart';
-import 'package:gymaster/core/database/models/rutina.dart';
-import 'package:gymaster/core/database/models/serie.dart';
+import 'package:gymaster/core/database/models/models.dart';
+import 'package:gymaster/core/database/models/routine.dart';
 
 class RecordRutina {
   final String id;
@@ -38,15 +37,15 @@ class RecordRutina {
   }
 
   factory RecordRutina.fromDatabase({
-    required Rutina rutinaDB,
+    required Routine rutinaDB,
     int? cantidadEjercicios,
   }) {
     return RecordRutina(
       id: rutinaDB.id,
-      nombre: rutinaDB.nombre,
-      fechaRealizada: DateTime.parse(rutinaDB.fechaCreacion),
+      nombre: rutinaDB.name,
+      fechaRealizada: DateTime.parse(rutinaDB.createdAt),
       tiempoRealizado: 'no hay tiempo',
-      color: rutinaDB.color,
+      color: rutinaDB.color ?? 0,
       ejercicios: [],
     );
   }
@@ -84,14 +83,14 @@ class RecordEjercicios {
   }
 
   factory RecordEjercicios.fromDatabase({
-    required Ejercicio ejercicioDB,
+    required Exercise ejercicioDB,
     required List<SeriesDelEjercicio> seriesDelEjercicio,
   }) {
     return RecordEjercicios(
       id: ejercicioDB.id,
-      nombre: ejercicioDB.nombre,
+      nombre: ejercicioDB.name,
       series: [],
-      iconoPath: ejercicioDB.imagenDireccion ?? '',
+      iconoPath: ejercicioDB.imagePath ?? '',
       seriesDelEjercicio: seriesDelEjercicio,
     );
   }
@@ -108,11 +107,7 @@ class SeriesDelEjercicio {
     required this.repeticiones,
   });
 
-  SeriesDelEjercicio copyWith({
-    String? id,
-    double? peso,
-    int? repeticiones,
-  }) {
+  SeriesDelEjercicio copyWith({String? id, double? peso, int? repeticiones}) {
     return SeriesDelEjercicio(
       id: id ?? this.id,
       peso: peso ?? this.peso,
@@ -120,13 +115,11 @@ class SeriesDelEjercicio {
     );
   }
 
-  factory SeriesDelEjercicio.fromDatabase({
-    required Serie serieDB,
-  }) {
+  factory SeriesDelEjercicio.fromDatabase({required ExerciseSet serieDB}) {
     return SeriesDelEjercicio(
       id: serieDB.id,
-      peso: serieDB.peso,
-      repeticiones: serieDB.repeticiones,
+      peso: serieDB.weight ?? 0.0,
+      repeticiones: serieDB.repetitions ?? 0,
     );
   }
 }

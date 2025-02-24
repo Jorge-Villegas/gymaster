@@ -1,8 +1,6 @@
+import 'package:gymaster/core/database/models/models.dart';
 import 'package:gymaster/features/routine/domain/entities/ejercicios_de_rutina.dart';
-import 'package:gymaster/core/database/models/musculo.dart' as musculo_db;
-import 'package:gymaster/core/database/models/rutina.dart' as rutina_db;
-import 'package:gymaster/core/database/models/serie.dart' as serie_db;
-import 'package:gymaster/core/database/models/ejercicio.dart' as ejercicio_db;
+
 import 'dart:convert';
 
 EjerciciosDeRutinaModel ejerciciosDeRutinaModelFromJson(String str) =>
@@ -35,35 +33,38 @@ class EjerciciosDeRutinaModel extends EjerciciosDeRutina {
       descripcion: json['descripcion'],
       fechaCreacion: DateTime.parse(json['fecha_creacion']),
       color: json['color'],
-      ejercicios: (json['ejercicios'] as List)
-          .map((e) => EjercicioModel.fromJson(e))
-          .toList(),
+      ejercicios:
+          (json['ejercicios'] as List)
+              .map((e) => EjercicioModel.fromJson(e))
+              .toList(),
       estado: json['estado'],
       id: json['id'],
       realizado: json['realizado'],
-      fechaRealizacion: json['fecha_realizacion'] != null
-          ? DateTime.parse(json['fecha_realizacion'])
-          : null,
+      fechaRealizacion:
+          json['fecha_realizacion'] != null
+              ? DateTime.parse(json['fecha_realizacion'])
+              : null,
     );
   }
 
   factory EjerciciosDeRutinaModel.fromDatabase(
-    rutina_db.Rutina rutinaDB,
+    Routine rutinaDB,
     List<EjercicioModel> ejercicios,
   ) {
     return EjerciciosDeRutinaModel(
       rutinaId: rutinaDB.id,
-      nombre: rutinaDB.nombre,
-      descripcion: rutinaDB.descripcion,
-      fechaCreacion: DateTime.parse(rutinaDB.fechaCreacion),
-      color: rutinaDB.color,
+      nombre: rutinaDB.name,
+      descripcion: rutinaDB.description,
+      fechaCreacion: DateTime.parse(rutinaDB.createdAt),
+      color: rutinaDB.color ?? 0,
       ejercicios: ejercicios,
-      estado: rutinaDB.estado == 1,
+      estado: true, //TODO: Cambiar
       id: rutinaDB.id,
-      realizado: rutinaDB.realizado == 1,
-      fechaRealizacion: rutinaDB.fechaRealizacion != null
-          ? DateTime.parse(rutinaDB.fechaRealizacion!)
-          : null,
+      realizado: true, //TODO: Cambiar
+      fechaRealizacion:
+          rutinaDB.createdAt != rutinaDB.updatedAt
+              ? DateTime.parse(rutinaDB.createdAt)
+              : null, //TODO: Cambiar
     );
   }
 }
@@ -79,40 +80,42 @@ class EjercicioModel extends Ejercicio {
   });
 
   factory EjercicioModel.fromDatabase({
-    required ejercicio_db.Ejercicio ejercicioDB,
+    required Exercise ejercicioDB,
     List<SeriesDelEjercicioModel>? series,
     List<MusculoModel>? musculos,
   }) {
     return EjercicioModel(
       id: ejercicioDB.id,
-      nombre: ejercicioDB.nombre,
-      imagenDireccion: ejercicioDB.imagenDireccion ?? '',
-      descripcion: ejercicioDB.descripcion ?? '',
+      nombre: ejercicioDB.name,
+      imagenDireccion: ejercicioDB.imagePath ?? '',
+      descripcion: ejercicioDB.description ?? '',
       series: series ?? [],
       musculos: musculos ?? [],
     );
   }
 
   factory EjercicioModel.fromJson(Map<String, dynamic> json) => EjercicioModel(
-        id: json["id"],
-        nombre: json["nombre"],
-        imagenDireccion: json["imagen_direccion"],
-        descripcion: json["descripcion"],
-        series: List<SeriesDelEjercicioModel>.from(
-            json["series"].map((x) => SeriesDelEjercicioModel.fromJson(x))),
-        musculos: List<MusculoModel>.from(
-            json["musculos"].map((x) => MusculoModel.fromJson(x))),
-      );
+    id: json["id"],
+    nombre: json["nombre"],
+    imagenDireccion: json["imagen_direccion"],
+    descripcion: json["descripcion"],
+    series: List<SeriesDelEjercicioModel>.from(
+      json["series"].map((x) => SeriesDelEjercicioModel.fromJson(x)),
+    ),
+    musculos: List<MusculoModel>.from(
+      json["musculos"].map((x) => MusculoModel.fromJson(x)),
+    ),
+  );
 
   @override
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "nombre": nombre,
-        "imagen_direccion": imagenDireccion,
-        "descripcion": descripcion,
-        "series": List<dynamic>.from(series.map((x) => x.toJson())),
-        "musculos": List<dynamic>.from(musculos!.map((x) => x.toJson())),
-      };
+    "id": id,
+    "nombre": nombre,
+    "imagen_direccion": imagenDireccion,
+    "descripcion": descripcion,
+    "series": List<dynamic>.from(series.map((x) => x.toJson())),
+    "musculos": List<dynamic>.from(musculos!.map((x) => x.toJson())),
+  };
 }
 
 class SeriesDelEjercicioModel extends Serie {
@@ -135,36 +138,36 @@ class SeriesDelEjercicioModel extends Serie {
 
   @override
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'peso': peso,
-        'repeticiones': repeticiones,
-        'timpo_descanso': timpoDescanso,
-        'realizado': realizado,
-      };
+    'id': id,
+    'peso': peso,
+    'repeticiones': repeticiones,
+    'timpo_descanso': timpoDescanso,
+    'realizado': realizado,
+  };
 
-  factory SeriesDelEjercicioModel.fromDatabase(serie_db.Serie serieDB) {
+  factory SeriesDelEjercicioModel.fromDatabase(ExerciseSet serieDB) {
     return SeriesDelEjercicioModel(
       id: serieDB.id,
-      peso: serieDB.peso,
-      repeticiones: serieDB.repeticiones,
-      timpoDescanso: serieDB.tiempoDescanso,
-      realizado: serieDB.realizado == 1,
+      peso: serieDB.weight ?? 0,
+      repeticiones: serieDB.repetitions ?? 0,
+      timpoDescanso: serieDB.restTime ?? 0,
+      realizado: serieDB.status == 'completed',
     );
   }
 }
 
 class MusculoModel extends Musculo {
- const  MusculoModel({
+  const MusculoModel({
     required super.id,
     required super.nombre,
     required super.imagenDireccion,
   });
 
-  factory MusculoModel.fromDatabase(musculo_db.Musculo musculoDB) {
+  factory MusculoModel.fromDatabase(Muscle musculoDB) {
     return MusculoModel(
       id: musculoDB.id,
-      nombre: musculoDB.nombre,
-      imagenDireccion: musculoDB.imagenDireccion ?? '',
+      nombre: musculoDB.name,
+      imagenDireccion: musculoDB.imagePath ?? '',
     );
   }
 
@@ -175,13 +178,9 @@ class MusculoModel extends Musculo {
       imagenDireccion: json['imagen_direccion'],
     );
   }
-  
+
   @override
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'nombre': nombre,
-      'imagen_direccion': imagenDireccion,
-    };
+    return {'id': id, 'nombre': nombre, 'imagen_direccion': imagenDireccion};
   }
 }

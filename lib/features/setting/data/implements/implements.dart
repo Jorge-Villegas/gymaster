@@ -13,7 +13,7 @@ class SettingRepositoryImp implements SettingRepository {
       final language = await localDataSource.getLanguage();
       return Right(language);
     } catch (e) {
-      return Left(CacheFailure());
+      return Left(CacheFailure(errorMessage: 'Error al obtener el idioma: $e'));
     }
   }
 
@@ -23,7 +23,9 @@ class SettingRepositoryImp implements SettingRepository {
       final isDarkMode = await localDataSource.getThemeMode();
       return Right(isDarkMode);
     } catch (e) {
-      return Left(CacheFailure());
+      return Left(
+        CacheFailure(errorMessage: 'Error al obtener el modo de tema: $e'),
+      );
     }
   }
 
@@ -33,7 +35,9 @@ class SettingRepositoryImp implements SettingRepository {
       await localDataSource.setLanguage(language);
       return const Right(null);
     } catch (e) {
-      return Left(CacheFailure());
+      return Left(
+        CacheFailure(errorMessage: 'Error al establecer el idioma: $e'),
+      );
     }
   }
 
@@ -43,7 +47,9 @@ class SettingRepositoryImp implements SettingRepository {
       await localDataSource.setThemeMode(isDarkMode);
       return const Right(null);
     } catch (e) {
-      return Left(CacheFailure());
+      return Left(
+        CacheFailure(errorMessage: 'Error al establecer el modo de tema: $e'),
+      );
     }
   }
 }

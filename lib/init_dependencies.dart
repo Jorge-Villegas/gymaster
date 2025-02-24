@@ -19,7 +19,8 @@ import 'package:gymaster/features/routine/domain/usecases/get_all_ejercicios_by_
 import 'package:gymaster/features/routine/domain/usecases/get_all_musculos_usecase.dart';
 import 'package:gymaster/features/routine/domain/usecases/get_all_routine_usecase.dart';
 import 'package:gymaster/features/routine/domain/usecases/get_all_serie_usecase.dart';
-import 'package:gymaster/features/routine/domain/usecases/get_routine_by_name_usecase.dartget_routine_by_name_usecase.dart';
+import 'package:gymaster/features/routine/domain/usecases/get_last_routine_session_by_routine_id_usecase.dart';
+import 'package:gymaster/features/routine/domain/usecases/get_routine_by_name_usecase.dart';
 import 'package:gymaster/features/routine/domain/usecases/update_serie.dart';
 import 'package:gymaster/features/routine/presentation/cubits/agregar_series/agregar_series_cubit.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicio/ejercicio_cubit.dart';

@@ -9,10 +9,12 @@ import 'package:shimmer/shimmer.dart';
 
 class AgregarEjerciciosPage extends StatelessWidget {
   final String rutinaid;
+  final String sesionId;
 
   const AgregarEjerciciosPage({
     super.key,
     required this.rutinaid,
+    required this.sesionId,
   });
 
   @override
@@ -27,10 +29,7 @@ class AgregarEjerciciosPage extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.search),
             onPressed: () {
-              showSearch(
-                context: context,
-                delegate: SearchDelegateCustom(),
-              );
+              showSearch(context: context, delegate: SearchDelegateCustom());
             },
           ),
         ],
@@ -41,16 +40,12 @@ class AgregarEjerciciosPage extends StatelessWidget {
             return buildMusculoList(state);
           }
           if (state is MusculoError) {
-            return Center(
-              child: Text(state.message),
-            );
+            return Center(child: Text(state.message));
           }
           if (state is MusculoLoading) {
             return buildShimmerLoadingEffect();
           }
-          return const Center(
-            child: Text("Ha sucedido un error inesperado"),
-          );
+          return const Center(child: Text("Ha sucedido un error inesperado"));
         },
       ),
       floatingActionButton: FloatingActionButton(
@@ -109,8 +104,10 @@ class AgregarEjerciciosPage extends StatelessWidget {
             ),
             title: Text(musculo.nombre),
             onTap: () {
+              print('AgregarEjerciciosPahe -> sesionId: $sesionId');
               context.push(
-                  '/listar-ejercicios/${musculo.id}/${musculo.nombre}/$rutinaid');
+                '/listar-ejercicios/${musculo.id}/${musculo.nombre}/$rutinaid/$sesionId',
+              );
             },
           ),
         );

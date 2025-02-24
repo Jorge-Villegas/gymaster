@@ -6,6 +6,9 @@ class CustomElevatedButton extends StatelessWidget {
   final Color? backgroundColor;
   final Color? textColor;
   final Icon? icon;
+  final double? width;
+  final double? height;
+  final double? borderRadius;
 
   const CustomElevatedButton({
     super.key,
@@ -14,33 +17,35 @@ class CustomElevatedButton extends StatelessWidget {
     this.backgroundColor,
     this.textColor,
     this.icon,
+    this.width,
+    this.height = 40,
+    this.borderRadius = 10,
   });
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: backgroundColor ?? const Color(0xFF675BE0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
+    return SizedBox(
+      width: width,
+      height: height,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: backgroundColor ?? const Color(0xFF675BE0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(borderRadius ?? 15),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
         ),
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 12,
+        onPressed: onPressed,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (icon != null)
+              Icon(icon!.icon, color: textColor ?? Colors.white),
+            if (icon != null && text != null) const SizedBox(width: 8),
+            if (text != null)
+              Text(text!, style: TextStyle(color: textColor ?? Colors.white)),
+          ],
         ),
-      ),
-      onPressed: onPressed,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (icon != null) icon!,
-          if (icon != null && text != null) const SizedBox(width: 8),
-          if (text != null)
-            Text(
-              text!,
-              style: TextStyle(color: textColor ?? Colors.white),
-            ),
-        ],
       ),
     );
   }

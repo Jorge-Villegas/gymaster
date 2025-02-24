@@ -12,18 +12,20 @@ import 'package:gymaster/shared/widgets/show_custom_snack_bar.dart';
 
 class AgregarEjercicioRutinaPage extends StatefulWidget {
   final String ejercicioNombre;
+  final String sesionId;
   final String ejercicioImagenDireccion;
   final String ejercicioId;
   final String rutinaId;
 
   const AgregarEjercicioRutinaPage({
     super.key,
+    required this.sesionId,
     required this.ejercicioNombre,
     required this.ejercicioId,
     required this.rutinaId,
     String? ejercicioImagenDireccion,
   }) : ejercicioImagenDireccion =
-            ejercicioImagenDireccion ?? AppConfig.defaultImagePath;
+           ejercicioImagenDireccion ?? AppConfig.defaultImagePath;
 
   @override
   State<AgregarEjercicioRutinaPage> createState() =>
@@ -39,6 +41,7 @@ class _AgregarEjercicioRutinaPageState
   @override
   void initState() {
     super.initState();
+    print(widget.sesionId);
     context.read<AgregarSeriesCubit>().iniciar();
     context.read<AgregarSeriesCubit>().stream.listen((state) {
       if (state is AgregarSeriesLoaded) {
@@ -91,12 +94,14 @@ class _AgregarEjercicioRutinaPageState
       return;
     }
 
-    List<double?> pesos = _pesoControllers
-        .map((controller) => TextFormatter.stringToDouble(controller.text))
-        .toList();
-    List<int?> repeticiones = _repeticionesControllers
-        .map((controller) => TextFormatter.stringToInt(controller.text))
-        .toList();
+    List<double?> pesos =
+        _pesoControllers
+            .map((controller) => TextFormatter.stringToDouble(controller.text))
+            .toList();
+    List<int?> repeticiones =
+        _repeticionesControllers
+            .map((controller) => TextFormatter.stringToInt(controller.text))
+            .toList();
 
     if (pesos.contains(null) || repeticiones.contains(null)) {
       showCustomSnackBar(
@@ -109,11 +114,12 @@ class _AgregarEjercicioRutinaPageState
 
     // Guardar los datos de forma asíncrona
     final resul = await context.read<AgregarSeriesCubit>().guardarDatos(
-          rutinaId: widget.rutinaId,
-          ejercicioId: widget.ejercicioId,
-          pesos: pesos.cast<double>(),
-          repeticiones: repeticiones.cast<int>(),
-        );
+      idSesion: widget.sesionId,
+      rutinaId: widget.rutinaId,
+      ejercicioId: widget.ejercicioId,
+      pesos: pesos.cast<double>(),
+      repeticiones: repeticiones.cast<int>(),
+    );
 
     // Verificar si el widget sigue montado antes de usar el contexto
     if (!mounted) return;
@@ -142,9 +148,7 @@ class _AgregarEjercicioRutinaPageState
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(244, 248, 252, 1.0),
-      appBar: AppBar(
-        title: const Text('Agregar Ejercicio a Rutina'),
-      ),
+      appBar: AppBar(title: const Text('Agregar Ejercicio a Rutina')),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: BlocBuilder<AgregarSeriesCubit, AgregarSeriesState>(

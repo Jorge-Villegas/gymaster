@@ -1,3 +1,4 @@
+import 'package:gymaster/core/database/models/routine_session.dart';
 import 'package:gymaster/core/error/failures.dart';
 import 'package:gymaster/features/routine/domain/entities/ejercicios_de_rutina.dart'
     as ejercicios_de_rutina;
@@ -20,9 +21,7 @@ abstract interface class RoutineRepository {
     required String imagenDireccion,
   });
 
-  Future<Either<Failure, void>> deleteRoutine({
-    required String id,
-  });
+  Future<Either<Failure, void>> deleteRoutine({required String id});
 
   Future<Either<Failure, void>> updateRoutine({
     required String id,
@@ -43,19 +42,19 @@ abstract interface class RoutineRepository {
   Future<Either<Failure, List<Musculo>>> getAllMusculos();
 
   Future<Either<Failure, List<EjerciciosPorMusculo>>>
-      getAllEjerciciosByMusculo({
-    required String musculoId,
-  });
+  getAllEjerciciosByMusculo({required String musculoId});
 
   Future<Either<Failure, void>> addEjericioRutina({
     required String idRutina,
+    required String idSesion,
     required String idEjercicio,
     required List<DataSerie> dataSeries,
   });
 
   Future<Either<Failure, ejercicios_de_rutina.EjerciciosDeRutina>>
-      getAllEjercicioByRutinaId({
+  getAllEjercicioByRutinaId({
     required String rutinaId,
+    required String idRoutineSession,
   });
 
   Future<Either<Failure, Serie>> updateSerie({
@@ -73,4 +72,9 @@ abstract interface class RoutineRepository {
   Future<Either<Failure, RutinaData>> obtenerRutinaDetalles({
     required String idRutina,
   });
+
+  //obtener la ultima session de la rutina por su id
+  Future<Either<Failure, RoutineSession>> getLastRoutineSessionByRoutineId(
+    String id,
+  );
 }

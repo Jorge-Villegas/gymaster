@@ -8,7 +8,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
   final EjerciciosDeRutina ejerciciosDeRutina;
   final String rutinaId;
   final Future<void> Function(BuildContext, EjerciciosDeRutina)
-      goToIniciarRutina;
+  goToIniciarRutina;
 
   const EjerciciosLlenosWidget({
     super.key,
@@ -30,9 +30,10 @@ class EjerciciosLlenosWidget extends StatelessWidget {
           },
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-            color: isDarkTheme
-                ? const Color.fromRGBO(40, 44, 48, 1)
-                : const Color.fromRGBO(216, 235, 224, 1),
+            color:
+                isDarkTheme
+                    ? const Color.fromRGBO(40, 44, 48, 1)
+                    : const Color.fromRGBO(216, 235, 224, 1),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -56,9 +57,10 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                 Text(
                   'Iniciar entrenamiento',
                   style: textTheme.labelMedium?.copyWith(
-                    color: Theme.of(context).brightness == Brightness.dark
-                        ? Colors.white
-                        : const Color.fromRGBO(86, 170, 27, 1),
+                    color:
+                        Theme.of(context).brightness == Brightness.dark
+                            ? Colors.white
+                            : const Color.fromRGBO(86, 170, 27, 1),
                   ),
                 ),
               ],
@@ -96,8 +98,9 @@ class EjerciciosLlenosWidget extends StatelessWidget {
               itemBuilder: (context, i) {
                 final ejercicio = ejerciciosDeRutina.ejercicios[i];
 
-                final estadoEjercicio =
-                    ejercicio.series.every((serie) => serie.realizado);
+                final estadoEjercicio = ejercicio.series.every(
+                  (serie) => serie.realizado,
+                );
                 final pesos =
                     ejercicio.series.map((serie) => serie.peso).toList();
                 return CustomCard(

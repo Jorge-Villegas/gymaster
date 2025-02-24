@@ -26,21 +26,24 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/',
       name: 'listaRutinas',
-      builder: (context, state) => BottomNavigationBarExampleApp(),
+      builder: (context, state) => const BottomNavigationBarExampleApp(),
     ),
     GoRoute(
-      path: '/agregar-ejercicios/:rutinaId',
+      path: '/agregar-ejercicios/:rutinaId/:sesionId',
       name: 'agregarEjercicios',
       builder: (context, state) {
         return AgregarEjerciciosPage(
-            rutinaid: state.pathParameters['rutinaId']!);
+          sesionId: state.pathParameters['sesionId']!,
+          rutinaid: state.pathParameters['rutinaId']!,
+        );
       },
     ),
     GoRoute(
-      path: '/listar-ejercicios/:musculoId/:nombreMusculo/:rutinaId',
+      path: '/listar-ejercicios/:musculoId/:nombreMusculo/:rutinaId/:sesionId',
       name: 'listarEjercicios',
       builder: (context, state) {
         return ListarEjerciciosPage(
+          sessionId: state.pathParameters['sesionId']!,
           musculoId: state.pathParameters['musculoId']!,
           nombreMusculo: state.pathParameters['nombreMusculo']!,
           rutinaId: state.pathParameters['rutinaId']!,
@@ -62,12 +65,14 @@ final GoRouter router = GoRouter(
       },
     ),
     GoRoute(
-      path: '/agregar-ejercicio-rutina/:rutinaId/:ejercicioId/:ejercicioNombre',
+      path:
+          '/agregar-ejercicio-rutina/:rutinaId/:ejercicioId/:ejercicioNombre/:sesionId',
       name: 'agregarEjercicioRutina',
       builder: (context, state) {
         // Extrae el objeto enviado a través de "extra".
         final data = state.extra as Map<String, dynamic>?;
         return AgregarEjercicioRutinaPage(
+          sesionId: state.pathParameters['sesionId']!,
           ejercicioId: state.pathParameters['ejercicioId']!,
           rutinaId: state.pathParameters['rutinaId']!,
           ejercicioNombre: state.pathParameters['ejercicioNombre']!,
@@ -84,37 +89,26 @@ final GoRouter router = GoRouter(
       path: '/rutina/detalle/:rutinaId',
       name: 'detallerutina',
       builder: (constext, state) {
-        return DetalleRutinaScreen(
-          rutinaId: state.pathParameters['rutinaId']!,
-        );
+        return DetalleRutinaScreen(rutinaId: state.pathParameters['rutinaId']!);
       },
     ),
 
     //-----------------------------------------
     //                Pruebas
     //-----------------------------------------
-    GoRoute(
-      path: '/settings',
-      builder: (context, state) => SettingPage(),
-    ),
+    GoRoute(path: '/settings', builder: (context, state) => SettingPage()),
     //-----------------------------------------
     //                Setting
     //-----------------------------------------
-    GoRoute(
-      path: '/home',
-      builder: (context, state) => HomePage(),
-    ),
+    GoRoute(path: '/home', builder: (context, state) => const HomePage()),
     GoRoute(
       path: '/business',
-      builder: (context, state) => BusinessPage(),
+      builder: (context, state) => const BusinessPage(),
     ),
-    GoRoute(
-      path: '/school',
-      builder: (context, state) => SchoolPage(),
-    ),
+    GoRoute(path: '/school', builder: (context, state) => const SchoolPage()),
     GoRoute(
       path: '/settings',
-      builder: (context, state) => SettingsPage(),
+      builder: (context, state) => const SettingsPage(),
     ),
     //-----------------------------------------
     //                Historial

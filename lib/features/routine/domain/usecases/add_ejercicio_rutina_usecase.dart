@@ -13,6 +13,7 @@ class AddEjercicioRutinaUsecase
   Future<Either<Failure, void>> call(AddEjercicioRutinaParams params) async {
     return await _routineRepository.addEjericioRutina(
       idRutina: params.idRutina,
+      idSesion: params.idSesion,
       idEjercicio: params.idEjercicio,
       dataSeries: params.dataSeries,
     );
@@ -23,11 +24,13 @@ class AddEjercicioRutinaParams {
   int? id;
   final String idRutina;
   final String idEjercicio;
+  final String idSesion;
   final List<DataSerie> dataSeries;
 
   AddEjercicioRutinaParams({
     this.id,
     required this.idRutina,
+    required this.idSesion,
     required this.idEjercicio,
     required this.dataSeries,
   });
@@ -41,10 +44,7 @@ class DataSerie {
   final double peso;
   final int numeroRepeticon;
 
-  DataSerie({
-    required this.peso,
-    required this.numeroRepeticon,
-  });
+  DataSerie({required this.peso, required this.numeroRepeticon});
   @override
   String toString() {
     return 'DataSerie(peso: $peso, numeroRepeticon: $numeroRepeticon)';

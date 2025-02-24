@@ -6,7 +6,9 @@ import 'package:gymaster/features/routine/presentation/cubits/rutina/routine_cub
 import 'package:gymaster/features/routine/presentation/pages/agregar_rutina_page.dart';
 import 'package:gymaster/features/routine/presentation/pages/routine_search_delegate.dart';
 import 'package:gymaster/features/routine/presentation/widgets/routine_card.dart';
+import 'package:gymaster/shared/widgets/custom_elevated_button.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
+import 'package:lottie/lottie.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ListaRutinasPage extends StatelessWidget {
@@ -31,8 +33,8 @@ class ListaRutinasPage extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: _buildFloatingActionButton(context),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      // floatingActionButton: _buildFloatingActionButton(context),
     );
   }
 
@@ -59,31 +61,63 @@ class ListaRutinasPage extends StatelessWidget {
   }
 
   Widget _buildSearchBar(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        const Text(
-          'Rutinas',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w400,
-            color: Colors.black,
-          ),
-        ),
-        IconButton(
-          icon: const Icon(IconsaxPlusLinear.search_normal_1),
-          onPressed: () async {
-            final routineCubit = BlocProvider.of<RoutineCubit>(context);
-            final result = await showSearch(
-              context: context,
-              delegate: RoutineSearchDelegate(),
-            );
-            if (result != null && context.mounted) {
-              routineCubit.getAllRoutine();
-            }
-          },
-        ),
-      ],
+    return BlocBuilder<RoutineCubit, RoutineState>(
+      builder: (context, state) {
+        if (state is RoutineError) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'Rutinas',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.black,
+                ),
+              ),
+              IconButton(
+                icon: const Icon(Icons.add),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => const AgregarRutinaPage(),
+                    ),
+                  );
+                },
+              ),
+            ],
+          );
+        }
+        if (state is RoutineGetAllSuccess) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'Rutinas',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.black,
+                ),
+              ),
+              IconButton(
+                icon: const Icon(IconsaxPlusLinear.search_normal_1),
+                onPressed: () async {
+                  final routineCubit = BlocProvider.of<RoutineCubit>(context);
+                  final result = await showSearch(
+                    context: context,
+                    delegate: RoutineSearchDelegate(),
+                  );
+                  if (result != null && context.mounted) {
+                    routineCubit.getAllRoutine();
+                  }
+                },
+              ),
+            ],
+          );
+        }
+        return const SizedBox();
+      },
     );
   }
 
@@ -117,8 +151,55 @@ class ListaRutinasPage extends StatelessWidget {
             }
             if (state is RoutineError) {
               debugPrint(state.message);
-              return Center(
-                child: Text(state.message),
+              // return Center(child: Text(state.message));
+              // return Column(
+              //   children: [
+              //     Center(
+              //       child: Lottie.asset('assets/lottie/alzando_pesas.json'),
+              //     ),
+              //     const Text(
+              //       'Cada gran cambio comienza con un primer paso. Agrega tu primera rutina ahoraCada gran cambio comienza con un primer paso. Agrega tu primera rutina ahora',
+              //     ),
+              //   ],
+              // );
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Lottie.asset(
+                      'assets/lottie/alzando_pesas.json',
+                      width: 200,
+                      height: 200,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(
+                      'Cada gran cambio comienza con un primer paso. Agrega tu primera rutina ahora.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black54,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+
+                  CustomElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => const AgregarRutinaPage(),
+                        ),
+                      );
+                    },
+                    text: 'Agregar Rutina',
+                    borderRadius: 10,
+                    height: 40,
+                  ),
+                ],
               );
             }
             if (state is RoutineAddSuccess) {
@@ -126,20 +207,28 @@ class ListaRutinasPage extends StatelessWidget {
             }
             if (state is RoutineGetAllSuccess) {
               if (state.routines.isEmpty) {
-                return const Center(
-                  child: Text('No hay rutinas disponibles'),
+                return Column(
+                  children: [
+                    Center(
+                      child: Lottie.network(
+                        'https://lottie.host/69088e50-d3a1-4fcc-8c18-8fcee60c44f0/8UbSvpBZAe.lottiehttps://lottie.host/69088e50-d3a1-4fcc-8c18-8fcee60c44f0/8UbSvpBZAe.lottie',
+                      ),
+                    ),
+                    const Text(
+                      'Cada gran cambio comienza con un primer paso. Agrega tu primera rutina ahoraCada gran cambio comienza con un primer paso. Agrega tu primera rutina ahora',
+                    ),
+                  ],
                 );
               }
               return ListView.separated(
                 itemCount: state.routines.length,
-                separatorBuilder: (_, __) => Container(
-                  height: 10,
-                  color: Colors.grey[200],
-                ),
+                separatorBuilder:
+                    (_, __) => Container(height: 10, color: Colors.grey[200]),
                 itemBuilder: (context, i) {
                   final rutina = state.routines[i];
-                  final cantidadTexto =
-                      _getCantidadTexto(rutina.cantidadEjercicios);
+                  final cantidadTexto = _getCantidadTexto(
+                    rutina.cantidadEjercicios,
+                  );
 
                   // Limita el retraso máximo a 1500 milisegundos (15 * 100)
                   final delay = Duration(milliseconds: 50 * (i < 5 ? i : 5));
@@ -159,9 +248,7 @@ class ListaRutinasPage extends StatelessWidget {
                 },
               );
             } else {
-              return const Center(
-                child: Text('Error al cargar las rutinas'),
-              );
+              return const Center(child: Text('Error al cargar las rutinas'));
             }
           },
         ),
@@ -177,27 +264,5 @@ class ListaRutinasPage extends StatelessWidget {
     } else {
       return '$cantidadEjercicios Ejercicios';
     }
-  }
-
-  Widget _buildFloatingActionButton(BuildContext context) {
-    return FloatingActionButton.extended(
-      elevation: 10,
-      backgroundColor: Theme.of(context).primaryColor,
-      onPressed: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (_) => const AgregarRutinaPage(),
-          ),
-        );
-      },
-      label: Text(
-        'Nueva Rutina',
-        style: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-          color: Theme.of(context).textTheme.bodyMedium?.color,
-        ),
-      ),
-    );
   }
 }

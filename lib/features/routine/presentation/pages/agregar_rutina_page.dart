@@ -117,76 +117,74 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
         leading: IconButton(
           icon: SvgPicture.asset(Assets.icons.flechaIzquierda.path),
           onPressed: () {
-            context.pop();
+            context.go('/');
           },
         ),
         title: const Text('Agregar Rutina'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              height: 300,
-              color: selectedColor,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    Assets.icons.logo.path,
-                    colorFilter: const ColorFilter.mode(
-                      Colors.black,
-                      BlendMode.srcIn,
-                    ),
-                    width: 100,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: TextField(
-                      controller: textController,
-                      textAlign: TextAlign.center,
-                      autofocus: true,
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                height: 300,
+                color: selectedColor,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      Assets.icons.logo.path,
+                      colorFilter: const ColorFilter.mode(
+                        Colors.black,
+                        BlendMode.srcIn,
                       ),
-                      decoration: const InputDecoration(
-                        hintText: 'Nombre de la rutina',
-                        border: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        errorBorder: InputBorder.none,
-                        disabledBorder: InputBorder.none,
+                      width: 100,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: TextField(
+                        controller: textController,
+                        textAlign: TextAlign.center,
+                        autofocus: true,
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        decoration: const InputDecoration(
+                          hintText: 'Nombre de la rutina',
+                          border: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            Text(
-              errorMessage ?? '',
-              style: const TextStyle(
-                color: Colors.red,
+              const SizedBox(height: 20),
+              Text(
+                errorMessage ?? '',
+                style: const TextStyle(color: Colors.red),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              'SELECCIONE UN COLOR',
-              style: TextStyle(
-                fontSize: 15,
-                color: Colors.deepPurple,
+              const SizedBox(height: 20),
+              const Text(
+                'SELECCIONE UN COLOR',
+                style: TextStyle(fontSize: 15, color: Colors.deepPurple),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 10),
-            Expanded(
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 5,
+              const SizedBox(height: 10),
+              GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount:
+                      (colors.length / 4).ceil(), // Adjust to show only 3 rows
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
                 ),
@@ -204,27 +202,21 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                         color: color,
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: const Icon(
-                        Icons.color_lens,
-                        color: Colors.white,
-                      ),
+                      child: const Icon(Icons.color_lens, color: Colors.white),
                     ),
                   );
                 },
               ),
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              'SELECCIONE UN ICONO',
-              style: TextStyle(
-                fontSize: 15,
-                color: Colors.deepPurple,
+              const SizedBox(height: 20),
+              const Text(
+                'SELECCIONE UN ICONO',
+                style: TextStyle(fontSize: 15, color: Colors.deepPurple),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 10),
-            Expanded(
-              child: GridView.builder(
+              const SizedBox(height: 10),
+              GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 5,
                   crossAxisSpacing: 10,
@@ -241,9 +233,10 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        color: selectedSvg == svgPath
-                            ? Colors.deepPurple
-                            : Colors.grey[200],
+                        color:
+                            selectedSvg == svgPath
+                                ? Colors.deepPurple
+                                : Colors.grey[200],
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Center(
@@ -263,39 +256,36 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                   );
                 },
               ),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _onSave,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF8870FF),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 15,
-                  vertical: 15,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              child: const Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.add,
-                    color: Colors.white,
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _onSave,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF8870FF),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 15,
+                    vertical: 15,
                   ),
-                  SizedBox(width: 10),
-                  Text(
-                    'Agregar',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: const Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.add, color: Colors.white),
+                    SizedBox(width: 10),
+                    Text(
+                      'Agregar',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

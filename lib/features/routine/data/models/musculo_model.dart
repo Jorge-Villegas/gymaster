@@ -1,5 +1,6 @@
+import 'package:gymaster/core/database/models/muscle.dart';
 import 'package:gymaster/features/routine/domain/entities/musculo.dart';
-import 'package:gymaster/core/database/models/musculo.dart' as musculo_db;
+
 class MusculoModel extends Musculo {
   MusculoModel({
     required super.id,
@@ -7,11 +8,7 @@ class MusculoModel extends Musculo {
     required super.imagenDirecion,
   });
 
-  MusculoModel copyWith({
-    String? id,
-    String? nombre,
-    String? imagenDirecion,
-  }) {
+  MusculoModel copyWith({String? id, String? nombre, String? imagenDirecion}) {
     return MusculoModel(
       id: id ?? this.id,
       nombre: nombre ?? this.nombre,
@@ -20,11 +17,7 @@ class MusculoModel extends Musculo {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'nombre': nombre,
-      'imagenDirecion': imagenDirecion,
-    };
+    return {'id': id, 'nombre': nombre, 'imagenDirecion': imagenDirecion};
   }
 
   factory MusculoModel.fromJson(Map<String, dynamic> json) {
@@ -35,12 +28,11 @@ class MusculoModel extends Musculo {
     );
   }
 
-  factory MusculoModel.fromEntity(musculo_db.Musculo musculo) {
+  factory MusculoModel.fromEntity(Muscle musculo) {
     return MusculoModel(
       id: musculo.id,
-      nombre: musculo.nombre,
-      imagenDirecion: musculo.imagenDireccion ?? '',
+      nombre: musculo.name,
+      imagenDirecion: musculo.imagePath ?? '',
     );
   }
-
 }

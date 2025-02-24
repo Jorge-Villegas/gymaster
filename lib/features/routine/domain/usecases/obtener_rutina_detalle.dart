@@ -12,8 +12,10 @@ class ObtenerRutinaDetalle
 
   ObtenerRutinaDetalle(this.repository);
 
+  @override
   Future<Either<Failure, RutinaData>> call(
-      ObtenerRutinaDetalleParams params) async {
+    ObtenerRutinaDetalleParams params,
+  ) async {
     return await repository.obtenerRutinaDetalles(idRutina: params.id);
   }
 }

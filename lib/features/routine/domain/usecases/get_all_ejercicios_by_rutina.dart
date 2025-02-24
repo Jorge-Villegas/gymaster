@@ -12,13 +12,21 @@ class GetAllEjerciciosByRutinaUseCase
 
   @override
   Future<Either<Failure, EjerciciosDeRutina>> call(
-      GetAllEjerciciosByRutinaParams params) async {
-    return await repository.getAllEjercicioByRutinaId(rutinaId: params.id);
+    GetAllEjerciciosByRutinaParams params,
+  ) async {
+    return await repository.getAllEjercicioByRutinaId(
+      rutinaId: params.id,
+      idRoutineSession: params.idRoutineSession,
+    );
   }
 }
 
 class GetAllEjerciciosByRutinaParams {
   final String id;
+  final String idRoutineSession;
 
-  GetAllEjerciciosByRutinaParams({required this.id});
+  GetAllEjerciciosByRutinaParams({
+    required this.id,
+    required this.idRoutineSession,
+  });
 }

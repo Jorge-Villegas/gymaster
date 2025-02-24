@@ -6,7 +6,7 @@ class AgregarSeriesCubit extends Cubit<AgregarSeriesState> {
   final AddEjercicioRutinaUsecase _addEjercicioRutinaUsecase;
 
   AgregarSeriesCubit(this._addEjercicioRutinaUsecase)
-      : super(AgregarSeriesLoaded.initial());
+    : super(AgregarSeriesLoaded.initial());
 
   void iniciar() {
     emit(AgregarSeriesLoaded.initial());
@@ -16,8 +16,11 @@ class AgregarSeriesCubit extends Cubit<AgregarSeriesState> {
     final currentState = state;
     if (currentState is AgregarSeriesLoaded) {
       if (currentState.cantidadSeries < 10) {
-        emit(currentState.copyWith(
-            cantidadSeries: currentState.cantidadSeries + 1));
+        emit(
+          currentState.copyWith(
+            cantidadSeries: currentState.cantidadSeries + 1,
+          ),
+        );
       }
     }
   }
@@ -28,7 +31,8 @@ class AgregarSeriesCubit extends Cubit<AgregarSeriesState> {
       if (currentState.cantidadSeries > 0) {
         emit(
           currentState.copyWith(
-              cantidadSeries: currentState.cantidadSeries - 1),
+            cantidadSeries: currentState.cantidadSeries - 1,
+          ),
         );
       }
     }
@@ -53,6 +57,7 @@ class AgregarSeriesCubit extends Cubit<AgregarSeriesState> {
   }
 
   Future<bool> guardarDatos({
+    required String idSesion,
     required String rutinaId,
     required String ejercicioId,
     required List<double> pesos,
@@ -63,22 +68,22 @@ class AgregarSeriesCubit extends Cubit<AgregarSeriesState> {
       // Crear una lista de DataSerie a partir de las listas de pesos y repeticiones
       List<DataSerie> dataSeries = [];
       for (int i = 0; i < pesos.length; i++) {
-        dataSeries.add(DataSerie(
-          peso: pesos[i],
-          numeroRepeticon: repeticiones[i],
-        ));
+        dataSeries.add(
+          DataSerie(peso: pesos[i], numeroRepeticon: repeticiones[i]),
+        );
       }
 
       // Crear una nueva instancia de EjercicioRutina
       final ejercicioRutina = AddEjercicioRutinaParams(
+        idSesion: idSesion,
         idRutina: rutinaId,
         idEjercicio: ejercicioId,
         dataSeries: dataSeries,
       );
 
       final resul = await _addEjercicioRutinaUsecase(ejercicioRutina);
-    
-      return resul.fold((l) => true, (r) => false);
+
+      return resul.fold((l) => false, (r) => true);
     }
     return false;
   }

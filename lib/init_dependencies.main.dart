@@ -11,8 +11,9 @@ Future<void> initDependencies() async {
 }
 
 void _initDatabaseHelper() {
-  serviceLocator
-      .registerLazySingleton<DatabaseHelper>(() => DatabaseHelper.instance);
+  serviceLocator.registerLazySingleton<DatabaseHelper>(
+    () => DatabaseHelper.instance,
+  );
 }
 
 void _initIdGenerator() {
@@ -23,14 +24,15 @@ void _initRoutine() {
   serviceLocator
     // Data source
     ..registerFactory<RoutineLocalDataSource>(
-        () => RoutineLocalDataSource(serviceLocator()))
-
+      () => RoutineLocalDataSource(serviceLocator(), serviceLocator()),
+    )
     // Repository
-    ..registerFactory<RoutineRepository>(() => RoutineRepositoryImpl(
-          localDataSource: serviceLocator(),
-          idGenerator: serviceLocator(),
-        ))
-
+    ..registerFactory<RoutineRepository>(
+      () => RoutineRepositoryImpl(
+        localDataSource: serviceLocator(),
+        idGenerator: serviceLocator(),
+      ),
+    )
     // Use cases
     ..registerFactory(() => AddRoutineUseCase(serviceLocator()))
     ..registerFactory(() => DeleteRoutineUseCase(serviceLocator()))
@@ -42,29 +44,37 @@ void _initRoutine() {
     ..registerFactory(() => GetAllEjerciciosByRutinaUseCase(serviceLocator()))
     ..registerFactory(() => UpdateSerieUseCase(serviceLocator()))
     ..registerFactory(() => GetRoutineByNameUseCase(serviceLocator()))
-
+    ..registerCachedFactory(
+      () => GetLastRoutineSessionByRoutineId(serviceLocator()),
+    )
     //Cubit
-    ..registerFactory(() => RoutineCubit(
-          addRoutineUseCase: serviceLocator(),
-          getAllRoutineUseCase: serviceLocator(),
-          deleteRoutineUseCase: serviceLocator(),
-          getRoutineByNameUseCase: serviceLocator(),
-        ))
-    ..registerFactory(() => MusculoCubit(
-          getAllMusculoUsecase: serviceLocator(),
-        ))
-    ..registerFactory(() => SerieCubit(
-          getAllSerieUseCase: serviceLocator(),
-        ))
-    ..registerFactory(() => EjercicioCubit(
-          getAllEjerciciosByMusculoUseCase: serviceLocator(),
-          getAllEjerciciosByRutinaUseCase: serviceLocator(),
-        ))
+    ..registerFactory(
+      () => RoutineCubit(
+        addRoutineUseCase: serviceLocator(),
+        getAllRoutineUseCase: serviceLocator(),
+        deleteRoutineUseCase: serviceLocator(),
+        getRoutineByNameUseCase: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => MusculoCubit(getAllMusculoUsecase: serviceLocator()),
+    )
+    ..registerFactory(() => SerieCubit(getAllSerieUseCase: serviceLocator()))
+    ..registerFactory(
+      () => EjercicioCubit(
+        getLastRoutineSessionByRoutineId: serviceLocator(),
+        getAllEjerciciosByMusculoUseCase: serviceLocator(),
+        getAllEjerciciosByRutinaUseCase: serviceLocator(),
+      ),
+    )
     ..registerFactory(() => AgregarSeriesCubit(serviceLocator()))
-    ..registerFactory(() => EjerciciosByRutinaCubit(
-          serviceLocator(),
-          serviceLocator(),
-        ))
+    ..registerFactory(
+      () => EjerciciosByRutinaCubit(
+        serviceLocator(),
+        serviceLocator(),
+        serviceLocator(),
+      ),
+    )
     ..registerFactory(() => RealizacionEjercicioCubit())
     ..registerFactory(() => RealizarEjercicioRutinaCubit(serviceLocator()));
 }
@@ -73,8 +83,8 @@ void _initSettings() {
   serviceLocator
     // Data Source
     ..registerFactory<SettingLocalDataSource>(
-        () => SettingLocalDataSource(serviceLocator()))
-
+      () => SettingLocalDataSource(serviceLocator()),
+    )
     // Repository
     ..registerFactory<SettingRepository>(
       () => SettingRepositoryImp(localDataSource: serviceLocator()),
@@ -85,39 +95,44 @@ void _initSettings() {
     ..registerFactory(() => SetLanguageUseCase(serviceLocator()))
     ..registerFactory(() => GetLanguageUseCase(serviceLocator()))
     ..registerCachedFactory(
-        () => GetAllCompletedRoutinesWithExercises(serviceLocator()))
-
+      () => GetAllCompletedRoutinesWithExercises(serviceLocator()),
+    )
     // Cubit
-    ..registerFactory(() => SettingCubit(
-          getLanguageUseCase: serviceLocator(),
-          getThemeModeUseCase: serviceLocator(),
-          setLanguageUseCase: serviceLocator(),
-          setThemeModeUseCase: serviceLocator(),
-        ));
+    ..registerFactory(
+      () => SettingCubit(
+        getLanguageUseCase: serviceLocator(),
+        getThemeModeUseCase: serviceLocator(),
+        setLanguageUseCase: serviceLocator(),
+        setThemeModeUseCase: serviceLocator(),
+      ),
+    );
 }
 
 void _initRecord() {
   serviceLocator
     // Data sources
     ..registerFactory<RecordLocalDataSource>(
-        () => RecordLocalDataSource(serviceLocator()))
-
+      () => RecordLocalDataSource(serviceLocator()),
+    )
     // Cubit
-    ..registerFactory(() => RecordCubit(
-          getAllCompletedRoutinesWithExercises: serviceLocator(),
-          getRutinaByIdUseCase: serviceLocator(),
-          saveRutinaUseCase: serviceLocator(),
-          deleteRutinaUseCase: serviceLocator(),
-        ))
-
+    ..registerFactory(
+      () => RecordCubit(
+        getAllCompletedRoutinesWithExercises: serviceLocator(),
+        getRutinaByIdUseCase: serviceLocator(),
+        saveRutinaUseCase: serviceLocator(),
+        deleteRutinaUseCase: serviceLocator(),
+      ),
+    )
     // Use cases
     ..registerLazySingleton(
-        () => GetRutinaByIdUseCase(repository: serviceLocator()))
+      () => GetRutinaByIdUseCase(repository: serviceLocator()),
+    )
     ..registerLazySingleton(
-        () => SaveRutinaUseCase(repository: serviceLocator()))
+      () => SaveRutinaUseCase(repository: serviceLocator()),
+    )
     ..registerLazySingleton(
-        () => DeleteRutinaUseCase(repository: serviceLocator()))
-
+      () => DeleteRutinaUseCase(repository: serviceLocator()),
+    )
     // Repository
     ..registerLazySingleton<RecordRepository>(
       () => RecordRepositoryImpl(localDataSource: serviceLocator()),

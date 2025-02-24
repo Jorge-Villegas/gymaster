@@ -1,6 +1,6 @@
 import 'package:gymaster/features/routine/domain/entities/serie.dart';
-import 'package:gymaster/core/database/models/serie.dart' as serie_db;
-import 'package:gymaster/core/database/models/ejercicio.dart' as ejercicio_db;
+import 'package:gymaster/core/database/models/exercise_set.dart' as serie_db;
+import 'package:gymaster/core/database/models/exercise.dart' as ejercicio_db;
 
 class SerieModel extends Serie {
   const SerieModel({
@@ -43,38 +43,26 @@ class SerieModel extends Serie {
   }
 
   factory SerieModel.fromDatabase({
-    required serie_db.Serie serieDB,
+    required serie_db.ExerciseSet serieDB,
     List<EjercicioModel>? ejercicios,
   }) {
     return SerieModel(
       id: serieDB.id,
-      realizado: serieDB.realizado == 1,
-      tiempoDescanso: serieDB.tiempoDescanso,
+      realizado: false, //TODO: Cambiar
+      tiempoDescanso: serieDB.restTime ?? 0,
       ejercicios: ejercicios,
     );
   }
 }
 
 class EjercicioModel extends Ejercicio {
-  const EjercicioModel({
-    required super.id,
-    required super.nombre,
-  });
+  const EjercicioModel({required super.id, required super.nombre});
 
-  EjercicioModel copyWith({
-    String? id,
-    String? nombre,
-  }) {
-    return EjercicioModel(
-      id: id ?? this.id,
-      nombre: nombre ?? this.nombre,
-    );
+  EjercicioModel copyWith({String? id, String? nombre}) {
+    return EjercicioModel(id: id ?? this.id, nombre: nombre ?? this.nombre);
   }
 
-  factory EjercicioModel.fromDatabase(ejercicio_db.Ejercicio ejercicioDB) {
-    return EjercicioModel(
-      id: ejercicioDB.id,
-      nombre: ejercicioDB.nombre,
-    );
+  factory EjercicioModel.fromDatabase(ejercicio_db.Exercise ejercicioDB) {
+    return EjercicioModel(id: ejercicioDB.id, nombre: ejercicioDB.name);
   }
 }

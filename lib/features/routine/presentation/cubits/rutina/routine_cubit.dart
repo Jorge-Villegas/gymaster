@@ -5,7 +5,7 @@ import 'package:gymaster/features/routine/domain/usecases/delete_routine_usecase
 import 'package:gymaster/features/routine/domain/usecases/get_all_routine_usecase.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:gymaster/features/routine/domain/usecases/get_routine_by_name_usecase.dartget_routine_by_name_usecase.dart';
+import 'package:gymaster/features/routine/domain/usecases/get_routine_by_name_usecase.dart';
 
 part 'routine_state.dart';
 
@@ -81,7 +81,7 @@ class RoutineCubit extends Cubit<RoutineState> {
     final result = await getAllRoutineUseCase(NoParams());
     debugPrint(result.toString());
     result.fold(
-      (l) => emit(RoutineError('Error al obtener las rutinas')),
+      (l) => emit(RoutineError(l.errorMessage)),
       (r) => emit(RoutineGetAllSuccess(r)),
     );
   }

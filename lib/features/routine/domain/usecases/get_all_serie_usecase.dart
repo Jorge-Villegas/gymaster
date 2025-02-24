@@ -10,12 +10,16 @@ class GetAllSerieUseCase implements UseCase<void, SerieParams> {
 
   @override
   Future<Either<Failure, void>> call(SerieParams params) async {
-    return await repository.getAllEjercicioByRutinaId(rutinaId: params.id);
+    return await repository.getAllEjercicioByRutinaId(
+      rutinaId: params.id,
+      idRoutineSession: params.idRoutineSession,
+    );
   }
 }
 
 class SerieParams {
   final String id;
+  final String idRoutineSession;
 
-  SerieParams({required this.id});
+  SerieParams({required this.id, required this.idRoutineSession});
 }

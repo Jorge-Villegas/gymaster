@@ -1,4 +1,5 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:gymaster/core/error/exceptions.dart';
 import 'package:gymaster/core/error/failures.dart';
 import 'package:gymaster/features/record/data/models/record_rutina_models.dart';
 import 'package:gymaster/features/record/data/sources/record_local_data_source.dart';
@@ -15,8 +16,13 @@ class RecordRepositoryImpl implements RecordRepository {
     try {
       final result = await localDataSource.getRutinaById(id);
       return Right(result);
-    } catch (e) {
-      return Left(DatabaseFailure());
+    } on ServerException {
+      return Left(
+        ServerFailure(
+          errorMessage:
+              'No se pudo obtener la rutina. Por favor, inténtalo de nuevo más tarde.',
+        ),
+      );
     }
   }
 
@@ -33,8 +39,13 @@ class RecordRepositoryImpl implements RecordRepository {
       );
       await localDataSource.saveRutina(rutinaModel);
       return const Right(null);
-    } catch (e) {
-      return Left(DatabaseFailure());
+    } on ServerException {
+      return Left(
+        ServerFailure(
+          errorMessage:
+              'No se pudo guardar la rutina. Por favor, inténtalo de nuevo más tarde.',
+        ),
+      );
     }
   }
 
@@ -43,14 +54,19 @@ class RecordRepositoryImpl implements RecordRepository {
     try {
       await localDataSource.deleteRutina(id);
       return const Right(null);
-    } catch (e) {
-      return Left(DatabaseFailure());
+    } on ServerException {
+      return Left(
+        ServerFailure(
+          errorMessage:
+              ' No se pudo eliminar la rutina. Por favor, inténtalo de nuevo más tarde.',
+        ),
+      );
     }
   }
 
   @override
   Future<Either<Failure, List<RecordRutina>>>
-      getAllCompletedRoutinesWithExercises() async {
+  getAllCompletedRoutinesWithExercises() async {
     try {
       final rutinas = await localDataSource.getCompletedRoutines();
       final List<RecordRutina> result = [];
@@ -65,22 +81,30 @@ class RecordRepositoryImpl implements RecordRepository {
       }
 
       return Right(result);
-    } catch (e) {
-      return Left(DatabaseFailure());
+    } on ServerException {
+      return Left(
+        ServerFailure(
+          errorMessage:
+              'No se pudieron obtener las rutinas completadas. Por favor, inténtalo de nuevo más tarde.',
+        ),
+      );
     }
   }
 
   Future<List<RecordEjercicios>> _getExercisesByRoutineId(
-      String rutinaId) async {
-    final ejerciciosDB =
-        await localDataSource.getCompletedExercisesByRoutineId(rutinaId);
+    String rutinaId,
+  ) async {
+    final ejerciciosDB = await localDataSource.getCompletedExercisesByRoutineId(
+      rutinaId,
+    );
     final Set<String> ejercicioIds = {};
     final List<RecordEjercicios> ejercicios = [];
 
     for (var ejercicioDB in ejerciciosDB) {
       if (!ejercicioIds.contains(ejercicioDB.id)) {
-        final seriesDelEjercicio =
-            await _getSeriesByEjercicioId(ejercicioDB.id);
+        final seriesDelEjercicio = await _getSeriesByEjercicioId(
+          ejercicioDB.id,
+        );
         final recordEjercicio = RecordEjercicios.fromDatabase(
           ejercicioDB: ejercicioDB,
           seriesDelEjercicio: seriesDelEjercicio,
@@ -94,9 +118,11 @@ class RecordRepositoryImpl implements RecordRepository {
   }
 
   Future<List<SeriesDelEjercicio>> _getSeriesByEjercicioId(
-      String ejercicioId) async {
-    final seriesDelEjercicioDB =
-        await localDataSource.getSeriesByExerciseId(ejercicioId);
+    String ejercicioId,
+  ) async {
+    final seriesDelEjercicioDB = await localDataSource.getSeriesByExerciseId(
+      ejercicioId,
+    );
     return seriesDelEjercicioDB.map((serieDB) {
       return SeriesDelEjercicio.fromDatabase(serieDB: serieDB);
     }).toList();

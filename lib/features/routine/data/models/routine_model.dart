@@ -1,5 +1,5 @@
 import 'package:gymaster/features/routine/domain/entities/routine.dart';
-import 'package:gymaster/core/database/models/rutina.dart' as rutina_db;
+import 'package:gymaster/core/database/models/routine.dart' as rutina_db;
 
 class RoutineModel extends Routine {
   RoutineModel({
@@ -41,18 +41,18 @@ class RoutineModel extends Routine {
   }
 
   factory RoutineModel.fromDatabase({
-    required rutina_db.Rutina serieDB,
+    required rutina_db.Routine serieDB,
     int? cantidadEjercicios,
   }) {
     return RoutineModel(
       id: serieDB.id,
-      name: serieDB.nombre,
-      description: serieDB.descripcion,
-      fechaCreacion: DateTime.parse(serieDB.fechaCreacion),
-      echo: serieDB.estado == 1,
-      color: serieDB.color,
+      name: serieDB.name,
+      description: serieDB.description,
+      fechaCreacion: DateTime.parse(serieDB.createdAt),
+      echo: false, //TODO: Cambiar
+      color: serieDB.color ?? 0,
       cantidadEjercicios: cantidadEjercicios ?? 0,
-      imagenDireccion: serieDB.imageDireccion,
+      imagenDireccion: serieDB.imagePath ?? '',
     );
   }
 }

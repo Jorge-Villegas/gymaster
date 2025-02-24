@@ -1,86 +1,114 @@
 import 'package:flutter/cupertino.dart';
 import 'package:gymaster/core/database/database_helper.dart';
-import 'package:gymaster/core/database/models/musculo.dart';
+import 'package:gymaster/core/database/models/models.dart';
 import 'package:gymaster/core/generated/assets.gen.dart';
 import 'package:gymaster/shared/utils/logger.dart';
+import 'package:gymaster/shared/utils/uuid_generator.dart';
 
 class MusculosDataSeed {
-  final DatabaseHelper _databaseHelper = DatabaseHelper.instance;
+  final IdGenerator idGenerator;
 
-  List<Musculo> musculos = [
-    Musculo(
-      id: DatabaseHelper.instance.generateUUID(),
-      nombre: 'trapecio',
-      imagenDireccion: Assets.imagenes.musculos.general.trapecio.path,
-    ),
-    Musculo(
-      id: DatabaseHelper.instance.generateUUID(),
-      nombre: 'hombro',
-      imagenDireccion: Assets.imagenes.musculos.general.hombro.path,
-    ),
-    Musculo(
-      id: DatabaseHelper.instance.generateUUID(),
-      nombre: 'pecho',
-      imagenDireccion: Assets.imagenes.musculos.general.pectoral.path,
-    ),
-    Musculo(
-      id: DatabaseHelper.instance.generateUUID(),
-      nombre: 'triceps',
-      imagenDireccion: Assets.imagenes.musculos.general.triceps.path,
-    ),
-    Musculo(
-      id: DatabaseHelper.instance.generateUUID(),
-      nombre: 'biceps',
-      imagenDireccion: Assets.imagenes.musculos.general.biceps.path,
-    ),
-    Musculo(
-      id: DatabaseHelper.instance.generateUUID(),
-      nombre: 'antebrazo',
-      imagenDireccion: Assets.imagenes.musculos.general.antebrazo.path,
-    ),
-    Musculo(
-      id: DatabaseHelper.instance.generateUUID(),
-      nombre: 'abdomen',
-      imagenDireccion: Assets.imagenes.musculos.general.abdomen.path,
-    ),
-    Musculo(
-      id: DatabaseHelper.instance.generateUUID(),
-      nombre: 'espalda',
-      imagenDireccion: Assets.imagenes.musculos.general.espalda.path,
-    ),
-    Musculo(
-      id: DatabaseHelper.instance.generateUUID(),
-      nombre: 'espalda baja',
-      imagenDireccion: Assets.imagenes.musculos.general.espaldaBaja.path,
-    ),
-    Musculo(
-      id: DatabaseHelper.instance.generateUUID(),
-      nombre: 'gluteo',
-      imagenDireccion: Assets.imagenes.musculos.general.gluteos.path,
-    ),
-    Musculo(
-      id: DatabaseHelper.instance.generateUUID(),
-      nombre: 'cuadriceps',
-      imagenDireccion: Assets.imagenes.musculos.general.cuadriceps.path,
-    ),
-    Musculo(
-      id: DatabaseHelper.instance.generateUUID(),
-      nombre: 'femorales',
-      imagenDireccion: Assets.imagenes.musculos.general.femorales.path,
-    ),
-    Musculo(
-      id: DatabaseHelper.instance.generateUUID(),
-      nombre: 'pantorrilla',
-      imagenDireccion: Assets.imagenes.musculos.general.pantorrilla.path,
-    ),
-  ];
+  MusculosDataSeed({required this.idGenerator});
+
+  final DatabaseHelper _databaseHelper = DatabaseHelper.instance;
 
   Future<void> seedGenerateMusulos() async {
     try {
+      List<Muscle> musculos = [
+        Muscle(
+          id: idGenerator.generateId(),
+          name: 'trapecio',
+          imagePath: Assets.imagenes.musculos.general.trapecio.path,
+          createdAt: DateTime.now().toIso8601String(),
+        ),
+        Muscle(
+          id: idGenerator.generateId(),
+          name: 'hombro',
+          imagePath: Assets.imagenes.musculos.general.hombro.path,
+          createdAt: DateTime.now().toIso8601String(),
+        ),
+        Muscle(
+          id: idGenerator.generateId(),
+          name: 'pecho',
+          imagePath: Assets.imagenes.musculos.general.pectoral.path,
+          createdAt: DateTime.now().toIso8601String(),
+        ),
+        Muscle(
+          id: idGenerator.generateId(),
+          name: 'triceps',
+          imagePath: Assets.imagenes.musculos.general.triceps.path,
+          createdAt: DateTime.now().toIso8601String(),
+        ),
+        Muscle(
+          id: idGenerator.generateId(),
+          name: 'biceps',
+          imagePath: Assets.imagenes.musculos.general.biceps.path,
+          createdAt: DateTime.now().toIso8601String(),
+        ),
+        Muscle(
+          id: idGenerator.generateId(),
+          name: 'antebrazo',
+          imagePath: Assets.imagenes.musculos.general.antebrazo.path,
+          createdAt: DateTime.now().toIso8601String(),
+        ),
+        Muscle(
+          id: idGenerator.generateId(),
+          name: 'abdomen',
+          imagePath: Assets.imagenes.musculos.general.abdomen.path,
+          createdAt: DateTime.now().toIso8601String(),
+        ),
+        Muscle(
+          id: idGenerator.generateId(),
+          name: 'espalda',
+          imagePath: Assets.imagenes.musculos.general.espalda.path,
+          createdAt: DateTime.now().toIso8601String(),
+        ),
+        Muscle(
+          id: idGenerator.generateId(),
+          name: 'espalda baja',
+          imagePath: Assets.imagenes.musculos.general.espaldaBaja.path,
+          createdAt: DateTime.now().toIso8601String(),
+        ),
+        Muscle(
+          id: idGenerator.generateId(),
+          name: 'gluteo',
+          imagePath: Assets.imagenes.musculos.general.gluteos.path,
+          createdAt: DateTime.now().toIso8601String(),
+        ),
+        Muscle(
+          id: idGenerator.generateId(),
+          name: 'cuadriceps',
+          imagePath: Assets.imagenes.musculos.general.cuadriceps.path,
+          createdAt: DateTime.now().toIso8601String(),
+        ),
+        Muscle(
+          id: idGenerator.generateId(),
+          name: 'femorales',
+          imagePath: Assets.imagenes.musculos.general.femorales.path,
+          createdAt: DateTime.now().toIso8601String(),
+        ),
+        Muscle(
+          id: idGenerator.generateId(),
+          name: 'pantorrilla',
+          imagePath: Assets.imagenes.musculos.general.pantorrilla.path,
+          createdAt: DateTime.now().toIso8601String(),
+        ),
+      ];
+
       final database = await _databaseHelper.database;
       for (final musculo in musculos) {
-        await database.insert(DatabaseHelper.tbMusculo, musculo.toJson());
-        debugPrint('musculo guardado: ${musculo.nombre}');
+        final existingMuscles = await database.query(
+          DatabaseHelper.tbMuscle,
+          where: 'name = ?',
+          whereArgs: [musculo.name],
+        );
+
+        if (existingMuscles.isEmpty) {
+          await database.insert(DatabaseHelper.tbMuscle, musculo.toJson());
+          debugPrint('musculo guardado: ${musculo.name}');
+        } else {
+          debugPrint('musculo ya existe: ${musculo.name}');
+        }
       }
     } catch (e) {
       logger.e(e);
