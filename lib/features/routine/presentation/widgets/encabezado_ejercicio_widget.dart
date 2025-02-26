@@ -21,21 +21,24 @@ class EncabezadoEjercicioWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Center(
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20.0),
-            child: _buildImageWidget(urlImage),
+            child: _buildImageWidget(urlImage, screenWidth * 0.4),
           ),
         ),
         const SizedBox(height: 10),
         Text(
           TextFormatter.capitalize(nombreEjercicio),
           textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontSize: 15,
+          style: TextStyle(
+            fontSize: screenWidth * 0.04,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -43,22 +46,22 @@ class EncabezadoEjercicioWidget extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.circular(10.0),
           child: Container(
-            height: 60,
+            height: screenHeight * 0.08,
             color: const Color.fromRGBO(232, 238, 241, 1.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
+                Text(
                   'Series: ',
-                  style: TextStyle(fontSize: 18),
+                  style: TextStyle(fontSize: screenWidth * 0.045),
                 ),
                 SizedBox(
-                  width: 40,
+                  width: screenWidth * 0.1,
                   child: Text(
                     cantidadSeries.toString(),
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontSize: 24,
+                    style: TextStyle(
+                      fontSize: screenWidth * 0.06,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -67,41 +70,30 @@ class EncabezadoEjercicioWidget extends StatelessWidget {
                   onPressed: onIncrement,
                   icon: const Icon(Icons.add_circle),
                   color: Colors.green,
-                  iconSize: 30,
+                  iconSize: screenWidth * 0.08,
                 ),
                 IconButton(
                   onPressed: onDecrement,
                   icon: const Icon(Icons.remove_circle),
                   color: Colors.red,
-                  iconSize: 30,
+                  iconSize: screenWidth * 0.08,
                 ),
               ],
             ),
           ),
-        )
+        ),
       ],
     );
   }
 
   /// Método que construye un widget de imagen.
-  Widget _buildImageWidget(String urlImage) {
+  Widget _buildImageWidget(String urlImage, double imageSize) {
     if (VerificadorTipoArchivo.esSvg(urlImage)) {
-      return SvgPicture.asset(
-        urlImage,
-        height: 150,
-        fit: BoxFit.cover,
-      );
+      return SvgPicture.asset(urlImage, height: imageSize, fit: BoxFit.cover);
     } else if (VerificadorTipoArchivo.esImagen(urlImage)) {
-      return Image.asset(
-        urlImage,
-        height: 150,
-        fit: BoxFit.cover,
-      );
+      return Image.asset(urlImage, height: imageSize, fit: BoxFit.cover);
     } else {
-      return const Icon(
-        Icons.error,
-        size: 150,
-      );
+      return Icon(Icons.error, size: imageSize);
     }
   }
 }

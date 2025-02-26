@@ -170,6 +170,20 @@ class RoutineRepositoryImpl implements RoutineRepository {
     required List<DataSerie> dataSeries,
   }) async {
     try {
+      final existingExercise = await localDataSource.getExerciseFromRoutine(
+        idRutina: idRutina,
+        exerciseId: idEjercicio,
+        idRoutineSession: idSesion,
+      );
+
+      if (existingExercise != null) {
+        return Left(
+          ServerFailure(
+            errorMessage: 'El ejercicio ya está agregado a la rutina.',
+          ),
+        );
+      }
+
       await localDataSource.addEjercicioToRutina(
         idRutina: idRutina,
         idEjercicio: idEjercicio,
@@ -295,12 +309,39 @@ class RoutineRepositoryImpl implements RoutineRepository {
         repetitions: repeticiones,
         status:
             realizado == true
-                ? 'completed'
-                : 'not completed', //TODO: Cambiar a enum
+                ? ExerciseSetStatus.completed.name
+                : 'not completed',
         restTime: tiempoDescanso,
       );
 
       final success = await localDataSource.updateSerie(updatedSerie);
+
+      if (realizado != null) {
+        //obtenermos el id de la session_exercise
+        final sessionExerciseId = await localDataSource
+            .getSessionExerciseIdByExerciseSetId(id);
+
+        if (sessionExerciseId == null) {
+          print('No se encontró el sessionExerciseId');
+        }
+
+        //consultamos todos los sets de la session
+        final sets = await localDataSource.getExerciseSetsBySessionExerciseId(
+          sessionExerciseId!,
+        );
+
+        //verificamos si todos los sets estan completados
+        final allCompleted = sets.every(
+          (element) => element.status == ExerciseSetStatus.completed.name,
+        );
+
+        //si todos los sets estan completados, actualizamos el sessionExercise
+        if (allCompleted) {
+          await localDataSource.markSessionExerciseAsCompletedById(
+            sessionExerciseId,
+          );
+        }
+      }
 
       final result = SerieModel.fromDatabase(serieDB: updatedSerie);
       if (success) {
@@ -517,5 +558,101 @@ class RoutineRepositoryImpl implements RoutineRepository {
     }
 
     return Right(newSession);
+  }
+
+  @override
+  Future<Either<Failure, void>> updateExerciseOrder({
+    required String routineId,
+    required List<String> exerciseIds,
+  }) async {
+    try {
+      // First get the active session for this routine
+      final sessionResult = await getLastRoutineSessionByRoutineId(routineId);
+
+      return sessionResult.fold((failure) => Left(failure), (session) async {
+        final result = await localDataSource.updateExerciseOrder(
+          routineSessionId: session.id,
+          exerciseIds: exerciseIds,
+        );
+
+        if (result) {
+          return const Right(null);
+        } else {
+          return Left(
+            ServerFailure(
+              errorMessage: 'Error al actualizar el orden de los ejercicios.',
+            ),
+          );
+        }
+      });
+    } catch (e) {
+      return Left(ServerFailure(errorMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> markExerciseAsCompleted({
+    required String exerciseId,
+    required String routineId,
+  }) async {
+    try {
+      // Obtener la sesión activa para esta rutina
+      final sessionResult = await getLastRoutineSessionByRoutineId(routineId);
+
+      return sessionResult.fold((failure) => Left(failure), (session) async {
+        // Obtener el sessionExerciseId asociado
+        final sessionExercise = await localDataSource
+            .getSessionExerciseByExerciseId(
+              routineSessionId: session.id,
+              exerciseId: exerciseId,
+            );
+
+        if (sessionExercise == null) {
+          return Left(
+            ServerFailure(
+              errorMessage: 'No se encontró el ejercicio en la sesión.',
+            ),
+          );
+        }
+
+        final result = await localDataSource.markExerciseAsCompleted(
+          sessionExerciseId: sessionExercise.id,
+          routineSessionId: session.id,
+        );
+
+        if (result) {
+          return const Right(true);
+        } else {
+          return Left(
+            ServerFailure(
+              errorMessage: 'Error al marcar el ejercicio como completado.',
+            ),
+          );
+        }
+      });
+    } catch (e) {
+      return Left(ServerFailure(errorMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> deleteEjercicioRutina(
+    String idEjercicio,
+    String idSesion,
+  ) async {
+    try {
+      final result = await localDataSource.deleteExerciseFromRoutineSession(
+        exerciseId: idEjercicio,
+        routineSessionId: idSesion,
+      );
+
+      if (result) {
+        return const Right(true);
+      } else {
+        return const Right(false);
+      }
+    } catch (e) {
+      return Left(ServerFailure(errorMessage: e.toString()));
+    }
   }
 }

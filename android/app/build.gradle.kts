@@ -8,7 +8,7 @@ plugins {
 android {
     namespace = "com.example.gymaster"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = 30.toString()
+    ndkVersion =  "27.0.12077973"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11

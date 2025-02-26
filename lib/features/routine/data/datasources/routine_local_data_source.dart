@@ -4,6 +4,7 @@ import 'package:gymaster/core/error/exceptions.dart';
 import 'package:gymaster/features/routine/domain/usecases/add_ejercicio_rutina_usecase.dart';
 import 'package:gymaster/shared/utils/enum.dart';
 import 'package:gymaster/shared/utils/uuid_generator.dart';
+import 'package:sqflite/sqflite.dart';
 
 class RoutineLocalDataSource {
   final DatabaseHelper databaseHelper;
@@ -65,6 +66,7 @@ class RoutineLocalDataSource {
           ''',
         [musculoId],
       );
+
       if (ejercicios.isEmpty) throw NoRecordsException();
       return ejercicios.map((map) => Exercise.fromJson(map)).toList();
     } catch (e) {
@@ -236,34 +238,48 @@ class RoutineLocalDataSource {
     try {
       final db = await databaseHelper.database;
 
-      final resul = await db.transaction((txn) async {
+      await db.transaction((txn) async {
+        final orderResults = await txn.query(
+          DatabaseHelper.tbSessionExercise,
+          columns: ['MAX(order_index) as max_order'],
+          where: 'session_id = ?',
+          whereArgs: [idRoutineSession],
+        );
+
+        int nextOrder = 0;
+
+        // Si hay ejercicios en la sesión, el siguiente ejercicio tendrá el siguiente orden
+        if (orderResults.isNotEmpty &&
+            orderResults.first['max_order'] != null) {
+          nextOrder = (orderResults.first['max_order'] as int) + 1;
+        }
+
         final idSessionExercise = idGenerator.generateId();
         final sessionExercise = SessionExercise(
           id: idSessionExercise,
           sessionId: idRoutineSession,
           exerciseId: idEjercicio,
           status: SessionExerciseStatus.pending.name,
+          orderIndex: nextOrder,
         );
-        // Insertar el ejercicio en la sesión de la rutina
+
         await txn.insert(
           DatabaseHelper.tbSessionExercise,
           sessionExercise.toJson(),
         );
 
-        // Insertar las series asociadas al ejercicio
         for (final serie in dataSeries) {
           final exerciseSet = ExerciseSet(
             id: idGenerator.generateId(),
             sessionExerciseId: idSessionExercise,
             weight: serie.peso,
             repetitions: serie.numeroRepeticon,
-            restTime: 60, // Valor por defecto o configurable
+            restTime: 60, //TODO: Cambiar a valor configurable
             status: ExerciseSetStatus.pending.name,
           );
           await txn.insert(DatabaseHelper.tbExerciseSet, exerciseSet.toJson());
         }
       });
-      print(resul);
     } catch (e) {
       throw ServerException();
     }
@@ -272,14 +288,14 @@ class RoutineLocalDataSource {
   Future<List<Exercise>> getExercisesByRoutine(String routineId) async {
     final db = await databaseHelper.database;
 
-    final List<Map<String, dynamic>> results = await db.rawQuery(
+    final results = await db.rawQuery(
       '''
-      SELECT DISTINCT e.id, e.name, e.description, e.image_path
-      FROM session_exercise se
-      JOIN exercise e ON se.exercise_id = e.id
-      JOIN routine_session rs ON se.session_id = rs.id
-      WHERE rs.routine_id = ?
-    ''',
+        SELECT DISTINCT e.id, e.name, e.description, e.image_path
+        FROM session_exercise se
+        JOIN exercise e ON se.exercise_id = e.id
+        JOIN routine_session rs ON se.session_id = rs.id
+        WHERE rs.routine_id = ?
+      ''',
       [routineId],
     );
 
@@ -314,6 +330,9 @@ class RoutineLocalDataSource {
         DatabaseHelper.tbSessionExercise,
         where: 'session_id = ?',
         whereArgs: [routineSessionId],
+        // Primero ordena por estado (no completados primero), luego por order_index
+        orderBy:
+            "CASE WHEN status = 'completed' THEN 1 ELSE 0 END, order_index ASC",
       );
       return result.map((map) => SessionExercise.fromJson(map)).toList();
     } catch (e) {
@@ -402,6 +421,265 @@ class RoutineLocalDataSource {
       }
 
       return RoutineSession.fromJson(result.first);
+    } catch (e) {
+      throw ServerException();
+    }
+  }
+
+  //getEjercicioFromRutina
+  Future<Exercise?> getExerciseFromRoutine({
+    required String idRutina,
+    required String exerciseId,
+    required String idRoutineSession,
+  }) async {
+    try {
+      final db = await databaseHelper.database;
+      final result = await db.rawQuery(
+        '''
+        SELECT e.*
+        FROM session_exercise se
+        JOIN exercise e ON se.exercise_id = e.id
+        WHERE se.session_id = ?
+        AND e.id = ?
+      ''',
+        [idRoutineSession, exerciseId],
+      );
+
+      if (result.isEmpty) {
+        return null;
+      }
+
+      return Exercise.fromJson(result.first);
+    } catch (e) {
+      throw ServerException();
+    }
+  }
+
+  Future<bool> updateExerciseOrder({
+    required String routineSessionId,
+    required List<String> exerciseIds,
+  }) async {
+    try {
+      final db = await databaseHelper.database;
+
+      final result = await db.transaction((txn) async {
+        // Actualiza el orden de cada ejercicio
+        for (int i = 0; i < exerciseIds.length; i++) {
+          await txn.update(
+            DatabaseHelper.tbSessionExercise,
+            {'order_index': i},
+            where: 'session_id = ? AND exercise_id = ?',
+            whereArgs: [routineSessionId, exerciseIds[i]],
+          );
+        }
+      });
+
+      return true;
+    } catch (e) {
+      throw ServerException();
+    }
+  }
+
+  Future<bool> markExerciseAsCompleted({
+    required String sessionExerciseId,
+    required String routineSessionId,
+  }) async {
+    try {
+      final db = await databaseHelper.database;
+
+      return await db.transaction((txn) async {
+        // Obtener el número total de ejercicios para esta sesión
+        final countResult = await txn.query(
+          DatabaseHelper.tbSessionExercise,
+          columns: ['COUNT(*) as count'],
+          where: 'session_id = ?',
+          whereArgs: [routineSessionId],
+        );
+
+        final totalExercises = Sqflite.firstIntValue(countResult) ?? 0;
+
+        // Actualizar el estado a completado
+        await txn.update(
+          DatabaseHelper.tbSessionExercise,
+          {
+            'status': SessionExerciseStatus.completed.name,
+            'order_index':
+                totalExercises +
+                1000, // Un valor alto para asegurar que esté al final
+          },
+          where: 'id = ?',
+          whereArgs: [sessionExerciseId],
+        );
+
+        // Reorganizar todos los índices para mantener el orden correcto
+        final exercises = await txn.query(
+          DatabaseHelper.tbSessionExercise,
+          where: 'session_id = ?',
+          whereArgs: [routineSessionId],
+          orderBy:
+              "CASE WHEN status = 'completed' THEN 1 ELSE 0 END, order_index ASC",
+        );
+
+        // Reasignar los order_index en secuencia
+        for (int i = 0; i < exercises.length; i++) {
+          await txn.update(
+            DatabaseHelper.tbSessionExercise,
+            {'order_index': i},
+            where: 'id = ?',
+            whereArgs: [exercises[i]['id']],
+          );
+        }
+
+        return true;
+      });
+    } catch (e) {
+      throw ServerException();
+    }
+  }
+
+  Future<SessionExercise?> getSessionExerciseByExerciseId({
+    required String routineSessionId,
+    required String exerciseId,
+  }) async {
+    try {
+      final db = await databaseHelper.database;
+      final result = await db.query(
+        DatabaseHelper.tbSessionExercise,
+        where: 'session_id = ? AND exercise_id = ?',
+        whereArgs: [routineSessionId, exerciseId],
+      );
+
+      if (result.isEmpty) {
+        return null;
+      }
+
+      return SessionExercise.fromJson(result.first);
+    } catch (e) {
+      throw ServerException();
+    }
+  }
+
+  Future<List<String>> getExerciseSetStatuses({
+    required String sessionId,
+    required String sessionExerciseId,
+  }) async {
+    try {
+      final db = await databaseHelper.database;
+      final result = await db.rawQuery(
+        '''
+          SELECT es.status AS exercise_set_status
+          FROM exercise e
+          JOIN session_exercise se ON e.id = se.exercise_id
+          JOIN exercise_set es ON se.id = es.session_exercise_id
+          WHERE se.session_id = ?
+          AND se.id = ?
+          ORDER BY se.order_index;
+        ''',
+        [sessionId, sessionExerciseId],
+      );
+
+      return result.map((row) => row['exercise_set_status'] as String).toList();
+    } catch (e) {
+      throw ServerException();
+    }
+  }
+
+  Future<String?> getSessionExerciseIdByExerciseSetId(
+    String exerciseSetId,
+  ) async {
+    try {
+      final db = await databaseHelper.database;
+      final result = await db.query(
+        DatabaseHelper.tbExerciseSet,
+        columns: ['session_exercise_id'],
+        where: 'id = ?',
+        whereArgs: [exerciseSetId],
+      );
+
+      if (result.isEmpty) {
+        return null;
+      }
+
+      return result.first['session_exercise_id'] as String?;
+    } catch (e) {
+      throw ServerException();
+    }
+  }
+
+  Future<bool> markSessionExerciseAsCompletedById(id) async {
+    try {
+      final db = await databaseHelper.database;
+      final result = await db.update(
+        DatabaseHelper.tbSessionExercise,
+        {'status': SessionExerciseStatus.completed.name},
+        where: 'id = ?',
+        whereArgs: [id],
+      );
+      return result > 0;
+    } catch (e) {
+      throw ServerException();
+    }
+  }
+
+  Future<bool> deleteExerciseFromRoutineSession({
+    required String exerciseId,
+    required String routineSessionId,
+  }) async {
+    try {
+      final db = await databaseHelper.database;
+
+      final result = await db.transaction((txn) async {
+        // Verificar si el ejercicio está en la sesión
+        final sessionExercise = await txn.query(
+          DatabaseHelper.tbSessionExercise,
+          where: 'exercise_id = ? AND session_id = ?',
+          whereArgs: [exerciseId, routineSessionId],
+        );
+
+        if (sessionExercise.isEmpty) {
+          throw ServerException();
+        }
+
+        // Verificar si el ejercicio tiene series completadas o en proceso
+        final exerciseSets = await txn.query(
+          DatabaseHelper.tbExerciseSet,
+          where:
+              'session_exercise_id IN (SELECT id FROM ${DatabaseHelper.tbSessionExercise} WHERE exercise_id = ? AND session_id = ?)',
+          whereArgs: [exerciseId, routineSessionId],
+        );
+
+        final hasCompletedOrInProgressSets = exerciseSets.any((set) {
+          final status = set['status'] as String;
+          return status == 'completed' || status == 'in_progress';
+        });
+
+        if (hasCompletedOrInProgressSets) {
+          // Si el ejercicio tiene series completadas o en proceso, no se puede eliminar
+          return false;
+        }
+
+        // Eliminar el ejercicio de la sesión
+        await txn.delete(
+          DatabaseHelper.tbSessionExercise,
+          where: 'exercise_id = ? AND session_id = ?',
+          whereArgs: [exerciseId, routineSessionId],
+        );
+
+        // Eliminar los sets de ejercicio asociados
+        await txn.delete(
+          DatabaseHelper.tbExerciseSet,
+          where: '''
+              session_exercise_id IN (
+                SELECT id FROM ${DatabaseHelper.tbSessionExercise} 
+                WHERE exercise_id = ? AND session_id = ?)
+            ''',
+          whereArgs: [exerciseId, routineSessionId],
+        );
+
+        return true;
+      });
+
+      return result;
     } catch (e) {
       throw ServerException();
     }

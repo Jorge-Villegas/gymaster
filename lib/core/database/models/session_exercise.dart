@@ -11,12 +11,14 @@ class SessionExercise {
   final String sessionId;
   final String exerciseId;
   final String status;
+  final int orderIndex;
 
   SessionExercise({
     required this.id,
     required this.sessionId,
     required this.exerciseId,
     required this.status,
+    required this.orderIndex,
   });
 
   SessionExercise copyWith({
@@ -24,11 +26,13 @@ class SessionExercise {
     String? sessionId,
     String? exerciseId,
     String? status,
+    int? orderIndex,
   }) => SessionExercise(
     id: id ?? this.id,
     sessionId: sessionId ?? this.sessionId,
     exerciseId: exerciseId ?? this.exerciseId,
     status: status ?? this.status,
+    orderIndex: orderIndex ?? this.orderIndex,
   );
 
   factory SessionExercise.fromJson(Map<String, dynamic> json) =>
@@ -37,6 +41,7 @@ class SessionExercise {
         sessionId: json["session_id"],
         exerciseId: json["exercise_id"],
         status: json["status"],
+        orderIndex: json["order_index"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -44,5 +49,6 @@ class SessionExercise {
     "session_id": sessionId,
     "exercise_id": exerciseId,
     "status": status,
+    "order_index": orderIndex,
   };
 }

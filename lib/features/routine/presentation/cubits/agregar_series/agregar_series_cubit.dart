@@ -56,6 +56,38 @@ class AgregarSeriesCubit extends Cubit<AgregarSeriesState> {
     }
   }
 
+  // Future<bool> guardarDatos({
+  //   required String idSesion,
+  //   required String rutinaId,
+  //   required String ejercicioId,
+  //   required List<double> pesos,
+  //   required List<int> repeticiones,
+  // }) async {
+  //   final currentState = state;
+  //   if (currentState is AgregarSeriesLoaded) {
+  //     // Crear una lista de DataSerie a partir de las listas de pesos y repeticiones
+  //     List<DataSerie> dataSeries = [];
+  //     for (int i = 0; i < pesos.length; i++) {
+  //       dataSeries.add(
+  //         DataSerie(peso: pesos[i], numeroRepeticon: repeticiones[i]),
+  //       );
+  //     }
+
+  //     // Crear una nueva instancia de EjercicioRutina
+  //     final ejercicioRutina = AddEjercicioRutinaParams(
+  //       idSesion: idSesion,
+  //       idRutina: rutinaId,
+  //       idEjercicio: ejercicioId,
+  //       dataSeries: dataSeries,
+  //     );
+
+  //     final resul = await _addEjercicioRutinaUsecase(ejercicioRutina);
+
+  //     return resul.fold((l) => false, (r) => true);
+  //   }
+  //   return false;
+  // }
+
   Future<bool> guardarDatos({
     required String idSesion,
     required String rutinaId,
@@ -65,25 +97,33 @@ class AgregarSeriesCubit extends Cubit<AgregarSeriesState> {
   }) async {
     final currentState = state;
     if (currentState is AgregarSeriesLoaded) {
-      // Crear una lista de DataSerie a partir de las listas de pesos y repeticiones
-      List<DataSerie> dataSeries = [];
-      for (int i = 0; i < pesos.length; i++) {
-        dataSeries.add(
-          DataSerie(peso: pesos[i], numeroRepeticon: repeticiones[i]),
+      try {
+        // Crear una lista de DataSerie a partir de las listas de pesos y repeticiones
+        List<DataSerie> dataSeries = [];
+        for (int i = 0; i < pesos.length; i++) {
+          dataSeries.add(
+            DataSerie(peso: pesos[i], numeroRepeticon: repeticiones[i]),
+          );
+        }
+
+        // Crear una nueva instancia de EjercicioRutina
+        final ejercicioRutina = AddEjercicioRutinaParams(
+          idSesion: idSesion,
+          idRutina: rutinaId,
+          idEjercicio: ejercicioId,
+          dataSeries: dataSeries,
         );
+
+        final resul = await _addEjercicioRutinaUsecase(ejercicioRutina);
+
+        return resul.fold((l) {
+          emit(AgregarSeriesError(l.errorMessage));
+          return false;
+        }, (r) => true);
+      } catch (e) {
+        emit(AgregarSeriesError(e.toString()));
+        return false;
       }
-
-      // Crear una nueva instancia de EjercicioRutina
-      final ejercicioRutina = AddEjercicioRutinaParams(
-        idSesion: idSesion,
-        idRutina: rutinaId,
-        idEjercicio: ejercicioId,
-        dataSeries: dataSeries,
-      );
-
-      final resul = await _addEjercicioRutinaUsecase(ejercicioRutina);
-
-      return resul.fold((l) => false, (r) => true);
     }
     return false;
   }

@@ -136,11 +136,17 @@ class _AgregarEjercicioRutinaPageState
         SnackBarType.success,
       );
     } else {
-      showCustomSnackBar(
-        context,
-        'Error al guardar el ejercicio',
-        SnackBarType.error,
-      );
+      final state = context.read<AgregarSeriesCubit>().state;
+      if (state is AgregarSeriesError) {
+        showCustomSnackBar(context, state.message, SnackBarType.error);
+        context.pop();
+      } else {
+        showCustomSnackBar(
+          context,
+          'Error inesperado al guardar el ejercicio',
+          SnackBarType.error,
+        );
+      }
     }
   }
 

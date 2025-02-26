@@ -1,145 +1,93 @@
+// ignore_for_file: depend_on_referenced_packages
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:gymaster/core/generated/assets.gen.dart';
-import 'package:gymaster/features/routine/domain/entities/ejercicios_de_rutina.dart';
-import 'package:gymaster/features/routine/presentation/widgets/custom_cart.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:gymaster/app_router.dart';
+import 'package:gymaster/core/database/database_helper.dart';
+import 'package:gymaster/core/theme/app_theme.dart';
+import 'package:gymaster/features/record/presentation/cubit/record_cubit.dart';
+import 'package:gymaster/features/routine/presentation/cubits/agregar_series/agregar_series_cubit.dart';
+import 'package:gymaster/features/routine/presentation/cubits/ejercicio/ejercicio_cubit.dart';
+import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
+import 'package:gymaster/features/routine/presentation/cubits/musculo/musculo_cubit.dart';
+import 'package:gymaster/features/routine/presentation/cubits/realizacion_ejercicio/realizacion_ejercicio_cubit.dart';
+import 'package:gymaster/features/routine/presentation/cubits/realizar_ejercicio_rutina/realizar_ejercicio_rutina_cubit.dart';
+import 'package:gymaster/features/routine/presentation/cubits/rutina/routine_cubit.dart';
+import 'package:gymaster/features/routine/presentation/cubits/serie/serie_cubit.dart';
+import 'package:gymaster/features/setting/presentation/cubit/setting_cubit.dart';
+import 'package:gymaster/features/setting/presentation/cubit/setting_state.dart';
+import 'package:gymaster/init_dependencies.dart';
 
-class EjerciciosLlenosWidget extends StatefulWidget {
-  final EjerciciosDeRutina ejerciciosDeRutina;
-  final String rutinaId;
-  final Future<void> Function(BuildContext, EjerciciosDeRutina)
-  goToIniciarRutina;
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-  const EjerciciosLlenosWidget({
-    super.key,
-    required this.ejerciciosDeRutina,
-    required this.rutinaId,
-    required this.goToIniciarRutina,
-  });
+  await initDependencies();
 
-  @override
-  _EjerciciosLlenosWidgetState createState() => _EjerciciosLlenosWidgetState();
+  // Inicializa la base de datos
+  await DatabaseHelper.instance.database;
+
+  // Ejecuta la aplicación
+  runApp(const Proveedores());
 }
 
-class _EjerciciosLlenosWidgetState extends State<EjerciciosLlenosWidget> {
-  late List<Ejercicio> _ejercicios;
-
+class Proveedores extends StatelessWidget {
+  const Proveedores({super.key});
   @override
-  void initState() {
-    super.initState();
-    _ejercicios = List.from(widget.ejerciciosDeRutina.ejercicios);
+  Widget build(BuildContext context) {
+    DatabaseHelper.instance.database;
+    return MultiBlocProvider(
+      providers: [
+        // Proveedores de los diferentes Cubits utilizados en la aplicación
+        BlocProvider(create: (_) => serviceLocator<RoutineCubit>()),
+        BlocProvider(create: (_) => serviceLocator<SerieCubit>()),
+        BlocProvider(create: (_) => serviceLocator<MusculoCubit>()),
+        BlocProvider(create: (_) => serviceLocator<EjercicioCubit>()),
+        // BlocProvider(create: (_) => serviceLocator<ConfiguracionCubit>()),
+        BlocProvider(create: (_) => serviceLocator<AgregarSeriesCubit>()),
+        BlocProvider(create: (_) => serviceLocator<EjerciciosByRutinaCubit>()),
+        BlocProvider(
+          create: (_) => serviceLocator<RealizacionEjercicioCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => serviceLocator<RealizarEjercicioRutinaCubit>(),
+        ),
+        BlocProvider(create: (_) => serviceLocator<SettingCubit>()),
+        BlocProvider(create: (_) => serviceLocator<RecordCubit>()),
+      ],
+      child: const MyApp(),
+    );
   }
+}
 
-  void _onReorder(int oldIndex, int newIndex) {
-    setState(() {
-      if (oldIndex < newIndex) {
-        newIndex -= 1;
-      }
-      final Ejercicio item = _ejercicios.removeAt(oldIndex);
-      _ejercicios.insert(newIndex, item);
-    });
-  }
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
+    return BlocBuilder<SettingCubit, SettingState>(
+      builder: (context, state) {
+        bool isDarkMode = false;
 
-    return Column(
-      children: [
-        InkWell(
-          onTap: () {
-            widget.goToIniciarRutina(context, widget.ejerciciosDeRutina);
-          },
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-            color:
-                isDarkTheme
-                    ? const Color.fromRGBO(40, 44, 48, 1)
-                    : const Color.fromRGBO(216, 235, 224, 1),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(15),
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Color.fromRGBO(86, 170, 27, 1),
-                  ),
-                  child: SvgPicture.asset(
-                    Assets.icons.iconsax.play.path,
-                    width: 15,
-                    height: 15,
-                    colorFilter: const ColorFilter.mode(
-                      Colors.white,
-                      BlendMode.srcIn,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Text(
-                  'Iniciar entrenamiento',
-                  style: textTheme.labelMedium?.copyWith(
-                    color:
-                        Theme.of(context).brightness == Brightness.dark
-                            ? Colors.white
-                            : const Color.fromRGBO(86, 170, 27, 1),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Ejercicios',
-                style: textTheme.bodyMedium?.copyWith(
-                  color: isDarkTheme ? Colors.white : Colors.black,
-                ),
-              ),
-              Text(_ejercicios.length.toString(), style: textTheme.labelMedium),
-            ],
-          ),
-        ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: ReorderableListView.builder(
-              onReorder: _onReorder,
-              itemBuilder: (context, i) {
-                final ejercicio = _ejercicios[i];
+        if (state is SettingLoaded) {
+          isDarkMode = state.isDarkMode;
+        }
 
-                final estadoEjercicio = ejercicio.series.every(
-                  (serie) => serie.realizado,
-                );
-                final pesos =
-                    ejercicio.series.map((serie) => serie.peso).toList();
-                return CustomCard(
-                  key: Key(ejercicio.id), // Necesario para ReorderableListView
-                  colorFondo: Colors.white,
-                  ejercicioId: ejercicio.id,
-                  estadoSerie: estadoEjercicio,
-                  nombreEjercicio: ejercicio.nombre,
-                  numeroSeries: ejercicio.series.length,
-                  imagenDireccion: ejercicio.imagenDireccion,
-                  pesos: pesos,
-                  onDismissed: () {
-                    // TODO: Implementar lógica al eliminar una serie
-                  },
-                  onTap: () {
-                    // TODO: Implementar lógica al seleccionar una serie
-                  },
-                );
-              },
-              itemCount: _ejercicios.length,
-            ),
-          ),
-        ),
-      ],
+        return MaterialApp.router(
+          // Configuración de localización de la aplicación
+          locale: const Locale('es', 'US'),
+          localizationsDelegates: const [
+            GlobalCupertinoLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+          ],
+          supportedLocales: const [Locale('es', 'US')],
+          debugShowCheckedModeBanner: false,
+          title: 'GyMaster',
+          routerConfig: router,
+          // Configuración del tema de la aplicación
+          theme: isDarkMode ? AppTheme.darkTheme : AppTheme.lightTheme,
+        );
+      },
     );
   }
 }

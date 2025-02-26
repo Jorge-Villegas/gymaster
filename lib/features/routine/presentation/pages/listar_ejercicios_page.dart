@@ -77,93 +77,113 @@ class ListarEjerciciosPage extends StatelessWidget {
   }
 
   Widget buildEjercicioList(EjercicioGetAllSuccess state) {
-    return ListView.separated(
-      separatorBuilder: (_, index) => const SizedBox(height: 5),
-      padding: const EdgeInsets.symmetric(horizontal: 0),
-      itemCount: state.ejercicios.length,
-      itemBuilder: (context, i) {
-        // Limita el retraso máximo a 1500 milisegundos (10 * 100)
-        final delay = Duration(milliseconds: 100 * (i < 10 ? i : 10));
-        final ejercicio = state.ejercicios[i];
-        final imagenDireccion =
-            ejercicio.imagenDireccion?.isNotEmpty == true
-                ? ejercicio.imagenDireccion!
-                : AppConfig.defaultImagePath;
-        return FadeInLeft(
-          duration: delay,
-          child: Container(
-            margin: const EdgeInsets.symmetric(vertical: 2.5),
-            decoration: BoxDecoration(
-              color:
-                  ejercicio.seleccionado
-                      ? Colors.green.withAlpha(51)
-                      : Colors.transparent,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: ListTile(
-              leading: Stack(
-                children: [
-                  Container(
-                    width: 50,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      shape: BoxShape.circle,
-                    ),
-                    child: ClipOval(
-                      child:
-                          VerificadorTipoArchivo.esSvg(imagenDireccion)
-                              ? SvgPicture.asset(
-                                imagenDireccion,
-                                width: 50,
-                                height: 50,
-                                fit: BoxFit.cover,
-                              )
-                              : Image.asset(
-                                imagenDireccion,
-                                width: 50,
-                                height: 50,
-                                fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return const Icon(Icons.error);
-                                },
-                              ),
-                    ),
-                  ),
-                  if (ejercicio.seleccionado)
-                    Positioned.fill(
-                      child: Container(
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isSmallScreen = constraints.maxWidth < 600;
+        final textScaleFactor = MediaQuery.of(context).textScaleFactor;
+        return ListView.separated(
+          separatorBuilder: (_, index) => const SizedBox(height: 5),
+          padding: const EdgeInsets.symmetric(horizontal: 0),
+          itemCount: state.ejercicios.length,
+          itemBuilder: (context, i) {
+            // Limita el retraso máximo a 1500 milisegundos (10 * 100)
+            final delay = Duration(milliseconds: 100 * (i < 10 ? i : 10));
+            final ejercicio = state.ejercicios[i];
+            final imagenDireccion =
+                ejercicio.imagenDireccion?.isNotEmpty == true
+                    ? ejercicio.imagenDireccion!
+                    : AppConfig.defaultImagePath;
+            return FadeInLeft(
+              duration: delay,
+              child: Container(
+                margin: const EdgeInsets.symmetric(vertical: 2.5),
+                decoration: BoxDecoration(
+                  color:
+                      ejercicio.seleccionado
+                          ? Colors.green.withAlpha(51)
+                          : Colors.transparent,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: ListTile(
+                  leading: Stack(
+                    children: [
+                      Container(
+                        width: isSmallScreen ? 40 : 50,
+                        height: isSmallScreen ? 40 : 50,
                         decoration: BoxDecoration(
-                          color: Colors.green.withAlpha(
-                            230,
-                          ), // Fondo semitransparente
+                          color: Colors.grey[200],
                           shape: BoxShape.circle,
                         ),
-                        child: const Align(
-                          alignment: Alignment.center,
-                          child: Icon(
-                            Icons.check,
-                            color: Colors.white,
-                            size: 24,
-                          ),
+                        child: ClipOval(
+                          child:
+                              VerificadorTipoArchivo.esSvg(imagenDireccion)
+                                  ? SvgPicture.asset(
+                                    imagenDireccion,
+                                    width: isSmallScreen ? 40 : 50,
+                                    height: isSmallScreen ? 40 : 50,
+                                    fit: BoxFit.cover,
+                                  )
+                                  : Image.asset(
+                                    imagenDireccion,
+                                    width: isSmallScreen ? 40 : 50,
+                                    height: isSmallScreen ? 40 : 50,
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return const Icon(Icons.error);
+                                    },
+                                  ),
                         ),
                       ),
+                      if (ejercicio.seleccionado)
+                        Positioned.fill(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.green.withAlpha(
+                                230,
+                              ), // Fondo semitransparente
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Align(
+                              alignment: Alignment.center,
+                              child: Icon(
+                                Icons.check,
+                                color: Colors.white,
+                                size: 24,
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                  title: Text(
+                    ejercicio.nombre,
+                    style: TextStyle(
+                      fontSize:
+                          isSmallScreen
+                              ? 14 * textScaleFactor
+                              : 16 * textScaleFactor,
                     ),
-                ],
+                  ),
+                  onTap:
+                      ejercicio.seleccionado
+                          ? null
+                          : () {
+                            //TODO: SOLUCIONAR ESTO
+                            print(
+                              'ListarEjerciciosPage -> sesionId: $sessionId',
+                            );
+                            context.push(
+                              '/agregar-ejercicio-rutina/$rutinaId/${ejercicio.id}/${ejercicio.nombre}/$sessionId',
+                              extra: {
+                                'ejercicioImagenDireccion':
+                                    ejercicio.imagenDireccion,
+                              },
+                            );
+                          },
+                ),
               ),
-              title: Text(ejercicio.nombre),
-              onTap: () {
-                //TODO: SOLUCIONAR ESTO
-                print('ListarEjerciciosPage -> sesionId: $sessionId');
-                context.push(
-                  '/agregar-ejercicio-rutina/$rutinaId/${ejercicio.id}/${ejercicio.nombre}/$sessionId',
-                  extra: {
-                    'ejercicioImagenDireccion': ejercicio.imagenDireccion,
-                  },
-                );
-              },
-            ),
-          ),
+            );
+          },
         );
       },
     );

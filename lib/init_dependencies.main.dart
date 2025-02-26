@@ -44,6 +44,7 @@ void _initRoutine() {
     ..registerFactory(() => GetAllEjerciciosByRutinaUseCase(serviceLocator()))
     ..registerFactory(() => UpdateSerieUseCase(serviceLocator()))
     ..registerFactory(() => GetRoutineByNameUseCase(serviceLocator()))
+    ..registerFactory(() => DeleteEjercicioRutinaUseCase(serviceLocator()))
     ..registerCachedFactory(
       () => GetLastRoutineSessionByRoutineId(serviceLocator()),
     )
@@ -70,6 +71,7 @@ void _initRoutine() {
     ..registerFactory(() => AgregarSeriesCubit(serviceLocator()))
     ..registerFactory(
       () => EjerciciosByRutinaCubit(
+        serviceLocator(),
         serviceLocator(),
         serviceLocator(),
         serviceLocator(),

@@ -77,4 +77,19 @@ abstract interface class RoutineRepository {
   Future<Either<Failure, RoutineSession>> getLastRoutineSessionByRoutineId(
     String id,
   );
+
+  Future<Either<Failure, void>> updateExerciseOrder({
+    required String routineId,
+    required List<String> exerciseIds,
+  });
+
+  Future<Either<Failure, bool>> markExerciseAsCompleted({
+    required String exerciseId,
+    required String routineId,
+  });
+
+  Future<Either<Failure, bool>> deleteEjercicioRutina(
+    String idEjercicio,
+    String idSesion,
+  );
 }

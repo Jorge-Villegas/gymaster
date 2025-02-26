@@ -13,6 +13,10 @@ class CustomCard extends StatelessWidget {
   final List<double> pesos;
   final VoidCallback onDismissed;
   final VoidCallback onTap;
+  final double? height; // Parámetro opcional para la altura
+  final int index; // Añade el índice como parámetro
+  // In CustomCard class, add this property:
+  final Future<bool> Function()? confirmDismiss;
 
   const CustomCard({
     super.key,
@@ -25,6 +29,9 @@ class CustomCard extends StatelessWidget {
     required this.pesos,
     required this.onTap,
     required this.colorFondo,
+    this.height, // Inicializa el parámetro opcional
+    required this.index, // Inicializa el índice
+    required this.confirmDismiss,
   });
 
   @override
@@ -32,97 +39,109 @@ class CustomCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Dismissible(
-        key: Key(ejercicioId),
+        key: ValueKey(ejercicioId), // Asegúrate de que esta clave sea única
         direction: DismissDirection.endToStart,
+        confirmDismiss:
+            confirmDismiss != null ? (direction) => confirmDismiss!() : null,
         onDismissed: (direction) => onDismissed(),
         background: Container(
           height: 20,
           color: Colors.red,
           alignment: Alignment.centerRight,
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: const Icon(
-            Icons.delete,
-            color: Colors.white,
-          ),
+          child: const Icon(Icons.delete, color: Colors.white),
         ),
-        child: Card(
-          elevation: 4,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          child: Row(
-            children: [
-              ///
-              /// Imagen del ejercicio
-              ///
-              Expanded(
-                flex: 1,
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.horizontal(
-                    left: Radius.circular(10.0),
+        child: SizedBox(
+          height: height, // Establece la altura si se proporciona
+          child: Card(
+            elevation: 4,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            child: Row(
+              children: [
+                SizedBox(
+                  height: double.infinity,
+                  child: ReorderableDragStartListener(
+                    index: index,
+                    child: const Icon(Icons.drag_indicator, color: Colors.grey),
                   ),
-                  child: Stack(
-                    children: [
-                      _buildImageWidget(imagenDireccion),
-                      if (estadoSerie)
-                        Positioned.fill(
-                          child: Container(
-                            color: Colors.green.withOpacity(0.3),
-                            child: const Center(
-                              child: Icon(
-                                Icons.check_circle,
-                                color: Colors.green,
-                                size: 50.0,
+                ),
+
+                /// Imagen del ejercicio
+                Expanded(
+                  flex: 1,
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.horizontal(
+                      left: Radius.circular(10.0),
+                    ),
+                    child: Stack(
+                      children: [
+                        _buildImageWidget(imagenDireccion),
+                        if (estadoSerie)
+                          Positioned.fill(
+                            child: Container(
+                              color: Colors.green.withAlpha(
+                                (0.5 * 255).toInt(),
+                              ), // Reemplaza withOpacity con withAlpha
+                              child: const Center(
+                                child: Icon(
+                                  Icons.check_circle,
+                                  color: Colors.green,
+                                  size: 50.0,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
 
-              ///
-              /// Nombre del ejercicio y numero de series
-              ///
-              Expanded(
-                flex: 2,
-                child: Container(
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        TextFormatter.capitalize(nombreEjercicio),
-                        style: const TextStyle(
-                          fontSize: 14.0,
-                          //fontWeight: FontWeight.bold
+                /// Nombre del ejercicio y numero de series
+                Expanded(
+                  flex: 2,
+                  child: Container(
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          TextFormatter.capitalize(nombreEjercicio),
+                          style: const TextStyle(
+                            fontSize: 14.0,
+                            //fontWeight: FontWeight.bold
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 4.0),
-                      Text(
-                        _formatoNumeroSeries(numeroSeries, numeroSeries, pesos),
-                        style: const TextStyle(
-                          fontSize: 12.0,
-                          color: Colors.grey,
+                        const SizedBox(height: 4.0),
+                        Text(
+                          _formatoNumeroSeries(
+                            numeroSeries,
+                            numeroSeries,
+                            pesos,
+                          ),
+                          style: const TextStyle(
+                            fontSize: 12.0,
+                            color: Colors.grey,
+                          ),
                         ),
-                      ),
-                      /*
-                      Text(
-                        estadoSerie ? 'Completado' : 'En proceso',
-                        style: TextStyle(
-                          fontSize: 12.0,
-                          color: estadoSerie ? Colors.grey : Colors.green,
-                        ),
-                      )
-                        */
-                    ],
+                        /*
+                        Text(
+                          estadoSerie ? 'Completado' : 'En proceso',
+                          style: TextStyle(
+                            fontSize: 12.0,
+                            color: estadoSerie ? Colors.grey : Colors.green,
+                          ),
+                        )
+                          */
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

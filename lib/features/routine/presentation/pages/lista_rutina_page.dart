@@ -17,6 +17,8 @@ class ListaRutinasPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: _builAddRoutineButton(context),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       backgroundColor: Colors.grey[200],
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
@@ -33,8 +35,17 @@ class ListaRutinasPage extends StatelessWidget {
           ),
         ),
       ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      // floatingActionButton: _buildFloatingActionButton(context),
+    );
+  }
+
+  Widget _builAddRoutineButton(BuildContext context) {
+    return FloatingActionButton(
+      onPressed:
+          () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const AgregarRutinaPage()),
+          ),
+      child: const Icon(Icons.add),
     );
   }
 

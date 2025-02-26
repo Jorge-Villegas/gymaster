@@ -1,6 +1,8 @@
+import 'package:gymaster/core/database/database_helper.dart';
 import 'package:gymaster/core/database/models/routine_session.dart';
 import 'package:gymaster/core/error/timeout_helper.dart';
 import 'package:gymaster/features/routine/domain/entities/ejercicios_de_rutina.dart';
+import 'package:gymaster/features/routine/domain/usecases/delete_ejercicio_rutina_usecase.dart';
 import 'package:gymaster/features/routine/domain/usecases/get_all_ejercicios_by_rutina.dart';
 import 'package:gymaster/features/routine/domain/usecases/get_last_routine_session_by_routine_id_usecase.dart';
 import 'package:gymaster/features/routine/domain/usecases/update_serie.dart';
@@ -13,9 +15,11 @@ part 'ejercicios_by_rutina_state.dart';
 class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
   final GetAllEjerciciosByRutinaUseCase getAllEjerciciosByRutinaUseCase;
   final UpdateSerieUseCase updateSerieUseCase;
+  final DeleteEjercicioRutinaUseCase deleteEjercicioRutinaUseCase;
   final GetLastRoutineSessionByRoutineId getLastRoutineSessionByRoutineId;
 
   EjerciciosByRutinaCubit(
+    this.deleteEjercicioRutinaUseCase,
     this.getLastRoutineSessionByRoutineId,
     this.getAllEjerciciosByRutinaUseCase,
     this.updateSerieUseCase,
@@ -181,15 +185,19 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
     int serieIndex = currentState.serieIndex;
 
     if (serieIndex + 1 < ejercicios[ejercicioIndex].series.length) {
+      // Avanza a la siguiente serie del ejercicio actual
       serieIndex++;
     } else if (ejercicioIndex + 1 < ejercicios.length) {
+      // Avanza al siguiente ejercicio y reinicia el índice de la serie
       ejercicioIndex++;
       serieIndex = 0;
     } else {
+      // Si no hay más series ni ejercicios, emite el estado de rutina completada
       emit(EjerciciosByRutinaCompleted());
       return;
     }
 
+    // Emite el nuevo estado con los índices actualizados
     emit(
       EjerciciosByRutinaSuccess(
         ejerciciosDeRutina: currentState.ejerciciosDeRutina,
@@ -228,5 +236,103 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
         serieIndex: currentState.serieIndex,
       ),
     );
+  }
+
+  void updateEjercicioOrder(
+    List<Ejercicio> newOrder,
+    String routineSessionId,
+  ) async {
+    if (state is! EjerciciosByRutinaSuccess) return;
+    final currentState = state as EjerciciosByRutinaSuccess;
+
+    // Update the state with the new order
+    final updatedEjerciciosDeRutina = currentState.ejerciciosDeRutina.copyWith(
+      ejercicios: newOrder,
+    );
+
+    emit(
+      EjerciciosByRutinaSuccess(
+        ejerciciosDeRutina: updatedEjerciciosDeRutina,
+        ejercicioIndex: currentState.ejercicioIndex,
+        serieIndex: currentState.serieIndex,
+      ),
+    );
+
+    // Now persist the changes to the database
+    try {
+      final db = await DatabaseHelper.instance.database;
+
+      // Use a transaction to ensure all updates succeed or fail together
+      await db.transaction((txn) async {
+        for (int i = 0; i < newOrder.length; i++) {
+          final ejercicio = newOrder[i];
+
+          // Find the session_exercise_id for this exercise
+          final sessionExerciseRows = await txn.query(
+            DatabaseHelper.tbSessionExercise,
+            where: 'session_id = ? AND exercise_id = ?',
+            whereArgs: [routineSessionId, ejercicio.id],
+          );
+
+          if (sessionExerciseRows.isNotEmpty) {
+            final sessionExerciseId = sessionExerciseRows.first['id'] as String;
+
+            // Update the order_index
+            await txn.update(
+              DatabaseHelper.tbSessionExercise,
+              {'order_index': i},
+              where: 'id = ?',
+              whereArgs: [sessionExerciseId],
+            );
+          }
+        }
+      });
+
+      print('Successfully updated exercise order in database');
+    } catch (e) {
+      print('Error updating exercise order: $e');
+    }
+  }
+
+  //eliminar un ejercicio de la rutina
+  void deleteEjercicio(String idEjercicio, String idSesion) async {
+    if (state is! EjerciciosByRutinaSuccess) return;
+    final currentState = state as EjerciciosByRutinaSuccess;
+
+    //Verificar si el ejercicio puede ser eliminado
+    final canDelete = await checkCanDeleteEjercicio(idEjercicio, idSesion);
+
+    if (canDelete) {
+      // Actualice el estado solo si la eliminación fue exitosa
+      final updatedEjercicios =
+          currentState.ejerciciosDeRutina.ejercicios
+              .where((ejercicio) => ejercicio.id != idEjercicio)
+              .toList();
+
+      final updatedEjerciciosDeRutina = currentState.ejerciciosDeRutina
+          .copyWith(ejercicios: updatedEjercicios);
+
+      emit(
+        EjerciciosByRutinaSuccess(
+          ejerciciosDeRutina: updatedEjerciciosDeRutina,
+          ejercicioIndex: currentState.ejercicioIndex,
+          serieIndex: currentState.serieIndex,
+        ),
+      );
+    }
+  }
+
+  Future<bool> checkCanDeleteEjercicio(
+    String idEjercicio,
+    String idSesion,
+  ) async {
+    final result = await deleteEjercicioRutinaUseCase(
+      DeleteEjercicioRutinaParams(idEjercicio: idEjercicio, idSesion: idSesion),
+    );
+
+    return result.fold((failure) {
+      debugPrint('Error checking if can delete exercise: $failure');
+      return false;
+    }, (success) => success);
   }
 }

@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gymaster/core/generated/assets.gen.dart';
 import 'package:gymaster/features/routine/domain/entities/ejercicios_de_rutina.dart';
+import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
 import 'package:gymaster/features/routine/presentation/widgets/custom_cart.dart';
 
-class EjerciciosLlenosWidget extends StatelessWidget {
+class EjerciciosLlenosWidget extends StatefulWidget {
   final EjerciciosDeRutina ejerciciosDeRutina;
   final String rutinaId;
+  final String sessionId;
   final Future<void> Function(BuildContext, EjerciciosDeRutina)
   goToIniciarRutina;
 
@@ -15,7 +18,46 @@ class EjerciciosLlenosWidget extends StatelessWidget {
     required this.ejerciciosDeRutina,
     required this.rutinaId,
     required this.goToIniciarRutina,
+    required this.sessionId,
   });
+
+  @override
+  _EjerciciosLlenosWidgetState createState() => _EjerciciosLlenosWidgetState();
+}
+
+class _EjerciciosLlenosWidgetState extends State<EjerciciosLlenosWidget> {
+  late List<Ejercicio> _ejercicios;
+
+  void _onDismissed(int index) {
+    final ejercicio = _ejercicios[index];
+    setState(() {
+      _ejercicios.removeAt(index);
+    });
+    BlocProvider.of<EjerciciosByRutinaCubit>(
+      context,
+    ).deleteEjercicio(ejercicio.id, widget.sessionId);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _ejercicios = widget.ejerciciosDeRutina.ejercicios;
+  }
+
+  void _onReorder(int oldIndex, int newIndex) {
+    setState(() {
+      if (newIndex > oldIndex) {
+        newIndex -= 1;
+      }
+      final item = _ejercicios.removeAt(oldIndex);
+      _ejercicios.insert(newIndex, item);
+
+      // Get the current session ID
+      BlocProvider.of<EjerciciosByRutinaCubit>(
+        context,
+      ).updateEjercicioOrder(_ejercicios, widget.sessionId);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +68,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
       children: [
         InkWell(
           onTap: () {
-            goToIniciarRutina(context, ejerciciosDeRutina);
+            widget.goToIniciarRutina(context, widget.ejerciciosDeRutina);
           },
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
@@ -58,7 +100,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                   'Iniciar entrenamiento',
                   style: textTheme.labelMedium?.copyWith(
                     color:
-                        Theme.of(context).brightness == Brightness.dark
+                        isDarkTheme
                             ? Colors.white
                             : const Color.fromRGBO(86, 170, 27, 1),
                   ),
@@ -78,25 +120,19 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                   color: isDarkTheme ? Colors.white : Colors.black,
                 ),
               ),
-              Text(
-                ejerciciosDeRutina.ejercicios.length.toString(),
-                style: textTheme.labelMedium,
-              ),
+              Text(_ejercicios.length.toString(), style: textTheme.labelMedium),
             ],
           ),
         ),
         Expanded(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 1,
-                crossAxisSpacing: 5.0, // Espacio vertical entre las columnas
-                mainAxisSpacing: 10.0, // Espacio horizontal entre las filas
-                mainAxisExtent: 125, // Altura fija para cada tarjeta
-              ),
+            child: ReorderableListView.builder(
+              onReorder: _onReorder,
+              itemCount: _ejercicios.length,
+              buildDefaultDragHandles: false,
               itemBuilder: (context, i) {
-                final ejercicio = ejerciciosDeRutina.ejercicios[i];
+                final ejercicio = _ejercicios[i];
 
                 final estadoEjercicio = ejercicio.series.every(
                   (serie) => serie.realizado,
@@ -104,6 +140,8 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                 final pesos =
                     ejercicio.series.map((serie) => serie.peso).toList();
                 return CustomCard(
+                  index: i,
+                  key: ValueKey(ejercicio.id),
                   colorFondo: Colors.white,
                   ejercicioId: ejercicio.id,
                   estadoSerie: estadoEjercicio,
@@ -112,14 +150,25 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                   imagenDireccion: ejercicio.imagenDireccion,
                   pesos: pesos,
                   onDismissed: () {
-                    // TODO: Implementar lógica al eliminar una serie
+                    _onDismissed(i);
+                  },
+                  confirmDismiss: () async {
+                    // Call the delete operation and return its result
+                    final cubit = BlocProvider.of<EjerciciosByRutinaCubit>(
+                      context,
+                    );
+                    final result = await cubit.checkCanDeleteEjercicio(
+                      ejercicio.id,
+                      widget.sessionId,
+                    );
+                    return result;
                   },
                   onTap: () {
                     // TODO: Implementar lógica al seleccionar una serie
                   },
+                  height: 125,
                 );
               },
-              itemCount: ejerciciosDeRutina.ejercicios.length,
             ),
           ),
         ),

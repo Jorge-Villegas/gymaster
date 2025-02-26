@@ -33,7 +33,10 @@ class DatabaseHelper {
 
   // Inicializa la base de datos
   Future<Database> _initDatabase() async {
-    if (Platform.isWindows) {
+    if (kIsWeb) {
+      sqfliteFfiInit();
+      databaseFactory = databaseFactoryFfi;
+    } else if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
       sqfliteFfiInit();
       databaseFactory = databaseFactoryFfi;
     }
@@ -124,6 +127,7 @@ class DatabaseHelper {
           id TEXT PRIMARY KEY,
           session_id TEXT NOT NULL,
           exercise_id TEXT NOT NULL,
+          order_index INTEGER DEFAULT 0,
           status TEXT CHECK(status IN ('pending','in_progress','completed','cancelled')),
           FOREIGN KEY (session_id) REFERENCES routine_session (id) ON DELETE CASCADE,
           FOREIGN KEY (exercise_id) REFERENCES exercise (id) ON DELETE CASCADE

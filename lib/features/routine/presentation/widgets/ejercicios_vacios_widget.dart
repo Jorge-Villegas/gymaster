@@ -17,51 +17,64 @@ class EjerciciosVaciosWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FractionallySizedBox(
-      heightFactor: 0.9,
-      widthFactor: 1,
-      alignment: Alignment.topCenter,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(
-            Assets.imagenes.otros.personaConPesaNegro.path,
-            width: 200,
-            height: 200,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isSmallScreen = constraints.maxWidth < 600;
+        final imageSize = isSmallScreen ? 150.0 : 200.0;
+        final padding = isSmallScreen ? 10.0 : 30.0;
+        final textScale = MediaQuery.textScalerOf(context);
+
+        return FractionallySizedBox(
+          heightFactor: 0.9,
+          widthFactor: 1,
+          alignment: Alignment.topCenter,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                Assets.imagenes.otros.personaConPesaNegro.path,
+                width: imageSize,
+                height: imageSize,
+              ),
+              const SizedBox(height: 10),
+              Text(
+                'No hay ejercicios aún',
+                style: Theme.of(
+                  context,
+                ).textTheme.labelLarge?.copyWith(fontSize: textScale.scale(26)),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                'Agrega ejercicios para comenzar tu rutina',
+                style: Theme.of(
+                  context,
+                ).textTheme.labelSmall?.copyWith(fontSize: textScale.scale(14)),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: padding),
+              Container(
+                padding: const EdgeInsets.all(5),
+                child: CustomElevatedButton(
+                  onPressed: () {
+                    context.push('/agregar-ejercicios/$rutinaId/$sessionId').then((
+                      _,
+                    ) {
+                      if (context.mounted) {
+                        // Llama a getAllEjercicios después de que se cierra la pantalla AgregarEjerciciosPage
+                        BlocProvider.of<EjerciciosByRutinaCubit>(
+                          context,
+                          listen: false,
+                        ).getAllEjercicios(idRutina: rutinaId);
+                      }
+                    });
+                  },
+                  text: 'Agregar Ejercicio',
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: 10),
-          Text(
-            'No hay ejercicios aún',
-            style: Theme.of(context).textTheme.labelLarge,
-          ),
-          const SizedBox(height: 10),
-          Text(
-            'Agrega ejercicios para comenzar tu rutina',
-            style: Theme.of(context).textTheme.labelSmall,
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 30),
-          Container(
-            padding: const EdgeInsets.all(5),
-            child: CustomElevatedButton(
-              onPressed: () {
-                context.push('/agregar-ejercicios/$rutinaId/$sessionId').then((
-                  _,
-                ) {
-                  if (context.mounted) {
-                    // Llama a getAllEjercicios después de que se cierra la pantalla AgregarEjerciciosPage
-                    BlocProvider.of<EjerciciosByRutinaCubit>(
-                      context,
-                      listen: false,
-                    ).getAllEjercicios(idRutina: rutinaId);
-                  }
-                });
-              },
-              text: 'Agregar Ejercicio',
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

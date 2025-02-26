@@ -13,6 +13,7 @@ import 'package:gymaster/features/routine/data/repositories/routine_repository_i
 import 'package:gymaster/features/routine/domain/repositories/rutine_repository.dart';
 import 'package:gymaster/features/routine/domain/usecases/add_ejercicio_rutina_usecase.dart';
 import 'package:gymaster/features/routine/domain/usecases/add_routine_usecase.dart';
+import 'package:gymaster/features/routine/domain/usecases/delete_ejercicio_rutina_usecase.dart';
 import 'package:gymaster/features/routine/domain/usecases/delete_routine_usecase.dart';
 import 'package:gymaster/features/routine/domain/usecases/get_all_ejercicios_by_musculo_usecase.dart';
 import 'package:gymaster/features/routine/domain/usecases/get_all_ejercicios_by_rutina.dart';

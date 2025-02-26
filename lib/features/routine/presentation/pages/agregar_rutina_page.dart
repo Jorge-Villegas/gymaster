@@ -117,7 +117,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
         leading: IconButton(
           icon: SvgPicture.asset(Assets.icons.flechaIzquierda.path),
           onPressed: () {
-            context.go('/');
+            context.push('/');
           },
         ),
         title: const Text('Agregar Rutina'),

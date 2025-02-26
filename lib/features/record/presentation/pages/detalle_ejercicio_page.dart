@@ -10,10 +10,7 @@ import 'package:gymaster/shared/widgets/reusable_table.dart';
 class DetalleEjercicioPage extends StatefulWidget {
   final RecordEjercicios recordEjercicios;
 
-  const DetalleEjercicioPage({
-    super.key,
-    required this.recordEjercicios,
-  });
+  const DetalleEjercicioPage({super.key, required this.recordEjercicios});
 
   @override
   _DetalleEjercicioPageState createState() => _DetalleEjercicioPageState();
@@ -29,14 +26,16 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
     if (widget.recordEjercicios.seriesDelEjercicio.isNotEmpty) {
       selectedRowIndex = 0;
     }
-    context.read<RecordCubit>().loadRecordRutina(RecordRutina(
-          id: '',
-          nombre: '',
-          fechaRealizada: DateTime.now(),
-          tiempoRealizado: '',
-          color: 0,
-          ejercicios: [widget.recordEjercicios],
-        ));
+    context.read<RecordCubit>().loadRecordRutina(
+      RecordRutina(
+        id: '',
+        nombre: '',
+        fechaRealizada: DateTime.now(),
+        tiempoRealizado: '',
+        color: 0,
+        ejercicios: [widget.recordEjercicios],
+      ),
+    );
   }
 
   void handleRowSelected(int index) {
@@ -66,20 +65,19 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
         },
         builder: (context, state) {
           if (state is RecordLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const Center(child: CircularProgressIndicator());
           }
           if (state is RutinaLoaded) {
             final recordEjercicios = state.rutina.ejercicios.first;
-            final tableData = recordEjercicios.seriesDelEjercicio.map((serie) {
-              return [
-                (recordEjercicios.seriesDelEjercicio.indexOf(serie) + 1)
-                    .toString(),
-                '${serie.peso} kg',
-                '${serie.repeticiones} x',
-              ];
-            }).toList();
+            final tableData =
+                recordEjercicios.seriesDelEjercicio.map((serie) {
+                  return [
+                    (recordEjercicios.seriesDelEjercicio.indexOf(serie) + 1)
+                        .toString(),
+                    '${serie.peso} kg',
+                    '${serie.repeticiones} x',
+                  ];
+                }).toList();
 
             return Column(
               children: [
@@ -89,9 +87,9 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                   onRemoveRow: (index) {
                     setState(() {
                       recordEjercicios.seriesDelEjercicio.removeAt(index);
-                      context
-                          .read<RecordCubit>()
-                          .loadRecordRutina(state.rutina);
+                      context.read<RecordCubit>().loadRecordRutina(
+                        state.rutina,
+                      );
                     });
                   },
                   enableRowSelection: true,
@@ -99,10 +97,12 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                   selectedRowIndex: selectedRowIndex,
                   bodyTextColor: Colors.black,
                   headerColor: Theme.of(context).primaryColor,
-                  selectionColor:
-                      Theme.of(context).primaryColor.withOpacity(0.2),
-                  backgroundColor:
-                      Theme.of(context).primaryColor.withOpacity(0.1),
+                  selectionColor: Theme.of(
+                    context,
+                  ).primaryColor.withOpacity(0.2),
+                  backgroundColor: Theme.of(
+                    context,
+                  ).primaryColor.withOpacity(0.1),
                   cellTextAlign: TextAlign.center,
                   headerTextSize: 16.0,
                   maxHeight: 400,
@@ -146,7 +146,9 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                                       context
                                           .read<RecordCubit>()
                                           .incrementSeries(
-                                              0, selectedRowIndex!);
+                                            0,
+                                            selectedRowIndex!,
+                                          );
                                     },
                                   ),
                                   SeriesControlButton(
@@ -155,7 +157,9 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                                       context
                                           .read<RecordCubit>()
                                           .decrementSeries(
-                                              0, selectedRowIndex!);
+                                            0,
+                                            selectedRowIndex!,
+                                          );
                                     },
                                   ),
                                 ],
@@ -184,17 +188,19 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                                   SeriesControlButton(
                                     icon: Icons.add,
                                     onPressed: () {
-                                      context
-                                          .read<RecordCubit>()
-                                          .incrementPeso(0, selectedRowIndex!);
+                                      context.read<RecordCubit>().incrementPeso(
+                                        0,
+                                        selectedRowIndex!,
+                                      );
                                     },
                                   ),
                                   SeriesControlButton(
                                     icon: Icons.remove,
                                     onPressed: () {
-                                      context
-                                          .read<RecordCubit>()
-                                          .decrementPeso(0, selectedRowIndex!);
+                                      context.read<RecordCubit>().decrementPeso(
+                                        0,
+                                        selectedRowIndex!,
+                                      );
                                     },
                                   ),
                                 ],
@@ -223,17 +229,19 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                                   SeriesControlButton(
                                     icon: Icons.add,
                                     onPressed: () {
-                                      context
-                                          .read<RecordCubit>()
-                                          .incrementReps(0, selectedRowIndex!);
+                                      context.read<RecordCubit>().incrementReps(
+                                        0,
+                                        selectedRowIndex!,
+                                      );
                                     },
                                   ),
                                   SeriesControlButton(
                                     icon: Icons.remove,
                                     onPressed: () {
-                                      context
-                                          .read<RecordCubit>()
-                                          .decrementReps(0, selectedRowIndex!);
+                                      context.read<RecordCubit>().decrementReps(
+                                        0,
+                                        selectedRowIndex!,
+                                      );
                                     },
                                   ),
                                 ],
@@ -242,7 +250,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                           ),
                         ],
                       ),
-                    )
+                    ),
               ],
             );
           }

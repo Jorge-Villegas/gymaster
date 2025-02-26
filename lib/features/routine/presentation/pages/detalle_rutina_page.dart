@@ -117,6 +117,7 @@ class DetalleRutinaScreen extends StatelessWidget {
                     );
                   } else {
                     return EjerciciosLlenosWidget(
+                      sessionId: sessionId,
                       ejerciciosDeRutina: state.ejerciciosDeRutina,
                       rutinaId: rutinaId,
                       goToIniciarRutina: _goToIniciarRutina,
