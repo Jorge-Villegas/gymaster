@@ -16,7 +16,7 @@ class CustomCard extends StatelessWidget {
   final double? height; // Parámetro opcional para la altura
   final int index; // Añade el índice como parámetro
   // In CustomCard class, add this property:
-  final Future<bool> Function()? confirmDismiss;
+  // final Future<bool> Function()? confirmDismiss;
 
   const CustomCard({
     super.key,
@@ -31,7 +31,7 @@ class CustomCard extends StatelessWidget {
     required this.colorFondo,
     this.height, // Inicializa el parámetro opcional
     required this.index, // Inicializa el índice
-    required this.confirmDismiss,
+    // required this.confirmDismiss,
   });
 
   @override
@@ -41,8 +41,8 @@ class CustomCard extends StatelessWidget {
       child: Dismissible(
         key: ValueKey(ejercicioId), // Asegúrate de que esta clave sea única
         direction: DismissDirection.endToStart,
-        confirmDismiss:
-            confirmDismiss != null ? (direction) => confirmDismiss!() : null,
+        // confirmDismiss:
+        //     confirmDismiss != null ? (direction) => confirmDismiss!() : null,
         onDismissed: (direction) => onDismissed(),
         background: Container(
           height: 20,

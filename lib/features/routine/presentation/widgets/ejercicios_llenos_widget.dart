@@ -1,108 +1,172 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:gymaster/core/generated/assets.gen.dart';
+import 'package:go_router/go_router.dart';
 import 'package:gymaster/features/routine/domain/entities/ejercicios_de_rutina.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
 import 'package:gymaster/features/routine/presentation/widgets/custom_cart.dart';
+import 'package:gymaster/shared/utils/enum.dart';
+import 'package:gymaster/shared/widgets/show_custom_snack_bar.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 
-class EjerciciosLlenosWidget extends StatefulWidget {
+class EjerciciosLlenosWidget extends StatelessWidget {
   final EjerciciosDeRutina ejerciciosDeRutina;
   final String rutinaId;
   final String sessionId;
-  final Future<void> Function(BuildContext, EjerciciosDeRutina)
-  goToIniciarRutina;
 
   const EjerciciosLlenosWidget({
     super.key,
     required this.ejerciciosDeRutina,
     required this.rutinaId,
-    required this.goToIniciarRutina,
     required this.sessionId,
   });
 
-  @override
-  _EjerciciosLlenosWidgetState createState() => _EjerciciosLlenosWidgetState();
-}
-
-class _EjerciciosLlenosWidgetState extends State<EjerciciosLlenosWidget> {
-  late List<Ejercicio> _ejercicios;
-
-  void _onDismissed(int index) {
-    final ejercicio = _ejercicios[index];
-    setState(() {
-      _ejercicios.removeAt(index);
-    });
-    BlocProvider.of<EjerciciosByRutinaCubit>(
-      context,
-    ).deleteEjercicio(ejercicio.id, widget.sessionId);
+  iniciarRutina(BuildContext context, String sessionId, String rutinaId) {
+    context.read<EjerciciosByRutinaCubit>().iniciarRutina(
+      routineSessionId: sessionId,
+      rutinaId: rutinaId,
+    );
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _ejercicios = widget.ejerciciosDeRutina.ejercicios;
-  }
-
-  void _onReorder(int oldIndex, int newIndex) {
-    setState(() {
-      if (newIndex > oldIndex) {
-        newIndex -= 1;
-      }
-      final item = _ejercicios.removeAt(oldIndex);
-      _ejercicios.insert(newIndex, item);
-
-      // Get the current session ID
-      BlocProvider.of<EjerciciosByRutinaCubit>(
-        context,
-      ).updateEjercicioOrder(_ejercicios, widget.sessionId);
-    });
+  mostrarDialogoPararEntrenamiento(BuildContext context, String sessionId) {
+    showDialog(
+      context: context,
+      builder:
+          (context) => AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            title: const Row(
+              children: [
+                Icon(Icons.warning, color: Colors.red),
+                SizedBox(width: 10),
+                Text(
+                  'Parar entrenamiento',
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            content: const Text(
+              '¿Estás seguro de que deseas parar el entrenamiento?',
+              style: TextStyle(fontSize: 16),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  context.pop();
+                },
+                style: TextButton.styleFrom(foregroundColor: Colors.grey),
+                child: const Text('Cancelar'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  context.read<EjerciciosByRutinaCubit>().stopRoutine(
+                    routineSessionId: sessionId,
+                  );
+                  context.pop();
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: const Text(
+                  'Aceptar',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<EjerciciosByRutinaCubit, EjerciciosByRutinaState>(
+      builder: (context, state) {
+        if (state is EjerciciosByRutinaLoading) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (state is EjerciciosByRutinaError) {
+          return Center(child: Text(state.message));
+        } else if (state is EjerciciosByRutinaSuccess) {
+          return _buildContent(context, state.ejerciciosDeRutina);
+        } else {
+          return Container();
+        }
+      },
+    );
+  }
+
+  Widget _buildContent(
+    BuildContext context,
+    EjerciciosDeRutina ejerciciosDeRutina,
+  ) {
+    print('routine_session = $sessionId');
     final textTheme = Theme.of(context).textTheme;
     final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
+    String getButtonText = 'Estado desconocido';
+    IconData getIconPath = Icons.error;
+    Color getButtonColor = Colors.grey;
+    Color getBackgroundColor = Colors.grey.withAlpha(25);
+
+    if (ejerciciosDeRutina.estado == RoutineSessionStatus.pending.name ||
+        ejerciciosDeRutina.estado == RoutineSessionStatus.completed.name ||
+        ejerciciosDeRutina.estado == RoutineSessionStatus.cancelled.name) {
+      getButtonText = 'Iniciar entrenamiento';
+      getIconPath = IconsaxPlusLinear.play;
+      getButtonColor = const Color.fromRGBO(86, 170, 27, 1);
+      getBackgroundColor = const Color.fromRGBO(86, 170, 27, 0.1);
+    }
+    if (ejerciciosDeRutina.estado == RoutineSessionStatus.in_progress.name) {
+      getButtonText = 'Parar entrenamiento';
+      getIconPath = IconsaxPlusLinear.stop;
+      getButtonColor = Colors.red;
+      getBackgroundColor = Colors.red.withAlpha(25);
+    }
 
     return Column(
       children: [
         InkWell(
           onTap: () {
-            widget.goToIniciarRutina(context, widget.ejerciciosDeRutina);
+            if (ejerciciosDeRutina.estado ==
+                RoutineSessionStatus.pending.name) {
+              iniciarRutina(context, sessionId, rutinaId);
+              context.push('/detalle-ejercicio');
+            }
+
+            if (ejerciciosDeRutina.estado ==
+                RoutineSessionStatus.completed.name) {
+              iniciarRutina(context, sessionId, rutinaId);
+              context.push('/detalle-ejercicio');
+            }
+
+            if (ejerciciosDeRutina.estado ==
+                RoutineSessionStatus.in_progress.name) {
+              mostrarDialogoPararEntrenamiento(context, sessionId);
+            }
           },
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-            color:
-                isDarkTheme
-                    ? const Color.fromRGBO(40, 44, 48, 1)
-                    : const Color.fromRGBO(216, 235, 224, 1),
+            color: getBackgroundColor,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
                   padding: const EdgeInsets.all(15),
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color.fromRGBO(86, 170, 27, 1),
+                    color: getButtonColor,
                   ),
-                  child: SvgPicture.asset(
-                    Assets.icons.iconsax.play.path,
-                    width: 15,
-                    height: 15,
-                    colorFilter: const ColorFilter.mode(
-                      Colors.white,
-                      BlendMode.srcIn,
-                    ),
-                  ),
+                  child: Icon(getIconPath, color: Colors.white, size: 15),
                 ),
                 const SizedBox(width: 10),
                 Text(
-                  'Iniciar entrenamiento',
+                  getButtonText,
                   style: textTheme.labelMedium?.copyWith(
-                    color:
-                        isDarkTheme
-                            ? Colors.white
-                            : const Color.fromRGBO(86, 170, 27, 1),
+                    color: isDarkTheme ? Colors.white : getButtonColor,
                   ),
                 ),
               ],
@@ -120,53 +184,78 @@ class _EjerciciosLlenosWidgetState extends State<EjerciciosLlenosWidget> {
                   color: isDarkTheme ? Colors.white : Colors.black,
                 ),
               ),
-              Text(_ejercicios.length.toString(), style: textTheme.labelMedium),
+              Text(
+                ejerciciosDeRutina.ejercicios.length.toString(),
+                style: textTheme.labelMedium,
+              ),
             ],
           ),
         ),
+
         Expanded(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: ReorderableListView.builder(
-              onReorder: _onReorder,
-              itemCount: _ejercicios.length,
+              onReorder: (oldIndex, newIndex) {
+                context.read<EjerciciosByRutinaCubit>().updateEjercicioOrder(
+                  ejerciciosDeRutina.ejercicios,
+                  sessionId,
+                );
+              },
+              itemCount: ejerciciosDeRutina.ejercicios.length,
               buildDefaultDragHandles: false,
               itemBuilder: (context, i) {
-                final ejercicio = _ejercicios[i];
-
+                final ejercicio = ejerciciosDeRutina.ejercicios[i];
                 final estadoEjercicio = ejercicio.series.every(
                   (serie) => serie.realizado,
                 );
                 final pesos =
                     ejercicio.series.map((serie) => serie.peso).toList();
-                return CustomCard(
-                  index: i,
+                return Dismissible(
                   key: ValueKey(ejercicio.id),
-                  colorFondo: Colors.white,
-                  ejercicioId: ejercicio.id,
-                  estadoSerie: estadoEjercicio,
-                  nombreEjercicio: ejercicio.nombre,
-                  numeroSeries: ejercicio.series.length,
-                  imagenDireccion: ejercicio.imagenDireccion,
-                  pesos: pesos,
-                  onDismissed: () {
-                    _onDismissed(i);
-                  },
-                  confirmDismiss: () async {
-                    // Call the delete operation and return its result
-                    final cubit = BlocProvider.of<EjerciciosByRutinaCubit>(
-                      context,
-                    );
-                    final result = await cubit.checkCanDeleteEjercicio(
+                  direction: DismissDirection.endToStart,
+                  onDismissed: (direction) {
+                    context.read<EjerciciosByRutinaCubit>().deleteEjercicio(
                       ejercicio.id,
-                      widget.sessionId,
+                      sessionId,
                     );
+                    // Eliminar el ejercicio de la lista y actualizar el estado
+                    ejerciciosDeRutina.ejercicios.removeAt(i);
+                    // Notificar al framework que el estado ha cambiado
+                    (context as Element).markNeedsBuild();
+                  },
+                  confirmDismiss: (direction) async {
+                    final result = await context
+                        .read<EjerciciosByRutinaCubit>()
+                        .checkCanDeleteEjercicio(ejercicio.id, sessionId);
                     return result;
                   },
-                  onTap: () {
-                    // TODO: Implementar lógica al seleccionar una serie
-                  },
-                  height: 125,
+                  background: Container(
+                    color: Colors.red,
+                    alignment: Alignment.centerRight,
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: const Icon(Icons.delete, color: Colors.white),
+                  ),
+                  child: CustomCard(
+                    index: i,
+                    colorFondo: Colors.white,
+                    ejercicioId: ejercicio.id,
+                    estadoSerie: estadoEjercicio,
+                    nombreEjercicio: ejercicio.nombre,
+                    numeroSeries: ejercicio.series.length,
+                    imagenDireccion: ejercicio.imagenDireccion,
+                    pesos: pesos,
+                    onDismissed: () {
+                      context.read<EjerciciosByRutinaCubit>().deleteEjercicio(
+                        ejercicio.id,
+                        sessionId,
+                      );
+                    },
+                    onTap: () {
+                      // TODO: Implementar lógica al seleccionar una serie
+                    },
+                    height: 125,
+                  ),
                 );
               },
             ),

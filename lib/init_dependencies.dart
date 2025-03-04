@@ -13,6 +13,7 @@ import 'package:gymaster/features/routine/data/repositories/routine_repository_i
 import 'package:gymaster/features/routine/domain/repositories/rutine_repository.dart';
 import 'package:gymaster/features/routine/domain/usecases/add_ejercicio_rutina_usecase.dart';
 import 'package:gymaster/features/routine/domain/usecases/add_routine_usecase.dart';
+import 'package:gymaster/features/routine/domain/usecases/complete_routine_session_usecase.dart';
 import 'package:gymaster/features/routine/domain/usecases/delete_ejercicio_rutina_usecase.dart';
 import 'package:gymaster/features/routine/domain/usecases/delete_routine_usecase.dart';
 import 'package:gymaster/features/routine/domain/usecases/get_all_ejercicios_by_musculo_usecase.dart';
@@ -22,6 +23,8 @@ import 'package:gymaster/features/routine/domain/usecases/get_all_routine_usecas
 import 'package:gymaster/features/routine/domain/usecases/get_all_serie_usecase.dart';
 import 'package:gymaster/features/routine/domain/usecases/get_last_routine_session_by_routine_id_usecase.dart';
 import 'package:gymaster/features/routine/domain/usecases/get_routine_by_name_usecase.dart';
+import 'package:gymaster/features/routine/domain/usecases/start_routine_session_usecase.dart';
+import 'package:gymaster/features/routine/domain/usecases/stop_routine_session_usecase.dart';
 import 'package:gymaster/features/routine/domain/usecases/update_serie.dart';
 import 'package:gymaster/features/routine/presentation/cubits/agregar_series/agregar_series_cubit.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicio/ejercicio_cubit.dart';

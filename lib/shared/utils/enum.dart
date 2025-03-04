@@ -1,8 +1,10 @@
-enum ExerciseStatus { pending, inProgress, completed, cancelled }
+// ignore_for_file: constant_identifier_names
 
-enum RoutineSessionStatus { pending, inProgress, completed, cancelled }
+enum ExerciseStatus { pending, in_progress, completed, cancelled }
 
-enum SessionExerciseStatus { pending, inProgress, completed, cancelled }
+enum RoutineSessionStatus { pending, in_progress, completed, cancelled }
+
+enum SessionExerciseStatus { pending, in_progress, completed, cancelled }
 
 enum ExerciseSetStatus { pending, completed, failed }
 

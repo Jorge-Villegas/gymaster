@@ -17,9 +17,7 @@ class _TemporizadorState extends State<Temporizador> {
     //final sp = Provider.of<SerieProvider>(context);
     const int duracion = 30; //sp.serie.tiempoDescanso;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("temporizador"),
-      ),
+      appBar: AppBar(title: const Text("temporizador")),
       body: Center(
         child: CircularCountDownTimer(
           // Duración de la cuenta regresiva en segundos.
@@ -82,7 +80,6 @@ class _TemporizadorState extends State<Temporizador> {
 
           // Maneja el inicio del temporizador.
           autoStart: true, //para que inicie acutomaticamente
-
           // Esta devolución de llamada se ejecutará cuando comience la cuenta regresiva.
           onStart: () {
             // Aquí, haz lo que quieras
@@ -108,30 +105,13 @@ class _TemporizadorState extends State<Temporizador> {
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SizedBox(
-            width: 30,
-          ),
-          _button(
-            title: "Reiniciar",
-            onPressed: () => controller.start(),
-          ),
-          const SizedBox(
-            width: 5,
-          ),
-          _button(
-            title: "Pausa",
-            onPressed: () => controller.pause(),
-          ),
-          const SizedBox(
-            width: 5,
-          ),
-          _button(
-            title: "Iniciar",
-            onPressed: () => controller.resume(),
-          ),
-          const SizedBox(
-            width: 5,
-          ),
+          const SizedBox(width: 30),
+          _button(title: "Reiniciar", onPressed: () => controller.start()),
+          const SizedBox(width: 5),
+          _button(title: "Pausa", onPressed: () => controller.pause()),
+          const SizedBox(width: 5),
+          _button(title: "Iniciar", onPressed: () => controller.resume()),
+          const SizedBox(width: 5),
           _button(
             title: "Avanzar",
             onPressed: () => GoRouter.of(context).go('/'),
@@ -149,10 +129,7 @@ Widget _button({required String title, VoidCallback? onPressed}) {
         backgroundColor: MaterialStateProperty.all(Colors.purple),
       ),
       onPressed: onPressed,
-      child: Text(
-        title,
-        style: const TextStyle(color: Colors.white),
-      ),
+      child: Text(title, style: const TextStyle(color: Colors.white)),
     ),
   );
 }

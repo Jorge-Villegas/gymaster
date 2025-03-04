@@ -9,6 +9,7 @@ import 'package:gymaster/features/routine/presentation/pages/lista_rutina_page.d
 import 'package:gymaster/features/routine/presentation/pages/listar_ejercicios_page.dart';
 import 'package:gymaster/features/setting/presentation/pages/setting_page.dart';
 import 'package:gymaster/shared/widgets/barra_navegacion.dart';
+import 'package:gymaster/shared/widgets/loading_dialog_page.dart';
 import 'package:gymaster/theme_preview_page.dart';
 
 /// Configuración de GoRouter
@@ -27,6 +28,12 @@ final GoRouter router = GoRouter(
       path: '/',
       name: 'listaRutinas',
       builder: (context, state) => const BottomNavigationBarExampleApp(),
+    ),
+    // Ruta para la pantalla de diálogo de carga
+    GoRoute(
+      path: '/dialog-loading',
+      name: 'dialogLoading',
+      builder: (context, state) => const LoadingDialogPage(),
     ),
     GoRoute(
       path: '/agregar-ejercicios/:rutinaId/:sesionId',

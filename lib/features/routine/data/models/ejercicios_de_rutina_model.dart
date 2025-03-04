@@ -1,7 +1,7 @@
+import 'dart:convert';
+
 import 'package:gymaster/core/database/models/models.dart';
 import 'package:gymaster/features/routine/domain/entities/ejercicios_de_rutina.dart';
-
-import 'dart:convert';
 
 EjerciciosDeRutinaModel ejerciciosDeRutinaModelFromJson(String str) =>
     EjerciciosDeRutinaModel.fromJson(json.decode(str));
@@ -24,10 +24,12 @@ class EjerciciosDeRutinaModel extends EjerciciosDeRutina {
     required super.color,
     required super.fechaRealizacion,
     required super.estado,
+    required super.session,
   });
 
   factory EjerciciosDeRutinaModel.fromJson(Map<String, dynamic> json) {
     return EjerciciosDeRutinaModel(
+      session: json['session'],
       rutinaId: json['rutinaId'],
       nombre: json['nombre'],
       descripcion: json['descripcion'],
@@ -47,18 +49,21 @@ class EjerciciosDeRutinaModel extends EjerciciosDeRutina {
     );
   }
 
-  factory EjerciciosDeRutinaModel.fromDatabase(
-    Routine rutinaDB,
-    List<EjercicioModel> ejercicios,
-  ) {
+  factory EjerciciosDeRutinaModel.fromDatabase({
+    required Routine rutinaDB,
+    required String status,
+    required List<EjercicioModel> ejercicios,
+    required String session,
+  }) {
     return EjerciciosDeRutinaModel(
+      session: session,
       rutinaId: rutinaDB.id,
       nombre: rutinaDB.name,
       descripcion: rutinaDB.description,
       fechaCreacion: DateTime.parse(rutinaDB.createdAt),
       color: rutinaDB.color ?? 0,
       ejercicios: ejercicios,
-      estado: true, //TODO: Cambiar
+      estado: status,
       id: rutinaDB.id,
       realizado: true, //TODO: Cambiar
       fechaRealizacion:

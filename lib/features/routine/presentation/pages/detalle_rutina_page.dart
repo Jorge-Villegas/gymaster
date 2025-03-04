@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/generated/assets.gen.dart';
-import 'package:gymaster/features/routine/domain/entities/ejercicios_de_rutina.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
 import 'package:gymaster/features/routine/presentation/widgets/ejercicios_llenos_widget.dart';
 import 'package:gymaster/features/routine/presentation/widgets/ejercicios_vacios_widget.dart';
@@ -15,14 +14,6 @@ class DetalleRutinaScreen extends StatelessWidget {
 
   // Constructor de la clase, requiere el identificador de la rutina.
   const DetalleRutinaScreen({super.key, required this.rutinaId});
-
-  // Método para navegar a la pantalla de inicio de la rutina.
-  Future<void> _goToIniciarRutina(
-    BuildContext context,
-    EjerciciosDeRutina ejerciciosDeRutina,
-  ) async {
-    context.push('/detalle-ejercicio');
-  }
 
   // Método que construye la interfaz de usuario de la pantalla.
   @override
@@ -83,7 +74,6 @@ class DetalleRutinaScreen extends StatelessWidget {
                           Assets.icons.iconsax.addCircle.path,
                         ),
                         onPressed: () {
-                          print('DetalleRutinaScreen -> sessionId: $sessionId');
                           context
                               .push('/agregar-ejercicios/$rutinaId/$sessionId')
                               .then((_) {
@@ -120,7 +110,6 @@ class DetalleRutinaScreen extends StatelessWidget {
                       sessionId: sessionId,
                       ejerciciosDeRutina: state.ejerciciosDeRutina,
                       rutinaId: rutinaId,
-                      goToIniciarRutina: _goToIniciarRutina,
                     );
                   }
                 }

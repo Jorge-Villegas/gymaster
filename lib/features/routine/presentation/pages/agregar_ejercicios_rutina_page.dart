@@ -41,7 +41,6 @@ class _AgregarEjercicioRutinaPageState
   @override
   void initState() {
     super.initState();
-    print(widget.sesionId);
     context.read<AgregarSeriesCubit>().iniciar();
     context.read<AgregarSeriesCubit>().stream.listen((state) {
       if (state is AgregarSeriesLoaded) {
@@ -77,9 +76,9 @@ class _AgregarEjercicioRutinaPageState
     // Verificamos si existe al menos una serie
     if (_pesoControllers.isEmpty || _repeticionesControllers.isEmpty) {
       showCustomSnackBar(
-        context,
-        'Por favor, agregue al menos una serie',
-        SnackBarType.error,
+        context: context,
+        message: 'Por favor, agregue al menos una serie',
+        type: SnackBarType.error,
       );
       return;
     }
@@ -87,9 +86,9 @@ class _AgregarEjercicioRutinaPageState
     // Validamos si la validación pasa
     if (!_formKey.currentState!.validate()) {
       showCustomSnackBar(
-        context,
-        'Por favor, complete todos los campos',
-        SnackBarType.error,
+        context: context,
+        message: 'Por favor, complete todos los campos',
+        type: SnackBarType.error,
       );
       return;
     }
@@ -105,9 +104,9 @@ class _AgregarEjercicioRutinaPageState
 
     if (pesos.contains(null) || repeticiones.contains(null)) {
       showCustomSnackBar(
-        context,
-        'Por favor, ingrese números válidos',
-        SnackBarType.error,
+        context: context,
+        message: 'Por favor, ingrese números válidos',
+        type: SnackBarType.error,
       );
       return;
     }
@@ -131,20 +130,25 @@ class _AgregarEjercicioRutinaPageState
       context.pop();
 
       showCustomSnackBar(
-        context,
-        'El ejercicio ha sido guardado',
-        SnackBarType.success,
+        context: context,
+        message: 'El ejercicio ha sido guardado',
+        type: SnackBarType.success,
+        duration: 2,
       );
     } else {
       final state = context.read<AgregarSeriesCubit>().state;
       if (state is AgregarSeriesError) {
-        showCustomSnackBar(context, state.message, SnackBarType.error);
+        showCustomSnackBar(
+          context: context,
+          message: state.message,
+          type: SnackBarType.error,
+        );
         context.pop();
       } else {
         showCustomSnackBar(
-          context,
-          'Error inesperado al guardar el ejercicio',
-          SnackBarType.error,
+          context: context,
+          message: 'Error inesperado al guardar el ejercicio',
+          type: SnackBarType.error,
         );
       }
     }

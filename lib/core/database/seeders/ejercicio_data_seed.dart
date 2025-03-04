@@ -4225,9 +4225,7 @@ class EjercicioDataSeed {
     int res = 0;
 
     for (var ejercicio in ejercicios) {
-      if (ejercicio.name == 'Encogimiento de hombros con Barra de Pesas') {
-        print('hola');
-      }
+      if (ejercicio.name == 'Encogimiento de hombros con Barra de Pesas') {}
       // Convertir a minúsculas antes de guardar
       ejercicio = ejercicio.copyWith(
         name: ejercicio.name.toLowerCase(),

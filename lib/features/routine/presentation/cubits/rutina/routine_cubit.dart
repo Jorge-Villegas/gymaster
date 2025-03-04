@@ -77,9 +77,7 @@ class RoutineCubit extends Cubit<RoutineState> {
 
   void getAllRoutine() async {
     emit(RoutineLoading());
-
     final result = await getAllRoutineUseCase(NoParams());
-    debugPrint(result.toString());
     result.fold(
       (l) => emit(RoutineError(l.errorMessage)),
       (r) => emit(RoutineGetAllSuccess(r)),

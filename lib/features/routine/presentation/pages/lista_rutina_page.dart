@@ -161,7 +161,6 @@ class ListaRutinasPage extends StatelessWidget {
               );
             }
             if (state is RoutineError) {
-              debugPrint(state.message);
               // return Center(child: Text(state.message));
               // return Column(
               //   children: [

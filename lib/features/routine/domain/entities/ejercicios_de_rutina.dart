@@ -7,10 +7,11 @@ class EjerciciosDeRutina extends Equatable {
   final bool realizado;
   final int color;
   final DateTime? fechaRealizacion;
-  final bool estado;
+  final String estado;
 
   final String rutinaId;
   final String nombre;
+  final String session;
   final List<Ejercicio> ejercicios;
 
   const EjerciciosDeRutina({
@@ -24,6 +25,7 @@ class EjerciciosDeRutina extends Equatable {
     required this.color,
     this.fechaRealizacion,
     required this.estado,
+    required this.session,
   });
 
   EjerciciosDeRutina copyWith({
@@ -36,9 +38,11 @@ class EjerciciosDeRutina extends Equatable {
     bool? realizado,
     int? color,
     DateTime? fechaRealizacion,
-    bool? estado,
+    String? estado,
+    String? session,
   }) {
     return EjerciciosDeRutina(
+      session: session ?? this.session,
       rutinaId: rutinaId ?? this.rutinaId,
       ejercicios: ejercicios ?? this.ejercicios,
       nombre: nombre ?? this.nombre,
@@ -65,11 +69,24 @@ class EjerciciosDeRutina extends Equatable {
       'color': color,
       'fechaRealizacion': fechaRealizacion?.toIso8601String(),
       'estado': estado,
+      'session': session,
     };
   }
 
   @override
-  List<Object?> get props => [rutinaId, ejercicios, nombre];
+  List<Object?> get props => [
+    rutinaId,
+    ejercicios,
+    nombre,
+    id,
+    descripcion,
+    fechaCreacion,
+    realizado,
+    color,
+    fechaRealizacion,
+    estado,
+    session,
+  ];
 
   @override
   String toString() =>
@@ -94,8 +111,7 @@ class Ejercicio extends Equatable {
     this.musculos,
   }) : cantidadSeries = series.length;
 
-
-//tojson
+  //tojson
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -126,13 +142,7 @@ class Ejercicio extends Equatable {
   }
 
   @override
-  List<Object?> get props => [
-        id,
-        nombre,
-        imagenDireccion,
-        descripcion,
-        series,
-      ];
+  List<Object?> get props => [id, nombre, imagenDireccion, descripcion, series];
 
   @override
   String toString() {
@@ -198,30 +208,19 @@ class Musculo extends Equatable {
   final String? nombre;
   final String? imagenDireccion;
 
-  const Musculo({
-    required this.id,
-    this.nombre,
-    this.imagenDireccion,
-  });
+  const Musculo({required this.id, this.nombre, this.imagenDireccion});
 
   //tojson
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'nombre': nombre,
-      'imagenDireccion': imagenDireccion,
-    };
+    return {'id': id, 'nombre': nombre, 'imagenDireccion': imagenDireccion};
   }
 
-  Musculo copyWith({
-    String? id,
-    String? nombre,
-    String? imagenDireccion,
-  }) {
+  Musculo copyWith({String? id, String? nombre, String? imagenDireccion}) {
     return Musculo(
-        id: id ?? this.id,
-        nombre: nombre ?? this.nombre,
-        imagenDireccion: imagenDireccion ?? this.imagenDireccion);
+      id: id ?? this.id,
+      nombre: nombre ?? this.nombre,
+      imagenDireccion: imagenDireccion ?? this.imagenDireccion,
+    );
   }
 
   @override

@@ -1,4 +1,3 @@
-// In a new file: update_exercise_order_usecase.dart
 import 'package:fpdart/fpdart.dart';
 import 'package:gymaster/core/error/failures.dart';
 import 'package:gymaster/core/usecase/usecase.dart';
@@ -10,6 +9,7 @@ class UpdateExerciseOrderUseCase
 
   UpdateExerciseOrderUseCase(this.repository);
 
+  @override
   Future<Either<Failure, void>> call(UpdateExerciseOrderParams params) {
     return repository.updateExerciseOrder(
       routineId: params.routineId,

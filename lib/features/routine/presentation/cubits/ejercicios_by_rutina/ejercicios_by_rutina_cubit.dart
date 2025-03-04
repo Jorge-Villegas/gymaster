@@ -1,14 +1,18 @@
+import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:gymaster/core/database/database_helper.dart';
 import 'package:gymaster/core/database/models/routine_session.dart';
 import 'package:gymaster/core/error/timeout_helper.dart';
 import 'package:gymaster/features/routine/domain/entities/ejercicios_de_rutina.dart';
+import 'package:gymaster/features/routine/domain/usecases/complete_routine_session_usecase.dart';
 import 'package:gymaster/features/routine/domain/usecases/delete_ejercicio_rutina_usecase.dart';
 import 'package:gymaster/features/routine/domain/usecases/get_all_ejercicios_by_rutina.dart';
 import 'package:gymaster/features/routine/domain/usecases/get_last_routine_session_by_routine_id_usecase.dart';
+import 'package:gymaster/features/routine/domain/usecases/start_routine_session_usecase.dart';
+import 'package:gymaster/features/routine/domain/usecases/stop_routine_session_usecase.dart';
 import 'package:gymaster/features/routine/domain/usecases/update_serie.dart';
-import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
+import 'package:gymaster/shared/utils/enum.dart';
 
 part 'ejercicios_by_rutina_state.dart';
 
@@ -17,12 +21,18 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
   final UpdateSerieUseCase updateSerieUseCase;
   final DeleteEjercicioRutinaUseCase deleteEjercicioRutinaUseCase;
   final GetLastRoutineSessionByRoutineId getLastRoutineSessionByRoutineId;
+  final StartRoutineSessionUseCase startRoutineSessionUseCase;
+  final StopRoutineSessionUseCase stopRoutineSessionUseCase;
+  final CompleteRoutineSessionUseCase completeRoutineSessionUseCase;
 
   EjerciciosByRutinaCubit(
     this.deleteEjercicioRutinaUseCase,
     this.getLastRoutineSessionByRoutineId,
     this.getAllEjerciciosByRutinaUseCase,
     this.updateSerieUseCase,
+    this.startRoutineSessionUseCase,
+    this.stopRoutineSessionUseCase,
+    this.completeRoutineSessionUseCase,
   ) : super(EjerciciosByRutinaInitial());
 
   void aumentarPeso() => _updatePeso(2.5);
@@ -88,8 +98,6 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
       session = r;
     });
 
-    print('CUBIT -> sessionId: ${session!.id}');
-
     return session!.id;
   }
 
@@ -121,16 +129,54 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
         ),
       );
 
-      result.fold((l) => emit(EjerciciosByRutinaError(l.errorMessage)), (r) {
-        print('Ejercicios obtenidos: $r');
-        _handleEjerciciosResult(r);
-      });
+      result.fold(
+        (l) => emit(EjerciciosByRutinaError(l.errorMessage)),
+        (r) => _handleEjerciciosResult(r),
+      );
     } catch (e) {
       emit(EjerciciosByRutinaError(e.toString()));
     }
   }
 
   void _handleEjerciciosResult(EjerciciosDeRutina r) {
+    if (r.estado == RoutineSessionStatus.completed.name) {
+      // Crear una nueva lista de ejercicios con las series actualizadas
+      final updatedEjercicios =
+          r.ejercicios.map((ejercicio) {
+            final updatedSeries =
+                ejercicio.series.map((serie) {
+                  return serie.copyWith(realizado: false);
+                }).toList();
+            return ejercicio.copyWith(series: updatedSeries);
+          }).toList();
+
+      // Emitir el estado con los ejercicios actualizados
+      emit(
+        EjerciciosByRutinaSuccess(
+          ejerciciosDeRutina: r.copyWith(ejercicios: updatedEjercicios),
+          ejercicioIndex: 0,
+          serieIndex: 0,
+        ),
+      );
+      return;
+    }
+
+    if (r.estado == RoutineSessionStatus.pending.name) {
+      emit(
+        EjerciciosByRutinaSuccess(
+          ejerciciosDeRutina: r,
+          ejercicioIndex: 0,
+          serieIndex: 0,
+        ),
+      );
+      return;
+    }
+
+    if (r.estado == RoutineSessionStatus.cancelled.name) {
+      emit(EjerciciosByRutinaError("La rutina ha sido cancelada"));
+      return;
+    }
+
     if (r.ejercicios.isEmpty) {
       emit(
         EjerciciosByRutinaSuccess(
@@ -164,7 +210,6 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
     final updatedSerie = _markSerieAsCompleted(currentState);
     _updateSerie(currentState, updatedSerie);
     _emitNextSerieState();
-    print(currentState.ejerciciosDeRutina.ejercicios);
   }
 
   Serie _markSerieAsCompleted(EjerciciosByRutinaSuccess currentState) {
@@ -173,11 +218,10 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
     final serie = ejercicio.series[currentState.serieIndex];
     updateSerieUseCase(UpdateSerieParams(id: serie.id, realizado: true));
     serie.copyWith(realizado: true);
-    print('Serie realizada: $serie');
     return serie.copyWith(realizado: true);
   }
 
-  void _emitNextSerieState() {
+  void _emitNextSerieState() async {
     if (state is! EjerciciosByRutinaSuccess) return;
     final currentState = state as EjerciciosByRutinaSuccess;
     final ejercicios = currentState.ejerciciosDeRutina.ejercicios;
@@ -193,6 +237,15 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
       serieIndex = 0;
     } else {
       // Si no hay más series ni ejercicios, emite el estado de rutina completada
+      final result = await completeRoutineSessionUseCase(
+        CompleteRoutineSessionParams(
+          sessionId: currentState.ejerciciosDeRutina.session,
+        ),
+      );
+
+      result.fold((l) => emit(EjerciciosByRutinaError(l.errorMessage)), (r) {
+        emit(EjerciciosByRutinaCompleted());
+      });
       emit(EjerciciosByRutinaCompleted());
       return;
     }
@@ -330,9 +383,134 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
       DeleteEjercicioRutinaParams(idEjercicio: idEjercicio, idSesion: idSesion),
     );
 
-    return result.fold((failure) {
-      debugPrint('Error checking if can delete exercise: $failure');
-      return false;
-    }, (success) => success);
+    return result.fold((failure) => false, (success) => success);
+  }
+
+  Future<bool> iniciarRutina({
+    required String routineSessionId,
+    required String rutinaId,
+  }) async {
+    emit(EjerciciosByRutinaLoading());
+
+    // 1. Intentar iniciar la rutina
+    final result = await startRoutineSessionUseCase(
+      StartRoutineSessionParams(
+        sessionId: routineSessionId,
+        rutinaId: rutinaId,
+      ),
+    );
+
+    return await result.fold(
+      (failure) {
+        // Si hay un error, emitir el estado de error y devolver false
+        emit(EjerciciosByRutinaError(failure.errorMessage));
+        return false;
+      },
+      (success) async {
+        if (!success) {
+          // Si no se pudo iniciar la rutina, emitir un mensaje de error y devolver false
+          emit(EjerciciosByRutinaError("No se pudo iniciar la rutina"));
+          return false;
+        }
+
+        // 2. Obtener la sesión actualizada
+        RoutineSession? updatedSession;
+        final sessionResult = await getLastRoutineSessionByRoutineId(
+          GetLastRoutineSessionByRoutineIdParams(idRoutine: rutinaId),
+        );
+
+        final hasSession = await sessionResult.fold(
+          (failure) {
+            emit(EjerciciosByRutinaError(failure.errorMessage));
+            return false;
+          },
+          (session) {
+            updatedSession = session;
+            return true;
+          },
+        );
+
+        if (!hasSession || updatedSession == null) {
+          return false;
+        }
+
+        // 3. Obtener los ejercicios de la sesión actualizada
+        final ejerciciosResult = await getAllEjerciciosByRutinaUseCase(
+          GetAllEjerciciosByRutinaParams(
+            id: rutinaId,
+            idRoutineSession: updatedSession!.id,
+          ),
+        );
+
+        return ejerciciosResult.fold(
+          (failure) {
+            emit(EjerciciosByRutinaError(failure.errorMessage));
+            return false;
+          },
+          (ejerciciosDeRutina) {
+            // Asegurarse de que el estado refleje correctamente que la rutina está en progreso
+            final updatedEjerciciosDeRutina = ejerciciosDeRutina.copyWith(
+              estado: RoutineSessionStatus.in_progress.name,
+            );
+
+            emit(
+              EjerciciosByRutinaSuccess(
+                ejerciciosDeRutina: updatedEjerciciosDeRutina,
+                ejercicioIndex: 0,
+                serieIndex: 0,
+              ),
+            );
+            return true;
+          },
+        );
+      },
+    );
+  }
+
+  Future<bool> stopRoutine({required String routineSessionId}) async {
+    final currentState = state as EjerciciosByRutinaSuccess;
+    final result = await stopRoutineSessionUseCase(
+      StopRoutineSessionParams(sessionId: routineSessionId),
+    );
+
+    return result.fold((failure) => false, (success) {
+      if (success) {
+        final updatedEjerciciosDeRutina = currentState.ejerciciosDeRutina
+            .copyWith(estado: RoutineSessionStatus.cancelled.name);
+
+        emit(
+          EjerciciosByRutinaSuccess(
+            ejerciciosDeRutina: updatedEjerciciosDeRutina,
+            ejercicioIndex: currentState.ejercicioIndex,
+            serieIndex: currentState.serieIndex,
+          ),
+        );
+      }
+
+      return success;
+    });
+  }
+
+  Future<bool> completeRoutine({required String routineSessionId}) async {
+    final currentState = state as EjerciciosByRutinaSuccess;
+    final result = await completeRoutineSessionUseCase(
+      CompleteRoutineSessionParams(sessionId: routineSessionId),
+    );
+
+    return result.fold((failure) => false, (success) {
+      if (success) {
+        final updatedEjerciciosDeRutina = currentState.ejerciciosDeRutina
+            .copyWith(estado: RoutineSessionStatus.completed.name);
+
+        emit(
+          EjerciciosByRutinaSuccess(
+            ejerciciosDeRutina: updatedEjerciciosDeRutina,
+            ejercicioIndex: currentState.ejercicioIndex,
+            serieIndex: currentState.serieIndex,
+          ),
+        );
+      }
+      return success;
+    });
   }
 }

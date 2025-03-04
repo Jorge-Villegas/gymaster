@@ -1,7 +1,6 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:gymaster/core/database/models/models.dart';
 import 'package:gymaster/core/database/seeders/database_seeder.dart';
-import 'package:gymaster/core/database/seeders/ejercicio_rutina_seeder.dart';
 import 'package:gymaster/core/database/seeders/rutina_data_seeder.dart';
 import 'package:gymaster/core/error/exceptions.dart';
 import 'package:gymaster/core/error/failures.dart';
@@ -280,7 +279,12 @@ class RoutineRepositoryImpl implements RoutineRepository {
         ejerciciosConDetalles.add(ejercicios);
       }
       final ejerciciosDeRutinaConDetalles = ejercicio_de_rutina
-          .EjerciciosDeRutinaModel.fromDatabase(rutina, ejerciciosConDetalles);
+          .EjerciciosDeRutinaModel.fromDatabase(
+        session: session.id,
+        rutinaDB: rutina,
+        ejercicios: ejerciciosConDetalles,
+        status: session.status,
+      );
 
       return Right(ejerciciosDeRutinaConDetalles);
     } on ServerException {
@@ -651,6 +655,150 @@ class RoutineRepositoryImpl implements RoutineRepository {
       } else {
         return const Right(false);
       }
+    } catch (e) {
+      return Left(ServerFailure(errorMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> startRoutineSession(
+    String sessionId,
+    String routineId,
+  ) async {
+    try {
+      // Verificar si la sesión actual está completada
+      final currentSession = await localDataSource.getRoutineSessionById(
+        sessionId,
+      );
+      if (currentSession != null &&
+          currentSession.status == RoutineSessionStatus.completed.name) {
+        // Crear una nueva sesión con estado en_progreso
+        final newSession = RoutineSession(
+          id: idGenerator.generateId(),
+          routineId: routineId,
+          status: RoutineSessionStatus.in_progress.name,
+          startTime: DateTime.now().toIso8601String(),
+          createdAt: DateTime.now().toString(),
+        );
+
+        final sessionCreated = await localDataSource.createRoutineSession(
+          newSession,
+        );
+        if (!sessionCreated) {
+          return Left(
+            ServerFailure(errorMessage: 'No se pudo crear la sesión nueva'),
+          );
+        }
+
+        // Obtener todos los ejercicios y sus series de la sesión completada (sessionId)
+        final sessionExercises = await localDataSource
+            .getSessionExercisesByRoutineSessionId(sessionId);
+
+        // Copiar cada ejercicio y sus series a la nueva sesión
+        for (var sessionExercise in sessionExercises) {
+          // Crear nuevo session_exercise para la nueva sesión
+          final newSessionExerciseId = idGenerator.generateId();
+          final newSessionExercise = SessionExercise(
+            id: newSessionExerciseId,
+            sessionId: newSession.id,
+            exerciseId: sessionExercise.exerciseId,
+            status: SessionExerciseStatus.pending.name,
+            orderIndex: sessionExercise.orderIndex,
+          );
+
+          await localDataSource.insertSessionExercise(newSessionExercise);
+
+          // Obtener todas las series del ejercicio original
+          final exerciseSets = await localDataSource
+              .getExerciseSetsBySessionExerciseId(sessionExercise.id);
+
+          // Copiar cada serie para el nuevo ejercicio, reiniciando el estado
+          for (var set in exerciseSets) {
+            final newSet = ExerciseSet(
+              id: idGenerator.generateId(),
+              sessionExerciseId: newSessionExerciseId,
+              weight: set.weight,
+              repetitions: set.repetitions,
+              restTime: set.restTime,
+              status:
+                  ExerciseSetStatus
+                      .pending
+                      .name, // Reiniciar estado a pendiente
+            );
+
+            await localDataSource.insertExerciseSet(newSet);
+          }
+        }
+
+        // Retornar la información sobre la nueva sesión creada para poder navegar a ella
+        return const Right(true);
+      }
+
+      // Si la sesión actual no estaba completada, solo actualizamos su estado a in_progress
+      final result = await localDataSource.updateRoutineSessionStatus(
+        sessionId: sessionId,
+        status: RoutineSessionStatus.in_progress.name,
+        startTime: DateTime.now(),
+      );
+      return Right(result);
+    } catch (e) {
+      return Left(ServerFailure(errorMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> stopRoutineSession(String sessionId) async {
+    try {
+      //verificamops si esta routine session esta en porceso
+      final statusRoutineSession = await localDataSource
+          .getRoutineSessionStatusById(sessionId);
+
+      if (statusRoutineSession == RoutineSessionStatus.completed.name) {
+        return Left(
+          ServerFailure(errorMessage: 'La sesión ya ha sido completada'),
+        );
+      }
+
+      final result = await localDataSource.updateRoutineSessionStatus(
+        sessionId: sessionId,
+        status: RoutineSessionStatus.cancelled.name,
+        endTime: DateTime.now(),
+      );
+      return Right(result);
+    } catch (e) {
+      return Left(ServerFailure(errorMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> completeRoutineSession(String sessionId) async {
+    try {
+      // Verificar si esta rutina está en proceso
+      final routineSessionStatus = await localDataSource
+          .getRoutineSessionStatusById(sessionId);
+
+      if (routineSessionStatus == RoutineSessionStatus.completed.name) {
+        return Left(
+          ServerFailure(errorMessage: 'La sesión ya ha sido completada'),
+        );
+      }
+
+      final allSessionExercisesCompleted = await localDataSource
+          .checkAllSessionExercisesCompleted(sessionId);
+
+      if (!allSessionExercisesCompleted) {
+        return Left(
+          ServerFailure(
+            errorMessage: 'No se han completado todos los ejercicios',
+          ),
+        );
+      }
+      final updateResult = await localDataSource.updateRoutineSessionStatus(
+        sessionId: sessionId,
+        status: RoutineSessionStatus.completed.name,
+        endTime: DateTime.now(),
+      );
+      return Right(updateResult);
     } catch (e) {
       return Left(ServerFailure(errorMessage: e.toString()));
     }

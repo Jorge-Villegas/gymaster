@@ -11,7 +11,10 @@ class SnackbarHelper {
   ScaffoldMessengerState? _messenger;
 
   void showCustomSnackBar(
-      BuildContext context, String message, SnackBarType type) {
+    BuildContext context,
+    String message,
+    SnackBarType type,
+  ) {
     _messenger ??= ScaffoldMessenger.of(context);
 
     // Limpia los SnackBars anteriores antes de mostrar uno nuevo

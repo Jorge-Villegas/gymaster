@@ -684,4 +684,126 @@ class RoutineLocalDataSource {
       throw ServerException();
     }
   }
+
+  Future<bool> updateRoutineSessionStatus({
+    required String sessionId,
+    required String status,
+    DateTime? startTime,
+    DateTime? endTime,
+  }) async {
+    try {
+      final db = await databaseHelper.database;
+
+      final values = {'status': status};
+
+      if (startTime != null) {
+        values['start_time'] = startTime.toIso8601String();
+      }
+
+      if (endTime != null) {
+        values['end_time'] = endTime.toIso8601String();
+      }
+
+      final result = await db.update(
+        DatabaseHelper.tbRoutineSession,
+        values,
+        where: 'id = ?',
+        whereArgs: [sessionId],
+      );
+
+      return result > 0;
+    } catch (e) {
+      throw ServerException();
+    }
+  }
+
+  /// Obtiene la sesión de rutina en progreso
+  Future<RoutineSession?> getInProgressRoutineSession() async {
+    try {
+      final db = await databaseHelper.database;
+      final result = await db.query(
+        DatabaseHelper.tbRoutineSession,
+        where: 'status = ?',
+        whereArgs: [RoutineSessionStatus.in_progress.name],
+        orderBy: 'created_at DESC',
+        limit: 1,
+      );
+
+      if (result.isEmpty) {
+        return null;
+      }
+
+      return RoutineSession.fromJson(result.first);
+    } catch (e) {
+      throw ServerException();
+    }
+  }
+
+  //obtener estado de la routinse session por su id
+  Future<String?> getRoutineSessionStatusById(String id) async {
+    try {
+      final db = await databaseHelper.database;
+      final result = await db.query(
+        DatabaseHelper.tbRoutineSession,
+        columns: ['status'],
+        where: 'id = ?',
+        whereArgs: [id],
+      );
+
+      if (result.isEmpty) {
+        return null;
+      }
+
+      return result.first['status'] as String?;
+    } catch (e) {
+      throw ServerException();
+    }
+  }
+
+  //verificar que todas mis session_exercise estaen completadas por su id
+  Future<bool> checkAllSessionExercisesCompleted(
+    String routineSessionId,
+  ) async {
+    try {
+      final db = await databaseHelper.database;
+      final result = await db.query(
+        DatabaseHelper.tbSessionExercise,
+        columns: ['COUNT(*) as count'],
+        where: 'session_id = ? AND status != ?',
+        whereArgs: [routineSessionId, SessionExerciseStatus.completed.name],
+      );
+
+      final count = Sqflite.firstIntValue(result) ?? 0;
+
+      return count == 0;
+    } catch (e) {
+      throw ServerException();
+    }
+  }
+
+  Future<bool> insertSessionExercise(SessionExercise sessionExercise) async {
+    try {
+      final db = await databaseHelper.database;
+      final result = await db.insert(
+        DatabaseHelper.tbSessionExercise,
+        sessionExercise.toJson(),
+      );
+      return result > 0;
+    } catch (e) {
+      throw ServerException();
+    }
+  }
+
+  Future<bool> insertExerciseSet(ExerciseSet exerciseSet) async {
+    try {
+      final db = await databaseHelper.database;
+      final result = await db.insert(
+        DatabaseHelper.tbExerciseSet,
+        exerciseSet.toJson(),
+      );
+      return result > 0;
+    } catch (e) {
+      throw ServerException();
+    }
+  }
 }

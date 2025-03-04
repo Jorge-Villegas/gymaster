@@ -17,19 +17,23 @@ class DetalleEjercicioScreen extends StatelessWidget {
     return BlocBuilder<EjerciciosByRutinaCubit, EjerciciosByRutinaState>(
       builder: (context, state) {
         if (state is EjerciciosByRutinaLoading) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          return const Center(child: CircularProgressIndicator());
         }
         if (state is EjerciciosByRutinaError) {
-          return Center(
-            child: Text(state.message),
-          );
+          return Center(child: Text(state.message));
         }
         if (state is EjerciciosByRutinaCompleted) {
           Future.microtask(() => context.go('/'));
+          return const Center(child: CircularProgressIndicator());
         }
         if (state is EjerciciosByRutinaSuccess) {
+          // Verificar si hay ejercicios antes de intentar acceder a ellos
+          if (state.ejerciciosDeRutina.ejercicios.isEmpty) {
+            // Redirigir al usuario a la página principal
+            Future.microtask(() => context.go('/'));
+            return const Center(child: Text('No hay ejercicios disponibles'));
+          }
+
           final ejercicio =
               state.ejerciciosDeRutina.ejercicios[state.ejercicioIndex];
           final serie = ejercicio.series[state.serieIndex];
@@ -40,15 +44,17 @@ class DetalleEjercicioScreen extends StatelessWidget {
             appBar: AppBar(
               title:
                   BlocBuilder<EjerciciosByRutinaCubit, EjerciciosByRutinaState>(
-                builder: (context, state) {
-                  if (state is EjerciciosByRutinaSuccess) {
-                    return Text(
-                      TextFormatter.capitalize(state.ejerciciosDeRutina.nombre),
-                    );
-                  }
-                  return const Text('RUTINA');
-                },
-              ),
+                    builder: (context, state) {
+                      if (state is EjerciciosByRutinaSuccess) {
+                        return Text(
+                          TextFormatter.capitalize(
+                            state.ejerciciosDeRutina.nombre,
+                          ),
+                        );
+                      }
+                      return const Text('RUTINA');
+                    },
+                  ),
               centerTitle: true,
               elevation: 0,
               iconTheme: const IconThemeData(color: Colors.black),
@@ -112,13 +118,14 @@ class DetalleEjercicioScreen extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     // Preparar los datos para la tabla genérica
-    final tableData = ejercicio.series.map((serie) {
-      return [
-        '${ejercicio.series.indexOf(serie) + 1}', // Serie
-        '${serie.peso} kg', // Peso
-        '${serie.repeticiones} x', // Repeticiones
-      ];
-    }).toList();
+    final tableData =
+        ejercicio.series.map((serie) {
+          return [
+            '${ejercicio.series.indexOf(serie) + 1}', // Serie
+            '${serie.peso} kg', // Peso
+            '${serie.repeticiones} x', // Repeticiones
+          ];
+        }).toList();
 
     return Container(
       color: const Color.fromARGB(255, 240, 240, 240),
@@ -160,9 +167,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
                   ),
                   label: Text(
                     '20 min',
-                    style: textTheme.bodySmall!.copyWith(
-                      color: Colors.black,
-                    ),
+                    style: textTheme.bodySmall!.copyWith(color: Colors.black),
                   ),
                 ),
               ],
@@ -176,8 +181,10 @@ class DetalleEjercicioScreen extends StatelessWidget {
               children: <Widget>[
                 // Contenedor para la imagen
                 Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 30,
+                  ),
                   child: _construirWidgetImagen(imagenDireccion),
                 ),
                 // Contenedor para la tabla
@@ -197,10 +204,15 @@ class DetalleEjercicioScreen extends StatelessWidget {
                       headerTextColor: Colors.black,
                       cellTextAlign: TextAlign.center,
                       rowHeight: 20.0,
-                      rowColors: ejercicio.series
-                          .map((serie) =>
-                              serie.realizado ? Colors.black : Colors.grey)
-                          .toList(),
+                      rowColors:
+                          ejercicio.series
+                              .map(
+                                (serie) =>
+                                    serie.realizado
+                                        ? Colors.black
+                                        : Colors.grey,
+                              )
+                              .toList(),
                     ),
                   ),
                 ),
@@ -213,20 +225,19 @@ class DetalleEjercicioScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(ejercicios.length, (index) {
                 final ejercicio = ejercicios[index];
-                final isRealizado =
-                    ejercicio.series.every((serie) => serie.realizado);
+                final isRealizado = ejercicio.series.every(
+                  (serie) => serie.realizado,
+                );
                 final isCurrent = index == ejercicioIndex;
-                final color = isRealizado
-                    ? Colors.green
-                    : (isCurrent ? Colors.indigo : Colors.white);
+                final color =
+                    isRealizado
+                        ? Colors.green
+                        : (isCurrent ? Colors.indigo : Colors.white);
                 final radius = isCurrent ? 4.0 : 3.5;
 
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 2.5),
-                  child: CircleAvatar(
-                    radius: radius,
-                    backgroundColor: color,
-                  ),
+                  child: CircleAvatar(radius: radius, backgroundColor: color),
                 );
               }),
             ),
@@ -278,25 +289,15 @@ class DetalleEjercicioScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(
-                'Serie : ',
-                style: textTheme.bodyMedium!.copyWith(),
-              ),
+              Text('Serie : ', style: textTheme.bodyMedium!.copyWith()),
               Text(
                 serieActual.toString(),
                 style: textTheme.titleLarge!.copyWith(),
               ),
-              const Text(
-                ' / ',
-                style: TextStyle(
-                  color: Colors.grey,
-                ),
-              ),
+              const Text(' / ', style: TextStyle(color: Colors.grey)),
               Text(
                 totalSeries.toString(),
-                style: const TextStyle(
-                  color: Colors.grey,
-                ),
+                style: const TextStyle(color: Colors.grey),
               ),
             ],
           ),
@@ -306,10 +307,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
             style: textTheme.bodyMedium!.copyWith(),
           ),
           const SizedBox(height: 20),
-          _construirFilaPeso(
-            context: context,
-            peso: peso,
-          ),
+          _construirFilaPeso(context: context, peso: peso),
           const SizedBox(height: 20),
           _construirFilaRepeticiones(
             context: context,
@@ -327,10 +325,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
     return Row(
       children: <Widget>[
         const Expanded(
-          child: Text(
-            'Peso : ',
-            style: TextStyle(color: Colors.grey),
-          ),
+          child: Text('Peso : ', style: TextStyle(color: Colors.grey)),
         ),
         Expanded(
           flex: 2,
