@@ -70,40 +70,45 @@ class _BotonGordoBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: 100,
-      margin: const EdgeInsets.all(0),
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: (0.1 * 255).roundToDouble()),
-            offset: const Offset(4, 6),
-            blurRadius: 10,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(15),
+      child: Stack(
+        children: [
+          Container(
+            width: double.infinity,
+            height: 100,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(colors: [color1, color2]),
+            ),
           ),
-        ],
-        borderRadius: BorderRadius.circular(15),
-        gradient: LinearGradient(colors: [color1, color2]),
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(15),
-        child: Stack(
-          children: [
-            Positioned(
-              right: -20,
-              top: -20,
-              child: SvgPicture.asset(
-                imagenDireccion,
-                width: 150,
-                height: 150,
-                colorFilter: ColorFilter.mode(
-                  color1.withValues(alpha: (0.8 * 255).roundToDouble()),
-                  BlendMode.srcATop,
-                ),
+          Positioned(
+            right: -20,
+            top: -20,
+            child: SvgPicture.asset(
+              imagenDireccion,
+              width: 150,
+              height: 150,
+              colorFilter: ColorFilter.mode(
+                color1.withAlpha((0.3 * 255).toInt()),
+                BlendMode.srcATop,
               ),
             ),
-          ],
-        ),
+          ),
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withAlpha((0.1 * 255).toInt()),
+                    offset: const Offset(4, 6),
+                    blurRadius: 10,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

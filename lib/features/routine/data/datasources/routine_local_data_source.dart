@@ -134,8 +134,8 @@ class RoutineLocalDataSource {
           SELECT DISTINCT e.*
           FROM session_exercise se
           JOIN exercise e ON se.exercise_id = e.id
-          LEFT JOIN exercise_set es ON se.id = es.session_exercise_id
-          WHERE se.session_id = ?;
+          JOIN routine_session rs ON se.session_id = rs.id
+          WHERE rs.routine_id = ?;
         ''',
         [rutinaId],
       );
@@ -210,7 +210,7 @@ class RoutineLocalDataSource {
       final rutinas = await db.rawQuery(
         '''
           SELECT * FROM ${DatabaseHelper.tbRoutine}
-          WHERE nombre LIKE ?;
+          WHERE name LIKE ?;
         ''',
         ['%$nombre%'],
       );
