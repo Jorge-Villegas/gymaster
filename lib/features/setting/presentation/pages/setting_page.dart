@@ -5,6 +5,8 @@ import 'package:gymaster/features/setting/presentation/cubit/setting_state.dart'
 import 'package:iconsax_plus/iconsax_plus.dart';
 
 class SettingPage extends StatelessWidget {
+  const SettingPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -21,10 +23,9 @@ class SettingPage extends StatelessWidget {
                   children: [
                     Text(
                       "Jorge Villegas",
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleLarge
-                          ?.copyWith(fontWeight: FontWeight.bold),
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(height: 16),
                     Expanded(
@@ -62,7 +63,8 @@ class SettingPage extends StatelessWidget {
                                         .toggleNotification(value);
                                   },
                                   secondary: const Icon(
-                                      IconsaxPlusLinear.notification),
+                                    IconsaxPlusLinear.notification,
+                                  ),
                                 );
                               }
                               return const SizedBox.shrink();
@@ -104,8 +106,8 @@ class SettingPage extends StatelessWidget {
                                   leading: const Icon(IconsaxPlusLinear.global),
                                   title: const Text('Idioma de la aplicación'),
                                   subtitle: Text(state.language),
-                                  onTap: () =>
-                                      _showLanguageBottomSheet(context),
+                                  onTap:
+                                      () => _showLanguageBottomSheet(context),
                                 );
                               }
                               return const SizedBox.shrink();
@@ -173,16 +175,18 @@ class SettingPage extends StatelessWidget {
                         const Text(
                           'Preferencias de Unidades',
                           style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         const SizedBox(height: 16),
                         ToggleOption(
                           title: 'Peso',
                           options: const ['kg', 'lb'],
                           onSelected: (index) {
-                            context
-                                .read<SettingCubit>()
-                                .setWeightUnit(index == 0 ? 'kg' : 'lb');
+                            context.read<SettingCubit>().setWeightUnit(
+                              index == 0 ? 'kg' : 'lb',
+                            );
                           },
                         ),
                         const SizedBox(height: 16),
@@ -190,9 +194,9 @@ class SettingPage extends StatelessWidget {
                           title: 'Longitud',
                           options: const ['cm', 'in'],
                           onSelected: (index) {
-                            context
-                                .read<SettingCubit>()
-                                .setLengthUnit(index == 0 ? 'cm' : 'in');
+                            context.read<SettingCubit>().setLengthUnit(
+                              index == 0 ? 'cm' : 'in',
+                            );
                           },
                         ),
                         const SizedBox(height: 16),
@@ -200,9 +204,9 @@ class SettingPage extends StatelessWidget {
                           title: 'Hora',
                           options: const ['24h', '12h'],
                           onSelected: (index) {
-                            context
-                                .read<SettingCubit>()
-                                .setTimeFormat(index == 0 ? '24h' : '12h');
+                            context.read<SettingCubit>().setTimeFormat(
+                              index == 0 ? '24h' : '12h',
+                            );
                           },
                         ),
                         const SizedBox(height: 16),
@@ -210,9 +214,9 @@ class SettingPage extends StatelessWidget {
                           title: 'Fecha',
                           options: const ['31.01', '01/31'],
                           onSelected: (index) {
-                            context
-                                .read<SettingCubit>()
-                                .setDateFormat(index == 0 ? '31.01' : '01/31');
+                            context.read<SettingCubit>().setDateFormat(
+                              index == 0 ? '31.01' : '01/31',
+                            );
                           },
                         ),
                         const SizedBox(height: 16),
@@ -220,9 +224,9 @@ class SettingPage extends StatelessWidget {
                           title: 'Calorías',
                           options: const ['kcal', 'kj'],
                           onSelected: (index) {
-                            context
-                                .read<SettingCubit>()
-                                .setCalories(index == 0 ? 'kcal' : 'kj');
+                            context.read<SettingCubit>().setCalories(
+                              index == 0 ? 'kcal' : 'kj',
+                            );
                           },
                         ),
                       ],
@@ -448,17 +452,17 @@ class ToggleOption extends StatefulWidget {
   final ValueChanged<int> onSelected;
 
   const ToggleOption({
-    Key? key,
+    super.key,
     required this.title,
     required this.options,
     required this.onSelected,
-  }) : super(key: key);
+  });
 
   @override
-  _ToggleOptionState createState() => _ToggleOptionState();
+  ToggleOptionState createState() => ToggleOptionState();
 }
 
-class _ToggleOptionState extends State<ToggleOption> {
+class ToggleOptionState extends State<ToggleOption> {
   int selectedIndex = 0;
 
   @override
@@ -470,39 +474,44 @@ class _ToggleOptionState extends State<ToggleOption> {
         children: [
           Text(widget.title, style: Theme.of(context).textTheme.bodyLarge),
           Row(
-            children: widget.options.asMap().entries.map((entry) {
-              int index = entry.key;
-              String value = entry.value;
-              return GestureDetector(
-                onTap: () {
-                  setState(() {
-                    selectedIndex = index;
-                  });
-                  widget.onSelected(index);
-                },
-                child: Container(
-                  width: 75,
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 15, horizontal: 12),
-                  margin: const EdgeInsets.symmetric(horizontal: 0),
-                  decoration: BoxDecoration(
-                    color: selectedIndex == index
-                        ? Theme.of(context).primaryColor
-                        : Colors.grey[200],
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  alignment: Alignment.center,
-                  child: Text(
-                    value,
-                    style: TextStyle(
-                      color: selectedIndex == index
-                          ? Colors.white
-                          : Colors.black87,
+            children:
+                widget.options.asMap().entries.map((entry) {
+                  int index = entry.key;
+                  String value = entry.value;
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selectedIndex = index;
+                      });
+                      widget.onSelected(index);
+                    },
+                    child: Container(
+                      width: 75,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 15,
+                        horizontal: 12,
+                      ),
+                      margin: const EdgeInsets.symmetric(horizontal: 0),
+                      decoration: BoxDecoration(
+                        color:
+                            selectedIndex == index
+                                ? Theme.of(context).primaryColor
+                                : Colors.grey[200],
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      alignment: Alignment.center,
+                      child: Text(
+                        value,
+                        style: TextStyle(
+                          color:
+                              selectedIndex == index
+                                  ? Colors.white
+                                  : Colors.black87,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              );
-            }).toList(),
+                  );
+                }).toList(),
           ),
         ],
       ),

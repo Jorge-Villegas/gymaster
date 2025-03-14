@@ -126,15 +126,6 @@ class RoutineLocalDataSource {
     }
   }
 
-  Future<void> createDetalleEjercicio() async {
-    try {
-      final db = await databaseHelper.database;
-      throw UnimplementedError();
-    } catch (e) {
-      throw ServerException();
-    }
-  }
-
   Future<List<Exercise>> getEjerciciosByRutinaId(String rutinaId) async {
     try {
       final db = await databaseHelper.database;
@@ -330,9 +321,7 @@ class RoutineLocalDataSource {
         DatabaseHelper.tbSessionExercise,
         where: 'session_id = ?',
         whereArgs: [routineSessionId],
-        // Primero ordena por estado (no completados primero), luego por order_index
-        orderBy:
-            "CASE WHEN status = 'completed' THEN 1 ELSE 0 END, order_index ASC",
+        orderBy: 'order_index ASC',
       );
       return result.map((map) => SessionExercise.fromJson(map)).toList();
     } catch (e) {
@@ -380,11 +369,11 @@ class RoutineLocalDataSource {
       final db = await databaseHelper.database;
       final result = await db.rawQuery(
         '''
-        SELECT e.*
-        FROM exercise e
-        JOIN session_exercise se ON e.id = se.exercise_id
-        WHERE se.id = ?
-      ''',
+          SELECT e.*
+          FROM exercise e
+          JOIN session_exercise se ON e.id = se.exercise_id
+          WHERE se.id = ?
+        ''',
         [sessionExerciseId],
       );
       return Exercise.fromJson(result.first);
@@ -462,7 +451,7 @@ class RoutineLocalDataSource {
     try {
       final db = await databaseHelper.database;
 
-      final result = await db.transaction((txn) async {
+      await db.transaction((txn) async {
         // Actualiza el orden de cada ejercicio
         for (int i = 0; i < exerciseIds.length; i++) {
           await txn.update(
@@ -806,4 +795,25 @@ class RoutineLocalDataSource {
       throw ServerException();
     }
   }
+
+  Future<bool> updateExerciseStatusById({
+    required String exerciseId,
+    required String routineSessionId,
+    required String status,
+  }) async {
+    try {
+      final db = await databaseHelper.database;
+      final result = await db.update(
+        DatabaseHelper.tbSessionExercise,
+        {'status': status},
+        where: 'exercise_id = ? AND session_id = ?',
+        whereArgs: [exerciseId, routineSessionId],
+      );
+      return result > 0;
+    } catch (e) {
+      throw ServerException();
+    }
+  }
+
+  //obtener ejercicios
 }

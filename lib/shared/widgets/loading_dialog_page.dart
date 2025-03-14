@@ -6,7 +6,9 @@ class LoadingDialogPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black.withOpacity(0.5),
+      backgroundColor: Colors.black.withValues(
+        alpha: (0.5 * 255).roundToDouble(),
+      ),
       body: Center(
         child: Container(
           padding: const EdgeInsets.all(20),

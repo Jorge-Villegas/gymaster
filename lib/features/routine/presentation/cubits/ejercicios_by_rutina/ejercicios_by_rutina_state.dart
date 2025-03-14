@@ -24,8 +24,8 @@ class EjerciciosByRutinaError extends EjerciciosByRutinaState {
 
 class EjerciciosByRutinaSuccess extends EjerciciosByRutinaState {
   final EjerciciosDeRutina ejerciciosDeRutina;
-  final int ejercicioIndex;
-  final int serieIndex;
+  final String ejercicioIndex;
+  final String serieIndex;
 
   EjerciciosByRutinaSuccess({
     required this.ejerciciosDeRutina,

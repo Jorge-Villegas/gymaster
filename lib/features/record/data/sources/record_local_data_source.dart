@@ -11,7 +11,7 @@ class RecordLocalDataSource {
 
   Future<List<Routine>> getCompletedRoutines() async {
     final db = await databaseHelper.database;
-    final rutinas = await db.query(
+    await db.query(
       DatabaseHelper.tbRoutine,
       where: 'realizado = ?',
       whereArgs: [1],

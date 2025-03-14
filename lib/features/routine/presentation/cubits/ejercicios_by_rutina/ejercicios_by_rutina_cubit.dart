@@ -11,6 +11,7 @@ import 'package:gymaster/features/routine/domain/usecases/get_all_ejercicios_by_
 import 'package:gymaster/features/routine/domain/usecases/get_last_routine_session_by_routine_id_usecase.dart';
 import 'package:gymaster/features/routine/domain/usecases/start_routine_session_usecase.dart';
 import 'package:gymaster/features/routine/domain/usecases/stop_routine_session_usecase.dart';
+import 'package:gymaster/features/routine/domain/usecases/update_exercise_status_usecase.dart';
 import 'package:gymaster/features/routine/domain/usecases/update_serie.dart';
 import 'package:gymaster/shared/utils/enum.dart';
 
@@ -24,6 +25,7 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
   final StartRoutineSessionUseCase startRoutineSessionUseCase;
   final StopRoutineSessionUseCase stopRoutineSessionUseCase;
   final CompleteRoutineSessionUseCase completeRoutineSessionUseCase;
+  final UpdateExerciseStatusUseCase updateExerciseStatusUseCase;
 
   EjerciciosByRutinaCubit(
     this.deleteEjercicioRutinaUseCase,
@@ -33,6 +35,7 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
     this.startRoutineSessionUseCase,
     this.stopRoutineSessionUseCase,
     this.completeRoutineSessionUseCase,
+    this.updateExerciseStatusUseCase,
   ) : super(EjerciciosByRutinaInitial());
 
   void aumentarPeso() => _updatePeso(2.5);
@@ -46,13 +49,15 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
   void _updatePeso(double increment) {
     if (state is! EjerciciosByRutinaSuccess) return;
     final currentState = state as EjerciciosByRutinaSuccess;
-    final ejercicio =
-        currentState.ejerciciosDeRutina.ejercicios[currentState.ejercicioIndex];
-    final newPeso = ejercicio.series[currentState.serieIndex].peso + increment;
+    final ejercicio = currentState.ejerciciosDeRutina.ejercicios.firstWhere(
+      (e) => e.id == currentState.ejercicioIndex,
+    );
+    final serie = ejercicio.series.firstWhere(
+      (s) => s.id == currentState.serieIndex,
+    );
+    final newPeso = serie.peso + increment;
     if (newPeso >= 0) {
-      final updatedSerie = ejercicio.series[currentState.serieIndex].copyWith(
-        peso: newPeso,
-      );
+      final updatedSerie = serie.copyWith(peso: newPeso);
       _updateSerie(currentState, updatedSerie);
       updateSerieUseCase(
         UpdateSerieParams(id: updatedSerie.id, peso: updatedSerie.peso),
@@ -63,15 +68,15 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
   void _updateRepeticiones(int increment) {
     if (state is! EjerciciosByRutinaSuccess) return;
     final currentState = state as EjerciciosByRutinaSuccess;
-    final ejercicio =
-        currentState.ejerciciosDeRutina.ejercicios[currentState.ejercicioIndex];
-    final newRepeticiones =
-        ejercicio.series[currentState.serieIndex].repeticiones + increment;
+    final ejercicio = currentState.ejerciciosDeRutina.ejercicios.firstWhere(
+      (e) => e.id == currentState.ejercicioIndex,
+    );
+    final serie = ejercicio.series.firstWhere(
+      (s) => s.id == currentState.serieIndex,
+    );
+    final newRepeticiones = serie.repeticiones + increment;
     if (newRepeticiones >= 0) {
-      final updatedSerie = ejercicio.series[currentState.serieIndex].copyWith(
-        repeticiones: newRepeticiones,
-      );
-
+      final updatedSerie = serie.copyWith(repeticiones: newRepeticiones);
       _updateSerie(currentState, updatedSerie);
       updateSerieUseCase(
         UpdateSerieParams(
@@ -129,49 +134,16 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
         ),
       );
 
-      result.fold(
-        (l) => emit(EjerciciosByRutinaError(l.errorMessage)),
-        (r) => _handleEjerciciosResult(r),
-      );
+      result.fold((l) => emit(EjerciciosByRutinaError(l.errorMessage)), (r) {
+        print('getAllEjercicios cubit: ${ejerciciosDeRutinaModelToJson(r)}');
+        _handleEjerciciosResult(r);
+      });
     } catch (e) {
       emit(EjerciciosByRutinaError(e.toString()));
     }
   }
 
   void _handleEjerciciosResult(EjerciciosDeRutina r) {
-    if (r.estado == RoutineSessionStatus.completed.name) {
-      // Crear una nueva lista de ejercicios con las series actualizadas
-      final updatedEjercicios =
-          r.ejercicios.map((ejercicio) {
-            final updatedSeries =
-                ejercicio.series.map((serie) {
-                  return serie.copyWith(realizado: false);
-                }).toList();
-            return ejercicio.copyWith(series: updatedSeries);
-          }).toList();
-
-      // Emitir el estado con los ejercicios actualizados
-      emit(
-        EjerciciosByRutinaSuccess(
-          ejerciciosDeRutina: r.copyWith(ejercicios: updatedEjercicios),
-          ejercicioIndex: 0,
-          serieIndex: 0,
-        ),
-      );
-      return;
-    }
-
-    if (r.estado == RoutineSessionStatus.pending.name) {
-      emit(
-        EjerciciosByRutinaSuccess(
-          ejerciciosDeRutina: r,
-          ejercicioIndex: 0,
-          serieIndex: 0,
-        ),
-      );
-      return;
-    }
-
     if (r.estado == RoutineSessionStatus.cancelled.name) {
       emit(EjerciciosByRutinaError("La rutina ha sido cancelada"));
       return;
@@ -181,60 +153,147 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
       emit(
         EjerciciosByRutinaSuccess(
           ejerciciosDeRutina: r,
-          ejercicioIndex: 0,
-          serieIndex: 0,
+          ejercicioIndex: '',
+          serieIndex: '',
         ),
       );
       return;
     }
-    for (int i = 0; i < r.ejercicios.length; i++) {
-      for (int j = 0; j < r.ejercicios[i].series.length; j++) {
-        if (!r.ejercicios[i].series[j].realizado) {
-          emit(
-            EjerciciosByRutinaSuccess(
-              ejerciciosDeRutina: r,
-              ejercicioIndex: i,
-              serieIndex: j,
-            ),
-          );
-          return;
-        }
-      }
-    }
-    emit(EjerciciosByRutinaError("La rutina ha sido finalizada"));
+
+    // Emitir el estado con los ejercicios en el orden original
+    emit(
+      EjerciciosByRutinaSuccess(
+        ejerciciosDeRutina: r,
+        ejercicioIndex: r.ejercicios.first.id,
+        serieIndex: r.ejercicios.first.series.first.id,
+      ),
+    );
   }
 
-  void avanzarSerie() {
+  void avanzarSerie() async {
     if (state is! EjerciciosByRutinaSuccess) return;
     final currentState = state as EjerciciosByRutinaSuccess;
-    final updatedSerie = _markSerieAsCompleted(currentState);
+    final updatedSerie = await _markSerieAsCompleted(currentState);
     _updateSerie(currentState, updatedSerie);
+
+    // Verificar si estamos en la última serie del ejercicio actual
+    final ejercicios = currentState.ejerciciosDeRutina.ejercicios;
+    final ejercicioIndex = ejercicios.indexWhere(
+      (e) => e.id == currentState.ejercicioIndex,
+    );
+    final serieIndex = ejercicios[ejercicioIndex].series.indexWhere(
+      (s) => s.id == currentState.serieIndex,
+    );
+
+    // Si no es la última serie del ejercicio actual, avanzar a la siguiente serie
+    if (serieIndex + 1 < ejercicios[ejercicioIndex].series.length) {
+      _emitNextSerieState();
+    }
+    // Si es la última serie, no hacemos nada aquí para permitir que la UI muestre los botones expandibles
+  }
+
+  // Método para avanzar explícitamente al siguiente ejercicio (usado por el botón de avanzar)
+  void avanzarAlSiguienteEjercicio() async {
+    if (state is! EjerciciosByRutinaSuccess) return;
     _emitNextSerieState();
   }
 
-  Serie _markSerieAsCompleted(EjerciciosByRutinaSuccess currentState) {
-    final ejercicio =
-        currentState.ejerciciosDeRutina.ejercicios[currentState.ejercicioIndex];
-    final serie = ejercicio.series[currentState.serieIndex];
+  Future<Serie> _markSerieAsCompleted(
+    EjerciciosByRutinaSuccess currentState,
+  ) async {
+    final ejercicio = currentState.ejerciciosDeRutina.ejercicios.firstWhere(
+      (e) => e.id == currentState.ejercicioIndex,
+    );
+    final serie = ejercicio.series.firstWhere(
+      (s) => s.id == currentState.serieIndex,
+    );
+
+    final updatedSerie = serie.copyWith(
+      estado: ExerciseSetStatus.completed.name,
+    );
+
+    final updatedEjercicio = ejercicio.copyWith(
+      estado:
+          ejercicio.estado == ExerciseStatus.completed.name
+              ? ExerciseStatus.completed.name
+              : ExerciseStatus.in_progress.name,
+    );
+
+    await updateExerciseStatusUseCase(
+      UpdateExerciseStatusParams(
+        exerciseId: updatedEjercicio.id,
+        statusExercise: updatedEjercicio.estado,
+        routineSessionId: currentState.ejerciciosDeRutina.session,
+      ),
+    );
+
+    final updatedSeries =
+        ejercicio.series.map((s) {
+          return s.id == updatedSerie.id ? updatedSerie : s;
+        }).toList();
+
+    final updatedEjercicios =
+        currentState.ejerciciosDeRutina.ejercicios.map((e) {
+          return e.id == updatedEjercicio.id
+              ? updatedEjercicio.copyWith(series: updatedSeries)
+              : e;
+        }).toList();
+
+    emit(
+      EjerciciosByRutinaSuccess(
+        ejerciciosDeRutina: currentState.ejerciciosDeRutina.copyWith(
+          ejercicios: updatedEjercicios,
+        ),
+        ejercicioIndex: currentState.ejercicioIndex,
+        serieIndex: currentState.serieIndex,
+      ),
+    );
+
     updateSerieUseCase(UpdateSerieParams(id: serie.id, realizado: true));
-    serie.copyWith(realizado: true);
-    return serie.copyWith(realizado: true);
+
+    return updatedSerie;
   }
 
   void _emitNextSerieState() async {
     if (state is! EjerciciosByRutinaSuccess) return;
     final currentState = state as EjerciciosByRutinaSuccess;
     final ejercicios = currentState.ejerciciosDeRutina.ejercicios;
-    int ejercicioIndex = currentState.ejercicioIndex;
-    int serieIndex = currentState.serieIndex;
+    final ejercicioIndex = ejercicios.indexWhere(
+      (e) => e.id == currentState.ejercicioIndex,
+    );
+    final serieIndex = ejercicios[ejercicioIndex].series.indexWhere(
+      (s) => s.id == currentState.serieIndex,
+    );
 
     if (serieIndex + 1 < ejercicios[ejercicioIndex].series.length) {
       // Avanza a la siguiente serie del ejercicio actual
-      serieIndex++;
+      emit(
+        EjerciciosByRutinaSuccess(
+          ejerciciosDeRutina: currentState.ejerciciosDeRutina,
+          ejercicioIndex: currentState.ejercicioIndex,
+          serieIndex: ejercicios[ejercicioIndex].series[serieIndex + 1].id,
+        ),
+      );
+      return;
     } else if (ejercicioIndex + 1 < ejercicios.length) {
       // Avanza al siguiente ejercicio y reinicia el índice de la serie
-      ejercicioIndex++;
-      serieIndex = 0;
+      final updatedEjercicio = ejercicios[ejercicioIndex].copyWith(
+        estado: ExerciseStatus.completed.name,
+      );
+      // Actualizar la lista de ejercicios con el ejercicio completado
+      final updatedEjercicios = List<Ejercicio>.from(ejercicios)
+        ..[ejercicioIndex] = updatedEjercicio;
+
+      emit(
+        EjerciciosByRutinaSuccess(
+          ejerciciosDeRutina: currentState.ejerciciosDeRutina.copyWith(
+            ejercicios: updatedEjercicios,
+          ),
+          ejercicioIndex: ejercicios[ejercicioIndex + 1].id,
+          serieIndex: ejercicios[ejercicioIndex + 1].series.first.id,
+        ),
+      );
+      return;
     } else {
       // Si no hay más series ni ejercicios, emite el estado de rutina completada
       final result = await completeRoutineSessionUseCase(
@@ -246,40 +305,38 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
       result.fold((l) => emit(EjerciciosByRutinaError(l.errorMessage)), (r) {
         emit(EjerciciosByRutinaCompleted());
       });
-      emit(EjerciciosByRutinaCompleted());
       return;
     }
-
-    // Emite el nuevo estado con los índices actualizados
-    emit(
-      EjerciciosByRutinaSuccess(
-        ejerciciosDeRutina: currentState.ejerciciosDeRutina,
-        ejercicioIndex: ejercicioIndex,
-        serieIndex: serieIndex,
-      ),
-    );
   }
 
   void _updateSerie(
     EjerciciosByRutinaSuccess currentState,
     Serie updatedSerie,
   ) {
+    // Mapea la lista de ejercicios actual para encontrar el ejercicio que coincide con el índice actual
     final updatedEjercicios =
         currentState.ejerciciosDeRutina.ejercicios.map((ejercicio) {
-          if (ejercicio.id ==
-              currentState
-                  .ejerciciosDeRutina
-                  .ejercicios[currentState.ejercicioIndex]
-                  .id) {
+          if (ejercicio.id == currentState.ejercicioIndex) {
+            // Si el ejercicio coincide, mapea sus series para encontrar la serie que coincide con la serie actual
             final updatedSeries =
                 ejercicio.series.map((serie) {
+                  // Si la serie coincide, la reemplaza con la serie actualizada
                   return serie.id == updatedSerie.id ? updatedSerie : serie;
                 }).toList();
-            return ejercicio.copyWith(series: updatedSeries);
+            // Retorna el ejercicio con las series actualizadas y el estado del ejercicio como 'in_progress' solo si no está completado
+            return ejercicio.copyWith(
+              series: updatedSeries,
+              estado:
+                  ejercicio.estado == ExerciseStatus.completed.name
+                      ? ExerciseStatus.completed.name
+                      : ExerciseStatus.in_progress.name,
+            );
           }
+          // Si el ejercicio no coincide, lo retorna sin cambios
           return ejercicio;
         }).toList();
 
+    // Emite un nuevo estado con la lista de ejercicios actualizada
     emit(
       EjerciciosByRutinaSuccess(
         ejerciciosDeRutina: currentState.ejerciciosDeRutina.copyWith(
@@ -419,7 +476,7 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
           GetLastRoutineSessionByRoutineIdParams(idRoutine: rutinaId),
         );
 
-        final hasSession = await sessionResult.fold(
+        final hasSession = sessionResult.fold(
           (failure) {
             emit(EjerciciosByRutinaError(failure.errorMessage));
             return false;
@@ -456,8 +513,9 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
             emit(
               EjerciciosByRutinaSuccess(
                 ejerciciosDeRutina: updatedEjerciciosDeRutina,
-                ejercicioIndex: 0,
-                serieIndex: 0,
+                ejercicioIndex: updatedEjerciciosDeRutina.ejercicios.first.id,
+                serieIndex:
+                    updatedEjerciciosDeRutina.ejercicios.first.series.first.id,
               ),
             );
             return true;

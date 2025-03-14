@@ -5,20 +5,10 @@ import 'package:gymaster/features/routine/domain/entities/ejercicios_de_rutina.d
 import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
 import 'package:gymaster/features/routine/presentation/widgets/custom_cart.dart';
 import 'package:gymaster/shared/utils/enum.dart';
-import 'package:gymaster/shared/widgets/show_custom_snack_bar.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 
 class EjerciciosLlenosWidget extends StatelessWidget {
-  final EjerciciosDeRutina ejerciciosDeRutina;
-  final String rutinaId;
-  final String sessionId;
-
-  const EjerciciosLlenosWidget({
-    super.key,
-    required this.ejerciciosDeRutina,
-    required this.rutinaId,
-    required this.sessionId,
-  });
+  const EjerciciosLlenosWidget({super.key});
 
   iniciarRutina(BuildContext context, String sessionId, String rutinaId) {
     context.read<EjerciciosByRutinaCubit>().iniciarRutina(
@@ -92,7 +82,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
         } else if (state is EjerciciosByRutinaError) {
           return Center(child: Text(state.message));
         } else if (state is EjerciciosByRutinaSuccess) {
-          return _buildContent(context, state.ejerciciosDeRutina);
+          return _buildContent(context, state.ejerciciosDeRutina, state);
         } else {
           return Container();
         }
@@ -103,8 +93,9 @@ class EjerciciosLlenosWidget extends StatelessWidget {
   Widget _buildContent(
     BuildContext context,
     EjerciciosDeRutina ejerciciosDeRutina,
+    EjerciciosByRutinaSuccess state,
   ) {
-    print('routine_session = $sessionId');
+    print('routine_session = ${state.ejerciciosDeRutina.session}');
     final textTheme = Theme.of(context).textTheme;
     final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
     String getButtonText = 'Estado desconocido';
@@ -127,25 +118,38 @@ class EjerciciosLlenosWidget extends StatelessWidget {
       getBackgroundColor = Colors.red.withAlpha(25);
     }
 
+    print('estado = ${ejerciciosDeRutinaModelToJson(ejerciciosDeRutina)}');
+
     return Column(
       children: [
         InkWell(
           onTap: () {
             if (ejerciciosDeRutina.estado ==
                 RoutineSessionStatus.pending.name) {
-              iniciarRutina(context, sessionId, rutinaId);
+              iniciarRutina(
+                context,
+                state.ejerciciosDeRutina.session,
+                state.ejerciciosDeRutina.rutinaId,
+              );
               context.push('/detalle-ejercicio');
             }
 
             if (ejerciciosDeRutina.estado ==
                 RoutineSessionStatus.completed.name) {
-              iniciarRutina(context, sessionId, rutinaId);
+              iniciarRutina(
+                context,
+                state.ejerciciosDeRutina.session,
+                state.ejerciciosDeRutina.rutinaId,
+              );
               context.push('/detalle-ejercicio');
             }
 
             if (ejerciciosDeRutina.estado ==
                 RoutineSessionStatus.in_progress.name) {
-              mostrarDialogoPararEntrenamiento(context, sessionId);
+              mostrarDialogoPararEntrenamiento(
+                context,
+                state.ejerciciosDeRutina.session,
+              );
             }
           },
           child: Container(
@@ -197,9 +201,18 @@ class EjerciciosLlenosWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: ReorderableListView.builder(
               onReorder: (oldIndex, newIndex) {
+                if (newIndex > oldIndex) {
+                  newIndex -= 1;
+                }
+                final ejercicio = ejerciciosDeRutina.ejercicios.removeAt(
+                  oldIndex,
+                );
+                ejerciciosDeRutina.ejercicios.insert(newIndex, ejercicio);
+
+                // Actualizar el orden en el Cubit
                 context.read<EjerciciosByRutinaCubit>().updateEjercicioOrder(
                   ejerciciosDeRutina.ejercicios,
-                  sessionId,
+                  state.ejerciciosDeRutina.session,
                 );
               },
               itemCount: ejerciciosDeRutina.ejercicios.length,
@@ -207,7 +220,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
               itemBuilder: (context, i) {
                 final ejercicio = ejerciciosDeRutina.ejercicios[i];
                 final estadoEjercicio = ejercicio.series.every(
-                  (serie) => serie.realizado,
+                  (serie) => serie.estado == 'completed',
                 );
                 final pesos =
                     ejercicio.series.map((serie) => serie.peso).toList();
@@ -217,7 +230,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                   onDismissed: (direction) {
                     context.read<EjerciciosByRutinaCubit>().deleteEjercicio(
                       ejercicio.id,
-                      sessionId,
+                      state.ejerciciosDeRutina.session,
                     );
                     // Eliminar el ejercicio de la lista y actualizar el estado
                     ejerciciosDeRutina.ejercicios.removeAt(i);
@@ -227,7 +240,10 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                   confirmDismiss: (direction) async {
                     final result = await context
                         .read<EjerciciosByRutinaCubit>()
-                        .checkCanDeleteEjercicio(ejercicio.id, sessionId);
+                        .checkCanDeleteEjercicio(
+                          ejercicio.id,
+                          state.ejerciciosDeRutina.session,
+                        );
                     return result;
                   },
                   background: Container(
@@ -240,7 +256,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                     index: i,
                     colorFondo: Colors.white,
                     ejercicioId: ejercicio.id,
-                    estadoSerie: estadoEjercicio,
+                    estadoEjercicio: ejercicio.estado,
                     nombreEjercicio: ejercicio.nombre,
                     numeroSeries: ejercicio.series.length,
                     imagenDireccion: ejercicio.imagenDireccion,
@@ -248,11 +264,32 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                     onDismissed: () {
                       context.read<EjerciciosByRutinaCubit>().deleteEjercicio(
                         ejercicio.id,
-                        sessionId,
+                        state.ejerciciosDeRutina.session,
                       );
                     },
                     onTap: () {
-                      // TODO: Implementar lógica al seleccionar una serie
+                      // Si la rutina está en ejecución, permitir navegar al ejercicio seleccionado
+                      if (ejerciciosDeRutina.estado ==
+                          RoutineSessionStatus.in_progress.name) {
+                        // Actualizar el ejercicio actual en el cubit
+                        final currentState = state;
+                        if (currentState is EjerciciosByRutinaSuccess) {
+                          // Emitir un nuevo estado con el ejercicio seleccionado
+                          context.read<EjerciciosByRutinaCubit>().emit(
+                            EjerciciosByRutinaSuccess(
+                              ejerciciosDeRutina:
+                                  currentState.ejerciciosDeRutina,
+                              ejercicioIndex: ejercicio.id,
+                              serieIndex:
+                                  ejercicio.series.isNotEmpty
+                                      ? ejercicio.series.first.id
+                                      : '',
+                            ),
+                          );
+                          // Navegar a la pantalla de detalle de ejercicio
+                          context.push('/detalle-ejercicio');
+                        }
+                      }
                     },
                     height: 125,
                   ),

@@ -1,4 +1,15 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
+
+EjerciciosDeRutina ejerciciosDeRutinaModelFromJson(String str) =>
+    EjerciciosDeRutina.fromJson(json.decode(str));
+
+String ejerciciosDeRutinaModelToJson(EjerciciosDeRutina data) =>
+    json.encode(data.toJson());
+
+String ejerciciosDeRutinaModelListToJson(List<EjerciciosDeRutina> data) =>
+    json.encode(data.map((e) => e.toJson()).toList());
 
 class EjerciciosDeRutina extends Equatable {
   final String id;
@@ -8,7 +19,6 @@ class EjerciciosDeRutina extends Equatable {
   final int color;
   final DateTime? fechaRealizacion;
   final String estado;
-
   final String rutinaId;
   final String nombre;
   final String session;
@@ -73,6 +83,28 @@ class EjerciciosDeRutina extends Equatable {
     };
   }
 
+  factory EjerciciosDeRutina.fromJson(Map<String, dynamic> json) {
+    return EjerciciosDeRutina(
+      session: json['session'],
+      rutinaId: json['rutinaId'],
+      nombre: json['nombre'],
+      descripcion: json['descripcion'],
+      fechaCreacion: DateTime.parse(json['fecha_creacion']),
+      color: json['color'],
+      ejercicios:
+          (json['ejercicios'] as List)
+              .map((e) => Ejercicio.fromJson(e))
+              .toList(),
+      estado: json['estado'],
+      id: json['id'],
+      realizado: json['realizado'],
+      fechaRealizacion:
+          json['fecha_realizacion'] != null
+              ? DateTime.parse(json['fecha_realizacion'])
+              : null,
+    );
+  }
+
   @override
   List<Object?> get props => [
     rutinaId,
@@ -98,9 +130,11 @@ class Ejercicio extends Equatable {
   final String nombre;
   final String imagenDireccion;
   final String descripcion;
+  final String estado;
   final List<Serie> series;
   final List<Musculo>? musculos;
   final int cantidadSeries;
+  final int orderIndex;
 
   const Ejercicio({
     required this.id,
@@ -109,6 +143,8 @@ class Ejercicio extends Equatable {
     required this.descripcion,
     required this.series,
     this.musculos,
+    required this.estado,
+    required this.orderIndex,
   }) : cantidadSeries = series.length;
 
   //tojson
@@ -120,6 +156,8 @@ class Ejercicio extends Equatable {
       'descripcion': descripcion,
       'series': series.map((e) => e.toJson()).toList(),
       'musculos': musculos?.map((e) => e.toJson()).toList(),
+      'estado': estado,
+      'orderIndex': orderIndex,
     };
   }
 
@@ -128,27 +166,50 @@ class Ejercicio extends Equatable {
     String? nombre,
     String? imagenDireccion,
     String? descripcion,
+    String? estado,
+    int? orderIndex,
     List<Serie>? series,
     List<Musculo>? musculos,
   }) {
     return Ejercicio(
+      estado: estado ?? this.estado,
       id: id ?? this.id,
       nombre: nombre ?? this.nombre,
       imagenDireccion: imagenDireccion ?? this.imagenDireccion,
       descripcion: descripcion ?? this.descripcion,
       series: series ?? this.series,
       musculos: musculos ?? this.musculos,
+      orderIndex: orderIndex ?? this.orderIndex,
     );
   }
 
   @override
-  List<Object?> get props => [id, nombre, imagenDireccion, descripcion, series];
+  List<Object?> get props => [
+    id,
+    nombre,
+    imagenDireccion,
+    descripcion,
+    series,
+    estado,
+  ];
+
+  factory Ejercicio.fromJson(Map<String, dynamic> json) => Ejercicio(
+    id: json["id"],
+    nombre: json["nombre"],
+    imagenDireccion: json["imagen_direccion"],
+    descripcion: json["descripcion"],
+    estado: json["estado"],
+    orderIndex: json['orderIndex'],
+    series: List<Serie>.from(json["series"].map((x) => Serie.fromJson(x))),
+    musculos: List<Musculo>.from(
+      json["musculos"].map((x) => Musculo.fromJson(x)),
+    ),
+  );
 
   @override
   String toString() {
     return 'Ejercicio(id: $id, nombre: $nombre, imagenDireccion: $imagenDireccion, '
-        'descripcion: $descripcion, '
-        'seriesDelEjercicio: $series)';
+        'descripcion: $descripcion, series: $series, musculos: $musculos, estado: $estado)';
   }
 }
 
@@ -157,14 +218,14 @@ class Serie extends Equatable {
   final double peso;
   final int repeticiones;
   final int timpoDescanso;
-  final bool realizado;
+  final String estado;
 
   const Serie({
     required this.id,
     required this.peso,
     required this.repeticiones,
     required this.timpoDescanso,
-    required this.realizado,
+    required this.estado,
   });
 
   //tojson
@@ -174,7 +235,7 @@ class Serie extends Equatable {
       'peso': peso,
       'repeticiones': repeticiones,
       'tiempoDescanso': timpoDescanso,
-      'realizado': realizado,
+      'estado': estado,
     };
   }
 
@@ -183,24 +244,33 @@ class Serie extends Equatable {
     double? peso,
     int? repeticiones,
     int? timpoDescanso,
-    bool? realizado,
+    String? estado,
   }) {
     return Serie(
       id: id ?? this.id,
       peso: peso ?? this.peso,
       repeticiones: repeticiones ?? this.repeticiones,
       timpoDescanso: timpoDescanso ?? this.timpoDescanso,
-      realizado: realizado ?? this.realizado,
+      estado: estado ?? this.estado,
     );
   }
 
   @override
-  List<Object?> get props => [id, peso, repeticiones, timpoDescanso, realizado];
+  List<Object?> get props => [id, peso, repeticiones, timpoDescanso, estado];
 
   @override
   String toString() =>
       'SeriesDelEjercicio(id: $id, peso: $peso, repeticiones: $repeticiones, '
-      'timpoDescanso: $timpoDescanso, realizado: $realizado)';
+      'timpoDescanso: $timpoDescanso, estado: $estado)';
+
+  //fromjson
+  factory Serie.fromJson(Map<String, dynamic> json) => Serie(
+    id: json['id'],
+    peso: json['peso'],
+    repeticiones: json['repeticiones'],
+    timpoDescanso: json['tiempoDescanso'],
+    estado: json['estado'],
+  );
 }
 
 class Musculo extends Equatable {
@@ -225,4 +295,11 @@ class Musculo extends Equatable {
 
   @override
   List<Object?> get props => [id, nombre, imagenDireccion];
+
+  //fromjson
+  factory Musculo.fromJson(Map<String, dynamic> json) => Musculo(
+    id: json['id'],
+    nombre: json['nombre'],
+    imagenDireccion: json['imagen_direccion'],
+  );
 }

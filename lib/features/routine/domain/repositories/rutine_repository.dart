@@ -99,4 +99,10 @@ abstract interface class RoutineRepository {
   );
   Future<Either<Failure, bool>> stopRoutineSession(String sessionId);
   Future<Either<Failure, bool>> completeRoutineSession(String sessionId);
+
+  Future<Either<Failure, void>> updateExerciseStatusById({
+    required String exerciseId,
+    required String routineSessionId,
+    required String statusExercise,
+  });
 }

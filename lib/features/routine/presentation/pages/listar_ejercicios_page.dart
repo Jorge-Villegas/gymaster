@@ -80,7 +80,7 @@ class ListarEjerciciosPage extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final isSmallScreen = constraints.maxWidth < 600;
-        final textScaleFactor = MediaQuery.of(context).textScaleFactor;
+        final textScaler = MediaQuery.of(context).textScaler;
         return ListView.separated(
           separatorBuilder: (_, index) => const SizedBox(height: 5),
           padding: const EdgeInsets.symmetric(horizontal: 0),
@@ -160,8 +160,8 @@ class ListarEjerciciosPage extends StatelessWidget {
                     style: TextStyle(
                       fontSize:
                           isSmallScreen
-                              ? 14 * textScaleFactor
-                              : 16 * textScaleFactor,
+                              ? textScaler.scale(14)
+                              : textScaler.scale(16),
                     ),
                   ),
                   onTap:

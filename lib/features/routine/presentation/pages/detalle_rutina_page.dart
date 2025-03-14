@@ -19,9 +19,9 @@ class DetalleRutinaScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Solicita todos los ejercicios de la rutina especificada.
-    BlocProvider.of<EjerciciosByRutinaCubit>(
-      context,
-    ).getAllEjercicios(idRutina: rutinaId);
+    // BlocProvider.of<EjerciciosByRutinaCubit>(
+    //   context,
+    // ).getAllEjercicios(idRutina: rutinaId);
 
     // Cambiar a FutureBuilder para manejar el Future<String> de sessionId
     return FutureBuilder<String>(
@@ -40,10 +40,7 @@ class DetalleRutinaScreen extends StatelessWidget {
           );
         } else {
           final sessionId = snapshot.data ?? '';
-
-          // Retorna un Scaffold que contiene la estructura básica de la interfaz de usuario de la aplicación.
           return Scaffold(
-            // AppBar que muestra el nombre de la rutina o "RUTINA" si no se pudo obtener.
             appBar: AppBar(
               leading: IconButton(
                 icon: SvgPicture.asset(Assets.icons.flechaIzquierda.path),
@@ -80,10 +77,10 @@ class DetalleRutinaScreen extends StatelessWidget {
                                 if (context.mounted) {
                                   // Llama a getAllEjercicios después de que se cierra la pantalla AgregarEjerciciosPage
                                   // cuando se vuelve de la pantalla de agregar, al regresar a la pantalla de detalle de la rutina
-                                  BlocProvider.of<EjerciciosByRutinaCubit>(
-                                    context,
-                                    listen: false,
-                                  ).getAllEjercicios(idRutina: rutinaId);
+                                  // BlocProvider.of<EjerciciosByRutinaCubit>(
+                                  //   context,
+                                  //   listen: false,
+                                  // ).getAllEjercicios(idRutina: rutinaId);
                                 }
                               });
                         },
@@ -106,11 +103,7 @@ class DetalleRutinaScreen extends StatelessWidget {
                       sessionId: sessionId,
                     );
                   } else {
-                    return EjerciciosLlenosWidget(
-                      sessionId: sessionId,
-                      ejerciciosDeRutina: state.ejerciciosDeRutina,
-                      rutinaId: rutinaId,
-                    );
+                    return const EjerciciosLlenosWidget();
                   }
                 }
                 if (state is EjerciciosByRutinaLoading) {

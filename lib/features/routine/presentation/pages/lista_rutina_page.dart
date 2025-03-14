@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
 import 'package:gymaster/features/routine/presentation/cubits/rutina/routine_cubit.dart';
 import 'package:gymaster/features/routine/presentation/pages/agregar_rutina_page.dart';
 import 'package:gymaster/features/routine/presentation/pages/routine_search_delegate.dart';
@@ -251,6 +252,9 @@ class ListaRutinasPage extends StatelessWidget {
                       cantidadEjerciciosPorSeries: cantidadTexto,
                       imagenDireccion: rutina.imagenDireccion,
                       onTap: () {
+                        BlocProvider.of<EjerciciosByRutinaCubit>(
+                          context,
+                        ).getAllEjercicios(idRutina: rutina.id!);
                         context.push('/rutina/detalle/${rutina.id!}');
                       },
                     ),

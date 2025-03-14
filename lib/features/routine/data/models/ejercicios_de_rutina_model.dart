@@ -78,24 +78,30 @@ class EjercicioModel extends Ejercicio {
   const EjercicioModel({
     required super.id,
     required super.nombre,
+    required super.estado,
     required super.imagenDireccion,
     required super.descripcion,
     required super.series,
+    required super.orderIndex,
     super.musculos,
   });
 
   factory EjercicioModel.fromDatabase({
     required Exercise ejercicioDB,
+    required String status,
+    required int orderIndex,
     List<SeriesDelEjercicioModel>? series,
     List<MusculoModel>? musculos,
   }) {
     return EjercicioModel(
+      estado: status,
       id: ejercicioDB.id,
       nombre: ejercicioDB.name,
       imagenDireccion: ejercicioDB.imagePath ?? '',
       descripcion: ejercicioDB.description ?? '',
       series: series ?? [],
       musculos: musculos ?? [],
+      orderIndex: orderIndex,
     );
   }
 
@@ -104,6 +110,8 @@ class EjercicioModel extends Ejercicio {
     nombre: json["nombre"],
     imagenDireccion: json["imagen_direccion"],
     descripcion: json["descripcion"],
+    estado: json["estado"],
+    orderIndex: json["order_index"],
     series: List<SeriesDelEjercicioModel>.from(
       json["series"].map((x) => SeriesDelEjercicioModel.fromJson(x)),
     ),
@@ -118,6 +126,8 @@ class EjercicioModel extends Ejercicio {
     "nombre": nombre,
     "imagen_direccion": imagenDireccion,
     "descripcion": descripcion,
+    "estado": estado,
+    "order_index": orderIndex,
     "series": List<dynamic>.from(series.map((x) => x.toJson())),
     "musculos": List<dynamic>.from(musculos!.map((x) => x.toJson())),
   };
@@ -129,7 +139,7 @@ class SeriesDelEjercicioModel extends Serie {
     required super.peso,
     required super.repeticiones,
     required super.timpoDescanso,
-    required super.realizado,
+    required super.estado,
   });
 
   factory SeriesDelEjercicioModel.fromJson(Map<String, dynamic> json) =>
@@ -138,7 +148,7 @@ class SeriesDelEjercicioModel extends Serie {
         peso: json['peso'],
         repeticiones: json['repeticiones'],
         timpoDescanso: json['timpo_descanso'],
-        realizado: json['realizado'],
+        estado: json['realizado'],
       );
 
   @override
@@ -147,7 +157,7 @@ class SeriesDelEjercicioModel extends Serie {
     'peso': peso,
     'repeticiones': repeticiones,
     'timpo_descanso': timpoDescanso,
-    'realizado': realizado,
+    'realizado': estado,
   };
 
   factory SeriesDelEjercicioModel.fromDatabase(ExerciseSet serieDB) {
@@ -156,7 +166,7 @@ class SeriesDelEjercicioModel extends Serie {
       peso: serieDB.weight ?? 0,
       repeticiones: serieDB.repetitions ?? 0,
       timpoDescanso: serieDB.restTime ?? 0,
-      realizado: serieDB.status == 'completed',
+      estado: serieDB.status,
     );
   }
 }

@@ -1,5 +1,4 @@
 import 'package:gymaster/core/database/models/models.dart';
-import 'package:gymaster/core/database/models/routine.dart';
 
 class RecordRutina {
   final String id;

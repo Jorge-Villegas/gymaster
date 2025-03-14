@@ -126,7 +126,7 @@ Widget _button({required String title, VoidCallback? onPressed}) {
   return Expanded(
     child: ElevatedButton(
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(Colors.purple),
+        backgroundColor: WidgetStateProperty.all(Colors.purple),
       ),
       onPressed: onPressed,
       child: Text(title, style: const TextStyle(color: Colors.white)),

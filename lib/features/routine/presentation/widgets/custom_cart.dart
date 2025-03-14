@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:gymaster/shared/utils/enum.dart';
 import 'package:gymaster/shared/utils/text_formatter.dart';
 import 'package:gymaster/shared/utils/verificador_tipo_archivo.dart';
 
@@ -7,7 +8,7 @@ class CustomCard extends StatelessWidget {
   final String ejercicioId;
   final String nombreEjercicio;
   final String imagenDireccion;
-  final bool estadoSerie;
+  final String estadoEjercicio;
   final int numeroSeries;
   final Color colorFondo;
   final List<double> pesos;
@@ -23,7 +24,7 @@ class CustomCard extends StatelessWidget {
     required this.ejercicioId,
     required this.nombreEjercicio,
     required this.imagenDireccion,
-    required this.estadoSerie,
+    required this.estadoEjercicio,
     required this.numeroSeries,
     required this.onDismissed,
     required this.pesos,
@@ -36,6 +37,7 @@ class CustomCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('CustomCard: $estadoEjercicio');
     return GestureDetector(
       onTap: onTap,
       child: Dismissible(
@@ -78,7 +80,8 @@ class CustomCard extends StatelessWidget {
                     child: Stack(
                       children: [
                         _buildImageWidget(imagenDireccion),
-                        if (estadoSerie)
+                        if (estadoEjercicio ==
+                            RoutineSessionStatus.completed.name)
                           Positioned.fill(
                             child: Container(
                               color: Colors.green.withAlpha(
@@ -88,6 +91,22 @@ class CustomCard extends StatelessWidget {
                                 child: Icon(
                                   Icons.check_circle,
                                   color: Colors.green,
+                                  size: 50.0,
+                                ),
+                              ),
+                            ),
+                          ),
+                        if (estadoEjercicio ==
+                            RoutineSessionStatus.in_progress.name)
+                          Positioned.fill(
+                            child: Container(
+                              color: Colors.orange.withAlpha(
+                                (0.5 * 255).toInt(),
+                              ), // Reemplaza withOpacity con withAlpha
+                              child: const Center(
+                                child: Icon(
+                                  Icons.play_arrow,
+                                  color: Colors.white,
                                   size: 50.0,
                                 ),
                               ),

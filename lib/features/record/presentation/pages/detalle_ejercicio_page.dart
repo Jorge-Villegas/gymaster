@@ -99,10 +99,10 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                   headerColor: Theme.of(context).primaryColor,
                   selectionColor: Theme.of(
                     context,
-                  ).primaryColor.withOpacity(0.2),
+                  ).primaryColor.withValues(alpha: (0.2 * 255).roundToDouble()),
                   backgroundColor: Theme.of(
                     context,
-                  ).primaryColor.withOpacity(0.1),
+                  ).primaryColor.withValues(alpha: (0.1 * 255).roundToDouble()),
                   cellTextAlign: TextAlign.center,
                   headerTextSize: 16.0,
                   maxHeight: 400,

@@ -19,35 +19,29 @@ class EtiquetaRutina extends StatelessWidget {
     //Cuando se agregar la etiqueta
     if (action == 1) {
       return CircleAvatar(
-        backgroundColor: color.withOpacity(0.3),
+        backgroundColor: color.withValues(alpha: (0.3 * 255).roundToDouble()),
         radius: 25,
         child: Text(
           text,
-          style: TextStyle(
-            color: Colors.grey[600],
-            fontSize: 14,
-          ),
+          style: TextStyle(color: Colors.grey[600], fontSize: 14),
         ),
       );
     }
     //cuando solo se agregar solo el color de la etiqueta
     if (action == 2) {
       return CircleAvatar(
-        backgroundColor: color.withOpacity(0.8),
+        backgroundColor: color.withValues(alpha: (0.8 * 255).roundToDouble()),
         radius: 25,
       );
     }
     //Solo para mostrar
     //|una ves finalizado todo
     return CircleAvatar(
-      backgroundColor: color.withOpacity(0.80),
+      backgroundColor: color.withValues(alpha: (0.8 * 255).roundToDouble()),
       radius: 25,
       child: Text(
         text,
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 14,
-        ),
+        style: const TextStyle(color: Colors.white, fontSize: 14),
       ),
     );
   }

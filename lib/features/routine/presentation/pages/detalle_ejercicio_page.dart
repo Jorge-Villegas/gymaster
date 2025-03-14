@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/generated/assets.gen.dart';
+import 'package:gymaster/features/routine/domain/entities/ejercicios_de_rutina.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
+import 'package:gymaster/shared/utils/enum.dart';
 import 'package:gymaster/shared/utils/text_formatter.dart';
 import 'package:gymaster/shared/utils/verificador_tipo_archivo.dart';
 import 'package:gymaster/shared/widgets/custom_icon_button.dart';
@@ -34,10 +36,13 @@ class DetalleEjercicioScreen extends StatelessWidget {
             return const Center(child: Text('No hay ejercicios disponibles'));
           }
 
-          final ejercicio =
-              state.ejerciciosDeRutina.ejercicios[state.ejercicioIndex];
-          final serie = ejercicio.series[state.serieIndex];
-          final serieActualIndex = state.serieIndex + 1;
+          final ejercicio = state.ejerciciosDeRutina.ejercicios.firstWhere(
+            (e) => e.id == state.ejercicioIndex,
+          );
+          final serie = ejercicio.series.firstWhere(
+            (s) => s.id == state.serieIndex,
+          );
+          final serieActualIndex = ejercicio.series.indexOf(serie) + 1;
 
           return Scaffold(
             backgroundColor: Colors.white,
@@ -83,13 +88,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
             ),
             floatingActionButton: Align(
               alignment: Alignment.bottomCenter,
-              child: FloatingActionButton(
-                onPressed: () {
-                  context.read<EjerciciosByRutinaCubit>().avanzarSerie();
-                },
-                backgroundColor: Colors.green,
-                child: const Icon(Icons.check, color: Colors.white),
-              ),
+              child: _buildActionButtons(context, ejercicio),
             ),
           );
         }
@@ -114,7 +113,9 @@ class DetalleEjercicioScreen extends StatelessWidget {
 
     final ejercicios = state.ejerciciosDeRutina.ejercicios;
     final ejercicioIndex = state.ejercicioIndex;
-    final ejercicio = state.ejerciciosDeRutina.ejercicios[state.ejercicioIndex];
+    final ejercicio = ejercicios.firstWhere(
+      (e) => e.id == state.ejercicioIndex,
+    );
     final textTheme = Theme.of(context).textTheme;
 
     // Preparar los datos para la tabla genérica
@@ -208,7 +209,8 @@ class DetalleEjercicioScreen extends StatelessWidget {
                           ejercicio.series
                               .map(
                                 (serie) =>
-                                    serie.realizado
+                                    serie.estado ==
+                                            ExerciseSetStatus.completed.name
                                         ? Colors.black
                                         : Colors.grey,
                               )
@@ -225,14 +227,23 @@ class DetalleEjercicioScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(ejercicios.length, (index) {
                 final ejercicio = ejercicios[index];
-                final isRealizado = ejercicio.series.every(
-                  (serie) => serie.realizado,
+                final isCompletado = ejercicio.series.every(
+                  (serie) => serie.estado == ExerciseSetStatus.completed.name,
                 );
+                final isEnProceso =
+                    ejercicio.estado == ExerciseStatus.in_progress.name;
                 final isCurrent = index == ejercicioIndex;
-                final color =
-                    isRealizado
-                        ? Colors.green
-                        : (isCurrent ? Colors.indigo : Colors.white);
+
+                // Determinar el color según el estado del ejercicio
+                Color color;
+                if (isCompletado) {
+                  color = Colors.green; // Ejercicio completado
+                } else if (isEnProceso || isCurrent) {
+                  color = Colors.indigo; // Ejercicio en proceso o actual
+                } else {
+                  color = Colors.white; // Ejercicio pendiente
+                }
+
                 final radius = isCurrent ? 4.0 : 3.5;
 
                 return Padding(
@@ -413,5 +424,36 @@ class DetalleEjercicioScreen extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Widget _buildActionButtons(BuildContext context, Ejercicio ejercicio) {
+    // Verificar si todas las series del ejercicio actual están completadas
+    bool todasLasSeriesCompletadas = ejercicio.series.every(
+      (serie) => serie.estado == ExerciseSetStatus.completed.name,
+    );
+
+    if (todasLasSeriesCompletadas) {
+      // Si todas las series están completadas, mostrar botón para avanzar al siguiente ejercicio
+      return FloatingActionButton.extended(
+        onPressed: () {
+          context.read<EjerciciosByRutinaCubit>().avanzarAlSiguienteEjercicio();
+        },
+        backgroundColor: Colors.blue,
+        icon: const Icon(Icons.arrow_forward, color: Colors.white),
+        label: const Text(
+          'Siguiente ejercicio',
+          style: TextStyle(color: Colors.white),
+        ),
+      );
+    } else {
+      // Si no, mostrar el botón para completar la serie actual
+      return FloatingActionButton(
+        onPressed: () {
+          context.read<EjerciciosByRutinaCubit>().avanzarSerie();
+        },
+        backgroundColor: Colors.green,
+        child: const Icon(Icons.check, color: Colors.white),
+      );
+    }
   }
 }

@@ -77,15 +77,13 @@ class _BotonGordoBackground extends StatelessWidget {
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: (0.1 * 255).roundToDouble()),
             offset: const Offset(4, 6),
             blurRadius: 10,
           ),
         ],
         borderRadius: BorderRadius.circular(15),
-        gradient: LinearGradient(
-          colors: [color1, color2],
-        ),
+        gradient: LinearGradient(colors: [color1, color2]),
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(15),
@@ -99,7 +97,7 @@ class _BotonGordoBackground extends StatelessWidget {
                 width: 150,
                 height: 150,
                 colorFilter: ColorFilter.mode(
-                  color1.withOpacity(0.8),
+                  color1.withValues(alpha: (0.8 * 255).roundToDouble()),
                   BlendMode.srcATop,
                 ),
               ),

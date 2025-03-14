@@ -99,8 +99,12 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
       imagenDireccion: selectedSvg,
     );
 
+    if (!mounted) return;
+
     if (routineCubit.state is RoutineAddSuccess) {
       final rutinaId = (routineCubit.state as RoutineAddSuccess).rutina.id!;
+      //viajar a a esta ruta de gorouter '/rutina/detalle/$rutinaId'
+
       context.push('/rutina/detalle/$rutinaId');
     }
     if (routineCubit.state is RoutineError) {

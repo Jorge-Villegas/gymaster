@@ -11,9 +11,7 @@ class BottomNavigationBarExampleApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: BottomNavigationBarExample(),
-    );
+    return const MaterialApp(home: BottomNavigationBarExample());
   }
 }
 
@@ -33,7 +31,7 @@ class _BottomNavigationBarExampleState
     const ListaRutinasPage(),
     const BusinessPage(),
     HistorialEjerciciosPage(),
-    SettingPage(),
+    const SettingPage(),
   ];
 
   void _onItemTapped(int index) {
@@ -73,13 +71,15 @@ class _BottomNavigationBarExampleState
         onTap: _onItemTapped,
         selectedItemColor:
             Theme.of(context).primaryColor, // Usar el color primario del tema
-        unselectedItemColor: Theme.of(context)
-            .textTheme
-            .bodyMedium
-            ?.color
-            ?.withOpacity(0.6), // Color del texto con opacidad
-        backgroundColor: Theme.of(context)
-            .scaffoldBackgroundColor, // Fondo de acuerdo al tema
+        unselectedItemColor: Theme.of(
+          context,
+        ).textTheme.bodyMedium?.color?.withValues(
+          alpha: (0.6 * 255).roundToDouble(),
+        ), // Color del texto con opacidad
+        backgroundColor:
+            Theme.of(
+              context,
+            ).scaffoldBackgroundColor, // Fondo de acuerdo al tema
         selectedFontSize: 14,
         unselectedFontSize: 14,
         iconSize: 24,
@@ -97,12 +97,8 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home Page'),
-      ),
-      body: const Center(
-        child: Text('Home Page Content'),
-      ),
+      appBar: AppBar(title: const Text('Home Page')),
+      body: const Center(child: Text('Home Page Content')),
     );
   }
 }
@@ -113,12 +109,8 @@ class BusinessPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Business Page'),
-      ),
-      body: const Center(
-        child: Text('Business Page Content'),
-      ),
+      appBar: AppBar(title: const Text('Business Page')),
+      body: const Center(child: Text('Business Page Content')),
     );
   }
 }
@@ -129,12 +121,8 @@ class SchoolPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('School Page'),
-      ),
-      body: const Center(
-        child: Text('School Page Content'),
-      ),
+      appBar: AppBar(title: const Text('School Page')),
+      body: const Center(child: Text('School Page Content')),
     );
   }
 }
@@ -145,12 +133,8 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Settings Page'),
-      ),
-      body: const Center(
-        child: Text('Settings Page Content'),
-      ),
+      appBar: AppBar(title: const Text('Settings Page')),
+      body: const Center(child: Text('Settings Page Content')),
     );
   }
 }

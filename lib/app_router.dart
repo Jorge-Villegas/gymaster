@@ -103,7 +103,10 @@ final GoRouter router = GoRouter(
     //-----------------------------------------
     //                Pruebas
     //-----------------------------------------
-    GoRoute(path: '/settings', builder: (context, state) => SettingPage()),
+    GoRoute(
+      path: '/settings',
+      builder: (context, state) => const SettingPage(),
+    ),
     //-----------------------------------------
     //                Setting
     //-----------------------------------------

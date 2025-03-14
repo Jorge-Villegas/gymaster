@@ -207,19 +207,15 @@ class RoutineRepositoryImpl implements RoutineRepository {
     required String idRoutineSession,
   }) async {
     try {
-      //Obtener rutina
+      // Obtener rutina
       final rutina = await localDataSource.getRutinaById(rutinaId);
-      //erificar si me devolvio algo
-      if (rutina == null) {
-        return Left(ServerFailure(errorMessage: 'La rutina no existe'));
-      }
 
       RoutineSession? session = await localDataSource.getRoutineSessionById(
         idRoutineSession,
       );
 
-      //si no hay session, devolvemos un error
-      //creamos una session ya que seria la primera vez que entra a la rutina
+      // Si no hay sesión, devolvemos un error
+      // Creamos una sesión ya que sería la primera vez que entra a la rutina
       if (session == null) {
         final newSession = RoutineSession(
           id: idGenerator.generateId(),
@@ -230,14 +226,13 @@ class RoutineRepositoryImpl implements RoutineRepository {
         final result = await localDataSource.createRoutineSession(newSession);
         if (!result) {
           return Left(
-            ServerFailure(errorMessage: 'No se pudo crear la session'),
+            ServerFailure(errorMessage: 'No se pudo crear la sesión'),
           );
         }
         session = newSession;
       }
 
-      //obtenemos los ejercicios de la rutina de esa session (session_exercise y exercise)
-
+      // Obtenemos los ejercicios de la rutina de esa sesión (session_exercise y exercise)
       List<ejercicio_de_rutina.EjercicioModel> ejerciciosConDetalles = [];
 
       final sessionExercises = await localDataSource
@@ -271,6 +266,8 @@ class RoutineRepositoryImpl implements RoutineRepository {
         }
 
         final ejercicios = ejercicio_de_rutina.EjercicioModel.fromDatabase(
+          orderIndex: sessionExercise.orderIndex,
+          status: sessionExercise.status,
           ejercicioDB: exercise,
           series: series,
           musculos: musculos,
@@ -284,6 +281,10 @@ class RoutineRepositoryImpl implements RoutineRepository {
         rutinaDB: rutina,
         ejercicios: ejerciciosConDetalles,
         status: session.status,
+      );
+
+      print(
+        'Ejercicios de rutina: ${ejercicio_de_rutina.ejerciciosDeRutinaModelToJson(ejerciciosDeRutinaConDetalles)}',
       );
 
       return Right(ejerciciosDeRutinaConDetalles);
@@ -799,6 +800,24 @@ class RoutineRepositoryImpl implements RoutineRepository {
         endTime: DateTime.now(),
       );
       return Right(updateResult);
+    } catch (e) {
+      return Left(ServerFailure(errorMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> updateExerciseStatusById({
+    required String exerciseId,
+    required String routineSessionId,
+    required String statusExercise,
+  }) async {
+    try {
+      await localDataSource.updateExerciseStatusById(
+        exerciseId: exerciseId,
+        routineSessionId: routineSessionId,
+        status: statusExercise,
+      );
+      return const Right(null);
     } catch (e) {
       return Left(ServerFailure(errorMessage: e.toString()));
     }
