@@ -11,6 +11,9 @@ import 'package:gymaster/features/setting/presentation/pages/setting_page.dart';
 import 'package:gymaster/shared/widgets/barra_navegacion.dart';
 import 'package:gymaster/shared/widgets/loading_dialog_page.dart';
 import 'package:gymaster/theme_preview_page.dart';
+import 'package:gymaster/features/exercise/domain/entities/exercise.dart';
+import 'package:gymaster/features/exercise/presentation/pages/exercise_catalog_page.dart';
+import 'package:gymaster/features/exercise/presentation/pages/exercise_detail_page.dart';
 
 /// Configuración de GoRouter
 final GoRouter router = GoRouter(
@@ -126,6 +129,22 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/record',
       builder: (context, state) => HistorialEjerciciosPage(),
+    ),
+    //-----------------------------------------
+    //                Exercise
+    //-----------------------------------------
+    GoRoute(
+      path: '/exercise-catalog',
+      name: 'exerciseCatalog',
+      builder: (context, state) => const ExerciseCatalogPage(),
+    ),
+    GoRoute(
+      path: '/exercise-detail',
+      name: 'exerciseDetail',
+      builder: (context, state) {
+        final exercise = state.extra as Exercise;
+        return ExerciseDetailPage(exercise: exercise);
+      },
     ),
   ],
 );

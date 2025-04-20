@@ -14,8 +14,11 @@ class RecordRepositoryImpl implements RecordRepository {
   @override
   Future<Either<Failure, RecordRutina>> getRutinaById(String id) async {
     try {
-      final result = await localDataSource.getRutinaById(id);
-      return Right(result);
+      final rutina = await localDataSource.getRutinaById(id);
+
+      return Right(
+        RecordRutina.fromDatabase(rutinaDB: rutina, cantidadEjercicios: 0),
+      );
     } on ServerException {
       return Left(
         ServerFailure(
@@ -68,16 +71,28 @@ class RecordRepositoryImpl implements RecordRepository {
   Future<Either<Failure, List<RecordRutina>>>
   getAllCompletedRoutinesWithExercises() async {
     try {
-      final rutinas = await localDataSource.getCompletedRoutines();
-      final List<RecordRutina> result = [];
+      final rutinaSessions = await localDataSource.getCompletedRoutines();
+      List<RecordRutina> result = [];
 
-      for (var rutina in rutinas) {
-        final ejercicios = await _getExercisesByRoutineId(rutina.id);
-        final recordRutina = RecordRutina.fromDatabase(
-          rutinaDB: rutina,
-        ).copyWith(ejercicios: ejercicios);
+      for (var rutinaSession in rutinaSessions) {
+        final ejercicios = await _getExercisesByRoutineId(
+          rutinaSession.routineId,
+        );
 
-        result.add(recordRutina);
+        final rutina = await localDataSource.getRutinaById(
+          rutinaSession.routineId,
+        );
+
+        result.add(
+          RecordRutina(
+            id: rutina.id,
+            nombre: rutina.name,
+            fechaRealizada: DateTime.parse(rutinaSession.endTime!),
+            tiempoRealizado: rutinaSession.duration.toString(),
+            color: rutina.color!,
+            ejercicios: ejercicios,
+          ),
+        );
       }
 
       return Right(result);

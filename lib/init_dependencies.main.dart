@@ -8,6 +8,7 @@ Future<void> initDependencies() async {
   _initIdGenerator();
   _initSettings();
   _initRecord();
+  _initExercise();
 }
 
 void _initDatabaseHelper() {
@@ -133,6 +134,7 @@ void _initRecord() {
         deleteRutinaUseCase: serviceLocator(),
       ),
     )
+    ..registerFactory(() => SelectedRoutineCubit()) // Nuevo Cubit
     // Use cases
     ..registerLazySingleton(
       () => GetRutinaByIdUseCase(repository: serviceLocator()),
@@ -146,5 +148,27 @@ void _initRecord() {
     // Repository
     ..registerLazySingleton<RecordRepository>(
       () => RecordRepositoryImpl(localDataSource: serviceLocator()),
+    );
+}
+
+void _initExercise() {
+  serviceLocator
+    // Data sources
+    ..registerFactory<ExerciseLocalDataSource>(
+      () => ExerciseLocalDataSource(serviceLocator()),
+    )
+    // Repository
+    ..registerLazySingleton<ExerciseRepository>(
+      () => ExerciseRepositoryImpl(localDataSource: serviceLocator()),
+    )
+    // Use cases
+    ..registerFactory(() => GetAllExercisesUseCase(serviceLocator()))
+    ..registerFactory(() => GetExercisesByMuscleUseCase(serviceLocator()))
+    // Cubit
+    ..registerFactory(
+      () => ExerciseCubit(
+        getAllExercisesUseCase: serviceLocator(),
+        getExercisesByMuscleUseCase: serviceLocator(),
+      ),
     );
 }

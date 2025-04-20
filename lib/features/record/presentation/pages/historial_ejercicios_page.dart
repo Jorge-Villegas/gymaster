@@ -50,9 +50,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
     return Card(
       margin: const EdgeInsets.all(16),
       elevation: 4,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -151,7 +149,8 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                     final state = context.read<RecordCubit>().state;
                     if (state is RecordLoaded) {
                       bool hasRutina = state.rutinas.any(
-                          (rutina) => isSameDay(rutina.fechaRealizada, date));
+                        (rutina) => isSameDay(rutina.fechaRealizada, date),
+                      );
                       if (hasRutina) {
                         return Container(
                           margin: const EdgeInsets.all(6.0),
@@ -183,9 +182,12 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
         if (state is RecordLoading) {
           return const Center(child: CircularProgressIndicator());
         } else if (state is RecordLoaded) {
-          final rutinasDelDia = state.rutinas
-              .where((rutina) => isSameDay(rutina.fechaRealizada, selectedDate))
-              .toList();
+          final rutinasDelDia =
+              state.rutinas
+                  .where(
+                    (rutina) => isSameDay(rutina.fechaRealizada, selectedDate),
+                  )
+                  .toList();
 
           if (rutinasDelDia.isEmpty) {
             return const Center(
@@ -232,7 +234,9 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                       subtitle: Text(
                         'Tiempo: ${rutina.tiempoRealizado}',
                         style: const TextStyle(
-                            fontSize: 16, color: Colors.black54),
+                          fontSize: 16,
+                          color: Colors.black54,
+                        ),
                       ),
                       trailing: IconButton(
                         icon: const Icon(IconsaxPlusLinear.edit),
@@ -250,46 +254,54 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                             shape: BoxShape.circle,
                           ),
                           child: Padding(
-                            padding:
-                                const EdgeInsets.all(0), // Optional padding
-                            child: ejercicio.iconoPath.endsWith('.svg')
-                                ? SvgPicture.asset(
-                                    ejercicio.iconoPath,
-                                    width: 32,
-                                    height: 32,
-                                    colorFilter: const ColorFilter.mode(
-                                      Colors.purple,
-                                      BlendMode.srcIn,
+                            padding: const EdgeInsets.all(
+                              0,
+                            ), // Optional padding
+                            child:
+                                ejercicio.iconoPath.endsWith('.svg')
+                                    ? SvgPicture.asset(
+                                      ejercicio.iconoPath,
+                                      width: 32,
+                                      height: 32,
+                                      colorFilter: const ColorFilter.mode(
+                                        Colors.purple,
+                                        BlendMode.srcIn,
+                                      ),
+                                    )
+                                    : Image.asset(
+                                      ejercicio.iconoPath,
+                                      width: 32,
+                                      height: 32,
+                                      fit: BoxFit.cover,
                                     ),
-                                  )
-                                : Image.asset(
-                                    ejercicio.iconoPath,
-                                    width: 32,
-                                    height: 32,
-                                    fit: BoxFit.cover,
-                                  ),
                           ),
                         ),
                         title: Text(
                           ejercicio.nombre,
                           style: const TextStyle(
-                              fontSize: 16, color: Colors.black87),
+                            fontSize: 16,
+                            color: Colors.black87,
+                          ),
                         ),
                         subtitle: Text(
-                          ejercicio.seriesDelEjercicio.map((serie) {
-                            return '${serie.peso.toInt()}x${serie.repeticiones}';
-                          }).join(', '),
+                          ejercicio.seriesDelEjercicio
+                              .map((serie) {
+                                return '${serie.peso.toInt()}x${serie.repeticiones}';
+                              })
+                              .join(', '),
                           style: const TextStyle(
-                              fontSize: 14, color: Colors.black54),
+                            fontSize: 14,
+                            color: Colors.black54,
+                          ),
                         ),
                         onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => DetalleEjercicioPage(
-                                recordEjercicios:
-                                    ejercicio, // Pass the required parameter here
-                              ),
+                              builder:
+                                  (context) => DetalleEjercicioPage(
+                                    recordEjercicios: ejercicio,
+                                  ),
                             ),
                           );
                         },
@@ -322,8 +334,9 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
   bool _hasRutina(DateTime date) {
     final state = context.read<RecordCubit>().state;
     if (state is RecordLoaded) {
-      return state.rutinas
-          .any((rutina) => isSameDay(rutina.fechaRealizada, date));
+      return state.rutinas.any(
+        (rutina) => isSameDay(rutina.fechaRealizada, date),
+      );
     }
     return false;
   }

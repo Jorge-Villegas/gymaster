@@ -3,7 +3,7 @@ import 'package:gymaster/core/theme/app_colors.dart';
 
 class AppTheme {
   static TextTheme _applyFontFamily(TextTheme textTheme) {
-    return textTheme.apply(fontFamily: 'ZonaPro');
+    return textTheme.apply(fontFamily: 'Montserrat');
   }
 
   static final ThemeData darkTheme = ThemeData.dark().copyWith(

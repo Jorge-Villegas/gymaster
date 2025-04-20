@@ -1,5 +1,11 @@
 import 'package:get_it/get_it.dart';
 import 'package:gymaster/core/database/database_helper.dart';
+import 'package:gymaster/features/exercise/data/datasources/exercise_local_data_source.dart';
+import 'package:gymaster/features/exercise/data/repositories/exercise_repository_impl.dart';
+import 'package:gymaster/features/exercise/domain/repositories/exercise_repository.dart';
+import 'package:gymaster/features/exercise/domain/usecases/get_all_exercises_usecase.dart';
+import 'package:gymaster/features/exercise/domain/usecases/get_exercises_by_muscle_usecase.dart';
+import 'package:gymaster/features/exercise/presentation/cubits/exercise/exercise_cubit.dart';
 import 'package:gymaster/features/record/data/implements/implements.dart';
 import 'package:gymaster/features/record/data/sources/record_local_data_source.dart';
 import 'package:gymaster/features/record/domain/repositories/repositories.dart';
@@ -8,6 +14,7 @@ import 'package:gymaster/features/record/domain/usecases/get_all_completed_routi
 import 'package:gymaster/features/record/domain/usecases/get_rutina_by_id_usecase.dart';
 import 'package:gymaster/features/record/domain/usecases/save_rutina_usecase.dart';
 import 'package:gymaster/features/record/presentation/cubit/record_cubit.dart';
+import 'package:gymaster/features/record/presentation/cubit/selected_routine/selected_routine_cubit.dart';
 import 'package:gymaster/features/routine/data/datasources/routine_local_data_source.dart';
 import 'package:gymaster/features/routine/data/repositories/routine_repository_impl.dart';
 import 'package:gymaster/features/routine/domain/repositories/rutine_repository.dart';

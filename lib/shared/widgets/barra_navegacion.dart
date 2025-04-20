@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gymaster/features/exercise/presentation/pages/exercise_catalog_page.dart';
 import 'package:gymaster/features/record/presentation/pages/historial_ejercicios_page.dart';
 import 'package:gymaster/features/routine/presentation/pages/lista_rutina_page.dart';
 import 'package:gymaster/features/setting/presentation/pages/setting_page.dart';
@@ -29,7 +30,7 @@ class _BottomNavigationBarExampleState
 
   final List<Widget> _pages = <Widget>[
     const ListaRutinasPage(),
-    const BusinessPage(),
+    const ExerciseCatalogPage(), // Nueva página de catálogo
     HistorialEjerciciosPage(),
     const SettingPage(),
   ];
@@ -47,24 +48,24 @@ class _BottomNavigationBarExampleState
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(IconsaxPlusLinear.home_1),
-            label: 'Home',
-            activeIcon: Icon(IconsaxPlusBold.home_1),
+            icon: Icon(IconsaxPlusLinear.weight),
+            activeIcon: Icon(IconsaxPlusBold.weight),
+            label: 'Rutinas',
           ),
           BottomNavigationBarItem(
-            icon: Icon(IconsaxPlusLinear.user),
-            label: 'User',
-            activeIcon: Icon(IconsaxPlusBold.user),
+            icon: Icon(IconsaxPlusLinear.activity),
+            activeIcon: Icon(IconsaxPlusBold.activity),
+            label: 'Ejercicios',
           ),
           BottomNavigationBarItem(
-            icon: Icon(IconsaxPlusLinear.book),
+            icon: Icon(IconsaxPlusLinear.chart),
+            activeIcon: Icon(IconsaxPlusBold.chart),
             label: 'Historial',
-            activeIcon: Icon(IconsaxPlusBold.book),
           ),
           BottomNavigationBarItem(
             icon: Icon(IconsaxPlusLinear.setting_2),
-            label: 'Settings',
             activeIcon: Icon(IconsaxPlusBold.setting_2),
+            label: 'Ajustes',
           ),
         ],
         currentIndex: _selectedIndex,

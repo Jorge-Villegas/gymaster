@@ -10,7 +10,7 @@ import 'package:gymaster/features/record/presentation/cubit/record_state.dart';
 
 class RecordCubit extends Cubit<RecordState> {
   final GetAllCompletedRoutinesWithExercises
-      getAllCompletedRoutinesWithExercises;
+  getAllCompletedRoutinesWithExercises;
   final GetRutinaByIdUseCase getRutinaByIdUseCase;
   final SaveRutinaUseCase saveRutinaUseCase;
   final DeleteRutinaUseCase deleteRutinaUseCase;
@@ -23,11 +23,23 @@ class RecordCubit extends Cubit<RecordState> {
   }) : super(RecordInitial());
 
   Future<void> getAllRutinas() async {
-    emit(RecordLoading());
+    emit(RecordLoading()); // Emitimos el estado de carga
     final result = await getAllCompletedRoutinesWithExercises(NoParams());
     result.fold(
-      (failure) => emit(RecordError(_mapFailureToMessage(failure))),
-      (rutinas) => emit(RecordLoaded(rutinas: rutinas)),
+      (failure) {
+        emit(
+          RecordError(_mapFailureToMessage(failure)),
+        ); // Emitimos error si falla
+      },
+      (rutinas) {
+        if (rutinas.isEmpty) {
+          emit(
+            RecordLoaded(rutinas: []),
+          ); // Emitimos estado vacío si no hay rutinas
+        } else {
+          emit(RecordLoaded(rutinas: rutinas)); // Emitimos las rutinas cargadas
+        }
+      },
     );
   }
 
@@ -71,8 +83,8 @@ class RecordCubit extends Cubit<RecordState> {
       final rutina = (state as RutinaLoaded).rutina;
       final ejercicios = List<RecordEjercicios>.from(rutina.ejercicios);
       final series = ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex];
-      ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex] =
-          series.copyWith(repeticiones: series.repeticiones + 1);
+      ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex] = series
+          .copyWith(repeticiones: series.repeticiones + 1);
       emit(RutinaLoaded(rutina: rutina.copyWith(ejercicios: ejercicios)));
     }
   }
@@ -83,8 +95,8 @@ class RecordCubit extends Cubit<RecordState> {
       final ejercicios = List<RecordEjercicios>.from(rutina.ejercicios);
       final series = ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex];
       if (series.repeticiones > 0) {
-        ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex] =
-            series.copyWith(repeticiones: series.repeticiones - 1);
+        ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex] = series
+            .copyWith(repeticiones: series.repeticiones - 1);
         emit(RutinaLoaded(rutina: rutina.copyWith(ejercicios: ejercicios)));
       }
     }
@@ -95,8 +107,8 @@ class RecordCubit extends Cubit<RecordState> {
       final rutina = (state as RutinaLoaded).rutina;
       final ejercicios = List<RecordEjercicios>.from(rutina.ejercicios);
       final series = ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex];
-      ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex] =
-          series.copyWith(peso: series.peso + 1);
+      ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex] = series
+          .copyWith(peso: series.peso + 1);
       emit(RutinaLoaded(rutina: rutina.copyWith(ejercicios: ejercicios)));
     }
   }
@@ -107,8 +119,8 @@ class RecordCubit extends Cubit<RecordState> {
       final ejercicios = List<RecordEjercicios>.from(rutina.ejercicios);
       final series = ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex];
       if (series.peso > 0) {
-        ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex] =
-            series.copyWith(peso: series.peso - 1);
+        ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex] = series
+            .copyWith(peso: series.peso - 1);
         emit(RutinaLoaded(rutina: rutina.copyWith(ejercicios: ejercicios)));
       }
     }
@@ -119,8 +131,8 @@ class RecordCubit extends Cubit<RecordState> {
       final rutina = (state as RutinaLoaded).rutina;
       final ejercicios = List<RecordEjercicios>.from(rutina.ejercicios);
       final series = ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex];
-      ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex] =
-          series.copyWith(repeticiones: series.repeticiones + 1);
+      ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex] = series
+          .copyWith(repeticiones: series.repeticiones + 1);
       emit(RutinaLoaded(rutina: rutina.copyWith(ejercicios: ejercicios)));
     }
   }
@@ -131,8 +143,8 @@ class RecordCubit extends Cubit<RecordState> {
       final ejercicios = List<RecordEjercicios>.from(rutina.ejercicios);
       final series = ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex];
       if (series.repeticiones > 0) {
-        ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex] =
-            series.copyWith(repeticiones: series.repeticiones - 1);
+        ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex] = series
+            .copyWith(repeticiones: series.repeticiones - 1);
         emit(RutinaLoaded(rutina: rutina.copyWith(ejercicios: ejercicios)));
       }
     }

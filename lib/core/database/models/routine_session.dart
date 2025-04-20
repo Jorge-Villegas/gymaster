@@ -22,6 +22,13 @@ class RoutineSession {
     required this.createdAt,
   });
 
+  // como saco el tiempo que tomo realizar esta routina_session
+  double get duration {
+    final start = DateTime.parse(startTime!);
+    final end = DateTime.parse(endTime!);
+    return end.difference(start).inMinutes.toDouble();
+  }
+
   RoutineSession copyWith({
     String? id,
     String? routineId,

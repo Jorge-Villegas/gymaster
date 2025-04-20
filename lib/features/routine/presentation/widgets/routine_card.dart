@@ -89,7 +89,7 @@ class _BotonGordoBackground extends StatelessWidget {
               width: 150,
               height: 150,
               colorFilter: ColorFilter.mode(
-                color1.withAlpha((0.3 * 255).toInt()),
+                color1.withAlpha((0.75 * 255).toInt()),
                 BlendMode.srcATop,
               ),
             ),

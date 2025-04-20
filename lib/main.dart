@@ -1,11 +1,12 @@
-// ignore_for_file: depend_on_referenced_packages
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+// ignore: depend_on_referenced_packages
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:gymaster/app_router.dart';
 import 'package:gymaster/core/database/database_helper.dart';
 import 'package:gymaster/core/theme/app_theme.dart';
 import 'package:gymaster/features/record/presentation/cubit/record_cubit.dart';
+import 'package:gymaster/features/record/presentation/cubit/selected_routine/selected_routine_cubit.dart';
 import 'package:gymaster/features/routine/presentation/cubits/agregar_series/agregar_series_cubit.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicio/ejercicio_cubit.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
@@ -17,6 +18,7 @@ import 'package:gymaster/features/routine/presentation/cubits/serie/serie_cubit.
 import 'package:gymaster/features/setting/presentation/cubit/setting_cubit.dart';
 import 'package:gymaster/features/setting/presentation/cubit/setting_state.dart';
 import 'package:gymaster/init_dependencies.dart';
+import 'package:gymaster/features/exercise/presentation/cubits/exercise/exercise_cubit.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -53,6 +55,8 @@ class Proveedores extends StatelessWidget {
         ),
         BlocProvider(create: (_) => serviceLocator<SettingCubit>()),
         BlocProvider(create: (_) => serviceLocator<RecordCubit>()),
+        BlocProvider(create: (_) => serviceLocator<SelectedRoutineCubit>()),
+        BlocProvider(create: (_) => serviceLocator<ExerciseCubit>()),
       ],
       child: const MyApp(),
     );

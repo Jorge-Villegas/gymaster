@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymaster/features/record/domain/entities/record_rutina.dart';
 import 'package:gymaster/features/record/presentation/cubit/record_cubit.dart';
-import 'package:gymaster/features/record/presentation/cubit/record_state.dart';
+import 'package:gymaster/features/record/presentation/cubit/selected_routine/selected_routine_cubit.dart';
+import 'package:gymaster/features/record/presentation/cubit/selected_routine/selected_routine_state.dart';
 import 'package:gymaster/features/routine/presentation/widgets/lista_series_widget.dart';
-import 'package:gymaster/shared/utils/snackbar_helper.dart';
 import 'package:gymaster/shared/widgets/reusable_table.dart';
 
 class DetalleEjercicioPage extends StatefulWidget {
@@ -22,241 +22,198 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
   @override
   void initState() {
     super.initState();
-    // Selecciona la primera fila por defecto
     if (widget.recordEjercicios.seriesDelEjercicio.isNotEmpty) {
       selectedRowIndex = 0;
     }
-    context.read<RecordCubit>().loadRecordRutina(
-      RecordRutina(
-        id: '',
-        nombre: '',
-        fechaRealizada: DateTime.now(),
-        tiempoRealizado: '',
-        color: 0,
-        ejercicios: [widget.recordEjercicios],
-      ),
-    );
-  }
-
-  void handleRowSelected(int index) {
-    setState(() {
-      selectedRowIndex = index;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          widget.recordEjercicios.nombre,
-          textAlign: TextAlign.center,
+    return WillPopScope(
+      onWillPop: () async {
+        // Forzar recarga de datos cuando se regresa a la página anterior
+        context.read<RecordCubit>().getAllRutinas();
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(widget.recordEjercicios.nombre),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.refresh),
+              onPressed: () {
+                // Forzar reconstrucción del widget
+                setState(() {});
+              },
+            ),
+          ],
+        ),
+        body: BlocBuilder<SelectedRoutineCubit, SelectedRoutineState>(
+          builder: (context, state) {
+            if (state is SelectedRoutineLoaded) {
+              // Encontrar el ejercicio específico en la rutina seleccionada
+              final ejercicio = state.rutina.ejercicios.firstWhere(
+                (e) => e.id == widget.recordEjercicios.id,
+                orElse: () => widget.recordEjercicios,
+              );
+
+              final tableData =
+                  ejercicio.seriesDelEjercicio.map((serie) {
+                    return [
+                      (ejercicio.seriesDelEjercicio.indexOf(serie) + 1)
+                          .toString(),
+                      '${serie.peso} kg',
+                      '${serie.repeticiones} x',
+                    ];
+                  }).toList();
+
+              return _buildContent(context, state, ejercicio, tableData);
+            }
+            return const Center(child: CircularProgressIndicator());
+          },
         ),
       ),
-      body: BlocConsumer<RecordCubit, RecordState>(
-        listener: (context, state) {
-          if (state is RecordError) {
-            SnackbarHelper().showCustomSnackBar(
-              context,
-              state.message,
-              SnackBarType.error,
-            );
-          }
-        },
-        builder: (context, state) {
-          if (state is RecordLoading) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          if (state is RutinaLoaded) {
-            final recordEjercicios = state.rutina.ejercicios.first;
-            final tableData =
-                recordEjercicios.seriesDelEjercicio.map((serie) {
-                  return [
-                    (recordEjercicios.seriesDelEjercicio.indexOf(serie) + 1)
-                        .toString(),
-                    '${serie.peso} kg',
-                    '${serie.repeticiones} x',
-                  ];
-                }).toList();
+    );
+  }
 
-            return Column(
-              children: [
-                CustomDataTable(
-                  headers: const ['Serie', 'Peso', 'Reps', 'Acciones'],
-                  data: tableData,
-                  onRemoveRow: (index) {
-                    setState(() {
-                      recordEjercicios.seriesDelEjercicio.removeAt(index);
-                      context.read<RecordCubit>().loadRecordRutina(
-                        state.rutina,
-                      );
-                    });
-                  },
-                  enableRowSelection: true,
-                  onRowSelected: handleRowSelected,
-                  selectedRowIndex: selectedRowIndex,
-                  bodyTextColor: Colors.black,
-                  headerColor: Theme.of(context).primaryColor,
-                  selectionColor: Theme.of(
-                    context,
-                  ).primaryColor.withValues(alpha: (0.2 * 255).roundToDouble()),
-                  backgroundColor: Theme.of(
-                    context,
-                  ).primaryColor.withValues(alpha: (0.1 * 255).roundToDouble()),
-                  cellTextAlign: TextAlign.center,
-                  headerTextSize: 16.0,
-                  maxHeight: 400,
-                  minHeight: 200,
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  widget.recordEjercicios.nombre,
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-                const SizedBox(height: 20),
-                if (selectedRowIndex != null)
-                  if (selectedRowIndex != null &&
-                      selectedRowIndex! < tableData.length)
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Serie:',
-                                style: Theme.of(context).textTheme.bodyMedium,
-                              ),
-                              Expanded(
-                                child: Center(
-                                  child: Text(
-                                    tableData[selectedRowIndex!][0],
-                                    style:
-                                        Theme.of(context).textTheme.bodyMedium,
-                                  ),
-                                ),
-                              ),
-                              Row(
-                                children: [
-                                  SeriesControlButton(
-                                    icon: Icons.add,
-                                    onPressed: () {
-                                      context
-                                          .read<RecordCubit>()
-                                          .incrementSeries(
-                                            0,
-                                            selectedRowIndex!,
-                                          );
-                                    },
-                                  ),
-                                  SeriesControlButton(
-                                    icon: Icons.remove,
-                                    onPressed: () {
-                                      context
-                                          .read<RecordCubit>()
-                                          .decrementSeries(
-                                            0,
-                                            selectedRowIndex!,
-                                          );
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 8),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Peso:',
-                                style: Theme.of(context).textTheme.bodyMedium,
-                              ),
-                              Expanded(
-                                child: Center(
-                                  child: Text(
-                                    tableData[selectedRowIndex!][1],
-                                    style:
-                                        Theme.of(context).textTheme.bodyMedium,
-                                  ),
-                                ),
-                              ),
-                              Row(
-                                children: [
-                                  SeriesControlButton(
-                                    icon: Icons.add,
-                                    onPressed: () {
-                                      context.read<RecordCubit>().incrementPeso(
-                                        0,
-                                        selectedRowIndex!,
-                                      );
-                                    },
-                                  ),
-                                  SeriesControlButton(
-                                    icon: Icons.remove,
-                                    onPressed: () {
-                                      context.read<RecordCubit>().decrementPeso(
-                                        0,
-                                        selectedRowIndex!,
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 8),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Reps:',
-                                style: Theme.of(context).textTheme.bodyMedium,
-                              ),
-                              Expanded(
-                                child: Center(
-                                  child: Text(
-                                    tableData[selectedRowIndex!][2],
-                                    style:
-                                        Theme.of(context).textTheme.bodyMedium,
-                                  ),
-                                ),
-                              ),
-                              Row(
-                                children: [
-                                  SeriesControlButton(
-                                    icon: Icons.add,
-                                    onPressed: () {
-                                      context.read<RecordCubit>().incrementReps(
-                                        0,
-                                        selectedRowIndex!,
-                                      );
-                                    },
-                                  ),
-                                  SeriesControlButton(
-                                    icon: Icons.remove,
-                                    onPressed: () {
-                                      context.read<RecordCubit>().decrementReps(
-                                        0,
-                                        selectedRowIndex!,
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-              ],
-            );
-          }
-          return const SizedBox.shrink();
-        },
+  Widget _buildContent(
+    BuildContext context,
+    SelectedRoutineLoaded state,
+    RecordEjercicios ejercicio,
+    List<List<String>> tableData,
+  ) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Text(
+            'Detalles de ${ejercicio.nombre}',
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+        ),
+        CustomDataTable(
+          headers: const ['Serie', 'Peso', 'Reps', 'Acciones'],
+          data: tableData,
+          onRemoveRow: (index) {
+            setState(() {
+              ejercicio.seriesDelEjercicio.removeAt(index);
+              // Actualizar el estado seleccionado
+              context.read<SelectedRoutineCubit>().saveChanges(state.rutina);
+              if (selectedRowIndex != null && index <= selectedRowIndex!) {
+                selectedRowIndex = selectedRowIndex! - 1;
+              }
+            });
+          },
+          enableRowSelection: true,
+          onRowSelected: (index) {
+            setState(() {
+              selectedRowIndex = index;
+            });
+          },
+          selectedRowIndex: selectedRowIndex,
+          headerColor: Theme.of(context).primaryColor,
+          bodyTextColor: Colors.black87,
+          backgroundColor: Colors.grey.shade100,
+        ),
+        const SizedBox(height: 24),
+        if (selectedRowIndex != null && selectedRowIndex! < tableData.length)
+          _buildControls(context, ejercicio, tableData),
+      ],
+    );
+  }
+
+  Widget _buildControls(
+    BuildContext context,
+    RecordEjercicios ejercicio,
+    List<List<String>> tableData,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Card(
+        elevation: 4,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Ajustar Serie ${selectedRowIndex! + 1}',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const SizedBox(height: 16),
+              _buildControlRow(
+                context: context,
+                label: 'Peso:',
+                value: tableData[selectedRowIndex!][1],
+                onIncrement: () {
+                  context.read<SelectedRoutineCubit>().incrementPeso(
+                    ejercicio.id == widget.recordEjercicios.id ? 0 : 1,
+                    selectedRowIndex!,
+                  );
+                },
+                onDecrement: () {
+                  context.read<SelectedRoutineCubit>().decrementPeso(
+                    ejercicio.id == widget.recordEjercicios.id ? 0 : 1,
+                    selectedRowIndex!,
+                  );
+                },
+              ),
+              const SizedBox(height: 12),
+              _buildControlRow(
+                context: context,
+                label: 'Repeticiones:',
+                value: tableData[selectedRowIndex!][2],
+                onIncrement: () {
+                  context.read<SelectedRoutineCubit>().incrementReps(
+                    ejercicio.id == widget.recordEjercicios.id ? 0 : 1,
+                    selectedRowIndex!,
+                  );
+                },
+                onDecrement: () {
+                  context.read<SelectedRoutineCubit>().decrementReps(
+                    ejercicio.id == widget.recordEjercicios.id ? 0 : 1,
+                    selectedRowIndex!,
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
       ),
+    );
+  }
+
+  Widget _buildControlRow({
+    required BuildContext context,
+    required String label,
+    required String value,
+    required VoidCallback onIncrement,
+    required VoidCallback onDecrement,
+  }) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+        ),
+        Expanded(
+          child: Center(
+            child: Text(
+              value,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+          ),
+        ),
+        Row(
+          children: [
+            SeriesControlButton(icon: Icons.add, onPressed: onIncrement),
+            const SizedBox(width: 8),
+            SeriesControlButton(icon: Icons.remove, onPressed: onDecrement),
+          ],
+        ),
+      ],
     );
   }
 }
