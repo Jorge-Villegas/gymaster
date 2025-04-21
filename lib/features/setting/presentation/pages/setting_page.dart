@@ -10,7 +10,6 @@ class SettingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isSelected = false;
     return BlocProvider(
       create: (_) => BlocProvider.of<SettingCubit>(context)..loadSettings(),
       child: Scaffold(

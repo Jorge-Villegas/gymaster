@@ -26,25 +26,28 @@ class ListarEjerciciosPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<EjercicioCubit>().setEjercicio(
-      musculoId: musculoId,
-      rutinaId: rutinaId,
-    );
+          musculoId: musculoId,
+          rutinaId: rutinaId,
+        );
     return Scaffold(
       appBar: AppBar(title: Text(TextFormatter.capitalize(nombreMusculo))),
-      body: BlocBuilder<EjercicioCubit, EjercicioState>(
-        builder: (context, state) {
-          if (state is EjercicioGetAllSuccess) {
-            return buildEjercicioList(state);
-          }
-          if (state is EjercicioLoading) {
-            return buildShimmerLoadingEffect();
-          }
-          if (state is EjercicioError) {
-            return Center(child: Text(state.message));
-          } else {
-            return const Center(child: Text('Ocurrio un error inesperado'));
-          }
-        },
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: BlocBuilder<EjercicioCubit, EjercicioState>(
+          builder: (context, state) {
+            if (state is EjercicioGetAllSuccess) {
+              return buildEjercicioList(context, state);
+            }
+            if (state is EjercicioLoading) {
+              return buildShimmerLoadingEffect();
+            }
+            if (state is EjercicioError) {
+              return Center(child: Text(state.message));
+            } else {
+              return const Center(child: Text('Ocurrio un error inesperado'));
+            }
+          },
+        ),
       ),
     );
   }
@@ -54,21 +57,25 @@ class ListarEjerciciosPage extends StatelessWidget {
       baseColor: Colors.grey[300]!,
       highlightColor: Colors.grey[100]!,
       child: ListView.builder(
-        padding: const EdgeInsets.symmetric(horizontal: 0),
         itemCount: 10, // Número de elementos de carga
         itemBuilder: (context, i) {
-          return Container(
-            margin: const EdgeInsets.symmetric(vertical: 2.5),
+          return Card(
+            margin: const EdgeInsets.symmetric(vertical: 4.0),
+            elevation: 1,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             child: ListTile(
               leading: const CircleAvatar(
                 radius: 27,
-                backgroundColor: Color(0xffF2F2F2),
+                backgroundColor: Colors.white,
               ),
               title: Container(
                 width: double.infinity,
-                height: 10.0,
+                height: 16.0,
                 color: Colors.white,
               ),
+              trailing: const SizedBox(
+                  width: 24, height: 24), // Espacio para el icono
             ),
           );
         },
@@ -76,114 +83,96 @@ class ListarEjerciciosPage extends StatelessWidget {
     );
   }
 
-  Widget buildEjercicioList(EjercicioGetAllSuccess state) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final isSmallScreen = constraints.maxWidth < 600;
-        final textScaler = MediaQuery.of(context).textScaler;
-        return ListView.separated(
-          separatorBuilder: (_, index) => const SizedBox(height: 5),
-          padding: const EdgeInsets.symmetric(horizontal: 0),
-          itemCount: state.ejercicios.length,
-          itemBuilder: (context, i) {
-            // Limita el retraso máximo a 1500 milisegundos (10 * 100)
-            final delay = Duration(milliseconds: 100 * (i < 10 ? i : 10));
-            final ejercicio = state.ejercicios[i];
-            final imagenDireccion =
-                ejercicio.imagenDireccion?.isNotEmpty == true
-                    ? ejercicio.imagenDireccion!
-                    : AppConfig.defaultImagePath;
-            return FadeInLeft(
-              duration: delay,
-              child: Container(
-                margin: const EdgeInsets.symmetric(vertical: 2.5),
-                decoration: BoxDecoration(
-                  color:
-                      ejercicio.seleccionado
-                          ? Colors.green.withAlpha(51)
-                          : Colors.transparent,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: ListTile(
-                  leading: Stack(
-                    children: [
-                      Container(
-                        width: isSmallScreen ? 40 : 50,
-                        height: isSmallScreen ? 40 : 50,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          shape: BoxShape.circle,
-                        ),
-                        child: ClipOval(
-                          child:
-                              VerificadorTipoArchivo.esSvg(imagenDireccion)
-                                  ? SvgPicture.asset(
-                                    imagenDireccion,
-                                    width: isSmallScreen ? 40 : 50,
-                                    height: isSmallScreen ? 40 : 50,
-                                    fit: BoxFit.cover,
-                                  )
-                                  : Image.asset(
-                                    imagenDireccion,
-                                    width: isSmallScreen ? 40 : 50,
-                                    height: isSmallScreen ? 40 : 50,
-                                    fit: BoxFit.cover,
-                                    errorBuilder: (context, error, stackTrace) {
-                                      return const Icon(Icons.error);
-                                    },
-                                  ),
-                        ),
-                      ),
-                      if (ejercicio.seleccionado)
-                        Positioned.fill(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.green.withAlpha(
-                                230,
-                              ), // Fondo semitransparente
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Align(
-                              alignment: Alignment.center,
-                              child: Icon(
-                                Icons.check,
-                                color: Colors.white,
-                                size: 24,
-                              ),
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
-                  title: Text(
-                    ejercicio.nombre,
-                    style: TextStyle(
-                      fontSize:
-                          isSmallScreen
-                              ? textScaler.scale(14)
-                              : textScaler.scale(16),
-                    ),
-                  ),
-                  onTap:
-                      ejercicio.seleccionado
-                          ? null
-                          : () {
-                            //TODO: SOLUCIONAR ESTO
-                            print(
-                              'ListarEjerciciosPage -> sesionId: $sessionId',
-                            );
-                            context.push(
-                              '/agregar-ejercicio-rutina/$rutinaId/${ejercicio.id}/${ejercicio.nombre}/$sessionId',
-                              extra: {
-                                'ejercicioImagenDireccion':
-                                    ejercicio.imagenDireccion,
-                              },
-                            );
+  Widget buildEjercicioList(
+      BuildContext context, EjercicioGetAllSuccess state) {
+    final theme = Theme.of(context);
+
+    return ListView.builder(
+      itemCount: state.ejercicios.length,
+      itemBuilder: (context, i) {
+        final delay =
+            Duration(milliseconds: 50 * (i < 15 ? i : 15)); // Ajustar animación
+        final ejercicio = state.ejercicios[i];
+        final imagenDireccion = ejercicio.imagenDireccion?.isNotEmpty == true
+            ? ejercicio.imagenDireccion!
+            : AppConfig.defaultImagePath;
+        final bool isSvg = VerificadorTipoArchivo.esSvg(imagenDireccion);
+
+        return FadeInLeft(
+          duration: delay,
+          child: Card(
+            margin: const EdgeInsets.symmetric(vertical: 4.0),
+            elevation: ejercicio.seleccionado
+                ? 3
+                : 1, // Mayor elevación si está seleccionado
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+              side: BorderSide(
+                // Borde coloreado si está seleccionado
+                color: ejercicio.seleccionado
+                    ? theme.colorScheme.primary
+                    : Colors.transparent,
+                width: 1.5,
+              ),
+            ),
+            child: ListTile(
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+              leading: CircleAvatar(
+                radius: 27,
+                backgroundColor: theme.colorScheme.surfaceVariant,
+                child: ClipOval(
+                  child: isSvg
+                      ? SvgPicture.asset(
+                          imagenDireccion,
+                          fit: BoxFit.cover,
+                          width: 54,
+                          height: 54,
+                          placeholderBuilder: (context) =>
+                              const CircularProgressIndicator(
+                                  strokeWidth: 2), // Placeholder para SVG
+                          // ignore: deprecated_member_use
+                          color: theme.iconTheme.color,
+                        )
+                      : Image.asset(
+                          imagenDireccion,
+                          fit: BoxFit.cover,
+                          width: 54,
+                          height: 54,
+                          errorBuilder: (context, error, stackTrace) {
+                            // Placeholder en caso de error al cargar la imagen
+                            return Icon(Icons.image_not_supported,
+                                color: theme.colorScheme.onSurfaceVariant);
                           },
+                        ),
                 ),
               ),
-            );
-          },
+              title: Text(
+                ejercicio.nombre,
+                style: theme.textTheme.labelMedium?.copyWith(
+                  fontWeight: ejercicio.seleccionado
+                      ? FontWeight.bold
+                      : FontWeight.normal,
+                ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              trailing: ejercicio.seleccionado
+                  ? Icon(Icons.check_circle, color: theme.colorScheme.primary)
+                  : const Icon(Icons.add_circle_outline),
+              onTap: ejercicio.seleccionado
+                  ? null
+                  : () {
+                      print('ListarEjerciciosPage -> sesionId: $sessionId');
+                      context.push(
+                        '/agregar-ejercicio-rutina/$rutinaId/${ejercicio.id}/${ejercicio.nombre}/$sessionId',
+                        extra: {
+                          'ejercicioImagenDireccion': ejercicio.imagenDireccion,
+                        },
+                      );
+                    },
+            ),
+          ),
         );
       },
     );

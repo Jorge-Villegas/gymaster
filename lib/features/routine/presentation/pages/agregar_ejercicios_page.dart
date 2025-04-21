@@ -34,19 +34,23 @@ class AgregarEjerciciosPage extends StatelessWidget {
           ),
         ],
       ),
-      body: BlocBuilder<MusculoCubit, MusculoState>(
-        builder: (context, state) {
-          if (state is MusculoLoaded) {
-            return buildMusculoList(state);
-          }
-          if (state is MusculoError) {
-            return Center(child: Text(state.message));
-          }
-          if (state is MusculoLoading) {
-            return buildShimmerLoadingEffect();
-          }
-          return const Center(child: Text("Ha sucedido un error inesperado"));
-        },
+      body: Padding(
+        // Añadir padding general
+        padding: const EdgeInsets.all(8.0),
+        child: BlocBuilder<MusculoCubit, MusculoState>(
+          builder: (context, state) {
+            if (state is MusculoLoaded) {
+              return buildMusculoList(context, state);
+            }
+            if (state is MusculoError) {
+              return Center(child: Text(state.message));
+            }
+            if (state is MusculoLoading) {
+              return buildShimmerLoadingEffect();
+            }
+            return const Center(child: Text("Ha sucedido un error inesperado"));
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         // El sombreado del botón
@@ -62,20 +66,23 @@ class AgregarEjerciciosPage extends StatelessWidget {
       baseColor: Colors.grey[300]!,
       highlightColor: Colors.grey[100]!,
       child: ListView.builder(
-        padding: const EdgeInsets.symmetric(horizontal: 0),
         itemCount: 10, // Número de elementos de carga
         itemBuilder: (context, i) {
-          return Container(
-            margin: const EdgeInsets.symmetric(vertical: 2.5),
+          return Card(
+            // Usar Card para el shimmer también
+            margin: const EdgeInsets.symmetric(vertical: 4.0),
+            elevation: 1, // Sutil elevación
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             child: ListTile(
               leading: const CircleAvatar(
                 radius: 27,
-                backgroundColor: Color(0xffF2F2F2),
+                backgroundColor: Colors.white, // Fondo blanco para shimmer
               ),
               title: Container(
                 width: double.infinity,
-                height: 10.0,
-                color: Colors.white,
+                height: 16.0, // Altura del texto simulado
+                color: Colors.white, // Color del placeholder
               ),
             ),
           );
@@ -84,27 +91,46 @@ class AgregarEjerciciosPage extends StatelessWidget {
     );
   }
 
-  Widget buildMusculoList(MusculoLoaded state) {
+  Widget buildMusculoList(BuildContext context, MusculoLoaded state) {
     return ListView.builder(
-      padding: const EdgeInsets.symmetric(horizontal: 0),
       itemCount: state.musculos.length,
       itemBuilder: (context, i) {
         final musculo = state.musculos[i];
         final isSvg = VerificadorTipoArchivo.esSvg(musculo.imagenDirecion);
-        return Container(
-          margin: const EdgeInsets.symmetric(vertical: 2.5),
+        return Card(
+          // Envolver ListTile en un Card
+          margin: const EdgeInsets.symmetric(vertical: 4.0),
+          elevation: 2, // Añadir una ligera elevación
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8)), // Bordes redondeados
           child: ListTile(
+            contentPadding: const EdgeInsets.symmetric(
+                vertical: 8.0, horizontal: 16.0), // Ajustar padding interno
             leading: CircleAvatar(
               radius: 27,
-              // Color de fondo del avatar
+              backgroundColor: Theme.of(context)
+                  .colorScheme
+                  .surfaceVariant, // Usar color del tema
               backgroundImage:
                   isSvg ? null : AssetImage(musculo.imagenDirecion),
-              backgroundColor: const Color(0xffF2F2F2),
-              child: isSvg ? SvgPicture.asset(musculo.imagenDirecion) : null,
+              child: isSvg
+                  ? ClipOval(
+                      // Asegurar que el SVG se recorte si es necesario
+                      child: SvgPicture.asset(
+                        musculo.imagenDirecion,
+                        fit: BoxFit.cover, // Ajustar imagen
+                        width: 54, // Doble del radio
+                        height: 54,
+                      ),
+                    )
+                  : null,
             ),
-            title: Text(musculo.nombre),
+            title: Text(musculo.nombre,
+                style: Theme.of(context).textTheme.labelMedium),
+            trailing:
+                const Icon(Icons.chevron_right), // Indicador visual de acción
             onTap: () {
-              print('AgregarEjerciciosPahe -> sesionId: $sesionId');
+              print('AgregarEjerciciosPage -> sesionId: $sesionId');
               context.push(
                 '/listar-ejercicios/${musculo.id}/${musculo.nombre}/$rutinaid/$sesionId',
               );
