@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymaster/features/setting/presentation/cubit/setting_cubit.dart';
@@ -9,6 +10,7 @@ class SettingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isSelected = false;
     return BlocProvider(
       create: (_) => BlocProvider.of<SettingCubit>(context)..loadSettings(),
       child: Scaffold(
@@ -24,8 +26,8 @@ class SettingPage extends StatelessWidget {
                     Text(
                       "Jorge Villegas",
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
                     const SizedBox(height: 16),
                     Expanded(
@@ -54,17 +56,28 @@ class SettingPage extends StatelessWidget {
                           BlocBuilder<SettingCubit, SettingState>(
                             builder: (context, state) {
                               if (state is SettingLoaded) {
-                                return SwitchListTile(
-                                  title: const Text('Notificaciones'),
-                                  value: state.isNotificationEnabled,
-                                  onChanged: (value) {
-                                    context
-                                        .read<SettingCubit>()
-                                        .toggleNotification(value);
-                                  },
-                                  secondary: const Icon(
+                                return ListTile(
+                                  leading: const Icon(
                                     IconsaxPlusLinear.notification,
                                   ),
+                                  title: const Text('Notificaciones'),
+                                  trailing: CupertinoSwitch(
+                                    value: state.isNotificationEnabled,
+                                    onChanged: (value) {
+                                      context
+                                          .read<SettingCubit>()
+                                          .toggleNotification(value);
+                                    },
+                                    activeTrackColor: Theme.of(context)
+                                        .primaryColor, // Opcional: para que coincida con el tema
+                                  ),
+                                  onTap: () {
+                                    // Permite activar/desactivar tocando toda la fila
+                                    context
+                                        .read<SettingCubit>()
+                                        .toggleNotification(
+                                            !state.isNotificationEnabled);
+                                  },
                                 );
                               }
                               return const SizedBox.shrink();
@@ -106,8 +119,8 @@ class SettingPage extends StatelessWidget {
                                   leading: const Icon(IconsaxPlusLinear.global),
                                   title: const Text('Idioma de la aplicación'),
                                   subtitle: Text(state.language),
-                                  onTap:
-                                      () => _showLanguageBottomSheet(context),
+                                  onTap: () =>
+                                      _showLanguageBottomSheet(context),
                                 );
                               }
                               return const SizedBox.shrink();
@@ -185,8 +198,8 @@ class SettingPage extends StatelessWidget {
                           options: const ['kg', 'lb'],
                           onSelected: (index) {
                             context.read<SettingCubit>().setWeightUnit(
-                              index == 0 ? 'kg' : 'lb',
-                            );
+                                  index == 0 ? 'kg' : 'lb',
+                                );
                           },
                         ),
                         const SizedBox(height: 16),
@@ -195,8 +208,8 @@ class SettingPage extends StatelessWidget {
                           options: const ['cm', 'in'],
                           onSelected: (index) {
                             context.read<SettingCubit>().setLengthUnit(
-                              index == 0 ? 'cm' : 'in',
-                            );
+                                  index == 0 ? 'cm' : 'in',
+                                );
                           },
                         ),
                         const SizedBox(height: 16),
@@ -205,8 +218,8 @@ class SettingPage extends StatelessWidget {
                           options: const ['24h', '12h'],
                           onSelected: (index) {
                             context.read<SettingCubit>().setTimeFormat(
-                              index == 0 ? '24h' : '12h',
-                            );
+                                  index == 0 ? '24h' : '12h',
+                                );
                           },
                         ),
                         const SizedBox(height: 16),
@@ -215,8 +228,8 @@ class SettingPage extends StatelessWidget {
                           options: const ['31.01', '01/31'],
                           onSelected: (index) {
                             context.read<SettingCubit>().setDateFormat(
-                              index == 0 ? '31.01' : '01/31',
-                            );
+                                  index == 0 ? '31.01' : '01/31',
+                                );
                           },
                         ),
                         const SizedBox(height: 16),
@@ -225,8 +238,8 @@ class SettingPage extends StatelessWidget {
                           options: const ['kcal', 'kj'],
                           onSelected: (index) {
                             context.read<SettingCubit>().setCalories(
-                              index == 0 ? 'kcal' : 'kj',
-                            );
+                                  index == 0 ? 'kcal' : 'kj',
+                                );
                           },
                         ),
                       ],
@@ -474,44 +487,41 @@ class ToggleOptionState extends State<ToggleOption> {
         children: [
           Text(widget.title, style: Theme.of(context).textTheme.bodyLarge),
           Row(
-            children:
-                widget.options.asMap().entries.map((entry) {
-                  int index = entry.key;
-                  String value = entry.value;
-                  return GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedIndex = index;
-                      });
-                      widget.onSelected(index);
-                    },
-                    child: Container(
-                      width: 75,
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 15,
-                        horizontal: 12,
-                      ),
-                      margin: const EdgeInsets.symmetric(horizontal: 0),
-                      decoration: BoxDecoration(
-                        color:
-                            selectedIndex == index
-                                ? Theme.of(context).primaryColor
-                                : Colors.grey[200],
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      alignment: Alignment.center,
-                      child: Text(
-                        value,
-                        style: TextStyle(
-                          color:
-                              selectedIndex == index
-                                  ? Colors.white
-                                  : Colors.black87,
-                        ),
-                      ),
+            children: widget.options.asMap().entries.map((entry) {
+              int index = entry.key;
+              String value = entry.value;
+              return GestureDetector(
+                onTap: () {
+                  setState(() {
+                    selectedIndex = index;
+                  });
+                  widget.onSelected(index);
+                },
+                child: Container(
+                  width: 75,
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 15,
+                    horizontal: 12,
+                  ),
+                  margin: const EdgeInsets.symmetric(horizontal: 0),
+                  decoration: BoxDecoration(
+                    color: selectedIndex == index
+                        ? Theme.of(context).primaryColor
+                        : Colors.grey[200],
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    value,
+                    style: TextStyle(
+                      color: selectedIndex == index
+                          ? Colors.white
+                          : Colors.black87,
                     ),
-                  );
-                }).toList(),
+                  ),
+                ),
+              );
+            }).toList(),
           ),
         ],
       ),
