@@ -9,6 +9,7 @@ class EncabezadoEjercicioWidget extends StatelessWidget {
   final VoidCallback onIncrement;
   final VoidCallback onDecrement;
   final String urlImage;
+  final String heroTag; // Añadir parámetro heroTag
 
   const EncabezadoEjercicioWidget({
     super.key,
@@ -17,6 +18,7 @@ class EncabezadoEjercicioWidget extends StatelessWidget {
     required this.onIncrement,
     required this.onDecrement,
     required this.urlImage,
+    required this.heroTag,
   });
 
   @override
@@ -28,9 +30,12 @@ class EncabezadoEjercicioWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Center(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20.0),
-            child: _buildImageWidget(urlImage, screenWidth * 0.4),
+          child: Hero(
+            tag: heroTag,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20.0),
+              child: _buildImageWidget(urlImage, screenWidth * 0.4),
+            ),
           ),
         ),
         const SizedBox(height: 10),

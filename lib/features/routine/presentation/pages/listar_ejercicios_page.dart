@@ -118,33 +118,37 @@ class ListarEjerciciosPage extends StatelessWidget {
             child: ListTile(
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-              leading: CircleAvatar(
-                radius: 27,
-                backgroundColor: theme.colorScheme.surfaceVariant,
-                child: ClipOval(
-                  child: isSvg
-                      ? SvgPicture.asset(
-                          imagenDireccion,
-                          fit: BoxFit.cover,
-                          width: 54,
-                          height: 54,
-                          placeholderBuilder: (context) =>
-                              const CircularProgressIndicator(
-                                  strokeWidth: 2), // Placeholder para SVG
-                          // ignore: deprecated_member_use
-                          color: theme.iconTheme.color,
-                        )
-                      : Image.asset(
-                          imagenDireccion,
-                          fit: BoxFit.cover,
-                          width: 54,
-                          height: 54,
-                          errorBuilder: (context, error, stackTrace) {
-                            // Placeholder en caso de error al cargar la imagen
-                            return Icon(Icons.image_not_supported,
-                                color: theme.colorScheme.onSurfaceVariant);
-                          },
-                        ),
+              leading: Hero(
+                // Añadir Hero aquí
+                tag: 'exercise-image-${ejercicio.id}', // Tag único
+                child: CircleAvatar(
+                  radius: 27,
+                  backgroundColor: theme.colorScheme.surfaceVariant,
+                  child: ClipOval(
+                    child: isSvg
+                        ? SvgPicture.asset(
+                            imagenDireccion,
+                            fit: BoxFit.cover,
+                            width: 54,
+                            height: 54,
+                            placeholderBuilder: (context) =>
+                                const CircularProgressIndicator(
+                                    strokeWidth: 2), // Placeholder para SVG
+                            // ignore: deprecated_member_use
+                            color: theme.iconTheme.color,
+                          )
+                        : Image.asset(
+                            imagenDireccion,
+                            fit: BoxFit.cover,
+                            width: 54,
+                            height: 54,
+                            errorBuilder: (context, error, stackTrace) {
+                              // Placeholder en caso de error al cargar la imagen
+                              return Icon(Icons.image_not_supported,
+                                  color: theme.colorScheme.onSurfaceVariant);
+                            },
+                          ),
+                  ),
                 ),
               ),
               title: Text(

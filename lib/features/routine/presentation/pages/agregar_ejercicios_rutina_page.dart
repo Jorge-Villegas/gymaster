@@ -25,7 +25,7 @@ class AgregarEjercicioRutinaPage extends StatefulWidget {
     required this.rutinaId,
     String? ejercicioImagenDireccion,
   }) : ejercicioImagenDireccion =
-           ejercicioImagenDireccion ?? AppConfig.defaultImagePath;
+            ejercicioImagenDireccion ?? AppConfig.defaultImagePath;
 
   @override
   State<AgregarEjercicioRutinaPage> createState() =>
@@ -93,14 +93,12 @@ class _AgregarEjercicioRutinaPageState
       return;
     }
 
-    List<double?> pesos =
-        _pesoControllers
-            .map((controller) => TextFormatter.stringToDouble(controller.text))
-            .toList();
-    List<int?> repeticiones =
-        _repeticionesControllers
-            .map((controller) => TextFormatter.stringToInt(controller.text))
-            .toList();
+    List<double?> pesos = _pesoControllers
+        .map((controller) => TextFormatter.stringToDouble(controller.text))
+        .toList();
+    List<int?> repeticiones = _repeticionesControllers
+        .map((controller) => TextFormatter.stringToInt(controller.text))
+        .toList();
 
     if (pesos.contains(null) || repeticiones.contains(null)) {
       showCustomSnackBar(
@@ -113,12 +111,12 @@ class _AgregarEjercicioRutinaPageState
 
     // Guardar los datos de forma asíncrona
     final resul = await context.read<AgregarSeriesCubit>().guardarDatos(
-      idSesion: widget.sesionId,
-      rutinaId: widget.rutinaId,
-      ejercicioId: widget.ejercicioId,
-      pesos: pesos.cast<double>(),
-      repeticiones: repeticiones.cast<int>(),
-    );
+          idSesion: widget.sesionId,
+          rutinaId: widget.rutinaId,
+          ejercicioId: widget.ejercicioId,
+          pesos: pesos.cast<double>(),
+          repeticiones: repeticiones.cast<int>(),
+        );
 
     // Verificar si el widget sigue montado antes de usar el contexto
     if (!mounted) return;
@@ -164,12 +162,14 @@ class _AgregarEjercicioRutinaPageState
         child: BlocBuilder<AgregarSeriesCubit, AgregarSeriesState>(
           builder: (context, state) {
             if (state is AgregarSeriesLoaded) {
+              final heroTag = 'exercise-image-${widget.ejercicioId}';
               return Form(
                 key: _formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     EncabezadoEjercicioWidget(
+                      heroTag: heroTag, // Pasar el tag Hero
                       nombreEjercicio: widget.ejercicioNombre,
                       cantidadSeries: state.cantidadSeries,
                       urlImage: widget.ejercicioImagenDireccion,
