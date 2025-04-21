@@ -38,7 +38,10 @@ class ExerciseDetailPage extends StatelessWidget {
           icon: const Icon(Icons.favorite_border, color: Colors.white),
           label: const Text(
             'Añadir a Favoritos',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ),
       ),

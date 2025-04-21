@@ -31,17 +31,15 @@ class EjercicioRutinaSeeder {
 
       // Crear una nueva sesión para la rutina
       String sessionId = idGenerator.generateId();
-      String status =
-          random.nextBool()
-              ? RoutineSessionStatus.completed.name
-              : RoutineSessionStatus.pending.name;
+      String status = random.nextBool()
+          ? RoutineSessionStatus.completed.name
+          : RoutineSessionStatus.pending.name;
       await db.insert('routine_session', {
         'id': sessionId,
         'routine_id': routineId,
-        'start_time':
-            DateTime.now()
-                .subtract(Duration(days: random.nextInt(30)))
-                .toIso8601String(),
+        'start_time': DateTime.now()
+            .subtract(Duration(days: random.nextInt(30)))
+            .toIso8601String(),
         'end_time':
             status == 'completed' ? DateTime.now().toIso8601String() : null,
         'status': status,
@@ -50,7 +48,7 @@ class EjercicioRutinaSeeder {
 
       // Seleccionar entre 5 a 10 ejercicios aleatorios
       exercises.shuffle();
-      int numExercises = (5 + random.nextInt(6)); // Entre 5 y 10 ejercicios
+      int numExercises = (5 + random.nextInt(6));
       List<Map<String, dynamic>> selectedExercises =
           exercises.take(numExercises).toList();
 

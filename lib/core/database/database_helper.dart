@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:gymaster/core/database/seeders/database_seeder.dart';
+import 'package:gymaster/shared/utils/uuid_generator.dart';
 import 'package:path/path.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
@@ -169,6 +171,8 @@ class DatabaseHelper {
           FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE
         )
       ''');
+    // Llama al seeder para llenar la base de datos con datos iniciales
+    // await DatabaseSeeder(idGenerator: UuidGenerator()).seedGenerateDatabase();
   }
 
   // Maneja las migraciones de la base de datos

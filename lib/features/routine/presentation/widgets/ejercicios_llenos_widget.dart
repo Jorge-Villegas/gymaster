@@ -12,64 +12,63 @@ class EjerciciosLlenosWidget extends StatelessWidget {
 
   iniciarRutina(BuildContext context, String sessionId, String rutinaId) {
     context.read<EjerciciosByRutinaCubit>().iniciarRutina(
-      routineSessionId: sessionId,
-      rutinaId: rutinaId,
-    );
+          routineSessionId: sessionId,
+          rutinaId: rutinaId,
+        );
   }
 
   mostrarDialogoPararEntrenamiento(BuildContext context, String sessionId) {
     showDialog(
       context: context,
-      builder:
-          (context) => AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            title: const Row(
-              children: [
-                Icon(Icons.warning, color: Colors.red),
-                SizedBox(width: 10),
-                Text(
-                  'Parar entrenamiento',
-                  style: TextStyle(
-                    color: Colors.red,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-            content: const Text(
-              '¿Estás seguro de que deseas parar el entrenamiento?',
-              style: TextStyle(fontSize: 16),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  context.pop();
-                },
-                style: TextButton.styleFrom(foregroundColor: Colors.grey),
-                child: const Text('Cancelar'),
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        title: const Row(
+          children: [
+            Icon(Icons.warning, color: Colors.red),
+            SizedBox(width: 10),
+            Text(
+              'Parar entrenamiento',
+              style: TextStyle(
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
               ),
-              ElevatedButton(
-                onPressed: () {
-                  context.read<EjerciciosByRutinaCubit>().stopRoutine(
+            ),
+          ],
+        ),
+        content: const Text(
+          '¿Estás seguro de que deseas parar el entrenamiento?',
+          style: TextStyle(fontSize: 16),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              context.pop();
+            },
+            style: TextButton.styleFrom(foregroundColor: Colors.grey),
+            child: const Text('Cancelar'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              context.read<EjerciciosByRutinaCubit>().stopRoutine(
                     routineSessionId: sessionId,
                   );
-                  context.pop();
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                child: const Text(
-                  'Aceptar',
-                  style: TextStyle(color: Colors.white),
-                ),
+              context.pop();
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
               ),
-            ],
+            ),
+            child: const Text(
+              'Aceptar',
+              style: TextStyle(color: Colors.white),
+            ),
           ),
+        ],
+      ),
     );
   }
 
@@ -171,6 +170,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                   getButtonText,
                   style: textTheme.labelMedium?.copyWith(
                     color: isDarkTheme ? Colors.white : getButtonColor,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
@@ -195,7 +195,6 @@ class EjerciciosLlenosWidget extends StatelessWidget {
             ],
           ),
         ),
-
         Expanded(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -211,9 +210,9 @@ class EjerciciosLlenosWidget extends StatelessWidget {
 
                 // Actualizar el orden en el Cubit
                 context.read<EjerciciosByRutinaCubit>().updateEjercicioOrder(
-                  ejerciciosDeRutina.ejercicios,
-                  state.ejerciciosDeRutina.session,
-                );
+                      ejerciciosDeRutina.ejercicios,
+                      state.ejerciciosDeRutina.session,
+                    );
               },
               itemCount: ejerciciosDeRutina.ejercicios.length,
               buildDefaultDragHandles: false,
@@ -229,9 +228,9 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                   direction: DismissDirection.endToStart,
                   onDismissed: (direction) {
                     context.read<EjerciciosByRutinaCubit>().deleteEjercicio(
-                      ejercicio.id,
-                      state.ejerciciosDeRutina.session,
-                    );
+                          ejercicio.id,
+                          state.ejerciciosDeRutina.session,
+                        );
                     // Eliminar el ejercicio de la lista y actualizar el estado
                     ejerciciosDeRutina.ejercicios.removeAt(i);
                     // Notificar al framework que el estado ha cambiado
@@ -263,9 +262,9 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                     pesos: pesos,
                     onDismissed: () {
                       context.read<EjerciciosByRutinaCubit>().deleteEjercicio(
-                        ejercicio.id,
-                        state.ejerciciosDeRutina.session,
-                      );
+                            ejercicio.id,
+                            state.ejerciciosDeRutina.session,
+                          );
                     },
                     onTap: () {
                       // Si la rutina está en ejecución, permitir navegar al ejercicio seleccionado
@@ -276,16 +275,15 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                         if (currentState is EjerciciosByRutinaSuccess) {
                           // Emitir un nuevo estado con el ejercicio seleccionado
                           context.read<EjerciciosByRutinaCubit>().emit(
-                            EjerciciosByRutinaSuccess(
-                              ejerciciosDeRutina:
-                                  currentState.ejerciciosDeRutina,
-                              ejercicioIndex: ejercicio.id,
-                              serieIndex:
-                                  ejercicio.series.isNotEmpty
+                                EjerciciosByRutinaSuccess(
+                                  ejerciciosDeRutina:
+                                      currentState.ejerciciosDeRutina,
+                                  ejercicioIndex: ejercicio.id,
+                                  serieIndex: ejercicio.series.isNotEmpty
                                       ? ejercicio.series.first.id
                                       : '',
-                            ),
-                          );
+                                ),
+                              );
                           // Navegar a la pantalla de detalle de ejercicio
                           context.push('/detalle-ejercicio');
                         }

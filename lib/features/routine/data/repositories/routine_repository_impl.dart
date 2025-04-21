@@ -1,6 +1,7 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:gymaster/core/database/models/models.dart';
 import 'package:gymaster/core/database/seeders/database_seeder.dart';
+import 'package:gymaster/core/database/seeders/ejercicio_rutina_seeder.dart';
 import 'package:gymaster/core/database/seeders/rutina_data_seeder.dart';
 import 'package:gymaster/core/error/exceptions.dart';
 import 'package:gymaster/core/error/failures.dart';
@@ -108,7 +109,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
 
         await RoutineDataSeeder(idGenerator: idGenerator).generateFakeRutinas();
 
-        // await EjercicioRutinaSeeder(idGenerator: idGenerator).generateData();
+        await EjercicioRutinaSeeder(idGenerator: idGenerator).generateData();
         // await generateData(DatabaseHelper.instance);
       }
 
@@ -126,7 +127,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
 
   @override
   Future<Either<Failure, List<EjerciciosPorMusculoModel>>>
-  getAllEjerciciosByMusculo({required String musculoId}) async {
+      getAllEjerciciosByMusculo({required String musculoId}) async {
     try {
       final ejercicios = await localDataSource.getEjerciciosPorMusculo(
         musculoId,
@@ -202,7 +203,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
 
   @override
   Future<Either<Failure, ejercicio_de_rutina.EjerciciosDeRutinaModel>>
-  getAllEjercicioByRutinaId({
+      getAllEjercicioByRutinaId({
     required String rutinaId,
     required String idRoutineSession,
   }) async {
@@ -275,8 +276,8 @@ class RoutineRepositoryImpl implements RoutineRepository {
 
         ejerciciosConDetalles.add(ejercicios);
       }
-      final ejerciciosDeRutinaConDetalles = ejercicio_de_rutina
-          .EjerciciosDeRutinaModel.fromDatabase(
+      final ejerciciosDeRutinaConDetalles =
+          ejercicio_de_rutina.EjerciciosDeRutinaModel.fromDatabase(
         session: session.id,
         rutinaDB: rutina,
         ejercicios: ejerciciosConDetalles,
@@ -312,10 +313,9 @@ class RoutineRepositoryImpl implements RoutineRepository {
       final updatedSerie = serieDB.copyWith(
         weight: peso,
         repetitions: repeticiones,
-        status:
-            realizado == true
-                ? ExerciseSetStatus.completed.name
-                : 'not completed',
+        status: realizado == true
+            ? ExerciseSetStatus.completed.name
+            : 'not completed',
         restTime: tiempoDescanso,
       );
 
@@ -323,8 +323,8 @@ class RoutineRepositoryImpl implements RoutineRepository {
 
       if (realizado != null) {
         //obtenermos el id de la session_exercise
-        final sessionExerciseId = await localDataSource
-            .getSessionExerciseIdByExerciseSetId(id);
+        final sessionExerciseId =
+            await localDataSource.getSessionExerciseIdByExerciseSetId(id);
 
         if (sessionExerciseId == null) {
           print('No se encontró el sessionExerciseId');
@@ -543,8 +543,8 @@ class RoutineRepositoryImpl implements RoutineRepository {
   Future<Either<Failure, RoutineSession>> getLastRoutineSessionByRoutineId(
     String id,
   ) async {
-    RoutineSession? session = await localDataSource
-        .getLastRoutineSessionByRoutineId(id);
+    RoutineSession? session =
+        await localDataSource.getLastRoutineSessionByRoutineId(id);
 
     if (session != null) {
       return Right(session);
@@ -606,11 +606,11 @@ class RoutineRepositoryImpl implements RoutineRepository {
 
       return sessionResult.fold((failure) => Left(failure), (session) async {
         // Obtener el sessionExerciseId asociado
-        final sessionExercise = await localDataSource
-            .getSessionExerciseByExerciseId(
-              routineSessionId: session.id,
-              exerciseId: exerciseId,
-            );
+        final sessionExercise =
+            await localDataSource.getSessionExerciseByExerciseId(
+          routineSessionId: session.id,
+          exerciseId: exerciseId,
+        );
 
         if (sessionExercise == null) {
           return Left(
@@ -721,10 +721,8 @@ class RoutineRepositoryImpl implements RoutineRepository {
               weight: set.weight,
               repetitions: set.repetitions,
               restTime: set.restTime,
-              status:
-                  ExerciseSetStatus
-                      .pending
-                      .name, // Reiniciar estado a pendiente
+              status: ExerciseSetStatus
+                  .pending.name, // Reiniciar estado a pendiente
             );
 
             await localDataSource.insertExerciseSet(newSet);
@@ -751,8 +749,8 @@ class RoutineRepositoryImpl implements RoutineRepository {
   Future<Either<Failure, bool>> stopRoutineSession(String sessionId) async {
     try {
       //verificamops si esta routine session esta en porceso
-      final statusRoutineSession = await localDataSource
-          .getRoutineSessionStatusById(sessionId);
+      final statusRoutineSession =
+          await localDataSource.getRoutineSessionStatusById(sessionId);
 
       if (statusRoutineSession == RoutineSessionStatus.completed.name) {
         return Left(
@@ -775,8 +773,8 @@ class RoutineRepositoryImpl implements RoutineRepository {
   Future<Either<Failure, bool>> completeRoutineSession(String sessionId) async {
     try {
       // Verificar si esta rutina está en proceso
-      final routineSessionStatus = await localDataSource
-          .getRoutineSessionStatusById(sessionId);
+      final routineSessionStatus =
+          await localDataSource.getRoutineSessionStatusById(sessionId);
 
       if (routineSessionStatus == RoutineSessionStatus.completed.name) {
         return Left(
@@ -784,8 +782,8 @@ class RoutineRepositoryImpl implements RoutineRepository {
         );
       }
 
-      final allSessionExercisesCompleted = await localDataSource
-          .checkAllSessionExercisesCompleted(sessionId);
+      final allSessionExercisesCompleted =
+          await localDataSource.checkAllSessionExercisesCompleted(sessionId);
 
       if (!allSessionExercisesCompleted) {
         return Left(
