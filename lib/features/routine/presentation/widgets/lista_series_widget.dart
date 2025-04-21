@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gymaster/features/record/presentation/widgets/series_control_button.dart';
 
 /// Widget que muestra una lista de series de ejercicios.
 ///
@@ -69,25 +70,27 @@ class ListaSeriesWidget extends StatelessWidget {
       child: Column(
         children: [
           const Padding(
-            padding: EdgeInsets.symmetric(vertical: 8.0),
+            // Mantener Padding para los encabezados
+            padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
             child: Row(
               children: [
-                SizedBox(width: 50),
+                SizedBox(width: 40),
                 Expanded(
                   child: Text(
-                    'Peso',
+                    'Peso (kg)',
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ),
-                SizedBox(width: 15),
+                SizedBox(width: 80),
                 Expanded(
                   child: Text(
-                    'Repetición',
+                    'Repeticiones',
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ),
+                SizedBox(width: 72),
               ],
             ),
           ),
@@ -96,20 +99,38 @@ class ListaSeriesWidget extends StatelessWidget {
               itemCount: cantidadSeries,
               itemBuilder: (context, index) {
                 return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 4.0, horizontal: 8.0),
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
-                        ' ${index + 1}: ',
-                        style: const TextStyle(fontSize: 18),
+                      SizedBox(
+                        // Envuelve el número de serie para controlar ancho
+                        width: 40, // Ancho fijo para alineación
+                        child: Text(
+                          ' ${index + 1}:',
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
-                      const SizedBox(width: 15),
+                      // const SizedBox(width: 5),
                       Expanded(
                         child: Row(
+                          crossAxisAlignment: CrossAxisAlignment
+                              .center, // Centrar verticalmente
                           children: [
                             Expanded(
                               child: TextFormField(
                                 controller: pesoControllers[index],
+                                textAlign: TextAlign.center, // Centrar texto
+                                decoration: const InputDecoration(
+                                  // Añadir decoración
+                                  border: OutlineInputBorder(),
+                                  isDense: true, // Hacerlo más compacto
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 10.0, horizontal: 8.0),
+                                ),
                                 keyboardType:
                                     const TextInputType.numberWithOptions(
                                   decimal: true,
@@ -139,31 +160,52 @@ class ListaSeriesWidget extends StatelessWidget {
                                       value.isEmpty ||
                                       double.tryParse(value) == null ||
                                       double.parse(value) <= 0) {
-                                    return 'Requerido';
+                                    return 'Inválido';
                                   }
                                   return null;
                                 },
                               ),
                             ),
-                            SeriesControlButton(
-                              icon: Icons.add,
-                              onPressed: () => _incrementPeso(index),
+                            const SizedBox(width: 4),
+                            SizedBox(
+                              // Mantener SizedBox para tamaño de botón
+                              width: 36,
+                              height: 36,
+                              child: SeriesControlButton(
+                                icon: Icons.add,
+                                onPressed: () => _incrementPeso(index),
+                              ),
                             ),
-                            SeriesControlButton(
-                              icon: Icons.remove,
-                              onPressed: () => _decrementPeso(index),
+                            SizedBox(
+                              // Mantener SizedBox para tamaño de botón
+                              width: 36,
+                              height: 36,
+                              child: SeriesControlButton(
+                                icon: Icons.remove,
+                                onPressed: () => _decrementPeso(index),
+                              ),
                             ),
                           ],
                         ),
                       ),
-                      const SizedBox(width: 15),
+                      const SizedBox(width: 10),
                       Expanded(
                         child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Expanded(
                               child: TextFormField(
                                 controller: repeticionesControllers[index],
+                                textAlign: TextAlign.center,
+                                decoration: const InputDecoration(
+                                  // Añadir decoración
+                                  border: OutlineInputBorder(),
+                                  isDense: true, // Hacerlo más compacto
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 10.0, horizontal: 8.0),
+                                ),
                                 keyboardType: TextInputType.number,
+                                // ...existing inputFormatters and validator...
                                 inputFormatters: [
                                   FilteringTextInputFormatter.digitsOnly,
                                   TextInputFormatter.withFunction(
@@ -179,22 +221,33 @@ class ListaSeriesWidget extends StatelessWidget {
                                       value.isEmpty ||
                                       int.tryParse(value) == null ||
                                       int.parse(value) <= 0) {
-                                    return 'Requerido';
+                                    return 'Inválido';
                                   }
                                   if (int.parse(value) > 50) {
-                                    return 'Máximo 50';
+                                    return '>50';
                                   }
                                   return null;
                                 },
                               ),
                             ),
-                            SeriesControlButton(
-                              icon: Icons.add,
-                              onPressed: () => _incrementRepeticiones(index),
+                            const SizedBox(width: 4),
+                            SizedBox(
+                              // Mantener SizedBox para tamaño de botón
+                              width: 36,
+                              height: 36,
+                              child: SeriesControlButton(
+                                icon: Icons.add,
+                                onPressed: () => _incrementRepeticiones(index),
+                              ),
                             ),
-                            SeriesControlButton(
-                              icon: Icons.remove,
-                              onPressed: () => _decrementRepeticiones(index),
+                            SizedBox(
+                              // Mantener SizedBox para tamaño de botón
+                              width: 36,
+                              height: 36,
+                              child: SeriesControlButton(
+                                icon: Icons.remove,
+                                onPressed: () => _decrementRepeticiones(index),
+                              ),
                             ),
                           ],
                         ),
@@ -207,36 +260,6 @@ class ListaSeriesWidget extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class SeriesControlButton extends StatelessWidget {
-  final IconData icon;
-  final VoidCallback onPressed;
-
-  const SeriesControlButton({
-    super.key,
-    required this.icon,
-    required this.onPressed,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      icon: Container(
-        decoration: BoxDecoration(
-          color: const Color.fromRGBO(232, 238, 241, 1.0),
-          borderRadius: BorderRadius.circular(50),
-        ),
-        padding: const EdgeInsets.all(8),
-        child: Icon(
-          icon,
-          color: Colors.black,
-          size: 24,
-        ),
-      ),
-      onPressed: onPressed,
     );
   }
 }

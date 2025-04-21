@@ -4,6 +4,7 @@ import 'package:gymaster/features/record/domain/entities/record_rutina.dart';
 import 'package:gymaster/features/record/presentation/cubit/record_cubit.dart';
 import 'package:gymaster/features/record/presentation/cubit/selected_routine/selected_routine_cubit.dart';
 import 'package:gymaster/features/record/presentation/cubit/selected_routine/selected_routine_state.dart';
+import 'package:gymaster/features/record/presentation/widgets/series_control_button.dart';
 import 'package:gymaster/features/routine/presentation/widgets/lista_series_widget.dart';
 import 'package:gymaster/shared/widgets/reusable_table.dart';
 
@@ -57,15 +58,13 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                 orElse: () => widget.recordEjercicios,
               );
 
-              final tableData =
-                  ejercicio.seriesDelEjercicio.map((serie) {
-                    return [
-                      (ejercicio.seriesDelEjercicio.indexOf(serie) + 1)
-                          .toString(),
-                      '${serie.peso} kg',
-                      '${serie.repeticiones} x',
-                    ];
-                  }).toList();
+              final tableData = ejercicio.seriesDelEjercicio.map((serie) {
+                return [
+                  (ejercicio.seriesDelEjercicio.indexOf(serie) + 1).toString(),
+                  '${serie.peso} kg',
+                  '${serie.repeticiones} x',
+                ];
+              }).toList();
 
               return _buildContent(context, state, ejercicio, tableData);
             }
@@ -148,15 +147,15 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                 value: tableData[selectedRowIndex!][1],
                 onIncrement: () {
                   context.read<SelectedRoutineCubit>().incrementPeso(
-                    ejercicio.id == widget.recordEjercicios.id ? 0 : 1,
-                    selectedRowIndex!,
-                  );
+                        ejercicio.id == widget.recordEjercicios.id ? 0 : 1,
+                        selectedRowIndex!,
+                      );
                 },
                 onDecrement: () {
                   context.read<SelectedRoutineCubit>().decrementPeso(
-                    ejercicio.id == widget.recordEjercicios.id ? 0 : 1,
-                    selectedRowIndex!,
-                  );
+                        ejercicio.id == widget.recordEjercicios.id ? 0 : 1,
+                        selectedRowIndex!,
+                      );
                 },
               ),
               const SizedBox(height: 12),
@@ -166,15 +165,15 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                 value: tableData[selectedRowIndex!][2],
                 onIncrement: () {
                   context.read<SelectedRoutineCubit>().incrementReps(
-                    ejercicio.id == widget.recordEjercicios.id ? 0 : 1,
-                    selectedRowIndex!,
-                  );
+                        ejercicio.id == widget.recordEjercicios.id ? 0 : 1,
+                        selectedRowIndex!,
+                      );
                 },
                 onDecrement: () {
                   context.read<SelectedRoutineCubit>().decrementReps(
-                    ejercicio.id == widget.recordEjercicios.id ? 0 : 1,
-                    selectedRowIndex!,
-                  );
+                        ejercicio.id == widget.recordEjercicios.id ? 0 : 1,
+                        selectedRowIndex!,
+                      );
                 },
               ),
             ],

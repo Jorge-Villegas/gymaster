@@ -169,7 +169,7 @@ class _AgregarEjercicioRutinaPageState
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     EncabezadoEjercicioWidget(
-                      heroTag: heroTag, // Pasar el tag Hero
+                      heroTag: heroTag,
                       nombreEjercicio: widget.ejercicioNombre,
                       cantidadSeries: state.cantidadSeries,
                       urlImage: widget.ejercicioImagenDireccion,
