@@ -15,46 +15,55 @@ class EjerciciosVaciosWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+
     return LayoutBuilder(
       builder: (context, constraints) {
         final isSmallScreen = constraints.maxWidth < 600;
         final imageSize = isSmallScreen ? 150.0 : 200.0;
-        final padding = isSmallScreen ? 10.0 : 30.0;
-        final textScale = MediaQuery.textScalerOf(context);
+        final verticalPadding = constraints.maxHeight * 0.1;
+        final horizontalPadding = isSmallScreen ? 24.0 : 48.0;
 
-        return FractionallySizedBox(
-          heightFactor: 0.9,
-          widthFactor: 1,
-          alignment: Alignment.topCenter,
+        return Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: horizontalPadding,
+            vertical: verticalPadding > 20 ? verticalPadding : 20,
+          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              const Spacer(),
               Image.asset(
                 Assets.imagenes.otros.personaConPesaNegro.path,
                 width: imageSize,
                 height: imageSize,
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 24),
               Text(
                 'No hay ejercicios aún',
-                style: Theme.of(
-                  context,
-                ).textTheme.labelLarge?.copyWith(fontSize: textScale.scale(26)),
-              ),
-              const SizedBox(height: 10),
-              Text(
-                'Agrega ejercicios para comenzar tu rutina',
-                style: Theme.of(
-                  context,
-                ).textTheme.labelSmall?.copyWith(fontSize: textScale.scale(14)),
+                style: textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: padding),
-              Container(
-                padding: const EdgeInsets.all(5),
+              const SizedBox(height: 12),
+              Text(
+                'Agrega ejercicios para comenzar tu rutina',
+                style: textTheme.bodyMedium?.copyWith(
+                  color: Colors.grey[600],
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 32),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: CustomElevatedButton(
                   onPressed: () {
-                    context.push('/agregar-ejercicios/$rutinaId/$sessionId').then((
+                    context
+                        .push('/agregar-ejercicios/$rutinaId/$sessionId')
+                        .then((
                       _,
                     ) {
                       if (context.mounted) {
@@ -69,6 +78,7 @@ class EjerciciosVaciosWidget extends StatelessWidget {
                   text: 'Agregar Ejercicio',
                 ),
               ),
+              const Spacer(),
             ],
           ),
         );
