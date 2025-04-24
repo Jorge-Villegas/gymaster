@@ -1,9 +1,9 @@
-import 'package:gymaster/core/database/models/routine_session.dart';
+import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:gymaster/core/database/models/routine_session_db_model.dart';
 import 'package:gymaster/core/error/timeout_helper.dart';
 import 'package:gymaster/features/routine/domain/entities/ejercicios_por_musculo.dart';
 import 'package:gymaster/features/routine/domain/usecases/get_all_ejercicios_by_musculo_usecase.dart';
-import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:gymaster/features/routine/domain/usecases/get_all_ejercicios_by_rutina.dart';
 import 'package:gymaster/features/routine/domain/usecases/get_last_routine_session_by_routine_id_usecase.dart';
 
@@ -33,7 +33,7 @@ class EjercicioCubit extends Cubit<EjercicioState> {
     ejercicios.fold((failure) => emit(EjercicioError(failure.errorMessage)), (
       ejercicios,
     ) async {
-      RoutineSession? session;
+      RoutineSessionDbModel? session;
 
       //obtenermos la ultima session de la rutina
       final resultSession = await runWithTimeout(
@@ -48,11 +48,11 @@ class EjercicioCubit extends Cubit<EjercicioState> {
 
       final ejerciciosSeleccionadosResult =
           await getAllEjerciciosByRutinaUseCase(
-            GetAllEjerciciosByRutinaParams(
-              id: rutinaId,
-              idRoutineSession: session!.id,
-            ),
-          );
+        GetAllEjerciciosByRutinaParams(
+          id: rutinaId,
+          idRoutineSession: session!.id,
+        ),
+      );
       ejerciciosSeleccionadosResult.fold(
         (failure) => emit(
           const EjercicioError(
@@ -60,14 +60,13 @@ class EjercicioCubit extends Cubit<EjercicioState> {
           ),
         ),
         (ejerciciosSeleccionados) {
-          final updatedEjercicios =
-              ejercicios.map((ejercicio) {
-                final isSelected = ejerciciosSeleccionados.ejercicios.any(
-                  (ejercicioSeleccionado) =>
-                      ejercicioSeleccionado.id == ejercicio.id,
-                );
-                return ejercicio.copyWith(seleccionado: isSelected);
-              }).toList();
+          final updatedEjercicios = ejercicios.map((ejercicio) {
+            final isSelected = ejerciciosSeleccionados.ejercicios.any(
+              (ejercicioSeleccionado) =>
+                  ejercicioSeleccionado.id == ejercicio.id,
+            );
+            return ejercicio.copyWith(seleccionado: isSelected);
+          }).toList();
           emit(EjercicioGetAllSuccess(ejercicios: updatedEjercicios));
         },
       );
@@ -77,13 +76,12 @@ class EjercicioCubit extends Cubit<EjercicioState> {
   ejercicioAgregado({required String id}) {
     final currentState = state;
     if (currentState is EjercicioGetAllSuccess) {
-      final updatedEjercicios =
-          currentState.ejercicios.map((e) {
-            if (e.id == id) {
-              return e.copyWith(seleccionado: !e.seleccionado);
-            }
-            return e;
-          }).toList();
+      final updatedEjercicios = currentState.ejercicios.map((e) {
+        if (e.id == id) {
+          return e.copyWith(seleccionado: !e.seleccionado);
+        }
+        return e;
+      }).toList();
       emit(EjercicioGetAllSuccess(ejercicios: updatedEjercicios));
     }
   }

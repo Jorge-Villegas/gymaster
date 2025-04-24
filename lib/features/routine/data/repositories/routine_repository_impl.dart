@@ -68,7 +68,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
     required String imagenDireccion,
   }) async {
     try {
-      final rutina = Routine(
+      final rutina = RoutineDbModel(
         id: idGenerator.generateId(),
         name: name,
         description: description,
@@ -109,7 +109,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
 
         await RoutineDataSeeder(idGenerator: idGenerator).generateFakeRutinas();
 
-        await EjercicioRutinaSeeder(idGenerator: idGenerator).generateData();
+        // await EjercicioRutinaSeeder(idGenerator: idGenerator).generateData();
         // await generateData(DatabaseHelper.instance);
       }
 
@@ -132,7 +132,6 @@ class RoutineRepositoryImpl implements RoutineRepository {
       final ejercicios = await localDataSource.getEjerciciosPorMusculo(
         musculoId,
       );
-
       return right(
         ejercicios
             .map(
@@ -211,14 +210,15 @@ class RoutineRepositoryImpl implements RoutineRepository {
       // Obtener rutina
       final rutina = await localDataSource.getRutinaById(rutinaId);
 
-      RoutineSession? session = await localDataSource.getRoutineSessionById(
+      RoutineSessionDbModel? session =
+          await localDataSource.getRoutineSessionById(
         idRoutineSession,
       );
 
       // Si no hay sesión, devolvemos un error
       // Creamos una sesión ya que sería la primera vez que entra a la rutina
       if (session == null) {
-        final newSession = RoutineSession(
+        final newSession = RoutineSessionDbModel(
           id: idGenerator.generateId(),
           routineId: rutinaId,
           status: RoutineSessionStatus.pending.name,
@@ -540,17 +540,18 @@ class RoutineRepositoryImpl implements RoutineRepository {
   }
 
   @override
-  Future<Either<Failure, RoutineSession>> getLastRoutineSessionByRoutineId(
+  Future<Either<Failure, RoutineSessionDbModel>>
+      getLastRoutineSessionByRoutineId(
     String id,
   ) async {
-    RoutineSession? session =
+    RoutineSessionDbModel? session =
         await localDataSource.getLastRoutineSessionByRoutineId(id);
 
     if (session != null) {
       return Right(session);
     }
 
-    final newSession = RoutineSession(
+    final newSession = RoutineSessionDbModel(
       id: idGenerator.generateId(),
       routineId: id,
       status: RoutineSessionStatus.pending.name,
@@ -674,7 +675,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
       if (currentSession != null &&
           currentSession.status == RoutineSessionStatus.completed.name) {
         // Crear una nueva sesión con estado en_progreso
-        final newSession = RoutineSession(
+        final newSession = RoutineSessionDbModel(
           id: idGenerator.generateId(),
           routineId: routineId,
           status: RoutineSessionStatus.in_progress.name,
@@ -699,7 +700,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
         for (var sessionExercise in sessionExercises) {
           // Crear nuevo session_exercise para la nueva sesión
           final newSessionExerciseId = idGenerator.generateId();
-          final newSessionExercise = SessionExercise(
+          final newSessionExercise = SessionExerciseDbModel(
             id: newSessionExerciseId,
             sessionId: newSession.id,
             exerciseId: sessionExercise.exerciseId,
@@ -715,7 +716,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
 
           // Copiar cada serie para el nuevo ejercicio, reiniciando el estado
           for (var set in exerciseSets) {
-            final newSet = ExerciseSet(
+            final newSet = ExerciseSetDbModel(
               id: idGenerator.generateId(),
               sessionExerciseId: newSessionExerciseId,
               weight: set.weight,

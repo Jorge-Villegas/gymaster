@@ -89,12 +89,12 @@ class EjercicioRutinaSeeder {
 
   //   // Obtener ejercicios y rutinas existentes
   //   List<Map<String, dynamic>> ejercicios = await db.query(
-  //     DatabaseHelper.tbExercise,
+  //     ExerciseDbModel.table,
   //   );
   //   List<Exercise> ejerciciosdb = listaEjerciciosFromMapList(ejercicios);
 
   //   List<Map<String, dynamic>> rutinas = await db.query(
-  //     DatabaseHelper.tbRoutine,
+  //     RoutineDbModel.table,
   //   );
   //   List<Routine> rutinasdb = listaRutinasFromMapList(rutinas);
 
@@ -121,7 +121,7 @@ class EjercicioRutinaSeeder {
   //       int cantidadSeries = faker.randomGenerator.integer(5, min: 3);
 
   //       for (int j = 0; j < cantidadSeries; j++) {
-  //         await db.insert(DatabaseHelper.tbExerciseSet, {
+  //         await db.insert(ExerciseSetDbModel.table, {
   //           'id': faker.guid.guid(),
   //           'peso': double.parse(
   //             (faker.randomGenerator.decimal(scale: 50)).toStringAsFixed(2),

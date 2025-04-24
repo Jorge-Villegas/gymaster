@@ -1,4 +1,5 @@
-import 'package:gymaster/core/database/models/routine_session.dart';
+import 'package:fpdart/fpdart.dart';
+import 'package:gymaster/core/database/models/routine_session_db_model.dart';
 import 'package:gymaster/core/error/failures.dart';
 import 'package:gymaster/features/routine/domain/entities/ejercicios_de_rutina.dart'
     as ejercicios_de_rutina;
@@ -7,7 +8,6 @@ import 'package:gymaster/features/routine/domain/entities/musculo.dart';
 import 'package:gymaster/features/routine/domain/entities/routine.dart';
 import 'package:gymaster/features/routine/domain/entities/rutina_data.dart';
 import 'package:gymaster/features/routine/domain/entities/serie.dart';
-import 'package:fpdart/fpdart.dart';
 
 import '../usecases/add_ejercicio_rutina_usecase.dart';
 
@@ -41,8 +41,8 @@ abstract interface class RoutineRepository {
 
   Future<Either<Failure, List<Musculo>>> getAllMusculos();
 
-  Future<Either<Failure, List<EjerciciosPorMusculo>>>
-  getAllEjerciciosByMusculo({required String musculoId});
+  Future<Either<Failure, List<EjerciciosPorMusculo>>> getAllEjerciciosByMusculo(
+      {required String musculoId});
 
   Future<Either<Failure, void>> addEjericioRutina({
     required String idRutina,
@@ -52,7 +52,7 @@ abstract interface class RoutineRepository {
   });
 
   Future<Either<Failure, ejercicios_de_rutina.EjerciciosDeRutina>>
-  getAllEjercicioByRutinaId({
+      getAllEjercicioByRutinaId({
     required String rutinaId,
     required String idRoutineSession,
   });
@@ -74,7 +74,8 @@ abstract interface class RoutineRepository {
   });
 
   //obtener la ultima session de la rutina por su id
-  Future<Either<Failure, RoutineSession>> getLastRoutineSessionByRoutineId(
+  Future<Either<Failure, RoutineSessionDbModel>>
+      getLastRoutineSessionByRoutineId(
     String id,
   );
 

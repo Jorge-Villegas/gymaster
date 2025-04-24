@@ -35,22 +35,20 @@ class EjerciciosDeRutinaModel extends EjerciciosDeRutina {
       descripcion: json['descripcion'],
       fechaCreacion: DateTime.parse(json['fecha_creacion']),
       color: json['color'],
-      ejercicios:
-          (json['ejercicios'] as List)
-              .map((e) => EjercicioModel.fromJson(e))
-              .toList(),
+      ejercicios: (json['ejercicios'] as List)
+          .map((e) => EjercicioModel.fromJson(e))
+          .toList(),
       estado: json['estado'],
       id: json['id'],
       realizado: json['realizado'],
-      fechaRealizacion:
-          json['fecha_realizacion'] != null
-              ? DateTime.parse(json['fecha_realizacion'])
-              : null,
+      fechaRealizacion: json['fecha_realizacion'] != null
+          ? DateTime.parse(json['fecha_realizacion'])
+          : null,
     );
   }
 
   factory EjerciciosDeRutinaModel.fromDatabase({
-    required Routine rutinaDB,
+    required RoutineDbModel rutinaDB,
     required String status,
     required List<EjercicioModel> ejercicios,
     required String session,
@@ -66,10 +64,9 @@ class EjerciciosDeRutinaModel extends EjerciciosDeRutina {
       estado: status,
       id: rutinaDB.id,
       realizado: true, //TODO: Cambiar
-      fechaRealizacion:
-          rutinaDB.createdAt != rutinaDB.updatedAt
-              ? DateTime.parse(rutinaDB.createdAt)
-              : null, //TODO: Cambiar
+      fechaRealizacion: rutinaDB.createdAt != rutinaDB.updatedAt
+          ? DateTime.parse(rutinaDB.createdAt)
+          : null, //TODO: Cambiar
     );
   }
 }
@@ -87,7 +84,7 @@ class EjercicioModel extends Ejercicio {
   });
 
   factory EjercicioModel.fromDatabase({
-    required Exercise ejercicioDB,
+    required ExerciseDbModel ejercicioDB,
     required String status,
     required int orderIndex,
     List<SeriesDelEjercicioModel>? series,
@@ -106,31 +103,31 @@ class EjercicioModel extends Ejercicio {
   }
 
   factory EjercicioModel.fromJson(Map<String, dynamic> json) => EjercicioModel(
-    id: json["id"],
-    nombre: json["nombre"],
-    imagenDireccion: json["imagen_direccion"],
-    descripcion: json["descripcion"],
-    estado: json["estado"],
-    orderIndex: json["order_index"],
-    series: List<SeriesDelEjercicioModel>.from(
-      json["series"].map((x) => SeriesDelEjercicioModel.fromJson(x)),
-    ),
-    musculos: List<MusculoModel>.from(
-      json["musculos"].map((x) => MusculoModel.fromJson(x)),
-    ),
-  );
+        id: json["id"],
+        nombre: json["nombre"],
+        imagenDireccion: json["imagen_direccion"],
+        descripcion: json["descripcion"],
+        estado: json["estado"],
+        orderIndex: json["order_index"],
+        series: List<SeriesDelEjercicioModel>.from(
+          json["series"].map((x) => SeriesDelEjercicioModel.fromJson(x)),
+        ),
+        musculos: List<MusculoModel>.from(
+          json["musculos"].map((x) => MusculoModel.fromJson(x)),
+        ),
+      );
 
   @override
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "nombre": nombre,
-    "imagen_direccion": imagenDireccion,
-    "descripcion": descripcion,
-    "estado": estado,
-    "order_index": orderIndex,
-    "series": List<dynamic>.from(series.map((x) => x.toJson())),
-    "musculos": List<dynamic>.from(musculos!.map((x) => x.toJson())),
-  };
+        "id": id,
+        "nombre": nombre,
+        "imagen_direccion": imagenDireccion,
+        "descripcion": descripcion,
+        "estado": estado,
+        "order_index": orderIndex,
+        "series": List<dynamic>.from(series.map((x) => x.toJson())),
+        "musculos": List<dynamic>.from(musculos!.map((x) => x.toJson())),
+      };
 }
 
 class SeriesDelEjercicioModel extends Serie {
@@ -153,14 +150,14 @@ class SeriesDelEjercicioModel extends Serie {
 
   @override
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'peso': peso,
-    'repeticiones': repeticiones,
-    'timpo_descanso': timpoDescanso,
-    'realizado': estado,
-  };
+        'id': id,
+        'peso': peso,
+        'repeticiones': repeticiones,
+        'timpo_descanso': timpoDescanso,
+        'realizado': estado,
+      };
 
-  factory SeriesDelEjercicioModel.fromDatabase(ExerciseSet serieDB) {
+  factory SeriesDelEjercicioModel.fromDatabase(ExerciseSetDbModel serieDB) {
     return SeriesDelEjercicioModel(
       id: serieDB.id,
       peso: serieDB.weight ?? 0,
@@ -178,7 +175,7 @@ class MusculoModel extends Musculo {
     required super.imagenDireccion,
   });
 
-  factory MusculoModel.fromDatabase(Muscle musculoDB) {
+  factory MusculoModel.fromDatabase(MuscleDbModel musculoDB) {
     return MusculoModel(
       id: musculoDB.id,
       nombre: musculoDB.name,

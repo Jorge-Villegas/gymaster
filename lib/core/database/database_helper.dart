@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:gymaster/core/database/seeders/database_seeder.dart';
-import 'package:gymaster/shared/utils/uuid_generator.dart';
+import 'package:gymaster/core/database/models/models.dart';
+// ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
@@ -10,17 +10,6 @@ import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 class DatabaseHelper {
   static const _databaseName = 'gymaster.db';
   static const _databaseVersion = 1;
-
-  // Nombres de las tablas
-  static const tbUser = 'user';
-  static const tbRoutine = 'routine';
-  static const tbRoutineSession = 'routine_session';
-  static const tbExercise = 'exercise';
-  static const tbMuscle = 'muscle';
-  static const tbExerciseMuscle = 'exercise_muscle';
-  static const tbSessionExercise = 'session_exercise';
-  static const tbExerciseSet = 'exercise_set';
-  static const tbAuditLog = 'audit_log';
 
   // Singleton
   DatabaseHelper._privateConstructor();
@@ -70,104 +59,104 @@ class DatabaseHelper {
 
   Future<void> _onCreate(Database db, int version) async {
     await db.execute('''
-        CREATE TABLE user (
-          id TEXT PRIMARY KEY,
-          username TEXT UNIQUE NOT NULL,
-          email TEXT UNIQUE NOT NULL,
-          password TEXT NOT NULL,
-          created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-          updated_at DATETIME
+        CREATE TABLE ${UserDbModel.table} (
+          ${UserDbModel.columnId}          TEXT PRIMARY KEY,
+          ${UserDbModel.columnUserName}    TEXT UNIQUE NOT NULL,
+          ${UserDbModel.columnEmain}       TEXT UNIQUE NOT NULL,
+          ${UserDbModel.columnPassword}    TEXT NOT NULL,
+          ${UserDbModel.columnCreatedAt}   DATETIME DEFAULT CURRENT_TIMESTAMP,
+          ${UserDbModel.columnUpdatedAt}   DATETIME
         )
       ''');
 
     await db.execute('''
-        CREATE TABLE routine (
-          id TEXT PRIMARY KEY,
-          user_id TEXT NOT NULL,
-          name TEXT NOT NULL,
-          description TEXT,
-          color INTEGER,
-          image_path TEXT,
-          created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-          updated_at DATETIME,
-          FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE
+        CREATE TABLE ${RoutineDbModel.table} (
+           ${RoutineDbModel.columnId}           TEXT PRIMARY KEY,
+           ${RoutineDbModel.columnUserId}       TEXT NOT NULL,
+           ${RoutineDbModel.columnName}         TEXT NOT NULL,
+           ${RoutineDbModel.columnDescription}  TEXT,
+           ${RoutineDbModel.columnColor}        INTEGER,
+           ${RoutineDbModel.columnImagePath}    TEXT,
+           ${RoutineDbModel.columnCreatedAt}    DATETIME DEFAULT CURRENT_TIMESTAMP,
+           ${RoutineDbModel.columnUpdatedAt}    DATETIME,
+          FOREIGN KEY (user_id)   REFERENCES user  (id)  ON DELETE CASCADE
         )
       ''');
 
     await db.execute('''
-        CREATE TABLE routine_session (
-          id TEXT PRIMARY KEY,
-          routine_id TEXT NOT NULL,
-          start_time DATETIME,
-          end_time DATETIME,
-          status TEXT CHECK(status IN ('pending','in_progress','completed','cancelled')),
-          created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-          FOREIGN KEY (routine_id) REFERENCES routine (id) ON DELETE CASCADE
+        CREATE TABLE  ${RoutineSessionDbModel.table} (
+          ${RoutineSessionDbModel.columnId}          TEXT PRIMARY KEY,
+          ${RoutineSessionDbModel.columnRoutineId}   TEXT NOT NULL,
+          ${RoutineSessionDbModel.columnStartTime}   DATETIME,
+          ${RoutineSessionDbModel.columnEndTime}     DATETIME,
+          ${RoutineSessionDbModel.columnStatus}      TEXT CHECK(status IN ('pending','in_progress','completed','cancelled')),
+          ${RoutineSessionDbModel.columnCreatedAt}   DATETIME DEFAULT CURRENT_TIMESTAMP,
+          FOREIGN KEY (routine_id)   REFERENCES routine   (id)  ON DELETE CASCADE
         )
       ''');
 
     await db.execute('''
-        CREATE TABLE exercise (
-          id TEXT PRIMARY KEY,
-          name TEXT NOT NULL,
-          description TEXT,
-          image_path TEXT,
-          created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-          updated_at DATETIME
+        CREATE TABLE ${ExerciseDbModel.table} (
+          ${ExerciseDbModel.columnId}           TEXT PRIMARY KEY,
+          ${ExerciseDbModel.columnName}         TEXT NOT NULL,
+          ${ExerciseDbModel.columnDescription}  TEXT,
+          ${ExerciseDbModel.columnImagePath}    TEXT,
+          ${ExerciseDbModel.columnCreatedAt}    DATETIME DEFAULT CURRENT_TIMESTAMP,
+          ${ExerciseDbModel.columnUpdatedAt}    DATETIME
         )
       ''');
 
     await db.execute('''
-        CREATE TABLE muscle (
-          id TEXT PRIMARY KEY,
-          name TEXT NOT NULL,
-          image_path TEXT,
-          created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        CREATE TABLE ${MuscleDbModel.table} (
+          ${MuscleDbModel.columnId}          TEXT PRIMARY KEY,
+          ${MuscleDbModel.columnName}        TEXT NOT NULL,
+          ${MuscleDbModel.columnImagePath}   TEXT,
+          ${MuscleDbModel.columnCreatedAt}   DATETIME DEFAULT CURRENT_TIMESTAMP
         )
       ''');
 
     await db.execute('''
-        CREATE TABLE exercise_muscle (
-          exercise_id TEXT NOT NULL,
-          muscle_id TEXT NOT NULL,
+        CREATE TABLE  ${ExerciseMuscleDbModel.table} (
+          ${ExerciseMuscleDbModel.columnExerciseId}  TEXT NOT NULL,
+          ${ExerciseMuscleDbModel.columnMuscleId}    TEXT NOT NULL,
           PRIMARY KEY (exercise_id, muscle_id),
-          FOREIGN KEY (exercise_id) REFERENCES exercise (id) ON DELETE CASCADE,
-          FOREIGN KEY (muscle_id) REFERENCES muscle (id) ON DELETE CASCADE
+          FOREIGN KEY (exercise_id)  REFERENCES exercise  (id)  ON DELETE CASCADE,
+          FOREIGN KEY (muscle_id)    REFERENCES muscle    (id)  ON DELETE CASCADE
         )
       ''');
 
     await db.execute('''
-        CREATE TABLE session_exercise (
-          id TEXT PRIMARY KEY,
-          session_id TEXT NOT NULL,
-          exercise_id TEXT NOT NULL,
-          order_index INTEGER DEFAULT 0,
-          status TEXT CHECK(status IN ('pending','in_progress','completed','cancelled')),
-          FOREIGN KEY (session_id) REFERENCES routine_session (id) ON DELETE CASCADE,
-          FOREIGN KEY (exercise_id) REFERENCES exercise (id) ON DELETE CASCADE
+        CREATE TABLE ${SessionExerciseDbModel.table} (
+          ${SessionExerciseDbModel.columnId}         TEXT PRIMARY KEY,
+          ${SessionExerciseDbModel.columnSessionId}  TEXT NOT NULL,
+          ${SessionExerciseDbModel.columnExerciseId} TEXT NOT NULL,
+          ${SessionExerciseDbModel.columnOrderIndex} INTEGER DEFAULT 0,
+          ${SessionExerciseDbModel.columnStatus}     TEXT CHECK(status IN ('pending','in_progress','completed','cancelled')),
+          FOREIGN KEY (session_id)    REFERENCES routine_session  (id)   ON DELETE CASCADE,
+          FOREIGN KEY (exercise_id)   REFERENCES exercise         (id)   ON DELETE CASCADE
         )
       ''');
 
     await db.execute('''
-        CREATE TABLE exercise_set (
-          id TEXT PRIMARY KEY,
-          session_exercise_id TEXT NOT NULL,
-          weight REAL,
-          repetitions INTEGER,
-          rest_time INTEGER,
-          status TEXT CHECK(status IN ('pending','completed','failed')),
+        CREATE TABLE ${ExerciseSetDbModel.table}  (
+          ${ExerciseSetDbModel.columnId}                 TEXT PRIMARY KEY,
+          ${ExerciseSetDbModel.columnSessionExerciseId}  TEXT NOT NULL,
+          ${ExerciseSetDbModel.columnWeight}             REAL,
+          ${ExerciseSetDbModel.columnRepetitions}        INTEGER,
+          ${ExerciseSetDbModel.columnRestTime}           INTEGER,
+          ${ExerciseSetDbModel.columnStatus}             TEXT CHECK(status IN ('pending','completed','failed')),
           FOREIGN KEY (session_exercise_id) REFERENCES session_exercise (id) ON DELETE CASCADE
         )
       ''');
 
     await db.execute('''
-        CREATE TABLE audit_log (
-          id TEXT PRIMARY KEY,
-          user_id TEXT NOT NULL,
-          table_name TEXT NOT NULL,
-          record_id TEXT NOT NULL,
-          action TEXT CHECK(action IN ('INSERT','UPDATE','DELETE')),
-          timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+        CREATE TABLE ${AuditLogDbModel.table}  (
+          ${AuditLogDbModel.columnId}          TEXT PRIMARY KEY,
+          ${AuditLogDbModel.columnUserId}      TEXT NOT NULL,
+          ${AuditLogDbModel.columnTableName}   TEXT NOT NULL,
+          ${AuditLogDbModel.columnRecordId}    TEXT NOT NULL,
+          ${AuditLogDbModel.columnAction}      TEXT CHECK(action IN ('INSERT','UPDATE','DELETE')),
+          ${AuditLogDbModel.columnTimestamp}   DATETIME DEFAULT CURRENT_TIMESTAMP,
           FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE
         )
       ''');

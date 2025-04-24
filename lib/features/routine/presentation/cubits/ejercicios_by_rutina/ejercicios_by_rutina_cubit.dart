@@ -2,7 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:gymaster/core/database/database_helper.dart';
-import 'package:gymaster/core/database/models/routine_session.dart';
+import 'package:gymaster/core/database/models/models.dart';
+import 'package:gymaster/core/database/models/routine_session_db_model.dart';
 import 'package:gymaster/core/error/timeout_helper.dart';
 import 'package:gymaster/features/routine/domain/entities/ejercicios_de_rutina.dart';
 import 'package:gymaster/features/routine/domain/usecases/complete_routine_session_usecase.dart';
@@ -88,7 +89,7 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
   }
 
   Future<String> getRoutineSessionByRoutineId(String idRutina) async {
-    RoutineSession? session;
+    RoutineSessionDbModel? session;
 
     //obtenermos la ultima session de la rutina
     final resultSession = await runWithTimeout(
@@ -110,7 +111,7 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
     try {
       emit(EjerciciosByRutinaLoading());
 
-      RoutineSession? session;
+      RoutineSessionDbModel? session;
 
       //obtenermos la ultima session de la rutina
       final resultSession = await runWithTimeout(
@@ -182,8 +183,8 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
       (e) => e.id == currentState.ejercicioIndex,
     );
     final serieIndex = ejercicios[ejercicioIndex].series.indexWhere(
-      (s) => s.id == currentState.serieIndex,
-    );
+          (s) => s.id == currentState.serieIndex,
+        );
 
     // Si no es la última serie del ejercicio actual, avanzar a la siguiente serie
     if (serieIndex + 1 < ejercicios[ejercicioIndex].series.length) {
@@ -213,10 +214,9 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
     );
 
     final updatedEjercicio = ejercicio.copyWith(
-      estado:
-          ejercicio.estado == ExerciseStatus.completed.name
-              ? ExerciseStatus.completed.name
-              : ExerciseStatus.in_progress.name,
+      estado: ejercicio.estado == ExerciseStatus.completed.name
+          ? ExerciseStatus.completed.name
+          : ExerciseStatus.in_progress.name,
     );
 
     await updateExerciseStatusUseCase(
@@ -227,17 +227,16 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
       ),
     );
 
-    final updatedSeries =
-        ejercicio.series.map((s) {
-          return s.id == updatedSerie.id ? updatedSerie : s;
-        }).toList();
+    final updatedSeries = ejercicio.series.map((s) {
+      return s.id == updatedSerie.id ? updatedSerie : s;
+    }).toList();
 
     final updatedEjercicios =
         currentState.ejerciciosDeRutina.ejercicios.map((e) {
-          return e.id == updatedEjercicio.id
-              ? updatedEjercicio.copyWith(series: updatedSeries)
-              : e;
-        }).toList();
+      return e.id == updatedEjercicio.id
+          ? updatedEjercicio.copyWith(series: updatedSeries)
+          : e;
+    }).toList();
 
     emit(
       EjerciciosByRutinaSuccess(
@@ -262,8 +261,8 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
       (e) => e.id == currentState.ejercicioIndex,
     );
     final serieIndex = ejercicios[ejercicioIndex].series.indexWhere(
-      (s) => s.id == currentState.serieIndex,
-    );
+          (s) => s.id == currentState.serieIndex,
+        );
 
     if (serieIndex + 1 < ejercicios[ejercicioIndex].series.length) {
       // Avanza a la siguiente serie del ejercicio actual
@@ -316,25 +315,23 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
     // Mapea la lista de ejercicios actual para encontrar el ejercicio que coincide con el índice actual
     final updatedEjercicios =
         currentState.ejerciciosDeRutina.ejercicios.map((ejercicio) {
-          if (ejercicio.id == currentState.ejercicioIndex) {
-            // Si el ejercicio coincide, mapea sus series para encontrar la serie que coincide con la serie actual
-            final updatedSeries =
-                ejercicio.series.map((serie) {
-                  // Si la serie coincide, la reemplaza con la serie actualizada
-                  return serie.id == updatedSerie.id ? updatedSerie : serie;
-                }).toList();
-            // Retorna el ejercicio con las series actualizadas y el estado del ejercicio como 'in_progress' solo si no está completado
-            return ejercicio.copyWith(
-              series: updatedSeries,
-              estado:
-                  ejercicio.estado == ExerciseStatus.completed.name
-                      ? ExerciseStatus.completed.name
-                      : ExerciseStatus.in_progress.name,
-            );
-          }
-          // Si el ejercicio no coincide, lo retorna sin cambios
-          return ejercicio;
+      if (ejercicio.id == currentState.ejercicioIndex) {
+        // Si el ejercicio coincide, mapea sus series para encontrar la serie que coincide con la serie actual
+        final updatedSeries = ejercicio.series.map((serie) {
+          // Si la serie coincide, la reemplaza con la serie actualizada
+          return serie.id == updatedSerie.id ? updatedSerie : serie;
         }).toList();
+        // Retorna el ejercicio con las series actualizadas y el estado del ejercicio como 'in_progress' solo si no está completado
+        return ejercicio.copyWith(
+          series: updatedSeries,
+          estado: ejercicio.estado == ExerciseStatus.completed.name
+              ? ExerciseStatus.completed.name
+              : ExerciseStatus.in_progress.name,
+        );
+      }
+      // Si el ejercicio no coincide, lo retorna sin cambios
+      return ejercicio;
+    }).toList();
 
     // Emite un nuevo estado con la lista de ejercicios actualizada
     emit(
@@ -379,7 +376,7 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
 
           // Find the session_exercise_id for this exercise
           final sessionExerciseRows = await txn.query(
-            DatabaseHelper.tbSessionExercise,
+            SessionExerciseDbModel.table,
             where: 'session_id = ? AND exercise_id = ?',
             whereArgs: [routineSessionId, ejercicio.id],
           );
@@ -389,7 +386,7 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
 
             // Update the order_index
             await txn.update(
-              DatabaseHelper.tbSessionExercise,
+              SessionExerciseDbModel.table,
               {'order_index': i},
               where: 'id = ?',
               whereArgs: [sessionExerciseId],
@@ -414,10 +411,9 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
 
     if (canDelete) {
       // Actualice el estado solo si la eliminación fue exitosa
-      final updatedEjercicios =
-          currentState.ejerciciosDeRutina.ejercicios
-              .where((ejercicio) => ejercicio.id != idEjercicio)
-              .toList();
+      final updatedEjercicios = currentState.ejerciciosDeRutina.ejercicios
+          .where((ejercicio) => ejercicio.id != idEjercicio)
+          .toList();
 
       final updatedEjerciciosDeRutina = currentState.ejerciciosDeRutina
           .copyWith(ejercicios: updatedEjercicios);
@@ -471,7 +467,7 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
         }
 
         // 2. Obtener la sesión actualizada
-        RoutineSession? updatedSession;
+        RoutineSessionDbModel? updatedSession;
         final sessionResult = await getLastRoutineSessionByRoutineId(
           GetLastRoutineSessionByRoutineIdParams(idRoutine: rutinaId),
         );

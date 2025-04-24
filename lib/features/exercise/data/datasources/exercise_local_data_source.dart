@@ -1,8 +1,8 @@
 import 'package:gymaster/core/database/database_helper.dart';
-import 'package:gymaster/core/database/models/exercise.dart' as exercise_db;
-import 'package:gymaster/core/database/models/muscle.dart';
 import 'package:gymaster/core/error/exceptions.dart';
 import 'package:gymaster/features/exercise/data/models/exercise_model.dart';
+
+import '../../../../core/database/models/models.dart';
 
 class ExerciseLocalDataSource {
   final DatabaseHelper databaseHelper;
@@ -12,12 +12,12 @@ class ExerciseLocalDataSource {
   Future<List<ExerciseModel>> getAllExercises() async {
     try {
       final db = await databaseHelper.database;
-      final exercises = await db.query(DatabaseHelper.tbExercise);
+      final exercises = await db.query(ExerciseDbModel.table);
 
       List<ExerciseModel> exerciseModels = [];
 
       for (var exercise in exercises) {
-        final exerciseDB = exercise_db.Exercise.fromJson(exercise);
+        final exerciseDB = ExerciseDbModel.fromJson(exercise);
         final muscles = await getMusclesForExercise(exerciseDB.id);
         exerciseModels.add(
           ExerciseModel.fromDatabase(
@@ -33,20 +33,20 @@ class ExerciseLocalDataSource {
     }
   }
 
-  Future<List<Muscle>> getMusclesForExercise(String exerciseId) async {
+  Future<List<MuscleDbModel>> getMusclesForExercise(String exerciseId) async {
     try {
       final db = await databaseHelper.database;
       final results = await db.rawQuery(
         '''
-        SELECT m.* FROM ${DatabaseHelper.tbMuscle} m
-        INNER JOIN ${DatabaseHelper.tbExerciseMuscle} em 
+        SELECT m.* FROM ${MuscleDbModel.table} m
+        INNER JOIN ${ExerciseDbModel.table} em 
         ON m.id = em.muscle_id
         WHERE em.exercise_id = ?
         ''',
         [exerciseId],
       );
 
-      return results.map((e) => Muscle.fromJson(e)).toList();
+      return results.map((e) => MuscleDbModel.fromJson(e)).toList();
     } catch (e) {
       throw ServerException();
     }
@@ -59,8 +59,8 @@ class ExerciseLocalDataSource {
       final exercises = await db.rawQuery(
         '''
         SELECT DISTINCT e.* 
-        FROM ${DatabaseHelper.tbExercise} e
-        INNER JOIN ${DatabaseHelper.tbExerciseMuscle} em ON e.id = em.exercise_id
+        FROM ${ExerciseDbModel.table} e
+        INNER JOIN ${ExerciseDbModel.table} em ON e.id = em.exercise_id
         WHERE em.muscle_id = ?
         ''',
         [muscleId],
@@ -70,7 +70,7 @@ class ExerciseLocalDataSource {
 
       // Para cada ejercicio, obtener todos sus músculos relacionados
       for (var exercise in exercises) {
-        final exerciseDB = exercise_db.Exercise.fromJson(exercise);
+        final exerciseDB = ExerciseDbModel.fromJson(exercise);
         // Obtener todos los músculos relacionados con este ejercicio
         final muscles = await getMusclesForExercise(exerciseDB.id);
         exerciseModels.add(
@@ -91,14 +91,14 @@ class ExerciseLocalDataSource {
     try {
       final db = await databaseHelper.database;
       final results = await db.query(
-        DatabaseHelper.tbExercise,
+        ExerciseDbModel.table,
         where: 'id = ?',
         whereArgs: [id],
       );
 
       if (results.isEmpty) return null;
 
-      final exerciseDB = exercise_db.Exercise.fromJson(results.first);
+      final exerciseDB = ExerciseDbModel.fromJson(results.first);
       final muscles = await getMusclesForExercise(exerciseDB.id);
 
       return ExerciseModel.fromDatabase(
@@ -114,7 +114,7 @@ class ExerciseLocalDataSource {
     try {
       final db = await databaseHelper.database;
       final exercises = await db.query(
-        DatabaseHelper.tbExercise,
+        ExerciseDbModel.table,
         where: 'name LIKE ? OR description LIKE ?',
         whereArgs: ['%$query%', '%$query%'],
       );
@@ -122,7 +122,7 @@ class ExerciseLocalDataSource {
       List<ExerciseModel> exerciseModels = [];
 
       for (var exercise in exercises) {
-        final exerciseDB = exercise_db.Exercise.fromJson(exercise);
+        final exerciseDB = ExerciseDbModel.fromJson(exercise);
         final muscles = await getMusclesForExercise(exerciseDB.id);
         exerciseModels.add(
           ExerciseModel.fromDatabase(

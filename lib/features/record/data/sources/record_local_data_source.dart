@@ -10,11 +10,11 @@ class RecordLocalDataSource {
 
   RecordLocalDataSource(this.databaseHelper);
 
-  Future<List<RoutineSession>> getCompletedRoutines() async {
+  Future<List<RoutineSessionDbModel>> getCompletedRoutines() async {
     try {
       final db = await databaseHelper.database;
       final result = await db.query(
-        DatabaseHelper.tbRoutineSession,
+        RoutineSessionDbModel.table,
         where: 'status = ?',
         whereArgs: [RoutineSessionStatus.completed.name],
         orderBy: 'created_at DESC',
@@ -24,13 +24,15 @@ class RecordLocalDataSource {
         throw NoRecordsException();
       }
 
-      return result.map((session) => RoutineSession.fromJson(session)).toList();
+      return result
+          .map((session) => RoutineSessionDbModel.fromJson(session))
+          .toList();
     } catch (e) {
       throw CacheException();
     }
   }
 
-  Future<List<Exercise>> getCompletedExercisesByRoutineId(
+  Future<List<ExerciseDbModel>> getCompletedExercisesByRoutineId(
     String routineId,
   ) async {
     final db = await databaseHelper.database;
@@ -45,10 +47,13 @@ class RecordLocalDataSource {
       [routineId],
     );
 
-    return ejercicios.map((ejercicio) => Exercise.fromJson(ejercicio)).toList();
+    return ejercicios
+        .map((ejercicio) => ExerciseDbModel.fromJson(ejercicio))
+        .toList();
   }
 
-  Future<List<ExerciseSet>> getSeriesByExerciseId(String exerciseId) async {
+  Future<List<ExerciseSetDbModel>> getSeriesByExerciseId(
+      String exerciseId) async {
     final db = await databaseHelper.database;
     final series = await db.rawQuery(
       '''
@@ -60,31 +65,31 @@ class RecordLocalDataSource {
       [exerciseId],
     );
 
-    return series.map((serie) => ExerciseSet.fromJson(serie)).toList();
+    return series.map((serie) => ExerciseSetDbModel.fromJson(serie)).toList();
   }
 
-  Future<List<Routine>> getAllRutinas() async {
+  Future<List<RoutineDbModel>> getAllRutinas() async {
     try {
       final db = await databaseHelper.database;
       final rutinas = await db.query(
-        DatabaseHelper.tbRoutine,
+        RoutineDbModel.table,
         orderBy: 'created_at',
       );
-      return rutinas.map((rutina) => Routine.fromJson(rutina)).toList();
+      return rutinas.map((rutina) => RoutineDbModel.fromJson(rutina)).toList();
     } catch (e) {
       throw CacheException();
     }
   }
 
-  Future<Routine> getRutinaById(String id) async {
+  Future<RoutineDbModel> getRutinaById(String id) async {
     final db = await databaseHelper.database;
     final result = await db.query(
-      DatabaseHelper.tbRoutine,
+      RoutineDbModel.table,
       where: 'id = ?',
       whereArgs: [id],
     );
     if (result.isNotEmpty) {
-      return Routine.fromJson(result.first);
+      return RoutineDbModel.fromJson(result.first);
     } else {
       throw Exception('Rutina not found');
     }
@@ -93,7 +98,7 @@ class RecordLocalDataSource {
   Future<void> saveRutina(RecordRutinaModel rutina) async {
     final db = await databaseHelper.database;
     await db.insert(
-      DatabaseHelper.tbRoutine,
+      RoutineDbModel.table,
       rutina.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
@@ -101,6 +106,6 @@ class RecordLocalDataSource {
 
   Future<void> deleteRutina(String id) async {
     final db = await databaseHelper.database;
-    await db.delete(DatabaseHelper.tbRoutine, where: 'id = ?', whereArgs: [id]);
+    await db.delete(RoutineDbModel.table, where: 'id = ?', whereArgs: [id]);
   }
 }

@@ -12,17 +12,17 @@ class RoutineLocalDataSource {
 
   RoutineLocalDataSource(this.databaseHelper, this.idGenerator);
 
-  Future<List<Routine>> getAllRutinas() async {
+  Future<List<RoutineDbModel>> getAllRutinas() async {
     try {
       final db = await databaseHelper.database;
       final rutinas = await db.query(
-        DatabaseHelper.tbRoutine,
+        RoutineDbModel.table,
         orderBy: 'created_at DESC',
       );
       if (rutinas.isEmpty) {
         throw NoRecordsException();
       }
-      return rutinas.map((rutina) => Routine.fromJson(rutina)).toList();
+      return rutinas.map((rutina) => RoutineDbModel.fromJson(rutina)).toList();
     } catch (e) {
       if (e is NoRecordsException) {
         rethrow;
@@ -32,29 +32,30 @@ class RoutineLocalDataSource {
     }
   }
 
-  Future<bool> createRutina({required Routine rutina}) async {
+  Future<bool> createRutina({required RoutineDbModel rutina}) async {
     try {
       final db = await databaseHelper.database;
-      final id = await db.insert(DatabaseHelper.tbRoutine, rutina.toJson());
+      final id = await db.insert(RoutineDbModel.table, rutina.toJson());
       return id > 0;
     } catch (e) {
       throw ServerException();
     }
   }
 
-  Future<List<Muscle>> getAllMusculos() async {
+  Future<List<MuscleDbModel>> getAllMusculos() async {
     try {
       final db = await databaseHelper.database;
-      final musculos = await db.query(DatabaseHelper.tbMuscle);
+      final musculos = await db.query(MuscleDbModel.table);
       return List.generate(musculos.length, (i) {
-        return Muscle.fromJson(musculos[i]);
+        return MuscleDbModel.fromJson(musculos[i]);
       });
     } catch (e) {
       throw ServerException();
     }
   }
 
-  Future<List<Exercise>> getEjerciciosPorMusculo(String musculoId) async {
+  Future<List<ExerciseDbModel>> getEjerciciosPorMusculo(
+      String musculoId) async {
     try {
       final db = await databaseHelper.database;
       final ejercicios = await db.rawQuery(
@@ -68,65 +69,66 @@ class RoutineLocalDataSource {
       );
 
       if (ejercicios.isEmpty) throw NoRecordsException();
-      return ejercicios.map((map) => Exercise.fromJson(map)).toList();
+      return ejercicios.map((map) => ExerciseDbModel.fromJson(map)).toList();
     } catch (e) {
       throw ServerException();
     }
   }
 
-  Future<Routine> getRutinaById(String id) async {
+  Future<RoutineDbModel> getRutinaById(String id) async {
     try {
       final db = await databaseHelper.database;
       final rutina = await db.query(
-        DatabaseHelper.tbRoutine,
+        RoutineDbModel.table,
         where: 'id = ?',
         whereArgs: [id],
       );
-      return Routine.fromJson(rutina.first);
+      return RoutineDbModel.fromJson(rutina.first);
     } catch (e) {
       throw ServerException();
     }
   }
 
-  Future<Exercise> getEjercicioById(String id) async {
+  Future<RoutineDbModel> getEjercicioById(String id) async {
     try {
       final db = await databaseHelper.database;
       final ejercicio = await db.query(
-        DatabaseHelper.tbExercise,
+        ExerciseDbModel.table,
         where: 'id = ?',
         whereArgs: [id],
       );
-      return Exercise.fromJson(ejercicio.first);
+      return RoutineDbModel.fromJson(ejercicio.first);
     } catch (e) {
       throw ServerException();
     }
   }
 
-  Future<ExerciseSet> getSerieById(String id) async {
+  Future<ExerciseSetDbModel> getSerieById(String id) async {
     try {
       final db = await databaseHelper.database;
       final serie = await db.query(
-        DatabaseHelper.tbExerciseSet,
+        ExerciseSetDbModel.table,
         where: 'id = ?',
         whereArgs: [id],
       );
-      return ExerciseSet.fromJson(serie.first);
+      return ExerciseSetDbModel.fromJson(serie.first);
     } catch (e) {
       throw ServerException();
     }
   }
 
-  Future<ExerciseSet> createSerie({required ExerciseSet serie}) async {
+  Future<ExerciseSetDbModel> createSerie(
+      {required ExerciseSetDbModel serie}) async {
     try {
       final db = await databaseHelper.database;
-      final id = await db.insert(DatabaseHelper.tbExerciseSet, serie.toJson());
+      final id = await db.insert(ExerciseSetDbModel.table, serie.toJson());
       return id > 0 ? serie : throw ServerException();
     } catch (e) {
       throw ServerException();
     }
   }
 
-  Future<List<Exercise>> getEjerciciosByRutinaId(String rutinaId) async {
+  Future<List<RoutineDbModel>> getEjerciciosByRutinaId(String rutinaId) async {
     try {
       final db = await databaseHelper.database;
       final result = await db.rawQuery(
@@ -140,13 +142,13 @@ class RoutineLocalDataSource {
         [rutinaId],
       );
       if (result.isEmpty) return [];
-      return result.map((map) => Exercise.fromJson(map)).toList();
+      return result.map((map) => RoutineDbModel.fromJson(map)).toList();
     } catch (e) {
       throw ServerException();
     }
   }
 
-  Future<List<ExerciseSet>> getSeriesByEjercicioIdAndRutinaId(
+  Future<List<ExerciseSetDbModel>> getSeriesByEjercicioIdAndRutinaId(
     String ejercicioId,
     String rutinaId,
   ) async {
@@ -164,14 +166,15 @@ class RoutineLocalDataSource {
         [rutinaId, ejercicioId],
       );
       return List.generate(series.length, (i) {
-        return ExerciseSet.fromJson(series[i]);
+        return ExerciseSetDbModel.fromJson(series[i]);
       });
     } catch (e) {
       throw ServerException();
     }
   }
 
-  Future<List<Muscle>> getMusculosByEjercicioId(String exerciseId) async {
+  Future<List<MuscleDbModel>> getMusculosByEjercicioId(
+      String exerciseId) async {
     try {
       final db = await databaseHelper.database;
       final maps = await db.rawQuery(
@@ -183,17 +186,17 @@ class RoutineLocalDataSource {
         ''',
         [exerciseId],
       );
-      return maps.map((map) => Muscle.fromJson(map)).toList();
+      return maps.map((map) => MuscleDbModel.fromJson(map)).toList();
     } catch (e) {
       throw ServerException();
     }
   }
 
-  Future<bool> updateSerie(ExerciseSet serie) async {
+  Future<bool> updateSerie(ExerciseSetDbModel serie) async {
     try {
       final db = await databaseHelper.database;
       final result = await db.update(
-        DatabaseHelper.tbExerciseSet,
+        ExerciseSetDbModel.table,
         serie.toJson(),
         where: 'id = ?',
         whereArgs: [serie.id],
@@ -204,17 +207,17 @@ class RoutineLocalDataSource {
     }
   }
 
-  Future<List<Routine>> getRutinasByNombre(String nombre) async {
+  Future<List<RoutineDbModel>> getRutinasByNombre(String nombre) async {
     try {
       final db = await databaseHelper.database;
       final rutinas = await db.rawQuery(
         '''
-          SELECT * FROM ${DatabaseHelper.tbRoutine}
+          SELECT * FROM ${RoutineDbModel.table}
           WHERE name LIKE ?;
         ''',
         ['%$nombre%'],
       );
-      return rutinas.map((rutina) => Routine.fromJson(rutina)).toList();
+      return rutinas.map((rutina) => RoutineDbModel.fromJson(rutina)).toList();
     } catch (e) {
       throw ServerException();
     }
@@ -231,7 +234,7 @@ class RoutineLocalDataSource {
 
       await db.transaction((txn) async {
         final orderResults = await txn.query(
-          DatabaseHelper.tbSessionExercise,
+          SessionExerciseDbModel.table,
           columns: ['MAX(order_index) as max_order'],
           where: 'session_id = ?',
           whereArgs: [idRoutineSession],
@@ -246,7 +249,7 @@ class RoutineLocalDataSource {
         }
 
         final idSessionExercise = idGenerator.generateId();
-        final sessionExercise = SessionExercise(
+        final sessionExercise = SessionExerciseDbModel(
           id: idSessionExercise,
           sessionId: idRoutineSession,
           exerciseId: idEjercicio,
@@ -255,12 +258,12 @@ class RoutineLocalDataSource {
         );
 
         await txn.insert(
-          DatabaseHelper.tbSessionExercise,
+          SessionExerciseDbModel.table,
           sessionExercise.toJson(),
         );
 
         for (final serie in dataSeries) {
-          final exerciseSet = ExerciseSet(
+          final exerciseSet = ExerciseSetDbModel(
             id: idGenerator.generateId(),
             sessionExerciseId: idSessionExercise,
             weight: serie.peso,
@@ -268,7 +271,7 @@ class RoutineLocalDataSource {
             restTime: 60, //TODO: Cambiar a valor configurable
             status: ExerciseSetStatus.pending.name,
           );
-          await txn.insert(DatabaseHelper.tbExerciseSet, exerciseSet.toJson());
+          await txn.insert(ExerciseSetDbModel.table, exerciseSet.toJson());
         }
       });
     } catch (e) {
@@ -276,7 +279,7 @@ class RoutineLocalDataSource {
     }
   }
 
-  Future<List<Exercise>> getExercisesByRoutine(String routineId) async {
+  Future<List<RoutineDbModel>> getExercisesByRoutine(String routineId) async {
     final db = await databaseHelper.database;
 
     final results = await db.rawQuery(
@@ -290,14 +293,15 @@ class RoutineLocalDataSource {
       [routineId],
     );
 
-    return results.map((map) => Exercise.fromJson(map)).toList();
+    return results.map((map) => RoutineDbModel.fromJson(map)).toList();
   }
 
-  Future<RoutineSession?> getLastRoutineSessionByRoutineId(String id) async {
+  Future<RoutineSessionDbModel?> getLastRoutineSessionByRoutineId(
+      String id) async {
     try {
       final db = await databaseHelper.database;
       final result = await db.query(
-        DatabaseHelper.tbRoutineSession,
+        RoutineSessionDbModel.table,
         where: 'routine_id = ?',
         whereArgs: [id],
         orderBy: 'created_at DESC',
@@ -306,63 +310,63 @@ class RoutineLocalDataSource {
       if (result.isEmpty) {
         return null;
       }
-      return RoutineSession.fromJson(result.first);
+      return RoutineSessionDbModel.fromJson(result.first);
     } catch (e) {
       return null;
     }
   }
 
-  Future<List<SessionExercise>> getSessionExercisesByRoutineSessionId(
+  Future<List<SessionExerciseDbModel>> getSessionExercisesByRoutineSessionId(
     String routineSessionId,
   ) async {
     try {
       final db = await databaseHelper.database;
       final result = await db.query(
-        DatabaseHelper.tbSessionExercise,
+        SessionExerciseDbModel.table,
         where: 'session_id = ?',
         whereArgs: [routineSessionId],
         orderBy: 'order_index ASC',
       );
-      return result.map((map) => SessionExercise.fromJson(map)).toList();
+      return result.map((map) => SessionExerciseDbModel.fromJson(map)).toList();
     } catch (e) {
       throw ServerException();
     }
   }
 
-  Future<ExerciseSet> getExerciseSetBySessionExerciseId(
+  Future<ExerciseSetDbModel> getExerciseSetBySessionExerciseId(
     String sessionExerciseId,
   ) async {
     try {
       final db = await databaseHelper.database;
       final result = await db.query(
-        DatabaseHelper.tbExerciseSet,
+        ExerciseSetDbModel.table,
         where: 'session_exercise_id = ?',
         whereArgs: [sessionExerciseId],
       );
-      return ExerciseSet.fromJson(result.first);
+      return ExerciseSetDbModel.fromJson(result.first);
     } catch (e) {
       throw ServerException();
     }
   }
 
   //obtener todos los exercises-sets de un ejercicio
-  Future<List<ExerciseSet>> getExerciseSetsBySessionExerciseId(
+  Future<List<ExerciseSetDbModel>> getExerciseSetsBySessionExerciseId(
     String sessionExerciseId,
   ) async {
     try {
       final db = await databaseHelper.database;
       final result = await db.query(
-        DatabaseHelper.tbExerciseSet,
+        ExerciseSetDbModel.table,
         where: 'session_exercise_id = ?',
         whereArgs: [sessionExerciseId],
       );
-      return result.map((map) => ExerciseSet.fromJson(map)).toList();
+      return result.map((map) => ExerciseSetDbModel.fromJson(map)).toList();
     } catch (e) {
       throw ServerException();
     }
   }
 
-  Future<Exercise> getExerciseBySessionExerciseId(
+  Future<ExerciseDbModel> getExerciseBySessionExerciseId(
     String sessionExerciseId,
   ) async {
     try {
@@ -376,18 +380,19 @@ class RoutineLocalDataSource {
         ''',
         [sessionExerciseId],
       );
-      return Exercise.fromJson(result.first);
+      return ExerciseDbModel.fromJson(result.first);
     } catch (e) {
       throw ServerException();
     }
   }
 
   //creamos uns session de rutina
-  Future<bool> createRoutineSession(RoutineSession routineSession) async {
+  Future<bool> createRoutineSession(
+      RoutineSessionDbModel routineSession) async {
     try {
       final db = await databaseHelper.database;
       final id = await db.insert(
-        DatabaseHelper.tbRoutineSession,
+        RoutineSessionDbModel.table,
         routineSession.toJson(),
       );
       return id > 0;
@@ -396,11 +401,11 @@ class RoutineLocalDataSource {
     }
   }
 
-  Future<RoutineSession?> getRoutineSessionById(String id) async {
+  Future<RoutineSessionDbModel?> getRoutineSessionById(String id) async {
     try {
       final db = await databaseHelper.database;
       final result = await db.query(
-        DatabaseHelper.tbRoutineSession,
+        RoutineSessionDbModel.table,
         where: 'id = ?',
         whereArgs: [id],
       );
@@ -409,14 +414,14 @@ class RoutineLocalDataSource {
         return null; // No se encontró la rutina
       }
 
-      return RoutineSession.fromJson(result.first);
+      return RoutineSessionDbModel.fromJson(result.first);
     } catch (e) {
       throw ServerException();
     }
   }
 
   //getEjercicioFromRutina
-  Future<Exercise?> getExerciseFromRoutine({
+  Future<ExerciseDbModel?> getExerciseFromRoutine({
     required String idRutina,
     required String exerciseId,
     required String idRoutineSession,
@@ -438,7 +443,7 @@ class RoutineLocalDataSource {
         return null;
       }
 
-      return Exercise.fromJson(result.first);
+      return ExerciseDbModel.fromJson(result.first);
     } catch (e) {
       throw ServerException();
     }
@@ -455,7 +460,7 @@ class RoutineLocalDataSource {
         // Actualiza el orden de cada ejercicio
         for (int i = 0; i < exerciseIds.length; i++) {
           await txn.update(
-            DatabaseHelper.tbSessionExercise,
+            SessionExerciseDbModel.table,
             {'order_index': i},
             where: 'session_id = ? AND exercise_id = ?',
             whereArgs: [routineSessionId, exerciseIds[i]],
@@ -479,7 +484,7 @@ class RoutineLocalDataSource {
       return await db.transaction((txn) async {
         // Obtener el número total de ejercicios para esta sesión
         final countResult = await txn.query(
-          DatabaseHelper.tbSessionExercise,
+          SessionExerciseDbModel.table,
           columns: ['COUNT(*) as count'],
           where: 'session_id = ?',
           whereArgs: [routineSessionId],
@@ -489,11 +494,10 @@ class RoutineLocalDataSource {
 
         // Actualizar el estado a completado
         await txn.update(
-          DatabaseHelper.tbSessionExercise,
+          SessionExerciseDbModel.table,
           {
             'status': SessionExerciseStatus.completed.name,
-            'order_index':
-                totalExercises +
+            'order_index': totalExercises +
                 1000, // Un valor alto para asegurar que esté al final
           },
           where: 'id = ?',
@@ -502,7 +506,7 @@ class RoutineLocalDataSource {
 
         // Reorganizar todos los índices para mantener el orden correcto
         final exercises = await txn.query(
-          DatabaseHelper.tbSessionExercise,
+          SessionExerciseDbModel.table,
           where: 'session_id = ?',
           whereArgs: [routineSessionId],
           orderBy:
@@ -512,7 +516,7 @@ class RoutineLocalDataSource {
         // Reasignar los order_index en secuencia
         for (int i = 0; i < exercises.length; i++) {
           await txn.update(
-            DatabaseHelper.tbSessionExercise,
+            SessionExerciseDbModel.table,
             {'order_index': i},
             where: 'id = ?',
             whereArgs: [exercises[i]['id']],
@@ -526,14 +530,14 @@ class RoutineLocalDataSource {
     }
   }
 
-  Future<SessionExercise?> getSessionExerciseByExerciseId({
+  Future<SessionExerciseDbModel?> getSessionExerciseByExerciseId({
     required String routineSessionId,
     required String exerciseId,
   }) async {
     try {
       final db = await databaseHelper.database;
       final result = await db.query(
-        DatabaseHelper.tbSessionExercise,
+        SessionExerciseDbModel.table,
         where: 'session_id = ? AND exercise_id = ?',
         whereArgs: [routineSessionId, exerciseId],
       );
@@ -542,7 +546,7 @@ class RoutineLocalDataSource {
         return null;
       }
 
-      return SessionExercise.fromJson(result.first);
+      return SessionExerciseDbModel.fromJson(result.first);
     } catch (e) {
       throw ServerException();
     }
@@ -579,7 +583,7 @@ class RoutineLocalDataSource {
     try {
       final db = await databaseHelper.database;
       final result = await db.query(
-        DatabaseHelper.tbExerciseSet,
+        ExerciseSetDbModel.table,
         columns: ['session_exercise_id'],
         where: 'id = ?',
         whereArgs: [exerciseSetId],
@@ -599,7 +603,7 @@ class RoutineLocalDataSource {
     try {
       final db = await databaseHelper.database;
       final result = await db.update(
-        DatabaseHelper.tbSessionExercise,
+        SessionExerciseDbModel.table,
         {'status': SessionExerciseStatus.completed.name},
         where: 'id = ?',
         whereArgs: [id],
@@ -620,7 +624,7 @@ class RoutineLocalDataSource {
       final result = await db.transaction((txn) async {
         // Verificar si el ejercicio está en la sesión
         final sessionExercise = await txn.query(
-          DatabaseHelper.tbSessionExercise,
+          SessionExerciseDbModel.table,
           where: 'exercise_id = ? AND session_id = ?',
           whereArgs: [exerciseId, routineSessionId],
         );
@@ -631,9 +635,9 @@ class RoutineLocalDataSource {
 
         // Verificar si el ejercicio tiene series completadas o en proceso
         final exerciseSets = await txn.query(
-          DatabaseHelper.tbExerciseSet,
+          ExerciseSetDbModel.table,
           where:
-              'session_exercise_id IN (SELECT id FROM ${DatabaseHelper.tbSessionExercise} WHERE exercise_id = ? AND session_id = ?)',
+              'session_exercise_id IN (SELECT id FROM ${SessionExerciseDbModel.table} WHERE exercise_id = ? AND session_id = ?)',
           whereArgs: [exerciseId, routineSessionId],
         );
 
@@ -649,17 +653,17 @@ class RoutineLocalDataSource {
 
         // Eliminar el ejercicio de la sesión
         await txn.delete(
-          DatabaseHelper.tbSessionExercise,
+          SessionExerciseDbModel.table,
           where: 'exercise_id = ? AND session_id = ?',
           whereArgs: [exerciseId, routineSessionId],
         );
 
         // Eliminar los sets de ejercicio asociados
         await txn.delete(
-          DatabaseHelper.tbExerciseSet,
+          ExerciseSetDbModel.table,
           where: '''
               session_exercise_id IN (
-                SELECT id FROM ${DatabaseHelper.tbSessionExercise} 
+                SELECT id FROM ${SessionExerciseDbModel.table} 
                 WHERE exercise_id = ? AND session_id = ?)
             ''',
           whereArgs: [exerciseId, routineSessionId],
@@ -694,7 +698,7 @@ class RoutineLocalDataSource {
       }
 
       final result = await db.update(
-        DatabaseHelper.tbRoutineSession,
+        RoutineSessionDbModel.table,
         values,
         where: 'id = ?',
         whereArgs: [sessionId],
@@ -707,11 +711,11 @@ class RoutineLocalDataSource {
   }
 
   /// Obtiene la sesión de rutina en progreso
-  Future<RoutineSession?> getInProgressRoutineSession() async {
+  Future<RoutineSessionDbModel?> getInProgressRoutineSession() async {
     try {
       final db = await databaseHelper.database;
       final result = await db.query(
-        DatabaseHelper.tbRoutineSession,
+        RoutineSessionDbModel.table,
         where: 'status = ?',
         whereArgs: [RoutineSessionStatus.in_progress.name],
         orderBy: 'created_at DESC',
@@ -722,7 +726,7 @@ class RoutineLocalDataSource {
         return null;
       }
 
-      return RoutineSession.fromJson(result.first);
+      return RoutineSessionDbModel.fromJson(result.first);
     } catch (e) {
       throw ServerException();
     }
@@ -733,7 +737,7 @@ class RoutineLocalDataSource {
     try {
       final db = await databaseHelper.database;
       final result = await db.query(
-        DatabaseHelper.tbRoutineSession,
+        RoutineSessionDbModel.table,
         columns: ['status'],
         where: 'id = ?',
         whereArgs: [id],
@@ -756,7 +760,7 @@ class RoutineLocalDataSource {
     try {
       final db = await databaseHelper.database;
       final result = await db.query(
-        DatabaseHelper.tbSessionExercise,
+        SessionExerciseDbModel.table,
         columns: ['COUNT(*) as count'],
         where: 'session_id = ? AND status != ?',
         whereArgs: [routineSessionId, SessionExerciseStatus.completed.name],
@@ -770,11 +774,12 @@ class RoutineLocalDataSource {
     }
   }
 
-  Future<bool> insertSessionExercise(SessionExercise sessionExercise) async {
+  Future<bool> insertSessionExercise(
+      SessionExerciseDbModel sessionExercise) async {
     try {
       final db = await databaseHelper.database;
       final result = await db.insert(
-        DatabaseHelper.tbSessionExercise,
+        SessionExerciseDbModel.table,
         sessionExercise.toJson(),
       );
       return result > 0;
@@ -783,11 +788,11 @@ class RoutineLocalDataSource {
     }
   }
 
-  Future<bool> insertExerciseSet(ExerciseSet exerciseSet) async {
+  Future<bool> insertExerciseSet(ExerciseSetDbModel exerciseSet) async {
     try {
       final db = await databaseHelper.database;
       final result = await db.insert(
-        DatabaseHelper.tbExerciseSet,
+        ExerciseSetDbModel.table,
         exerciseSet.toJson(),
       );
       return result > 0;
@@ -804,7 +809,7 @@ class RoutineLocalDataSource {
     try {
       final db = await databaseHelper.database;
       final result = await db.update(
-        DatabaseHelper.tbSessionExercise,
+        SessionExerciseDbModel.table,
         {'status': status},
         where: 'exercise_id = ? AND session_id = ?',
         whereArgs: [exerciseId, routineSessionId],
