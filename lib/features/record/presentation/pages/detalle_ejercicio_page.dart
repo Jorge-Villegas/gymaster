@@ -5,7 +5,6 @@ import 'package:gymaster/features/record/presentation/cubit/record_cubit.dart';
 import 'package:gymaster/features/record/presentation/cubit/selected_routine/selected_routine_cubit.dart';
 import 'package:gymaster/features/record/presentation/cubit/selected_routine/selected_routine_state.dart';
 import 'package:gymaster/features/record/presentation/widgets/series_control_button.dart';
-import 'package:gymaster/features/routine/presentation/widgets/lista_series_widget.dart';
 import 'package:gymaster/shared/widgets/reusable_table.dart';
 
 class DetalleEjercicioPage extends StatefulWidget {

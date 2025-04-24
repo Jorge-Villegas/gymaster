@@ -128,7 +128,7 @@ class RoutineLocalDataSource {
     }
   }
 
-  Future<List<RoutineDbModel>> getEjerciciosByRutinaId(String rutinaId) async {
+  Future<List<ExerciseDbModel>> getEjerciciosByRutinaId(String rutinaId) async {
     try {
       final db = await databaseHelper.database;
       final result = await db.rawQuery(
@@ -142,7 +142,7 @@ class RoutineLocalDataSource {
         [rutinaId],
       );
       if (result.isEmpty) return [];
-      return result.map((map) => RoutineDbModel.fromJson(map)).toList();
+      return result.map((map) => ExerciseDbModel.fromJson(map)).toList();
     } catch (e) {
       throw ServerException();
     }

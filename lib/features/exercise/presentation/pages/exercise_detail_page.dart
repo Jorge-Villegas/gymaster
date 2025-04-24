@@ -207,7 +207,7 @@ class ExerciseDetailPage extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.03),
+            color: Colors.black.withAlpha(8),
             blurRadius: 10,
             spreadRadius: 0,
             offset: const Offset(0, 2),
@@ -254,34 +254,32 @@ class ExerciseDetailPage extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 12),
-        ...variations
-            .map((variation) => Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 24,
-                        height: 24,
-                        alignment: Alignment.center,
-                        child: Text(
-                          '${variations.indexOf(variation) + 1}',
-                          style: TextStyle(
-                            color: AppColors.primaryColor,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
+        ...variations.map((variation) => Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Row(
+                children: [
+                  Container(
+                    width: 24,
+                    height: 24,
+                    alignment: Alignment.center,
+                    child: Text(
+                      '${variations.indexOf(variation) + 1}',
+                      style: const TextStyle(
+                        color: AppColors.primaryColor,
+                        fontWeight: FontWeight.w500,
                       ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Text(
-                          variation,
-                          style: const TextStyle(fontSize: 14),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                ))
-            .toList(),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      variation,
+                      style: const TextStyle(fontSize: 14),
+                    ),
+                  ),
+                ],
+              ),
+            )),
       ],
     );
   }

@@ -1,7 +1,6 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:gymaster/core/database/models/models.dart';
 import 'package:gymaster/core/database/seeders/database_seeder.dart';
-import 'package:gymaster/core/database/seeders/ejercicio_rutina_seeder.dart';
 import 'package:gymaster/core/database/seeders/rutina_data_seeder.dart';
 import 'package:gymaster/core/error/exceptions.dart';
 import 'package:gymaster/core/error/failures.dart';
