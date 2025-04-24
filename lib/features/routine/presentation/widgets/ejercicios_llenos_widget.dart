@@ -24,12 +24,15 @@ class EjerciciosLlenosWidget extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
-        title: const Row(
+        title: const Column(
+          // Usar Column para apilar icono y título
+          mainAxisSize: MainAxisSize.min, // Ajustar tamaño al contenido
           children: [
-            Icon(Icons.warning, color: Colors.red),
-            SizedBox(width: 10),
+            Icon(Icons.warning, color: Colors.red, size: 40), // Icono arriba
+            SizedBox(height: 10),
             Text(
               'Parar entrenamiento',
+              textAlign: TextAlign.center, // Centrar texto del título
               style: TextStyle(
                 color: Colors.red,
                 fontWeight: FontWeight.bold,
@@ -39,8 +42,10 @@ class EjerciciosLlenosWidget extends StatelessWidget {
         ),
         content: const Text(
           '¿Estás seguro de que deseas parar el entrenamiento?',
+          textAlign: TextAlign.center, // Centrar texto del contenido
           style: TextStyle(fontSize: 16),
         ),
+        actionsAlignment: MainAxisAlignment.center, // Centrar botones
         actions: [
           TextButton(
             onPressed: () {
@@ -272,21 +277,19 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                           RoutineSessionStatus.in_progress.name) {
                         // Actualizar el ejercicio actual en el cubit
                         final currentState = state;
-                        if (currentState is EjerciciosByRutinaSuccess) {
-                          // Emitir un nuevo estado con el ejercicio seleccionado
-                          context.read<EjerciciosByRutinaCubit>().emit(
-                                EjerciciosByRutinaSuccess(
-                                  ejerciciosDeRutina:
-                                      currentState.ejerciciosDeRutina,
-                                  ejercicioIndex: ejercicio.id,
-                                  serieIndex: ejercicio.series.isNotEmpty
-                                      ? ejercicio.series.first.id
-                                      : '',
-                                ),
-                              );
-                          // Navegar a la pantalla de detalle de ejercicio
-                          context.push('/detalle-ejercicio');
-                        }
+                        // Emitir un nuevo estado con el ejercicio seleccionado
+                        context.read<EjerciciosByRutinaCubit>().emit(
+                              EjerciciosByRutinaSuccess(
+                                ejerciciosDeRutina:
+                                    currentState.ejerciciosDeRutina,
+                                ejercicioIndex: ejercicio.id,
+                                serieIndex: ejercicio.series.isNotEmpty
+                                    ? ejercicio.series.first.id
+                                    : '',
+                              ),
+                            );
+                        // Navegar a la pantalla de detalle de ejercicio
+                        context.push('/detalle-ejercicio');
                       }
                     },
                     height: 125,
