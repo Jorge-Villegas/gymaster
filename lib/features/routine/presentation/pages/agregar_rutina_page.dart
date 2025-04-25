@@ -6,6 +6,7 @@ import 'package:gymaster/core/generated/assets.gen.dart';
 import 'package:gymaster/features/routine/domain/entities/routine.dart';
 import 'package:gymaster/features/routine/presentation/cubits/rutina/routine_cubit.dart';
 import 'package:gymaster/shared/utils/snackbar_helper.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 
 class AgregarRutinaPage extends StatefulWidget {
   const AgregarRutinaPage({super.key});
@@ -119,7 +120,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: SvgPicture.asset(Assets.icons.flechaIzquierda.path),
+          icon: const Icon(IconsaxPlusLinear.arrow_left),
           onPressed: () {
             context.push('/');
           },
@@ -237,10 +238,9 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        color:
-                            selectedSvg == svgPath
-                                ? Colors.deepPurple
-                                : Colors.grey[200],
+                        color: selectedSvg == svgPath
+                            ? Colors.deepPurple
+                            : Colors.grey[200],
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Center(

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gymaster/core/generated/assets.gen.dart';
 import 'package:gymaster/features/routine/domain/entities/ejercicios_de_rutina.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
 import 'package:gymaster/shared/utils/enum.dart';
@@ -11,6 +10,7 @@ import 'package:gymaster/shared/utils/verificador_tipo_archivo.dart';
 import 'package:gymaster/shared/widgets/custom_icon_button.dart';
 // ignore: depend_on_referenced_packages
 import 'package:collection/collection.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 
 class CustomDataTable extends StatelessWidget {
   final List<String> headers;
@@ -312,10 +312,8 @@ class DetalleEjercicioScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                _buildTimerInfo(
-                    context, Assets.icons.iconsax.timer.path, '120 seg'),
-                _buildTimerInfo(
-                    context, Assets.icons.iconsax.timer1.path, '20 min'),
+                _buildTimerInfo(context, IconsaxPlusLinear.timer, '120 seg'),
+                _buildTimerInfo(context, IconsaxPlusLinear.timer_1, '20 min'),
               ],
             ),
             const SizedBox(height: 16),
@@ -366,18 +364,16 @@ class DetalleEjercicioScreen extends StatelessWidget {
   }
 
   // Ayudante para mostrar información del temporizador
-  Widget _buildTimerInfo(BuildContext context, String iconPath, String label) {
+  Widget _buildTimerInfo(
+      BuildContext context, IconData iconData, String label) {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
     return Row(
-      // Usar Row en lugar de TextButton si no es clickeable
       children: [
-        SvgPicture.asset(
-          iconPath,
-          colorFilter:
-              ColorFilter.mode(colorScheme.onSurfaceVariant, BlendMode.srcIn),
-          height: 16,
-          width: 16,
+        Icon(
+          iconData,
+          color: colorScheme.onSurfaceVariant,
+          size: 16,
         ),
         const SizedBox(width: 4),
         Text(
@@ -579,12 +575,10 @@ class DetalleEjercicioScreen extends StatelessWidget {
         Expanded(
           flex: 1,
           child: CustomIconButton(
-            icon: SvgPicture.asset(
-              Assets.icons.iconsax.minus.path,
-              colorFilter:
-                  ColorFilter.mode(colorScheme.primary, BlendMode.srcIn),
-              width: 18,
-              height: 18,
+            icon: const Icon(
+              IconsaxPlusLinear.minus,
+              color: Colors.black,
+              size: 18,
             ),
             borderColor: colorScheme.outline.withAlpha(127),
             backgroundColor: colorScheme.surface,
@@ -614,13 +608,12 @@ class DetalleEjercicioScreen extends StatelessWidget {
         Expanded(
           flex: 1,
           child: CustomIconButton(
-            icon: SvgPicture.asset(
-              Assets.icons.iconsax.add.path,
-              colorFilter:
-                  ColorFilter.mode(colorScheme.primary, BlendMode.srcIn),
-              width: 18,
-              height: 18,
+            icon: const Icon(
+              IconsaxPlusLinear.add,
+              color: Colors.black,
+              size: 18,
             ),
+            // icon: SvgP
             borderColor: colorScheme.outline.withAlpha(125),
             backgroundColor: colorScheme.surface,
             onPressed: onIncrement,

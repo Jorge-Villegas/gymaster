@@ -43,46 +43,44 @@ class DetalleRutinaScreen extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               leading: IconButton(
-                icon: SvgPicture.asset(Assets.icons.flechaIzquierda.path),
+                icon: const Icon(Icons.arrow_back_ios_new_rounded),
                 onPressed: () {
                   context.go('/');
                 },
               ),
               title:
                   BlocBuilder<EjerciciosByRutinaCubit, EjerciciosByRutinaState>(
-                    builder: (context, state) {
-                      if (state is EjerciciosByRutinaSuccess) {
-                        return Text(
-                          TextFormatter.capitalize(
-                            state.ejerciciosDeRutina.nombre,
-                          ),
-                        );
-                      }
-                      return const Text('RUTINA');
-                    },
-                  ),
+                builder: (context, state) {
+                  if (state is EjerciciosByRutinaSuccess) {
+                    return Text(
+                      TextFormatter.capitalize(
+                        state.ejerciciosDeRutina.nombre,
+                      ),
+                    );
+                  }
+                  return const Text('RUTINA');
+                },
+              ),
               // Botón para agregar ejercicios a la rutina.
               actions: [
                 BlocBuilder<EjerciciosByRutinaCubit, EjerciciosByRutinaState>(
                   builder: (context, state) {
                     if (state is! EjerciciosByRutinaCompleted) {
                       return IconButton(
-                        icon: SvgPicture.asset(
-                          Assets.icons.iconsax.addCircle.path,
-                        ),
+                        icon: const Icon(Icons.add_circle_outline_rounded),
                         onPressed: () {
                           context
                               .push('/agregar-ejercicios/$rutinaId/$sessionId')
                               .then((_) {
-                                if (context.mounted) {
-                                  // Llama a getAllEjercicios después de que se cierra la pantalla AgregarEjerciciosPage
-                                  // cuando se vuelve de la pantalla de agregar, al regresar a la pantalla de detalle de la rutina
-                                  // BlocProvider.of<EjerciciosByRutinaCubit>(
-                                  //   context,
-                                  //   listen: false,
-                                  // ).getAllEjercicios(idRutina: rutinaId);
-                                }
-                              });
+                            if (context.mounted) {
+                              // Llama a getAllEjercicios después de que se cierra la pantalla AgregarEjerciciosPage
+                              // cuando se vuelve de la pantalla de agregar, al regresar a la pantalla de detalle de la rutina
+                              // BlocProvider.of<EjerciciosByRutinaCubit>(
+                              //   context,
+                              //   listen: false,
+                              // ).getAllEjercicios(idRutina: rutinaId);
+                            }
+                          });
                         },
                       );
                     }

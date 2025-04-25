@@ -10,6 +10,9 @@
 class FontFamily {
   FontFamily._();
 
+  /// Font family: Montserrat
+  static const String montserrat = 'Montserrat';
+
   /// Font family: ZonaPro
   static const String zonaPro = 'ZonaPro';
 }
