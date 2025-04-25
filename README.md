@@ -1,4 +1,4 @@
-# asistente_de_entrenamientos
+# gymaster
 
 A new Flutter project.
 
@@ -44,3 +44,9 @@ Isar es una base de datos NoSQL orientada a objetos para Flutter. Utilizamos `bu
 
 Flutter Gen se utiliza para manejar recursos de la aplicación como imágenes, fuentes, colores, etc. Genera un archivo Dart que contiene referencias a todos estos recursos, lo que permite un acceso más fácil y seguro a los mismos.
 
+
+### Probable direccion de donde se guarda la base de datos
+
+C:\Users\Jorge Villegas\AppData\Local\Google\AndroidStudio2024.2\device-explorer\Pixel 9 Pro API VanillaIceCream\_\data\data\com.example.gymaster\databases
+
+C:\Users\Jorge Villegas\Desktop\gymaster\dart_tool\sqflite_common_ffi\databases\gymaster.db
