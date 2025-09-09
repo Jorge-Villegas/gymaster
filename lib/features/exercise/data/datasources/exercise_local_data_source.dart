@@ -39,7 +39,7 @@ class ExerciseLocalDataSource {
       final results = await db.rawQuery(
         '''
         SELECT m.* FROM ${MuscleDbModel.table} m
-        INNER JOIN ${ExerciseDbModel.table} em 
+        INNER JOIN ${ExerciseMuscleDbModel.table} em
         ON m.id = em.muscle_id
         WHERE em.exercise_id = ?
         ''',
@@ -55,14 +55,14 @@ class ExerciseLocalDataSource {
   Future<List<ExerciseModel>> getExercisesByMuscle(String muscleId) async {
     try {
       final db = await databaseHelper.database;
-      // Obtener ejercicios que tienen el músculo solicitado y todos sus músculos relacionados
+
       final exercises = await db.rawQuery(
         '''
-        SELECT DISTINCT e.* 
-        FROM ${ExerciseDbModel.table} e
-        INNER JOIN ${ExerciseDbModel.table} em ON e.id = em.exercise_id
-        WHERE em.muscle_id = ?
-        ''',
+      SELECT DISTINCT e.*
+      FROM ${ExerciseDbModel.table} e
+      INNER JOIN ${ExerciseMuscleDbModel.table} em ON e.id = em.exercise_id
+      WHERE em.muscle_id = ?
+      ''',
         [muscleId],
       );
 
@@ -71,7 +71,6 @@ class ExerciseLocalDataSource {
       // Para cada ejercicio, obtener todos sus músculos relacionados
       for (var exercise in exercises) {
         final exerciseDB = ExerciseDbModel.fromJson(exercise);
-        // Obtener todos los músculos relacionados con este ejercicio
         final muscles = await getMusclesForExercise(exerciseDB.id);
         exerciseModels.add(
           ExerciseModel.fromDatabase(

@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:gymaster/core/usecase/usecase.dart';
 import 'package:gymaster/features/exercise/domain/entities/exercise.dart';
 import 'package:gymaster/features/exercise/domain/usecases/get_all_exercises_usecase.dart';
@@ -30,19 +31,27 @@ class ExerciseCubit extends Cubit<ExerciseState> {
   Future<void> filterByMuscle(String muscleId) async {
     emit(ExerciseLoading());
 
+    debugPrint('Filtrando ejercicios por músculo: $muscleId');
+
     final result = await getExercisesByMuscleUseCase(
       GetExercisesByMuscleParams(muscleId: muscleId),
     );
 
     result.fold(
-      (failure) => emit(ExerciseError(failure.errorMessage)),
-      (exercises) => emit(
-        ExerciseLoaded(
-          exercises: exercises,
-          isFiltered: true,
-          activeFilter: muscleId,
-        ),
-      ),
+      (failure) {
+        debugPrint('Error al filtrar ejercicios: ${failure.errorMessage}');
+        emit(ExerciseError(failure.errorMessage));
+      },
+      (exercises) {
+        debugPrint('Ejercicios filtrados encontrados: ${exercises.length}');
+        emit(
+          ExerciseLoaded(
+            exercises: exercises,
+            isFiltered: true,
+            activeFilter: muscleId,
+          ),
+        );
+      },
     );
   }
 

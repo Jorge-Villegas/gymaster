@@ -45,17 +45,29 @@ class ExerciseRepositoryImpl implements ExerciseRepository {
 
   @override
   Future<Either<Failure, List<Exercise>>> getExercisesByMuscle(
-    String muscleId,
-  ) async {
+      String muscleId) async {
     try {
-      final exercises = await localDataSource.getExercisesByMuscle(muscleId);
+      final exerciseModels =
+          await localDataSource.getExercisesByMuscle(muscleId);
+      final exercises =
+          exerciseModels.map((model) => model.toEntity()).toList();
+
+      // ✅ Validación adicional
+      if (exercises.isEmpty) {
+        return Left(NoRecordsFailure(
+            errorMessage: 'No se encontraron ejercicios para este músculo'));
+      }
+
       return Right(exercises);
-    } on ServerException {
+    } on DatabaseException catch (e) {
+      return Left(DatabaseFailure(errorMessage: e.message));
+    } on ServerException catch (e) {
       return Left(
-        ServerFailure(
-          errorMessage: 'Error al obtener los ejercicios por músculo',
-        ),
-      );
+          ServerFailure(errorMessage: 'Error de servidor: ${e.toString()}'));
+    } catch (e) {
+      return Left(CacheFailure(
+          errorMessage:
+              'Error inesperado al obtener ejercicios por músculo: $e'));
     }
   }
 
