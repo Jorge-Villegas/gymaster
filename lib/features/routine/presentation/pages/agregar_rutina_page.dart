@@ -104,9 +104,8 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
 
     if (routineCubit.state is RoutineAddSuccess) {
       final rutinaId = (routineCubit.state as RoutineAddSuccess).rutina.id!;
-      //viajar a a esta ruta de gorouter '/rutina/detalle/$rutinaId'
-
-      context.push('/rutina/detalle/$rutinaId');
+      // Navegación reemplazando la pantalla de creación por el detalle de rutina
+      context.go('/rutina/detalle/$rutinaId');
     }
     if (routineCubit.state is RoutineError) {
       setState(() {
