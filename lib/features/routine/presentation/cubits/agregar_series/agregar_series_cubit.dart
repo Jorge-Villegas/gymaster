@@ -6,7 +6,7 @@ class AgregarSeriesCubit extends Cubit<AgregarSeriesState> {
   final AddEjercicioRutinaUsecase _addEjercicioRutinaUsecase;
 
   AgregarSeriesCubit(this._addEjercicioRutinaUsecase)
-    : super(AgregarSeriesLoaded.initial());
+      : super(AgregarSeriesLoaded.initial());
 
   void iniciar() {
     emit(AgregarSeriesLoaded.initial());

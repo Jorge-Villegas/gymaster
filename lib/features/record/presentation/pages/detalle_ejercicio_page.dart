@@ -9,8 +9,13 @@ import 'package:gymaster/shared/widgets/reusable_table.dart';
 
 class DetalleEjercicioPage extends StatefulWidget {
   final RecordEjercicios recordEjercicios;
+  final RecordRutina rutina;
 
-  const DetalleEjercicioPage({super.key, required this.recordEjercicios});
+  const DetalleEjercicioPage({
+    super.key,
+    required this.recordEjercicios,
+    required this.rutina,
+  });
 
   @override
   _DetalleEjercicioPageState createState() => _DetalleEjercicioPageState();
@@ -22,6 +27,9 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
   @override
   void initState() {
     super.initState();
+    // Cargar la rutina en el SelectedRoutineCubit
+    context.read<SelectedRoutineCubit>().loadRoutine(widget.rutina);
+
     if (widget.recordEjercicios.seriesDelEjercicio.isNotEmpty) {
       selectedRowIndex = 0;
     }

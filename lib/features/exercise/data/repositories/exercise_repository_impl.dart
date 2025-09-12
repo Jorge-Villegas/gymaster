@@ -49,8 +49,7 @@ class ExerciseRepositoryImpl implements ExerciseRepository {
     try {
       final exerciseModels =
           await localDataSource.getExercisesByMuscle(muscleId);
-      final exercises =
-          exerciseModels.map((model) => model.toEntity()).toList();
+      final exercises = exerciseModels.map((model) => model).toList();
 
       // ✅ Validación adicional
       if (exercises.isEmpty) {
@@ -59,8 +58,6 @@ class ExerciseRepositoryImpl implements ExerciseRepository {
       }
 
       return Right(exercises);
-    } on DatabaseException catch (e) {
-      return Left(DatabaseFailure(errorMessage: e.message));
     } on ServerException catch (e) {
       return Left(
           ServerFailure(errorMessage: 'Error de servidor: ${e.toString()}'));

@@ -1,4 +1,3 @@
-
 import 'package:fpdart/fpdart.dart';
 import 'package:gymaster/core/error/failures.dart';
 import 'package:gymaster/core/usecase/usecase.dart';
@@ -6,7 +5,8 @@ import 'package:gymaster/features/routine/domain/entities/ejercicios_por_musculo
 import 'package:gymaster/features/routine/domain/repositories/rutine_repository.dart';
 
 class GetAllEjerciciosByMusculoUseCase
-    implements UseCase<List<EjerciciosPorMusculo>, GetAllEjerciciosByMusculoParams> {
+    implements
+        UseCase<List<EjerciciosPorMusculo>, GetAllEjerciciosByMusculoParams> {
   final RoutineRepository repository;
 
   GetAllEjerciciosByMusculoUseCase(this.repository);

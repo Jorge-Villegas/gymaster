@@ -10,6 +10,8 @@ import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class HistorialEjerciciosPage extends StatefulWidget {
+  const HistorialEjerciciosPage({super.key});
+
   @override
   _HistorialEjerciciosPageState createState() =>
       _HistorialEjerciciosPageState();
@@ -182,12 +184,11 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
         if (state is RecordLoading) {
           return const Center(child: CircularProgressIndicator());
         } else if (state is RecordLoaded) {
-          final rutinasDelDia =
-              state.rutinas
-                  .where(
-                    (rutina) => isSameDay(rutina.fechaRealizada, selectedDate),
-                  )
-                  .toList();
+          final rutinasDelDia = state.rutinas
+              .where(
+                (rutina) => isSameDay(rutina.fechaRealizada, selectedDate),
+              )
+              .toList();
 
           if (rutinasDelDia.isEmpty) {
             return const Center(
@@ -257,23 +258,22 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                             padding: const EdgeInsets.all(
                               0,
                             ), // Optional padding
-                            child:
-                                ejercicio.iconoPath.endsWith('.svg')
-                                    ? SvgPicture.asset(
-                                      ejercicio.iconoPath,
-                                      width: 32,
-                                      height: 32,
-                                      colorFilter: const ColorFilter.mode(
-                                        Colors.purple,
-                                        BlendMode.srcIn,
-                                      ),
-                                    )
-                                    : Image.asset(
-                                      ejercicio.iconoPath,
-                                      width: 32,
-                                      height: 32,
-                                      fit: BoxFit.cover,
+                            child: ejercicio.iconoPath.endsWith('.svg')
+                                ? SvgPicture.asset(
+                                    ejercicio.iconoPath,
+                                    width: 32,
+                                    height: 32,
+                                    colorFilter: const ColorFilter.mode(
+                                      Colors.purple,
+                                      BlendMode.srcIn,
                                     ),
+                                  )
+                                : Image.asset(
+                                    ejercicio.iconoPath,
+                                    width: 32,
+                                    height: 32,
+                                    fit: BoxFit.cover,
+                                  ),
                           ),
                         ),
                         title: Text(
@@ -284,11 +284,9 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                           ),
                         ),
                         subtitle: Text(
-                          ejercicio.seriesDelEjercicio
-                              .map((serie) {
-                                return '${serie.peso.toInt()}x${serie.repeticiones}';
-                              })
-                              .join(', '),
+                          ejercicio.seriesDelEjercicio.map((serie) {
+                            return '${serie.peso.toInt()}x${serie.repeticiones}';
+                          }).join(', '),
                           style: const TextStyle(
                             fontSize: 14,
                             color: Colors.black54,
@@ -298,10 +296,10 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder:
-                                  (context) => DetalleEjercicioPage(
-                                    recordEjercicios: ejercicio,
-                                  ),
+                              builder: (context) => DetalleEjercicioPage(
+                                recordEjercicios: ejercicio,
+                                rutina: rutina,
+                              ),
                             ),
                           );
                         },
@@ -343,7 +341,6 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
 
   void _navigateToNextRoutine() {
     // Debouncing: Evitar múltiples clics en un corto período de tiempo
-    final now = DateTime.now();
     /*
     if (_lastClickTime != null &&
         now.difference(_lastClickTime!) < Duration(seconds: 1)) {
@@ -380,7 +377,6 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
 
   void _navigateToPreviousRoutine() {
     // Debouncing: Evitar múltiples clics en un corto período de tiempo
-    final now = DateTime.now();
     /*
     if (_lastClickTime != null &&
         now.difference(_lastClickTime!) < const Duration(milliseconds: 500)) {

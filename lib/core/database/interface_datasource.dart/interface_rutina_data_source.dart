@@ -1,4 +1,3 @@
-
 // import 'package:gymaster/core/database/models/rutina.dart';
 
 // abstract class IRutinaDataSource {

@@ -69,7 +69,7 @@ class RecordRepositoryImpl implements RecordRepository {
 
   @override
   Future<Either<Failure, List<RecordRutina>>>
-  getAllCompletedRoutinesWithExercises() async {
+      getAllCompletedRoutinesWithExercises() async {
     try {
       final rutinaSessions = await localDataSource.getCompletedRoutines();
       List<RecordRutina> result = [];

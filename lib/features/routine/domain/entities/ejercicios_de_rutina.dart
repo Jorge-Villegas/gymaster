@@ -91,34 +91,32 @@ class EjerciciosDeRutina extends Equatable {
       descripcion: json['descripcion'],
       fechaCreacion: DateTime.parse(json['fecha_creacion']),
       color: json['color'],
-      ejercicios:
-          (json['ejercicios'] as List)
-              .map((e) => Ejercicio.fromJson(e))
-              .toList(),
+      ejercicios: (json['ejercicios'] as List)
+          .map((e) => Ejercicio.fromJson(e))
+          .toList(),
       estado: json['estado'],
       id: json['id'],
       realizado: json['realizado'],
-      fechaRealizacion:
-          json['fecha_realizacion'] != null
-              ? DateTime.parse(json['fecha_realizacion'])
-              : null,
+      fechaRealizacion: json['fecha_realizacion'] != null
+          ? DateTime.parse(json['fecha_realizacion'])
+          : null,
     );
   }
 
   @override
   List<Object?> get props => [
-    rutinaId,
-    ejercicios,
-    nombre,
-    id,
-    descripcion,
-    fechaCreacion,
-    realizado,
-    color,
-    fechaRealizacion,
-    estado,
-    session,
-  ];
+        rutinaId,
+        ejercicios,
+        nombre,
+        id,
+        descripcion,
+        fechaCreacion,
+        realizado,
+        color,
+        fechaRealizacion,
+        estado,
+        session,
+      ];
 
   @override
   String toString() =>
@@ -185,26 +183,26 @@ class Ejercicio extends Equatable {
 
   @override
   List<Object?> get props => [
-    id,
-    nombre,
-    imagenDireccion,
-    descripcion,
-    series,
-    estado,
-  ];
+        id,
+        nombre,
+        imagenDireccion,
+        descripcion,
+        series,
+        estado,
+      ];
 
   factory Ejercicio.fromJson(Map<String, dynamic> json) => Ejercicio(
-    id: json["id"],
-    nombre: json["nombre"],
-    imagenDireccion: json["imagen_direccion"],
-    descripcion: json["descripcion"],
-    estado: json["estado"],
-    orderIndex: json['orderIndex'],
-    series: List<Serie>.from(json["series"].map((x) => Serie.fromJson(x))),
-    musculos: List<Musculo>.from(
-      json["musculos"].map((x) => Musculo.fromJson(x)),
-    ),
-  );
+        id: json["id"],
+        nombre: json["nombre"],
+        imagenDireccion: json["imagen_direccion"],
+        descripcion: json["descripcion"],
+        estado: json["estado"],
+        orderIndex: json['orderIndex'],
+        series: List<Serie>.from(json["series"].map((x) => Serie.fromJson(x))),
+        musculos: List<Musculo>.from(
+          json["musculos"].map((x) => Musculo.fromJson(x)),
+        ),
+      );
 
   @override
   String toString() {
@@ -265,12 +263,12 @@ class Serie extends Equatable {
 
   //fromjson
   factory Serie.fromJson(Map<String, dynamic> json) => Serie(
-    id: json['id'],
-    peso: json['peso'],
-    repeticiones: json['repeticiones'],
-    timpoDescanso: json['tiempoDescanso'],
-    estado: json['estado'],
-  );
+        id: json['id'],
+        peso: json['peso'],
+        repeticiones: json['repeticiones'],
+        timpoDescanso: json['tiempoDescanso'],
+        estado: json['estado'],
+      );
 }
 
 class Musculo extends Equatable {
@@ -298,8 +296,8 @@ class Musculo extends Equatable {
 
   //fromjson
   factory Musculo.fromJson(Map<String, dynamic> json) => Musculo(
-    id: json['id'],
-    nombre: json['nombre'],
-    imagenDireccion: json['imagen_direccion'],
-  );
+        id: json['id'],
+        nombre: json['nombre'],
+        imagenDireccion: json['imagen_direccion'],
+      );
 }

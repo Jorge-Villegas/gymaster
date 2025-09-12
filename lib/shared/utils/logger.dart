@@ -1,7 +1,7 @@
 import 'package:logger/logger.dart';
 
 /// Una instancia global de [Logger] para registrar mensajes de log.
-/// 
+///
 /// Esta instancia de `Logger` se puede utilizar en toda la aplicación para
 /// registrar mensajes de depuración, información, advertencias, errores, etc.
 /// Utiliza la biblioteca `logger` que proporciona una forma fácil y estructurada

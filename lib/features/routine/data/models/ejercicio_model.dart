@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'package:gymaster/features/routine/domain/entities/ejercicio.dart';
 
-List<EjercicioModel> ejercicioFromJson(String str) => List<EjercicioModel>.from(json.decode(str).map((x) => EjercicioModel.fromJson(x)));
+List<EjercicioModel> ejercicioFromJson(String str) => List<EjercicioModel>.from(
+    json.decode(str).map((x) => EjercicioModel.fromJson(x)));
 
-String ejercicioToJson(List<EjercicioModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String ejercicioToJson(List<EjercicioModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class EjercicioModel extends Ejercicio {
   EjercicioModel({
@@ -68,7 +70,7 @@ class EjercicioModel extends Ejercicio {
       'estado': estado,
     };
   }
-  
+
   @override
   String toString() {
     return 'EjercicioModel(isarId: $isarId, id: $id, nombre: $nombre, descripcion: $descripcion, imagen: $imagenDireccion, repeticiones: $cantidadRepeticiones, series: $cantidadSeries, estado: $estado)';

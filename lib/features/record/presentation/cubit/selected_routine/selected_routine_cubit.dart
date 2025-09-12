@@ -5,13 +5,17 @@ import 'package:gymaster/features/record/presentation/cubit/selected_routine/sel
 class SelectedRoutineCubit extends Cubit<SelectedRoutineState> {
   SelectedRoutineCubit() : super(SelectedRoutineInitial());
 
+  void loadRoutine(RecordRutina rutina) {
+    emit(SelectedRoutineLoaded(rutina: rutina));
+  }
+
   void incrementSeries(int ejercicioIndex, int seriesIndex) {
     if (state is SelectedRoutineLoaded) {
       final rutina = (state as SelectedRoutineLoaded).rutina;
       final ejercicios = List<RecordEjercicios>.from(rutina.ejercicios);
       final series = ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex];
-      ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex] = series
-          .copyWith(repeticiones: series.repeticiones + 1);
+      ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex] =
+          series.copyWith(repeticiones: series.repeticiones + 1);
       emit(
         SelectedRoutineLoaded(rutina: rutina.copyWith(ejercicios: ejercicios)),
       );
@@ -24,8 +28,8 @@ class SelectedRoutineCubit extends Cubit<SelectedRoutineState> {
       final ejercicios = List<RecordEjercicios>.from(rutina.ejercicios);
       final series = ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex];
       if (series.repeticiones > 0) {
-        ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex] = series
-            .copyWith(repeticiones: series.repeticiones - 1);
+        ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex] =
+            series.copyWith(repeticiones: series.repeticiones - 1);
         emit(
           SelectedRoutineLoaded(
             rutina: rutina.copyWith(ejercicios: ejercicios),
@@ -40,8 +44,8 @@ class SelectedRoutineCubit extends Cubit<SelectedRoutineState> {
       final rutina = (state as SelectedRoutineLoaded).rutina;
       final ejercicios = List<RecordEjercicios>.from(rutina.ejercicios);
       final series = ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex];
-      ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex] = series
-          .copyWith(peso: series.peso + 1);
+      ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex] =
+          series.copyWith(peso: series.peso + 1);
       emit(
         SelectedRoutineLoaded(rutina: rutina.copyWith(ejercicios: ejercicios)),
       );
@@ -54,8 +58,8 @@ class SelectedRoutineCubit extends Cubit<SelectedRoutineState> {
       final ejercicios = List<RecordEjercicios>.from(rutina.ejercicios);
       final series = ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex];
       if (series.peso > 0) {
-        ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex] = series
-            .copyWith(peso: series.peso - 1);
+        ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex] =
+            series.copyWith(peso: series.peso - 1);
         emit(
           SelectedRoutineLoaded(
             rutina: rutina.copyWith(ejercicios: ejercicios),
@@ -70,8 +74,8 @@ class SelectedRoutineCubit extends Cubit<SelectedRoutineState> {
       final rutina = (state as SelectedRoutineLoaded).rutina;
       final ejercicios = List<RecordEjercicios>.from(rutina.ejercicios);
       final series = ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex];
-      ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex] = series
-          .copyWith(repeticiones: series.repeticiones + 1);
+      ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex] =
+          series.copyWith(repeticiones: series.repeticiones + 1);
       emit(
         SelectedRoutineLoaded(rutina: rutina.copyWith(ejercicios: ejercicios)),
       );
@@ -84,8 +88,8 @@ class SelectedRoutineCubit extends Cubit<SelectedRoutineState> {
       final ejercicios = List<RecordEjercicios>.from(rutina.ejercicios);
       final series = ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex];
       if (series.repeticiones > 0) {
-        ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex] = series
-            .copyWith(repeticiones: series.repeticiones - 1);
+        ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex] =
+            series.copyWith(repeticiones: series.repeticiones - 1);
         emit(
           SelectedRoutineLoaded(
             rutina: rutina.copyWith(ejercicios: ejercicios),

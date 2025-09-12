@@ -10,7 +10,7 @@ class RealizarEjercicioRutinaCubit extends Cubit<RealizarEjercicioRutinaState> {
   final UpdateSerieUseCase updateSerieUseCase;
 
   RealizarEjercicioRutinaCubit(this.updateSerieUseCase)
-    : super(RealizarEjercicioRutinaInitial());
+      : super(RealizarEjercicioRutinaInitial());
 
   iniciar({required EjerciciosDeRutina ejerciciosDeRutina}) {
     for (var ejercicio in ejerciciosDeRutina.ejercicios) {

@@ -1,0 +1,30 @@
+{
+    "editor.wordWrap": "on",
+    "editor.lineHeight": 1.3,
+    "editor.fontFamily": "Dank Mono, google sans code",
+    "editor.tokenColorCustomizations": {
+        "textMateRules": [
+            // {
+            //     "scope": [
+            //         "keyword",
+            //         "storage.type",
+            //         "variable.language",
+            //         "storage.modifier"
+            //     ],
+            //     "settings": {
+            //         "fontWStyle": "italic"
+            //     }
+            // },
+            {
+                "scope": [
+                    "comment",
+                    "comment.block.documentation"
+                ],
+                "settings": {
+                    "fontStyle": "italic"
+                }
+            }
+        ]
+    },
+    "window.border": "#FF0000"
+}

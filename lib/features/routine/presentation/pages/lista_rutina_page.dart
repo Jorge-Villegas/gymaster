@@ -41,11 +41,10 @@ class ListaRutinasPage extends StatelessWidget {
 
   Widget _builAddRoutineButton(BuildContext context) {
     return FloatingActionButton(
-      onPressed:
-          () => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => const AgregarRutinaPage()),
-          ),
+      onPressed: () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const AgregarRutinaPage()),
+      ),
       child: const Icon(Icons.add),
     );
   }
@@ -197,7 +196,6 @@ class ListaRutinasPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 20),
-
                   CustomElevatedButton(
                     onPressed: () {
                       Navigator.of(context).push(
@@ -233,8 +231,8 @@ class ListaRutinasPage extends StatelessWidget {
               }
               return ListView.separated(
                 itemCount: state.routines.length,
-                separatorBuilder:
-                    (_, __) => Container(height: 10, color: Colors.grey[200]),
+                separatorBuilder: (_, __) =>
+                    Container(height: 10, color: Colors.grey[200]),
                 itemBuilder: (context, i) {
                   final rutina = state.routines[i];
                   final cantidadTexto = _getCantidadTexto(

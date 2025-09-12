@@ -70,6 +70,7 @@ class CustomDataTable extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Table(
               columnWidths: columnWidths ??
@@ -102,7 +103,8 @@ class CustomDataTable extends StatelessWidget {
                 ),
               ],
             ),
-            Expanded(
+            Flexible(
+              fit: FlexFit.loose,
               child: SingleChildScrollView(
                 child: Table(
                   columnWidths: columnWidths ??

@@ -75,12 +75,11 @@ class _BottomNavigationBarExampleState
         unselectedItemColor: Theme.of(
           context,
         ).textTheme.bodyMedium?.color?.withValues(
-          alpha: (0.6 * 255).roundToDouble(),
-        ), // Color del texto con opacidad
-        backgroundColor:
-            Theme.of(
-              context,
-            ).scaffoldBackgroundColor, // Fondo de acuerdo al tema
+              alpha: (0.6 * 255).roundToDouble(),
+            ), // Color del texto con opacidad
+        backgroundColor: Theme.of(
+          context,
+        ).scaffoldBackgroundColor, // Fondo de acuerdo al tema
         selectedFontSize: 14,
         unselectedFontSize: 14,
         iconSize: 24,
