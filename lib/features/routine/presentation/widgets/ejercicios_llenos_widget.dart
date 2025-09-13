@@ -235,6 +235,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                     context.read<EjerciciosByRutinaCubit>().deleteEjercicio(
                           ejercicio.id,
                           state.ejerciciosDeRutina.session,
+                          context, // Pasar context para actualizar RoutineCubit
                         );
                     // Eliminar el ejercicio de la lista y actualizar el estado
                     ejerciciosDeRutina.ejercicios.removeAt(i);
@@ -269,6 +270,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                       context.read<EjerciciosByRutinaCubit>().deleteEjercicio(
                             ejercicio.id,
                             state.ejerciciosDeRutina.session,
+                            context, // Pasar context para actualizar RoutineCubit
                           );
                     },
                     onTap: () {

@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymaster/core/database/database_helper.dart';
 import 'package:gymaster/core/database/models/models.dart';
 import 'package:gymaster/core/database/models/routine_session_db_model.dart';
@@ -14,6 +15,7 @@ import 'package:gymaster/features/routine/domain/usecases/start_routine_session_
 import 'package:gymaster/features/routine/domain/usecases/stop_routine_session_usecase.dart';
 import 'package:gymaster/features/routine/domain/usecases/update_exercise_status_usecase.dart';
 import 'package:gymaster/features/routine/domain/usecases/update_serie.dart';
+import 'package:gymaster/features/routine/presentation/cubits/rutina/routine_cubit.dart';
 import 'package:gymaster/shared/utils/enum.dart';
 
 part 'ejercicios_by_rutina_state.dart';
@@ -402,7 +404,8 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
   }
 
   //eliminar un ejercicio de la rutina
-  void deleteEjercicio(String idEjercicio, String idSesion) async {
+  void deleteEjercicio(String idEjercicio, String idSesion,
+      [BuildContext? context]) async {
     if (state is! EjerciciosByRutinaSuccess) return;
     final currentState = state as EjerciciosByRutinaSuccess;
 
@@ -425,6 +428,14 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
           serieIndex: currentState.serieIndex,
         ),
       );
+      if (context != null) {
+        try {
+          context.read<RoutineCubit>().getAllRoutine();
+        } catch (e) {
+          print(
+              'Error al actualizar lista de rutinas después de eliminar ejercicio: $e');
+        }
+      }
     }
   }
 

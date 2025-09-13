@@ -5,6 +5,7 @@ import 'package:gymaster/core/config/app_config.dart';
 import 'package:gymaster/features/routine/presentation/cubits/agregar_series/agregar_series_cubit.dart';
 import 'package:gymaster/features/routine/presentation/cubits/agregar_series/agregar_series_state.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicio/ejercicio_cubit.dart';
+import 'package:gymaster/features/routine/presentation/cubits/rutina/routine_cubit.dart';
 import 'package:gymaster/features/routine/presentation/widgets/encabezado_ejercicio_widget.dart';
 import 'package:gymaster/features/routine/presentation/widgets/lista_series_widget.dart';
 import 'package:gymaster/shared/utils/text_formatter.dart';
@@ -124,6 +125,9 @@ class _AgregarEjercicioRutinaPageState
     if (resul) {
       // Llamar al EjercicioCubit para actualizar el estado
       context.read<EjercicioCubit>().ejercicioAgregado(id: widget.ejercicioId);
+
+      // Forzar recarga del listado de rutinas
+      context.read<RoutineCubit>().getAllRoutine();
 
       context.pop();
 
