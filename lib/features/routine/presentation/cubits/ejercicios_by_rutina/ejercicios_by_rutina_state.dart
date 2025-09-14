@@ -2,17 +2,22 @@ part of 'ejercicios_by_rutina_cubit.dart';
 
 class EjerciciosByRutinaCancelled extends EjerciciosByRutinaState {
   final String rutinaName;
+  final String rutinaId;
+  final String sessionId;
   final int totalEjercicios;
   final DateTime fechaCancelada;
 
   EjerciciosByRutinaCancelled({
     required this.rutinaName,
+    required this.rutinaId,
+    required this.sessionId,
     required this.totalEjercicios,
     required this.fechaCancelada,
   });
 
   @override
-  List<Object?> get props => [rutinaName, totalEjercicios, fechaCancelada];
+  List<Object?> get props =>
+      [rutinaName, rutinaId, sessionId, totalEjercicios, fechaCancelada];
 }
 
 @immutable

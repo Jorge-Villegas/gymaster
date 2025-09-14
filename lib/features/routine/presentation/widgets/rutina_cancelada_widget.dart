@@ -3,12 +3,16 @@ import 'package:go_router/go_router.dart';
 
 class RutinaCanceladaWidget extends StatelessWidget {
   final String rutinaName;
+  final String rutinaId;
+  final String sessionId;
   final int totalEjercicios;
   final DateTime fechaCancelada;
 
   const RutinaCanceladaWidget({
     super.key,
     required this.rutinaName,
+    required this.rutinaId,
+    required this.sessionId,
     required this.totalEjercicios,
     required this.fechaCancelada,
   });
@@ -88,16 +92,45 @@ class RutinaCanceladaWidget extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 32),
+                // Botón principal: Reintentar Rutina
                 ElevatedButton.icon(
+                  onPressed: () => _reintentarRutina(context),
+                  icon: const Icon(Icons.refresh_rounded),
+                  label: const Text('Reintentar Rutina'),
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size.fromHeight(56),
+                    elevation: 4,
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                // Mensaje motivacional
+                Text(
+                  '¡No te rindas! Puedes intentarlo de nuevo 💪',
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Theme.of(context).colorScheme.primary,
+                        fontWeight: FontWeight.w500,
+                      ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 24),
+                // Botones secundarios
+                OutlinedButton.icon(
                   onPressed: () => context.go('/'),
                   icon: const Icon(Icons.home_rounded),
                   label: const Text('Volver al Inicio'),
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size.fromHeight(48),
-                    elevation: 0,
-                    shadowColor: Colors.transparent,
-                    backgroundColor: Theme.of(context).colorScheme.primary,
-                    foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 16,
+                      horizontal: 30,
+                    ),
+                    side: BorderSide(
+                        color: Theme.of(context).colorScheme.outline),
+                    foregroundColor: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -139,5 +172,24 @@ class RutinaCanceladaWidget extends StatelessWidget {
       'Diciembre'
     ];
     return '${fecha.day} de ${meses[fecha.month - 1]} de ${fecha.year}';
+  }
+
+  void _reintentarRutina(BuildContext context) async {
+    try {
+      // Navegar directamente al detalle de la rutina
+      // El cubit detectará que está cancelada y la mostrará como pending
+      context.goNamed('detallerutina', pathParameters: {
+        'rutinaId': rutinaId,
+      });
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error al navegar: ${e.toString()}'),
+            backgroundColor: Theme.of(context).colorScheme.error,
+          ),
+        );
+      }
+    }
   }
 }

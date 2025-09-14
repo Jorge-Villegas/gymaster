@@ -29,10 +29,13 @@ class DetalleRutinaScreen extends StatelessWidget {
         if (state is EjerciciosByRutinaCancelled) {
           return RutinaCanceladaWidget(
             rutinaName: state.rutinaName,
+            rutinaId: state.rutinaId,
+            sessionId: state.sessionId,
             totalEjercicios: state.totalEjercicios,
             fechaCancelada: state.fechaCancelada,
           );
         }
+
         return Scaffold(
           appBar: AppBar(
             leading: IconButton(

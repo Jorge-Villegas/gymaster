@@ -667,18 +667,21 @@ class RoutineRepositoryImpl implements RoutineRepository {
     String routineId,
   ) async {
     try {
-      // Verificar si la sesión actual está completada
+      // Verificar si la sesión actual está completada o cancelada
       final currentSession = await localDataSource.getRoutineSessionById(
         sessionId,
       );
+
       if (currentSession != null &&
-          currentSession.status == RoutineSessionStatus.completed.name) {
-        // Crear una nueva sesión con estado en_progreso
+          (currentSession.status == RoutineSessionStatus.completed.name ||
+              currentSession.status == RoutineSessionStatus.cancelled.name)) {
+        // Crear una nueva sesión con estado pendiente (no en progreso)
+        // Esto permite que se muestre el botón "Iniciar entrenamiento"
         final newSession = RoutineSessionDbModel(
           id: idGenerator.generateId(),
           routineId: routineId,
-          status: RoutineSessionStatus.in_progress.name,
-          startTime: DateTime.now().toIso8601String(),
+          status: RoutineSessionStatus.pending.name, // Cambiar a pending
+          startTime: null, // No establecer tiempo hasta que realmente inicie
           createdAt: DateTime.now().toString(),
         );
 
@@ -733,7 +736,19 @@ class RoutineRepositoryImpl implements RoutineRepository {
         return const Right(true);
       }
 
-      // Si la sesión actual no estaba completada, solo actualizamos su estado a in_progress
+      // Verificar si la sesión actual está en pending y necesita ser iniciada
+      if (currentSession != null &&
+          currentSession.status == RoutineSessionStatus.pending.name) {
+        // Actualizar la sesión de pending a in_progress
+        final result = await localDataSource.updateRoutineSessionStatus(
+          sessionId: sessionId,
+          status: RoutineSessionStatus.in_progress.name,
+          startTime: DateTime.now(),
+        );
+        return Right(result);
+      }
+
+      // Si la sesión actual no estaba completada ni pending, solo actualizamos su estado a in_progress
       final result = await localDataSource.updateRoutineSessionStatus(
         sessionId: sessionId,
         status: RoutineSessionStatus.in_progress.name,

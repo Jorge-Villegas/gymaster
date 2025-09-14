@@ -148,11 +148,34 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
 
   void _handleEjerciciosResult(EjerciciosDeRutina r) {
     if (r.estado == RoutineSessionStatus.cancelled.name) {
-      emit(EjerciciosByRutinaCancelled(
-        rutinaName: r.nombre,
-        totalEjercicios: r.ejercicios.length,
-        fechaCancelada: DateTime.now(),
-      ));
+      // Mostrar los ejercicios normalmente pero como "pending" para que se vea el botón de iniciar
+      final ejerciciosConEstadoPending = r.copyWith(
+        estado: RoutineSessionStatus.pending.name, // Cambiar a pending
+      );
+
+      if (r.ejercicios.isEmpty) {
+        emit(
+          EjerciciosByRutinaSuccess(
+            ejerciciosDeRutina: ejerciciosConEstadoPending,
+            ejercicioIndex: '',
+            serieIndex: '',
+          ),
+        );
+      } else {
+        emit(
+          EjerciciosByRutinaSuccess(
+            ejerciciosDeRutina: ejerciciosConEstadoPending,
+            ejercicioIndex: '',
+            serieIndex: '',
+          ),
+        );
+      }
+      return;
+    }
+
+    // Nuevo: Manejar rutinas completadas creando una nueva sesión automáticamente
+    if (r.estado == RoutineSessionStatus.completed.name) {
+      _createNewSessionForCompletedRoutine(r);
       return;
     }
 
@@ -531,6 +554,12 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
             return false;
           },
           (ejerciciosDeRutina) {
+            if (ejerciciosDeRutina.ejercicios.isEmpty) {
+              emit(EjerciciosByRutinaError(
+                  "La rutina no tiene ejercicios configurados"));
+              return false;
+            }
+
             // Asegurarse de que el estado refleje correctamente que la rutina está en progreso
             final updatedEjerciciosDeRutina = ejerciciosDeRutina.copyWith(
               estado: RoutineSessionStatus.in_progress.name,
@@ -613,5 +642,54 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
       }
       return success;
     });
+  }
+
+  // Método para crear una nueva sesión cuando la rutina está completada
+  Future<void> _createNewSessionForCompletedRoutine(
+      EjerciciosDeRutina rutina) async {
+    try {
+      // Usar startRoutineSession para crear una nueva sesión automáticamente
+      final result = await startRoutineSessionUseCase(
+        StartRoutineSessionParams(
+          sessionId: rutina.session,
+          rutinaId: rutina.rutinaId,
+        ),
+      );
+
+      await result.fold(
+        (failure) {
+          // Si hay un error, mostrar como pending pero con un mensaje
+          final ejerciciosConEstadoPending = rutina.copyWith(
+            estado: RoutineSessionStatus.pending.name,
+          );
+
+          emit(
+            EjerciciosByRutinaSuccess(
+              ejerciciosDeRutina: ejerciciosConEstadoPending,
+              ejercicioIndex: '',
+              serieIndex: '',
+            ),
+          );
+        },
+        (success) async {
+          // Si se crea la nueva sesión exitosamente, recargar los ejercicios
+          // Esto asegura que se muestren sin checks verdes
+          getAllEjercicios(idRutina: rutina.rutinaId);
+        },
+      );
+    } catch (e) {
+      // En caso de error, mostrar como pending
+      final ejerciciosConEstadoPending = rutina.copyWith(
+        estado: RoutineSessionStatus.pending.name,
+      );
+
+      emit(
+        EjerciciosByRutinaSuccess(
+          ejerciciosDeRutina: ejerciciosConEstadoPending,
+          ejercicioIndex: '',
+          serieIndex: '',
+        ),
+      );
+    }
   }
 }
