@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
 import 'package:gymaster/features/routine/presentation/widgets/ejercicios_llenos_widget.dart';
 import 'package:gymaster/features/routine/presentation/widgets/ejercicios_vacios_widget.dart';
+import 'package:gymaster/features/routine/presentation/widgets/rutina_completada_widget.dart';
 import 'package:gymaster/shared/utils/text_formatter.dart';
 
 class DetalleRutinaScreen extends StatelessWidget {
@@ -93,7 +94,7 @@ class DetalleRutinaScreen extends StatelessWidget {
             );
           }
           if (state is EjerciciosByRutinaCompleted) {
-            return const Center(child: Text('Rutina completada'));
+            return RutinaCompletadaWidget(state: state);
           }
           return const Center(
             child: Text('Error al cargar los ejercicios'),

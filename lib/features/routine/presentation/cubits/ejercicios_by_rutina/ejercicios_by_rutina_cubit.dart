@@ -304,7 +304,22 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
       );
 
       result.fold((l) => emit(EjerciciosByRutinaError(l.errorMessage)), (r) {
-        emit(EjerciciosByRutinaCompleted());
+        // Calcular estadísticas del entrenamiento completado
+        final rutina = currentState.ejerciciosDeRutina;
+        final totalEjercicios = rutina.ejercicios.length;
+        final totalSeries =
+            rutina.ejercicios.expand((ejercicio) => ejercicio.series).length;
+
+        // Calcular tiempo total (estimado desde el inicio de la sesión)
+        final tiempoTotal = DateTime.now().difference(rutina.fechaCreacion);
+
+        emit(EjerciciosByRutinaCompleted(
+          rutinaName: rutina.nombre,
+          totalEjercicios: totalEjercicios,
+          totalSeries: totalSeries,
+          tiempoTotal: tiempoTotal,
+          fechaCompletado: DateTime.now(),
+        ));
       });
       return;
     }
@@ -557,23 +572,40 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
   }
 
   Future<bool> completeRoutine({required String routineSessionId}) async {
+    print('🎯 DEBUG: completeRoutine llamado con sessionId: $routineSessionId');
     final currentState = state as EjerciciosByRutinaSuccess;
     final result = await completeRoutineSessionUseCase(
       CompleteRoutineSessionParams(sessionId: routineSessionId),
     );
 
-    return result.fold((failure) => false, (success) {
+    return result.fold((failure) {
+      print('❌ ERROR: completeRoutine falló: ${failure.errorMessage}');
+      return false;
+    }, (success) {
+      print('✅ SUCCESS: completeRoutine exitoso: $success');
       if (success) {
-        final updatedEjerciciosDeRutina = currentState.ejerciciosDeRutina
-            .copyWith(estado: RoutineSessionStatus.completed.name);
+        // Calcular estadísticas del entrenamiento completado
+        final rutina = currentState.ejerciciosDeRutina;
+        final totalEjercicios = rutina.ejercicios.length;
+        final totalSeries =
+            rutina.ejercicios.expand((ejercicio) => ejercicio.series).length;
 
-        emit(
-          EjerciciosByRutinaSuccess(
-            ejerciciosDeRutina: updatedEjerciciosDeRutina,
-            ejercicioIndex: currentState.ejercicioIndex,
-            serieIndex: currentState.serieIndex,
-          ),
-        );
+        // Calcular tiempo total (estimado desde el inicio de la sesión)
+        final tiempoTotal = DateTime.now().difference(rutina.fechaCreacion);
+
+        print('🎉 EMITIENDO EjerciciosByRutinaCompleted con:');
+        print('   - Rutina: ${rutina.nombre}');
+        print('   - Ejercicios: $totalEjercicios');
+        print('   - Series: $totalSeries');
+        print('   - Tiempo: $tiempoTotal');
+
+        emit(EjerciciosByRutinaCompleted(
+          rutinaName: rutina.nombre,
+          totalEjercicios: totalEjercicios,
+          totalSeries: totalSeries,
+          tiempoTotal: tiempoTotal,
+          fechaCompletado: DateTime.now(),
+        ));
       }
       return success;
     });

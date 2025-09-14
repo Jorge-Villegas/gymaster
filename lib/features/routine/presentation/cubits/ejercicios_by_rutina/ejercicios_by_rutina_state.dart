@@ -38,6 +38,26 @@ class EjerciciosByRutinaSuccess extends EjerciciosByRutinaState {
 }
 
 class EjerciciosByRutinaCompleted extends EjerciciosByRutinaState {
+  final String rutinaName;
+  final int totalEjercicios;
+  final int totalSeries;
+  final Duration tiempoTotal;
+  final DateTime fechaCompletado;
+
+  EjerciciosByRutinaCompleted({
+    required this.rutinaName,
+    required this.totalEjercicios,
+    required this.totalSeries,
+    required this.tiempoTotal,
+    required this.fechaCompletado,
+  });
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [
+        rutinaName,
+        totalEjercicios,
+        totalSeries,
+        tiempoTotal,
+        fechaCompletado,
+      ];
 }

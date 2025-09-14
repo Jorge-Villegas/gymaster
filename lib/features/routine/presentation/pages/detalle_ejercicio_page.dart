@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/features/routine/domain/entities/ejercicios_de_rutina.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
+import 'package:gymaster/features/routine/presentation/widgets/rutina_completada_widget.dart';
 import 'package:gymaster/shared/utils/enum.dart';
 import 'package:gymaster/shared/utils/text_formatter.dart';
 import 'package:gymaster/shared/utils/verificador_tipo_archivo.dart';
@@ -150,17 +151,8 @@ class DetalleEjercicioScreen extends StatelessWidget {
           );
         }
         if (state is EjerciciosByRutinaCompleted) {
-          // Usar un listener u otro mecanismo para la navegación
-          // Esto evita activar la navegación durante la fase de construcción
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            if (context.mounted) {
-              context.go('/');
-            }
-          });
-          return Scaffold(
-            appBar: AppBar(title: const Text('Rutina Completada')),
-            body: const Center(child: CircularProgressIndicator()),
-          );
+          // Mostrar widget de celebración en lugar de navegación automática
+          return RutinaCompletadaWidget(state: state);
         }
         if (state is EjerciciosByRutinaSuccess) {
           if (state.ejerciciosDeRutina.ejercicios.isEmpty) {
@@ -650,6 +642,8 @@ class DetalleEjercicioScreen extends StatelessWidget {
         buttonColor = colorScheme.tertiary;
         buttonIcon = Icons.check_circle_outline;
         onPressed = () {
+          print('🔴 DEBUG: Botón Finalizar Rutina presionado');
+          print('   - Session ID: ${state.ejerciciosDeRutina.session}');
           // Marcar el último ejercicio como completado antes de finalizar
           context.read<EjerciciosByRutinaCubit>().completeRoutine(
               routineSessionId: state.ejerciciosDeRutina.session);
