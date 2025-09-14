@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:gymaster/features/routine/domain/entities/ejercicios_de_rutina.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
 import 'package:gymaster/features/routine/presentation/widgets/rutina_completada_widget.dart';
+import 'package:gymaster/features/routine/presentation/widgets/rutina_cancelada_widget.dart';
 import 'package:gymaster/shared/utils/enum.dart';
 import 'package:gymaster/shared/utils/text_formatter.dart';
 import 'package:gymaster/shared/utils/verificador_tipo_archivo.dart';
@@ -130,6 +131,13 @@ class DetalleEjercicioScreen extends StatelessWidget {
 
     return BlocBuilder<EjerciciosByRutinaCubit, EjerciciosByRutinaState>(
       builder: (context, state) {
+        if (state is EjerciciosByRutinaCancelled) {
+          return RutinaCanceladaWidget(
+            rutinaName: state.rutinaName,
+            totalEjercicios: state.totalEjercicios,
+            fechaCancelada: state.fechaCancelada,
+          );
+        }
         if (state is EjerciciosByRutinaLoading) {
           return Scaffold(
             appBar: AppBar(title: const Text('Cargando...')),

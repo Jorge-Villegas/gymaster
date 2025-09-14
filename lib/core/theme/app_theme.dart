@@ -5,7 +5,15 @@ class AppTheme {
   static final ThemeData darkTheme = ThemeData(
     fontFamily: 'Montserrat',
     useMaterial3: true,
-    primaryColor: AppColors.primary,
+    colorScheme: ColorScheme.dark(
+      primary: AppColors.primary,
+      secondary: AppColors.secondary,
+      surface: AppColors.backgroundDark,
+      error: Colors.red.shade400,
+      onPrimary: Colors.white,
+      onSecondary: Colors.white,
+      onSurface: AppColors.textLight,
+    ),
     scaffoldBackgroundColor: AppColors.backgroundDark,
     textTheme: const TextTheme(
       bodyLarge: TextStyle(fontSize: 20.0, color: AppColors.textLight),
@@ -44,7 +52,15 @@ class AppTheme {
   static final ThemeData lightTheme = ThemeData(
     fontFamily: 'Montserrat',
     useMaterial3: true,
-    primaryColor: AppColors.primary,
+    colorScheme: ColorScheme.light(
+      primary: AppColors.primary,
+      secondary: AppColors.secondary,
+      surface: AppColors.backgroundLight,
+      error: Colors.red.shade600,
+      onPrimary: Colors.white,
+      onSecondary: Colors.white,
+      onSurface: AppColors.textDark,
+    ),
     scaffoldBackgroundColor: AppColors.backgroundLight,
     textTheme: const TextTheme(
       bodyLarge: TextStyle(fontSize: 20.0, color: AppColors.textDark),

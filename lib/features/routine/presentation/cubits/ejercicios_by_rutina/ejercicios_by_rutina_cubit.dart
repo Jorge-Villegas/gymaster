@@ -148,7 +148,11 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
 
   void _handleEjerciciosResult(EjerciciosDeRutina r) {
     if (r.estado == RoutineSessionStatus.cancelled.name) {
-      emit(EjerciciosByRutinaError("La rutina ha sido cancelada"));
+      emit(EjerciciosByRutinaCancelled(
+        rutinaName: r.nombre,
+        totalEjercicios: r.ejercicios.length,
+        fechaCancelada: DateTime.now(),
+      ));
       return;
     }
 
