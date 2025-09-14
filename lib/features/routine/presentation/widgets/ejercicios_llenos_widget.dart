@@ -138,15 +138,8 @@ class EjerciciosLlenosWidget extends StatelessWidget {
               context.push('/detalle-ejercicio');
             }
 
-            if (ejerciciosDeRutina.estado ==
-                RoutineSessionStatus.completed.name) {
-              iniciarRutina(
-                context,
-                state.ejerciciosDeRutina.session,
-                state.ejerciciosDeRutina.rutinaId,
-              );
-              context.push('/detalle-ejercicio');
-            }
+            // Removido: No debería llamar iniciarRutina para rutinas completadas
+            // porque ya se maneja automáticamente en _handleEjerciciosResult
 
             if (ejerciciosDeRutina.estado ==
                 RoutineSessionStatus.in_progress.name) {

@@ -588,16 +588,10 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
 
     return result.fold((failure) => false, (success) {
       if (success) {
-        final updatedEjerciciosDeRutina = currentState.ejerciciosDeRutina
-            .copyWith(estado: RoutineSessionStatus.cancelled.name);
-
-        emit(
-          EjerciciosByRutinaSuccess(
-            ejerciciosDeRutina: updatedEjerciciosDeRutina,
-            ejercicioIndex: currentState.ejercicioIndex,
-            serieIndex: currentState.serieIndex,
-          ),
-        );
+        // En lugar de solo actualizar el estado en memoria,
+        // recargar los ejercicios para que _handleEjerciciosResult
+        // pueda procesar el estado cancelled y cambiarlo a pending
+        getAllEjercicios(idRutina: currentState.ejerciciosDeRutina.rutinaId);
       }
 
       return success;
