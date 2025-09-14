@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gymaster/features/exercise/domain/entities/exercise.dart';
-import 'package:gymaster/shared/utils/colors.dart';
 import 'package:gymaster/shared/utils/text_formatter.dart';
 import 'package:gymaster/shared/utils/verificador_tipo_archivo.dart';
 
@@ -15,8 +14,10 @@ class ExerciseDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      backgroundColor: colorScheme.surface,
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
@@ -34,12 +35,12 @@ class ExerciseDetailPage extends StatelessWidget {
         child: FloatingActionButton.extended(
           elevation: 2,
           onPressed: () {},
-          backgroundColor: AppColors.primaryColor,
-          icon: const Icon(Icons.favorite_border, color: Colors.white),
-          label: const Text(
+          backgroundColor: colorScheme.primary,
+          icon: Icon(Icons.favorite_border, color: colorScheme.onPrimary),
+          label: Text(
             'Añadir a Favoritos',
             style: TextStyle(
-              color: Colors.white,
+              color: colorScheme.onPrimary,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -129,7 +130,7 @@ class ExerciseDetailPage extends StatelessWidget {
           _buildMinimalDescription(exercise.description),
           if (exercise.variations.isNotEmpty) ...[
             const SizedBox(height: 32),
-            _buildMinimalVariations(exercise.variations),
+            _buildMinimalVariations(context, exercise.variations),
           ],
           const SizedBox(height: 60),
         ],
@@ -152,46 +153,51 @@ class ExerciseDetailPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: muscles
-                .map((muscle) => Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 8),
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            AppColors.primaryColor.withAlpha(50),
-                            AppColors.primaryColor.withAlpha(25),
-                          ],
-                        ),
-                        borderRadius: BorderRadius.circular(25),
-                        border: Border.all(
-                          color: AppColors.primaryColor.withAlpha(75),
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Icon(
-                            Icons.fitness_center,
-                            size: 14,
-                            color: AppColors.primaryColor,
-                          ),
-                          const SizedBox(width: 8),
-                          Text(
-                            TextFormatter.capitalize(muscle),
-                            style: const TextStyle(
-                              color: AppColors.primaryColor,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w500,
+          Builder(
+            builder: (context) {
+              final colorScheme = Theme.of(context).colorScheme;
+              return Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: muscles
+                    .map((muscle) => Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 8),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                colorScheme.primary.withAlpha(50),
+                                colorScheme.primary.withAlpha(25),
+                              ],
+                            ),
+                            borderRadius: BorderRadius.circular(25),
+                            border: Border.all(
+                              color: colorScheme.primary.withAlpha(75),
                             ),
                           ),
-                        ],
-                      ),
-                    ))
-                .toList(),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                Icons.fitness_center,
+                                size: 14,
+                                color: colorScheme.primary,
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                TextFormatter.capitalize(muscle),
+                                style: TextStyle(
+                                  color: colorScheme.primary,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ))
+                    .toList(),
+              );
+            },
           ),
         ],
       ),
@@ -242,7 +248,10 @@ class ExerciseDetailPage extends StatelessWidget {
     );
   }
 
-  Widget _buildMinimalVariations(List<String> variations) {
+  Widget _buildMinimalVariations(
+      BuildContext context, List<String> variations) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -264,8 +273,8 @@ class ExerciseDetailPage extends StatelessWidget {
                     alignment: Alignment.center,
                     child: Text(
                       '${variations.indexOf(variation) + 1}',
-                      style: const TextStyle(
-                        color: AppColors.primaryColor,
+                      style: TextStyle(
+                        color: colorScheme.primary,
                         fontWeight: FontWeight.w500,
                       ),
                     ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
 
 class RutinaCanceladaWidget extends StatelessWidget {
   final String rutinaName;
@@ -41,7 +40,7 @@ class RutinaCanceladaWidget extends StatelessWidget {
                 Text(
                   'Has cancelado la rutina "$rutinaName"',
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        color: Colors.grey[700],
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
                   textAlign: TextAlign.center,
                 ),
@@ -66,7 +65,10 @@ class RutinaCanceladaWidget extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.fitness_center, color: Colors.grey[600]),
+                            Icon(Icons.fitness_center,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSurfaceVariant),
                             const SizedBox(width: 8),
                             Text('$totalEjercicios ejercicios'),
                           ],
@@ -76,7 +78,9 @@ class RutinaCanceladaWidget extends StatelessWidget {
                           'Cancelada el ${_formatearFecha(fechaCancelada)}',
                           style:
                               Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    color: Colors.grey[600],
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSurfaceVariant,
                                   ),
                         ),
                       ],

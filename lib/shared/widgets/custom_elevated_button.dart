@@ -24,6 +24,8 @@ class CustomElevatedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return LayoutBuilder(
       builder: (context, constraints) {
         double buttonWidth = width ?? constraints.maxWidth * 0.8;
@@ -34,7 +36,7 @@ class CustomElevatedButton extends StatelessWidget {
           height: buttonHeight,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: backgroundColor ?? const Color(0xFF675BE0),
+              backgroundColor: backgroundColor ?? colorScheme.primary,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(borderRadius ?? 15),
               ),
@@ -45,12 +47,12 @@ class CustomElevatedButton extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 if (icon != null)
-                  Icon(icon!.icon, color: textColor ?? Colors.white),
+                  Icon(icon!.icon, color: textColor ?? colorScheme.onPrimary),
                 if (icon != null && text != null) const SizedBox(width: 8),
                 if (text != null)
                   Text(
                     text!,
-                    style: TextStyle(color: textColor ?? Colors.white),
+                    style: TextStyle(color: textColor ?? colorScheme.onPrimary),
                   ),
               ],
             ),

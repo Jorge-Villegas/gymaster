@@ -37,7 +37,7 @@ class RutinaCompletadaWidget extends StatelessWidget {
                     onPressed: () => _navegarAlInicio(context),
                     icon: const Icon(Icons.close),
                     iconSize: 32,
-                    color: Colors.grey[600],
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -90,7 +90,7 @@ class RutinaCompletadaWidget extends StatelessWidget {
     return Text(
       'Has completado "${state.rutinaName}"',
       style: Theme.of(context).textTheme.titleLarge?.copyWith(
-            color: Colors.grey[700],
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
           ),
       textAlign: TextAlign.center,
     );
@@ -124,14 +124,14 @@ class RutinaCompletadaWidget extends StatelessWidget {
                   valor: '${state.totalEjercicios}',
                   etiqueta: 'Ejercicios',
                 ),
-                _buildDividerVertical(),
+                _buildDividerVertical(context),
                 _buildEstadisticaItem(
                   context,
                   icon: Icons.repeat,
                   valor: '${state.totalSeries}',
                   etiqueta: 'Series',
                 ),
-                _buildDividerVertical(),
+                _buildDividerVertical(context),
                 _buildEstadisticaItem(
                   context,
                   icon: Icons.timer,
@@ -147,7 +147,7 @@ class RutinaCompletadaWidget extends StatelessWidget {
             Text(
               'Completado el ${_formatearFecha(state.fechaCompletado)}',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Colors.grey[600],
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
             ),
           ],
@@ -180,18 +180,18 @@ class RutinaCompletadaWidget extends StatelessWidget {
         Text(
           etiqueta,
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: Colors.grey[600],
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
         ),
       ],
     );
   }
 
-  Widget _buildDividerVertical() {
+  Widget _buildDividerVertical(BuildContext context) {
     return Container(
       height: 60,
       width: 1,
-      color: Colors.grey[300],
+      color: Theme.of(context).colorScheme.outlineVariant,
     );
   }
 
@@ -204,8 +204,8 @@ class RutinaCompletadaWidget extends StatelessWidget {
           child: CustomElevatedButton(
             onPressed: () => _navegarAlInicio(context),
             text: 'Volver al Inicio',
-            backgroundColor: const Color.fromRGBO(86, 170, 27, 1),
-            textColor: Colors.white,
+            // backgroundColor usará colorScheme.primary por defecto
+            // textColor usará colorScheme.onPrimary por defecto
           ),
         ),
 

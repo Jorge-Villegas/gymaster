@@ -14,6 +14,8 @@ class _TemporizadorState extends State<Temporizador> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     //final sp = Provider.of<SerieProvider>(context);
     const int duracion = 30; //sp.serie.tiempoDescanso;
     return Scaffold(
@@ -36,19 +38,19 @@ class _TemporizadorState extends State<Temporizador> {
           height: MediaQuery.of(context).size.height / 2,
 
           // Color del anillo para el widget de cuenta regresiva.
-          ringColor: Colors.grey[300]!,
+          ringColor: colorScheme.outlineVariant,
 
           // Gradiente de anillo para el widget de cuenta regresiva.
           ringGradient: null,
 
           // Color de relleno para el widget de cuenta regresiva.
-          fillColor: Colors.purpleAccent[100]!,
+          fillColor: colorScheme.primary.withValues(alpha: 0.3),
 
           // Gradiente de relleno para el widget de cuenta regresiva.
           fillGradient: null,
 
           // Color de fondo para el widget de cuenta regresiva.
-          backgroundColor: Colors.purple[500],
+          backgroundColor: colorScheme.primary,
 
           // Gradiente de fondo para el widget de cuenta regresiva.
           backgroundGradient: null,
@@ -60,9 +62,9 @@ class _TemporizadorState extends State<Temporizador> {
           strokeCap: StrokeCap.round,
 
           // Estilo de texto para texto de cuenta regresiva.
-          textStyle: const TextStyle(
+          textStyle: TextStyle(
             fontSize: 50.0,
-            color: Colors.white,
+            color: colorScheme.onPrimary,
             fontWeight: FontWeight.bold,
           ),
 
@@ -106,13 +108,16 @@ class _TemporizadorState extends State<Temporizador> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const SizedBox(width: 30),
-          _button(title: "Reiniciar", onPressed: () => controller.start()),
+          _button(context,
+              title: "Reiniciar", onPressed: () => controller.start()),
           const SizedBox(width: 5),
-          _button(title: "Pausa", onPressed: () => controller.pause()),
+          _button(context, title: "Pausa", onPressed: () => controller.pause()),
           const SizedBox(width: 5),
-          _button(title: "Iniciar", onPressed: () => controller.resume()),
+          _button(context,
+              title: "Iniciar", onPressed: () => controller.resume()),
           const SizedBox(width: 5),
           _button(
+            context,
             title: "Avanzar",
             onPressed: () => GoRouter.of(context).go('/'),
           ),
@@ -122,14 +127,17 @@ class _TemporizadorState extends State<Temporizador> {
   }
 }
 
-Widget _button({required String title, VoidCallback? onPressed}) {
+Widget _button(BuildContext context,
+    {required String title, VoidCallback? onPressed}) {
+  final colorScheme = Theme.of(context).colorScheme;
+
   return Expanded(
     child: ElevatedButton(
       style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all(Colors.purple),
+        backgroundColor: WidgetStateProperty.all(colorScheme.primary),
       ),
       onPressed: onPressed,
-      child: Text(title, style: const TextStyle(color: Colors.white)),
+      child: Text(title, style: TextStyle(color: colorScheme.onPrimary)),
     ),
   );
 }
