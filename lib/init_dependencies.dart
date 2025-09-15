@@ -50,6 +50,27 @@ import 'package:gymaster/features/setting/domain/usecases/get_theme_mode_usecase
 import 'package:gymaster/features/setting/domain/usecases/set_lenguage_usecase.dart';
 import 'package:gymaster/features/setting/domain/usecases/set_theme_mode_usecase.dart';
 import 'package:gymaster/features/setting/presentation/cubit/setting_cubit.dart';
+
+// Emotional system imports
+import 'package:gymaster/features/setting/data/datasources/achievement_local_data_source.dart';
+import 'package:gymaster/features/setting/data/datasources/achievement_local_data_source_impl.dart';
+import 'package:gymaster/features/setting/data/datasources/user_emotional_local_data_source.dart';
+import 'package:gymaster/features/setting/data/datasources/user_emotional_local_data_source_impl.dart';
+import 'package:gymaster/features/setting/data/repositories/achievement_repository_impl.dart';
+import 'package:gymaster/features/setting/data/repositories/user_emotional_repository_impl.dart';
+import 'package:gymaster/features/setting/domain/repositories/achievement_repository.dart';
+import 'package:gymaster/features/setting/domain/repositories/user_emotional_repository.dart';
+import 'package:gymaster/features/setting/domain/usecases/get_achievement_usecase.dart';
+import 'package:gymaster/features/setting/domain/usecases/get_latest_user_mood_usecase.dart';
+import 'package:gymaster/features/setting/domain/usecases/get_user_motivation_usecase.dart';
+import 'package:gymaster/features/setting/domain/usecases/is_onboarding_completed_usecase.dart';
+import 'package:gymaster/features/setting/domain/usecases/mark_onboarding_completed_usecase.dart';
+import 'package:gymaster/features/setting/domain/usecases/save_user_motivation_usecase.dart';
+import 'package:gymaster/features/setting/domain/usecases/save_user_mood_usecase.dart';
+import 'package:gymaster/features/setting/presentation/cubits/achievement_cubit.dart';
+import 'package:gymaster/features/setting/presentation/cubits/app_start/app_start_cubit.dart';
+import 'package:gymaster/features/setting/presentation/cubits/onboarding/onboarding_cubit.dart';
+
 import 'package:gymaster/shared/utils/uuid_generator.dart';
 
 part 'init_dependencies.main.dart';

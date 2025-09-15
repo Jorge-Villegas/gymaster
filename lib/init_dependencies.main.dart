@@ -9,6 +9,7 @@ Future<void> initDependencies() async {
   _initSettings();
   _initRecord();
   _initExercise();
+  _initEmotionalSystem();
 }
 
 void _initDatabaseHelper() {
@@ -105,9 +106,6 @@ void _initSettings() {
     ..registerFactory(() => GetThemeModeUseCase(serviceLocator()))
     ..registerFactory(() => SetLanguageUseCase(serviceLocator()))
     ..registerFactory(() => GetLanguageUseCase(serviceLocator()))
-    ..registerCachedFactory(
-      () => GetAllCompletedRoutinesWithExercises(serviceLocator()),
-    )
     // Cubit
     ..registerFactory(
       () => SettingCubit(
@@ -125,16 +123,10 @@ void _initRecord() {
     ..registerFactory<RecordLocalDataSource>(
       () => RecordLocalDataSource(serviceLocator()),
     )
-    // Cubit
-    ..registerFactory(
-      () => RecordCubit(
-        getAllCompletedRoutinesWithExercises: serviceLocator(),
-        getRutinaByIdUseCase: serviceLocator(),
-        saveRutinaUseCase: serviceLocator(),
-        deleteRutinaUseCase: serviceLocator(),
-      ),
+    // Repository
+    ..registerLazySingleton<RecordRepository>(
+      () => RecordRepositoryImpl(localDataSource: serviceLocator()),
     )
-    ..registerFactory(() => SelectedRoutineCubit()) // Nuevo Cubit
     // Use cases
     ..registerLazySingleton(
       () => GetRutinaByIdUseCase(repository: serviceLocator()),
@@ -145,10 +137,19 @@ void _initRecord() {
     ..registerLazySingleton(
       () => DeleteRutinaUseCase(repository: serviceLocator()),
     )
-    // Repository
-    ..registerLazySingleton<RecordRepository>(
-      () => RecordRepositoryImpl(localDataSource: serviceLocator()),
-    );
+    ..registerCachedFactory(
+      () => GetAllCompletedRoutinesWithExercises(serviceLocator()),
+    )
+    // Cubit
+    ..registerFactory(
+      () => RecordCubit(
+        getAllCompletedRoutinesWithExercises: serviceLocator(),
+        getRutinaByIdUseCase: serviceLocator(),
+        saveRutinaUseCase: serviceLocator(),
+        deleteRutinaUseCase: serviceLocator(),
+      ),
+    )
+    ..registerFactory(() => SelectedRoutineCubit()); // Nuevo Cubit
 }
 
 void _initExercise() {
@@ -169,6 +170,60 @@ void _initExercise() {
       () => ExerciseCubit(
         getAllExercisesUseCase: serviceLocator(),
         getExercisesByMuscleUseCase: serviceLocator(),
+      ),
+    );
+}
+
+void _initEmotionalSystem() {
+  serviceLocator
+    // Data sources - User Emotional
+    ..registerFactory<UserEmotionalLocalDataSource>(
+      () => UserEmotionalLocalDataSourceImpl(serviceLocator()),
+    )
+
+    // Data sources - Achievement
+    ..registerFactory<AchievementLocalDataSource>(
+      () => AchievementLocalDataSourceImpl(
+        databaseHelper: serviceLocator(),
+        idGenerator: serviceLocator(),
+      ),
+    )
+
+    // Repositories
+    ..registerFactory<UserEmotionalRepository>(
+      () => UserEmotionalRepositoryImpl(localDataSource: serviceLocator()),
+    )
+    ..registerFactory<AchievementRepository>(
+      () => AchievementRepositoryImpl(localDataSource: serviceLocator()),
+    )
+
+    // Use cases - User Emotional
+    ..registerFactory(() => SaveUserMotivationUseCase(serviceLocator()))
+    ..registerFactory(() => SaveUserMoodUseCase(serviceLocator()))
+    ..registerFactory(() => GetUserMotivationUseCase(serviceLocator()))
+    ..registerFactory(() => GetLatestUserMoodUseCase(serviceLocator()))
+    ..registerFactory(() => IsOnboardingCompletedUseCase(serviceLocator()))
+    ..registerFactory(() => MarkOnboardingCompletedUseCase(serviceLocator()))
+
+    // Use cases - Achievement
+    ..registerFactory(() => GetAchievementUseCase(serviceLocator()))
+
+    // Cubits
+    ..registerFactory(
+      () => AppStartCubit(
+        isOnboardingCompletedUseCase: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => OnboardingCubit(
+        saveUserMotivationUseCase: serviceLocator(),
+        markOnboardingCompletedUseCase: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => AchievementCubit(
+        getAchievementUseCase: serviceLocator(),
+        achievementRepository: serviceLocator(),
       ),
     );
 }

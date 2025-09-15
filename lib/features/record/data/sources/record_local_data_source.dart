@@ -21,13 +21,19 @@ class RecordLocalDataSource {
       );
 
       if (result.isEmpty) {
-        throw NoRecordsException();
+        return []; // Retornar lista vacía en lugar de lanzar excepción
       }
 
-      return result
+      final sessions = result
           .map((session) => RoutineSessionDbModel.fromJson(session))
           .toList();
+
+      return sessions;
+    } on DatabaseException catch (e) {
+      print('❌ Error de base de datos: $e');
+      throw CacheException();
     } catch (e) {
+      print('❌ Error inesperado al obtener rutinas completadas: $e');
       throw CacheException();
     }
   }

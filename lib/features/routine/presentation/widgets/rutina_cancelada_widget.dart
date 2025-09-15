@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:gymaster/core/theme/emotional_text_styles.dart';
+import 'package:gymaster/core/theme/app_colors.dart';
 
 class RutinaCanceladaWidget extends StatelessWidget {
   final String rutinaName;
@@ -96,12 +98,18 @@ class RutinaCanceladaWidget extends StatelessWidget {
                 ElevatedButton.icon(
                   onPressed: () => _reintentarRutina(context),
                   icon: const Icon(Icons.refresh_rounded),
-                  label: const Text('Reintentar Rutina'),
+                  label: Text(
+                    'Reintentar Rutina',
+                    style: EmotionalTextStyles.encouragement.copyWith(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
+                  ),
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size.fromHeight(56),
                     elevation: 4,
-                    backgroundColor: Theme.of(context).colorScheme.primary,
-                    foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                    backgroundColor: AppColors.energyOrange, // Color emocional
+                    foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
@@ -111,10 +119,10 @@ class RutinaCanceladaWidget extends StatelessWidget {
                 // Mensaje motivacional
                 Text(
                   '¡No te rindas! Puedes intentarlo de nuevo 💪',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontWeight: FontWeight.w500,
-                      ),
+                  style: EmotionalTextStyles.encouragement.copyWith(
+                    color: AppColors.warmOrange,
+                    fontSize: 16,
+                  ),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 24),

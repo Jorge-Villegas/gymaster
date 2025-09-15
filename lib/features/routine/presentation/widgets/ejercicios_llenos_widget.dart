@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/shared/utils/haptic_feedback_helper.dart';
+import 'package:gymaster/shared/utils/audio_feedback_helper.dart';
 import 'package:gymaster/features/routine/domain/entities/ejercicios_de_rutina.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
 import 'package:gymaster/features/routine/presentation/widgets/custom_cart.dart';
@@ -10,7 +13,11 @@ import 'package:iconsax_plus/iconsax_plus.dart';
 class EjerciciosLlenosWidget extends StatelessWidget {
   const EjerciciosLlenosWidget({super.key});
 
-  iniciarRutina(BuildContext context, String sessionId, String rutinaId) {
+  iniciarRutina(BuildContext context, String sessionId, String rutinaId) async {
+    // Feedback emocional al iniciar rutina
+    await HapticFeedbackHelper.vibracionMotivacionalInicioRutina();
+    await AudioFeedbackHelper.reproducirSonidoMotivacional();
+
     context.read<EjerciciosByRutinaCubit>().iniciarRutina(
           routineSessionId: sessionId,
           rutinaId: rutinaId,
@@ -112,8 +119,8 @@ class EjerciciosLlenosWidget extends StatelessWidget {
         ejerciciosDeRutina.estado == RoutineSessionStatus.cancelled.name) {
       getButtonText = 'Iniciar entrenamiento';
       getIconPath = IconsaxPlusLinear.play;
-      getButtonColor = const Color.fromRGBO(86, 170, 27, 1);
-      getBackgroundColor = const Color.fromRGBO(86, 170, 27, 0.1);
+      getButtonColor = Colors.green;
+      getBackgroundColor = getButtonColor.withAlpha((0.1 * 255).toInt());
     }
     if (ejerciciosDeRutina.estado == RoutineSessionStatus.in_progress.name) {
       getButtonText = 'Parar entrenamiento';
@@ -216,9 +223,6 @@ class EjerciciosLlenosWidget extends StatelessWidget {
               buildDefaultDragHandles: false,
               itemBuilder: (context, i) {
                 final ejercicio = ejerciciosDeRutina.ejercicios[i];
-                final estadoEjercicio = ejercicio.series.every(
-                  (serie) => serie.estado == 'completed',
-                );
                 final pesos =
                     ejercicio.series.map((serie) => serie.peso).toList();
                 return Dismissible(
@@ -270,19 +274,6 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                       // Si la rutina está en ejecución, permitir navegar al ejercicio seleccionado
                       if (ejerciciosDeRutina.estado ==
                           RoutineSessionStatus.in_progress.name) {
-                        // Actualizar el ejercicio actual en el cubit
-                        final currentState = state;
-                        // Emitir un nuevo estado con el ejercicio seleccionado
-                        context.read<EjerciciosByRutinaCubit>().emit(
-                              EjerciciosByRutinaSuccess(
-                                ejerciciosDeRutina:
-                                    currentState.ejerciciosDeRutina,
-                                ejercicioIndex: ejercicio.id,
-                                serieIndex: ejercicio.series.isNotEmpty
-                                    ? ejercicio.series.first.id
-                                    : '',
-                              ),
-                            );
                         // Navegar a la pantalla de detalle de ejercicio
                         context.push('/detalle-ejercicio');
                       }

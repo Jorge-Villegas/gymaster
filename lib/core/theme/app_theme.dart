@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:gymaster/core/theme/app_colors.dart';
 
+/// Tema de la aplicación GyMaster con diseño emocional
+/// Implementa los tres niveles de Norman: Visceral, Conductual y Reflexivo
 class AppTheme {
   static final ThemeData darkTheme = ThemeData(
     fontFamily: 'Montserrat',
     useMaterial3: true,
-    colorScheme: ColorScheme.dark(
+    colorScheme: const ColorScheme.dark(
       primary: AppColors.primary,
       secondary: AppColors.secondary,
       surface: AppColors.backgroundDark,
-      error: Colors.red.shade400,
+      error: AppColors.motivationRed, // Error emocional
       onPrimary: Colors.white,
       onSecondary: Colors.white,
       onSurface: AppColors.textLight,
+      // Colores adicionales emocionales
+      tertiary: AppColors.energyOrange,
+      onTertiary: Colors.white,
     ),
     scaffoldBackgroundColor: AppColors.backgroundDark,
     textTheme: const TextTheme(
@@ -35,16 +40,19 @@ class AppTheme {
       backgroundColor: AppColors.backgroundDark,
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
-      backgroundColor: AppColors.primary,
+      backgroundColor: AppColors.energyOrange, // FAB emocional
+      foregroundColor: Colors.white,
+      elevation: 6,
     ),
     inputDecorationTheme: const InputDecorationTheme(
       floatingLabelStyle: TextStyle(color: AppColors.primary),
       border: OutlineInputBorder(),
       enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: AppColors.primary),
+        borderSide: BorderSide(color: AppColors.calmBlue), // Border emocional
       ),
       focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: AppColors.primary),
+        borderSide:
+            BorderSide(color: AppColors.energyOrange), // Focus emocional
       ),
     ),
   );
@@ -52,14 +60,17 @@ class AppTheme {
   static final ThemeData lightTheme = ThemeData(
     fontFamily: 'Montserrat',
     useMaterial3: true,
-    colorScheme: ColorScheme.light(
+    colorScheme: const ColorScheme.light(
       primary: AppColors.primary,
       secondary: AppColors.secondary,
       surface: AppColors.backgroundLight,
-      error: Colors.red.shade600,
+      error: AppColors.motivationRed, // Error emocional
       onPrimary: Colors.white,
       onSecondary: Colors.white,
       onSurface: AppColors.textDark,
+      // Colores adicionales emocionales
+      tertiary: AppColors.energyOrange,
+      onTertiary: Colors.white,
     ),
     scaffoldBackgroundColor: AppColors.backgroundLight,
     textTheme: const TextTheme(
@@ -82,16 +93,19 @@ class AppTheme {
       backgroundColor: AppColors.backgroundLight,
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
-      backgroundColor: AppColors.primary,
+      backgroundColor: AppColors.energyOrange, // FAB emocional
+      foregroundColor: Colors.white,
+      elevation: 6,
     ),
     inputDecorationTheme: const InputDecorationTheme(
       floatingLabelStyle: TextStyle(color: AppColors.primary),
       border: OutlineInputBorder(),
       enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: AppColors.primary),
+        borderSide: BorderSide(color: AppColors.calmBlue), // Border emocional
       ),
       focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: AppColors.primary),
+        borderSide:
+            BorderSide(color: AppColors.energyOrange), // Focus emocional
       ),
     ),
   );

@@ -652,8 +652,6 @@ class DetalleEjercicioScreen extends StatelessWidget {
         buttonColor = colorScheme.tertiary;
         buttonIcon = Icons.check_circle_outline;
         onPressed = () {
-          print('🔴 DEBUG: Botón Finalizar Rutina presionado');
-          print('   - Session ID: ${state.ejerciciosDeRutina.session}');
           // Marcar el último ejercicio como completado antes de finalizar
           context.read<EjerciciosByRutinaCubit>().completeRoutine(
               routineSessionId: state.ejerciciosDeRutina.session);

@@ -35,7 +35,7 @@ class RecordCubit extends Cubit<RecordState> {
         if (rutinas.isEmpty) {
           emit(
             RecordLoaded(rutinas: []),
-          ); // Emitimos estado vacío si no hay rutinas
+          );
         } else {
           emit(RecordLoaded(rutinas: rutinas)); // Emitimos las rutinas cargadas
         }

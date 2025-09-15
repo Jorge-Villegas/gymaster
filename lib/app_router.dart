@@ -8,6 +8,8 @@ import 'package:gymaster/features/routine/presentation/pages/detalle_rutina_page
 import 'package:gymaster/features/routine/presentation/pages/lista_rutina_page.dart';
 import 'package:gymaster/features/routine/presentation/pages/listar_ejercicios_page.dart';
 import 'package:gymaster/features/setting/presentation/pages/setting_page.dart';
+import 'package:gymaster/features/setting/presentation/pages/onboarding_emocional_page.dart';
+import 'package:gymaster/features/setting/presentation/pages/app_start_page.dart';
 import 'package:gymaster/shared/widgets/barra_navegacion.dart';
 import 'package:gymaster/shared/widgets/loading_dialog_page.dart';
 import 'package:gymaster/theme_preview_page.dart';
@@ -29,6 +31,11 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(
       path: '/',
+      name: 'appStart',
+      builder: (context, state) => const AppStartPage(),
+    ),
+    GoRoute(
+      path: '/main',
       name: 'listaRutinas',
       builder: (context, state) => const BottomNavigationBarExampleApp(),
     ),
@@ -113,6 +120,11 @@ final GoRouter router = GoRouter(
     //-----------------------------------------
     //                Setting
     //-----------------------------------------
+    GoRoute(
+      path: '/onboarding',
+      name: 'onboarding',
+      builder: (context, state) => const OnboardingEmocionalPage(),
+    ),
     GoRoute(path: '/home', builder: (context, state) => const HomePage()),
     GoRoute(
       path: '/business',
@@ -128,7 +140,7 @@ final GoRouter router = GoRouter(
     //-----------------------------------------
     GoRoute(
       path: '/record',
-      builder: (context, state) => HistorialEjerciciosPage(),
+      builder: (context, state) => const HistorialEjerciciosPage(),
     ),
     //-----------------------------------------
     //                Exercise

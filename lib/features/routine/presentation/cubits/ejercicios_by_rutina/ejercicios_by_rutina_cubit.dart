@@ -1,10 +1,8 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymaster/core/database/database_helper.dart';
 import 'package:gymaster/core/database/models/models.dart';
-import 'package:gymaster/core/database/models/routine_session_db_model.dart';
 import 'package:gymaster/core/error/timeout_helper.dart';
 import 'package:gymaster/features/routine/domain/entities/ejercicios_de_rutina.dart';
 import 'package:gymaster/features/routine/domain/usecases/complete_routine_session_usecase.dart';
@@ -138,7 +136,6 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
       );
 
       result.fold((l) => emit(EjerciciosByRutinaError(l.errorMessage)), (r) {
-        print('getAllEjercicios cubit: ${ejerciciosDeRutinaModelToJson(r)}');
         _handleEjerciciosResult(r);
       });
     } catch (e) {
@@ -438,8 +435,6 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
           }
         }
       });
-
-      print('Successfully updated exercise order in database');
     } catch (e) {
       print('Error updating exercise order: $e');
     }
@@ -599,17 +594,14 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
   }
 
   Future<bool> completeRoutine({required String routineSessionId}) async {
-    print('🎯 DEBUG: completeRoutine llamado con sessionId: $routineSessionId');
     final currentState = state as EjerciciosByRutinaSuccess;
     final result = await completeRoutineSessionUseCase(
       CompleteRoutineSessionParams(sessionId: routineSessionId),
     );
 
     return result.fold((failure) {
-      print('❌ ERROR: completeRoutine falló: ${failure.errorMessage}');
       return false;
     }, (success) {
-      print('✅ SUCCESS: completeRoutine exitoso: $success');
       if (success) {
         // Calcular estadísticas del entrenamiento completado
         final rutina = currentState.ejerciciosDeRutina;

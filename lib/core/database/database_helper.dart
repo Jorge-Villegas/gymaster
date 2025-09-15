@@ -9,7 +9,8 @@ import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 
 class DatabaseHelper {
   static const _databaseName = 'gymaster.db';
-  static const _databaseVersion = 1;
+  static const _databaseVersion =
+      3; // Incrementamos la versión para user_motivation
 
   // Singleton
   DatabaseHelper._privateConstructor();
@@ -160,15 +161,103 @@ class DatabaseHelper {
           FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE
         )
       ''');
+
+    // Tablas del sistema emocional
+    await db.execute('''
+        CREATE TABLE achievement (
+          id TEXT PRIMARY KEY,
+          name TEXT NOT NULL,
+          description TEXT,
+          icon TEXT,
+          is_unlocked INTEGER DEFAULT 0,
+          unlocked_at DATETIME,
+          created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        )
+      ''');
+
+    await db.execute('''
+        CREATE TABLE user_motivation (
+          id TEXT PRIMARY KEY,
+          userId TEXT NOT NULL,
+          motivations TEXT NOT NULL,
+          challenges TEXT NOT NULL,
+          postWorkoutFeelings TEXT NOT NULL,
+          notificationPreferences TEXT NOT NULL,
+          createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+          updatedAt DATETIME,
+          FOREIGN KEY (userId) REFERENCES user (id) ON DELETE CASCADE
+        )
+      ''');
+
+    await db.execute('''
+        CREATE TABLE user_mood (
+          id TEXT PRIMARY KEY,
+          user_id TEXT NOT NULL,
+          mood_type TEXT NOT NULL,
+          recorded_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+          FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE
+        )
+      ''');
+
+    await db.execute('''
+        CREATE TABLE user_onboarding (
+          id TEXT PRIMARY KEY,
+          userId TEXT NOT NULL,
+          completed INTEGER DEFAULT 0,
+          completedAt DATETIME,
+          createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+          FOREIGN KEY (userId) REFERENCES user (id) ON DELETE CASCADE
+        )
+      ''');
+
     // Llama al seeder para llenar la base de datos con datos iniciales
     // await DatabaseSeeder(idGenerator: UuidGenerator()).seedGenerateDatabase();
   }
 
   // Maneja las migraciones de la base de datos
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
-    if (oldVersion < newVersion) {
-      // Agregar lógica para manejar cambios entre versiones.
-      // Por ejemplo: db.execute('ALTER TABLE Ejercicio ADD COLUMN nuevaColumna TEXT');
+    if (oldVersion < 2) {
+      // Agregar tabla user_onboarding en versión 2
+      await db.execute('''
+        CREATE TABLE user_onboarding (
+          id TEXT PRIMARY KEY,
+          userId TEXT NOT NULL,
+          completed INTEGER DEFAULT 0,
+          completedAt DATETIME,
+          createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+          FOREIGN KEY (userId) REFERENCES user (id) ON DELETE CASCADE
+        )
+      ''');
+      debugPrint('🔄 Migración completada: Tabla user_onboarding agregada');
+    }
+
+    if (oldVersion < 3) {
+      // Migrar user_motivation para la nueva estructura en versión 3
+      debugPrint('🔄 Iniciando migración de user_motivation...');
+
+      // Hacer backup de datos existentes
+      final List<Map<String, dynamic>> existingData =
+          await db.query('user_motivation');
+
+      // Eliminar tabla antigua
+      await db.execute('DROP TABLE IF EXISTS user_motivation');
+
+      // Crear nueva tabla con estructura correcta
+      await db.execute('''
+        CREATE TABLE user_motivation (
+          id TEXT PRIMARY KEY,
+          userId TEXT NOT NULL,
+          motivations TEXT NOT NULL,
+          challenges TEXT NOT NULL,
+          postWorkoutFeelings TEXT NOT NULL,
+          notificationPreferences TEXT NOT NULL,
+          createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+          updatedAt DATETIME,
+          FOREIGN KEY (userId) REFERENCES user (id) ON DELETE CASCADE
+        )
+      ''');
+
+      debugPrint('🔄 Migración completada: Tabla user_motivation actualizada');
     }
   }
 

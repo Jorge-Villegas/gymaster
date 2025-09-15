@@ -17,6 +17,8 @@ import 'package:gymaster/features/routine/presentation/cubits/rutina/routine_cub
 import 'package:gymaster/features/routine/presentation/cubits/serie/serie_cubit.dart';
 import 'package:gymaster/features/setting/presentation/cubit/setting_cubit.dart';
 import 'package:gymaster/features/setting/presentation/cubit/setting_state.dart';
+import 'package:gymaster/features/setting/presentation/cubits/app_start/app_start_cubit.dart';
+import 'package:gymaster/features/setting/presentation/cubits/onboarding/onboarding_cubit.dart';
 import 'package:gymaster/init_dependencies.dart';
 import 'package:gymaster/features/exercise/presentation/cubits/exercise/exercise_cubit.dart';
 
@@ -44,7 +46,6 @@ class Proveedores extends StatelessWidget {
         BlocProvider(create: (_) => serviceLocator<SerieCubit>()),
         BlocProvider(create: (_) => serviceLocator<MusculoCubit>()),
         BlocProvider(create: (_) => serviceLocator<EjercicioCubit>()),
-        // BlocProvider(create: (_) => serviceLocator<ConfiguracionCubit>()),
         BlocProvider(create: (_) => serviceLocator<AgregarSeriesCubit>()),
         BlocProvider(create: (_) => serviceLocator<EjerciciosByRutinaCubit>()),
         BlocProvider(
@@ -54,6 +55,8 @@ class Proveedores extends StatelessWidget {
           create: (_) => serviceLocator<RealizarEjercicioRutinaCubit>(),
         ),
         BlocProvider(create: (_) => serviceLocator<SettingCubit>()),
+        BlocProvider(create: (_) => serviceLocator<AppStartCubit>()),
+        BlocProvider(create: (_) => serviceLocator<OnboardingCubit>()),
         BlocProvider(create: (_) => serviceLocator<RecordCubit>()),
         BlocProvider(create: (_) => serviceLocator<SelectedRoutineCubit>()),
         BlocProvider(create: (_) => serviceLocator<ExerciseCubit>()),

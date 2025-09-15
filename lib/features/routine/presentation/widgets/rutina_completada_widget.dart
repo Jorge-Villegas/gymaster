@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 import 'package:gymaster/core/generated/assets.gen.dart';
+import 'package:gymaster/core/theme/emotional_text_styles.dart';
+import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/services/emotional_message_service.dart';
+import 'package:gymaster/shared/utils/haptic_feedback_helper.dart';
+import 'package:gymaster/shared/utils/audio_feedback_helper.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
-import 'package:gymaster/shared/widgets/custom_elevated_button.dart';
+import 'package:gymaster/features/record/presentation/cubit/record_cubit.dart';
+import 'package:gymaster/features/record/presentation/cubit/record_state.dart';
 
 /// Widget que muestra la celebración cuando una rutina es completada exitosamente
 /// Sigue las reglas del proyecto: Clean Architecture, terminología en español, UI centrada en el usuario
-class RutinaCompletadaWidget extends StatelessWidget {
+class RutinaCompletadaWidget extends StatefulWidget {
   final EjerciciosByRutinaCompleted state;
 
   const RutinaCompletadaWidget({
@@ -16,45 +23,95 @@ class RutinaCompletadaWidget extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    print('🎉 DEBUG: RutinaCompletadaWidget.build() llamado');
-    print('   - Rutina: ${state.rutinaName}');
-    print('   - Ejercicios: ${state.totalEjercicios}');
-    print('   - Series: ${state.totalSeries}');
+  State<RutinaCompletadaWidget> createState() => _RutinaCompletadaWidgetState();
+}
 
-    return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: SingleChildScrollView(
-            child: Column(
+class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget> {
+  int _totalRutinasCompletadas = 1; // Default para primera rutina
+  bool _isLoadingRecords = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCompletedRoutinesCount();
+
+    // Trigger celebration feedback when widget builds
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      HapticFeedbackHelper.vibracionLogro();
+      AudioFeedbackHelper.reproducirSonidoCelebracion();
+    });
+  }
+
+  void _loadCompletedRoutinesCount() {
+    final recordCubit = context.read<RecordCubit>();
+    final currentState = recordCubit.state;
+
+    if (currentState is RecordLoaded) {
+      // Si ya tenemos los datos, usarlos directamente
+      setState(() {
+        _totalRutinasCompletadas = currentState.rutinas.length;
+      });
+    } else if (!_isLoadingRecords) {
+      // Solo cargar si no estamos ya cargando
+      setState(() {
+        _isLoadingRecords = true;
+      });
+      recordCubit.getAllRutinas();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocListener<RecordCubit, RecordState>(
+      listener: (context, recordState) {
+        if (recordState is RecordLoaded && _isLoadingRecords) {
+          setState(() {
+            _totalRutinasCompletadas = recordState.rutinas.length;
+            _isLoadingRecords = false;
+          });
+        }
+      },
+      child: Scaffold(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Stack(
               children: [
+                SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                          height: 60), // Espacio para el botón cerrar
+                      // Animación de celebración
+                      _buildAnimacionCelebracion(),
+                      const SizedBox(height: 32),
+                      // Título de felicitación
+                      _buildTituloFelicitacion(context),
+                      const SizedBox(height: 16),
+                      // Subtítulo con nombre de rutina
+                      _buildSubtituloRutina(context),
+                      const SizedBox(height: 40),
+                      // Card con estadísticas
+                      _buildEstadisticasCard(context),
+                      const SizedBox(height: 40),
+                      // Botones de acción
+                      _buildBotonesAccion(context),
+                    ],
+                  ),
+                ),
                 // Botón para cerrar en la esquina superior derecha
                 Align(
                   alignment: Alignment.topRight,
                   child: IconButton(
                     onPressed: () => _navegarAlInicio(context),
-                    icon: const Icon(Icons.close),
-                    iconSize: 32,
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    icon: Icon(
+                      Icons.close,
+                      size: 32,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    ),
                   ),
                 ),
-                const SizedBox(height: 8),
-                // Animación de celebración
-                _buildAnimacionCelebracion(),
-                const SizedBox(height: 32),
-                // Título de felicitación
-                _buildTituloFelicitacion(context),
-                const SizedBox(height: 16),
-                // Subtítulo con nombre de rutina
-                _buildSubtituloRutina(context),
-                const SizedBox(height: 40),
-                // Card con estadísticas
-                _buildEstadisticasCard(context),
-                const SizedBox(height: 40),
-                // Botones de acción
-                _buildBotonesAccion(context),
               ],
             ),
           ),
@@ -64,9 +121,19 @@ class RutinaCompletadaWidget extends StatelessWidget {
   }
 
   Widget _buildAnimacionCelebracion() {
-    return SizedBox(
+    return Container(
       height: 200,
       width: 200,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(100),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.achievementGold.withOpacity(0.3),
+            blurRadius: 20,
+            spreadRadius: 5,
+          ),
+        ],
+      ),
       child: Lottie.asset(
         Assets.lottie.alzandoPesas,
         repeat: true,
@@ -76,23 +143,96 @@ class RutinaCompletadaWidget extends StatelessWidget {
   }
 
   Widget _buildTituloFelicitacion(BuildContext context) {
-    return Text(
-      '¡Felicidades! 🎉',
-      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-            fontWeight: FontWeight.bold,
-            color: const Color.fromRGBO(86, 170, 27, 1), // Color verde del tema
+    final String mensajePersonalizado =
+        MensajesEmocionalesService.obtenerMensajeDeCompletacion(
+      widget.state.rutinaName,
+      _totalRutinasCompletadas,
+      widget.state.totalEjercicios,
+      widget.state.totalSeries,
+    );
+
+    return Column(
+      children: [
+        Text(
+          '${_totalRutinasCompletadas.iconoProgreso} ¡Felicidades! ${_totalRutinasCompletadas.iconoProgreso}',
+          style: EmotionalTextStyles.celebration.copyWith(
+            color: AppColors.achievementGold,
+            fontSize: 28,
           ),
-      textAlign: TextAlign.center,
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: 8),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+          decoration: BoxDecoration(
+            color: AppColors.achievementGold.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(20),
+            border:
+                Border.all(color: AppColors.achievementGold.withOpacity(0.3)),
+          ),
+          child: Text(
+            _totalRutinasCompletadas.insigniaProgreso,
+            style: const TextStyle(
+              color: AppColors.achievementGold,
+              fontWeight: FontWeight.bold,
+              fontSize: 12,
+              letterSpacing: 1.2,
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
+        Text(
+          mensajePersonalizado,
+          style: EmotionalTextStyles.encouragement.copyWith(
+            fontSize: 18,
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ],
     );
   }
 
   Widget _buildSubtituloRutina(BuildContext context) {
-    return Text(
-      'Has completado "${state.rutinaName}"',
-      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-            color: Theme.of(context).colorScheme.onSurfaceVariant,
+    final String subtituloContextual =
+        MensajesEmocionalesService.obtenerSubtituloContextual(
+      widget.state.rutinaName,
+      _totalRutinasCompletadas,
+      widget.state.totalEjercicios,
+    );
+
+    return Column(
+      children: [
+        Text(
+          subtituloContextual,
+          style: EmotionalTextStyles.encouragement.copyWith(
+            fontSize: 20,
+            color: AppColors.successGreen,
+            fontWeight: FontWeight.w600,
           ),
-      textAlign: TextAlign.center,
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: 8),
+        Text(
+          MensajesEmocionalesService.obtenerEstadisticasContext(
+              _totalRutinasCompletadas),
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: AppColors.motivationRed,
+                fontWeight: FontWeight.w500,
+              ),
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: 4),
+        Text(
+          MensajesEmocionalesService.obtenerProyeccionDeLogros(
+              _totalRutinasCompletadas),
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+                fontStyle: FontStyle.italic,
+              ),
+          textAlign: TextAlign.center,
+        ),
+      ],
     );
   }
 
@@ -121,21 +261,21 @@ class RutinaCompletadaWidget extends StatelessWidget {
                 _buildEstadisticaItem(
                   context,
                   icon: Icons.fitness_center,
-                  valor: '${state.totalEjercicios}',
+                  valor: '${widget.state.totalEjercicios}',
                   etiqueta: 'Ejercicios',
                 ),
                 _buildDividerVertical(context),
                 _buildEstadisticaItem(
                   context,
                   icon: Icons.repeat,
-                  valor: '${state.totalSeries}',
+                  valor: '${widget.state.totalSeries}',
                   etiqueta: 'Series',
                 ),
                 _buildDividerVertical(context),
                 _buildEstadisticaItem(
                   context,
                   icon: Icons.timer,
-                  valor: _formatearTiempo(state.tiempoTotal),
+                  valor: _formatearTiempo(widget.state.tiempoTotal),
                   etiqueta: 'Tiempo',
                 ),
               ],
@@ -145,7 +285,7 @@ class RutinaCompletadaWidget extends StatelessWidget {
 
             // Fecha de completado
             Text(
-              'Completado el ${_formatearFecha(state.fechaCompletado)}',
+              'Completado el ${_formatearFecha(widget.state.fechaCompletado)}',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
@@ -201,11 +341,14 @@ class RutinaCompletadaWidget extends StatelessWidget {
         // Botón principal: Volver al inicio
         SizedBox(
           width: double.infinity,
-          child: CustomElevatedButton(
+          child: ElevatedButton(
             onPressed: () => _navegarAlInicio(context),
-            text: 'Volver al Inicio',
-            // backgroundColor usará colorScheme.primary por defecto
-            // textColor usará colorScheme.onPrimary por defecto
+            style: ElevatedButton.styleFrom(
+              elevation: 0,
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              foregroundColor: Theme.of(context).colorScheme.onPrimary,
+            ),
+            child: const Text('Volver al Inicio'),
           ),
         ),
 
@@ -219,7 +362,7 @@ class RutinaCompletadaWidget extends StatelessWidget {
             icon: const Icon(Icons.history),
             label: const Text('Ver Historial'),
             style: OutlinedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 16),
+              padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
               side: const BorderSide(
                 color: Color.fromRGBO(86, 170, 27, 1),
               ),

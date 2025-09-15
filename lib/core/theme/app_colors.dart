@@ -25,4 +25,32 @@ class AppColors {
 
   static const Color purpura = Color(0xFF9C27B0); // Purple
   static const Color lavanda = Color(0xFFE1BEE7); // Lavender
+
+  // === COLORES EMOCIONALES - DISEÑO VISCERAL ===
+
+  // Energía y motivación (para botones de acción)
+  static const Color energyOrange = Color(0xFFFF6B35); // Naranja energético
+  static const Color motivationRed = Color(0xFFE74C3C); // Rojo motivacional
+  static const Color fireRed = Color(0xFFFF4757); // Rojo fuego para rachas
+
+  // Logro y éxito (para completar ejercicios)
+  static const Color successGreen = Color(0xFF27AE60); // Verde éxito
+  static const Color achievementGold = Color(0xFFF39C12); // Dorado logros
+  static const Color victoryGreen = Color(0xFF2ECC71); // Verde victoria
+
+  // Calma y recuperación (para descansos)
+  static const Color calmBlue = Color(0xFF3498DB); // Azul calmado
+  static const Color restTeal = Color(0xFF1ABC9C); // Teal descanso
+  static const Color peacefulBlue = Color(0xFF74B9FF); // Azul paz
+
+  // Elementos especiales
+  static const Color celebrationPurple =
+      Color(0xFF9B59B6); // Morado celebración
+  static const Color warmOrange = Color(0xFFE67E22); // Naranja cálido
+  static const Color inspirationPink = Color(0xFFE91E63); // Rosa inspiración
+
+  // Estados emocionales
+  static const Color happyYellow = Color(0xFFF1C40F); // Amarillo feliz
+  static const Color energeticCoral = Color(0xFFFF7675); // Coral energético
+  static const Color focusIndigo = Color(0xFF6C5CE7); // Índigo concentración
 }

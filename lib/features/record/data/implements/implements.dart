@@ -5,6 +5,7 @@ import 'package:gymaster/features/record/data/models/record_rutina_models.dart';
 import 'package:gymaster/features/record/data/sources/record_local_data_source.dart';
 import 'package:gymaster/features/record/domain/entities/record_rutina.dart';
 import 'package:gymaster/features/record/domain/repositories/repositories.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class RecordRepositoryImpl implements RecordRepository {
   final RecordLocalDataSource localDataSource;
@@ -72,33 +73,48 @@ class RecordRepositoryImpl implements RecordRepository {
       getAllCompletedRoutinesWithExercises() async {
     try {
       final rutinaSessions = await localDataSource.getCompletedRoutines();
+
+      if (rutinaSessions.isEmpty) {
+        return const Right([]);
+      }
+
       List<RecordRutina> result = [];
 
       for (var rutinaSession in rutinaSessions) {
-        final ejercicios = await _getExercisesByRoutineId(
-          rutinaSession.routineId,
-        );
-
-        final rutina = await localDataSource.getRutinaById(
-          rutinaSession.routineId,
-        );
-
-        result.add(
-          RecordRutina(
-            id: rutina.id,
-            nombre: rutina.name,
-            fechaRealizada: DateTime.parse(rutinaSession.endTime!),
-            tiempoRealizado: rutinaSession.duration.toString(),
-            color: rutina.color!,
-            ejercicios: ejercicios,
-          ),
-        );
+        try {
+          final ejercicios = await _getExercisesByRoutineId(
+            rutinaSession.routineId,
+          );
+          final rutina = await localDataSource.getRutinaById(
+            rutinaSession.routineId,
+          );
+          result.add(
+            RecordRutina(
+              id: rutina.id,
+              nombre: rutina.name,
+              fechaRealizada: DateTime.parse(rutinaSession.endTime!),
+              tiempoRealizado: rutinaSession.duration.toString(),
+              color: rutina.color!,
+              ejercicios: ejercicios,
+            ),
+          );
+        } catch (e) {
+          print('⚠️ Error procesando rutina ${rutinaSession.routineId}: $e');
+          // Continúa con la siguiente rutina en lugar de fallar completamente
+          continue;
+        }
       }
-
       return Right(result);
-    } on ServerException {
+    } on DatabaseException catch (e) {
       return Left(
-        ServerFailure(
+        CacheFailure(
+          errorMessage:
+              'Error al acceder a la base de datos. Verifica tu conexión.',
+        ),
+      );
+    } catch (e) {
+      return Left(
+        CacheFailure(
           errorMessage:
               'No se pudieron obtener las rutinas completadas. Por favor, inténtalo de nuevo más tarde.',
         ),

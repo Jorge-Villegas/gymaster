@@ -2,6 +2,8 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:gymaster/core/theme/emotional_text_styles.dart';
+import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
 import 'package:gymaster/features/routine/presentation/cubits/rutina/routine_cubit.dart';
 import 'package:gymaster/features/routine/presentation/pages/agregar_rutina_page.dart';
@@ -50,25 +52,94 @@ class ListaRutinasPage extends StatelessWidget {
   }
 
   Widget _buildHeader(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    final hour = DateTime.now().hour;
+    String timeGreeting;
+    String emoji;
+
+    if (hour < 12) {
+      timeGreeting = 'Buenos días';
+      emoji = '☀️';
+    } else if (hour < 18) {
+      timeGreeting = 'Buenas tardes';
+      emoji = '🌤️';
+    } else {
+      timeGreeting = 'Buenas noches';
+      emoji = '🌙';
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Hola, Jorge',
-          style: TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-            color: Color.fromARGB(255, 3, 3, 3),
+        // Saludo emocional personalizado
+        Text(
+          '$timeGreeting, Jorge $emoji',
+          style: EmotionalTextStyles.greeting,
+        ),
+        const SizedBox(height: 4),
+        // Mensaje motivacional dinámico
+        Text(
+          _getMotivationalMessage(),
+          style: EmotionalTextStyles.encouragement.copyWith(
+            fontSize: 16,
+            color: AppColors.energeticCoral,
           ),
         ),
-        IconButton(
-          onPressed: () {
-            BlocProvider.of<RoutineCubit>(context).getAllRoutine();
-          },
-          icon: const Icon(Icons.refresh),
+        const SizedBox(height: 8),
+        // Botón de refresh con estilo mejorado
+        Align(
+          alignment: Alignment.centerRight,
+          child: IconButton(
+            onPressed: () {
+              BlocProvider.of<RoutineCubit>(context).getAllRoutine();
+            },
+            icon: const Icon(Icons.refresh_rounded),
+            style: IconButton.styleFrom(
+              backgroundColor: AppColors.calmBlue.withOpacity(0.1),
+              foregroundColor: AppColors.calmBlue,
+            ),
+          ),
         ),
       ],
     );
+  }
+
+  /// Genera mensajes motivacionales dinámicos basados en la hora
+  String _getMotivationalMessage() {
+    final hour = DateTime.now().hour;
+    final motivationalMessages = {
+      'morning': [
+        '¡Perfecto momento para activar el cuerpo! 💪',
+        '¿Listo para conquistar el día con energía?',
+        'Tu cuerpo te va a agradecer este momento',
+        'Cada día es una nueva oportunidad de mejorar',
+      ],
+      'afternoon': [
+        '¡Hora de recargar energías! ⚡',
+        'Una rutina ahora te dará fuerza para el resto del día',
+        '¿Qué tal si liberamos un poco de estrés?',
+        'Tu yo del futuro te va a agradecer este entrenamiento',
+      ],
+      'evening': [
+        'Perfecto para relajar tensiones del día 🌅',
+        'Un entrenamiento nocturno para desconectar',
+        '¿Terminamos el día con una nota alta?',
+        'Nada mejor que dormir después de un buen entreno',
+      ],
+    };
+
+    List<String> messages;
+    if (hour < 12) {
+      messages = motivationalMessages['morning']!;
+    } else if (hour < 18) {
+      messages = motivationalMessages['afternoon']!;
+    } else {
+      messages = motivationalMessages['evening']!;
+    }
+
+    // Rotar mensajes basado en el día del año para variedad
+    final dayOfYear =
+        DateTime.now().difference(DateTime(DateTime.now().year)).inDays;
+    return messages[dayOfYear % messages.length];
   }
 
   Widget _buildSearchBar(BuildContext context) {
