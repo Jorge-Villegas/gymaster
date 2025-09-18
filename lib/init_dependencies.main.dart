@@ -182,8 +182,8 @@ void _initEmotionalSystem() {
     )
 
     // Data sources - Achievement
-    ..registerFactory<AchievementLocalDataSource>(
-      () => AchievementLocalDataSourceImpl(
+    ..registerFactory<LogroLocalDataSource>(
+      () => LogroLocalDataSourceImpl(
         databaseHelper: serviceLocator(),
         idGenerator: serviceLocator(),
       ),

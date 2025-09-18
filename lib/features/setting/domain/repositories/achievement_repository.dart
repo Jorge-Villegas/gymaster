@@ -1,34 +1,33 @@
 import 'package:fpdart/fpdart.dart';
 import '../../../../core/error/failures.dart';
-import '../entities/achievement.dart';
+import '../entities/logro.dart';
 
 /// Repositorio abstracto para el manejo de logros (achievements) en GyMaster
 abstract class AchievementRepository {
   /// Obtiene todos los logros del usuario
-  Future<Either<Failure, List<Achievement>>> getAllAchievements();
+  Future<Either<Failure, List<Logro>>> getAllAchievements();
 
   /// Obtiene logros por tipo específico
-  Future<Either<Failure, List<Achievement>>> getAchievementsByType(
-      AchievementType type);
+  Future<Either<Failure, List<Logro>>> getAchievementsByType(TipoLogro type);
 
   /// Obtiene logros desbloqueados
-  Future<Either<Failure, List<Achievement>>> getUnlockedAchievements();
+  Future<Either<Failure, List<Logro>>> getUnlockedAchievements();
 
   /// Obtiene logros por rareza
-  Future<Either<Failure, List<Achievement>>> getAchievementsByRarity(
-      AchievementRarity rarity);
+  Future<Either<Failure, List<Logro>>> getAchievementsByRarity(
+      RarezaLogro rarity);
 
   /// Desbloquea un logro específico
-  Future<Either<Failure, Achievement>> unlockAchievement(String achievementId);
+  Future<Either<Failure, Logro>> unlockAchievement(String achievementId);
 
   /// Actualiza el progreso de un logro
-  Future<Either<Failure, Achievement>> updateAchievementProgress({
-    required String achievementId,
+  Future<Either<Failure, Logro>> updateAchievementProgress({
+    required String logroId,
     required double progress,
   });
 
   /// Verifica si un logro debe desbloquearse basado en criterios
-  Future<Either<Failure, List<Achievement>>> checkAchievementsToUnlock(
+  Future<Either<Failure, List<Logro>>> checkAchievementsToUnlock(
       Map<String, dynamic> userStats);
 
   /// Obtiene el total de puntos de logros del usuario
@@ -53,10 +52,10 @@ class AchievementStats {
   final int totalPoints;
 
   /// Estadísticas por rareza
-  final Map<AchievementRarity, int> achievementsByRarity;
+  final Map<RarezaLogro, int> achievementsByRarity;
 
   /// Estadísticas por tipo
-  final Map<AchievementType, int> achievementsByType;
+  final Map<TipoLogro, int> achievementsByType;
 
   /// Porcentaje de completitud
   final double completionPercentage;
@@ -74,8 +73,8 @@ class AchievementStats {
     int? totalAchievements,
     int? unlockedAchievements,
     int? totalPoints,
-    Map<AchievementRarity, int>? achievementsByRarity,
-    Map<AchievementType, int>? achievementsByType,
+    Map<RarezaLogro, int>? achievementsByRarity,
+    Map<TipoLogro, int>? achievementsByType,
     double? completionPercentage,
   }) =>
       AchievementStats(
@@ -92,17 +91,17 @@ class AchievementStats {
         totalAchievements: json["totalAchievements"],
         unlockedAchievements: json["unlockedAchievements"],
         totalPoints: json["totalPoints"],
-        achievementsByRarity: Map<AchievementRarity, int>.from(
+        achievementsByRarity: Map<RarezaLogro, int>.from(
           json["achievementsByRarity"].map((key, value) => MapEntry(
-                AchievementRarity.values.firstWhere(
+                RarezaLogro.values.firstWhere(
                   (e) => e.toString().split('.').last == key,
                 ),
                 value,
               )),
         ),
-        achievementsByType: Map<AchievementType, int>.from(
+        achievementsByType: Map<TipoLogro, int>.from(
           json["achievementsByType"].map((key, value) => MapEntry(
-                AchievementType.values.firstWhere(
+                TipoLogro.values.firstWhere(
                   (e) => e.toString().split('.').last == key,
                 ),
                 value,

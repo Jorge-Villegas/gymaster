@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymaster/core/error/failures.dart';
-import 'package:gymaster/features/setting/domain/entities/achievement.dart';
+import 'package:gymaster/features/setting/domain/entities/logro.dart';
 import 'package:gymaster/features/setting/domain/repositories/achievement_repository.dart';
 import 'package:gymaster/features/setting/domain/usecases/get_achievement_usecase.dart';
 
@@ -36,7 +36,7 @@ class AchievementCubit extends Cubit<AchievementState> {
     );
   }
 
-  Future<void> getAchievementsByType(AchievementType type) async {
+  Future<void> getAchievementsByType(TipoLogro type) async {
     emit(AchievementLoading());
 
     final result =

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:gymaster/core/database/models/logro_db_model.dart';
 import 'package:gymaster/core/database/models/models.dart';
 // ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
@@ -162,16 +163,21 @@ class DatabaseHelper {
         )
       ''');
 
-    // Tablas del sistema emocional
     await db.execute('''
-        CREATE TABLE achievement (
-          id            TEXT PRIMARY KEY,
-          name          TEXT NOT NULL,
-          description   TEXT,
-          icon          TEXT,
-          is_unlocked   INTEGER DEFAULT 0,
-          unlocked_at   DATETIME,
-          created_at    DATETIME DEFAULT CURRENT_TIMESTAMP
+        CREATE TABLE ${LogroDbModel.tabla} (
+          ${LogroDbModel.columnaId}                TEXT PRIMARY KEY,
+          ${LogroDbModel.columnaTipo}              TEXT NOT NULL,
+          ${LogroDbModel.columnaTitulo}            TEXT NOT NULL,
+          ${LogroDbModel.columnaDescripcion}       TEXT,
+          ${LogroDbModel.columnaIcono}             TEXT,
+          ${LogroDbModel.columnaColor}             INTEGER,
+          ${LogroDbModel.columnaPuntos}            INTEGER,
+          ${LogroDbModel.columnaFechaDesbloqueo}   DATETIME,
+          ${LogroDbModel.columnaDesbloqueado}      INTEGER DEFAULT 0,
+          ${LogroDbModel.columnaCriterios}         TEXT,
+          ${LogroDbModel.columnaProgreso}          REAL DEFAULT 0.0,
+          ${LogroDbModel.columnaRareza}            TEXT,
+          ${LogroDbModel.columnaFechaCreacion}     DATETIME DEFAULT CURRENT_TIMESTAMP
         )
       ''');
 

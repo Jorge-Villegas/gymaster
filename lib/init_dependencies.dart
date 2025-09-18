@@ -52,8 +52,8 @@ import 'package:gymaster/features/setting/domain/usecases/set_theme_mode_usecase
 import 'package:gymaster/features/setting/presentation/cubit/setting_cubit.dart';
 
 // Emotional system imports
-import 'package:gymaster/features/setting/data/datasources/achievement_local_data_source.dart';
-import 'package:gymaster/features/setting/data/datasources/achievement_local_data_source_impl.dart';
+import 'package:gymaster/features/setting/data/datasources/logro_local_data_source.dart';
+import 'package:gymaster/features/setting/data/datasources/logro_local_data_source_impl.dart';
 import 'package:gymaster/features/setting/data/datasources/user_emotional_local_data_source.dart';
 import 'package:gymaster/features/setting/data/datasources/user_emotional_local_data_source_impl.dart';
 import 'package:gymaster/features/setting/data/repositories/achievement_repository_impl.dart';

@@ -8,19 +8,19 @@ final class AchievementInitial extends AchievementState {}
 final class AchievementLoading extends AchievementState {}
 
 final class AchievementLoaded extends AchievementState {
-  final List<Achievement> achievements;
+  final List<Logro> achievements;
 
   AchievementLoaded(this.achievements);
 }
 
 final class AchievementUnlocked extends AchievementState {
-  final Achievement achievement;
+  final Logro achievement;
 
   AchievementUnlocked(this.achievement);
 }
 
 final class MultipleAchievementsUnlocked extends AchievementState {
-  final List<Achievement> achievements;
+  final List<Logro> achievements;
 
   MultipleAchievementsUnlocked(this.achievements);
 }
