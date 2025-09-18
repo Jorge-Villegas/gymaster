@@ -69,12 +69,12 @@ class RoutineRepositoryImpl implements RoutineRepository {
     try {
       final rutina = RoutineDbModel(
         id: idGenerator.generateId(),
-        name: name,
-        description: description,
-        createdAt: creationDate.toString(),
+        nombre: name,
+        descripcion: description,
+        fechaCreacion: creationDate.toString(),
         color: color,
-        imagePath: imagenDireccion,
-        userId: '1', //TODO: Cambiar por el usuario logueado
+        rutaImagen: imagenDireccion,
+        usuarioId: '1', //TODO: Cambiar por el usuario logueado
       );
       final result = await localDataSource.createRutina(rutina: rutina);
 

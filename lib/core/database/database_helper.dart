@@ -71,15 +71,15 @@ class DatabaseHelper {
       ''');
 
     await db.execute('''
-        CREATE TABLE ${RoutineDbModel.table} (
-           ${RoutineDbModel.columnId}           TEXT PRIMARY KEY,
-           ${RoutineDbModel.columnUserId}       TEXT NOT NULL,
-           ${RoutineDbModel.columnName}         TEXT NOT NULL,
-           ${RoutineDbModel.columnDescription}  TEXT,
-           ${RoutineDbModel.columnColor}        INTEGER,
-           ${RoutineDbModel.columnImagePath}    TEXT,
-           ${RoutineDbModel.columnCreatedAt}    DATETIME DEFAULT CURRENT_TIMESTAMP,
-           ${RoutineDbModel.columnUpdatedAt}    DATETIME,
+        CREATE TABLE ${RoutineDbModel.tabla} (
+           ${RoutineDbModel.columnaId}           TEXT PRIMARY KEY,
+           ${RoutineDbModel.columnaUsuarioId}       TEXT NOT NULL,
+           ${RoutineDbModel.columnaNombre}         TEXT NOT NULL,
+           ${RoutineDbModel.columnaDescripcion}  TEXT,
+           ${RoutineDbModel.columnaColor}        INTEGER,
+           ${RoutineDbModel.columnaRutaImagen}    TEXT,
+           ${RoutineDbModel.columnaFechaCreacion}    DATETIME DEFAULT CURRENT_TIMESTAMP,
+           ${RoutineDbModel.columnaFechaActualizacion}    DATETIME,
           FOREIGN KEY (user_id)   REFERENCES user  (id)  ON DELETE CASCADE
         )
       ''');

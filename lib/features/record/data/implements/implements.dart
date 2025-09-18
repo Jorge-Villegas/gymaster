@@ -111,12 +111,12 @@ class RecordRepositoryImpl implements RecordRepository {
           }
 
           print(
-              '✅ Rutina ${rutina.name} ${rutinaSession.routineId} procesada con ${ejercicios.length} ejercicios');
+              '✅ Rutina ${rutina.nombre} ${rutinaSession.routineId} procesada con ${ejercicios.length} ejercicios');
 
           resultadoRutinas.add(
             RecordRutina(
               id: rutina.id,
-              nombre: rutina.name,
+              nombre: rutina.nombre,
               fechaRealizada: DateTime.parse(rutinaSession.endTime!),
               tiempoRealizado: rutinaSession.duration.toString(),
               color: rutina.color ?? 0xFF2196F3,

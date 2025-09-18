@@ -41,8 +41,8 @@ class RecordRutina {
   }) {
     return RecordRutina(
       id: rutinaDB.id,
-      nombre: rutinaDB.name,
-      fechaRealizada: DateTime.parse(rutinaDB.createdAt),
+      nombre: rutinaDB.nombre,
+      fechaRealizada: DateTime.parse(rutinaDB.fechaCreacion),
       tiempoRealizado: 'no hay tiempo',
       color: rutinaDB.color ?? 0,
       ejercicios: [],

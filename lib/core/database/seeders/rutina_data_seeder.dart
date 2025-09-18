@@ -216,15 +216,15 @@ class RoutineDataSeeder {
       // );
 
       await db.insert(
-        RoutineDbModel.table,
+        RoutineDbModel.tabla,
         RoutineDbModel(
           id: idGenerator.generateId(),
-          name: nombresRutinas[i],
-          description: faker.lorem.sentence(),
-          createdAt: fechaCreacion.toIso8601String(),
+          nombre: nombresRutinas[i],
+          descripcion: faker.lorem.sentence(),
+          fechaCreacion: fechaCreacion.toIso8601String(),
           color: colores[i],
-          imagePath: imagenDireccion[i],
-          userId: '1',
+          rutaImagen: imagenDireccion[i],
+          usuarioId: '1',
         ).toJson(),
       );
     }

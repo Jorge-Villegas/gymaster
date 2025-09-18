@@ -7,34 +7,34 @@ String routineToJson(RoutineDbModel data) => json.encode(data.toJson());
 
 class RoutineDbModel {
   // Nombres de las columnas de la tabla
-  static const String table = 'routine';
-  static const String columnId = 'id';
-  static const String columnUserId = 'user_id';
-  static const String columnName = 'name';
-  static const String columnDescription = 'description';
-  static const String columnColor = 'color';
-  static const String columnImagePath = 'image_path';
-  static const String columnCreatedAt = 'created_at';
-  static const String columnUpdatedAt = 'updated_at';
+  static const String tabla = 'rutina';
+  static const String columnaId = 'id';
+  static const String columnaUsuarioId = 'usuario_id';
+  static const String columnaNombre = 'nombre';
+  static const String columnaDescripcion = 'descripcion';
+  static const String columnaColor = 'color';
+  static const String columnaRutaImagen = 'ruta_imagen';
+  static const String columnaFechaCreacion = 'fecha_creacion';
+  static const String columnaFechaActualizacion = 'fecha_actualizacion';
 
   final String id;
-  final String userId;
-  final String name;
-  final String? description;
+  final String usuarioId;
+  final String nombre;
+  final String? descripcion;
   final int? color;
-  final String? imagePath;
-  final String createdAt;
-  final String? updatedAt;
+  final String? rutaImagen;
+  final String fechaCreacion;
+  final String? fechaActualizacion;
 
   RoutineDbModel({
     required this.id,
-    required this.userId,
-    required this.name,
-    this.description,
+    required this.usuarioId,
+    required this.nombre,
+    this.descripcion,
     this.color,
-    this.imagePath,
-    required this.createdAt,
-    this.updatedAt,
+    this.rutaImagen,
+    required this.fechaCreacion,
+    this.fechaActualizacion,
   });
 
   RoutineDbModel copyWith({
@@ -49,34 +49,34 @@ class RoutineDbModel {
   }) =>
       RoutineDbModel(
         id: id ?? this.id,
-        userId: userId ?? this.userId,
-        name: name ?? this.name,
-        description: description ?? this.description,
+        usuarioId: userId ?? usuarioId,
+        nombre: name ?? nombre,
+        descripcion: description ?? descripcion,
         color: color ?? this.color,
-        imagePath: imagePath ?? this.imagePath,
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
+        rutaImagen: imagePath ?? rutaImagen,
+        fechaCreacion: createdAt ?? fechaCreacion,
+        fechaActualizacion: updatedAt ?? fechaActualizacion,
       );
 
   factory RoutineDbModel.fromJson(Map<String, dynamic> json) => RoutineDbModel(
         id: json["id"],
-        userId: json["user_id"],
-        name: json["name"],
-        description: json["description"],
+        usuarioId: json["usuario_id"],
+        nombre: json["nombre"],
+        descripcion: json["descripcion"],
         color: json["color"],
-        imagePath: json["image_path"],
-        createdAt: json["created_at"],
-        updatedAt: json["updated_at"],
+        rutaImagen: json["ruta_imagen"],
+        fechaCreacion: json["fecha_creacion"],
+        fechaActualizacion: json["fecha_actualizacion"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "user_id": userId,
-        "name": name,
-        "description": description,
+        "usuario_id": usuarioId,
+        "nombre": nombre,
+        "descripcion": descripcion,
         "color": color,
-        "image_path": imagePath,
-        "created_at": createdAt,
-        "updated_at": updatedAt,
+        "ruta_imagen": rutaImagen,
+        "fecha_creacion": fechaCreacion,
+        "fecha_actualizacion": fechaActualizacion,
       };
 }

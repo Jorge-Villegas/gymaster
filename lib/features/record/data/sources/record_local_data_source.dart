@@ -119,7 +119,7 @@ class RecordLocalDataSource {
     try {
       final db = await databaseHelper.database;
       final rutinas = await db.query(
-        RoutineDbModel.table,
+        RoutineDbModel.tabla,
         orderBy: 'created_at',
       );
       return rutinas.map((rutina) => RoutineDbModel.fromJson(rutina)).toList();
@@ -131,7 +131,7 @@ class RecordLocalDataSource {
   Future<RoutineDbModel> getRutinaById(String id) async {
     final db = await databaseHelper.database;
     final result = await db.query(
-      RoutineDbModel.table,
+      RoutineDbModel.tabla,
       where: 'id = ?',
       whereArgs: [id],
     );
@@ -145,7 +145,7 @@ class RecordLocalDataSource {
   Future<void> saveRutina(RecordRutinaModel rutina) async {
     final db = await databaseHelper.database;
     await db.insert(
-      RoutineDbModel.table,
+      RoutineDbModel.tabla,
       rutina.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
@@ -154,7 +154,7 @@ class RecordLocalDataSource {
   Future<void> deleteRutina(String id) async {
     final db = await databaseHelper.database;
     await db.delete(
-      RoutineDbModel.table,
+      RoutineDbModel.tabla,
       where: 'id = ?',
       whereArgs: [id],
     );

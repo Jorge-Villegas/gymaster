@@ -56,16 +56,16 @@ class EjerciciosDeRutinaModel extends EjerciciosDeRutina {
     return EjerciciosDeRutinaModel(
       session: session,
       rutinaId: rutinaDB.id,
-      nombre: rutinaDB.name,
-      descripcion: rutinaDB.description,
-      fechaCreacion: DateTime.parse(rutinaDB.createdAt),
+      nombre: rutinaDB.nombre,
+      descripcion: rutinaDB.descripcion,
+      fechaCreacion: DateTime.parse(rutinaDB.fechaCreacion),
       color: rutinaDB.color ?? 0,
       ejercicios: ejercicios,
       estado: status,
       id: rutinaDB.id,
       realizado: true, //TODO: Cambiar
-      fechaRealizacion: rutinaDB.createdAt != rutinaDB.updatedAt
-          ? DateTime.parse(rutinaDB.createdAt)
+      fechaRealizacion: rutinaDB.fechaCreacion != rutinaDB.fechaActualizacion
+          ? DateTime.parse(rutinaDB.fechaCreacion)
           : null, //TODO: Cambiar
     );
   }

@@ -16,7 +16,7 @@ class RoutineLocalDataSource {
     try {
       final db = await databaseHelper.database;
       final rutinas = await db.query(
-        RoutineDbModel.table,
+        RoutineDbModel.tabla,
         orderBy: 'created_at DESC',
       );
       if (rutinas.isEmpty) {
@@ -35,7 +35,7 @@ class RoutineLocalDataSource {
   Future<bool> createRutina({required RoutineDbModel rutina}) async {
     try {
       final db = await databaseHelper.database;
-      final id = await db.insert(RoutineDbModel.table, rutina.toJson());
+      final id = await db.insert(RoutineDbModel.tabla, rutina.toJson());
       return id > 0;
     } catch (e) {
       throw ServerException();
@@ -79,7 +79,7 @@ class RoutineLocalDataSource {
     try {
       final db = await databaseHelper.database;
       final rutina = await db.query(
-        RoutineDbModel.table,
+        RoutineDbModel.tabla,
         where: 'id = ?',
         whereArgs: [id],
       );
@@ -212,7 +212,7 @@ class RoutineLocalDataSource {
       final db = await databaseHelper.database;
       final rutinas = await db.rawQuery(
         '''
-          SELECT * FROM ${RoutineDbModel.table}
+          SELECT * FROM ${RoutineDbModel.tabla}
           WHERE name LIKE ?;
         ''',
         ['%$nombre%'],

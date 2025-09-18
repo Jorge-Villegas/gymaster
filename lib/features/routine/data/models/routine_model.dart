@@ -47,13 +47,13 @@ class RoutineModel extends Routine {
   }) {
     return RoutineModel(
       id: serieDB.id,
-      name: serieDB.name,
-      description: serieDB.description,
-      fechaCreacion: DateTime.parse(serieDB.createdAt),
+      name: serieDB.nombre,
+      description: serieDB.descripcion,
+      fechaCreacion: DateTime.parse(serieDB.fechaCreacion),
       echo: false, //TODO: Cambiar
       color: serieDB.color ?? 0,
       cantidadEjercicios: cantidadEjercicios ?? 0,
-      imagenDireccion: serieDB.imagePath ?? '',
+      imagenDireccion: serieDB.rutaImagen ?? '',
     );
   }
 }
