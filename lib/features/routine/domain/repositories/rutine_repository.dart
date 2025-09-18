@@ -1,5 +1,5 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:gymaster/core/database/models/routine_session_db_model.dart';
+import 'package:gymaster/core/database/models/rutina_sesion_db.dart';
 import 'package:gymaster/core/error/failures.dart';
 import 'package:gymaster/features/routine/domain/entities/ejercicios_de_rutina.dart'
     as ejercicios_de_rutina;
@@ -74,7 +74,7 @@ abstract interface class RoutineRepository {
   });
 
   //obtener la ultima session de la rutina por su id
-  Future<Either<Failure, RutinaSesionDbModel>> getLastRoutineSessionByRoutineId(
+  Future<Either<Failure, RutinaSesionDb>> getLastRoutineSessionByRoutineId(
     String id,
   );
 

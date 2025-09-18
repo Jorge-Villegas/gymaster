@@ -1,12 +1,11 @@
 import 'dart:convert';
 
-SerieEjercicioDbModel exerciseSetFromJson(String str) =>
-    SerieEjercicioDbModel.fromJson(json.decode(str));
+SerieEjercicioDb exerciseSetFromJson(String str) =>
+    SerieEjercicioDb.fromJson(json.decode(str));
 
-String exerciseSetToJson(SerieEjercicioDbModel data) =>
-    json.encode(data.toJson());
+String exerciseSetToJson(SerieEjercicioDb data) => json.encode(data.toJson());
 
-class SerieEjercicioDbModel {
+class SerieEjercicioDb {
   // Nombres de las columnas de la tabla
   static const String tabla = 'serie_ejercicio';
   static const String columnaId = 'id';
@@ -23,7 +22,7 @@ class SerieEjercicioDbModel {
   final int? tiempoDescanso;
   final String estado;
 
-  SerieEjercicioDbModel({
+  SerieEjercicioDb({
     required this.id,
     required this.ejercicioSesionId,
     this.peso,
@@ -32,7 +31,7 @@ class SerieEjercicioDbModel {
     required this.estado,
   });
 
-  SerieEjercicioDbModel copyWith({
+  SerieEjercicioDb copyWith({
     String? id,
     String? ejercicioSesionId,
     double? peso,
@@ -40,7 +39,7 @@ class SerieEjercicioDbModel {
     int? tiempoDescanso,
     String? estado,
   }) =>
-      SerieEjercicioDbModel(
+      SerieEjercicioDb(
         id: id ?? this.id,
         ejercicioSesionId: ejercicioSesionId ?? this.ejercicioSesionId,
         peso: peso ?? this.peso,
@@ -49,8 +48,8 @@ class SerieEjercicioDbModel {
         estado: estado ?? this.estado,
       );
 
-  factory SerieEjercicioDbModel.fromJson(Map<String, dynamic> json) =>
-      SerieEjercicioDbModel(
+  factory SerieEjercicioDb.fromJson(Map<String, dynamic> json) =>
+      SerieEjercicioDb(
         id: json["id"],
         ejercicioSesionId: json["session_exercise_id"],
         peso: json["peso"],

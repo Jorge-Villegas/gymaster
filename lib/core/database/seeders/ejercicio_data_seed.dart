@@ -10,8 +10,8 @@ class EjercicioDataSeed {
 
   Future<void> seedGenerateEjercicios() async {
     try {
-      List<EjercicioDbModel> trapecio = List.from([
-        EjercicioDbModel(
+      List<EjercicioDb> trapecio = List.from([
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Encogimiento de hombros con Barra de Pesas',
@@ -20,7 +20,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.trapecio
               .encogimientoDeHombrosConBarraDePesas.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -30,7 +30,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.trapecio
               .encogimientoDeHombrosConBarraDePesasDetrasDeLaEspalda.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Encogimiento de Hombros con Mancuernas (de pie)',
@@ -39,7 +39,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.trapecio
               .encogimientoDeHombrosConMancuernasDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Encogimiento de Hombros con Maquina (sentado)',
@@ -48,7 +48,7 @@ class EjercicioDataSeed {
           descripcion:
               'En este ejercicio, se utiliza una máquina diseñada para el encogimiento de hombros. Sentado en la máquina, se agarra las asas y se elevan los hombros hacia las orejas, manteniendo los brazos rectos. Se contraen los músculos del trapecio al final del movimiento.',
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -58,7 +58,7 @@ class EjercicioDataSeed {
           descripcion:
               'Este ejercicio se realiza de pie, utilizando la máquina smith. Se coloca la barra detrás del cuerpo y se elevan los hombros hacia las orejas, manteniendo los brazos rectos. Al final del movimiento, se contraen los músculos del trapecio.',
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Encogimiento de hombros en la maquina smith (de pie)',
@@ -67,7 +67,7 @@ class EjercicioDataSeed {
           descripcion:
               'En este ejercicio, se utiliza la máquina smith para realizar el encogimiento de hombros. De pie frente a la máquina, se agarra la barra y se elevan los hombros hacia las orejas, manteniendo los brazos rectos. Se contraen los músculos del trapecio al final del movimiento.',
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Remo vertical con barra de pesas (de pie)',
@@ -76,7 +76,7 @@ class EjercicioDataSeed {
           descripcion:
               'Este ejercicio se realiza de pie, sosteniendo una barra con peso en frente del cuerpo con las palmas hacia abajo. Se eleva la barra verticalmente hacia el mentón, manteniendo los codos altos. Se contraen los músculos del trapecio al final del movimiento.',
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Remo vertical con cable-polea (de pie)',
@@ -85,7 +85,7 @@ class EjercicioDataSeed {
           descripcion:
               'En este ejercicio, se utiliza una máquina de poleas para realizar el remo vertical. De pie frente a la máquina, se agarra la polea con las manos y se eleva hacia el mentón, manteniendo los codos altos. Se contraen los músculos del trapecio al final del movimiento.',
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Remo vertical con mancuerna (de pie)',
@@ -94,7 +94,7 @@ class EjercicioDataSeed {
           descripcion:
               'Este ejercicio se realiza de pie, sosteniendo una mancuerna en cada mano a los costados del cuerpo. Se eleva la mancuerna verticalmente hacia el mentón, manteniendo los codos altos. Se contraen los músculos del trapecio al final del movimiento.',
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Remo vertical con máquina smith (de pie)',
@@ -105,8 +105,8 @@ class EjercicioDataSeed {
         ),
       ]);
 
-      List<EjercicioDbModel> ejerciciosHombro = List.from([
-        EjercicioDbModel(
+      List<EjercicioDb> ejerciciosHombro = List.from([
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Apertura con maquina invertida (acostado)',
@@ -115,7 +115,7 @@ class EjercicioDataSeed {
           descripcion:
               'Este ejercicio se realiza acostado en una máquina de pecho invertida. Se agarra las asas con los brazos extendidos y se abren los brazos hacia los lados, manteniendo los codos ligeramente flexionados. Se contraen los músculos del pecho al final del movimiento.',
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Apertura con maquina invertida (sentado)',
@@ -124,7 +124,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.hombro.aperturaConMaquinaInvertidaSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Aperturas en Banco plano con mancuernas invertidas (prono)',
@@ -133,7 +133,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.hombro
               .aperturasEnBancoPlanoConMancuernasInvertidasProno.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de pecho parado sobre la cabeza',
@@ -142,7 +142,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.hombro
               .flexionesDePechoParadoSobreLaCabeza.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Levantamiento frontal con barra de pesas (de pie)',
@@ -151,7 +151,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.hombro
               .levantamientoFrontalConBarraDePesasDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Levantamiento frontal con cuerda y cable-polea (de pie)',
@@ -160,7 +160,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.hombro
               .levantamientoFrontalConCuerdaYCablePoleaDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Levantamiento Frontal con disco (de pie)',
@@ -169,7 +169,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.hombro.levantamientoFrontalConDiscoDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Levantamiento Frontal con mancuerna (de pie)',
@@ -178,7 +178,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.hombro
               .levantamientoFrontalConMancuernaDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Levantamiento Frontal con un brazo en cable-polea (de pie)',
@@ -187,7 +187,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.hombro
               .levantamientoFrontalConUnBrazoEnCablePoleaDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -197,7 +197,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.hombro
               .levantamientoFrontalConCablePoleaEnUnSoloBrazoInclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Levantamiento lateral con mancuernas (de pie)',
@@ -206,7 +206,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.hombro
               .levantamientoLateralConMancuernasDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Levantamiento lateral con mancuernas (inclinado)',
@@ -215,7 +215,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.hombro
               .levantamientoLateralConMancuernasInclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Levantamiento lateral con maquina (sentado)',
@@ -224,7 +224,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.hombro
               .levantamientoLateralConMaquinaSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press de cuello con barra de pesas (de pie)',
@@ -233,7 +233,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.hombro.pressDeCuelloConBarraDePesasDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press de hombros con barra de pesas (de pie)',
@@ -242,7 +242,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.hombro.pressDeHombrosConBarraDePesasDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press de hombros con mancuernas (sentado)',
@@ -251,7 +251,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.hombro.pressDeHombrosConMancuernasSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press de hombros con maquina (sentado)',
@@ -260,7 +260,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.hombro.pressDeHombrosConMaquinaSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press de hombros con maquina smith (sentado)',
@@ -269,7 +269,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.hombro
               .pressDeHombrosConMaquinaSmithSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press de pecho con barra de pesas (inclinado)',
@@ -278,7 +278,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.hombro
               .pressDePechoConBarraDePesasInclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Remo vertical con barra de pesas (de pie)',
@@ -287,7 +287,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.hombro.remoVerticalConBarraDePesasDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Remo vertical con cable-polea (de pie)',
@@ -296,7 +296,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.hombro.remoVerticalConCablePoleaDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Remo vertical con mancuernas (de pie)',
@@ -305,7 +305,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.hombro.remoVerticalConMancuernasDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Remo vertical con maquina de smith (de pie)',
@@ -316,8 +316,8 @@ class EjercicioDataSeed {
         ),
       ]);
 
-      List<EjercicioDbModel> ejerciciosPecho = List.from([
-        EjercicioDbModel(
+      List<EjercicioDb> ejerciciosPecho = List.from([
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Apertura con maquina (sentado)',
@@ -326,7 +326,7 @@ class EjercicioDataSeed {
           rutaImagen:
               Assets.imagenes.musculos.pecho.aperturaConMaquinaSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Apertura con mancuernas (declinado)',
@@ -335,7 +335,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.pecho.aperturaConMancuernasDeclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Apertura con mancuernas (inclinado)',
@@ -344,7 +344,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.pecho.aperturaConMancuernasInclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Apertura con mancuernas en plano',
@@ -353,7 +353,7 @@ class EjercicioDataSeed {
           rutaImagen:
               Assets.imagenes.musculos.pecho.aperturaConMancuernasEnPlano.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Apertura de banco plano con cable-polea',
@@ -362,7 +362,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.pecho.aperturaDeBancoPlanoConCablePolea.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Apertura de banco plano con mancuernas girando',
@@ -371,7 +371,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.pecho
               .aperturaDeBancoPlanoConMancuernasGirando.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Apertura de banco plano con cable-polea (declinado)',
@@ -380,7 +380,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.pecho
               .aperturaDeBancoPlanoConCablePoleaDeclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Apertura de banco plano con cable-polea (inclinado)',
@@ -389,7 +389,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.pecho
               .aperturaDeBancoPlanoConCablePoleaInclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Apertura en banco con mancuernas girando (declinado)',
@@ -398,7 +398,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.pecho
               .aperturaEnBancoConMancuernasGirandoDeclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Apertura en banco con mancuernas girando (inclinado)',
@@ -407,7 +407,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.pecho
               .aperturaEnBancoConMancuernasGirandoInclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Barra paralela en maquina sostenidas',
@@ -416,7 +416,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.pecho.barraParalelaEnMaquinaSostenidas.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Barra paralelas, inclinado, agarre amplio',
@@ -425,7 +425,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.pecho.barraParalelasInclinadoAgarreAmplio.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'barra paralelas, inclinados',
@@ -434,7 +434,7 @@ class EjercicioDataSeed {
           rutaImagen:
               Assets.imagenes.musculos.pecho.barraParalelasInclinados.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Cruzada con Cable-Polea (de pie)',
@@ -443,7 +443,7 @@ class EjercicioDataSeed {
           rutaImagen:
               Assets.imagenes.musculos.pecho.cruzadaConCablePoleaDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de pecho con mancuernas (declinado)',
@@ -452,7 +452,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.pecho
               .flexionesDePechoConMancuernasDeclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de pecho con mancuernas (inclinado)',
@@ -461,7 +461,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.pecho
               .flexionesDePechoConMancuernasInclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de pecho en plano con mancuernas',
@@ -470,7 +470,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.pecho
               .flexionesDePechoEnPlanoConMancuernas.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de pecho, agarre amplio',
@@ -479,7 +479,7 @@ class EjercicioDataSeed {
           rutaImagen:
               Assets.imagenes.musculos.pecho.flexionesDePechoAgarreAmplio.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de pecho, agarre amplio (declinado)',
@@ -488,7 +488,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.pecho
               .flexionesDePechoAgarreAmplioDeclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Hala con cable-polea y brazo recto (de pie)',
@@ -497,7 +497,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.pecho.halaConCablePoleaYBrazoRectoDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Mariposa con maquinas (sentado)',
@@ -506,7 +506,7 @@ class EjercicioDataSeed {
           rutaImagen:
               Assets.imagenes.musculos.pecho.mariposaConMaquinasSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press de pecho frontal con maquina (sentado)',
@@ -515,7 +515,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.pecho
               .pressDePechoFrontalConMaquinaSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press de pecho plano con barra de pesas',
@@ -524,7 +524,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.pecho.pressDePechoPlanoConBarraDePesas.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press de pecho plano con barra de pesas, agarre amplio',
@@ -533,7 +533,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.pecho
               .pressDePechoPlanoConBarraDePesasAgarreAmplio.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -543,7 +543,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.pecho
               .pressDePechoPlanoConBarraDePesasAgarreAmplioDeclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -553,7 +553,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.pecho
               .pressDePechoPlanoConBarraDePesasAgarreAmplioInclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press de pecho plano con maquina',
@@ -562,7 +562,7 @@ class EjercicioDataSeed {
           rutaImagen:
               Assets.imagenes.musculos.pecho.pressDePechoPlanoConMaquina.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press de pecho plano con maquina smith',
@@ -571,7 +571,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.pecho.pressDePechoPlanoConMaquinaSmith.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press de pecho plano con maquina smith, agarre amplio',
@@ -580,7 +580,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.pecho
               .pressDePechoPlanoConMaquinaSmithAgarreAmplio.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press de pecho con barra de pesas (declinado)',
@@ -589,7 +589,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.pecho
               .pressDePechoConBarraDePesasDeclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press de pecho con barra de pesas (inclinado)',
@@ -598,7 +598,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.pecho
               .pressDePechoConBarraDePesasInclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press de pecho con maquina smith (declinado)',
@@ -607,7 +607,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.pecho
               .pressDePechoConMaquinaSmithDeclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press de pecho con maquina smith (inclinado)',
@@ -616,7 +616,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.pecho
               .pressDePechoConMaquinaSmithInclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press de pecho con maquina smith, agarre amplio (declinado)',
@@ -625,7 +625,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.pecho
               .pressDePechoConMaquinaSmithAgarreAmplioDeclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press de pecho con maquina smith, agarre amplio (inclinado)',
@@ -634,7 +634,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.pecho
               .pressDePechoConMaquinaSmithAgarreAmplioInclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press en banco plano con mancuernas en agarre de martillo',
@@ -643,7 +643,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.pecho
               .pressEnBancoPlanoConMancuernasEnAgarreDeMartillo.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -653,7 +653,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.pecho
               .pressEnBancoConMancuernasEnAgarreDeMartilloDeclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -663,7 +663,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.pecho
               .pressEnBancoConMancuernasEnAgarreDeMartilloInclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press en banco con maquina (declinado)',
@@ -672,7 +672,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.pecho.pressEnBancoConMaquinaDeclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press en banco con maquina (inclinado)',
@@ -681,7 +681,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.pecho.pressEnBancoConMaquinaInclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Pullover en banco plano con barra de pesas',
@@ -690,7 +690,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.pecho.pulloverEnBancoPlanoConBarraDePesas.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Pullover en banco plano con Cable-Polea',
@@ -699,7 +699,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.pecho.pulloverEnBancoPlanoConCablePolea.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Pullover en Banco plano con Maquinas',
@@ -708,7 +708,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.pecho.pulloverEnBancoPlanoConMaquinas.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Pullover en plano con Barra EZ',
@@ -719,8 +719,8 @@ class EjercicioDataSeed {
         ),
       ]);
 
-      List<EjercicioDbModel> ejerciciosTriceps = List.from([
-        EjercicioDbModel(
+      List<EjercicioDb> ejerciciosTriceps = List.from([
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -730,7 +730,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.triceps
               .arrastreDeConcentracionDeTricepsConCablePoleaArrodillado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -740,7 +740,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.triceps
               .arrastreDeTricepsConCablePoleaAgarrePorDebajoSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Barra, Agarre Ancho',
@@ -748,7 +748,7 @@ class EjercicioDataSeed {
               'De pie, sostén una barra con las manos separadas a una distancia mayor que el ancho de los hombros. Eleva la barra hasta que los brazos estén completamente extendidos, manteniendo los codos cerca del cuerpo. Luego, flexiona los codos para bajar la barra detrás de la cabeza, manteniendo los codos en su lugar. Finalmente, extiende los brazos para volver a la posición inicial.',
           rutaImagen: Assets.imagenes.musculos.triceps.barraAgarreAncho.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Pecho con Mancuernas (declinado)',
@@ -757,7 +757,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.pecho
               .flexionesDePechoConMancuernasDeclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Pecho con Mancuernas (inclinado)',
@@ -766,7 +766,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.pecho
               .flexionesDePechoConMancuernasInclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Pecho en Plano con Mancuernas',
@@ -775,7 +775,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.pecho
               .flexionesDePechoEnPlanoConMancuernas.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Pecho, Agarre Cerrado',
@@ -784,7 +784,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.triceps.flexionesDePechoAgarreCerrado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Maquina de tríceps con Cable-Polea (acostado)',
@@ -793,7 +793,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.triceps
               .maquinaDeTricepsConCablePoleaAcostado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Maquina de tríceps con Cable-Polea (inclinado)',
@@ -802,7 +802,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.triceps
               .maquinaDeTricepsConCablePoleaInclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Paralelas con Maquina Sostenida',
@@ -811,7 +811,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.triceps.paralelasConMaquinaSostenida.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Paralelas, Piernas Levantadas',
@@ -820,7 +820,7 @@ class EjercicioDataSeed {
           rutaImagen:
               Assets.imagenes.musculos.triceps.paralelasPiernasLevantadas.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Patada de tríceps con Cable-Polea (inclinado)',
@@ -829,7 +829,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.triceps
               .patadaDeTricepsConCablePoleaInclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Patada de tríceps con Mancuernas (inclinado)',
@@ -838,7 +838,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.triceps
               .patadaDeTricepsConMancuernasInclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press tate de tríceps con Mancuernas (acostado)',
@@ -847,7 +847,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.triceps
               .pressTateDeTricepsConMancuernasAcostado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press con Barra de pesas en maquina smith, agarre cerrado',
@@ -856,7 +856,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.triceps
               .pressConBarraDePesasEnMaquinaSmithAgarreCerrado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -866,7 +866,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.triceps
               .pressConBarraDePesasEnMaquinaSmithAgarreCerradoDeclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -876,7 +876,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.triceps
               .pressConBarraDePesasEnMaquinaSmithAgarreCerradoInclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press de Pecho Frontal con Maquina (sentado)',
@@ -885,7 +885,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.pecho
               .pressDePechoFrontalConMaquinaSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press de Pecho Plano con Barra de Pesas',
@@ -894,7 +894,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.pecho.pressDePechoPlanoConBarraDePesas.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press de Pecho Plano con Maquina Smith',
@@ -903,7 +903,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.pecho.pressDePechoPlanoConMaquinaSmith.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press de Pecho con Barra de Pesas (declinado)',
@@ -912,7 +912,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.pecho
               .pressDePechoConBarraDePesasDeclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press de Pecho con Barra de Pesas (inclinado)',
@@ -921,7 +921,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.pecho
               .pressDePechoConBarraDePesasInclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press de Pecho con Maquina Smith (declinado)',
@@ -930,7 +930,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.pecho
               .pressDePechoConMaquinaSmithDeclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press de Pecho con Maquina Smith (inclinado)',
@@ -939,7 +939,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.pecho
               .pressDePechoConMaquinaSmithInclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press de Tríceps Frances con Barra EZ (acostado)',
@@ -948,7 +948,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.triceps
               .pressDeTricepsFrancesConBarraEzAcostado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press de Tríceps Frances con Barra EZ (declinado)',
@@ -957,7 +957,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.triceps
               .pressDeTricepsFrancesConBarraEzDeclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press de Tríceps Frances con Barra EZ (inclinado)',
@@ -966,7 +966,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.triceps
               .pressDeTricepsFrancesConBarraEzInclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -976,7 +976,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.triceps
               .pressDeTricepsFrancesConBarraEzAgarrePorAbajoAcostado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press de Tríceps con Barra EZ por Arriba (sentado)',
@@ -985,7 +985,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.triceps
               .pressDeTricepsConBarraEzPorArribaSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press de Tríceps con Cable-Polea por Arriba (arrodillado)',
@@ -994,7 +994,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.triceps
               .pressDeTricepsConCablePoleaPorArribaArrodillado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press de Tríceps con Cuerda y Cable-Polea (de pie)',
@@ -1003,7 +1003,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.triceps
               .pressDeTricepsConCuerdaYCablePoleaDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -1013,7 +1013,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.triceps
               .pressDeTricepsConCuerdaYCablePoleaPorArribaDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -1023,7 +1023,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.triceps
               .pressDeTricepsConCuerdaYCablePoleaPorArribaInclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -1033,7 +1033,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.triceps
               .pressDeTricepsConMancuernasAmbasConBrazosArribaSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press de Tríceps con Mancuernas por Arriba (inclinado)',
@@ -1042,7 +1042,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.triceps
               .pressDeTricepsConMancuernasPorArribaInclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press de Tríceps con Máquina (sentado)',
@@ -1051,7 +1051,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.triceps.pressDeTricepsConMaquinaSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -1061,7 +1061,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.triceps
               .pressDeTricepsConUnaMancuernaConElBrazoArribaSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press de Tríceps en Cable-Polea (de pie)',
@@ -1070,7 +1070,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.triceps.pressDeTricepsEnCablePoleaDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Press en Banco Plano con Barra de Pesas, Agarre Cerrado',
@@ -1079,7 +1079,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.triceps
               .pressEnBancoPlanoConBarraDePesasAgarreCerrado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -1089,7 +1089,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.triceps
               .pressEnBancoConBarraDePesasAgarreCerradoDeclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -1099,7 +1099,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.triceps
               .pressEnBancoConBarraDePesasAgarreCerradoInclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Tracción en Barra Paralelas',
@@ -1110,8 +1110,8 @@ class EjercicioDataSeed {
         ),
       ]);
 
-      List<EjercicioDbModel> antebrazo = List.from([
-        EjercicioDbModel(
+      List<EjercicioDb> antebrazo = List.from([
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Contracción de Mano y Antebrazo con Disco (de pie)',
@@ -1120,7 +1120,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.antebrazo
               .contraccionDeManoYAntebrazoConDiscoDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Dominadas, Agarre Estrecho por Encima',
@@ -1129,7 +1129,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.antebrazo
               .dominadasAgarreEstrechoPorEncima.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones Laterales de Antebrazo con Cable-Polea (sentado)',
@@ -1138,7 +1138,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.antebrazo
               .flexionesLateralesDeAntebrazoConCablePoleaSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones con Barra EX en Maquina Scott Agarre Cerrado',
@@ -1147,7 +1147,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.antebrazo
               .flexionesConBarraExEnMaquinaScottAgarreCerrado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Antebrazo con Barra de Pesas Inversa (de pie)',
@@ -1156,7 +1156,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.antebrazo
               .flexionesDeAntebrazoConBarraDePesasInversaDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Antebrazo con Cable-Polea (de pie)',
@@ -1165,7 +1165,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.antebrazo
               .flexionesDeAntebrazoConCablePoleaDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Antebrazo con Disco Invertido (de pie)',
@@ -1174,7 +1174,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.antebrazo
               .flexionesDeAntebrazoConDiscoInvertidoDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Antebrazo con Cable-Polea Inversa (inclinado)',
@@ -1183,7 +1183,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.antebrazo
               .flexionesDeAntebrazoConCablePoleaInversaInclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -1197,7 +1197,7 @@ class EjercicioDataSeed {
               .flexionesDeMunecaYAntebrazoConBarraDePesasDetrasDeLaEspaldaDePie
               .path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Muñeca y Antebrazo con Cable-Polea (de pie)',
@@ -1206,7 +1206,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.antebrazo
               .flexionesDeMunecaYAntebrazoConCablePoleaDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Muñeca y Antebrazo con Barra EZ (sentado)',
@@ -1215,7 +1215,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.antebrazo
               .flexionesDeMunecaYAntebrazoConBarraEzSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Muñeca y Antebrazo con Barra EZ (de pie)',
@@ -1224,7 +1224,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.antebrazo
               .flexionesDeMunecaYAntebrazoConBarraEzDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -1234,7 +1234,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.antebrazo
               .flexionesDeMunecaYAntebrazoConBarraDePesasSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Muñeca y Antebrazo con Mancuernas (sentado)',
@@ -1245,8 +1245,8 @@ class EjercicioDataSeed {
         ),
       ]);
 
-      List<EjercicioDbModel> abdominales = List.from([
-        EjercicioDbModel(
+      List<EjercicioDb> abdominales = List.from([
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Abdominal intenso',
@@ -1254,7 +1254,7 @@ class EjercicioDataSeed {
               'Acuéstate boca arriba con las piernas flexionadas y los pies apoyados en el suelo. Coloca las manos detrás de la cabeza y eleva el torso hacia las rodillas contrayendo los músculos abdominales. Luego, baja el torso controladamente de vuelta a la posición inicial.',
           rutaImagen: Assets.imagenes.musculos.abdomen.abdominalIntenso.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Abdominales (declinado)',
@@ -1263,7 +1263,7 @@ class EjercicioDataSeed {
           rutaImagen:
               Assets.imagenes.musculos.abdomen.abdominalesDeclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Abdominales Parciales (declinado)',
@@ -1272,7 +1272,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.abdomen.abdominalesParcialesDeclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Abdominales Parcial laterales (acostado)',
@@ -1281,7 +1281,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.abdomen
               .abdominalesParcialLateralesAcostado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Abdominales Parciales Laterales con Hiperextension',
@@ -1290,7 +1290,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.abdomen
               .abdominalesParcialesLateralesConHyperextension.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Abdominales Parciales Sostenidos (acostado)',
@@ -1299,7 +1299,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.abdomen
               .abdominalesParcialesSostenidosAcostado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Abdominales Parciales Sostenidos Laterales (acostado)',
@@ -1308,7 +1308,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.abdomen
               .abdominalesParcialesSostenidosLateralesAcostado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Abdominales Parciales con Cable-Polea (de pie)',
@@ -1317,7 +1317,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.abdomen
               .abdominalesParcialesConCablePoleaDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Abdominales Parciales con Cable-Polea (sentado)',
@@ -1326,7 +1326,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.abdomen
               .abdominalesParcialesConCablePoleaSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Abdominales Parciales de Bicicleta',
@@ -1335,7 +1335,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.abdomen.abdominalesParcialesDeBicicleta.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Abdominales Parciales de Bicicleta Alternando',
@@ -1344,7 +1344,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.abdomen
               .abdominalesParcialesDeBicicletaAlternando.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Abdominales Parciales de Reversa, Piernas Elevadas',
@@ -1353,7 +1353,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.abdomen
               .abdominalesParcialesDeReversaPiernasElevadas.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Abdominales Parciales, Piernas Elevadas',
@@ -1362,7 +1362,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.abdomen
               .abdominalesParcialesPiernasElevadas.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Abdominales Parciales, Piernas Flexionadas',
@@ -1371,7 +1371,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.abdomen
               .abdominalesParcialesPiernasFlexionadas.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Abdominales de Giro, Piernas Elevadas',
@@ -1380,7 +1380,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.abdomen.abdominalesDeGiroPiernasElevadas.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Abdominales de Giro Piernas Flexionadas',
@@ -1389,7 +1389,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.abdomen
               .abdominalesDeGiroPiernasFlexionadas.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Abdominales de pliegue (acostado)',
@@ -1398,7 +1398,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.abdomen.abdominalesDePliegueAcostado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Abdominales, Piernas Elevadas',
@@ -1407,7 +1407,7 @@ class EjercicioDataSeed {
           rutaImagen:
               Assets.imagenes.musculos.abdomen.abdominalesPiernasElevadas.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Abdominales, Piernas Flexionadas',
@@ -1416,7 +1416,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.abdomen.abdominalesPiernasFlexionadas.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Alternar Tocando el Talon (acostado)',
@@ -1425,7 +1425,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.abdomen.alternarTocandoElTalonAcostado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Ejercicio de Piernas (acostado)',
@@ -1434,7 +1434,7 @@ class EjercicioDataSeed {
           rutaImagen:
               Assets.imagenes.musculos.abdomen.ejercicioDePiernasAcostado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Elevación de Rodilla (suspendido)',
@@ -1443,7 +1443,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.abdomen.elevacionDeRodillaSuspendido.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Elevación de Rodilla, Apoyo en los Brazos',
@@ -1452,7 +1452,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.abdomen
               .elevacionDeRodillaApoyoEnLosBrazos.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexión Lateral del Torso con Barra de Pesas (de pie)',
@@ -1461,7 +1461,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.abdomen
               .flexionLateralDelTorsoConBarraDePesasDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexion Lateral del Torso con Cable-Polea (de pie)',
@@ -1470,7 +1470,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.abdomen
               .flexionLateralDelTorsoConCablePoleaDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexion Lateral del Torso con Mancuernas (de pie)',
@@ -1479,7 +1479,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.abdomen
               .flexionLateralDelTorsoConMancuernasDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Giro de Torso con Barra de Pesas (de pie)',
@@ -1488,7 +1488,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.abdomen.giroDeTorsoConBarraDePesasDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Halar con Cable-Polea y Brazo Recto (de pie)',
@@ -1497,7 +1497,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.abdomen
               .halarConCablePoleaYBrazoRectoDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Levantamiento de Cadera Lateral (acostado)',
@@ -1506,7 +1506,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.abdomen
               .levantamientoDeCaderaLateralAcostado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Levantamiento de Pelvis, Piernas Elevadas (acostado)',
@@ -1515,7 +1515,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.abdomen
               .levantamientoDePelvisPiernasElevadasAcostado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Levantamiento de Pelvis, Piernas Flexionadas (acostado)',
@@ -1524,7 +1524,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.abdomen
               .levantamientoDePelvisPiernasFlexionadasAcostado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Levantamiento de Piernas (acostado)',
@@ -1533,7 +1533,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.abdomen.levantamientoDePiernasAcostado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Levantamiento de Piernas (suspendido)',
@@ -1542,7 +1542,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.abdomen.levantamientoDePiernasSuspendido.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Levantamiento de Piernas, Apoyo en los Brazos',
@@ -1551,7 +1551,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.abdomen
               .levantamientoDePiernasApoyoEnLosBrazos.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Maquina de Abdominales Parciales (sentado)',
@@ -1560,7 +1560,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.abdomen
               .maquinaDeAbdominalesParcialesSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Maquina de Abdominales Parciales Laterales (sentado)',
@@ -1569,7 +1569,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.abdomen
               .maquinaDeAbdominalesParcialesLateralesSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Pataleo (acostado)',
@@ -1577,7 +1577,7 @@ class EjercicioDataSeed {
               'Acuéstate boca arriba con las piernas extendidas y los brazos a los lados del cuerpo. Alterna levantando una pierna hacia arriba mientras mantienes la otra pierna cerca del suelo. Realiza un movimiento de pedaleo continuo, contrayendo los músculos abdominales.',
           rutaImagen: Assets.imagenes.musculos.abdomen.pataleoAcostado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Planks',
@@ -1585,7 +1585,7 @@ class EjercicioDataSeed {
               'Colócate en posición de plancha con los antebrazos y los dedos de los pies apoyados en el suelo, manteniendo el cuerpo en línea recta desde la cabeza hasta los talones. Contrayendo los músculos abdominales, mantén la posición durante el tiempo deseado.',
           rutaImagen: Assets.imagenes.musculos.abdomen.planks.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Rodamiento de pesas (arrodillado)',
@@ -1594,7 +1594,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.abdomen.rodamientoDePesasArrodillado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Tocar los Dedos de los Pies (acostado)',
@@ -1605,8 +1605,8 @@ class EjercicioDataSeed {
         ),
       ]);
 
-      List<EjercicioDbModel> espalda = List.from([
-        EjercicioDbModel(
+      List<EjercicioDb> espalda = List.from([
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Dominadas con Maquina Sostenida, Agarre Amplio por Debajo',
@@ -1615,7 +1615,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.espalda
               .dominadasConMaquinaSostenidaAgarreAmplioPorDebajo.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Dominadas en Maquina Sostenida, Agarre Amplio por Encima',
@@ -1624,7 +1624,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.espalda
               .dominadasEnMaquinaSostenidaAgarreAmplioPorEncima.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Dominadas en Maquina Sostenida, Agarre Medio por Debajo',
@@ -1633,7 +1633,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.espalda
               .dominadasEnMaquinaSostenidaAgarreMedioPorDebajo.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Dominadas en Maquina Sostenida, Agarre Medio por Encima',
@@ -1642,7 +1642,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.espalda
               .dominadasEnMaquinaSostenidaAgarreMedioPorEncima.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Dominadas, Agarre Amplio por Debajo',
@@ -1651,7 +1651,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.espalda.dominadasAgarreAmplioPorDebajo.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Dominadas, Agarre Amplio por Encima',
@@ -1660,7 +1660,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.espalda.dominadasAgarreAmplioPorEncima.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Dominadas, Agarre Medio Por Debajo',
@@ -1669,7 +1669,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.espalda.dominadasAgarreMedioPorDebajo.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Dominadas, Agarre Medio Por Encima',
@@ -1678,7 +1678,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.espalda.dominadasAgarreMedioPorEncima.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -1688,7 +1688,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.espalda
               .espaldaAToraxConCablePoleaAgarreCerradoDeMantilloSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -1698,7 +1698,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.espalda
               .espaldaAToraxConCablePoleaAgarreCerradoDebajoSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -1708,7 +1708,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.espalda
               .espaldaConCablePoleaDetrasDelCuelloAgarreAmplioSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Espalda con Cable-Polea al Tórax, Agarre Amplio (sentado)',
@@ -1717,7 +1717,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.espalda
               .espaldaConCablePoleaAlToraxAgarreAmplioSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Espalda con Maquina de Palanca (sentado)',
@@ -1726,7 +1726,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.espalda.espaldaConMaquinaDePalancaSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Remo con Barra de Pesas, Inclinado (de pie)',
@@ -1735,7 +1735,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.espalda.remoConBarraDePesasInclinadoDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -1745,7 +1745,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.espalda
               .remoConBarraDePesasInclinadoAgarrePorAbajoDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Remo con Cable-Polea (sentado)',
@@ -1754,7 +1754,7 @@ class EjercicioDataSeed {
           rutaImagen:
               Assets.imagenes.musculos.espalda.remoConCablePoleaSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Remo con Cable-Polea, Inclinado (de pie)',
@@ -1763,7 +1763,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.espalda.remoConCablePoleaInclinadoDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Remo con Mancuernas, Inclinado (de pie)',
@@ -1772,7 +1772,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.espalda.remoConMancuernasInclinadoDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Remo con Máquina de Palanca (sentado)',
@@ -1781,7 +1781,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.espalda.remoConMaquinaDePalancaSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Remo con Máquina de Smith, Inclinado (de pie)',
@@ -1790,7 +1790,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.espalda
               .remoConMaquinaDeSmithInclinadoDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Remo en Banco Plano Alto con Barra de Pesas (prono)',
@@ -1799,7 +1799,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.espalda
               .remoEnBancoPlanoAltoConBarraDePesasProno.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Remo en Banco Plano Alto con Mancuernas (prono)',
@@ -1808,7 +1808,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.espalda
               .remoEnBancoPlanoAltoConMancuernasProno.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Step-up con Barra de Pesas, Inclinado (De pie)',
@@ -1819,8 +1819,8 @@ class EjercicioDataSeed {
         ),
       ]);
 
-      List<EjercicioDbModel> espaldaBaja = List.from([
-        EjercicioDbModel(
+      List<EjercicioDb> espaldaBaja = List.from([
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Arrastre Mediante con Cuerda y Polea (de pie)',
@@ -1829,14 +1829,14 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.espaldaBaja
               .arrastreMedianteConCuerdaYPoleaDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Barra de Peso Muerto',
           descripcion:
               'De pie con los pies separados al ancho de los hombros, agarra una barra con las manos separadas al ancho de los hombros. Flexiona las caderas y las rodillas para bajar la barra hacia el suelo, manteniendo la espalda recta. Luego, estira las caderas y las rodillas para levantar la barra de vuelta a la posición inicial.',
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Estiramiento de Gato en Tapete (arrodillado)',
@@ -1845,7 +1845,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.espaldaBaja
               .estiramientoDeGatoEnTapeteArrodillado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Espalda con Barra de Pesas (sentado)',
@@ -1854,7 +1854,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.espaldaBaja
               .flexionesDeEspaldaConBarraDePesasSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Espalda con Barra de Pesas (de pie)',
@@ -1863,7 +1863,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.espaldaBaja
               .flexionesDeEspaldaConMaquinaSmithDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Espalda con Maquina Smith (de pie)',
@@ -1872,7 +1872,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.espaldaBaja
               .flexionesDeEspaldaConMaquinaSmithDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Espalda con Tapete (prono)',
@@ -1881,7 +1881,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.espaldaBaja
               .flexionesDeEspaldaConTapeteProno.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Hiperextensiones en Banco Plano (prono)',
@@ -1890,7 +1890,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.espaldaBaja
               .hiperextensionesEnBancoPlanoProno.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Maquina de Hiperextensiones',
@@ -1899,7 +1899,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.espaldaBaja.maquinaDeHiperextensiones.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Maquina de hiperextensiones (sentado)',
@@ -1908,7 +1908,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.espaldaBaja
               .maquinaDeHiperextensionesSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Peso Muerto Sumo con Barra de Pesas, Pies Separadas',
@@ -1917,7 +1917,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.espaldaBaja
               .pesoMuertoSumoConBarraDePesasPiesSeparadas.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Peso Muerto con Cable-Polea',
@@ -1926,7 +1926,7 @@ class EjercicioDataSeed {
           rutaImagen:
               Assets.imagenes.musculos.espaldaBaja.pesoMuertoConCablePolea.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Peso Muerto con Mancuernas',
@@ -1935,7 +1935,7 @@ class EjercicioDataSeed {
           rutaImagen:
               Assets.imagenes.musculos.espaldaBaja.pesoMuertoConMancuernas.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Sentadillas con Barra de Pesas (arrodillado)',
@@ -1944,7 +1944,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.espaldaBaja
               .sentadillasConBarraDePesasArrodillado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Sentadillas con Barra de Pesas (de pie)',
@@ -1953,7 +1953,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.espaldaBaja
               .sentadillasConBarraDePesasDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Sentadillas con Barra de Pesas Frontal (de pie)',
@@ -1962,7 +1962,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.espaldaBaja
               .sentadillasConBarraDePesasFrontalDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Sentadillas en Maquina de Palanca (de pie)',
@@ -1973,8 +1973,8 @@ class EjercicioDataSeed {
         ),
       ]);
 
-      List<EjercicioDbModel> gluteos = List.from([
-        EjercicioDbModel(
+      List<EjercicioDb> gluteos = List.from([
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Arrastre Mediante con Cuerda y Polea (de pie)',
@@ -1983,7 +1983,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.gluteo
               .arrastreMedianteConCuerdaYPoleaDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Barra de Peso Muerto',
@@ -1991,7 +1991,7 @@ class EjercicioDataSeed {
               'De pie con los pies separados al ancho de los hombros, agarra una barra con las manos separadas al ancho de los hombros. Flexiona las caderas y las rodillas para bajar la barra hacia el suelo, manteniendo la espalda recta. Luego, estira las caderas y las rodillas para levantar la barra de vuelta a la posición inicial.',
           rutaImagen: Assets.imagenes.musculos.gluteo.barraDePesoMuerto.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Estocadas en Barra de Pesas',
@@ -2000,7 +2000,7 @@ class EjercicioDataSeed {
           rutaImagen:
               Assets.imagenes.musculos.gluteo.estocadasEnBarraDePesas.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Estocadas en Mancuernas',
@@ -2009,7 +2009,7 @@ class EjercicioDataSeed {
           rutaImagen:
               Assets.imagenes.musculos.gluteo.estocadasEnMancuernas.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Extensión de Cadera en Cable-Polea (de pie)',
@@ -2018,7 +2018,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.gluteo.extensionDeCaderaEnCablePoleaDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Extensión de Pierna hacia atrás (arrodillado)',
@@ -2027,7 +2027,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.gluteo
               .extensionDePiernaHaciaAtrasArrodillado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Extension de la Cadera (arrodillado)',
@@ -2036,7 +2036,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.gluteo.extensionDeLaCaderaArrodillado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Extension de la Cadera con maquina',
@@ -2045,7 +2045,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.gluteo.extensionDeLaCaderaConMaquina.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexion de Espalda con Barra de Pesas (de pie)',
@@ -2054,7 +2054,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.gluteo
               .flexionDeEspaldaConBarraDePesasDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexión de Espalda con Maquina Smith (de pie)',
@@ -2063,7 +2063,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.gluteo
               .flexionDeEspaldaConMaquinaSmithDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Levantamiento de Pelvis, Piernas Flexionadas (acostado)',
@@ -2072,7 +2072,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.gluteo
               .levantamientoDePelvisPiernasFlexionadasAcostado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Maquina de Abducción (sentado)',
@@ -2081,7 +2081,7 @@ class EjercicioDataSeed {
           rutaImagen:
               Assets.imagenes.musculos.gluteo.maquinaDeAbduccionSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Maquinas de Aducción (sentado)',
@@ -2090,7 +2090,7 @@ class EjercicioDataSeed {
           rutaImagen:
               Assets.imagenes.musculos.gluteo.maquinaDeAbduccionSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Maquina de Prensa de Piernas (inclinado)',
@@ -2099,7 +2099,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.gluteo.maquinaDePrensaDePiernasInclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Maquina de Prensa de Piernas, pies Sentado (inclinado)',
@@ -2108,7 +2108,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.gluteo
               .maquinaDePrensaDePiernasPiesSentadoInclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Pataleo (acostado)',
@@ -2116,7 +2116,7 @@ class EjercicioDataSeed {
               'Acuéstate de lado con la cabeza apoyada en el brazo y la otra mano en el suelo frente a ti para mantener el equilibrio. Levanta la pierna superior hacia el techo, contrayendo los glúteos en la parte superior del movimiento. Controla el movimiento al bajar la pierna de vuelta a la posición inicial.',
           rutaImagen: Assets.imagenes.musculos.gluteo.pataleoAcostado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Peso Muerto Sumo con Barra de Pesas, Pies Separados',
@@ -2125,7 +2125,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.gluteo
               .pesoMuertoSumoConBarraDePesasPiesSeparados.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Peso Muerto con Cable-Polea',
@@ -2134,7 +2134,7 @@ class EjercicioDataSeed {
           rutaImagen:
               Assets.imagenes.musculos.gluteo.pesoMuertoConCablePolea.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Peso Muerto con Mancuernas',
@@ -2143,7 +2143,7 @@ class EjercicioDataSeed {
           rutaImagen:
               Assets.imagenes.musculos.gluteo.pesoMuertoConMancuernas.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Sentadillas Frontal con Maquina de Smith (de pie)',
@@ -2152,7 +2152,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.gluteo
               .sentadillasFrontalConMaquinaDeSmithDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Sentadillas Hack con Barra de Pesas (de pie)',
@@ -2161,7 +2161,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.gluteo
               .sentadillasHackConBarraDePesasDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Sentadillas Hack con Maquina de Smith (de pie)',
@@ -2170,7 +2170,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.gluteo
               .sentadillasHackConMaquinaDeSmithDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Sentadillas con Barra de Pesas (arrodillado)',
@@ -2179,7 +2179,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.gluteo
               .sentadillasConBarraDePesasArrodillado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Sentadillas con Barra de Pesas (de pie)',
@@ -2188,7 +2188,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.gluteo.sentadillasConBarraDePesasDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Sentadillas con Barra de Pesas Frontal (de pie)',
@@ -2197,7 +2197,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.gluteo
               .sentadillasConBarraDePesasFrontalDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Sentadillas con Maquina (inclinado)',
@@ -2206,7 +2206,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.gluteo.sentadillasConMaquinaInclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Sentadillas con Maquina de Palanca (de pie)',
@@ -2216,7 +2216,7 @@ class EjercicioDataSeed {
               .sentadillasConMaquinaDePalancaDePie.path,
         ),
         //este se repite en cuadriceps
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Skipping Rápido (de pie)',
@@ -2227,8 +2227,8 @@ class EjercicioDataSeed {
         ),
       ]);
 
-      List<EjercicioDbModel> cuadriceps = List.from([
-        EjercicioDbModel(
+      List<EjercicioDb> cuadriceps = List.from([
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Abductor con Cable-Polea (de pie)',
@@ -2237,7 +2237,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.cuadriceps.abductorConCablePoleaDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Aductor con Cable-Polea (de pie)',
@@ -2246,7 +2246,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.cuadriceps.aductorConCablePoleaDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Barra de peso Muerto',
@@ -2255,7 +2255,7 @@ class EjercicioDataSeed {
           rutaImagen:
               Assets.imagenes.musculos.cuadriceps.barraDePesoMuerto.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Elevación Lateral de Piernas (acostado)',
@@ -2264,7 +2264,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.cuadriceps
               .elevacionLateralDePiernasAcostado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Estocadas con Barra de Pesas',
@@ -2273,7 +2273,7 @@ class EjercicioDataSeed {
           rutaImagen:
               Assets.imagenes.musculos.cuadriceps.estocadasConBarraDePesas.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Estocadas con Mancuernas',
@@ -2282,7 +2282,7 @@ class EjercicioDataSeed {
           rutaImagen:
               Assets.imagenes.musculos.cuadriceps.estocadasConMancuernas.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Extensión de Piernas con Maquina (sentado)',
@@ -2291,7 +2291,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.cuadriceps
               .extensionDePiernasConMaquinaSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Step-up con Barra de Pesas (de pie)',
@@ -2300,7 +2300,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.cuadriceps.stepUpConBarraDePesasDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Step-up con Mancuernas (de pie)',
@@ -2311,8 +2311,8 @@ class EjercicioDataSeed {
         ),
       ]);
 
-      List<EjercicioDbModel> femorales = List.from([
-        EjercicioDbModel(
+      List<EjercicioDb> femorales = List.from([
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Pierna con Maquina (de pie)',
@@ -2321,7 +2321,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.femorales
               .flexionesDePiernaConMaquinaDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Pierna con Maquina (prono)',
@@ -2330,7 +2330,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.femorales
               .flexionesDePiernaConMaquinaProno.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Pierna con Maquina (sentado)',
@@ -2339,7 +2339,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.femorales
               .flexionesDePiernaConMaquinaSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Pierna con Cable-Polea (de pie)',
@@ -2350,8 +2350,8 @@ class EjercicioDataSeed {
         ),
       ]);
 
-      List<EjercicioDbModel> pantorrilla = List.from([
-        EjercicioDbModel(
+      List<EjercicioDb> pantorrilla = List.from([
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Balanceo de Pierna con Barra de Pesas (de pie)',
@@ -2360,7 +2360,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.pantorrilla
               .balanceoDePiernaConBarraDePesasDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Balanceo de Pierna con Barra de Pesas (sentado)',
@@ -2369,7 +2369,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.pantorrilla
               .balanceoDePiernaConBarraDePesasSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Balanceo de Pantorrilla con Maquina (de pie)',
@@ -2378,7 +2378,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.pantorrilla
               .balanceoDePantorrillaConMaquinaDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Balanceo de Pantorrillas con Maquina Smith (sentado)',
@@ -2387,7 +2387,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.pantorrilla
               .balanceoDePantorrillasConMaquinaSmithSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Balanceo de Pantorrillas con Maquina Smith (de pie)',
@@ -2398,8 +2398,8 @@ class EjercicioDataSeed {
         ),
       ]);
 
-      List<EjercicioDbModel> biceps = List.from([
-        EjercicioDbModel(
+      List<EjercicioDb> biceps = List.from([
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Dominadas en Maquina Sostenida, Agarre Medio por Debajo',
@@ -2408,7 +2408,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.biceps
               .dominadasEnMaquinaSostenidaAgarreMedioPorDebajo.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Dominadas en Maquina Sostenida, Agarre Medio por Encima',
@@ -2417,7 +2417,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.biceps
               .dominadasEnMaquinaSostenidaAgarreMedioPorEncima.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Dominadas, Agarre Cerrado por Debajo',
@@ -2426,7 +2426,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.biceps.dominadasAgarreCerradoPorDebajo.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Dominadas, Agarre Estrecho por Encima',
@@ -2435,7 +2435,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.biceps.dominadasAgarreEstrechoPorEncima.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Dominadas, Agarre Medio Por Debajo',
@@ -2444,7 +2444,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.biceps.dominadasAgarreMedioPorDebajo.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Dominadas, Agarre Medio Por Encima',
@@ -2453,7 +2453,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.biceps.dominadasAgarreMedioPorEncima.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -2463,7 +2463,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.biceps
               .espaldaAToraxConCablePoleaAgarreCerradoDeMantilloSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -2473,7 +2473,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.biceps
               .espaldaAToraxConCablePoleaAgarreCerradoDebajoDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Biceps Alternando las Mancuernas (de pie)',
@@ -2482,7 +2482,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.biceps
               .flexionesDeBicepsAlternandoLasMancuernasDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Biceps Alternando las Mancuernas (sentado)',
@@ -2491,7 +2491,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.biceps
               .flexionesDeBicepsAlternandoLasMancuernasSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -2501,7 +2501,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.biceps
               .flexionesDeBicepsAlternandoLasMancuernasEnMartilloDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -2511,7 +2511,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.biceps
               .flexionesDeBicepsAlternandoLasMancuernasEnMartilloSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -2521,7 +2521,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.biceps
               .flexionesDeBicepsAlternandoConcentradasConCablePoleaSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -2531,7 +2531,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.biceps
               .flexionesDeBicepsAlternandoConcentradasConMancuernasSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -2541,7 +2541,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.biceps
               .flexionesDeBicepsAlternandoCruzadasConMancuernasDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -2555,7 +2555,7 @@ class EjercicioDataSeed {
               .flexionesDeBicepsAlternandoCruzadasConMancuernasConMartilloDePie
               .path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Biceps con Barra EZ (de pie)',
@@ -2564,7 +2564,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.biceps.flexionesDeBicepsConBarraEzDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Biceps con Barra EZ en Maquina Scott (sentado)',
@@ -2573,7 +2573,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.biceps
               .flexionesDeBicepsConBarraEzEnMaquinaScottSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Biceps con Barra EZ, Agarre Amplio (de pie)',
@@ -2582,7 +2582,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.biceps
               .flexionesDeBicepsConBarraEzAgarreAmplioDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Biceps con Barra EZ, Agarre Cerrado (de pie)',
@@ -2591,7 +2591,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.biceps
               .flexionesDeBicepsConBarraEzAgarreCerradoDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Biceps con Barra de Pesas (inclinado)',
@@ -2600,7 +2600,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.biceps
               .flexionesDeBicepsConBarraDePesasInclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -2610,7 +2610,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.biceps
               .flexionesDeBicepsConBarraDePesasAgarreAmplioDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -2620,7 +2620,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.biceps
               .flexionesDeBicepsConBarraDePesasAgarreCerradoDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Biceps con Barra (de pie)',
@@ -2629,7 +2629,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.biceps.flexionesDeBicepsConBarraDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Biceps con Cable abajo en la Maquina de Scott',
@@ -2638,7 +2638,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.biceps
               .flexionesDeBicepsConCableAbajoEnLaMaquinaDeScott.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Biceps con Cable-Polea (de pie)',
@@ -2647,7 +2647,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.biceps
               .flexionesDeBicepsConCablePoleaDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Biceps con Cable-Polea por Arriba (de pie)',
@@ -2656,7 +2656,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.biceps
               .flexionesDeBicepsConCablePoleaPorArribaDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Biceps con Cuerda en Cable-Polea (de pie)',
@@ -2665,7 +2665,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.biceps
               .flexionesDeBicepsConCuerdaEnCablePoleaDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Biceps con Mancuernas (de pie)',
@@ -2674,7 +2674,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.biceps
               .flexionesDeBicepsConMancuernasDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Biceps con Mancuernas (inclinado)',
@@ -2683,7 +2683,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.biceps
               .flexionesDeBicepsConMancuernasInclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Biceps con Mancuernas (sentado)',
@@ -2692,7 +2692,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.biceps
               .flexionesDeBicepsConMancuernasSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Biceps con Mancuernas en Martillo (de pie)',
@@ -2701,7 +2701,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.biceps
               .flexionesDeBicepsConMancuernasEnMartilloDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Biceps con Mancuernas en Martillo (sentado)',
@@ -2710,7 +2710,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.biceps
               .flexionesDeBicepsConMancuernasEnMartilloSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -2720,7 +2720,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.biceps
               .flexionesDeBicepsConMancuernasEnMartilloEnMaquinaScott.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Biceps con Mancuernas en Maquina Scott',
@@ -2729,7 +2729,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.biceps
               .flexionesDeBicepsConMancuernasEnMaquinaScott.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Biceps de Zottman en Mancuernas (de pie)',
@@ -2738,7 +2738,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.biceps
               .flexionesDeBicepsDeZottmanEnMancuernasDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Biceps en Cable-Polea (acostado)',
@@ -2747,7 +2747,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.biceps
               .flexionesDeBicepsEnCablePoleaAcostado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Biceps en Maquina (sentado)',
@@ -2756,7 +2756,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.biceps.flexionesDeBicepsEnMaquinaSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Biceps en Maquina Scott (sentado)',
@@ -2765,7 +2765,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.biceps
               .flexionesDeBicepsEnMaquinaScottSentado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -2775,7 +2775,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.biceps
               .flexionesDeBicepsEnUnBancoAltoConBarraDePesasProno.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Biceps en un Banco Alto con Mancuernas (prono)',
@@ -2784,7 +2784,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.biceps
               .flexionesDeBicepsEnUnBancoAltoConMancuernasProno.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -2794,7 +2794,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.biceps
               .flexionesDeBicepsEnUnBancoEnLaCablePoleaAcostado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre:
@@ -2804,7 +2804,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.biceps
               .flexionesDeBicepsEnUnBancoEnLaCablePoleaInclinado.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Flexiones de Biceps y Antebrazo con uno solo Mancuerna',
@@ -2813,7 +2813,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets.imagenes.musculos.biceps
               .flexionesDeBicepsYAntebrazoConUnoSoloMancuerna.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Remo Vertical con Barra de Pesas (de pie)',
@@ -2822,7 +2822,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.biceps.remoVerticalConBarraDePesasDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Remo Vertical con Cable-Polea (de pie)',
@@ -2831,7 +2831,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.biceps.remoVerticalConCablePoleaDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Remo Vertical con Mancuernas (de pie)',
@@ -2840,7 +2840,7 @@ class EjercicioDataSeed {
           rutaImagen: Assets
               .imagenes.musculos.biceps.remoVerticalConMancuernasDePie.path,
         ),
-        EjercicioDbModel(
+        EjercicioDb(
           fechaCreacion: DateTime.now().toIso8601String(),
           id: idGenerator.generateId(),
           nombre: 'Remo Vertical con Maquina de Smith (de pie)',
@@ -2871,7 +2871,7 @@ class EjercicioDataSeed {
   }
 
   Future<int> _insertarEjercicio(
-    List<EjercicioDbModel> ejercicios,
+    List<EjercicioDb> ejercicios,
     List<String>? listaNombresMusculos,
   ) async {
     final db = await DatabaseHelper.instance.database;
@@ -2887,14 +2887,14 @@ class EjercicioDataSeed {
 
       // Verificar si el ejercicio ya existe
       final existingEjercicio = await db.query(
-        EjercicioDbModel.tabla,
+        EjercicioDb.tabla,
         where: 'name = ?',
         whereArgs: [ejercicio.nombre],
       );
 
       if (existingEjercicio.isEmpty) {
         // Agregamos el ejercicio si no existe
-        res += await db.insert(EjercicioDbModel.tabla, ejercicio.toJson());
+        res += await db.insert(EjercicioDb.tabla, ejercicio.toJson());
       } else {
         // Si el ejercicio ya existe, actualizamos su ID
         ejercicio = ejercicio.copyWith(
@@ -2910,7 +2910,7 @@ class EjercicioDataSeed {
         final musculo = await buscarMusculoPorNombre(nombreMusculo);
         if (musculo == null) {
           // Si no existe el músculo lo agregamos
-          final nuevoMusculo = MusculoDbModel(
+          final nuevoMusculo = MusculoDb(
             id: idGenerator.generateId(),
             nombre: nombreMusculo,
             fechaCreacion: DateTime.now().toIso8601String(),
@@ -2957,16 +2957,16 @@ class EjercicioDataSeed {
     }
   }
 
-  Future<MusculoDbModel?> buscarMusculoPorNombre(String nombreMusculo) async {
+  Future<MusculoDb?> buscarMusculoPorNombre(String nombreMusculo) async {
     try {
       final db = await DatabaseHelper.instance.database;
       final res = await db.query(
-        MusculoDbModel.tabla,
+        MusculoDb.tabla,
         where: 'name = ?',
         whereArgs: [nombreMusculo],
       );
       if (res.isNotEmpty) {
-        return MusculoDbModel.fromJson(res.first);
+        return MusculoDb.fromJson(res.first);
       }
 
       return null;
@@ -2977,10 +2977,10 @@ class EjercicioDataSeed {
   }
 
   // Insertar el músculo
-  Future<String?> insertarMusculo(MusculoDbModel musculo) async {
+  Future<String?> insertarMusculo(MusculoDb musculo) async {
     try {
       final db = await DatabaseHelper.instance.database;
-      await db.insert(MusculoDbModel.tabla, musculo.toJson());
+      await db.insert(MusculoDb.tabla, musculo.toJson());
       return musculo.id;
     } catch (e) {
       print('Error al insertar el músculo: $e');

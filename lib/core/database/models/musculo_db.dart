@@ -1,11 +1,10 @@
 import 'dart:convert';
 
-MusculoDbModel muscleFromJson(String str) =>
-    MusculoDbModel.fromJson(json.decode(str));
+MusculoDb muscleFromJson(String str) => MusculoDb.fromJson(json.decode(str));
 
-String muscleToJson(MusculoDbModel data) => json.encode(data.toJson());
+String muscleToJson(MusculoDb data) => json.encode(data.toJson());
 
-class MusculoDbModel {
+class MusculoDb {
   // Nombres de las columnas de la tabla
   static const String tabla = 'muscle';
   static const String columnaId = 'id';
@@ -18,27 +17,27 @@ class MusculoDbModel {
   final String? rutaImagen;
   final String fechaCreacion;
 
-  MusculoDbModel({
+  MusculoDb({
     required this.id,
     required this.nombre,
     this.rutaImagen,
     required this.fechaCreacion,
   });
 
-  MusculoDbModel copyWith({
+  MusculoDb copyWith({
     String? id,
     String? nombre,
     String? rutaImagen,
     String? fechaCreacion,
   }) =>
-      MusculoDbModel(
+      MusculoDb(
         id: id ?? this.id,
         nombre: nombre ?? this.nombre,
         rutaImagen: rutaImagen ?? this.rutaImagen,
         fechaCreacion: fechaCreacion ?? this.fechaCreacion,
       );
 
-  factory MusculoDbModel.fromJson(Map<String, dynamic> json) => MusculoDbModel(
+  factory MusculoDb.fromJson(Map<String, dynamic> json) => MusculoDb(
         id: json["id"],
         nombre: json["name"],
         rutaImagen: json["ruta_imagen"],

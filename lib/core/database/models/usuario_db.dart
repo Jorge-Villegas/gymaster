@@ -1,11 +1,10 @@
 import 'dart:convert';
 
-UsuarioDbModel userFromJson(String str) =>
-    UsuarioDbModel.fromJson(json.decode(str));
+UsuarioDb userFromJson(String str) => UsuarioDb.fromJson(json.decode(str));
 
-String userToJson(UsuarioDbModel data) => json.encode(data.toJson());
+String userToJson(UsuarioDb data) => json.encode(data.toJson());
 
-class UsuarioDbModel {
+class UsuarioDb {
   //nombres de las columnas de la tabla
   static const String tabla = 'usuario';
   static const String columnaId = 'id';
@@ -22,7 +21,7 @@ class UsuarioDbModel {
   final String fechaCreacion;
   final String fechaActualizacion;
 
-  UsuarioDbModel({
+  UsuarioDb({
     required this.id,
     required this.nombreUsuario,
     required this.correo,
@@ -31,7 +30,7 @@ class UsuarioDbModel {
     required this.fechaActualizacion,
   });
 
-  UsuarioDbModel copyWith({
+  UsuarioDb copyWith({
     String? id,
     String? nombreUsuario,
     String? correo,
@@ -39,7 +38,7 @@ class UsuarioDbModel {
     String? fechaCreacion,
     String? fechaActualizacion,
   }) =>
-      UsuarioDbModel(
+      UsuarioDb(
         id: id ?? this.id,
         nombreUsuario: nombreUsuario ?? this.nombreUsuario,
         correo: correo ?? this.correo,
@@ -48,7 +47,7 @@ class UsuarioDbModel {
         fechaActualizacion: fechaActualizacion ?? this.fechaActualizacion,
       );
 
-  factory UsuarioDbModel.fromJson(Map<String, dynamic> json) => UsuarioDbModel(
+  factory UsuarioDb.fromJson(Map<String, dynamic> json) => UsuarioDb(
         id: json["id"],
         nombreUsuario: json["nombre_usuario"],
         correo: json["correo"],

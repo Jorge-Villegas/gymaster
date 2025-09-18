@@ -1,18 +1,17 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:gymaster/core/database/models/routine_session_db_model.dart';
+import 'package:gymaster/core/database/models/rutina_sesion_db.dart';
 import 'package:gymaster/core/error/failures.dart';
 import 'package:gymaster/core/usecase/usecase.dart';
 import 'package:gymaster/features/routine/domain/repositories/rutine_repository.dart';
 
 class GetLastRoutineSessionByRoutineId
-    implements
-        UseCase<RutinaSesionDbModel, GetLastRoutineSessionByRoutineIdParams> {
+    implements UseCase<RutinaSesionDb, GetLastRoutineSessionByRoutineIdParams> {
   final RoutineRepository repository;
 
   GetLastRoutineSessionByRoutineId(this.repository);
 
   @override
-  Future<Either<Failure, RutinaSesionDbModel>> call(
+  Future<Either<Failure, RutinaSesionDb>> call(
     GetLastRoutineSessionByRoutineIdParams params,
   ) async {
     return await repository.getLastRoutineSessionByRoutineId(params.idRoutine);

@@ -67,7 +67,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
     required String imagenDireccion,
   }) async {
     try {
-      final rutina = RutinaDbModel(
+      final rutina = RutinaDb(
         id: idGenerator.generateId(),
         nombre: name,
         descripcion: description,
@@ -209,15 +209,14 @@ class RoutineRepositoryImpl implements RoutineRepository {
       // Obtener rutina
       final rutina = await localDataSource.getRutinaById(rutinaId);
 
-      RutinaSesionDbModel? session =
-          await localDataSource.getRoutineSessionById(
+      RutinaSesionDb? session = await localDataSource.getRoutineSessionById(
         idRoutineSession,
       );
 
       // Si no hay sesión, devolvemos un error
       // Creamos una sesión ya que sería la primera vez que entra a la rutina
       if (session == null) {
-        final newSession = RutinaSesionDbModel(
+        final newSession = RutinaSesionDb(
           id: idGenerator.generateId(),
           rutinaId: rutinaId,
           estado: EstadoSesionRutina.pendiente.name,
@@ -539,17 +538,17 @@ class RoutineRepositoryImpl implements RoutineRepository {
   }
 
   @override
-  Future<Either<Failure, RutinaSesionDbModel>> getLastRoutineSessionByRoutineId(
+  Future<Either<Failure, RutinaSesionDb>> getLastRoutineSessionByRoutineId(
     String id,
   ) async {
-    RutinaSesionDbModel? session =
+    RutinaSesionDb? session =
         await localDataSource.getLastRoutineSessionByRoutineId(id);
 
     if (session != null) {
       return Right(session);
     }
 
-    final newSession = RutinaSesionDbModel(
+    final newSession = RutinaSesionDb(
       id: idGenerator.generateId(),
       rutinaId: id,
       estado: EstadoSesionRutina.pendiente.name,
@@ -676,7 +675,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
               currentSession.estado == EstadoSesionRutina.cancelado.name)) {
         // Crear una nueva sesión con estado pendiente (no en progreso)
         // Esto permite que se muestre el botón "Iniciar entrenamiento"
-        final newSession = RutinaSesionDbModel(
+        final newSession = RutinaSesionDb(
           id: idGenerator.generateId(),
           rutinaId: routineId,
           estado: EstadoSesionRutina.pendiente.name, // Cambiar a pendiente
@@ -702,7 +701,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
         for (var sessionExercise in sessionExercises) {
           // Crear nuevo session_exercise para la nueva sesión
           final newSessionExerciseId = idGenerator.generateId();
-          final newSessionExercise = SessionEjercicioDbModel(
+          final newSessionExercise = SessionEjercicioDb(
             id: newSessionExerciseId,
             sessionId: newSession.id,
             exerciseId: sessionExercise.exerciseId,
@@ -718,7 +717,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
 
           // Copiar cada serie para el nuevo ejercicio, reiniciando el estado
           for (var set in exerciseSets) {
-            final newSet = SerieEjercicioDbModel(
+            final newSet = SerieEjercicioDb(
               id: idGenerator.generateId(),
               ejercicioSesionId: newSessionExerciseId,
               peso: set.peso,

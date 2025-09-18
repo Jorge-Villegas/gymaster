@@ -36,7 +36,7 @@ class RecordRutina {
   }
 
   factory RecordRutina.fromDatabase({
-    required RutinaDbModel rutinaDB,
+    required RutinaDb rutinaDB,
     int? cantidadEjercicios,
   }) {
     return RecordRutina(
@@ -82,7 +82,7 @@ class RecordEjercicios {
   }
 
   factory RecordEjercicios.fromDatabase({
-    required EjercicioDbModel ejercicioDB,
+    required EjercicioDb ejercicioDB,
     required List<SeriesDelEjercicio> seriesDelEjercicio,
   }) {
     return RecordEjercicios(
@@ -114,8 +114,7 @@ class SeriesDelEjercicio {
     );
   }
 
-  factory SeriesDelEjercicio.fromDatabase(
-      {required SerieEjercicioDbModel serieDB}) {
+  factory SeriesDelEjercicio.fromDatabase({required SerieEjercicioDb serieDB}) {
     return SeriesDelEjercicio(
       id: serieDB.id,
       peso: serieDB.peso ?? 0.0,

@@ -1,5 +1,5 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:gymaster/core/database/models/routine_db_model.dart';
+import 'package:gymaster/core/database/models/routine_db.dart';
 import 'package:gymaster/core/error/exceptions.dart';
 import 'package:gymaster/core/error/failures.dart';
 import 'package:gymaster/features/record/data/models/record_rutina_models.dart';
@@ -88,7 +88,7 @@ class RecordRepositoryImpl implements RecordRepository {
           );
 
           // Obtener rutina de la base de datos
-          RutinaDbModel? rutina;
+          RutinaDb? rutina;
           try {
             rutina = await localDataSource.getRutinaById(
               rutinaSession.rutinaId,

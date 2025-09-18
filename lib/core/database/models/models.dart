@@ -1,9 +1,9 @@
-export 'package:gymaster/core/database/models/audit_log_db_model.dart';
+export 'package:gymaster/core/database/models/audit_log_db.dart';
 export 'package:gymaster/core/database/models/excercise_muscle_db_model.dart';
-export 'package:gymaster/core/database/models/exercise_db_model.dart';
-export 'package:gymaster/core/database/models/exercise_set_db_model.dart';
-export 'package:gymaster/core/database/models/muscle_db_model.dart';
-export 'package:gymaster/core/database/models/routine_db_model.dart';
-export 'package:gymaster/core/database/models/routine_session_db_model.dart';
-export 'package:gymaster/core/database/models/session_exercise_db_model.dart';
-export 'package:gymaster/core/database/models/user_db_model.dart';
+export 'package:gymaster/core/database/models/ejercicio_db.dart';
+export 'package:gymaster/core/database/models/serie_ejercicio_db.dart';
+export 'package:gymaster/core/database/models/musculo_db.dart';
+export 'package:gymaster/core/database/models/routine_db.dart';
+export 'package:gymaster/core/database/models/rutina_sesion_db.dart';
+export 'package:gymaster/core/database/models/sesion_ejercicio_db.dart';
+export 'package:gymaster/core/database/models/usuario_db.dart';

@@ -1,4 +1,4 @@
-import 'package:gymaster/core/database/models/muscle_db_model.dart';
+import 'package:gymaster/core/database/models/musculo_db.dart';
 import 'package:gymaster/features/routine/domain/entities/musculo.dart';
 
 class MusculoModel extends Musculo {
@@ -28,7 +28,7 @@ class MusculoModel extends Musculo {
     );
   }
 
-  factory MusculoModel.fromEntity(MusculoDbModel musculo) {
+  factory MusculoModel.fromEntity(MusculoDb musculo) {
     return MusculoModel(
       id: musculo.id,
       nombre: musculo.nombre,

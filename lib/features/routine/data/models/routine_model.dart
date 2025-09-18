@@ -1,5 +1,4 @@
-import 'package:gymaster/core/database/models/routine_db_model.dart'
-    as rutina_db;
+import 'package:gymaster/core/database/models/routine_db.dart' as rutina_db;
 import 'package:gymaster/features/routine/domain/entities/routine.dart';
 
 class RoutineModel extends Routine {
@@ -42,7 +41,7 @@ class RoutineModel extends Routine {
   }
 
   factory RoutineModel.fromDatabase({
-    required rutina_db.RutinaDbModel serieDB,
+    required rutina_db.RutinaDb serieDB,
     int? cantidadEjercicios,
   }) {
     return RoutineModel(

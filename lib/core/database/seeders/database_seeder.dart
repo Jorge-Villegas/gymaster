@@ -2,7 +2,7 @@ import 'package:gymaster/shared/utils/uuid_generator.dart';
 
 import '../database_helper.dart';
 import '../models/excercise_muscle_db_model.dart';
-import '../models/exercise_db_model.dart';
+import '../models/ejercicio_db.dart';
 import 'ejercicio_data_seed.dart';
 import 'musculo_data_seed.dart';
 
@@ -15,7 +15,7 @@ class DatabaseSeeder {
 
     // Verificar si ya existen datos en las tablas principales
     final muscles = await db.query(EjercicioMusculoDbModel.tabla);
-    final exercises = await db.query(EjercicioDbModel.tabla);
+    final exercises = await db.query(EjercicioDb.tabla);
 
     // Solo ejecutar el seeding si no hay datos
     if (muscles.isEmpty) {

@@ -61,59 +61,59 @@ class DatabaseHelper {
 
   Future<void> _onCreate(Database db, int version) async {
     await db.execute('''
-        CREATE TABLE ${UsuarioDbModel.tabla} (
-          ${UsuarioDbModel.columnaId}          TEXT PRIMARY KEY,
-          ${UsuarioDbModel.columnaNombreUsuario}    TEXT UNIQUE NOT NULL,
-          ${UsuarioDbModel.columnaCorreo}       TEXT UNIQUE NOT NULL,
-          ${UsuarioDbModel.columnaContrasena}    TEXT NOT NULL,
-          ${UsuarioDbModel.columnaFechaCreacion}   DATETIME DEFAULT CURRENT_TIMESTAMP,
-          ${UsuarioDbModel.columnaFechaActualizacion}   DATETIME
+        CREATE TABLE ${UsuarioDb.tabla} (
+          ${UsuarioDb.columnaId}          TEXT PRIMARY KEY,
+          ${UsuarioDb.columnaNombreUsuario}    TEXT UNIQUE NOT NULL,
+          ${UsuarioDb.columnaCorreo}       TEXT UNIQUE NOT NULL,
+          ${UsuarioDb.columnaContrasena}    TEXT NOT NULL,
+          ${UsuarioDb.columnaFechaCreacion}   DATETIME DEFAULT CURRENT_TIMESTAMP,
+          ${UsuarioDb.columnaFechaActualizacion}   DATETIME
         )
       ''');
 
     await db.execute('''
-        CREATE TABLE ${RutinaDbModel.tabla} (
-           ${RutinaDbModel.columnaId}           TEXT PRIMARY KEY,
-           ${RutinaDbModel.columnaUsuarioId}       TEXT NOT NULL,
-           ${RutinaDbModel.columnaNombre}         TEXT NOT NULL,
-           ${RutinaDbModel.columnaDescripcion}  TEXT,
-           ${RutinaDbModel.columnaColor}        INTEGER,
-           ${RutinaDbModel.columnaRutaImagen}    TEXT,
-           ${RutinaDbModel.columnaFechaCreacion}    DATETIME DEFAULT CURRENT_TIMESTAMP,
-           ${RutinaDbModel.columnaFechaActualizacion}    DATETIME,
-          FOREIGN KEY (${RutinaDbModel.columnaUsuarioId})   REFERENCES user  (id)  ON DELETE CASCADE
+        CREATE TABLE ${RutinaDb.tabla} (
+           ${RutinaDb.columnaId}           TEXT PRIMARY KEY,
+           ${RutinaDb.columnaUsuarioId}       TEXT NOT NULL,
+           ${RutinaDb.columnaNombre}         TEXT NOT NULL,
+           ${RutinaDb.columnaDescripcion}  TEXT,
+           ${RutinaDb.columnaColor}        INTEGER,
+           ${RutinaDb.columnaRutaImagen}    TEXT,
+           ${RutinaDb.columnaFechaCreacion}    DATETIME DEFAULT CURRENT_TIMESTAMP,
+           ${RutinaDb.columnaFechaActualizacion}    DATETIME,
+          FOREIGN KEY (${RutinaDb.columnaUsuarioId})   REFERENCES user  (id)  ON DELETE CASCADE
         )
       ''');
 
     await db.execute('''
-        CREATE TABLE  ${RutinaSesionDbModel.tabla} (
-          ${RutinaSesionDbModel.columnaId}          TEXT PRIMARY KEY,
-          ${RutinaSesionDbModel.columnaRutinaId}   TEXT NOT NULL,
-          ${RutinaSesionDbModel.columnaHoraInicio}   DATETIME,
-          ${RutinaSesionDbModel.columnaHoraFin}     DATETIME,
-          ${RutinaSesionDbModel.columnaEstado}      TEXT CHECK(${RutinaSesionDbModel.columnaEstado}  IN ('pendiente','en_progreso','completado','cancelado')),
-          ${RutinaSesionDbModel.columnaFechaCreacion}   DATETIME DEFAULT CURRENT_TIMESTAMP,
-          FOREIGN KEY (${RutinaSesionDbModel.columnaRutinaId})   REFERENCES ${RutinaDbModel.tabla}   (id)  ON DELETE CASCADE
+        CREATE TABLE  ${RutinaSesionDb.tabla} (
+          ${RutinaSesionDb.columnaId}          TEXT PRIMARY KEY,
+          ${RutinaSesionDb.columnaRutinaId}   TEXT NOT NULL,
+          ${RutinaSesionDb.columnaHoraInicio}   DATETIME,
+          ${RutinaSesionDb.columnaHoraFin}     DATETIME,
+          ${RutinaSesionDb.columnaEstado}      TEXT CHECK(${RutinaSesionDb.columnaEstado}  IN ('pendiente','en_progreso','completado','cancelado')),
+          ${RutinaSesionDb.columnaFechaCreacion}   DATETIME DEFAULT CURRENT_TIMESTAMP,
+          FOREIGN KEY (${RutinaSesionDb.columnaRutinaId})   REFERENCES ${RutinaDb.tabla}   (id)  ON DELETE CASCADE
         )
       ''');
 
     await db.execute('''
-        CREATE TABLE ${EjercicioDbModel.tabla} (
-          ${EjercicioDbModel.columnId}           TEXT PRIMARY KEY,
-          ${EjercicioDbModel.columnaNombre}         TEXT NOT NULL,
-          ${EjercicioDbModel.columnaDescripcion}  TEXT,
-          ${EjercicioDbModel.columnaRutaImagen}    TEXT,
-          ${EjercicioDbModel.columnaFechaCreacion}    DATETIME DEFAULT CURRENT_TIMESTAMP,
-          ${EjercicioDbModel.columnaFechaActualizacion}    DATETIME
+        CREATE TABLE ${EjercicioDb.tabla} (
+          ${EjercicioDb.columnId}           TEXT PRIMARY KEY,
+          ${EjercicioDb.columnaNombre}         TEXT NOT NULL,
+          ${EjercicioDb.columnaDescripcion}  TEXT,
+          ${EjercicioDb.columnaRutaImagen}    TEXT,
+          ${EjercicioDb.columnaFechaCreacion}    DATETIME DEFAULT CURRENT_TIMESTAMP,
+          ${EjercicioDb.columnaFechaActualizacion}    DATETIME
         )
       ''');
 
     await db.execute('''
-        CREATE TABLE ${MusculoDbModel.tabla} (
-          ${MusculoDbModel.columnaId}          TEXT PRIMARY KEY,
-          ${MusculoDbModel.columnaNombre}        TEXT NOT NULL,
-          ${MusculoDbModel.columnaRutaImagen}   TEXT,
-          ${MusculoDbModel.columnaFechaCreacion}   DATETIME DEFAULT CURRENT_TIMESTAMP
+        CREATE TABLE ${MusculoDb.tabla} (
+          ${MusculoDb.columnaId}          TEXT PRIMARY KEY,
+          ${MusculoDb.columnaNombre}        TEXT NOT NULL,
+          ${MusculoDb.columnaRutaImagen}   TEXT,
+          ${MusculoDb.columnaFechaCreacion}   DATETIME DEFAULT CURRENT_TIMESTAMP
         )
       ''');
 
@@ -122,44 +122,44 @@ class DatabaseHelper {
           ${EjercicioMusculoDbModel.columnaEjercicioId}  TEXT NOT NULL,
           ${EjercicioMusculoDbModel.columnaMusculoId}    TEXT NOT NULL,
           PRIMARY KEY (${EjercicioMusculoDbModel.columnaEjercicioId}, ${EjercicioMusculoDbModel.columnaMusculoId}),
-          FOREIGN KEY (${EjercicioMusculoDbModel.columnaEjercicioId})  REFERENCES ${EjercicioDbModel.tabla}  (id)  ON DELETE CASCADE,
-          FOREIGN KEY (${EjercicioMusculoDbModel.columnaMusculoId})    REFERENCES ${MusculoDbModel.tabla} (id)  ON DELETE CASCADE
+          FOREIGN KEY (${EjercicioMusculoDbModel.columnaEjercicioId})  REFERENCES ${EjercicioDb.tabla}  (id)  ON DELETE CASCADE,
+          FOREIGN KEY (${EjercicioMusculoDbModel.columnaMusculoId})    REFERENCES ${MusculoDb.tabla} (id)  ON DELETE CASCADE
         )
       ''');
 
     await db.execute('''
-        CREATE TABLE ${SessionEjercicioDbModel.tabla} (
-          ${SessionEjercicioDbModel.columnId}         TEXT PRIMARY KEY,
-          ${SessionEjercicioDbModel.columnSessionId}  TEXT NOT NULL,
-          ${SessionEjercicioDbModel.columnExerciseId} TEXT NOT NULL,
-          ${SessionEjercicioDbModel.columnOrderIndex} INTEGER DEFAULT 0,
-          ${SessionEjercicioDbModel.columnStatus}     TEXT CHECK(${SessionEjercicioDbModel.columnStatus} IN ('pendiente','en_progreso','completado','cancelado')),
-          FOREIGN KEY (${SessionEjercicioDbModel.columnSessionId})    REFERENCES ${RutinaSesionDbModel.tabla}  (id)   ON DELETE CASCADE,
-          FOREIGN KEY (${SessionEjercicioDbModel.columnExerciseId})   REFERENCES ${EjercicioDbModel.tabla}     (id)   ON DELETE CASCADE
+        CREATE TABLE ${SessionEjercicioDb.tabla} (
+          ${SessionEjercicioDb.columnId}         TEXT PRIMARY KEY,
+          ${SessionEjercicioDb.columnSessionId}  TEXT NOT NULL,
+          ${SessionEjercicioDb.columnExerciseId} TEXT NOT NULL,
+          ${SessionEjercicioDb.columnOrderIndex} INTEGER DEFAULT 0,
+          ${SessionEjercicioDb.columnStatus}     TEXT CHECK(${SessionEjercicioDb.columnStatus} IN ('pendiente','en_progreso','completado','cancelado')),
+          FOREIGN KEY (${SessionEjercicioDb.columnSessionId})    REFERENCES ${RutinaSesionDb.tabla}  (id)   ON DELETE CASCADE,
+          FOREIGN KEY (${SessionEjercicioDb.columnExerciseId})   REFERENCES ${EjercicioDb.tabla}     (id)   ON DELETE CASCADE
         )
       ''');
 
     await db.execute('''
-        CREATE TABLE ${SerieEjercicioDbModel.tabla}  (
-          ${SerieEjercicioDbModel.columnaId}                 TEXT PRIMARY KEY,
-          ${SerieEjercicioDbModel.columnaEjercicioSesionId}  TEXT NOT NULL,
-          ${SerieEjercicioDbModel.columnaPeso}             REAL,
-          ${SerieEjercicioDbModel.columnaRepeticiones}        INTEGER,
-          ${SerieEjercicioDbModel.columnaTiempoDescanso}           INTEGER,
-          ${SerieEjercicioDbModel.columnaEstado}             TEXT CHECK(${SerieEjercicioDbModel.columnaEstado} IN ('pendiente','completado','fallida')),
-          FOREIGN KEY (${SerieEjercicioDbModel.columnaEjercicioSesionId}) REFERENCES ${SessionEjercicioDbModel.tabla} (id) ON DELETE CASCADE
+        CREATE TABLE ${SerieEjercicioDb.tabla}  (
+          ${SerieEjercicioDb.columnaId}                 TEXT PRIMARY KEY,
+          ${SerieEjercicioDb.columnaEjercicioSesionId}  TEXT NOT NULL,
+          ${SerieEjercicioDb.columnaPeso}             REAL,
+          ${SerieEjercicioDb.columnaRepeticiones}        INTEGER,
+          ${SerieEjercicioDb.columnaTiempoDescanso}           INTEGER,
+          ${SerieEjercicioDb.columnaEstado}             TEXT CHECK(${SerieEjercicioDb.columnaEstado} IN ('pendiente','completado','fallida')),
+          FOREIGN KEY (${SerieEjercicioDb.columnaEjercicioSesionId}) REFERENCES ${SessionEjercicioDb.tabla} (id) ON DELETE CASCADE
         )
       ''');
 
     await db.execute('''
-        CREATE TABLE ${AuditLogDbModel.table}  (
-          ${AuditLogDbModel.columnId}          TEXT PRIMARY KEY,
-          ${AuditLogDbModel.columnUserId}      TEXT NOT NULL,
-          ${AuditLogDbModel.columnTableName}   TEXT NOT NULL,
-          ${AuditLogDbModel.columnRecordId}    TEXT NOT NULL,
-          ${AuditLogDbModel.columnAction}      TEXT CHECK(action IN ('INSERT','UPDATE','DELETE')),
-          ${AuditLogDbModel.columnTimestamp}   DATETIME DEFAULT CURRENT_TIMESTAMP,
-          FOREIGN KEY (${AuditLogDbModel.columnUserId}) REFERENCES ${UsuarioDbModel.tabla} (id) ON DELETE CASCADE
+        CREATE TABLE ${AuditLogDb.table}  (
+          ${AuditLogDb.columnId}          TEXT PRIMARY KEY,
+          ${AuditLogDb.columnUserId}      TEXT NOT NULL,
+          ${AuditLogDb.columnTableName}   TEXT NOT NULL,
+          ${AuditLogDb.columnRecordId}    TEXT NOT NULL,
+          ${AuditLogDb.columnAction}      TEXT CHECK(action IN ('INSERT','UPDATE','DELETE')),
+          ${AuditLogDb.columnTimestamp}   DATETIME DEFAULT CURRENT_TIMESTAMP,
+          FOREIGN KEY (${AuditLogDb.columnUserId}) REFERENCES ${UsuarioDb.tabla} (id) ON DELETE CASCADE
         )
       ''');
 
@@ -184,35 +184,35 @@ class DatabaseHelper {
     await db.execute('''
         CREATE TABLE user_motivation (
           id            TEXT PRIMARY KEY,
-          ${RutinaDbModel.columnaUsuarioId}       TEXT NOT NULL,
+          ${RutinaDb.columnaUsuarioId}       TEXT NOT NULL,
           motivations   TEXT NOT NULL,
           challenges    TEXT NOT NULL,
           postWorkoutFeelings TEXT NOT NULL,
           notificationPreferences TEXT NOT NULL,
           createdAt     DATETIME DEFAULT CURRENT_TIMESTAMP,
           updatedAt     DATETIME,
-          FOREIGN KEY (${RutinaDbModel.columnaUsuarioId}) REFERENCES ${RutinaDbModel.tabla} (id) ON DELETE CASCADE
+          FOREIGN KEY (${RutinaDb.columnaUsuarioId}) REFERENCES ${RutinaDb.tabla} (id) ON DELETE CASCADE
         )
       ''');
 
     await db.execute('''
         CREATE TABLE user_mood (
           id            TEXT PRIMARY KEY,
-          ${RutinaDbModel.columnaUsuarioId}       TEXT NOT NULL,
+          ${RutinaDb.columnaUsuarioId}       TEXT NOT NULL,
           mood_type     TEXT NOT NULL,
           recorded_at   DATETIME DEFAULT CURRENT_TIMESTAMP,
-          FOREIGN KEY (${RutinaDbModel.columnaUsuarioId}) REFERENCES ${RutinaDbModel.tabla} (id) ON DELETE CASCADE
+          FOREIGN KEY (${RutinaDb.columnaUsuarioId}) REFERENCES ${RutinaDb.tabla} (id) ON DELETE CASCADE
         )
       ''');
 
     await db.execute('''
         CREATE TABLE user_onboarding (
           id TEXT PRIMARY KEY,
-          ${RutinaDbModel.columnaUsuarioId}      TEXT NOT NULL,
+          ${RutinaDb.columnaUsuarioId}      TEXT NOT NULL,
           completed   INTEGER DEFAULT 0,
           completedAt DATETIME,
           createdAt   DATETIME DEFAULT CURRENT_TIMESTAMP,
-          FOREIGN KEY (${RutinaDbModel.columnaUsuarioId}) REFERENCES ${RutinaDbModel.tabla} (id) ON DELETE CASCADE
+          FOREIGN KEY (${RutinaDb.columnaUsuarioId}) REFERENCES ${RutinaDb.tabla} (id) ON DELETE CASCADE
         )
       ''');
 
@@ -227,11 +227,11 @@ class DatabaseHelper {
       await db.execute('''
         CREATE TABLE user_onboarding (
           id          TEXT PRIMARY KEY,
-          ${RutinaDbModel.columnaUsuarioId}      TEXT NOT NULL,
+          ${RutinaDb.columnaUsuarioId}      TEXT NOT NULL,
           completed   INTEGER DEFAULT 0,
           completedAt DATETIME,
           createdAt   DATETIME DEFAULT CURRENT_TIMESTAMP,
-          FOREIGN KEY (${RutinaDbModel.columnaUsuarioId}) REFERENCES ${RutinaDbModel.tabla} (id) ON DELETE CASCADE
+          FOREIGN KEY (${RutinaDb.columnaUsuarioId}) REFERENCES ${RutinaDb.tabla} (id) ON DELETE CASCADE
         )
       ''');
       debugPrint('🔄 Migración completada: Tabla user_onboarding agregada');
@@ -252,14 +252,14 @@ class DatabaseHelper {
       await db.execute('''
         CREATE TABLE user_motivation (
           id          TEXT PRIMARY KEY,
-          ${RutinaDbModel.columnaUsuarioId}      TEXT NOT NULL,
+          ${RutinaDb.columnaUsuarioId}      TEXT NOT NULL,
           motivations TEXT NOT NULL,
           challenges  TEXT NOT NULL,
           postWorkoutFeelings TEXT NOT NULL,
           notificationPreferences TEXT NOT NULL,
           createdAt   DATETIME DEFAULT CURRENT_TIMESTAMP,
           updatedAt   DATETIME,
-          FOREIGN KEY (${RutinaDbModel.columnaUsuarioId}) REFERENCES ${RutinaDbModel.tabla} (id) ON DELETE CASCADE
+          FOREIGN KEY (${RutinaDb.columnaUsuarioId}) REFERENCES ${RutinaDb.tabla} (id) ON DELETE CASCADE
         )
       ''');
 

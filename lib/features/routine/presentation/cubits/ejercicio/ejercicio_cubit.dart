@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:gymaster/core/database/models/routine_session_db_model.dart';
+import 'package:gymaster/core/database/models/rutina_sesion_db.dart';
 import 'package:gymaster/core/error/timeout_helper.dart';
 import 'package:gymaster/features/routine/domain/entities/ejercicios_por_musculo.dart';
 import 'package:gymaster/features/routine/domain/usecases/get_all_ejercicios_by_musculo_usecase.dart';
@@ -33,7 +33,7 @@ class EjercicioCubit extends Cubit<EjercicioState> {
     ejercicios.fold((failure) => emit(EjercicioError(failure.errorMessage)), (
       ejercicios,
     ) async {
-      RutinaSesionDbModel? session;
+      RutinaSesionDb? session;
 
       //obtenermos la ultima session de la rutina
       final resultSession = await runWithTimeout(

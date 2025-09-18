@@ -1,5 +1,4 @@
-import 'package:gymaster/core/database/models/exercise_db_model.dart'
-    as exercise_db;
+import 'package:gymaster/core/database/models/ejercicio_db.dart' as exercise_db;
 import 'package:gymaster/features/exercise/domain/entities/exercise.dart';
 
 class ExerciseModel extends Exercise {
@@ -16,7 +15,7 @@ class ExerciseModel extends Exercise {
   });
 
   factory ExerciseModel.fromDatabase(
-    exercise_db.EjercicioDbModel exerciseDB,
+    exercise_db.EjercicioDb exerciseDB,
     List<String> muscles,
   ) {
     return ExerciseModel(

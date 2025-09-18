@@ -1,58 +1,68 @@
 import 'dart:convert';
 
-EjercicioDbModel exerciseFromJson(String str) =>
-    EjercicioDbModel.fromJson(json.decode(str));
+RutinaDb routineFromJson(String str) => RutinaDb.fromJson(json.decode(str));
 
-String exerciseToJson(EjercicioDbModel data) => json.encode(data.toJson());
+String routineToJson(RutinaDb data) => json.encode(data.toJson());
 
-class EjercicioDbModel {
+class RutinaDb {
   // Nombres de las columnas de la tabla
-  static const String tabla = 'ejercicio';
-  static const String columnId = 'id';
+  static const String tabla = 'rutina';
+  static const String columnaId = 'id';
+  static const String columnaUsuarioId = 'usuario_id';
   static const String columnaNombre = 'nombre';
   static const String columnaDescripcion = 'descripcion';
+  static const String columnaColor = 'color';
   static const String columnaRutaImagen = 'ruta_imagen';
   static const String columnaFechaCreacion = 'fecha_creacion';
   static const String columnaFechaActualizacion = 'fecha_actualizacion';
 
   final String id;
+  final String usuarioId;
   final String nombre;
   final String? descripcion;
+  final int? color;
   final String? rutaImagen;
   final String fechaCreacion;
   final String? fechaActualizacion;
 
-  EjercicioDbModel({
+  RutinaDb({
     required this.id,
+    required this.usuarioId,
     required this.nombre,
     this.descripcion,
+    this.color,
     this.rutaImagen,
     required this.fechaCreacion,
     this.fechaActualizacion,
   });
 
-  EjercicioDbModel copyWith({
+  RutinaDb copyWith({
     String? id,
-    String? nombre,
-    String? descripcion,
-    String? rutaImagen,
-    String? fechaCreacion,
-    String? fechaActualizacion,
+    String? userId,
+    String? name,
+    String? description,
+    int? color,
+    String? imagePath,
+    String? createdAt,
+    String? updatedAt,
   }) =>
-      EjercicioDbModel(
+      RutinaDb(
         id: id ?? this.id,
-        nombre: nombre ?? this.nombre,
-        descripcion: descripcion ?? this.descripcion,
-        rutaImagen: rutaImagen ?? this.rutaImagen,
-        fechaCreacion: fechaCreacion ?? this.fechaCreacion,
-        fechaActualizacion: fechaActualizacion ?? this.fechaActualizacion,
+        usuarioId: userId ?? usuarioId,
+        nombre: name ?? nombre,
+        descripcion: description ?? descripcion,
+        color: color ?? this.color,
+        rutaImagen: imagePath ?? rutaImagen,
+        fechaCreacion: createdAt ?? fechaCreacion,
+        fechaActualizacion: updatedAt ?? fechaActualizacion,
       );
 
-  factory EjercicioDbModel.fromJson(Map<String, dynamic> json) =>
-      EjercicioDbModel(
+  factory RutinaDb.fromJson(Map<String, dynamic> json) => RutinaDb(
         id: json["id"],
+        usuarioId: json["usuario_id"],
         nombre: json["nombre"],
         descripcion: json["descripcion"],
+        color: json["color"],
         rutaImagen: json["ruta_imagen"],
         fechaCreacion: json["fecha_creacion"],
         fechaActualizacion: json["fecha_actualizacion"],
@@ -60,8 +70,10 @@ class EjercicioDbModel {
 
   Map<String, dynamic> toJson() => {
         "id": id,
+        "usuario_id": usuarioId,
         "nombre": nombre,
         "descripcion": descripcion,
+        "color": color,
         "ruta_imagen": rutaImagen,
         "fecha_creacion": fechaCreacion,
         "fecha_actualizacion": fechaActualizacion,

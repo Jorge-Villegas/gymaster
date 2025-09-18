@@ -1,12 +1,11 @@
 import 'dart:convert';
 
-RutinaSesionDbModel routineSessionFromJson(String str) =>
-    RutinaSesionDbModel.fromJson(json.decode(str));
+RutinaSesionDb routineSessionFromJson(String str) =>
+    RutinaSesionDb.fromJson(json.decode(str));
 
-String routineSessionToJson(RutinaSesionDbModel data) =>
-    json.encode(data.toJson());
+String routineSessionToJson(RutinaSesionDb data) => json.encode(data.toJson());
 
-class RutinaSesionDbModel {
+class RutinaSesionDb {
   // Nombres de las columnas de la tabla
   static const String tabla = 'routine_session';
   static const String columnaId = 'id';
@@ -23,7 +22,7 @@ class RutinaSesionDbModel {
   final String estado;
   final String fechaCreacion;
 
-  RutinaSesionDbModel({
+  RutinaSesionDb({
     required this.id,
     required this.rutinaId,
     this.horaInicio,
@@ -48,7 +47,7 @@ class RutinaSesionDbModel {
     }
   }
 
-  RutinaSesionDbModel copyWith({
+  RutinaSesionDb copyWith({
     String? id,
     String? rutinaId,
     String? horaInicio,
@@ -56,7 +55,7 @@ class RutinaSesionDbModel {
     String? estado,
     String? fechaCreacion,
   }) =>
-      RutinaSesionDbModel(
+      RutinaSesionDb(
         id: id ?? this.id,
         rutinaId: rutinaId ?? this.rutinaId,
         horaInicio: horaInicio ?? this.horaInicio,
@@ -65,8 +64,7 @@ class RutinaSesionDbModel {
         fechaCreacion: fechaCreacion ?? this.fechaCreacion,
       );
 
-  factory RutinaSesionDbModel.fromJson(Map<String, dynamic> json) =>
-      RutinaSesionDbModel(
+  factory RutinaSesionDb.fromJson(Map<String, dynamic> json) => RutinaSesionDb(
         id: json["id"],
         rutinaId: json["rutina_id"],
         horaInicio: json["hora_inicio"],

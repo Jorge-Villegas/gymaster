@@ -9,10 +9,10 @@ class RoutineDataSeeder {
 
   RoutineDataSeeder({required this.idGenerator});
 
-  Future<List<RutinaDbModel>> generateFakeRutinas() async {
+  Future<List<RutinaDb>> generateFakeRutinas() async {
     final db = await DatabaseHelper.instance.database;
     var faker = Faker();
-    List<RutinaDbModel> rutinas = [];
+    List<RutinaDb> rutinas = [];
     List<String> imagenDireccion = [
       Assets.icons.otros.biceps.path,
       Assets.icons.otros.bicicletaDeSpinning.path,
@@ -216,8 +216,8 @@ class RoutineDataSeeder {
       // );
 
       await db.insert(
-        RutinaDbModel.tabla,
-        RutinaDbModel(
+        RutinaDb.tabla,
+        RutinaDb(
           id: idGenerator.generateId(),
           nombre: nombresRutinas[i],
           descripcion: faker.lorem.sentence(),

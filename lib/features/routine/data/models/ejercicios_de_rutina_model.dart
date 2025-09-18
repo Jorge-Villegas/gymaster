@@ -48,7 +48,7 @@ class EjerciciosDeRutinaModel extends EjerciciosDeRutina {
   }
 
   factory EjerciciosDeRutinaModel.fromDatabase({
-    required RutinaDbModel rutinaDB,
+    required RutinaDb rutinaDB,
     required String status,
     required List<EjercicioModel> ejercicios,
     required String session,
@@ -84,7 +84,7 @@ class EjercicioModel extends Ejercicio {
   });
 
   factory EjercicioModel.fromDatabase({
-    required EjercicioDbModel ejercicioDB,
+    required EjercicioDb ejercicioDB,
     required String status,
     required int orderIndex,
     List<SeriesDelEjercicioModel>? series,
@@ -157,7 +157,7 @@ class SeriesDelEjercicioModel extends Serie {
         'realizado': estado,
       };
 
-  factory SeriesDelEjercicioModel.fromDatabase(SerieEjercicioDbModel serieDB) {
+  factory SeriesDelEjercicioModel.fromDatabase(SerieEjercicioDb serieDB) {
     return SeriesDelEjercicioModel(
       id: serieDB.id,
       peso: serieDB.peso ?? 0,
@@ -175,7 +175,7 @@ class MusculoModel extends Musculo {
     required super.imagenDireccion,
   });
 
-  factory MusculoModel.fromDatabase(MusculoDbModel musculoDB) {
+  factory MusculoModel.fromDatabase(MusculoDb musculoDB) {
     return MusculoModel(
       id: musculoDB.id,
       nombre: musculoDB.nombre,

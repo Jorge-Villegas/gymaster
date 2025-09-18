@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-AuditLogDbModel auditLogFromJson(String str) =>
-    AuditLogDbModel.fromJson(json.decode(str));
+AuditLogDb auditLogFromJson(String str) =>
+    AuditLogDb.fromJson(json.decode(str));
 
-String auditLogToJson(AuditLogDbModel data) => json.encode(data.toJson());
+String auditLogToJson(AuditLogDb data) => json.encode(data.toJson());
 
-class AuditLogDbModel {
+class AuditLogDb {
   // Nombres de las columnas de la tabla
   static const String table = 'audit_log';
   static const String columnId = 'id';
@@ -22,7 +22,7 @@ class AuditLogDbModel {
   final String action;
   final String timestamp;
 
-  AuditLogDbModel({
+  AuditLogDb({
     this.id,
     required this.userId,
     required this.tableName,
@@ -31,7 +31,7 @@ class AuditLogDbModel {
     required this.timestamp,
   });
 
-  AuditLogDbModel copyWith({
+  AuditLogDb copyWith({
     String? id,
     String? userId,
     String? tableName,
@@ -39,7 +39,7 @@ class AuditLogDbModel {
     String? action,
     String? timestamp,
   }) =>
-      AuditLogDbModel(
+      AuditLogDb(
         id: id ?? this.id,
         userId: userId ?? this.userId,
         tableName: tableName ?? this.tableName,
@@ -48,8 +48,7 @@ class AuditLogDbModel {
         timestamp: timestamp ?? this.timestamp,
       );
 
-  factory AuditLogDbModel.fromJson(Map<String, dynamic> json) =>
-      AuditLogDbModel(
+  factory AuditLogDb.fromJson(Map<String, dynamic> json) => AuditLogDb(
         id: json["id"],
         userId: json["user_id"],
         tableName: json["table_name"],
