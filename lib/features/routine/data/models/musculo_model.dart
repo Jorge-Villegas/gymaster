@@ -28,11 +28,11 @@ class MusculoModel extends Musculo {
     );
   }
 
-  factory MusculoModel.fromEntity(MuscleDbModel musculo) {
+  factory MusculoModel.fromEntity(MusculoDbModel musculo) {
     return MusculoModel(
       id: musculo.id,
-      nombre: musculo.name,
-      imagenDirecion: musculo.imagePath ?? '',
+      nombre: musculo.nombre,
+      imagenDirecion: musculo.rutaImagen ?? '',
     );
   }
 }

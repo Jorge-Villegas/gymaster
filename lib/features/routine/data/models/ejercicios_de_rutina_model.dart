@@ -175,11 +175,11 @@ class MusculoModel extends Musculo {
     required super.imagenDireccion,
   });
 
-  factory MusculoModel.fromDatabase(MuscleDbModel musculoDB) {
+  factory MusculoModel.fromDatabase(MusculoDbModel musculoDB) {
     return MusculoModel(
       id: musculoDB.id,
-      nombre: musculoDB.name,
-      imagenDireccion: musculoDB.imagePath ?? '',
+      nombre: musculoDB.nombre,
+      imagenDireccion: musculoDB.rutaImagen ?? '',
     );
   }
 

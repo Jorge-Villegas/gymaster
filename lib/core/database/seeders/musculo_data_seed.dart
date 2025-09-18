@@ -14,100 +14,100 @@ class MusculosDataSeed {
 
   Future<void> seedGenerateMusulos() async {
     try {
-      List<MuscleDbModel> musculos = [
-        MuscleDbModel(
+      List<MusculoDbModel> musculos = [
+        MusculoDbModel(
           id: idGenerator.generateId(),
-          name: 'trapecio',
-          imagePath: Assets.imagenes.musculos.general.trapecio.path,
-          createdAt: DateTime.now().toIso8601String(),
+          nombre: 'trapecio',
+          rutaImagen: Assets.imagenes.musculos.general.trapecio.path,
+          fechaCreacion: DateTime.now().toIso8601String(),
         ),
-        MuscleDbModel(
+        MusculoDbModel(
           id: idGenerator.generateId(),
-          name: 'hombro',
-          imagePath: Assets.imagenes.musculos.general.hombro.path,
-          createdAt: DateTime.now().toIso8601String(),
+          nombre: 'hombro',
+          rutaImagen: Assets.imagenes.musculos.general.hombro.path,
+          fechaCreacion: DateTime.now().toIso8601String(),
         ),
-        MuscleDbModel(
+        MusculoDbModel(
           id: idGenerator.generateId(),
-          name: 'pecho',
-          imagePath: Assets.imagenes.musculos.general.pectoral.path,
-          createdAt: DateTime.now().toIso8601String(),
+          nombre: 'pecho',
+          rutaImagen: Assets.imagenes.musculos.general.pectoral.path,
+          fechaCreacion: DateTime.now().toIso8601String(),
         ),
-        MuscleDbModel(
+        MusculoDbModel(
           id: idGenerator.generateId(),
-          name: 'triceps',
-          imagePath: Assets.imagenes.musculos.general.triceps.path,
-          createdAt: DateTime.now().toIso8601String(),
+          nombre: 'triceps',
+          rutaImagen: Assets.imagenes.musculos.general.triceps.path,
+          fechaCreacion: DateTime.now().toIso8601String(),
         ),
-        MuscleDbModel(
+        MusculoDbModel(
           id: idGenerator.generateId(),
-          name: 'biceps',
-          imagePath: Assets.imagenes.musculos.general.biceps.path,
-          createdAt: DateTime.now().toIso8601String(),
+          nombre: 'biceps',
+          rutaImagen: Assets.imagenes.musculos.general.biceps.path,
+          fechaCreacion: DateTime.now().toIso8601String(),
         ),
-        MuscleDbModel(
+        MusculoDbModel(
           id: idGenerator.generateId(),
-          name: 'antebrazo',
-          imagePath: Assets.imagenes.musculos.general.antebrazo.path,
-          createdAt: DateTime.now().toIso8601String(),
+          nombre: 'antebrazo',
+          rutaImagen: Assets.imagenes.musculos.general.antebrazo.path,
+          fechaCreacion: DateTime.now().toIso8601String(),
         ),
-        MuscleDbModel(
+        MusculoDbModel(
           id: idGenerator.generateId(),
-          name: 'abdomen',
-          imagePath: Assets.imagenes.musculos.general.abdomen.path,
-          createdAt: DateTime.now().toIso8601String(),
+          nombre: 'abdomen',
+          rutaImagen: Assets.imagenes.musculos.general.abdomen.path,
+          fechaCreacion: DateTime.now().toIso8601String(),
         ),
-        MuscleDbModel(
+        MusculoDbModel(
           id: idGenerator.generateId(),
-          name: 'espalda',
-          imagePath: Assets.imagenes.musculos.general.espalda.path,
-          createdAt: DateTime.now().toIso8601String(),
+          nombre: 'espalda',
+          rutaImagen: Assets.imagenes.musculos.general.espalda.path,
+          fechaCreacion: DateTime.now().toIso8601String(),
         ),
-        MuscleDbModel(
+        MusculoDbModel(
           id: idGenerator.generateId(),
-          name: 'espalda baja',
-          imagePath: Assets.imagenes.musculos.general.espaldaBaja.path,
-          createdAt: DateTime.now().toIso8601String(),
+          nombre: 'espalda baja',
+          rutaImagen: Assets.imagenes.musculos.general.espaldaBaja.path,
+          fechaCreacion: DateTime.now().toIso8601String(),
         ),
-        MuscleDbModel(
+        MusculoDbModel(
           id: idGenerator.generateId(),
-          name: 'gluteo',
-          imagePath: Assets.imagenes.musculos.general.gluteos.path,
-          createdAt: DateTime.now().toIso8601String(),
+          nombre: 'gluteo',
+          rutaImagen: Assets.imagenes.musculos.general.gluteos.path,
+          fechaCreacion: DateTime.now().toIso8601String(),
         ),
-        MuscleDbModel(
+        MusculoDbModel(
           id: idGenerator.generateId(),
-          name: 'cuadriceps',
-          imagePath: Assets.imagenes.musculos.general.cuadriceps.path,
-          createdAt: DateTime.now().toIso8601String(),
+          nombre: 'cuadriceps',
+          rutaImagen: Assets.imagenes.musculos.general.cuadriceps.path,
+          fechaCreacion: DateTime.now().toIso8601String(),
         ),
-        MuscleDbModel(
+        MusculoDbModel(
           id: idGenerator.generateId(),
-          name: 'femorales',
-          imagePath: Assets.imagenes.musculos.general.femorales.path,
-          createdAt: DateTime.now().toIso8601String(),
+          nombre: 'femorales',
+          rutaImagen: Assets.imagenes.musculos.general.femorales.path,
+          fechaCreacion: DateTime.now().toIso8601String(),
         ),
-        MuscleDbModel(
+        MusculoDbModel(
           id: idGenerator.generateId(),
-          name: 'pantorrilla',
-          imagePath: Assets.imagenes.musculos.general.pantorrilla.path,
-          createdAt: DateTime.now().toIso8601String(),
+          nombre: 'pantorrilla',
+          rutaImagen: Assets.imagenes.musculos.general.pantorrilla.path,
+          fechaCreacion: DateTime.now().toIso8601String(),
         ),
       ];
 
       final database = await _databaseHelper.database;
       for (final musculo in musculos) {
         final existingMuscles = await database.query(
-          MuscleDbModel.table,
+          MusculoDbModel.tabla,
           where: 'name = ?',
-          whereArgs: [musculo.name],
+          whereArgs: [musculo.nombre],
         );
 
         if (existingMuscles.isEmpty) {
-          await database.insert(MuscleDbModel.table, musculo.toJson());
-          debugPrint('musculo guardado: ${musculo.name}');
+          await database.insert(MusculoDbModel.tabla, musculo.toJson());
+          debugPrint('musculo guardado: ${musculo.nombre}');
         } else {
-          debugPrint('musculo ya existe: ${musculo.name}');
+          debugPrint('musculo ya existe: ${musculo.nombre}');
         }
       }
     } catch (e) {

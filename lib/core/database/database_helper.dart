@@ -108,11 +108,11 @@ class DatabaseHelper {
       ''');
 
     await db.execute('''
-        CREATE TABLE ${MuscleDbModel.table} (
-          ${MuscleDbModel.columnId}          TEXT PRIMARY KEY,
-          ${MuscleDbModel.columnName}        TEXT NOT NULL,
-          ${MuscleDbModel.columnImagePath}   TEXT,
-          ${MuscleDbModel.columnCreatedAt}   DATETIME DEFAULT CURRENT_TIMESTAMP
+        CREATE TABLE ${MusculoDbModel.tabla} (
+          ${MusculoDbModel.columnaId}          TEXT PRIMARY KEY,
+          ${MusculoDbModel.columnaNombre}        TEXT NOT NULL,
+          ${MusculoDbModel.columnaRutaImagen}   TEXT,
+          ${MusculoDbModel.columnaFechaCreacion}   DATETIME DEFAULT CURRENT_TIMESTAMP
         )
       ''');
 

@@ -42,12 +42,12 @@ class RoutineLocalDataSource {
     }
   }
 
-  Future<List<MuscleDbModel>> getAllMusculos() async {
+  Future<List<MusculoDbModel>> getAllMusculos() async {
     try {
       final db = await databaseHelper.database;
-      final musculos = await db.query(MuscleDbModel.table);
+      final musculos = await db.query(MusculoDbModel.tabla);
       return List.generate(musculos.length, (i) {
-        return MuscleDbModel.fromJson(musculos[i]);
+        return MusculoDbModel.fromJson(musculos[i]);
       });
     } catch (e) {
       throw ServerException();
@@ -174,7 +174,7 @@ class RoutineLocalDataSource {
     }
   }
 
-  Future<List<MuscleDbModel>> getMusculosByEjercicioId(
+  Future<List<MusculoDbModel>> getMusculosByEjercicioId(
       String exerciseId) async {
     try {
       final db = await databaseHelper.database;
@@ -187,7 +187,7 @@ class RoutineLocalDataSource {
         ''',
         [exerciseId],
       );
-      return maps.map((map) => MuscleDbModel.fromJson(map)).toList();
+      return maps.map((map) => MusculoDbModel.fromJson(map)).toList();
     } catch (e) {
       throw ServerException();
     }

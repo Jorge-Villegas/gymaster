@@ -22,7 +22,7 @@ class ExerciseLocalDataSource {
         exerciseModels.add(
           ExerciseModel.fromDatabase(
             exerciseDB,
-            muscles.map((m) => m.name).toList(),
+            muscles.map((m) => m.nombre).toList(),
           ),
         );
       }
@@ -33,12 +33,12 @@ class ExerciseLocalDataSource {
     }
   }
 
-  Future<List<MuscleDbModel>> getMusclesForExercise(String exerciseId) async {
+  Future<List<MusculoDbModel>> getMusclesForExercise(String exerciseId) async {
     try {
       final db = await databaseHelper.database;
       final results = await db.rawQuery(
         '''
-        SELECT m.* FROM ${MuscleDbModel.table} m
+        SELECT m.* FROM ${MusculoDbModel.tabla} m
         INNER JOIN ${ExerciseMuscleDbModel.table} em
         ON m.id = em.muscle_id
         WHERE em.exercise_id = ?
@@ -46,7 +46,7 @@ class ExerciseLocalDataSource {
         [exerciseId],
       );
 
-      return results.map((e) => MuscleDbModel.fromJson(e)).toList();
+      return results.map((e) => MusculoDbModel.fromJson(e)).toList();
     } catch (e) {
       throw ServerException();
     }
@@ -75,7 +75,7 @@ class ExerciseLocalDataSource {
         exerciseModels.add(
           ExerciseModel.fromDatabase(
             exerciseDB,
-            muscles.map((m) => m.name).toList(),
+            muscles.map((m) => m.nombre).toList(),
           ),
         );
       }
@@ -102,7 +102,7 @@ class ExerciseLocalDataSource {
 
       return ExerciseModel.fromDatabase(
         exerciseDB,
-        muscles.map((m) => m.name).toList(), // Cambiado de id a name
+        muscles.map((m) => m.nombre).toList(), // Cambiado de id a name
       );
     } catch (e) {
       throw ServerException();
@@ -126,7 +126,7 @@ class ExerciseLocalDataSource {
         exerciseModels.add(
           ExerciseModel.fromDatabase(
             exerciseDB,
-            muscles.map((m) => m.name).toList(),
+            muscles.map((m) => m.nombre).toList(),
           ),
         );
       }

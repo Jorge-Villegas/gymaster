@@ -2910,10 +2910,10 @@ class EjercicioDataSeed {
         final musculo = await buscarMusculoPorNombre(nombreMusculo);
         if (musculo == null) {
           // Si no existe el músculo lo agregamos
-          final nuevoMusculo = MuscleDbModel(
+          final nuevoMusculo = MusculoDbModel(
             id: idGenerator.generateId(),
-            name: nombreMusculo,
-            createdAt: DateTime.now().toIso8601String(),
+            nombre: nombreMusculo,
+            fechaCreacion: DateTime.now().toIso8601String(),
           );
           await insertarMusculo(nuevoMusculo);
           idMusculo = nuevoMusculo.id;
@@ -2957,16 +2957,16 @@ class EjercicioDataSeed {
     }
   }
 
-  Future<MuscleDbModel?> buscarMusculoPorNombre(String nombreMusculo) async {
+  Future<MusculoDbModel?> buscarMusculoPorNombre(String nombreMusculo) async {
     try {
       final db = await DatabaseHelper.instance.database;
       final res = await db.query(
-        MuscleDbModel.table,
+        MusculoDbModel.tabla,
         where: 'name = ?',
         whereArgs: [nombreMusculo],
       );
       if (res.isNotEmpty) {
-        return MuscleDbModel.fromJson(res.first);
+        return MusculoDbModel.fromJson(res.first);
       }
 
       return null;
@@ -2977,10 +2977,10 @@ class EjercicioDataSeed {
   }
 
   // Insertar el músculo
-  Future<String?> insertarMusculo(MuscleDbModel musculo) async {
+  Future<String?> insertarMusculo(MusculoDbModel musculo) async {
     try {
       final db = await DatabaseHelper.instance.database;
-      await db.insert(MuscleDbModel.table, musculo.toJson());
+      await db.insert(MusculoDbModel.tabla, musculo.toJson());
       return musculo.id;
     } catch (e) {
       print('Error al insertar el músculo: $e');
