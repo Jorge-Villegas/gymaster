@@ -139,14 +139,14 @@ class DatabaseHelper {
       ''');
 
     await db.execute('''
-        CREATE TABLE ${ExerciseSetDbModel.table}  (
-          ${ExerciseSetDbModel.columnId}                 TEXT PRIMARY KEY,
-          ${ExerciseSetDbModel.columnSessionExerciseId}  TEXT NOT NULL,
-          ${ExerciseSetDbModel.columnWeight}             REAL,
-          ${ExerciseSetDbModel.columnRepetitions}        INTEGER,
-          ${ExerciseSetDbModel.columnRestTime}           INTEGER,
-          ${ExerciseSetDbModel.columnStatus}             TEXT CHECK(status IN ('pendiente','completado','fallida')),
-          FOREIGN KEY (${ExerciseSetDbModel.columnSessionExerciseId}) REFERENCES ${SessionEjercicioDbModel.table} (id) ON DELETE CASCADE
+        CREATE TABLE ${SerieEjercicioDbModel.tabla}  (
+          ${SerieEjercicioDbModel.columnaId}                 TEXT PRIMARY KEY,
+          ${SerieEjercicioDbModel.columnaEjercicioSesionId}  TEXT NOT NULL,
+          ${SerieEjercicioDbModel.columnaPeso}             REAL,
+          ${SerieEjercicioDbModel.columnaRepeticiones}        INTEGER,
+          ${SerieEjercicioDbModel.columnaTiempoDescanso}           INTEGER,
+          ${SerieEjercicioDbModel.columnaEstado}             TEXT CHECK(status IN ('pendiente','completado','fallida')),
+          FOREIGN KEY (${SerieEjercicioDbModel.columnaEjercicioSesionId}) REFERENCES ${SessionEjercicioDbModel.table} (id) ON DELETE CASCADE
         )
       ''');
 

@@ -45,13 +45,13 @@ class SerieModel extends Serie {
   }
 
   factory SerieModel.fromDatabase({
-    required serie_db.ExerciseSetDbModel serieDB,
+    required serie_db.SerieEjercicioDbModel serieDB,
     List<EjercicioModel>? ejercicios,
   }) {
     return SerieModel(
       id: serieDB.id,
       realizado: false, //TODO: Cambiar
-      tiempoDescanso: serieDB.restTime ?? 0,
+      tiempoDescanso: serieDB.tiempoDescanso ?? 0,
       ejercicios: ejercicios,
     );
   }

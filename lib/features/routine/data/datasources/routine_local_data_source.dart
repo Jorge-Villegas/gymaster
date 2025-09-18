@@ -103,25 +103,25 @@ class RoutineLocalDataSource {
     }
   }
 
-  Future<ExerciseSetDbModel> getSerieById(String id) async {
+  Future<SerieEjercicioDbModel> getSerieById(String id) async {
     try {
       final db = await databaseHelper.database;
       final serie = await db.query(
-        ExerciseSetDbModel.table,
+        SerieEjercicioDbModel.tabla,
         where: 'id = ?',
         whereArgs: [id],
       );
-      return ExerciseSetDbModel.fromJson(serie.first);
+      return SerieEjercicioDbModel.fromJson(serie.first);
     } catch (e) {
       throw ServerException();
     }
   }
 
-  Future<ExerciseSetDbModel> createSerie(
-      {required ExerciseSetDbModel serie}) async {
+  Future<SerieEjercicioDbModel> createSerie(
+      {required SerieEjercicioDbModel serie}) async {
     try {
       final db = await databaseHelper.database;
-      final id = await db.insert(ExerciseSetDbModel.table, serie.toJson());
+      final id = await db.insert(SerieEjercicioDbModel.tabla, serie.toJson());
       return id > 0 ? serie : throw ServerException();
     } catch (e) {
       throw ServerException();
@@ -149,7 +149,7 @@ class RoutineLocalDataSource {
     }
   }
 
-  Future<List<ExerciseSetDbModel>> getSeriesByEjercicioIdAndRutinaId(
+  Future<List<SerieEjercicioDbModel>> getSeriesByEjercicioIdAndRutinaId(
     String ejercicioId,
     String rutinaId,
   ) async {
@@ -167,7 +167,7 @@ class RoutineLocalDataSource {
         [rutinaId, ejercicioId],
       );
       return List.generate(series.length, (i) {
-        return ExerciseSetDbModel.fromJson(series[i]);
+        return SerieEjercicioDbModel.fromJson(series[i]);
       });
     } catch (e) {
       throw ServerException();
@@ -193,11 +193,11 @@ class RoutineLocalDataSource {
     }
   }
 
-  Future<bool> updateSerie(ExerciseSetDbModel serie) async {
+  Future<bool> updateSerie(SerieEjercicioDbModel serie) async {
     try {
       final db = await databaseHelper.database;
       final result = await db.update(
-        ExerciseSetDbModel.table,
+        SerieEjercicioDbModel.tabla,
         serie.toJson(),
         where: 'id = ?',
         whereArgs: [serie.id],
@@ -264,15 +264,15 @@ class RoutineLocalDataSource {
         );
 
         for (final serie in dataSeries) {
-          final exerciseSet = ExerciseSetDbModel(
+          final exerciseSet = SerieEjercicioDbModel(
             id: idGenerator.generateId(),
-            sessionExerciseId: idSessionExercise,
-            weight: serie.peso,
-            repetitions: serie.numeroRepeticon,
-            restTime: 60, //TODO: Cambiar a valor configurable
-            status: EstadoSerieEjercicio.pendiente.name,
+            ejercicioSesionId: idSessionExercise,
+            peso: serie.peso,
+            repeticiones: serie.numeroRepeticon,
+            tiempoDescanso: 60, //TODO: Cambiar a valor configurable
+            estado: EstadoSerieEjercicio.pendiente.name,
           );
-          await txn.insert(ExerciseSetDbModel.table, exerciseSet.toJson());
+          await txn.insert(SerieEjercicioDbModel.tabla, exerciseSet.toJson());
         }
       });
     } catch (e) {
@@ -336,34 +336,34 @@ class RoutineLocalDataSource {
     }
   }
 
-  Future<ExerciseSetDbModel> getExerciseSetBySessionExerciseId(
+  Future<SerieEjercicioDbModel> getExerciseSetBySessionExerciseId(
     String sessionExerciseId,
   ) async {
     try {
       final db = await databaseHelper.database;
       final result = await db.query(
-        ExerciseSetDbModel.table,
+        SerieEjercicioDbModel.tabla,
         where: 'session_exercise_id = ?',
         whereArgs: [sessionExerciseId],
       );
-      return ExerciseSetDbModel.fromJson(result.first);
+      return SerieEjercicioDbModel.fromJson(result.first);
     } catch (e) {
       throw ServerException();
     }
   }
 
   //obtener todos los exercises-sets de un ejercicio
-  Future<List<ExerciseSetDbModel>> getExerciseSetsBySessionExerciseId(
+  Future<List<SerieEjercicioDbModel>> getExerciseSetsBySessionExerciseId(
     String sessionExerciseId,
   ) async {
     try {
       final db = await databaseHelper.database;
       final result = await db.query(
-        ExerciseSetDbModel.table,
+        SerieEjercicioDbModel.tabla,
         where: 'session_exercise_id = ?',
         whereArgs: [sessionExerciseId],
       );
-      return result.map((map) => ExerciseSetDbModel.fromJson(map)).toList();
+      return result.map((map) => SerieEjercicioDbModel.fromJson(map)).toList();
     } catch (e) {
       throw ServerException();
     }
@@ -585,7 +585,7 @@ class RoutineLocalDataSource {
     try {
       final db = await databaseHelper.database;
       final result = await db.query(
-        ExerciseSetDbModel.table,
+        SerieEjercicioDbModel.tabla,
         columns: ['session_exercise_id'],
         where: 'id = ?',
         whereArgs: [exerciseSetId],
@@ -637,7 +637,7 @@ class RoutineLocalDataSource {
 
         // Verificar si el ejercicio tiene series completadas o en proceso
         final exerciseSets = await txn.query(
-          ExerciseSetDbModel.table,
+          SerieEjercicioDbModel.tabla,
           where:
               'session_exercise_id IN (SELECT id FROM ${SessionEjercicioDbModel.table} WHERE exercise_id = ? AND session_id = ?)',
           whereArgs: [exerciseId, routineSessionId],
@@ -662,7 +662,7 @@ class RoutineLocalDataSource {
 
         // Eliminar los sets de ejercicio asociados
         await txn.delete(
-          ExerciseSetDbModel.table,
+          SerieEjercicioDbModel.tabla,
           where: '''
               session_exercise_id IN (
                 SELECT id FROM ${SessionEjercicioDbModel.table} 
@@ -791,11 +791,11 @@ class RoutineLocalDataSource {
     }
   }
 
-  Future<bool> insertExerciseSet(ExerciseSetDbModel exerciseSet) async {
+  Future<bool> insertExerciseSet(SerieEjercicioDbModel exerciseSet) async {
     try {
       final db = await databaseHelper.database;
       final result = await db.insert(
-        ExerciseSetDbModel.table,
+        SerieEjercicioDbModel.tabla,
         exerciseSet.toJson(),
       );
       return result > 0;

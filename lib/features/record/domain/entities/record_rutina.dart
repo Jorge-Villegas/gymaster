@@ -115,11 +115,11 @@ class SeriesDelEjercicio {
   }
 
   factory SeriesDelEjercicio.fromDatabase(
-      {required ExerciseSetDbModel serieDB}) {
+      {required SerieEjercicioDbModel serieDB}) {
     return SeriesDelEjercicio(
       id: serieDB.id,
-      peso: serieDB.weight ?? 0.0,
-      repeticiones: serieDB.repetitions ?? 0,
+      peso: serieDB.peso ?? 0.0,
+      repeticiones: serieDB.repeticiones ?? 0,
     );
   }
 }

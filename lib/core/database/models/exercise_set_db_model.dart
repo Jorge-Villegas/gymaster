@@ -1,69 +1,70 @@
 import 'dart:convert';
 
-ExerciseSetDbModel exerciseSetFromJson(String str) =>
-    ExerciseSetDbModel.fromJson(json.decode(str));
+SerieEjercicioDbModel exerciseSetFromJson(String str) =>
+    SerieEjercicioDbModel.fromJson(json.decode(str));
 
-String exerciseSetToJson(ExerciseSetDbModel data) => json.encode(data.toJson());
+String exerciseSetToJson(SerieEjercicioDbModel data) =>
+    json.encode(data.toJson());
 
-class ExerciseSetDbModel {
+class SerieEjercicioDbModel {
   // Nombres de las columnas de la tabla
-  static const String table = 'exercise_set';
-  static const String columnId = 'id';
-  static const String columnSessionExerciseId = 'session_exercise_id';
-  static const String columnWeight = 'weight';
-  static const String columnRepetitions = 'repetitions';
-  static const String columnRestTime = 'rest_time';
-  static const String columnStatus = 'status';
+  static const String tabla = 'serie_ejercicio';
+  static const String columnaId = 'id';
+  static const String columnaEjercicioSesionId = 'session_exercise_id';
+  static const String columnaPeso = 'peso';
+  static const String columnaRepeticiones = 'repeticiones';
+  static const String columnaTiempoDescanso = 'tiempo_descanso';
+  static const String columnaEstado = 'estado';
 
   final String id;
-  final String sessionExerciseId;
-  final double? weight;
-  final int? repetitions;
-  final int? restTime;
-  final String status;
+  final String ejercicioSesionId;
+  final double? peso;
+  final int? repeticiones;
+  final int? tiempoDescanso;
+  final String estado;
 
-  ExerciseSetDbModel({
+  SerieEjercicioDbModel({
     required this.id,
-    required this.sessionExerciseId,
-    this.weight,
-    this.repetitions,
-    this.restTime,
-    required this.status,
+    required this.ejercicioSesionId,
+    this.peso,
+    this.repeticiones,
+    this.tiempoDescanso,
+    required this.estado,
   });
 
-  ExerciseSetDbModel copyWith({
+  SerieEjercicioDbModel copyWith({
     String? id,
-    String? sessionExerciseId,
-    double? weight,
-    int? repetitions,
-    int? restTime,
-    String? status,
+    String? ejercicioSesionId,
+    double? peso,
+    int? repeticiones,
+    int? tiempoDescanso,
+    String? estado,
   }) =>
-      ExerciseSetDbModel(
+      SerieEjercicioDbModel(
         id: id ?? this.id,
-        sessionExerciseId: sessionExerciseId ?? this.sessionExerciseId,
-        weight: weight ?? this.weight,
-        repetitions: repetitions ?? this.repetitions,
-        restTime: restTime ?? this.restTime,
-        status: status ?? this.status,
+        ejercicioSesionId: ejercicioSesionId ?? this.ejercicioSesionId,
+        peso: peso ?? this.peso,
+        repeticiones: repeticiones ?? this.repeticiones,
+        tiempoDescanso: tiempoDescanso ?? this.tiempoDescanso,
+        estado: estado ?? this.estado,
       );
 
-  factory ExerciseSetDbModel.fromJson(Map<String, dynamic> json) =>
-      ExerciseSetDbModel(
+  factory SerieEjercicioDbModel.fromJson(Map<String, dynamic> json) =>
+      SerieEjercicioDbModel(
         id: json["id"],
-        sessionExerciseId: json["session_exercise_id"],
-        weight: json["weight"],
-        repetitions: json["repetitions"],
-        restTime: json["rest_time"],
-        status: json["status"],
+        ejercicioSesionId: json["session_exercise_id"],
+        peso: json["peso"],
+        repeticiones: json["repeticiones"],
+        tiempoDescanso: json["tiempo_descanso"],
+        estado: json["estado"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "session_exercise_id": sessionExerciseId,
-        "weight": weight,
-        "repetitions": repetitions,
-        "rest_time": restTime,
-        "status": status,
+        "session_exercise_id": ejercicioSesionId,
+        "peso": peso,
+        "repeticiones": repeticiones,
+        "tiempo_descanso": tiempoDescanso,
+        "estado": estado,
       };
 }

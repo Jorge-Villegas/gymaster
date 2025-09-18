@@ -310,12 +310,12 @@ class RoutineRepositoryImpl implements RoutineRepository {
       final serieDB = await localDataSource.getSerieById(id);
 
       final updatedSerie = serieDB.copyWith(
-        weight: peso,
-        repetitions: repeticiones,
-        status: realizado == true
+        peso: peso,
+        repeticiones: repeticiones,
+        estado: realizado == true
             ? EstadoSerieEjercicio.completado.name
             : 'not completed',
-        restTime: tiempoDescanso,
+        tiempoDescanso: tiempoDescanso,
       );
 
       final success = await localDataSource.updateSerie(updatedSerie);
@@ -336,7 +336,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
 
         //verificamos si todos los sets estan completados
         final allCompleted = sets.every(
-          (element) => element.status == EstadoSerieEjercicio.completado.name,
+          (element) => element.estado == EstadoSerieEjercicio.completado.name,
         );
 
         //si todos los sets estan completados, actualizamos el sessionExercise
@@ -718,13 +718,13 @@ class RoutineRepositoryImpl implements RoutineRepository {
 
           // Copiar cada serie para el nuevo ejercicio, reiniciando el estado
           for (var set in exerciseSets) {
-            final newSet = ExerciseSetDbModel(
+            final newSet = SerieEjercicioDbModel(
               id: idGenerator.generateId(),
-              sessionExerciseId: newSessionExerciseId,
-              weight: set.weight,
-              repetitions: set.repetitions,
-              restTime: set.restTime,
-              status: EstadoSerieEjercicio
+              ejercicioSesionId: newSessionExerciseId,
+              peso: set.peso,
+              repeticiones: set.repeticiones,
+              tiempoDescanso: set.tiempoDescanso,
+              estado: EstadoSerieEjercicio
                   .pendiente.name, // Reiniciar estado a pendiente
             );
 

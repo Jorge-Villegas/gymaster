@@ -83,7 +83,7 @@ class RecordLocalDataSource {
         .toList();
   }
 
-  Future<List<ExerciseSetDbModel>> getSeriesByExerciseId(
+  Future<List<SerieEjercicioDbModel>> getSeriesByExerciseId(
       String exerciseId) async {
     final db = await databaseHelper.database;
     final series = await db.rawQuery(
@@ -96,11 +96,13 @@ class RecordLocalDataSource {
       [exerciseId],
     );
 
-    return series.map((serie) => ExerciseSetDbModel.fromJson(serie)).toList();
+    return series
+        .map((serie) => SerieEjercicioDbModel.fromJson(serie))
+        .toList();
   }
 
   // Nuevo método para obtener series por ejercicio y sesión específicos
-  Future<List<ExerciseSetDbModel>> getSeriesByExerciseAndSessionId(
+  Future<List<SerieEjercicioDbModel>> getSeriesByExerciseAndSessionId(
       String exerciseId, String sessionId) async {
     final db = await databaseHelper.database;
     final series = await db.rawQuery(
@@ -113,7 +115,9 @@ class RecordLocalDataSource {
       [exerciseId, sessionId],
     );
 
-    return series.map((serie) => ExerciseSetDbModel.fromJson(serie)).toList();
+    return series
+        .map((serie) => SerieEjercicioDbModel.fromJson(serie))
+        .toList();
   }
 
   Future<List<RutinaDbModel>> getAllRutinas() async {

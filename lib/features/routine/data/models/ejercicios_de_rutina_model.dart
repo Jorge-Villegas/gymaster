@@ -157,13 +157,13 @@ class SeriesDelEjercicioModel extends Serie {
         'realizado': estado,
       };
 
-  factory SeriesDelEjercicioModel.fromDatabase(ExerciseSetDbModel serieDB) {
+  factory SeriesDelEjercicioModel.fromDatabase(SerieEjercicioDbModel serieDB) {
     return SeriesDelEjercicioModel(
       id: serieDB.id,
-      peso: serieDB.weight ?? 0,
-      repeticiones: serieDB.repetitions ?? 0,
-      timpoDescanso: serieDB.restTime ?? 0,
-      estado: serieDB.status,
+      peso: serieDB.peso ?? 0,
+      repeticiones: serieDB.repeticiones ?? 0,
+      timpoDescanso: serieDB.tiempoDescanso ?? 0,
+      estado: serieDB.estado,
     );
   }
 }
