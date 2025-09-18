@@ -7,7 +7,7 @@ String userToJson(UsuarioDbModel data) => json.encode(data.toJson());
 
 class UsuarioDbModel {
   //nombres de las columnas de la tabla
-  static const String table = 'usuario';
+  static const String tabla = 'usuario';
   static const String columnaId = 'id';
   static const String columnaNombreUsuario = 'nombre_usuario';
   static const String columnaCorreo = 'correo';

@@ -60,7 +60,7 @@ class DatabaseHelper {
 
   Future<void> _onCreate(Database db, int version) async {
     await db.execute('''
-        CREATE TABLE ${UsuarioDbModel.table} (
+        CREATE TABLE ${UsuarioDbModel.tabla} (
           ${UsuarioDbModel.columnaId}          TEXT PRIMARY KEY,
           ${UsuarioDbModel.columnaNombreUsuario}    TEXT UNIQUE NOT NULL,
           ${UsuarioDbModel.columnaCorreo}       TEXT UNIQUE NOT NULL,
