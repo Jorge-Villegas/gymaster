@@ -88,7 +88,7 @@ class RecordRepositoryImpl implements RecordRepository {
           );
 
           // Obtener rutina de la base de datos
-          RoutineDbModel? rutina;
+          RutinaDbModel? rutina;
           try {
             rutina = await localDataSource.getRutinaById(
               rutinaSession.rutinaId,

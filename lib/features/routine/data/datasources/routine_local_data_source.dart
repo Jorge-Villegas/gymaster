@@ -12,17 +12,17 @@ class RoutineLocalDataSource {
 
   RoutineLocalDataSource(this.databaseHelper, this.idGenerator);
 
-  Future<List<RoutineDbModel>> getAllRutinas() async {
+  Future<List<RutinaDbModel>> getAllRutinas() async {
     try {
       final db = await databaseHelper.database;
       final rutinas = await db.query(
-        RoutineDbModel.tabla,
+        RutinaDbModel.tabla,
         orderBy: 'created_at DESC',
       );
       if (rutinas.isEmpty) {
         throw NoRecordsException();
       }
-      return rutinas.map((rutina) => RoutineDbModel.fromJson(rutina)).toList();
+      return rutinas.map((rutina) => RutinaDbModel.fromJson(rutina)).toList();
     } catch (e) {
       if (e is NoRecordsException) {
         rethrow;
@@ -32,10 +32,10 @@ class RoutineLocalDataSource {
     }
   }
 
-  Future<bool> createRutina({required RoutineDbModel rutina}) async {
+  Future<bool> createRutina({required RutinaDbModel rutina}) async {
     try {
       final db = await databaseHelper.database;
-      final id = await db.insert(RoutineDbModel.tabla, rutina.toJson());
+      final id = await db.insert(RutinaDbModel.tabla, rutina.toJson());
       return id > 0;
     } catch (e) {
       throw ServerException();
@@ -75,21 +75,21 @@ class RoutineLocalDataSource {
     }
   }
 
-  Future<RoutineDbModel> getRutinaById(String id) async {
+  Future<RutinaDbModel> getRutinaById(String id) async {
     try {
       final db = await databaseHelper.database;
       final rutina = await db.query(
-        RoutineDbModel.tabla,
+        RutinaDbModel.tabla,
         where: 'id = ?',
         whereArgs: [id],
       );
-      return RoutineDbModel.fromJson(rutina.first);
+      return RutinaDbModel.fromJson(rutina.first);
     } catch (e) {
       throw ServerException();
     }
   }
 
-  Future<RoutineDbModel> getEjercicioById(String id) async {
+  Future<RutinaDbModel> getEjercicioById(String id) async {
     try {
       final db = await databaseHelper.database;
       final ejercicio = await db.query(
@@ -97,7 +97,7 @@ class RoutineLocalDataSource {
         where: 'id = ?',
         whereArgs: [id],
       );
-      return RoutineDbModel.fromJson(ejercicio.first);
+      return RutinaDbModel.fromJson(ejercicio.first);
     } catch (e) {
       throw ServerException();
     }
@@ -207,17 +207,17 @@ class RoutineLocalDataSource {
     }
   }
 
-  Future<List<RoutineDbModel>> getRutinasByNombre(String nombre) async {
+  Future<List<RutinaDbModel>> getRutinasByNombre(String nombre) async {
     try {
       final db = await databaseHelper.database;
       final rutinas = await db.rawQuery(
         '''
-          SELECT * FROM ${RoutineDbModel.tabla}
+          SELECT * FROM ${RutinaDbModel.tabla}
           WHERE name LIKE ?;
         ''',
         ['%$nombre%'],
       );
-      return rutinas.map((rutina) => RoutineDbModel.fromJson(rutina)).toList();
+      return rutinas.map((rutina) => RutinaDbModel.fromJson(rutina)).toList();
     } catch (e) {
       throw ServerException();
     }
@@ -279,7 +279,7 @@ class RoutineLocalDataSource {
     }
   }
 
-  Future<List<RoutineDbModel>> getExercisesByRoutine(String routineId) async {
+  Future<List<RutinaDbModel>> getExercisesByRoutine(String routineId) async {
     final db = await databaseHelper.database;
 
     final results = await db.rawQuery(
@@ -293,7 +293,7 @@ class RoutineLocalDataSource {
       [routineId],
     );
 
-    return results.map((map) => RoutineDbModel.fromJson(map)).toList();
+    return results.map((map) => RutinaDbModel.fromJson(map)).toList();
   }
 
   Future<RutinaSesionDbModel?> getLastRoutineSessionByRoutineId(

@@ -48,7 +48,7 @@ class EjerciciosDeRutinaModel extends EjerciciosDeRutina {
   }
 
   factory EjerciciosDeRutinaModel.fromDatabase({
-    required RoutineDbModel rutinaDB,
+    required RutinaDbModel rutinaDB,
     required String status,
     required List<EjercicioModel> ejercicios,
     required String session,

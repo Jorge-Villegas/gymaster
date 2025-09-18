@@ -36,7 +36,7 @@ class RecordRutina {
   }
 
   factory RecordRutina.fromDatabase({
-    required RoutineDbModel rutinaDB,
+    required RutinaDbModel rutinaDB,
     int? cantidadEjercicios,
   }) {
     return RecordRutina(

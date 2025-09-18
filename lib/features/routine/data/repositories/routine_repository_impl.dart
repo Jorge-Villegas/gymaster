@@ -67,7 +67,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
     required String imagenDireccion,
   }) async {
     try {
-      final rutina = RoutineDbModel(
+      final rutina = RutinaDbModel(
         id: idGenerator.generateId(),
         nombre: name,
         descripcion: description,

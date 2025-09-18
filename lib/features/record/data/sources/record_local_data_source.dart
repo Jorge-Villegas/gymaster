@@ -116,28 +116,28 @@ class RecordLocalDataSource {
     return series.map((serie) => ExerciseSetDbModel.fromJson(serie)).toList();
   }
 
-  Future<List<RoutineDbModel>> getAllRutinas() async {
+  Future<List<RutinaDbModel>> getAllRutinas() async {
     try {
       final db = await databaseHelper.database;
       final rutinas = await db.query(
-        RoutineDbModel.tabla,
-        orderBy: RoutineDbModel.columnaFechaCreacion,
+        RutinaDbModel.tabla,
+        orderBy: RutinaDbModel.columnaFechaCreacion,
       );
-      return rutinas.map((rutina) => RoutineDbModel.fromJson(rutina)).toList();
+      return rutinas.map((rutina) => RutinaDbModel.fromJson(rutina)).toList();
     } catch (e) {
       throw CacheException();
     }
   }
 
-  Future<RoutineDbModel> getRutinaById(String id) async {
+  Future<RutinaDbModel> getRutinaById(String id) async {
     final db = await databaseHelper.database;
     final result = await db.query(
-      RoutineDbModel.tabla,
+      RutinaDbModel.tabla,
       where: 'id = ?',
       whereArgs: [id],
     );
     if (result.isNotEmpty) {
-      return RoutineDbModel.fromJson(result.first);
+      return RutinaDbModel.fromJson(result.first);
     } else {
       throw Exception('Rutina not found');
     }
@@ -146,7 +146,7 @@ class RecordLocalDataSource {
   Future<void> saveRutina(RecordRutinaModel rutina) async {
     final db = await databaseHelper.database;
     await db.insert(
-      RoutineDbModel.tabla,
+      RutinaDbModel.tabla,
       rutina.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
@@ -155,7 +155,7 @@ class RecordLocalDataSource {
   Future<void> deleteRutina(String id) async {
     final db = await databaseHelper.database;
     await db.delete(
-      RoutineDbModel.tabla,
+      RutinaDbModel.tabla,
       where: 'id = ?',
       whereArgs: [id],
     );

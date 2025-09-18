@@ -42,7 +42,7 @@ class RoutineModel extends Routine {
   }
 
   factory RoutineModel.fromDatabase({
-    required rutina_db.RoutineDbModel serieDB,
+    required rutina_db.RutinaDbModel serieDB,
     int? cantidadEjercicios,
   }) {
     return RoutineModel(

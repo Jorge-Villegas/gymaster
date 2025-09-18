@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-RoutineDbModel routineFromJson(String str) =>
-    RoutineDbModel.fromJson(json.decode(str));
+RutinaDbModel routineFromJson(String str) =>
+    RutinaDbModel.fromJson(json.decode(str));
 
-String routineToJson(RoutineDbModel data) => json.encode(data.toJson());
+String routineToJson(RutinaDbModel data) => json.encode(data.toJson());
 
-class RoutineDbModel {
+class RutinaDbModel {
   // Nombres de las columnas de la tabla
   static const String tabla = 'rutina';
   static const String columnaId = 'id';
@@ -26,7 +26,7 @@ class RoutineDbModel {
   final String fechaCreacion;
   final String? fechaActualizacion;
 
-  RoutineDbModel({
+  RutinaDbModel({
     required this.id,
     required this.usuarioId,
     required this.nombre,
@@ -37,7 +37,7 @@ class RoutineDbModel {
     this.fechaActualizacion,
   });
 
-  RoutineDbModel copyWith({
+  RutinaDbModel copyWith({
     String? id,
     String? userId,
     String? name,
@@ -47,7 +47,7 @@ class RoutineDbModel {
     String? createdAt,
     String? updatedAt,
   }) =>
-      RoutineDbModel(
+      RutinaDbModel(
         id: id ?? this.id,
         usuarioId: userId ?? usuarioId,
         nombre: name ?? nombre,
@@ -58,7 +58,7 @@ class RoutineDbModel {
         fechaActualizacion: updatedAt ?? fechaActualizacion,
       );
 
-  factory RoutineDbModel.fromJson(Map<String, dynamic> json) => RoutineDbModel(
+  factory RutinaDbModel.fromJson(Map<String, dynamic> json) => RutinaDbModel(
         id: json["id"],
         usuarioId: json["usuario_id"],
         nombre: json["nombre"],
