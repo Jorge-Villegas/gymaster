@@ -60,7 +60,7 @@ class MensajesEmocionalesService {
 
   static String obtenerProyeccionDeLogros(int totalRutinasCompletadas) {
     final int rutinasParaSiguienteHito =
-        _obtenerSiguienteHito(totalRutinasCompletadas);
+        _obtenerSiguienteLogro(totalRutinasCompletadas);
     final int rutinasRestantes =
         rutinasParaSiguienteHito - totalRutinasCompletadas;
 
@@ -69,7 +69,7 @@ class MensajesEmocionalesService {
     } else if (rutinasRestantes <= 3) {
       return '🎯 Solo $rutinasRestantes rutinas más para tu próximo logro';
     } else {
-      return '📊 Próximo hito en $rutinasRestantes rutinas';
+      return '📊 Próximo logro en $rutinasRestantes rutinas';
     }
   }
 
@@ -125,12 +125,12 @@ class MensajesEmocionalesService {
     return mensajes[_random.nextInt(mensajes.length)];
   }
 
-  static int _obtenerSiguienteHito(int rutinasActuales) {
-    final List<int> hitos = [1, 3, 5, 7, 10, 15, 20, 25, 30, 40, 50, 75, 100];
+  static int _obtenerSiguienteLogro(int rutinasActuales) {
+    final List<int> logros = [1, 3, 5, 7, 10, 15, 20, 25, 30, 40, 50, 75, 100];
 
-    for (final hito in hitos) {
-      if (rutinasActuales < hito) {
-        return hito;
+    for (final logro in logros) {
+      if (rutinasActuales < logro) {
+        return logro;
       }
     }
 

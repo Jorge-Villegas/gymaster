@@ -102,7 +102,7 @@ class _RoutineCardState extends State<RoutineCard>
         return Transform.translate(
           offset: Offset(0, 30 * (1 - _slideAnimation.value)),
           child: Opacity(
-            opacity: _slideAnimation.value,
+            opacity: (_slideAnimation.value).clamp(0.0, 1.0),
             child: AnimatedScale(
               scale: _isPressed ? 0.95 : 1.0,
               duration: const Duration(milliseconds: 150),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/theme/emotional_text_styles.dart';
 import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/shared/widgets/chiclet_button.dart';
 
 class RutinaCanceladaWidget extends StatelessWidget {
   final String rutinaName;
@@ -126,6 +127,18 @@ class RutinaCanceladaWidget extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 24),
+                ChicletButton(
+                  texto: 'Volver al Inicio',
+                  icono: Icons.home_rounded,
+                  colorFondo: Theme.of(context).colorScheme.primary,
+                  colorTexto: Colors.white,
+                  onPressed: () => context.go('/'),
+                  radioBorde: 16,
+                  paddingHorizontal: 30,
+                  tamano: TamanoBotonChiclet.mediano,
+                  estilo: EstiloBotonChiclet.relleno,
+                  conSombreado: true,
+                ),
                 // Botones secundarios
                 OutlinedButton.icon(
                   onPressed: () => context.go('/'),

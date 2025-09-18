@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/features/routine/domain/entities/ejercicios_de_rutina.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
-import 'package:gymaster/features/routine/presentation/widgets/rutina_completada_widget.dart';
+import 'package:gymaster/features/routine/presentation/pages/celebracion_rutina_page.dart';
 import 'package:gymaster/features/routine/presentation/widgets/rutina_cancelada_widget.dart';
+import 'package:gymaster/features/routine/presentation/widgets/rutina_completada_widget.dart';
 import 'package:gymaster/shared/utils/enum.dart';
 import 'package:gymaster/shared/utils/text_formatter.dart';
 import 'package:gymaster/shared/utils/verificador_tipo_archivo.dart';
-import 'package:gymaster/shared/widgets/custom_icon_button.dart';
+import 'package:gymaster/shared/widgets/chiclet_button.dart';
 // ignore: depend_on_referenced_packages
 import 'package:collection/collection.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
@@ -163,6 +165,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
         if (state is EjerciciosByRutinaCompleted) {
           // Mostrar widget de celebración en lugar de navegación automática
           return RutinaCompletadaWidget(state: state);
+          // return CelebracionRutinaPage(estadoCompletado: state);
         }
         if (state is EjerciciosByRutinaSuccess) {
           if (state.ejerciciosDeRutina.ejercicios.isEmpty) {
@@ -573,17 +576,20 @@ class DetalleEjercicioScreen extends StatelessWidget {
               style: textTheme.titleMedium
                   ?.copyWith(color: colorScheme.onSurfaceVariant)),
         ),
-        // Botón de Decremento
+        // Botón de Decremento con ChicletButton outlined
         Expanded(
           flex: 1,
-          child: CustomIconButton(
-            icon: const Icon(
-              IconsaxPlusLinear.minus,
-              color: Colors.black,
-              size: 18,
-            ),
-            borderColor: colorScheme.outline.withAlpha(127),
-            backgroundColor: colorScheme.surface,
+          child: ChicletButton(
+            texto: '',
+            icono: IconsaxPlusLinear.minus,
+            estilo: EstiloBotonChiclet.contorno,
+            tamano: TamanoBotonChiclet.mediano,
+            colorFondo: colorScheme.surface,
+            colorTexto: colorScheme.onSurface,
+            colorBorde: colorScheme.surface,
+            radioBorde: 20,
+            conSombreado: true,
+            conBordes: true,
             onPressed: onDecrement,
           ),
         ),
@@ -606,31 +612,29 @@ class DetalleEjercicioScreen extends StatelessWidget {
             ),
           ),
         ),
-        // Botón de Incremento
+        // Botón de Incremento con ChicletButton outlined
         Expanded(
           flex: 1,
-          child: CustomIconButton(
-            icon: const Icon(
-              IconsaxPlusLinear.add,
-              color: Colors.black,
-              size: 18,
-            ),
-            // icon: SvgP
-            borderColor: colorScheme.outline.withAlpha(125),
-            backgroundColor: colorScheme.surface,
+          child: ChicletButton(
+            texto: '',
+            icono: IconsaxPlusLinear.add,
+            estilo: EstiloBotonChiclet.contorno,
+            tamano: TamanoBotonChiclet.mediano,
+            colorFondo: colorScheme.surface,
+            colorTexto: colorScheme.onSurface,
+            colorBorde: colorScheme.surface,
+            radioBorde: 20,
+            conSombreado: true,
+            conBordes: true,
             onPressed: onIncrement,
           ),
         ),
       ],
     );
-  }
+  } // Constructor de Botón de Acción Actualizado con ChicletButtons
 
-  // Constructor de Botón de Acción Actualizado
   Widget _buildActionButtons(BuildContext context, Ejercicio ejercicio,
       EjerciciosByRutinaSuccess state) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
-
     bool todasLasSeriesCompletadas = ejercicio.series.every(
       (serie) => serie.estado == ExerciseSetStatus.completed.name,
     );
@@ -641,56 +645,55 @@ class DetalleEjercicioScreen extends StatelessWidget {
         ejercicios.indexWhere((e) => e.id == state.ejercicioIndex);
     final isLastExercise = currentEjercicioIndex == ejercicios.length - 1;
 
-    String buttonText;
-    Color buttonColor;
-    IconData buttonIcon;
-    VoidCallback onPressed;
-
     if (todasLasSeriesCompletadas) {
       if (isLastExercise) {
-        buttonText = 'Finalizar Rutina';
-        buttonColor = colorScheme.tertiary;
-        buttonIcon = Icons.check_circle_outline;
-        onPressed = () {
-          // Marcar el último ejercicio como completado antes de finalizar
-          context.read<EjerciciosByRutinaCubit>().completeRoutine(
-              routineSessionId: state.ejerciciosDeRutina.session);
-        };
+        return ChicletButton(
+          texto: 'Finalizar Rutina',
+          colorFondo: AppColors.celebrationPurple,
+          colorTexto: Colors.white,
+          onPressed: () {
+            // Marcar el último ejercicio como completado antes de finalizar
+            context.read<EjerciciosByRutinaCubit>().completeRoutine(
+                routineSessionId: state.ejerciciosDeRutina.session);
+          },
+          estaHabilitado: true,
+          tamano: TamanoBotonChiclet.grande,
+          estilo: EstiloBotonChiclet.relleno,
+          radioBorde: 28,
+          ancho: double.infinity,
+        );
       } else {
-        buttonText = 'Siguiente Ejercicio';
-        buttonColor = colorScheme.primary;
-        buttonIcon = Icons.arrow_forward;
-        onPressed = () => context
-            .read<EjerciciosByRutinaCubit>()
-            .avanzarAlSiguienteEjercicio();
+        return ChicletButton(
+          texto: 'Siguiente Ejercicio',
+          colorFondo: AppColors.secondary,
+          colorTexto: Colors.white,
+          onPressed: () => context
+              .read<EjerciciosByRutinaCubit>()
+              .avanzarAlSiguienteEjercicio(),
+          estaHabilitado: true,
+          tamano: TamanoBotonChiclet.grande,
+          estilo: EstiloBotonChiclet.relleno,
+          radioBorde: 28,
+          ancho: double.infinity,
+          conSombreado: true,
+          conBordes: true,
+        );
       }
     } else {
-      buttonText = 'Completar Serie';
-      buttonColor = Colors.green;
-      buttonIcon = Icons.check;
-      onPressed = () => context.read<EjerciciosByRutinaCubit>().avanzarSerie();
+      return ChicletButton(
+        texto: 'Completar Serie',
+        colorFondo: AppColors.success,
+        colorTexto: Colors.white,
+        onPressed: () => context.read<EjerciciosByRutinaCubit>().avanzarSerie(),
+        estaCargando: false,
+        estaHabilitado: true,
+        tamano: TamanoBotonChiclet.grande,
+        estilo: EstiloBotonChiclet.relleno,
+        radioBorde: 28,
+        ancho: double.infinity,
+        conSombreado: true,
+        conBordes: true,
+      );
     }
-
-    return SizedBox(
-      // Hacer botón de ancho completo
-      width: double.infinity,
-      child: ElevatedButton.icon(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: buttonColor,
-          foregroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          padding: const EdgeInsets.symmetric(vertical: 16),
-        ),
-        icon: Icon(buttonIcon, size: 20),
-        label: Text(
-          buttonText,
-          style: textTheme.titleMedium
-              ?.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-      ),
-    );
   }
 }

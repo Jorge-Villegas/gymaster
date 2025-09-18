@@ -682,6 +682,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
           routineId: routineId,
           status: RoutineSessionStatus.pending.name, // Cambiar a pending
           startTime: null, // No establecer tiempo hasta que realmente inicie
+          endTime: null, // Asegurar que endTime sea null para sesiones nuevas
           createdAt: DateTime.now().toString(),
         );
 

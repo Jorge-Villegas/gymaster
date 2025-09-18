@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gymaster/core/theme/app_theme.dart';
 
 class ThemePreviewPage extends StatefulWidget {
+  const ThemePreviewPage({super.key});
+
   @override
   _ThemePreviewPageState createState() => _ThemePreviewPageState();
 }
@@ -205,14 +207,14 @@ class _ThemePreviewPageState extends State<ThemePreviewPage> {
                 ),
                 const SizedBox(height: 32),
                 const Text(
-                  'Prueba de Fuente',
+                  'Prueba de Fuente - System',
                   style: TextStyle(
                     fontSize: 24,
                     fontFamily: 'System', // Fuente del sistema
                   ),
                 ),
                 const Text(
-                  'Prueba de Fuente',
+                  'Prueba de Fuente - Montserrat',
                   style: TextStyle(
                     fontSize: 24,
                     fontFamily: 'Montserrat',

@@ -8,7 +8,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 
 class DatabaseHelper {
-  static const _databaseName = 'gymaster.db';
+  static const _databaseName = 'database_gymaster.db';
   static const _databaseVersion =
       3; // Incrementamos la versión para user_motivation
 
@@ -165,36 +165,36 @@ class DatabaseHelper {
     // Tablas del sistema emocional
     await db.execute('''
         CREATE TABLE achievement (
-          id TEXT PRIMARY KEY,
-          name TEXT NOT NULL,
-          description TEXT,
-          icon TEXT,
-          is_unlocked INTEGER DEFAULT 0,
-          unlocked_at DATETIME,
-          created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+          id            TEXT PRIMARY KEY,
+          name          TEXT NOT NULL,
+          description   TEXT,
+          icon          TEXT,
+          is_unlocked   INTEGER DEFAULT 0,
+          unlocked_at   DATETIME,
+          created_at    DATETIME DEFAULT CURRENT_TIMESTAMP
         )
       ''');
 
     await db.execute('''
         CREATE TABLE user_motivation (
-          id TEXT PRIMARY KEY,
-          userId TEXT NOT NULL,
-          motivations TEXT NOT NULL,
-          challenges TEXT NOT NULL,
+          id            TEXT PRIMARY KEY,
+          userId       TEXT NOT NULL,
+          motivations   TEXT NOT NULL,
+          challenges    TEXT NOT NULL,
           postWorkoutFeelings TEXT NOT NULL,
           notificationPreferences TEXT NOT NULL,
-          createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-          updatedAt DATETIME,
+          createdAt     DATETIME DEFAULT CURRENT_TIMESTAMP,
+          updatedAt     DATETIME,
           FOREIGN KEY (userId) REFERENCES user (id) ON DELETE CASCADE
         )
       ''');
 
     await db.execute('''
         CREATE TABLE user_mood (
-          id TEXT PRIMARY KEY,
-          user_id TEXT NOT NULL,
-          mood_type TEXT NOT NULL,
-          recorded_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+          id            TEXT PRIMARY KEY,
+          user_id       TEXT NOT NULL,
+          mood_type     TEXT NOT NULL,
+          recorded_at   DATETIME DEFAULT CURRENT_TIMESTAMP,
           FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE
         )
       ''');
@@ -202,10 +202,10 @@ class DatabaseHelper {
     await db.execute('''
         CREATE TABLE user_onboarding (
           id TEXT PRIMARY KEY,
-          userId TEXT NOT NULL,
-          completed INTEGER DEFAULT 0,
+          userId      TEXT NOT NULL,
+          completed   INTEGER DEFAULT 0,
           completedAt DATETIME,
-          createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+          createdAt   DATETIME DEFAULT CURRENT_TIMESTAMP,
           FOREIGN KEY (userId) REFERENCES user (id) ON DELETE CASCADE
         )
       ''');
@@ -220,11 +220,11 @@ class DatabaseHelper {
       // Agregar tabla user_onboarding en versión 2
       await db.execute('''
         CREATE TABLE user_onboarding (
-          id TEXT PRIMARY KEY,
-          userId TEXT NOT NULL,
-          completed INTEGER DEFAULT 0,
+          id          TEXT PRIMARY KEY,
+          userId      TEXT NOT NULL,
+          completed   INTEGER DEFAULT 0,
           completedAt DATETIME,
-          createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+          createdAt   DATETIME DEFAULT CURRENT_TIMESTAMP,
           FOREIGN KEY (userId) REFERENCES user (id) ON DELETE CASCADE
         )
       ''');
@@ -245,14 +245,14 @@ class DatabaseHelper {
       // Crear nueva tabla con estructura correcta
       await db.execute('''
         CREATE TABLE user_motivation (
-          id TEXT PRIMARY KEY,
-          userId TEXT NOT NULL,
+          id          TEXT PRIMARY KEY,
+          userId      TEXT NOT NULL,
           motivations TEXT NOT NULL,
-          challenges TEXT NOT NULL,
+          challenges  TEXT NOT NULL,
           postWorkoutFeelings TEXT NOT NULL,
           notificationPreferences TEXT NOT NULL,
-          createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-          updatedAt DATETIME,
+          createdAt   DATETIME DEFAULT CURRENT_TIMESTAMP,
+          updatedAt   DATETIME,
           FOREIGN KEY (userId) REFERENCES user (id) ON DELETE CASCADE
         )
       ''');

@@ -34,9 +34,18 @@ class RoutineSessionDbModel {
 
   // como saco el tiempo que tomo realizar esta routina_session
   double get duration {
-    final start = DateTime.parse(startTime!);
-    final end = DateTime.parse(endTime!);
-    return end.difference(start).inMinutes.toDouble();
+    if (startTime == null || endTime == null) {
+      return 0.0; // Retornar 0 si algún timestamp es nulo
+    }
+
+    try {
+      final start = DateTime.parse(startTime!);
+      final end = DateTime.parse(endTime!);
+      return end.difference(start).inMinutes.toDouble();
+    } catch (e) {
+      // Si hay error al parsear las fechas, retornar 0
+      return 0.0;
+    }
   }
 
   RoutineSessionDbModel copyWith({

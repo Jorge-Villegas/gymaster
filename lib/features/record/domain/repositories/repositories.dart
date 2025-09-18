@@ -7,5 +7,5 @@ abstract class RecordRepository {
   Future<Either<Failure, void>> saveRutina(RecordRutina rutina);
   Future<Either<Failure, void>> deleteRutina(String id);
   Future<Either<Failure, List<RecordRutina>>>
-      getAllCompletedRoutinesWithExercises();
+      obtenerTodasLasRutinasCompletadasConEjercicios();
 }

@@ -1,4 +1,5 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:gymaster/core/database/models/routine_db_model.dart';
 import 'package:gymaster/core/error/exceptions.dart';
 import 'package:gymaster/core/error/failures.dart';
 import 'package:gymaster/features/record/data/models/record_rutina_models.dart';
@@ -70,7 +71,7 @@ class RecordRepositoryImpl implements RecordRepository {
 
   @override
   Future<Either<Failure, List<RecordRutina>>>
-      getAllCompletedRoutinesWithExercises() async {
+      obtenerTodasLasRutinasCompletadasConEjercicios() async {
     try {
       final rutinaSessions = await localDataSource.getCompletedRoutines();
 
@@ -78,34 +79,57 @@ class RecordRepositoryImpl implements RecordRepository {
         return const Right([]);
       }
 
-      List<RecordRutina> result = [];
+      List<RecordRutina> resultadoRutinas = [];
 
       for (var rutinaSession in rutinaSessions) {
         try {
-          final ejercicios = await _getExercisesByRoutineId(
-            rutinaSession.routineId,
+          final ejercicios = await _getExercisesBySessionId(
+            rutinaSession.id,
           );
-          final rutina = await localDataSource.getRutinaById(
-            rutinaSession.routineId,
-          );
-          result.add(
+
+          // Obtener rutina de la base de datos
+          RoutineDbModel? rutina;
+          try {
+            rutina = await localDataSource.getRutinaById(
+              rutinaSession.routineId,
+            );
+          } catch (e) {
+            print(
+                '⚠️ No se pudo obtener rutina ${rutinaSession.routineId}: $e');
+            continue;
+          }
+
+          if (rutinaSession.endTime == null || rutinaSession.endTime!.isEmpty) {
+            print('⚠️ endTime nulo o vacío para sesión ${rutinaSession.id}');
+            continue;
+          }
+
+          if (rutinaSession.startTime == null ||
+              rutinaSession.startTime!.isEmpty) {
+            print('⚠️ startTime nulo o vacío para sesión ${rutinaSession.id}');
+            continue;
+          }
+
+          print(
+              '✅ Rutina ${rutina.name} ${rutinaSession.routineId} procesada con ${ejercicios.length} ejercicios');
+
+          resultadoRutinas.add(
             RecordRutina(
               id: rutina.id,
               nombre: rutina.name,
               fechaRealizada: DateTime.parse(rutinaSession.endTime!),
               tiempoRealizado: rutinaSession.duration.toString(),
-              color: rutina.color!,
+              color: rutina.color ?? 0xFF2196F3,
               ejercicios: ejercicios,
             ),
           );
         } catch (e) {
           print('⚠️ Error procesando rutina ${rutinaSession.routineId}: $e');
-          // Continúa con la siguiente rutina en lugar de fallar completamente
           continue;
         }
       }
-      return Right(result);
-    } on DatabaseException catch (e) {
+      return Right(resultadoRutinas);
+    } on DatabaseException {
       return Left(
         CacheFailure(
           errorMessage:
@@ -122,19 +146,20 @@ class RecordRepositoryImpl implements RecordRepository {
     }
   }
 
-  Future<List<RecordEjercicios>> _getExercisesByRoutineId(
-    String rutinaId,
+  Future<List<RecordEjercicios>> _getExercisesBySessionId(
+    String sessionId,
   ) async {
-    final ejerciciosDB = await localDataSource.getCompletedExercisesByRoutineId(
-      rutinaId,
+    final ejerciciosDB = await localDataSource.getCompletedExercisesBySessionId(
+      sessionId,
     );
     final Set<String> ejercicioIds = {};
     final List<RecordEjercicios> ejercicios = [];
 
     for (var ejercicioDB in ejerciciosDB) {
       if (!ejercicioIds.contains(ejercicioDB.id)) {
-        final seriesDelEjercicio = await _getSeriesByEjercicioId(
+        final seriesDelEjercicio = await _getSeriesByEjercicioAndSessionId(
           ejercicioDB.id,
+          sessionId,
         );
         final recordEjercicio = RecordEjercicios.fromDatabase(
           ejercicioDB: ejercicioDB,
@@ -148,11 +173,14 @@ class RecordRepositoryImpl implements RecordRepository {
     return ejercicios;
   }
 
-  Future<List<SeriesDelEjercicio>> _getSeriesByEjercicioId(
+  Future<List<SeriesDelEjercicio>> _getSeriesByEjercicioAndSessionId(
     String ejercicioId,
+    String sessionId,
   ) async {
-    final seriesDelEjercicioDB = await localDataSource.getSeriesByExerciseId(
+    final seriesDelEjercicioDB =
+        await localDataSource.getSeriesByExerciseAndSessionId(
       ejercicioId,
+      sessionId,
     );
     return seriesDelEjercicioDB.map((serieDB) {
       return SeriesDelEjercicio.fromDatabase(serieDB: serieDB);

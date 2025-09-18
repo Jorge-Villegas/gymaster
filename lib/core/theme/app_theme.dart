@@ -5,7 +5,7 @@ import 'package:gymaster/core/theme/app_colors.dart';
 /// Implementa los tres niveles de Norman: Visceral, Conductual y Reflexivo
 class AppTheme {
   static final ThemeData darkTheme = ThemeData(
-    fontFamily: 'Montserrat',
+    fontFamily: 'Poppins',
     useMaterial3: true,
     colorScheme: const ColorScheme.dark(
       primary: AppColors.primary,
@@ -58,7 +58,7 @@ class AppTheme {
   );
 
   static final ThemeData lightTheme = ThemeData(
-    fontFamily: 'Montserrat',
+    fontFamily: 'Poppins',
     useMaterial3: true,
     colorScheme: const ColorScheme.light(
       primary: AppColors.primary,

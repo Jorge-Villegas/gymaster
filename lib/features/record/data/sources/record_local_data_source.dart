@@ -13,9 +13,13 @@ class RecordLocalDataSource {
   Future<List<RoutineSessionDbModel>> getCompletedRoutines() async {
     try {
       final db = await databaseHelper.database;
+
+      // Corregir registros inconsistentes: sesiones marcadas como completed pero sin timestamps
+      await _fixInconsistentCompletedSessions(db);
+
       final result = await db.query(
         RoutineSessionDbModel.table,
-        where: 'status = ?',
+        where: 'status = ? AND start_time IS NOT NULL AND end_time IS NOT NULL',
         whereArgs: [RoutineSessionStatus.completed.name],
         orderBy: 'created_at DESC',
       );
@@ -58,6 +62,26 @@ class RecordLocalDataSource {
         .toList();
   }
 
+  // Nuevo método para obtener ejercicios por sessionId específico
+  Future<List<ExerciseDbModel>> getCompletedExercisesBySessionId(
+    String sessionId,
+  ) async {
+    final db = await databaseHelper.database;
+    final ejercicios = await db.rawQuery(
+      '''
+        SELECT e.*
+        FROM exercise e
+        INNER JOIN session_exercise se ON e.id = se.exercise_id
+        WHERE se.session_id = ? AND se.status = 'completed';
+      ''',
+      [sessionId],
+    );
+
+    return ejercicios
+        .map((ejercicio) => ExerciseDbModel.fromJson(ejercicio))
+        .toList();
+  }
+
   Future<List<ExerciseSetDbModel>> getSeriesByExerciseId(
       String exerciseId) async {
     final db = await databaseHelper.database;
@@ -69,6 +93,23 @@ class RecordLocalDataSource {
         WHERE se.exercise_id = ? AND es.status = 'completed';
       ''',
       [exerciseId],
+    );
+
+    return series.map((serie) => ExerciseSetDbModel.fromJson(serie)).toList();
+  }
+
+  // Nuevo método para obtener series por ejercicio y sesión específicos
+  Future<List<ExerciseSetDbModel>> getSeriesByExerciseAndSessionId(
+      String exerciseId, String sessionId) async {
+    final db = await databaseHelper.database;
+    final series = await db.rawQuery(
+      '''
+        SELECT es.*
+        FROM exercise_set es
+        INNER JOIN session_exercise se ON es.session_exercise_id = se.id
+        WHERE se.exercise_id = ? AND se.session_id = ? AND es.status = 'completed';
+      ''',
+      [exerciseId, sessionId],
     );
 
     return series.map((serie) => ExerciseSetDbModel.fromJson(serie)).toList();
@@ -112,6 +153,49 @@ class RecordLocalDataSource {
 
   Future<void> deleteRutina(String id) async {
     final db = await databaseHelper.database;
-    await db.delete(RoutineDbModel.table, where: 'id = ?', whereArgs: [id]);
+    await db.delete(
+      RoutineDbModel.table,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
+  // Método privado para corregir datos inconsistentes
+  Future<void> _fixInconsistentCompletedSessions(Database db) async {
+    try {
+      // Buscar sesiones completed sin timestamps
+      final inconsistentSessions = await db.query(
+        RoutineSessionDbModel.table,
+        where: 'status = ? AND (start_time IS NULL OR end_time IS NULL)',
+        whereArgs: [RoutineSessionStatus.completed.name],
+      );
+
+      for (var session in inconsistentSessions) {
+        final sessionId = session['id'] as String;
+        final createdAt = session['created_at'] as String;
+
+        print('🔧 Corrigiendo sesión inconsistente: $sessionId');
+
+        // Asignar timestamps basados en created_at si faltan
+        final createdDate = DateTime.parse(createdAt);
+        final estimatedStartTime = createdDate;
+        final estimatedEndTime =
+            createdDate.add(const Duration(minutes: 45)); // Duración estimada
+
+        await db.update(
+          RoutineSessionDbModel.table,
+          {
+            'start_time':
+                session['start_time'] ?? estimatedStartTime.toIso8601String(),
+            'end_time':
+                session['end_time'] ?? estimatedEndTime.toIso8601String(),
+          },
+          where: 'id = ?',
+          whereArgs: [sessionId],
+        );
+      }
+    } catch (e) {
+      print('⚠️ Error corrigiendo sesiones inconsistentes: $e');
+    }
   }
 }

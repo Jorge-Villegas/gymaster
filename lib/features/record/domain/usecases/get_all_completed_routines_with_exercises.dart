@@ -12,6 +12,6 @@ class GetAllCompletedRoutinesWithExercises
 
   @override
   Future<Either<Failure, List<RecordRutina>>> call(NoParams params) async {
-    return await repository.getAllCompletedRoutinesWithExercises();
+    return await repository.obtenerTodasLasRutinasCompletadasConEjercicios();
   }
 }

@@ -53,4 +53,10 @@ class AppColors {
   static const Color happyYellow = Color(0xFFF1C40F); // Amarillo feliz
   static const Color energeticCoral = Color(0xFFFF7675); // Coral energético
   static const Color focusIndigo = Color(0xFF6C5CE7); // Índigo concentración
+
+  // === ALIAS PARA BOTONES (facilita uso en ChicletButtonVariants) ===
+  static const Color success = successGreen;
+  static const Color error = motivationRed;
+  static const Color warning = energyOrange;
+  static const Color info = calmBlue;
 }

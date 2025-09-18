@@ -97,4 +97,31 @@ class MyApp extends StatelessWidget {
       },
     );
   }
+  // @override
+  // Widget build(BuildContext context) {
+  //   return BlocBuilder<SettingCubit, SettingState>(
+  //     builder: (context, state) {
+  //       bool isDarkMode = false;
+  //       if (state is SettingLoaded) {
+  //         isDarkMode = state.isDarkMode;
+  //       }
+  //       return MaterialApp(
+  //         theme: ThemeData(
+  //           fontFamily: 'Poppins', // Fuente predeterminada
+  //         ),
+  //         locale: const Locale('es', 'US'),
+  //         localizationsDelegates: const [
+  //           GlobalCupertinoLocalizations.delegate,
+  //           GlobalMaterialLocalizations.delegate,
+  //           GlobalWidgetsLocalizations.delegate,
+  //         ],
+  //         supportedLocales: const [Locale('es', 'US')],
+  //         debugShowCheckedModeBanner: false,
+  //         title: 'GyMaster',
+  //         // home: ChicletButtonDemoPage(),
+  //         home: const ThemePreviewPage(),
+  //       );
+  //     },
+  //   );
+  // }
 }
