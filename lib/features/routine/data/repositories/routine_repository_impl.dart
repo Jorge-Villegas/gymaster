@@ -136,9 +136,9 @@ class RoutineRepositoryImpl implements RoutineRepository {
             .map(
               (ejercicio) => EjerciciosPorMusculoModel(
                 id: ejercicio.id,
-                nombre: ejercicio.name,
-                descripcion: ejercicio.description ?? '',
-                imagenDireccion: ejercicio.imagePath ?? '',
+                nombre: ejercicio.nombre,
+                descripcion: ejercicio.descripcion ?? '',
+                imagenDireccion: ejercicio.rutaImagen ?? '',
                 musculos: [],
               ),
             )
@@ -702,7 +702,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
         for (var sessionExercise in sessionExercises) {
           // Crear nuevo session_exercise para la nueva sesión
           final newSessionExerciseId = idGenerator.generateId();
-          final newSessionExercise = SessionExerciseDbModel(
+          final newSessionExercise = SessionEjercicioDbModel(
             id: newSessionExerciseId,
             sessionId: newSession.id,
             exerciseId: sessionExercise.exerciseId,

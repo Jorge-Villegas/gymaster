@@ -93,7 +93,7 @@ class EjercicioRutinaSeeder {
 
   //   // Obtener ejercicios y rutinas existentes
   //   List<Map<String, dynamic>> ejercicios = await db.query(
-  //     ExerciseDbModel.table,
+  //     EjercicioDbModel.table,
   //   );
   //   List<Exercise> ejerciciosdb = listaEjerciciosFromMapList(ejercicios);
 

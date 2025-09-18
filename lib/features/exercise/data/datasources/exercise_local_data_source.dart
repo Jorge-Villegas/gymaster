@@ -12,12 +12,12 @@ class ExerciseLocalDataSource {
   Future<List<ExerciseModel>> getAllExercises() async {
     try {
       final db = await databaseHelper.database;
-      final exercises = await db.query(ExerciseDbModel.table);
+      final exercises = await db.query(EjercicioDbModel.tabla);
 
       List<ExerciseModel> exerciseModels = [];
 
       for (var exercise in exercises) {
-        final exerciseDB = ExerciseDbModel.fromJson(exercise);
+        final exerciseDB = EjercicioDbModel.fromJson(exercise);
         final muscles = await getMusclesForExercise(exerciseDB.id);
         exerciseModels.add(
           ExerciseModel.fromDatabase(
@@ -59,7 +59,7 @@ class ExerciseLocalDataSource {
       final exercises = await db.rawQuery(
         '''
       SELECT DISTINCT e.*
-      FROM ${ExerciseDbModel.table} e
+      FROM ${EjercicioDbModel.tabla} e
       INNER JOIN ${ExerciseMuscleDbModel.table} em ON e.id = em.exercise_id
       WHERE em.muscle_id = ?
       ''',
@@ -70,7 +70,7 @@ class ExerciseLocalDataSource {
 
       // Para cada ejercicio, obtener todos sus músculos relacionados
       for (var exercise in exercises) {
-        final exerciseDB = ExerciseDbModel.fromJson(exercise);
+        final exerciseDB = EjercicioDbModel.fromJson(exercise);
         final muscles = await getMusclesForExercise(exerciseDB.id);
         exerciseModels.add(
           ExerciseModel.fromDatabase(
@@ -90,14 +90,14 @@ class ExerciseLocalDataSource {
     try {
       final db = await databaseHelper.database;
       final results = await db.query(
-        ExerciseDbModel.table,
+        EjercicioDbModel.tabla,
         where: 'id = ?',
         whereArgs: [id],
       );
 
       if (results.isEmpty) return null;
 
-      final exerciseDB = ExerciseDbModel.fromJson(results.first);
+      final exerciseDB = EjercicioDbModel.fromJson(results.first);
       final muscles = await getMusclesForExercise(exerciseDB.id);
 
       return ExerciseModel.fromDatabase(
@@ -113,7 +113,7 @@ class ExerciseLocalDataSource {
     try {
       final db = await databaseHelper.database;
       final exercises = await db.query(
-        ExerciseDbModel.table,
+        EjercicioDbModel.tabla,
         where: 'name LIKE ? OR description LIKE ?',
         whereArgs: ['%$query%', '%$query%'],
       );
@@ -121,7 +121,7 @@ class ExerciseLocalDataSource {
       List<ExerciseModel> exerciseModels = [];
 
       for (var exercise in exercises) {
-        final exerciseDB = ExerciseDbModel.fromJson(exercise);
+        final exerciseDB = EjercicioDbModel.fromJson(exercise);
         final muscles = await getMusclesForExercise(exerciseDB.id);
         exerciseModels.add(
           ExerciseModel.fromDatabase(

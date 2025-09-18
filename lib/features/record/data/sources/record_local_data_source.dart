@@ -43,7 +43,7 @@ class RecordLocalDataSource {
     }
   }
 
-  Future<List<ExerciseDbModel>> getCompletedExercisesByRoutineId(
+  Future<List<EjercicioDbModel>> getCompletedExercisesByRoutineId(
     String routineId,
   ) async {
     final db = await databaseHelper.database;
@@ -59,12 +59,12 @@ class RecordLocalDataSource {
     );
 
     return ejercicios
-        .map((ejercicio) => ExerciseDbModel.fromJson(ejercicio))
+        .map((ejercicio) => EjercicioDbModel.fromJson(ejercicio))
         .toList();
   }
 
   // Nuevo método para obtener ejercicios por sessionId específico
-  Future<List<ExerciseDbModel>> getCompletedExercisesBySessionId(
+  Future<List<EjercicioDbModel>> getCompletedExercisesBySessionId(
     String sessionId,
   ) async {
     final db = await databaseHelper.database;
@@ -79,7 +79,7 @@ class RecordLocalDataSource {
     );
 
     return ejercicios
-        .map((ejercicio) => ExerciseDbModel.fromJson(ejercicio))
+        .map((ejercicio) => EjercicioDbModel.fromJson(ejercicio))
         .toList();
   }
 

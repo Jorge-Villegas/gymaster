@@ -1,69 +1,69 @@
 import 'dart:convert';
 
-ExerciseDbModel exerciseFromJson(String str) =>
-    ExerciseDbModel.fromJson(json.decode(str));
+EjercicioDbModel exerciseFromJson(String str) =>
+    EjercicioDbModel.fromJson(json.decode(str));
 
-String exerciseToJson(ExerciseDbModel data) => json.encode(data.toJson());
+String exerciseToJson(EjercicioDbModel data) => json.encode(data.toJson());
 
-class ExerciseDbModel {
+class EjercicioDbModel {
   // Nombres de las columnas de la tabla
-  static const String table = 'exercise';
+  static const String tabla = 'ejercicio';
   static const String columnId = 'id';
-  static const String columnName = 'name';
-  static const String columnDescription = 'description';
-  static const String columnImagePath = 'image_path';
-  static const String columnCreatedAt = 'created_at';
-  static const String columnUpdatedAt = 'updated_at';
+  static const String columnaNombre = 'nombre';
+  static const String columnaDescripcion = 'descripcion';
+  static const String columnaRutaImagen = 'ruta_imagen';
+  static const String columnaFechaCreacion = 'fecha_creacion';
+  static const String columnaFechaActualizacion = 'fecha_actualizacion';
 
   final String id;
-  final String name;
-  final String? description;
-  final String? imagePath;
-  final String createdAt;
-  final String? updatedAt;
+  final String nombre;
+  final String? descripcion;
+  final String? rutaImagen;
+  final String fechaCreacion;
+  final String? fechaActualizacion;
 
-  ExerciseDbModel({
+  EjercicioDbModel({
     required this.id,
-    required this.name,
-    this.description,
-    this.imagePath,
-    required this.createdAt,
-    this.updatedAt,
+    required this.nombre,
+    this.descripcion,
+    this.rutaImagen,
+    required this.fechaCreacion,
+    this.fechaActualizacion,
   });
 
-  ExerciseDbModel copyWith({
+  EjercicioDbModel copyWith({
     String? id,
-    String? name,
-    String? description,
-    String? imagePath,
-    String? createdAt,
-    String? updatedAt,
+    String? nombre,
+    String? descripcion,
+    String? rutaImagen,
+    String? fechaCreacion,
+    String? fechaActualizacion,
   }) =>
-      ExerciseDbModel(
+      EjercicioDbModel(
         id: id ?? this.id,
-        name: name ?? this.name,
-        description: description ?? this.description,
-        imagePath: imagePath ?? this.imagePath,
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
+        nombre: nombre ?? this.nombre,
+        descripcion: descripcion ?? this.descripcion,
+        rutaImagen: rutaImagen ?? this.rutaImagen,
+        fechaCreacion: fechaCreacion ?? this.fechaCreacion,
+        fechaActualizacion: fechaActualizacion ?? this.fechaActualizacion,
       );
 
-  factory ExerciseDbModel.fromJson(Map<String, dynamic> json) =>
-      ExerciseDbModel(
+  factory EjercicioDbModel.fromJson(Map<String, dynamic> json) =>
+      EjercicioDbModel(
         id: json["id"],
-        name: json["name"],
-        description: json["description"],
-        imagePath: json["image_path"],
-        createdAt: json["created_at"],
-        updatedAt: json["updated_at"],
+        nombre: json["nombre"],
+        descripcion: json["descripcion"],
+        rutaImagen: json["ruta_imagen"],
+        fechaCreacion: json["fecha_creacion"],
+        fechaActualizacion: json["fecha_actualizacion"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "name": name,
-        "description": description,
-        "image_path": imagePath,
-        "created_at": createdAt,
-        "updated_at": updatedAt,
+        "nombre": nombre,
+        "descripcion": descripcion,
+        "ruta_imagen": rutaImagen,
+        "fecha_creacion": fechaCreacion,
+        "fecha_actualizacion": fechaActualizacion,
       };
 }

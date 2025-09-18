@@ -16,14 +16,14 @@ class ExerciseModel extends Exercise {
   });
 
   factory ExerciseModel.fromDatabase(
-    exercise_db.ExerciseDbModel exerciseDB,
+    exercise_db.EjercicioDbModel exerciseDB,
     List<String> muscles,
   ) {
     return ExerciseModel(
       id: exerciseDB.id,
-      name: exerciseDB.name,
-      description: exerciseDB.description ?? '',
-      imagePath: exerciseDB.imagePath ?? '',
+      name: exerciseDB.nombre,
+      description: exerciseDB.descripcion ?? '',
+      imagePath: exerciseDB.rutaImagen ?? '',
       targetMuscles: muscles,
       equipment: '',
       instructions: '',

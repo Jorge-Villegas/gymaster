@@ -65,7 +65,7 @@ class EjercicioModel extends Ejercicio {
   }
 
   factory EjercicioModel.fromDatabase(
-      ejercicio_db.ExerciseDbModel ejercicioDB) {
-    return EjercicioModel(id: ejercicioDB.id, nombre: ejercicioDB.name);
+      ejercicio_db.EjercicioDbModel ejercicioDB) {
+    return EjercicioModel(id: ejercicioDB.id, nombre: ejercicioDB.nombre);
   }
 }

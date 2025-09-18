@@ -97,13 +97,13 @@ class DatabaseHelper {
       ''');
 
     await db.execute('''
-        CREATE TABLE ${ExerciseDbModel.table} (
-          ${ExerciseDbModel.columnId}           TEXT PRIMARY KEY,
-          ${ExerciseDbModel.columnName}         TEXT NOT NULL,
-          ${ExerciseDbModel.columnDescription}  TEXT,
-          ${ExerciseDbModel.columnImagePath}    TEXT,
-          ${ExerciseDbModel.columnCreatedAt}    DATETIME DEFAULT CURRENT_TIMESTAMP,
-          ${ExerciseDbModel.columnUpdatedAt}    DATETIME
+        CREATE TABLE ${EjercicioDbModel.tabla} (
+          ${EjercicioDbModel.columnId}           TEXT PRIMARY KEY,
+          ${EjercicioDbModel.columnaNombre}         TEXT NOT NULL,
+          ${EjercicioDbModel.columnaDescripcion}  TEXT,
+          ${EjercicioDbModel.columnaRutaImagen}    TEXT,
+          ${EjercicioDbModel.columnaFechaCreacion}    DATETIME DEFAULT CURRENT_TIMESTAMP,
+          ${EjercicioDbModel.columnaFechaActualizacion}    DATETIME
         )
       ''');
 
@@ -127,12 +127,12 @@ class DatabaseHelper {
       ''');
 
     await db.execute('''
-        CREATE TABLE ${SessionExerciseDbModel.table} (
-          ${SessionExerciseDbModel.columnId}         TEXT PRIMARY KEY,
-          ${SessionExerciseDbModel.columnSessionId}  TEXT NOT NULL,
-          ${SessionExerciseDbModel.columnExerciseId} TEXT NOT NULL,
-          ${SessionExerciseDbModel.columnOrderIndex} INTEGER DEFAULT 0,
-          ${SessionExerciseDbModel.columnStatus}     TEXT CHECK(status IN ('pendiente','en_progreso','completado','cancelado')),
+        CREATE TABLE ${SessionEjercicioDbModel.table} (
+          ${SessionEjercicioDbModel.columnId}         TEXT PRIMARY KEY,
+          ${SessionEjercicioDbModel.columnSessionId}  TEXT NOT NULL,
+          ${SessionEjercicioDbModel.columnExerciseId} TEXT NOT NULL,
+          ${SessionEjercicioDbModel.columnOrderIndex} INTEGER DEFAULT 0,
+          ${SessionEjercicioDbModel.columnStatus}     TEXT CHECK(status IN ('pendiente','en_progreso','completado','cancelado')),
           FOREIGN KEY (session_id)    REFERENCES routine_session  (id)   ON DELETE CASCADE,
           FOREIGN KEY (exercise_id)   REFERENCES exercise         (id)   ON DELETE CASCADE
         )

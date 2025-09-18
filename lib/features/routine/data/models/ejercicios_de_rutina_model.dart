@@ -84,7 +84,7 @@ class EjercicioModel extends Ejercicio {
   });
 
   factory EjercicioModel.fromDatabase({
-    required ExerciseDbModel ejercicioDB,
+    required EjercicioDbModel ejercicioDB,
     required String status,
     required int orderIndex,
     List<SeriesDelEjercicioModel>? series,
@@ -93,9 +93,9 @@ class EjercicioModel extends Ejercicio {
     return EjercicioModel(
       estado: status,
       id: ejercicioDB.id,
-      nombre: ejercicioDB.name,
-      imagenDireccion: ejercicioDB.imagePath ?? '',
-      descripcion: ejercicioDB.description ?? '',
+      nombre: ejercicioDB.nombre,
+      imagenDireccion: ejercicioDB.rutaImagen ?? '',
+      descripcion: ejercicioDB.descripcion ?? '',
       series: series ?? [],
       musculos: musculos ?? [],
       orderIndex: orderIndex,

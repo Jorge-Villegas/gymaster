@@ -82,14 +82,14 @@ class RecordEjercicios {
   }
 
   factory RecordEjercicios.fromDatabase({
-    required ExerciseDbModel ejercicioDB,
+    required EjercicioDbModel ejercicioDB,
     required List<SeriesDelEjercicio> seriesDelEjercicio,
   }) {
     return RecordEjercicios(
       id: ejercicioDB.id,
-      nombre: ejercicioDB.name,
+      nombre: ejercicioDB.nombre,
       series: [],
-      iconoPath: ejercicioDB.imagePath ?? '',
+      iconoPath: ejercicioDB.rutaImagen ?? '',
       seriesDelEjercicio: seriesDelEjercicio,
     );
   }
