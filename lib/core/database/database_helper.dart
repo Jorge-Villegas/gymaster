@@ -128,7 +128,7 @@ class DatabaseHelper {
       ''');
 
     await db.execute('''
-        CREATE TABLE ${SessionEjercicioDbModel.table} (
+        CREATE TABLE ${SessionEjercicioDbModel.tabla} (
           ${SessionEjercicioDbModel.columnId}         TEXT PRIMARY KEY,
           ${SessionEjercicioDbModel.columnSessionId}  TEXT NOT NULL,
           ${SessionEjercicioDbModel.columnExerciseId} TEXT NOT NULL,
@@ -147,7 +147,7 @@ class DatabaseHelper {
           ${SerieEjercicioDbModel.columnaRepeticiones}        INTEGER,
           ${SerieEjercicioDbModel.columnaTiempoDescanso}           INTEGER,
           ${SerieEjercicioDbModel.columnaEstado}             TEXT CHECK(${SerieEjercicioDbModel.columnaEstado} IN ('pendiente','completado','fallida')),
-          FOREIGN KEY (${SerieEjercicioDbModel.columnaEjercicioSesionId}) REFERENCES ${SessionEjercicioDbModel.table} (id) ON DELETE CASCADE
+          FOREIGN KEY (${SerieEjercicioDbModel.columnaEjercicioSesionId}) REFERENCES ${SessionEjercicioDbModel.tabla} (id) ON DELETE CASCADE
         )
       ''');
 

@@ -8,7 +8,7 @@ String sessionExerciseToJson(SessionEjercicioDbModel data) =>
 
 class SessionEjercicioDbModel {
   // Nombres de las columnas de la tabla
-  static const String table = 'session_exercise';
+  static const String tabla = 'session_exercise';
   static const String columnId = 'id';
   static const String columnSessionId = 'session_id';
   static const String columnExerciseId = 'exercise_id';

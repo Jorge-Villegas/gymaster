@@ -417,7 +417,7 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
 
           // Find the session_exercise_id for this exercise
           final sessionExerciseRows = await txn.query(
-            SessionEjercicioDbModel.table,
+            SessionEjercicioDbModel.tabla,
             where: 'session_id = ? AND exercise_id = ?',
             whereArgs: [routineSessionId, ejercicio.id],
           );
@@ -427,7 +427,7 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
 
             // Update the order_index
             await txn.update(
-              SessionEjercicioDbModel.table,
+              SessionEjercicioDbModel.tabla,
               {'order_index': i},
               where: 'id = ?',
               whereArgs: [sessionExerciseId],
