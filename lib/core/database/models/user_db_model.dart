@@ -1,67 +1,68 @@
 import 'dart:convert';
 
-UserDbModel userFromJson(String str) => UserDbModel.fromJson(json.decode(str));
+UsuarioDbModel userFromJson(String str) =>
+    UsuarioDbModel.fromJson(json.decode(str));
 
-String userToJson(UserDbModel data) => json.encode(data.toJson());
+String userToJson(UsuarioDbModel data) => json.encode(data.toJson());
 
-class UserDbModel {
+class UsuarioDbModel {
   //nombres de las columnas de la tabla
-  static const String table = 'user';
-  static const String columnId = 'id';
-  static const String columnUserName = 'username';
-  static const String columnEmain = 'email';
-  static const String columnPassword = 'password';
-  static const String columnCreatedAt = 'created_at';
-  static const String columnUpdatedAt = 'updated_at';
+  static const String table = 'usuario';
+  static const String columnaId = 'id';
+  static const String columnaNombreUsuario = 'nombre_usuario';
+  static const String columnaCorreo = 'correo';
+  static const String columnaContrasena = 'contrasena';
+  static const String columnaFechaCreacion = 'fecha_creacion';
+  static const String columnaFechaActualizacion = 'fecha_actualizacion';
 
   final String id;
-  final String username;
-  final String email;
-  final String password;
-  final String createdAt;
-  final String updatedAt;
+  final String nombreUsuario;
+  final String correo;
+  final String contrasena;
+  final String fechaCreacion;
+  final String fechaActualizacion;
 
-  UserDbModel({
+  UsuarioDbModel({
     required this.id,
-    required this.username,
-    required this.email,
-    required this.password,
-    required this.createdAt,
-    required this.updatedAt,
+    required this.nombreUsuario,
+    required this.correo,
+    required this.contrasena,
+    required this.fechaCreacion,
+    required this.fechaActualizacion,
   });
 
-  UserDbModel copyWith({
+  UsuarioDbModel copyWith({
     String? id,
-    String? username,
-    String? email,
-    String? password,
-    String? createdAt,
-    String? updatedAt,
+    String? nombreUsuario,
+    String? correo,
+    String? contrasena,
+    String? fechaCreacion,
+    String? fechaActualizacion,
   }) =>
-      UserDbModel(
+      UsuarioDbModel(
         id: id ?? this.id,
-        username: username ?? this.username,
-        email: email ?? this.email,
-        password: password ?? this.password,
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
+        nombreUsuario: nombreUsuario ?? this.nombreUsuario,
+        correo: correo ?? this.correo,
+        contrasena: contrasena ?? this.contrasena,
+        fechaCreacion: fechaCreacion ?? this.fechaCreacion,
+        fechaActualizacion: fechaActualizacion ?? this.fechaActualizacion,
       );
 
-  factory UserDbModel.fromJson(Map<String, dynamic> json) => UserDbModel(
+  factory UsuarioDbModel.fromJson(Map<String, dynamic> json) => UsuarioDbModel(
         id: json["id"],
-        username: json["username"],
-        email: json["email"],
-        password: json["password"],
-        createdAt: json["created_at"],
-        updatedAt: json["updated_at"],
+        nombreUsuario: json["nombre_usuario"],
+        correo: json["correo"],
+        contrasena: json["contrasena"],
+        fechaCreacion: json["fecha_creacion"],
+        fechaActualizacion: json["fecha_actualizacion"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "username": username,
-        "email": email,
-        "password": password,
-        "created_at": createdAt,
-        "updated_at": updatedAt,
+        "nombre_usuario": nombreUsuario,
+        "correo": correo,
+        "contrasena": contrasena,
+        "fecha_creacion": fechaCreacion,
+        "fecha_actualizacion": fechaActualizacion,
       };
 }

@@ -60,13 +60,13 @@ class DatabaseHelper {
 
   Future<void> _onCreate(Database db, int version) async {
     await db.execute('''
-        CREATE TABLE ${UserDbModel.table} (
-          ${UserDbModel.columnId}          TEXT PRIMARY KEY,
-          ${UserDbModel.columnUserName}    TEXT UNIQUE NOT NULL,
-          ${UserDbModel.columnEmain}       TEXT UNIQUE NOT NULL,
-          ${UserDbModel.columnPassword}    TEXT NOT NULL,
-          ${UserDbModel.columnCreatedAt}   DATETIME DEFAULT CURRENT_TIMESTAMP,
-          ${UserDbModel.columnUpdatedAt}   DATETIME
+        CREATE TABLE ${UsuarioDbModel.table} (
+          ${UsuarioDbModel.columnaId}          TEXT PRIMARY KEY,
+          ${UsuarioDbModel.columnaNombreUsuario}    TEXT UNIQUE NOT NULL,
+          ${UsuarioDbModel.columnaCorreo}       TEXT UNIQUE NOT NULL,
+          ${UsuarioDbModel.columnaContrasena}    TEXT NOT NULL,
+          ${UsuarioDbModel.columnaFechaCreacion}   DATETIME DEFAULT CURRENT_TIMESTAMP,
+          ${UsuarioDbModel.columnaFechaActualizacion}   DATETIME
         )
       ''');
 
