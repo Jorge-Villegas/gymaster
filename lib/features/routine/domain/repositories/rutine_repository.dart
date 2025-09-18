@@ -74,8 +74,7 @@ abstract interface class RoutineRepository {
   });
 
   //obtener la ultima session de la rutina por su id
-  Future<Either<Failure, RoutineSessionDbModel>>
-      getLastRoutineSessionByRoutineId(
+  Future<Either<Failure, RutinaSesionDbModel>> getLastRoutineSessionByRoutineId(
     String id,
   );
 

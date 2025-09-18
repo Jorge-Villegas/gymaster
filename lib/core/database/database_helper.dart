@@ -85,13 +85,13 @@ class DatabaseHelper {
       ''');
 
     await db.execute('''
-        CREATE TABLE  ${RoutineSessionDbModel.table} (
-          ${RoutineSessionDbModel.columnId}          TEXT PRIMARY KEY,
-          ${RoutineSessionDbModel.columnRoutineId}   TEXT NOT NULL,
-          ${RoutineSessionDbModel.columnStartTime}   DATETIME,
-          ${RoutineSessionDbModel.columnEndTime}     DATETIME,
-          ${RoutineSessionDbModel.columnStatus}      TEXT CHECK(status IN ('pendiente','en_progreso','completado','cancelado')),
-          ${RoutineSessionDbModel.columnCreatedAt}   DATETIME DEFAULT CURRENT_TIMESTAMP,
+        CREATE TABLE  ${RutinaSesionDbModel.tabla} (
+          ${RutinaSesionDbModel.columnaId}          TEXT PRIMARY KEY,
+          ${RutinaSesionDbModel.columnaRutinaId}   TEXT NOT NULL,
+          ${RutinaSesionDbModel.columnaHoraInicio}   DATETIME,
+          ${RutinaSesionDbModel.columnaHoraFin}     DATETIME,
+          ${RutinaSesionDbModel.columnaEstado}      TEXT CHECK(status IN ('pendiente','en_progreso','completado','cancelado')),
+          ${RutinaSesionDbModel.columnaFechaCreacion}   DATETIME DEFAULT CURRENT_TIMESTAMP,
           FOREIGN KEY (routine_id)   REFERENCES routine   (id)  ON DELETE CASCADE
         )
       ''');

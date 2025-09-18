@@ -6,13 +6,13 @@ import 'package:gymaster/features/routine/domain/repositories/rutine_repository.
 
 class GetLastRoutineSessionByRoutineId
     implements
-        UseCase<RoutineSessionDbModel, GetLastRoutineSessionByRoutineIdParams> {
+        UseCase<RutinaSesionDbModel, GetLastRoutineSessionByRoutineIdParams> {
   final RoutineRepository repository;
 
   GetLastRoutineSessionByRoutineId(this.repository);
 
   @override
-  Future<Either<Failure, RoutineSessionDbModel>> call(
+  Future<Either<Failure, RutinaSesionDbModel>> call(
     GetLastRoutineSessionByRoutineIdParams params,
   ) async {
     return await repository.getLastRoutineSessionByRoutineId(params.idRoutine);

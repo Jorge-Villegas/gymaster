@@ -91,40 +91,39 @@ class RecordRepositoryImpl implements RecordRepository {
           RoutineDbModel? rutina;
           try {
             rutina = await localDataSource.getRutinaById(
-              rutinaSession.routineId,
+              rutinaSession.rutinaId,
             );
           } catch (e) {
-            print(
-                '⚠️ No se pudo obtener rutina ${rutinaSession.routineId}: $e');
+            print('⚠️ No se pudo obtener rutina ${rutinaSession.rutinaId}: $e');
             continue;
           }
 
-          if (rutinaSession.endTime == null || rutinaSession.endTime!.isEmpty) {
+          if (rutinaSession.horaFin == null || rutinaSession.horaFin!.isEmpty) {
             print('⚠️ endTime nulo o vacío para sesión ${rutinaSession.id}');
             continue;
           }
 
-          if (rutinaSession.startTime == null ||
-              rutinaSession.startTime!.isEmpty) {
+          if (rutinaSession.horaInicio == null ||
+              rutinaSession.horaInicio!.isEmpty) {
             print('⚠️ startTime nulo o vacío para sesión ${rutinaSession.id}');
             continue;
           }
 
           print(
-              '✅ Rutina ${rutina.nombre} ${rutinaSession.routineId} procesada con ${ejercicios.length} ejercicios');
+              '✅ Rutina ${rutina.nombre} ${rutinaSession.rutinaId} procesada con ${ejercicios.length} ejercicios');
 
           resultadoRutinas.add(
             RecordRutina(
               id: rutina.id,
               nombre: rutina.nombre,
-              fechaRealizada: DateTime.parse(rutinaSession.endTime!),
-              tiempoRealizado: rutinaSession.duration.toString(),
+              fechaRealizada: DateTime.parse(rutinaSession.horaFin!),
+              tiempoRealizado: rutinaSession.duracion.toString(),
               color: rutina.color ?? 0xFF2196F3,
               ejercicios: ejercicios,
             ),
           );
         } catch (e) {
-          print('⚠️ Error procesando rutina ${rutinaSession.routineId}: $e');
+          print('⚠️ Error procesando rutina ${rutinaSession.rutinaId}: $e');
           continue;
         }
       }

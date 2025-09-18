@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:gymaster/core/database/database_helper.dart';
+import 'package:gymaster/core/database/models/routine_session_db_model.dart';
 import 'package:gymaster/shared/utils/enum.dart';
 import 'package:gymaster/shared/utils/uuid_generator.dart';
 
@@ -34,16 +35,17 @@ class EjercicioRutinaSeeder {
       String status = random.nextBool()
           ? EstadoSesionRutina.completado.name
           : EstadoSesionRutina.pendiente.name;
-      await db.insert('routine_session', {
-        'id': sessionId,
-        'routine_id': routineId,
-        'start_time': DateTime.now()
+      await db.insert(RutinaSesionDbModel.tabla, {
+        RutinaSesionDbModel.columnaId: sessionId,
+        RutinaSesionDbModel.columnaRutinaId: routineId,
+        RutinaSesionDbModel.columnaHoraInicio: DateTime.now()
             .subtract(Duration(days: random.nextInt(30)))
             .toIso8601String(),
-        'end_time':
+        RutinaSesionDbModel.columnaHoraFin:
             status == 'completado' ? DateTime.now().toIso8601String() : null,
-        'status': status,
-        'created_at': DateTime.now().toIso8601String(),
+        RutinaSesionDbModel.columnaEstado: status,
+        RutinaSesionDbModel.columnaFechaCreacion:
+            DateTime.now().toIso8601String(),
       });
 
       // Seleccionar entre 5 a 10 ejercicios aleatorios

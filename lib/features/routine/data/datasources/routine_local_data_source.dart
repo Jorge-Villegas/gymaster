@@ -296,12 +296,12 @@ class RoutineLocalDataSource {
     return results.map((map) => RoutineDbModel.fromJson(map)).toList();
   }
 
-  Future<RoutineSessionDbModel?> getLastRoutineSessionByRoutineId(
+  Future<RutinaSesionDbModel?> getLastRoutineSessionByRoutineId(
       String id) async {
     try {
       final db = await databaseHelper.database;
       final result = await db.query(
-        RoutineSessionDbModel.table,
+        RutinaSesionDbModel.tabla,
         where: 'routine_id = ?',
         whereArgs: [id],
         orderBy: 'created_at DESC',
@@ -310,7 +310,7 @@ class RoutineLocalDataSource {
       if (result.isEmpty) {
         return null;
       }
-      return RoutineSessionDbModel.fromJson(result.first);
+      return RutinaSesionDbModel.fromJson(result.first);
     } catch (e) {
       return null;
     }
@@ -387,12 +387,11 @@ class RoutineLocalDataSource {
   }
 
   //creamos uns session de rutina
-  Future<bool> createRoutineSession(
-      RoutineSessionDbModel routineSession) async {
+  Future<bool> createRoutineSession(RutinaSesionDbModel routineSession) async {
     try {
       final db = await databaseHelper.database;
       final id = await db.insert(
-        RoutineSessionDbModel.table,
+        RutinaSesionDbModel.tabla,
         routineSession.toJson(),
       );
       return id > 0;
@@ -401,11 +400,11 @@ class RoutineLocalDataSource {
     }
   }
 
-  Future<RoutineSessionDbModel?> getRoutineSessionById(String id) async {
+  Future<RutinaSesionDbModel?> getRoutineSessionById(String id) async {
     try {
       final db = await databaseHelper.database;
       final result = await db.query(
-        RoutineSessionDbModel.table,
+        RutinaSesionDbModel.tabla,
         where: 'id = ?',
         whereArgs: [id],
       );
@@ -414,7 +413,7 @@ class RoutineLocalDataSource {
         return null; // No se encontró la rutina
       }
 
-      return RoutineSessionDbModel.fromJson(result.first);
+      return RutinaSesionDbModel.fromJson(result.first);
     } catch (e) {
       throw ServerException();
     }
@@ -690,17 +689,18 @@ class RoutineLocalDataSource {
       final values = {'status': status};
 
       if (startTime != null) {
-        values['start_time'] = startTime.toIso8601String();
+        values[RutinaSesionDbModel.columnaHoraInicio] =
+            startTime.toIso8601String();
       }
 
       if (endTime != null) {
-        values['end_time'] = endTime.toIso8601String();
+        values[RutinaSesionDbModel.columnaHoraFin] = endTime.toIso8601String();
       }
 
       final result = await db.update(
-        RoutineSessionDbModel.table,
+        RutinaSesionDbModel.tabla,
         values,
-        where: 'id = ?',
+        where: '${RutinaSesionDbModel.columnaId} = ?',
         whereArgs: [sessionId],
       );
 
@@ -711,14 +711,14 @@ class RoutineLocalDataSource {
   }
 
   /// Obtiene la sesión de rutina en progreso
-  Future<RoutineSessionDbModel?> getInProgressRoutineSession() async {
+  Future<RutinaSesionDbModel?> getInProgressRoutineSession() async {
     try {
       final db = await databaseHelper.database;
       final result = await db.query(
-        RoutineSessionDbModel.table,
-        where: 'status = ?',
+        RutinaSesionDbModel.tabla,
+        where: '${RutinaSesionDbModel.columnaEstado} = ?',
         whereArgs: [EstadoSesionRutina.en_progreso.name],
-        orderBy: 'created_at DESC',
+        orderBy: '${RutinaSesionDbModel.columnaFechaCreacion} DESC',
         limit: 1,
       );
 
@@ -726,7 +726,7 @@ class RoutineLocalDataSource {
         return null;
       }
 
-      return RoutineSessionDbModel.fromJson(result.first);
+      return RutinaSesionDbModel.fromJson(result.first);
     } catch (e) {
       throw ServerException();
     }
@@ -737,7 +737,7 @@ class RoutineLocalDataSource {
     try {
       final db = await databaseHelper.database;
       final result = await db.query(
-        RoutineSessionDbModel.table,
+        RutinaSesionDbModel.tabla,
         columns: ['status'],
         where: 'id = ?',
         whereArgs: [id],

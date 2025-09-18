@@ -209,7 +209,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
       // Obtener rutina
       final rutina = await localDataSource.getRutinaById(rutinaId);
 
-      RoutineSessionDbModel? session =
+      RutinaSesionDbModel? session =
           await localDataSource.getRoutineSessionById(
         idRoutineSession,
       );
@@ -217,11 +217,11 @@ class RoutineRepositoryImpl implements RoutineRepository {
       // Si no hay sesión, devolvemos un error
       // Creamos una sesión ya que sería la primera vez que entra a la rutina
       if (session == null) {
-        final newSession = RoutineSessionDbModel(
+        final newSession = RutinaSesionDbModel(
           id: idGenerator.generateId(),
-          routineId: rutinaId,
-          status: EstadoSesionRutina.pendiente.name,
-          createdAt: DateTime.now().toString(),
+          rutinaId: rutinaId,
+          estado: EstadoSesionRutina.pendiente.name,
+          fechaCreacion: DateTime.now().toString(),
         );
         final result = await localDataSource.createRoutineSession(newSession);
         if (!result) {
@@ -280,7 +280,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
         session: session.id,
         rutinaDB: rutina,
         ejercicios: ejerciciosConDetalles,
-        status: session.status,
+        status: session.estado,
       );
 
       print(
@@ -539,22 +539,21 @@ class RoutineRepositoryImpl implements RoutineRepository {
   }
 
   @override
-  Future<Either<Failure, RoutineSessionDbModel>>
-      getLastRoutineSessionByRoutineId(
+  Future<Either<Failure, RutinaSesionDbModel>> getLastRoutineSessionByRoutineId(
     String id,
   ) async {
-    RoutineSessionDbModel? session =
+    RutinaSesionDbModel? session =
         await localDataSource.getLastRoutineSessionByRoutineId(id);
 
     if (session != null) {
       return Right(session);
     }
 
-    final newSession = RoutineSessionDbModel(
+    final newSession = RutinaSesionDbModel(
       id: idGenerator.generateId(),
-      routineId: id,
-      status: EstadoSesionRutina.pendiente.name,
-      createdAt: DateTime.now().toString(),
+      rutinaId: id,
+      estado: EstadoSesionRutina.pendiente.name,
+      fechaCreacion: DateTime.now().toString(),
     );
     final result = await localDataSource.createRoutineSession(newSession);
 
@@ -673,17 +672,17 @@ class RoutineRepositoryImpl implements RoutineRepository {
       );
 
       if (currentSession != null &&
-          (currentSession.status == EstadoSesionRutina.completado.name ||
-              currentSession.status == EstadoSesionRutina.cancelado.name)) {
+          (currentSession.estado == EstadoSesionRutina.completado.name ||
+              currentSession.estado == EstadoSesionRutina.cancelado.name)) {
         // Crear una nueva sesión con estado pendiente (no en progreso)
         // Esto permite que se muestre el botón "Iniciar entrenamiento"
-        final newSession = RoutineSessionDbModel(
+        final newSession = RutinaSesionDbModel(
           id: idGenerator.generateId(),
-          routineId: routineId,
-          status: EstadoSesionRutina.pendiente.name, // Cambiar a pendiente
-          startTime: null, // No establecer tiempo hasta que realmente inicie
-          endTime: null, // Asegurar que endTime sea null para sesiones nuevas
-          createdAt: DateTime.now().toString(),
+          rutinaId: routineId,
+          estado: EstadoSesionRutina.pendiente.name, // Cambiar a pendiente
+          horaInicio: null, // No establecer tiempo hasta que realmente inicie
+          horaFin: null, // Asegurar que endTime sea null para sesiones nuevas
+          fechaCreacion: DateTime.now().toString(),
         );
 
         final sessionCreated = await localDataSource.createRoutineSession(
@@ -739,7 +738,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
 
       // Verificar si la sesión actual está en pendiente y necesita ser iniciada
       if (currentSession != null &&
-          currentSession.status == EstadoSesionRutina.pendiente.name) {
+          currentSession.estado == EstadoSesionRutina.pendiente.name) {
         // Actualizar la sesión de pendiente a en_progreso
         final result = await localDataSource.updateRoutineSessionStatus(
           sessionId: sessionId,

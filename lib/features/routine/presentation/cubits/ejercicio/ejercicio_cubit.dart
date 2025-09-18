@@ -33,7 +33,7 @@ class EjercicioCubit extends Cubit<EjercicioState> {
     ejercicios.fold((failure) => emit(EjercicioError(failure.errorMessage)), (
       ejercicios,
     ) async {
-      RoutineSessionDbModel? session;
+      RutinaSesionDbModel? session;
 
       //obtenermos la ultima session de la rutina
       final resultSession = await runWithTimeout(

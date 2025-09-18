@@ -89,7 +89,7 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
   }
 
   Future<String> getRoutineSessionByRoutineId(String idRutina) async {
-    RoutineSessionDbModel? session;
+    RutinaSesionDbModel? session;
 
     //obtenermos la ultima session de la rutina
     final resultSession = await runWithTimeout(
@@ -111,7 +111,7 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
     try {
       emit(EjerciciosByRutinaLoading());
 
-      RoutineSessionDbModel? session;
+      RutinaSesionDbModel? session;
 
       //obtenermos la ultima session de la rutina
       final resultSession = await runWithTimeout(
@@ -515,7 +515,7 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
         }
 
         // 2. Obtener la sesión actualizada
-        RoutineSessionDbModel? updatedSession;
+        RutinaSesionDbModel? updatedSession;
         final sessionResult = await getLastRoutineSessionByRoutineId(
           GetLastRoutineSessionByRoutineIdParams(idRoutine: rutinaId),
         );

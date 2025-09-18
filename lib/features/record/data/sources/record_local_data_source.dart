@@ -10,7 +10,7 @@ class RecordLocalDataSource {
 
   RecordLocalDataSource(this.databaseHelper);
 
-  Future<List<RoutineSessionDbModel>> getCompletedRoutines() async {
+  Future<List<RutinaSesionDbModel>> getCompletedRoutines() async {
     try {
       final db = await databaseHelper.database;
 
@@ -18,10 +18,11 @@ class RecordLocalDataSource {
       await _fixInconsistentCompletedSessions(db);
 
       final result = await db.query(
-        RoutineSessionDbModel.table,
-        where: 'status = ? AND start_time IS NOT NULL AND end_time IS NOT NULL',
+        RutinaSesionDbModel.tabla,
+        where:
+            'estado = ? AND ${RutinaSesionDbModel.columnaHoraInicio} IS NOT NULL AND ${RutinaSesionDbModel.columnaHoraFin} IS NOT NULL',
         whereArgs: [EstadoSesionRutina.completado.name],
-        orderBy: 'created_at DESC',
+        orderBy: '${RutinaSesionDbModel.columnaFechaCreacion} DESC',
       );
 
       if (result.isEmpty) {
@@ -29,7 +30,7 @@ class RecordLocalDataSource {
       }
 
       final sessions = result
-          .map((session) => RoutineSessionDbModel.fromJson(session))
+          .map((session) => RutinaSesionDbModel.fromJson(session))
           .toList();
 
       return sessions;
@@ -120,7 +121,7 @@ class RecordLocalDataSource {
       final db = await databaseHelper.database;
       final rutinas = await db.query(
         RoutineDbModel.tabla,
-        orderBy: 'created_at',
+        orderBy: RoutineDbModel.columnaFechaCreacion,
       );
       return rutinas.map((rutina) => RoutineDbModel.fromJson(rutina)).toList();
     } catch (e) {
@@ -165,14 +166,16 @@ class RecordLocalDataSource {
     try {
       // Buscar sesiones completed sin timestamps
       final inconsistentSessions = await db.query(
-        RoutineSessionDbModel.table,
-        where: 'status = ? AND (start_time IS NULL OR end_time IS NULL)',
+        RutinaSesionDbModel.tabla,
+        where:
+            '${RutinaSesionDbModel.columnaEstado} = ? AND (${RutinaSesionDbModel.columnaHoraInicio} IS NULL OR ${RutinaSesionDbModel.columnaHoraFin} IS NULL)',
         whereArgs: [EstadoSesionRutina.completado.name],
       );
 
       for (var session in inconsistentSessions) {
-        final sessionId = session['id'] as String;
-        final createdAt = session['created_at'] as String;
+        final sessionId = session[RutinaSesionDbModel.columnaId] as String;
+        final createdAt =
+            session[RutinaSesionDbModel.columnaFechaCreacion] as String;
 
         print('🔧 Corrigiendo sesión inconsistente: $sessionId');
 
@@ -183,14 +186,16 @@ class RecordLocalDataSource {
             createdDate.add(const Duration(minutes: 45)); // Duración estimada
 
         await db.update(
-          RoutineSessionDbModel.table,
+          RutinaSesionDbModel.tabla,
           {
-            'start_time':
-                session['start_time'] ?? estimatedStartTime.toIso8601String(),
-            'end_time':
-                session['end_time'] ?? estimatedEndTime.toIso8601String(),
+            RutinaSesionDbModel.columnaHoraInicio:
+                session[RutinaSesionDbModel.columnaHoraInicio] ??
+                    estimatedStartTime.toIso8601String(),
+            RutinaSesionDbModel.columnaHoraFin:
+                session[RutinaSesionDbModel.columnaHoraFin] ??
+                    estimatedEndTime.toIso8601String(),
           },
-          where: 'id = ?',
+          where: '${RutinaSesionDbModel.columnaId} = ?',
           whereArgs: [sessionId],
         );
       }
