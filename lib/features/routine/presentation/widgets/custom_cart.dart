@@ -81,7 +81,7 @@ class CustomCard extends StatelessWidget {
                       children: [
                         _buildImageWidget(imagenDireccion),
                         if (estadoEjercicio ==
-                            RoutineSessionStatus.completed.name)
+                            EstadoSesionRutina.completado.name)
                           Positioned.fill(
                             child: Container(
                               color: Colors.green.withAlpha(
@@ -97,7 +97,7 @@ class CustomCard extends StatelessWidget {
                             ),
                           ),
                         if (estadoEjercicio ==
-                            RoutineSessionStatus.in_progress.name)
+                            EstadoSesionRutina.en_progreso.name)
                           Positioned.fill(
                             child: Container(
                               color: Colors.orange.withAlpha(

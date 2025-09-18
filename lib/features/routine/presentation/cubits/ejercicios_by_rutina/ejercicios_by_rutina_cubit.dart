@@ -144,10 +144,10 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
   }
 
   void _handleEjerciciosResult(EjerciciosDeRutina r) {
-    if (r.estado == RoutineSessionStatus.cancelled.name) {
+    if (r.estado == EstadoSesionRutina.cancelado.name) {
       // Mostrar los ejercicios normalmente pero como "pending" para que se vea el botón de iniciar
       final ejerciciosConEstadoPending = r.copyWith(
-        estado: RoutineSessionStatus.pending.name, // Cambiar a pending
+        estado: EstadoSesionRutina.pendiente.name, // Cambiar a pending
       );
 
       if (r.ejercicios.isEmpty) {
@@ -171,7 +171,7 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
     }
 
     // Nuevo: Manejar rutinas completadas creando una nueva sesión automáticamente
-    if (r.estado == RoutineSessionStatus.completed.name) {
+    if (r.estado == EstadoSesionRutina.completado.name) {
       _createNewSessionForCompletedRoutine(r);
       return;
     }
@@ -236,13 +236,13 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
     );
 
     final updatedSerie = serie.copyWith(
-      estado: ExerciseSetStatus.completed.name,
+      estado: EstadoSerieEjercicio.completado.name,
     );
 
     final updatedEjercicio = ejercicio.copyWith(
-      estado: ejercicio.estado == ExerciseStatus.completed.name
-          ? ExerciseStatus.completed.name
-          : ExerciseStatus.in_progress.name,
+      estado: ejercicio.estado == EstadoEjercicio.completado.name
+          ? EstadoEjercicio.completado.name
+          : EstadoEjercicio.en_progreso.name,
     );
 
     await updateExerciseStatusUseCase(
@@ -303,7 +303,7 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
     } else if (ejercicioIndex + 1 < ejercicios.length) {
       // Avanza al siguiente ejercicio y reinicia el índice de la serie
       final updatedEjercicio = ejercicios[ejercicioIndex].copyWith(
-        estado: ExerciseStatus.completed.name,
+        estado: EstadoEjercicio.completado.name,
       );
       // Actualizar la lista de ejercicios con el ejercicio completado
       final updatedEjercicios = List<Ejercicio>.from(ejercicios)
@@ -362,12 +362,12 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
           // Si la serie coincide, la reemplaza con la serie actualizada
           return serie.id == updatedSerie.id ? updatedSerie : serie;
         }).toList();
-        // Retorna el ejercicio con las series actualizadas y el estado del ejercicio como 'in_progress' solo si no está completado
+        // Retorna el ejercicio con las series actualizadas y el estado del ejercicio como 'en_progreso' solo si no está completado
         return ejercicio.copyWith(
           series: updatedSeries,
-          estado: ejercicio.estado == ExerciseStatus.completed.name
-              ? ExerciseStatus.completed.name
-              : ExerciseStatus.in_progress.name,
+          estado: ejercicio.estado == EstadoEjercicio.completado.name
+              ? EstadoEjercicio.completado.name
+              : EstadoEjercicio.en_progreso.name,
         );
       }
       // Si el ejercicio no coincide, lo retorna sin cambios
@@ -557,7 +557,7 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
 
             // Asegurarse de que el estado refleje correctamente que la rutina está en progreso
             final updatedEjerciciosDeRutina = ejerciciosDeRutina.copyWith(
-              estado: RoutineSessionStatus.in_progress.name,
+              estado: EstadoSesionRutina.en_progreso.name,
             );
 
             emit(
@@ -646,7 +646,7 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
         (failure) {
           // Si hay un error, mostrar como pending pero con un mensaje
           final ejerciciosConEstadoPending = rutina.copyWith(
-            estado: RoutineSessionStatus.pending.name,
+            estado: EstadoSesionRutina.pendiente.name,
           );
 
           emit(
@@ -666,7 +666,7 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
     } catch (e) {
       // En caso de error, mostrar como pending
       final ejerciciosConEstadoPending = rutina.copyWith(
-        estado: RoutineSessionStatus.pending.name,
+        estado: EstadoSesionRutina.pendiente.name,
       );
 
       emit(

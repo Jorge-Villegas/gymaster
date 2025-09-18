@@ -14,13 +14,13 @@ class RecordLocalDataSource {
     try {
       final db = await databaseHelper.database;
 
-      // Corregir registros inconsistentes: sesiones marcadas como completed pero sin timestamps
+      // Corregir registros inconsistentes: sesiones marcadas como completadas pero sin timestamps
       await _fixInconsistentCompletedSessions(db);
 
       final result = await db.query(
         RoutineSessionDbModel.table,
         where: 'status = ? AND start_time IS NOT NULL AND end_time IS NOT NULL',
-        whereArgs: [RoutineSessionStatus.completed.name],
+        whereArgs: [EstadoSesionRutina.completado.name],
         orderBy: 'created_at DESC',
       );
 
@@ -52,7 +52,7 @@ class RecordLocalDataSource {
         FROM exercise e
         INNER JOIN session_exercise se ON e.id = se.exercise_id
         INNER JOIN routine_session rs ON se.session_id = rs.id
-        WHERE rs.routine_id = ? AND rs.status = 'completed' AND se.status = 'completed';
+        WHERE rs.routine_id = ? AND rs.status = 'completado' AND se.status = 'completado';
       ''',
       [routineId],
     );
@@ -72,7 +72,7 @@ class RecordLocalDataSource {
         SELECT e.*
         FROM exercise e
         INNER JOIN session_exercise se ON e.id = se.exercise_id
-        WHERE se.session_id = ? AND se.status = 'completed';
+        WHERE se.session_id = ? AND se.status = 'completado';
       ''',
       [sessionId],
     );
@@ -90,7 +90,7 @@ class RecordLocalDataSource {
         SELECT es.*
         FROM exercise_set es
         INNER JOIN session_exercise se ON es.session_exercise_id = se.id
-        WHERE se.exercise_id = ? AND es.status = 'completed';
+        WHERE se.exercise_id = ? AND es.status = 'completado';
       ''',
       [exerciseId],
     );
@@ -107,7 +107,7 @@ class RecordLocalDataSource {
         SELECT es.*
         FROM exercise_set es
         INNER JOIN session_exercise se ON es.session_exercise_id = se.id
-        WHERE se.exercise_id = ? AND se.session_id = ? AND es.status = 'completed';
+        WHERE se.exercise_id = ? AND se.session_id = ? AND es.status = 'completado';
       ''',
       [exerciseId, sessionId],
     );
@@ -167,7 +167,7 @@ class RecordLocalDataSource {
       final inconsistentSessions = await db.query(
         RoutineSessionDbModel.table,
         where: 'status = ? AND (start_time IS NULL OR end_time IS NULL)',
-        whereArgs: [RoutineSessionStatus.completed.name],
+        whereArgs: [EstadoSesionRutina.completado.name],
       );
 
       for (var session in inconsistentSessions) {

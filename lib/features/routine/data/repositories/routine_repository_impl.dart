@@ -220,7 +220,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
         final newSession = RoutineSessionDbModel(
           id: idGenerator.generateId(),
           routineId: rutinaId,
-          status: RoutineSessionStatus.pending.name,
+          status: EstadoSesionRutina.pendiente.name,
           createdAt: DateTime.now().toString(),
         );
         final result = await localDataSource.createRoutineSession(newSession);
@@ -313,7 +313,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
         weight: peso,
         repetitions: repeticiones,
         status: realizado == true
-            ? ExerciseSetStatus.completed.name
+            ? EstadoSerieEjercicio.completado.name
             : 'not completed',
         restTime: tiempoDescanso,
       );
@@ -336,7 +336,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
 
         //verificamos si todos los sets estan completados
         final allCompleted = sets.every(
-          (element) => element.status == ExerciseSetStatus.completed.name,
+          (element) => element.status == EstadoSerieEjercicio.completado.name,
         );
 
         //si todos los sets estan completados, actualizamos el sessionExercise
@@ -553,7 +553,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
     final newSession = RoutineSessionDbModel(
       id: idGenerator.generateId(),
       routineId: id,
-      status: RoutineSessionStatus.pending.name,
+      status: EstadoSesionRutina.pendiente.name,
       createdAt: DateTime.now().toString(),
     );
     final result = await localDataSource.createRoutineSession(newSession);
@@ -673,14 +673,14 @@ class RoutineRepositoryImpl implements RoutineRepository {
       );
 
       if (currentSession != null &&
-          (currentSession.status == RoutineSessionStatus.completed.name ||
-              currentSession.status == RoutineSessionStatus.cancelled.name)) {
+          (currentSession.status == EstadoSesionRutina.completado.name ||
+              currentSession.status == EstadoSesionRutina.cancelado.name)) {
         // Crear una nueva sesión con estado pendiente (no en progreso)
         // Esto permite que se muestre el botón "Iniciar entrenamiento"
         final newSession = RoutineSessionDbModel(
           id: idGenerator.generateId(),
           routineId: routineId,
-          status: RoutineSessionStatus.pending.name, // Cambiar a pending
+          status: EstadoSesionRutina.pendiente.name, // Cambiar a pendiente
           startTime: null, // No establecer tiempo hasta que realmente inicie
           endTime: null, // Asegurar que endTime sea null para sesiones nuevas
           createdAt: DateTime.now().toString(),
@@ -707,7 +707,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
             id: newSessionExerciseId,
             sessionId: newSession.id,
             exerciseId: sessionExercise.exerciseId,
-            status: SessionExerciseStatus.pending.name,
+            status: EstadoEjercicioSesion.pendiente.name,
             orderIndex: sessionExercise.orderIndex,
           );
 
@@ -725,8 +725,8 @@ class RoutineRepositoryImpl implements RoutineRepository {
               weight: set.weight,
               repetitions: set.repetitions,
               restTime: set.restTime,
-              status: ExerciseSetStatus
-                  .pending.name, // Reiniciar estado a pendiente
+              status: EstadoSerieEjercicio
+                  .pendiente.name, // Reiniciar estado a pendiente
             );
 
             await localDataSource.insertExerciseSet(newSet);
@@ -737,22 +737,22 @@ class RoutineRepositoryImpl implements RoutineRepository {
         return const Right(true);
       }
 
-      // Verificar si la sesión actual está en pending y necesita ser iniciada
+      // Verificar si la sesión actual está en pendiente y necesita ser iniciada
       if (currentSession != null &&
-          currentSession.status == RoutineSessionStatus.pending.name) {
-        // Actualizar la sesión de pending a in_progress
+          currentSession.status == EstadoSesionRutina.pendiente.name) {
+        // Actualizar la sesión de pendiente a en_progreso
         final result = await localDataSource.updateRoutineSessionStatus(
           sessionId: sessionId,
-          status: RoutineSessionStatus.in_progress.name,
+          status: EstadoSesionRutina.en_progreso.name,
           startTime: DateTime.now(),
         );
         return Right(result);
       }
 
-      // Si la sesión actual no estaba completada ni pending, solo actualizamos su estado a in_progress
+      // Si la sesión actual no estaba completada ni pendiente, solo actualizamos su estado a en_progreso
       final result = await localDataSource.updateRoutineSessionStatus(
         sessionId: sessionId,
-        status: RoutineSessionStatus.in_progress.name,
+        status: EstadoSesionRutina.en_progreso.name,
         startTime: DateTime.now(),
       );
       return Right(result);
@@ -768,7 +768,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
       final statusRoutineSession =
           await localDataSource.getRoutineSessionStatusById(sessionId);
 
-      if (statusRoutineSession == RoutineSessionStatus.completed.name) {
+      if (statusRoutineSession == EstadoSesionRutina.completado.name) {
         return Left(
           ServerFailure(errorMessage: 'La sesión ya ha sido completada'),
         );
@@ -776,7 +776,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
 
       final result = await localDataSource.updateRoutineSessionStatus(
         sessionId: sessionId,
-        status: RoutineSessionStatus.cancelled.name,
+        status: EstadoSesionRutina.cancelado.name,
         endTime: DateTime.now(),
       );
       return Right(result);
@@ -792,7 +792,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
       final routineSessionStatus =
           await localDataSource.getRoutineSessionStatusById(sessionId);
 
-      if (routineSessionStatus == RoutineSessionStatus.completed.name) {
+      if (routineSessionStatus == EstadoSesionRutina.completado.name) {
         return Left(
           ServerFailure(errorMessage: 'La sesión ya ha sido completada'),
         );
@@ -810,7 +810,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
       }
       final updateResult = await localDataSource.updateRoutineSessionStatus(
         sessionId: sessionId,
-        status: RoutineSessionStatus.completed.name,
+        status: EstadoSesionRutina.completado.name,
         endTime: DateTime.now(),
       );
       return Right(updateResult);

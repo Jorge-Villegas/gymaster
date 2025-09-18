@@ -15,7 +15,7 @@ class RealizarEjercicioRutinaCubit extends Cubit<RealizarEjercicioRutinaState> {
   iniciar({required EjerciciosDeRutina ejerciciosDeRutina}) {
     for (var ejercicio in ejerciciosDeRutina.ejercicios) {
       for (var serie in ejercicio.series) {
-        if (!(serie.estado == ExerciseSetStatus.completed.name)) {
+        if (!(serie.estado == EstadoSerieEjercicio.completado.name)) {
           _updateData(ejercicio: ejercicio, serie: serie);
           return;
         }

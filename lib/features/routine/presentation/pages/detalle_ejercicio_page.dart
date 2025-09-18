@@ -301,7 +301,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
     }).toList();
 
     final completedRows = ejercicio.series
-        .map((serie) => serie.estado == ExerciseSetStatus.completed.name)
+        .map((serie) => serie.estado == EstadoSerieEjercicio.completado.name)
         .toList();
 
     return Card(
@@ -349,7 +349,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
                     // Usar colores del tema para las filas
                     rowColors: ejercicio.series.map((serie) {
                       bool isCompleted =
-                          serie.estado == ExerciseSetStatus.completed.name;
+                          serie.estado == EstadoSerieEjercicio.completado.name;
                       return isCompleted
                           ? Colors.green.shade50
                           : Colors.grey.shade100;
@@ -398,9 +398,9 @@ class DetalleEjercicioScreen extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(ejercicios.length, (index) {
         final ejercicio = ejercicios[index];
-        final isCompleted = ejercicio.estado == ExerciseStatus.completed.name;
+        final isCompleted = ejercicio.estado == EstadoEjercicio.completado.name;
         final isInProgress =
-            ejercicio.estado == ExerciseStatus.in_progress.name;
+            ejercicio.estado == EstadoEjercicio.en_progreso.name;
         final isCurrent = index == currentEjercicioIndex;
 
         Color color;
@@ -636,7 +636,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
   Widget _buildActionButtons(BuildContext context, Ejercicio ejercicio,
       EjerciciosByRutinaSuccess state) {
     bool todasLasSeriesCompletadas = ejercicio.series.every(
-      (serie) => serie.estado == ExerciseSetStatus.completed.name,
+      (serie) => serie.estado == EstadoSerieEjercicio.completado.name,
     );
 
     // Verificar si este es el último ejercicio y todas sus series están hechas

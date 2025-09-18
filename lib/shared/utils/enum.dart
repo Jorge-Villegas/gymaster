@@ -1,14 +1,14 @@
 // ignore_for_file: constant_identifier_names
 
-enum ExerciseStatus { pending, in_progress, completed, cancelled }
+enum EstadoEjercicio { pendiente, en_progreso, completado, cancelado }
 
-enum RoutineSessionStatus { pending, in_progress, completed, cancelled }
+enum EstadoSesionRutina { pendiente, en_progreso, completado, cancelado }
 
-enum SessionExerciseStatus { pending, in_progress, completed, cancelled }
+enum EstadoEjercicioSesion { pendiente, en_progreso, completado, cancelado }
 
-enum ExerciseSetStatus { pending, completed, failed }
+enum EstadoSerieEjercicio { pendiente, completado, fallida }
 
-enum AuditLogAction { insert, update, delete }
+enum AccionRegistroAuditoria { insert, update, delete }
 
 extension EnumToString on Enum {
   String get name => toString().split('.').last;

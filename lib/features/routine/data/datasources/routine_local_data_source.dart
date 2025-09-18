@@ -253,7 +253,7 @@ class RoutineLocalDataSource {
           id: idSessionExercise,
           sessionId: idRoutineSession,
           exerciseId: idEjercicio,
-          status: SessionExerciseStatus.pending.name,
+          status: EstadoEjercicioSesion.pendiente.name,
           orderIndex: nextOrder,
         );
 
@@ -269,7 +269,7 @@ class RoutineLocalDataSource {
             weight: serie.peso,
             repetitions: serie.numeroRepeticon,
             restTime: 60, //TODO: Cambiar a valor configurable
-            status: ExerciseSetStatus.pending.name,
+            status: EstadoSerieEjercicio.pendiente.name,
           );
           await txn.insert(ExerciseSetDbModel.table, exerciseSet.toJson());
         }
@@ -496,7 +496,7 @@ class RoutineLocalDataSource {
         await txn.update(
           SessionExerciseDbModel.table,
           {
-            'status': SessionExerciseStatus.completed.name,
+            'status': EstadoEjercicioSesion.completado.name,
             'order_index': totalExercises +
                 1000, // Un valor alto para asegurar que esté al final
           },
@@ -510,7 +510,7 @@ class RoutineLocalDataSource {
           where: 'session_id = ?',
           whereArgs: [routineSessionId],
           orderBy:
-              "CASE WHEN status = 'completed' THEN 1 ELSE 0 END, order_index ASC",
+              "CASE WHEN status = 'completado' THEN 1 ELSE 0 END, order_index ASC",
         );
 
         // Reasignar los order_index en secuencia
@@ -604,7 +604,7 @@ class RoutineLocalDataSource {
       final db = await databaseHelper.database;
       final result = await db.update(
         SessionExerciseDbModel.table,
-        {'status': SessionExerciseStatus.completed.name},
+        {'status': EstadoEjercicioSesion.completado.name},
         where: 'id = ?',
         whereArgs: [id],
       );
@@ -643,7 +643,7 @@ class RoutineLocalDataSource {
 
         final hasCompletedOrInProgressSets = exerciseSets.any((set) {
           final status = set['status'] as String;
-          return status == 'completed' || status == 'in_progress';
+          return status == 'completado' || status == 'en_progreso';
         });
 
         if (hasCompletedOrInProgressSets) {
@@ -717,7 +717,7 @@ class RoutineLocalDataSource {
       final result = await db.query(
         RoutineSessionDbModel.table,
         where: 'status = ?',
-        whereArgs: [RoutineSessionStatus.in_progress.name],
+        whereArgs: [EstadoSesionRutina.en_progreso.name],
         orderBy: 'created_at DESC',
         limit: 1,
       );
@@ -763,7 +763,7 @@ class RoutineLocalDataSource {
         SessionExerciseDbModel.table,
         columns: ['COUNT(*) as count'],
         where: 'session_id = ? AND status != ?',
-        whereArgs: [routineSessionId, SessionExerciseStatus.completed.name],
+        whereArgs: [routineSessionId, EstadoEjercicioSesion.completado.name],
       );
 
       final count = Sqflite.firstIntValue(result) ?? 0;

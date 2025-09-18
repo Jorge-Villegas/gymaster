@@ -90,7 +90,7 @@ class DatabaseHelper {
           ${RoutineSessionDbModel.columnRoutineId}   TEXT NOT NULL,
           ${RoutineSessionDbModel.columnStartTime}   DATETIME,
           ${RoutineSessionDbModel.columnEndTime}     DATETIME,
-          ${RoutineSessionDbModel.columnStatus}      TEXT CHECK(status IN ('pending','in_progress','completed','cancelled')),
+          ${RoutineSessionDbModel.columnStatus}      TEXT CHECK(status IN ('pendiente','en_progreso','completado','cancelado')),
           ${RoutineSessionDbModel.columnCreatedAt}   DATETIME DEFAULT CURRENT_TIMESTAMP,
           FOREIGN KEY (routine_id)   REFERENCES routine   (id)  ON DELETE CASCADE
         )
@@ -132,7 +132,7 @@ class DatabaseHelper {
           ${SessionExerciseDbModel.columnSessionId}  TEXT NOT NULL,
           ${SessionExerciseDbModel.columnExerciseId} TEXT NOT NULL,
           ${SessionExerciseDbModel.columnOrderIndex} INTEGER DEFAULT 0,
-          ${SessionExerciseDbModel.columnStatus}     TEXT CHECK(status IN ('pending','in_progress','completed','cancelled')),
+          ${SessionExerciseDbModel.columnStatus}     TEXT CHECK(status IN ('pendiente','en_progreso','completado','cancelado')),
           FOREIGN KEY (session_id)    REFERENCES routine_session  (id)   ON DELETE CASCADE,
           FOREIGN KEY (exercise_id)   REFERENCES exercise         (id)   ON DELETE CASCADE
         )
@@ -145,7 +145,7 @@ class DatabaseHelper {
           ${ExerciseSetDbModel.columnWeight}             REAL,
           ${ExerciseSetDbModel.columnRepetitions}        INTEGER,
           ${ExerciseSetDbModel.columnRestTime}           INTEGER,
-          ${ExerciseSetDbModel.columnStatus}             TEXT CHECK(status IN ('pending','completed','failed')),
+          ${ExerciseSetDbModel.columnStatus}             TEXT CHECK(status IN ('pendiente','completado','fallida')),
           FOREIGN KEY (session_exercise_id) REFERENCES session_exercise (id) ON DELETE CASCADE
         )
       ''');

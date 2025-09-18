@@ -32,8 +32,8 @@ class EjercicioRutinaSeeder {
       // Crear una nueva sesión para la rutina
       String sessionId = idGenerator.generateId();
       String status = random.nextBool()
-          ? RoutineSessionStatus.completed.name
-          : RoutineSessionStatus.pending.name;
+          ? EstadoSesionRutina.completado.name
+          : EstadoSesionRutina.pendiente.name;
       await db.insert('routine_session', {
         'id': sessionId,
         'routine_id': routineId,
@@ -41,7 +41,7 @@ class EjercicioRutinaSeeder {
             .subtract(Duration(days: random.nextInt(30)))
             .toIso8601String(),
         'end_time':
-            status == 'completed' ? DateTime.now().toIso8601String() : null,
+            status == 'completado' ? DateTime.now().toIso8601String() : null,
         'status': status,
         'created_at': DateTime.now().toIso8601String(),
       });
@@ -57,7 +57,8 @@ class EjercicioRutinaSeeder {
 
         // Crear un nuevo registro en session_exercise
         String sessionExerciseId = idGenerator.generateId();
-        String exerciseStatus = status == 'completed' ? 'completed' : 'pending';
+        String exerciseStatus =
+            status == 'completado' ? 'completado' : 'pendiente';
         await db.insert('session_exercise', {
           'id': sessionExerciseId,
           'session_id': sessionId,
@@ -75,7 +76,8 @@ class EjercicioRutinaSeeder {
             'repetitions': 6 + random.nextInt(9), // Repeticiones entre 6 y 14
             'rest_time':
                 30 + random.nextInt(31), // Descanso entre 30 y 60 segundos
-            'status': exerciseStatus == 'completed' ? 'completed' : 'pending',
+            'status':
+                exerciseStatus == 'completado' ? 'completado' : 'pendiente',
           });
         }
       }

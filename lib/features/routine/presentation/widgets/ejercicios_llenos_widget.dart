@@ -114,15 +114,15 @@ class EjerciciosLlenosWidget extends StatelessWidget {
     Color getButtonColor = Colors.grey;
     Color getBackgroundColor = Colors.grey.withAlpha(25);
 
-    if (ejerciciosDeRutina.estado == RoutineSessionStatus.pending.name ||
-        ejerciciosDeRutina.estado == RoutineSessionStatus.completed.name ||
-        ejerciciosDeRutina.estado == RoutineSessionStatus.cancelled.name) {
+    if (ejerciciosDeRutina.estado == EstadoSesionRutina.pendiente.name ||
+        ejerciciosDeRutina.estado == EstadoSesionRutina.completado.name ||
+        ejerciciosDeRutina.estado == EstadoSesionRutina.cancelado.name) {
       getButtonText = 'Iniciar entrenamiento';
       getIconPath = IconsaxPlusLinear.play;
       getButtonColor = Colors.green;
       getBackgroundColor = getButtonColor.withAlpha((0.1 * 255).toInt());
     }
-    if (ejerciciosDeRutina.estado == RoutineSessionStatus.in_progress.name) {
+    if (ejerciciosDeRutina.estado == EstadoSesionRutina.en_progreso.name) {
       getButtonText = 'Parar entrenamiento';
       getIconPath = IconsaxPlusLinear.stop;
       getButtonColor = Colors.red;
@@ -136,7 +136,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
         InkWell(
           onTap: () {
             if (ejerciciosDeRutina.estado ==
-                RoutineSessionStatus.pending.name) {
+                EstadoSesionRutina.pendiente.name) {
               iniciarRutina(
                 context,
                 state.ejerciciosDeRutina.session,
@@ -149,7 +149,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
             // porque ya se maneja automáticamente en _handleEjerciciosResult
 
             if (ejerciciosDeRutina.estado ==
-                RoutineSessionStatus.in_progress.name) {
+                EstadoSesionRutina.en_progreso.name) {
               mostrarDialogoPararEntrenamiento(
                 context,
                 state.ejerciciosDeRutina.session,
@@ -273,7 +273,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                     onTap: () {
                       // Si la rutina está en ejecución, permitir navegar al ejercicio seleccionado
                       if (ejerciciosDeRutina.estado ==
-                          RoutineSessionStatus.in_progress.name) {
+                          EstadoSesionRutina.en_progreso.name) {
                         // Navegar a la pantalla de detalle de ejercicio
                         context.push('/detalle-ejercicio');
                       }
