@@ -117,12 +117,12 @@ class DatabaseHelper {
       ''');
 
     await db.execute('''
-        CREATE TABLE  ${ExerciseMuscleDbModel.table} (
-          ${ExerciseMuscleDbModel.columnExerciseId}  TEXT NOT NULL,
-          ${ExerciseMuscleDbModel.columnMuscleId}    TEXT NOT NULL,
-          PRIMARY KEY (exercise_id, muscle_id),
-          FOREIGN KEY (exercise_id)  REFERENCES exercise  (id)  ON DELETE CASCADE,
-          FOREIGN KEY (muscle_id)    REFERENCES muscle    (id)  ON DELETE CASCADE
+        CREATE TABLE  ${EjercicioMusculoDbModel.tabla} (
+          ${EjercicioMusculoDbModel.columnaEjercicioId}  TEXT NOT NULL,
+          ${EjercicioMusculoDbModel.columnaMusculoId}    TEXT NOT NULL,
+          PRIMARY KEY (${EjercicioMusculoDbModel.columnaEjercicioId}, ${EjercicioMusculoDbModel.columnaMusculoId}),
+          FOREIGN KEY (${EjercicioMusculoDbModel.columnaEjercicioId})  REFERENCES ${EjercicioDbModel.tabla}  (id)  ON DELETE CASCADE,
+          FOREIGN KEY (${EjercicioMusculoDbModel.columnaMusculoId})    REFERENCES ${MusculoDbModel.tabla} (id)  ON DELETE CASCADE
         )
       ''');
 
@@ -133,8 +133,8 @@ class DatabaseHelper {
           ${SessionEjercicioDbModel.columnExerciseId} TEXT NOT NULL,
           ${SessionEjercicioDbModel.columnOrderIndex} INTEGER DEFAULT 0,
           ${SessionEjercicioDbModel.columnStatus}     TEXT CHECK(status IN ('pendiente','en_progreso','completado','cancelado')),
-          FOREIGN KEY (session_id)    REFERENCES routine_session  (id)   ON DELETE CASCADE,
-          FOREIGN KEY (exercise_id)   REFERENCES exercise         (id)   ON DELETE CASCADE
+          FOREIGN KEY (${SessionEjercicioDbModel.columnSessionId})    REFERENCES ${RutinaSesionDbModel.tabla}  (id)   ON DELETE CASCADE,
+          FOREIGN KEY (${SessionEjercicioDbModel.columnExerciseId})   REFERENCES ${EjercicioDbModel.tabla}     (id)   ON DELETE CASCADE
         )
       ''');
 
@@ -146,7 +146,7 @@ class DatabaseHelper {
           ${ExerciseSetDbModel.columnRepetitions}        INTEGER,
           ${ExerciseSetDbModel.columnRestTime}           INTEGER,
           ${ExerciseSetDbModel.columnStatus}             TEXT CHECK(status IN ('pendiente','completado','fallida')),
-          FOREIGN KEY (session_exercise_id) REFERENCES session_exercise (id) ON DELETE CASCADE
+          FOREIGN KEY (${ExerciseSetDbModel.columnSessionExerciseId}) REFERENCES ${SessionEjercicioDbModel.table} (id) ON DELETE CASCADE
         )
       ''');
 
@@ -158,7 +158,7 @@ class DatabaseHelper {
           ${AuditLogDbModel.columnRecordId}    TEXT NOT NULL,
           ${AuditLogDbModel.columnAction}      TEXT CHECK(action IN ('INSERT','UPDATE','DELETE')),
           ${AuditLogDbModel.columnTimestamp}   DATETIME DEFAULT CURRENT_TIMESTAMP,
-          FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE
+          FOREIGN KEY (${AuditLogDbModel.columnUserId}) REFERENCES ${UsuarioDbModel.tabla} (id) ON DELETE CASCADE
         )
       ''');
 

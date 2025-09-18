@@ -39,7 +39,7 @@ class ExerciseLocalDataSource {
       final results = await db.rawQuery(
         '''
         SELECT m.* FROM ${MusculoDbModel.tabla} m
-        INNER JOIN ${ExerciseMuscleDbModel.table} em
+        INNER JOIN ${EjercicioMusculoDbModel.tabla} em
         ON m.id = em.muscle_id
         WHERE em.exercise_id = ?
         ''',
@@ -60,7 +60,7 @@ class ExerciseLocalDataSource {
         '''
       SELECT DISTINCT e.*
       FROM ${EjercicioDbModel.tabla} e
-      INNER JOIN ${ExerciseMuscleDbModel.table} em ON e.id = em.exercise_id
+      INNER JOIN ${EjercicioMusculoDbModel.tabla} em ON e.id = em.exercise_id
       WHERE em.muscle_id = ?
       ''',
         [muscleId],

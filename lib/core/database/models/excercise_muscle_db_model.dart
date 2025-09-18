@@ -1,36 +1,36 @@
 import 'dart:convert';
 
-ExerciseMuscleDbModel exerciseMuscleFromJson(String str) =>
-    ExerciseMuscleDbModel.fromJson(json.decode(str));
+EjercicioMusculoDbModel exerciseMuscleFromJson(String str) =>
+    EjercicioMusculoDbModel.fromJson(json.decode(str));
 
-String exerciseMuscleToJson(ExerciseMuscleDbModel data) =>
+String exerciseMuscleToJson(EjercicioMusculoDbModel data) =>
     json.encode(data.toJson());
 
-class ExerciseMuscleDbModel {
+class EjercicioMusculoDbModel {
   // Nombres de las columnas de la tabla
-  static const String table = 'exercise_muscle';
-  static const String columnExerciseId = 'exercise_id';
-  static const String columnMuscleId = 'muscle_id';
+  static const String tabla = 'ejercicio_musculo';
+  static const String columnaEjercicioId = 'ejercicio_id';
+  static const String columnaMusculoId = 'musculo_id';
 
-  final String exerciseId;
-  final String muscleId;
+  final String ejercicioId;
+  final String musculoId;
 
-  ExerciseMuscleDbModel({required this.exerciseId, required this.muscleId});
+  EjercicioMusculoDbModel({required this.ejercicioId, required this.musculoId});
 
-  ExerciseMuscleDbModel copyWith({String? exerciseId, String? muscleId}) =>
-      ExerciseMuscleDbModel(
-        exerciseId: exerciseId ?? this.exerciseId,
-        muscleId: muscleId ?? this.muscleId,
+  EjercicioMusculoDbModel copyWith({String? ejercicioId, String? musculoId}) =>
+      EjercicioMusculoDbModel(
+        ejercicioId: ejercicioId ?? this.ejercicioId,
+        musculoId: musculoId ?? this.musculoId,
       );
 
-  factory ExerciseMuscleDbModel.fromJson(Map<String, dynamic> json) =>
-      ExerciseMuscleDbModel(
-        exerciseId: json["exercise_id"],
-        muscleId: json["muscle_id"],
+  factory EjercicioMusculoDbModel.fromJson(Map<String, dynamic> json) =>
+      EjercicioMusculoDbModel(
+        ejercicioId: json["ejercicio_id"],
+        musculoId: json["musculo_id"],
       );
 
   Map<String, dynamic> toJson() => {
-        "exercise_id": exerciseId,
-        "muscle_id": muscleId,
+        "ejercicio_id": ejercicioId,
+        "musculo_id": musculoId,
       };
 }

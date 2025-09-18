@@ -14,7 +14,7 @@ class DatabaseSeeder {
     final db = await DatabaseHelper.instance.database;
 
     // Verificar si ya existen datos en las tablas principales
-    final muscles = await db.query(ExerciseMuscleDbModel.table);
+    final muscles = await db.query(EjercicioMusculoDbModel.tabla);
     final exercises = await db.query(EjercicioDbModel.tabla);
 
     // Solo ejecutar el seeding si no hay datos

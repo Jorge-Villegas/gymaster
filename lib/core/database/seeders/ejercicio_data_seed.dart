@@ -2942,12 +2942,12 @@ class EjercicioDataSeed {
   }) async {
     try {
       final db = await DatabaseHelper.instance.database;
-      final ejercicioMusculo = ExerciseMuscleDbModel(
-        exerciseId: ejercicioId,
-        muscleId: musculoId,
+      final ejercicioMusculo = EjercicioMusculoDbModel(
+        ejercicioId: ejercicioId,
+        musculoId: musculoId,
       );
       final result = await db.insert(
-        ExerciseMuscleDbModel.table,
+        EjercicioMusculoDbModel.tabla,
         ejercicioMusculo.toJson(),
       );
       return result != -1;

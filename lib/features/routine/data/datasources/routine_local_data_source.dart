@@ -61,7 +61,7 @@ class RoutineLocalDataSource {
       final ejercicios = await db.rawQuery(
         '''
             SELECT e.* FROM exercise e
-            JOIN exercise_muscle em ON e.id = em.exercise_id
+            JOIN ejercicio_musculo em ON e.id = em.exercise_id
             JOIN muscle m ON em.muscle_id = m.id
             WHERE m.id = ?;
           ''',
@@ -180,10 +180,10 @@ class RoutineLocalDataSource {
       final db = await databaseHelper.database;
       final maps = await db.rawQuery(
         '''
-          SELECT m.id, m.name, m.image_path, m.created_at
-          FROM muscle m
-          JOIN exercise_muscle em ON m.id = em.muscle_id
-          WHERE em.exercise_id = ?
+          SELECT m.id, m.nombre, m.image_path, m.created_at
+          FROM musculo m
+          JOIN ejercicio_musculo em ON m.id = em.musculo_id
+          WHERE em.ejercicio_id = ?
         ''',
         [exerciseId],
       );
