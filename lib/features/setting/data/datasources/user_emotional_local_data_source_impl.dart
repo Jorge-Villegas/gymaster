@@ -198,7 +198,7 @@ class UserEmotionalLocalDataSourceImpl implements UserEmotionalLocalDataSource {
         'user_onboarding',
         {
           'id': DateTime.now().millisecondsSinceEpoch.toString(),
-          'userId': userId,
+          'usuario_id': userId,
           'completed': 1,
           'completedAt': DateTime.now().toIso8601String(),
           'createdAt': DateTime.now().toIso8601String(),
@@ -213,7 +213,7 @@ class UserEmotionalLocalDataSourceImpl implements UserEmotionalLocalDataSource {
         await db.execute('''
           CREATE TABLE IF NOT EXISTS user_onboarding (
             id TEXT PRIMARY KEY,
-            userId TEXT NOT NULL,
+            usuario_id TEXT NOT NULL,
             completed INTEGER DEFAULT 0,
             completedAt DATETIME,
             createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
@@ -225,7 +225,7 @@ class UserEmotionalLocalDataSourceImpl implements UserEmotionalLocalDataSource {
           'user_onboarding',
           {
             'id': DateTime.now().millisecondsSinceEpoch.toString(),
-            'userId': userId,
+            'usuario_id': userId,
             'completed': 1,
             'completedAt': DateTime.now().toIso8601String(),
             'createdAt': DateTime.now().toIso8601String(),
