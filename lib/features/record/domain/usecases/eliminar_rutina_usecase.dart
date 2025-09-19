@@ -3,19 +3,19 @@ import 'package:gymaster/core/error/failures.dart';
 import 'package:gymaster/core/usecase/usecase.dart';
 import 'package:gymaster/features/record/domain/repositories/repositories.dart';
 
-class DeleteRutinaUseCase extends UseCase<void, DeleteRutinaParams> {
+class EliminarRutinaUseCase extends UseCase<void, EliminarRutinaParams> {
   final RecordRepository repository;
 
-  DeleteRutinaUseCase({required this.repository});
+  EliminarRutinaUseCase({required this.repository});
 
   @override
-  Future<Either<Failure, void>> call(DeleteRutinaParams params) async {
+  Future<Either<Failure, void>> call(EliminarRutinaParams params) async {
     return await repository.eliminarRutina(params.id);
   }
 }
 
-class DeleteRutinaParams {
+class EliminarRutinaParams {
   final String id;
 
-  DeleteRutinaParams({required this.id});
+  EliminarRutinaParams({required this.id});
 }

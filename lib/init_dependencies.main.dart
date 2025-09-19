@@ -129,16 +129,16 @@ void _initRecord() {
     )
     // Use cases
     ..registerLazySingleton(
-      () => GetRutinaByIdUseCase(repository: serviceLocator()),
+      () => ObtenerRutinaPorIdUseCase(repository: serviceLocator()),
     )
     ..registerLazySingleton(
-      () => SaveRutinaUseCase(repository: serviceLocator()),
+      () => GuardarRutinaUseCase(repository: serviceLocator()),
     )
     ..registerLazySingleton(
-      () => DeleteRutinaUseCase(repository: serviceLocator()),
+      () => EliminarRutinaUseCase(repository: serviceLocator()),
     )
     ..registerCachedFactory(
-      () => GetAllCompletedRoutinesWithExercises(serviceLocator()),
+      () => ObtenerRutinasCompletadasConEjerciciosUseCase(serviceLocator()),
     )
     // Cubit
     ..registerFactory(

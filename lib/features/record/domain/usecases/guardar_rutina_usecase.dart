@@ -4,19 +4,19 @@ import 'package:gymaster/core/usecase/usecase.dart';
 import 'package:gymaster/features/record/domain/entities/record_rutina.dart';
 import 'package:gymaster/features/record/domain/repositories/repositories.dart';
 
-class SaveRutinaUseCase extends UseCase<void, SaveRutinaParams> {
+class GuardarRutinaUseCase extends UseCase<void, GuardarRutinaParams> {
   final RecordRepository repository;
 
-  SaveRutinaUseCase({required this.repository});
+  GuardarRutinaUseCase({required this.repository});
 
   @override
-  Future<Either<Failure, void>> call(SaveRutinaParams params) async {
+  Future<Either<Failure, void>> call(GuardarRutinaParams params) async {
     return await repository.guardarRutina(params.rutina);
   }
 }
 
-class SaveRutinaParams {
+class GuardarRutinaParams {
   final RecordRutina rutina;
 
-  SaveRutinaParams({required this.rutina});
+  GuardarRutinaParams({required this.rutina});
 }
