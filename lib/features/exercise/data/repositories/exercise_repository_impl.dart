@@ -25,7 +25,7 @@ class ExerciseRepositoryImpl implements ExerciseRepository {
   }
 
   @override
-  Future<Either<Failure, Exercise>> getExerciseById(String id) async {
+  Future<Either<Failure, Exercise>> obtenerEjercicioPorId(String id) async {
     try {
       final exercise = await localDataSource.obtenerEjercicioPorId(id);
       if (exercise == null) {
@@ -44,7 +44,7 @@ class ExerciseRepositoryImpl implements ExerciseRepository {
   }
 
   @override
-  Future<Either<Failure, List<Exercise>>> getExercisesByMuscle(
+  Future<Either<Failure, List<Exercise>>> obtenerEjerciciosPorMusculo(
       String muscleId) async {
     try {
       final exerciseModels =
@@ -69,7 +69,7 @@ class ExerciseRepositoryImpl implements ExerciseRepository {
   }
 
   @override
-  Future<Either<Failure, List<Exercise>>> searchExercises(String query) async {
+  Future<Either<Failure, List<Exercise>>> buscarEjercicios(String query) async {
     try {
       final exercises = await localDataSource.buscarEjercicios(query);
       return Right(exercises);
@@ -79,20 +79,21 @@ class ExerciseRepositoryImpl implements ExerciseRepository {
   }
 
   @override
-  Future<Either<Failure, Exercise>> updateExercise(Exercise exercise) async {
+  Future<Either<Failure, Exercise>> actualizarEjercicio(
+      Exercise ejercicio) async {
     // TODO: Implementar cuando se necesite la funcionalidad de actualización
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<Failure, List<Exercise>>> getRecommendedExercises({
-    required String muscleGroup,
-    required String difficulty,
-    String? equipment,
+  Future<Either<Failure, List<Exercise>>> obtenerEjerciciosRecomendados({
+    required String grupoMuscular,
+    required String dificultad,
+    String? equipo,
   }) async {
     try {
       final exercises =
-          await localDataSource.obtenerEjerciciosPorMusculo(muscleGroup);
+          await localDataSource.obtenerEjerciciosPorMusculo(grupoMuscular);
       // TODO: Implementar filtros por dificultad y equipamiento
       return Right(exercises);
     } on ServerException {

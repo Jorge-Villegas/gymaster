@@ -14,7 +14,7 @@ class GetExercisesByMuscleUseCase
   Future<Either<Failure, List<Exercise>>> call(
     GetExercisesByMuscleParams params,
   ) async {
-    return await repository.getExercisesByMuscle(params.muscleId);
+    return await repository.obtenerEjerciciosPorMusculo(params.muscleId);
   }
 }
 

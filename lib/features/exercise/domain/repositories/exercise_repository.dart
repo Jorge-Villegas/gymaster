@@ -4,13 +4,14 @@ import 'package:gymaster/features/exercise/domain/entities/exercise.dart';
 
 abstract interface class ExerciseRepository {
   Future<Either<Failure, List<Exercise>>> obtenerTodosLosEjercicios();
-  Future<Either<Failure, Exercise>> getExerciseById(String id);
-  Future<Either<Failure, List<Exercise>>> getExercisesByMuscle(String muscleId);
-  Future<Either<Failure, List<Exercise>>> searchExercises(String query);
-  Future<Either<Failure, Exercise>> updateExercise(Exercise exercise);
-  Future<Either<Failure, List<Exercise>>> getRecommendedExercises({
-    required String muscleGroup,
-    required String difficulty,
-    String? equipment,
+  Future<Either<Failure, Exercise>> obtenerEjercicioPorId(String id);
+  Future<Either<Failure, List<Exercise>>> obtenerEjerciciosPorMusculo(
+      String musculoId);
+  Future<Either<Failure, List<Exercise>>> buscarEjercicios(String query);
+  Future<Either<Failure, Exercise>> actualizarEjercicio(Exercise ejercicio);
+  Future<Either<Failure, List<Exercise>>> obtenerEjerciciosRecomendados({
+    required String grupoMuscular,
+    required String dificultad,
+    String? equipo,
   });
 }
