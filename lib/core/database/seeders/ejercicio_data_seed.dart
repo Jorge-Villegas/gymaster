@@ -2888,7 +2888,7 @@ class EjercicioDataSeed {
       // Verificar si el ejercicio ya existe
       final existingEjercicio = await db.query(
         EjercicioDb.tabla,
-        where: 'name = ?',
+        where: '${EjercicioDb.columnaNombre} = ?',
         whereArgs: [ejercicio.nombre],
       );
 
@@ -2962,7 +2962,7 @@ class EjercicioDataSeed {
       final db = await DatabaseHelper.instance.database;
       final res = await db.query(
         MusculoDb.tabla,
-        where: 'name = ?',
+        where: '${MusculoDb.columnaNombre} = ?',
         whereArgs: [nombreMusculo],
       );
       if (res.isNotEmpty) {

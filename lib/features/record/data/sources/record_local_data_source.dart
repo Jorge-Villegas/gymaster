@@ -20,7 +20,7 @@ class RecordLocalDataSource {
       final result = await db.query(
         RutinaSesionDb.tabla,
         where:
-            'estado = ? AND ${RutinaSesionDb.columnaHoraInicio} IS NOT NULL AND ${RutinaSesionDb.columnaHoraFin} IS NOT NULL',
+            '${RutinaSesionDb.columnaEstado} = ? AND ${RutinaSesionDb.columnaHoraInicio} IS NOT NULL AND ${RutinaSesionDb.columnaHoraFin} IS NOT NULL',
         whereArgs: [EstadoSesionRutina.completado.name],
         orderBy: '${RutinaSesionDb.columnaFechaCreacion} DESC',
       );
@@ -49,10 +49,10 @@ class RecordLocalDataSource {
     final ejercicios = await db.rawQuery(
       '''
         SELECT e.*
-        FROM exercise e
-        INNER JOIN session_exercise se ON e.id = se.exercise_id
-        INNER JOIN routine_session rs ON se.session_id = rs.id
-        WHERE rs.routine_id = ? AND rs.status = 'completado' AND se.status = 'completado';
+        FROM ${EjercicioDb.tabla} e
+        INNER JOIN ${SessionEjercicioDb.tabla} se ON e.id = se.${SessionEjercicioDb.columnId}
+        INNER JOIN ${RutinaSesionDb.tabla} rs ON se.${SessionEjercicioDb.columnSessionId} = rs.${RutinaSesionDb.columnaId}
+        WHERE rs.${RutinaSesionDb.columnaRutinaId}  = ? AND rs.${RutinaSesionDb.columnaEstado}  = '${EstadoSesionRutina.completado.name}' AND se.${SessionEjercicioDb.columnStatus}  = '${EstadoEjercicioSesion.completado.name}';
       ''',
       [routineId],
     );
@@ -70,9 +70,9 @@ class RecordLocalDataSource {
     final ejercicios = await db.rawQuery(
       '''
         SELECT e.*
-        FROM exercise e
-        INNER JOIN session_exercise se ON e.id = se.exercise_id
-        WHERE se.session_id = ? AND se.status = 'completado';
+        FROM ${EjercicioDb.tabla}  e
+        INNER JOIN ${SessionEjercicioDb.tabla}  se ON e.id = se.${SessionEjercicioDb.columnExerciseId}
+        WHERE se.${SessionEjercicioDb.columnSessionId}  = ? AND se.${SessionEjercicioDb.columnStatus}  = '${EstadoSerieEjercicio.completado.name}';
       ''',
       [sessionId],
     );
@@ -88,9 +88,9 @@ class RecordLocalDataSource {
     final series = await db.rawQuery(
       '''
         SELECT es.*
-        FROM exercise_set es
-        INNER JOIN session_exercise se ON es.session_exercise_id = se.id
-        WHERE se.exercise_id = ? AND es.status = 'completado';
+        FROM ${SerieEjercicioDb.tabla} es
+        INNER JOIN ${SessionEjercicioDb.tabla} se ON es.${SerieEjercicioDb.columnaEjercicioSesionId}  = se.${SessionEjercicioDb.columnId} 
+        WHERE se.${SessionEjercicioDb.columnExerciseId}  = ? AND es.${SerieEjercicioDb.columnaEstado}  = '${EstadoSerieEjercicio.completado.name}';
       ''',
       [exerciseId],
     );
@@ -105,9 +105,9 @@ class RecordLocalDataSource {
     final series = await db.rawQuery(
       '''
         SELECT es.*
-        FROM exercise_set es
-        INNER JOIN session_exercise se ON es.session_exercise_id = se.id
-        WHERE se.exercise_id = ? AND se.session_id = ? AND es.status = 'completado';
+        FROM ${SerieEjercicioDb.tabla}  es
+        INNER JOIN ${SessionEjercicioDb.tabla} se ON es.${SerieEjercicioDb.columnaEjercicioSesionId} = se.${SessionEjercicioDb.columnId}
+        WHERE se.${SessionEjercicioDb.columnExerciseId} = ? AND se.${SessionEjercicioDb.columnSessionId} = ? AND es.${SerieEjercicioDb.columnaEstado}  = '${EstadoSerieEjercicio.completado.name}';
       ''',
       [exerciseId, sessionId],
     );
@@ -132,7 +132,7 @@ class RecordLocalDataSource {
     final db = await databaseHelper.database;
     final result = await db.query(
       RutinaDb.tabla,
-      where: 'id = ?',
+      where: '${RutinaDb.columnaId} = ?',
       whereArgs: [id],
     );
     if (result.isNotEmpty) {
@@ -155,7 +155,7 @@ class RecordLocalDataSource {
     final db = await databaseHelper.database;
     await db.delete(
       RutinaDb.tabla,
-      where: 'id = ?',
+      where: '${RutinaDb.columnaId} = ?',
       whereArgs: [id],
     );
   }

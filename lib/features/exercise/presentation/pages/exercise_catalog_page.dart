@@ -154,7 +154,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage> {
           ),
         ),
         title: Text(exercise.name),
-        subtitle: Text(
+          subtitle: Text(
           exercise.targetMuscles.join(', '),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,

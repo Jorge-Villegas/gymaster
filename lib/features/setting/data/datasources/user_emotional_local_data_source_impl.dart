@@ -246,7 +246,7 @@ class UserEmotionalLocalDataSourceImpl implements UserEmotionalLocalDataSource {
     try {
       final List<Map<String, dynamic>> maps = await db.query(
         'user_onboarding',
-        where: 'userId = ? AND completed = 1',
+        where: 'usuario_id = ? AND completed = 1',
         whereArgs: [userId],
         limit: 1,
       );
@@ -259,7 +259,7 @@ class UserEmotionalLocalDataSourceImpl implements UserEmotionalLocalDataSource {
         await db.execute('''
           CREATE TABLE IF NOT EXISTS user_onboarding (
             id TEXT PRIMARY KEY,
-            userId TEXT NOT NULL,
+            usuario_id TEXT NOT NULL,
             completed INTEGER DEFAULT 0,
             completedAt DATETIME,
             createdAt DATETIME DEFAULT CURRENT_TIMESTAMP

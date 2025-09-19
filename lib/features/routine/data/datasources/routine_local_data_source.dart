@@ -79,7 +79,7 @@ class RoutineLocalDataSource {
       final db = await databaseHelper.database;
       final rutina = await db.query(
         RutinaDb.tabla,
-        where: 'id = ?',
+        where: '${RutinaDb.columnaId} = ?',
         whereArgs: [id],
       );
       return RutinaDb.fromJson(rutina.first);
@@ -107,7 +107,7 @@ class RoutineLocalDataSource {
       final db = await databaseHelper.database;
       final serie = await db.query(
         SerieEjercicioDb.tabla,
-        where: 'id = ?',
+        where: '${SerieEjercicioDb.columnaId} = ?',
         whereArgs: [id],
       );
       return SerieEjercicioDb.fromJson(serie.first);
@@ -196,7 +196,7 @@ class RoutineLocalDataSource {
       final result = await db.update(
         SerieEjercicioDb.tabla,
         serie.toJson(),
-        where: 'id = ?',
+        where: '${SerieEjercicioDb.columnaId} = ?',
         whereArgs: [serie.id],
       );
       return result > 0;
@@ -211,7 +211,7 @@ class RoutineLocalDataSource {
       final rutinas = await db.rawQuery(
         '''
           SELECT * FROM ${RutinaDb.tabla}
-          WHERE name LIKE ?;
+          WHERE ${RutinaDb.columnaNombre} LIKE ?;
         ''',
         ['%$nombre%'],
       );
@@ -354,7 +354,7 @@ class RoutineLocalDataSource {
       final db = await databaseHelper.database;
       final result = await db.query(
         SerieEjercicioDb.tabla,
-        where: '${SessionEjercicioDb.columnExerciseId} = ?',
+        where: '${SerieEjercicioDb.columnaEjercicioSesionId} = ?',
         whereArgs: [sessionExerciseId],
       );
       return result.map((map) => SerieEjercicioDb.fromJson(map)).toList();
@@ -373,7 +373,7 @@ class RoutineLocalDataSource {
           SELECT e.*
           FROM ${EjercicioDb.tabla} e
           JOIN ${SessionEjercicioDb.tabla} se ON e.id = se.${SessionEjercicioDb.columnExerciseId}
-          WHERE se.id = ?
+          WHERE se.${SessionEjercicioDb.columnId}  = ?
         ''',
         [sessionExerciseId],
       );
@@ -430,7 +430,7 @@ class RoutineLocalDataSource {
         FROM ${SessionEjercicioDb.tabla} se
         JOIN ${EjercicioDb.tabla} e ON se.${SessionEjercicioDb.columnExerciseId} = e.id
         WHERE se.${SessionEjercicioDb.columnSessionId} = ?
-        AND e.id = ?
+        AND e.${EjercicioDb.columnId}  = ?
       ''',
         [idRoutineSession, exerciseId],
       );
@@ -498,7 +498,7 @@ class RoutineLocalDataSource {
             SessionEjercicioDb.columnOrderIndex: totalExercises +
                 1000, // Un valor alto para asegurar que esté al final
           },
-          where: 'id = ?',
+          where: '${SessionEjercicioDb.columnId} = ?',
           whereArgs: [sessionExerciseId],
         );
 
@@ -516,7 +516,7 @@ class RoutineLocalDataSource {
           await txn.update(
             SessionEjercicioDb.tabla,
             {SessionEjercicioDb.columnOrderIndex: i},
-            where: 'id = ?',
+            where: '${SessionEjercicioDb.columnId} = ?',
             whereArgs: [exercises[i]['id']],
           );
         }
@@ -564,7 +564,7 @@ class RoutineLocalDataSource {
           JOIN ${SessionEjercicioDb.tabla} se ON e.${SessionEjercicioDb.columnId} = se.${SessionEjercicioDb.columnExerciseId}
           JOIN ${SerieEjercicioDb.tabla} es ON se.${SerieEjercicioDb.columnaId}  = es.${SerieEjercicioDb.columnaEjercicioSesionId}
           WHERE se.${SessionEjercicioDb.columnSessionId} = ?
-          AND se.id = ?
+          AND se.${SessionEjercicioDb.columnId} = ?
           ORDER BY se.${SessionEjercicioDb.columnOrderIndex};
         ''',
         [sessionId, sessionExerciseId],
@@ -584,7 +584,7 @@ class RoutineLocalDataSource {
       final result = await db.query(
         SerieEjercicioDb.tabla,
         columns: [SerieEjercicioDb.columnaEjercicioSesionId],
-        where: 'id = ?',
+        where: '${SerieEjercicioDb.columnaId} = ?',
         whereArgs: [exerciseSetId],
       );
 
@@ -592,7 +592,7 @@ class RoutineLocalDataSource {
         return null;
       }
 
-      return result.first['session_exercise_id'] as String?;
+      return result.first[SerieEjercicioDb.columnaEjercicioSesionId] as String?;
     } catch (e) {
       throw ServerException();
     }
@@ -603,7 +603,7 @@ class RoutineLocalDataSource {
       final db = await databaseHelper.database;
       final result = await db.update(
         SessionEjercicioDb.tabla,
-        {'status': EstadoEjercicioSesion.completado.name},
+        {'${SessionEjercicioDb.columnStatus}': EstadoEjercicioSesion.completado.name},
         where: 'id = ?',
         whereArgs: [id],
       );
@@ -654,7 +654,7 @@ class RoutineLocalDataSource {
         // Eliminar el ejercicio de la sesión
         await txn.delete(
           SessionEjercicioDb.tabla,
-          where: 'exercise_id = ? AND session_id = ?',
+          where: '${SessionEjercicioDb.columnExerciseId}  = ? AND ${SessionEjercicioDb.columnSessionId}  = ?',
           whereArgs: [exerciseId, routineSessionId],
         );
 
@@ -662,9 +662,9 @@ class RoutineLocalDataSource {
         await txn.delete(
           SerieEjercicioDb.tabla,
           where: '''
-              session_exercise_id IN (
+              ${SerieEjercicioDb.columnaEjercicioSesionId} IN (
                 SELECT id FROM ${SessionEjercicioDb.tabla} 
-                WHERE exercise_id = ? AND ${SessionEjercicioDb.columnSessionId} = ?)
+                WHERE ejercicio_id = ? AND ${SessionEjercicioDb.columnSessionId} = ?)
             ''',
           whereArgs: [exerciseId, routineSessionId],
         );

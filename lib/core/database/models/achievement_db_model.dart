@@ -1,5 +1,4 @@
 import 'package:gymaster/features/setting/domain/entities/logro.dart';
-import 'package:gymaster/shared/utils/enum.dart';
 
 /// Modelo de base de datos para Achievement
 class AchievementDbModel {

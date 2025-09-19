@@ -40,8 +40,8 @@ class ExerciseLocalDataSource {
         '''
         SELECT m.* FROM ${MusculoDb.tabla} m
         INNER JOIN ${EjercicioMusculoDbModel.tabla} em
-        ON m.id = em.muscle_id
-        WHERE em.exercise_id = ?
+        ON m.${MusculoDb.columnaId}  = em.${EjercicioMusculoDbModel.columnaMusculoId} 
+        WHERE em.${EjercicioMusculoDbModel.columnaEjercicioId} = ?
         ''',
         [exerciseId],
       );
@@ -60,8 +60,8 @@ class ExerciseLocalDataSource {
         '''
       SELECT DISTINCT e.*
       FROM ${EjercicioDb.tabla} e
-      INNER JOIN ${EjercicioMusculoDbModel.tabla} em ON e.id = em.exercise_id
-      WHERE em.muscle_id = ?
+      INNER JOIN ${EjercicioMusculoDbModel.tabla} em ON e.${EjercicioDb.columnId}  = em.${EjercicioMusculoDbModel.columnaEjercicioId} 
+      WHERE em.${EjercicioMusculoDbModel.columnaMusculoId}  = ?
       ''',
         [muscleId],
       );
@@ -91,7 +91,7 @@ class ExerciseLocalDataSource {
       final db = await databaseHelper.database;
       final results = await db.query(
         EjercicioDb.tabla,
-        where: 'id = ?',
+        where: '${EjercicioDb.columnId} = ?',
         whereArgs: [id],
       );
 
@@ -114,7 +114,7 @@ class ExerciseLocalDataSource {
       final db = await databaseHelper.database;
       final exercises = await db.query(
         EjercicioDb.tabla,
-        where: 'name LIKE ? OR description LIKE ?',
+        where: 'name LIKE ? OR ${EjercicioDb.columnaDescripcion} LIKE ?',
         whereArgs: ['%$query%', '%$query%'],
       );
 

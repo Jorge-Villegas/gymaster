@@ -224,6 +224,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
         );
         final result = await localDataSource.createRoutineSession(newSession);
         if (!result) {
+          print('No se pudo crear la sesión');
           return Left(
             ServerFailure(errorMessage: 'No se pudo crear la sesión'),
           );

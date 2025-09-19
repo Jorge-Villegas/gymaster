@@ -1,8 +1,11 @@
 import 'dart:math';
 import 'package:gymaster/core/database/database_helper.dart';
+import 'package:gymaster/core/database/models/models.dart';
 import 'package:gymaster/core/database/models/rutina_sesion_db.dart';
 import 'package:gymaster/shared/utils/enum.dart';
 import 'package:gymaster/shared/utils/uuid_generator.dart';
+
+import '../models/sesion_ejercicio_db.dart';
 
 class EjercicioRutinaSeeder {
   final IdGenerator idGenerator;
@@ -59,26 +62,26 @@ class EjercicioRutinaSeeder {
         // Crear un nuevo registro en session_exercise
         String sessionExerciseId = idGenerator.generateId();
         String exerciseStatus =
-            status == 'completado' ? 'completado' : 'pendiente';
-        await db.insert('session_exercise', {
-          'id': sessionExerciseId,
-          'session_id': sessionId,
-          'exercise_id': exerciseId,
-          'status': exerciseStatus,
+            status == '${EstadoEjercicio.completado.name}' ? '${EstadoEjercicio.completado.name}' : '${EstadoEjercicio.pendiente.name}';
+        await db.insert('${SessionEjercicioDb.tabla}', {
+          '${SessionEjercicioDb.columnId}': sessionExerciseId,
+          '${SessionEjercicioDb.columnSessionId}': sessionId,
+          '${SessionEjercicioDb.columnExerciseId}': exerciseId,
+          '${SessionEjercicioDb.columnStatus}': exerciseStatus,
         });
 
         // Crear sets para el ejercicio
         int numSets = (3 + random.nextInt(3)); // Entre 3 y 5 sets
         for (int i = 0; i < numSets; i++) {
-          await db.insert('exercise_set', {
-            'id': idGenerator.generateId(),
-            'session_exercise_id': sessionExerciseId,
-            'weight': 40 + random.nextInt(61), // Peso entre 40 y 100 kg
-            'repetitions': 6 + random.nextInt(9), // Repeticiones entre 6 y 14
-            'rest_time':
+          await db.insert(SerieEjercicioDb.tabla, {
+            SerieEjercicioDb.columnaId: idGenerator.generateId(),
+            SerieEjercicioDb.columnaEjercicioSesionId: sessionExerciseId,
+            SerieEjercicioDb.columnaPeso: 40 + random.nextInt(61), // Peso entre 40 y 100 kg
+            SerieEjercicioDb.columnaRepeticiones: 6 + random.nextInt(9), // Repeticiones entre 6 y 14
+            SerieEjercicioDb.columnaTiempoDescanso:
                 30 + random.nextInt(31), // Descanso entre 30 y 60 segundos
-            'status':
-                exerciseStatus == 'completado' ? 'completado' : 'pendiente',
+            SerieEjercicioDb.columnaEstado:
+                exerciseStatus == EstadoEjercicio.completado.name ? EstadoEjercicio.completado.name : EstadoEjercicio.pendiente.name
           });
         }
       }
