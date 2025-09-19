@@ -4,10 +4,11 @@ import 'package:gymaster/core/usecase/usecase.dart';
 import 'package:gymaster/features/exercise/domain/entities/exercise.dart';
 import 'package:gymaster/features/exercise/domain/repositories/exercise_repository.dart';
 
-class GetAllExercisesUseCase implements UseCase<List<Exercise>, NoParams> {
+class ObtenerTodosLosEjerciciosUseCase
+    implements UseCase<List<Exercise>, NoParams> {
   final ExerciseRepository repository;
 
-  GetAllExercisesUseCase(this.repository);
+  ObtenerTodosLosEjerciciosUseCase(this.repository);
 
   @override
   Future<Either<Failure, List<Exercise>>> call(NoParams params) async {

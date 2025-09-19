@@ -3,14 +3,14 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:gymaster/core/usecase/usecase.dart';
 import 'package:gymaster/features/exercise/domain/entities/exercise.dart';
-import 'package:gymaster/features/exercise/domain/usecases/get_all_exercises_usecase.dart';
-import 'package:gymaster/features/exercise/domain/usecases/get_exercises_by_muscle_usecase.dart';
+import 'package:gymaster/features/exercise/domain/usecases/obtener_todos_los_ejercicios_usecase.dart';
+import 'package:gymaster/features/exercise/domain/usecases/obtener_ejercicios_por_musculo_usecase.dart';
 
 part 'exercise_state.dart';
 
 class ExerciseCubit extends Cubit<ExerciseState> {
-  final GetAllExercisesUseCase getAllExercisesUseCase;
-  final GetExercisesByMuscleUseCase getExercisesByMuscleUseCase;
+  final ObtenerTodosLosEjerciciosUseCase getAllExercisesUseCase;
+  final ObtenerEjerciciosPorMusculoUseCase getExercisesByMuscleUseCase;
 
   ExerciseCubit({
     required this.getAllExercisesUseCase,
@@ -34,7 +34,7 @@ class ExerciseCubit extends Cubit<ExerciseState> {
     debugPrint('Filtrando ejercicios por músculo: $muscleId');
 
     final result = await getExercisesByMuscleUseCase(
-      GetExercisesByMuscleParams(muscleId: muscleId),
+      ObtenerEjerciciosPorMusculoParams(muscleId: muscleId),
     );
 
     result.fold(

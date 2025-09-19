@@ -163,8 +163,9 @@ void _initExercise() {
       () => ExerciseRepositoryImpl(localDataSource: serviceLocator()),
     )
     // Use cases
-    ..registerFactory(() => GetAllExercisesUseCase(serviceLocator()))
-    ..registerFactory(() => GetExercisesByMuscleUseCase(serviceLocator()))
+    ..registerFactory(() => ObtenerTodosLosEjerciciosUseCase(serviceLocator()))
+    ..registerFactory(
+        () => ObtenerEjerciciosPorMusculoUseCase(serviceLocator()))
     // Cubit
     ..registerFactory(
       () => ExerciseCubit(
