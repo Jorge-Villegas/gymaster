@@ -14,9 +14,9 @@ class RecordRepositoryImpl implements RecordRepository {
   RecordRepositoryImpl({required this.localDataSource});
 
   @override
-  Future<Either<Failure, RecordRutina>> getRutinaById(String id) async {
+  Future<Either<Failure, RecordRutina>> obtenerRutinaPorId(String id) async {
     try {
-      final rutina = await localDataSource.getRutinaById(id);
+      final rutina = await localDataSource.obtenerRutinaPorId(id);
 
       return Right(
         RecordRutina.fromDatabase(rutinaDB: rutina, cantidadEjercicios: 0),
@@ -32,7 +32,7 @@ class RecordRepositoryImpl implements RecordRepository {
   }
 
   @override
-  Future<Either<Failure, void>> saveRutina(RecordRutina rutina) async {
+  Future<Either<Failure, void>> guardarRutina(RecordRutina rutina) async {
     try {
       final rutinaModel = RecordRutinaModel(
         id: rutina.id,
@@ -42,7 +42,7 @@ class RecordRepositoryImpl implements RecordRepository {
         color: rutina.color,
         ejercicios: rutina.ejercicios,
       );
-      await localDataSource.saveRutina(rutinaModel);
+      await localDataSource.guardarRutina(rutinaModel);
       return const Right(null);
     } on ServerException {
       return Left(
@@ -55,9 +55,9 @@ class RecordRepositoryImpl implements RecordRepository {
   }
 
   @override
-  Future<Either<Failure, void>> deleteRutina(String id) async {
+  Future<Either<Failure, void>> eliminarRutina(String id) async {
     try {
-      await localDataSource.deleteRutina(id);
+      await localDataSource.eliminarRutina(id);
       return const Right(null);
     } on ServerException {
       return Left(
@@ -71,9 +71,10 @@ class RecordRepositoryImpl implements RecordRepository {
 
   @override
   Future<Either<Failure, List<RecordRutina>>>
-      obtenerTodasLasRutinasCompletadasConEjercicios() async {
+      obtenerRutinasCompletadasConEjercicios() async {
     try {
-      final rutinaSessions = await localDataSource.getCompletedRoutines();
+      final rutinaSessions =
+          await localDataSource.obtenerSesionesRutinaCompletadas();
 
       if (rutinaSessions.isEmpty) {
         return const Right([]);
@@ -83,14 +84,14 @@ class RecordRepositoryImpl implements RecordRepository {
 
       for (var rutinaSession in rutinaSessions) {
         try {
-          final ejercicios = await _getExercisesBySessionId(
+          final ejercicios = await _obtenerEjerciciosPorSesionId(
             rutinaSession.id,
           );
 
           // Obtener rutina de la base de datos
           RutinaDb? rutina;
           try {
-            rutina = await localDataSource.getRutinaById(
+            rutina = await localDataSource.obtenerRutinaPorId(
               rutinaSession.rutinaId,
             );
           } catch (e) {
@@ -145,10 +146,11 @@ class RecordRepositoryImpl implements RecordRepository {
     }
   }
 
-  Future<List<RecordEjercicios>> _getExercisesBySessionId(
+  Future<List<RecordEjercicios>> _obtenerEjerciciosPorSesionId(
     String sessionId,
   ) async {
-    final ejerciciosDB = await localDataSource.getCompletedExercisesBySessionId(
+    final ejerciciosDB =
+        await localDataSource.obtenerEjerciciosCompletadosPorSesionId(
       sessionId,
     );
     final Set<String> ejercicioIds = {};
@@ -156,7 +158,7 @@ class RecordRepositoryImpl implements RecordRepository {
 
     for (var ejercicioDB in ejerciciosDB) {
       if (!ejercicioIds.contains(ejercicioDB.id)) {
-        final seriesDelEjercicio = await _getSeriesByEjercicioAndSessionId(
+        final seriesDelEjercicio = await _obtenerSeriesPorEjercicioYSesionId(
           ejercicioDB.id,
           sessionId,
         );
@@ -172,12 +174,12 @@ class RecordRepositoryImpl implements RecordRepository {
     return ejercicios;
   }
 
-  Future<List<SeriesDelEjercicio>> _getSeriesByEjercicioAndSessionId(
+  Future<List<SeriesDelEjercicio>> _obtenerSeriesPorEjercicioYSesionId(
     String ejercicioId,
     String sessionId,
   ) async {
     final seriesDelEjercicioDB =
-        await localDataSource.getSeriesByExerciseAndSessionId(
+        await localDataSource.obtenerSeriesPorEjercicioYSesionId(
       ejercicioId,
       sessionId,
     );

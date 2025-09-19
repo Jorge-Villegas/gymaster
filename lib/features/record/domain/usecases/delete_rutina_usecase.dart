@@ -10,7 +10,7 @@ class DeleteRutinaUseCase extends UseCase<void, DeleteRutinaParams> {
 
   @override
   Future<Either<Failure, void>> call(DeleteRutinaParams params) async {
-    return await repository.deleteRutina(params.id);
+    return await repository.eliminarRutina(params.id);
   }
 }
 

@@ -10,14 +10,14 @@ class RecordLocalDataSource {
 
   RecordLocalDataSource(this.databaseHelper);
 
-  Future<List<RutinaSesionDb>> getCompletedRoutines() async {
+  Future<List<RutinaSesionDb>> obtenerSesionesRutinaCompletadas() async {
     try {
       final db = await databaseHelper.database;
 
       // Corregir registros inconsistentes: sesiones marcadas como completadas pero sin timestamps
-      await _fixInconsistentCompletedSessions(db);
+      await _corregirSesionesCompletadasInconsistentes(db);
 
-      final result = await db.query(
+      final resultado = await db.query(
         RutinaSesionDb.tabla,
         where:
             '${RutinaSesionDb.columnaEstado} = ? AND ${RutinaSesionDb.columnaHoraInicio} IS NOT NULL AND ${RutinaSesionDb.columnaHoraFin} IS NOT NULL',
@@ -25,14 +25,14 @@ class RecordLocalDataSource {
         orderBy: '${RutinaSesionDb.columnaFechaCreacion} DESC',
       );
 
-      if (result.isEmpty) {
+      if (resultado.isEmpty) {
         return []; // Retornar lista vacía en lugar de lanzar excepción
       }
 
-      final sessions =
-          result.map((session) => RutinaSesionDb.fromJson(session)).toList();
+      final sesiones =
+          resultado.map((session) => RutinaSesionDb.fromJson(session)).toList();
 
-      return sessions;
+      return sesiones;
     } on DatabaseException catch (e) {
       print('❌ Error de base de datos: $e');
       throw CacheException();
@@ -42,8 +42,8 @@ class RecordLocalDataSource {
     }
   }
 
-  Future<List<EjercicioDb>> getCompletedExercisesByRoutineId(
-    String routineId,
+  Future<List<EjercicioDb>> obtenerEjerciciosCompletadosPorRutinaId(
+    String rutinaId,
   ) async {
     final db = await databaseHelper.database;
     final ejercicios = await db.rawQuery(
@@ -54,7 +54,7 @@ class RecordLocalDataSource {
         INNER JOIN ${RutinaSesionDb.tabla} rs ON se.${SessionEjercicioDb.columnSessionId} = rs.${RutinaSesionDb.columnaId}
         WHERE rs.${RutinaSesionDb.columnaRutinaId}  = ? AND rs.${RutinaSesionDb.columnaEstado}  = '${EstadoSesionRutina.completado.name}' AND se.${SessionEjercicioDb.columnStatus}  = '${EstadoEjercicioSesion.completado.name}';
       ''',
-      [routineId],
+      [rutinaId],
     );
 
     return ejercicios
@@ -62,8 +62,7 @@ class RecordLocalDataSource {
         .toList();
   }
 
-  // Nuevo método para obtener ejercicios por sessionId específico
-  Future<List<EjercicioDb>> getCompletedExercisesBySessionId(
+  Future<List<EjercicioDb>> obtenerEjerciciosCompletadosPorSesionId(
     String sessionId,
   ) async {
     final db = await databaseHelper.database;
@@ -82,8 +81,8 @@ class RecordLocalDataSource {
         .toList();
   }
 
-  Future<List<SerieEjercicioDb>> getSeriesByExerciseId(
-      String exerciseId) async {
+  Future<List<SerieEjercicioDb>> obtenerSeriesPorEjercicioId(
+      String ejercicioId) async {
     final db = await databaseHelper.database;
     final series = await db.rawQuery(
       '''
@@ -92,15 +91,15 @@ class RecordLocalDataSource {
         INNER JOIN ${SessionEjercicioDb.tabla} se ON es.${SerieEjercicioDb.columnaEjercicioSesionId}  = se.${SessionEjercicioDb.columnId} 
         WHERE se.${SessionEjercicioDb.columnExerciseId}  = ? AND es.${SerieEjercicioDb.columnaEstado}  = '${EstadoSerieEjercicio.completado.name}';
       ''',
-      [exerciseId],
+      [ejercicioId],
     );
 
     return series.map((serie) => SerieEjercicioDb.fromJson(serie)).toList();
   }
 
   // Nuevo método para obtener series por ejercicio y sesión específicos
-  Future<List<SerieEjercicioDb>> getSeriesByExerciseAndSessionId(
-      String exerciseId, String sessionId) async {
+  Future<List<SerieEjercicioDb>> obtenerSeriesPorEjercicioYSesionId(
+      String ejercicioId, String sesionId) async {
     final db = await databaseHelper.database;
     final series = await db.rawQuery(
       '''
@@ -109,13 +108,13 @@ class RecordLocalDataSource {
         INNER JOIN ${SessionEjercicioDb.tabla} se ON es.${SerieEjercicioDb.columnaEjercicioSesionId} = se.${SessionEjercicioDb.columnId}
         WHERE se.${SessionEjercicioDb.columnExerciseId} = ? AND se.${SessionEjercicioDb.columnSessionId} = ? AND es.${SerieEjercicioDb.columnaEstado}  = '${EstadoSerieEjercicio.completado.name}';
       ''',
-      [exerciseId, sessionId],
+      [ejercicioId, sesionId],
     );
 
     return series.map((serie) => SerieEjercicioDb.fromJson(serie)).toList();
   }
 
-  Future<List<RutinaDb>> getAllRutinas() async {
+  Future<List<RutinaDb>> obtenerTodasLasRutinas() async {
     try {
       final db = await databaseHelper.database;
       final rutinas = await db.query(
@@ -128,7 +127,7 @@ class RecordLocalDataSource {
     }
   }
 
-  Future<RutinaDb> getRutinaById(String id) async {
+  Future<RutinaDb> obtenerRutinaPorId(String id) async {
     final db = await databaseHelper.database;
     final result = await db.query(
       RutinaDb.tabla,
@@ -142,7 +141,7 @@ class RecordLocalDataSource {
     }
   }
 
-  Future<void> saveRutina(RecordRutinaModel rutina) async {
+  Future<void> guardarRutina(RecordRutinaModel rutina) async {
     final db = await databaseHelper.database;
     await db.insert(
       RutinaDb.tabla,
@@ -151,7 +150,7 @@ class RecordLocalDataSource {
     );
   }
 
-  Future<void> deleteRutina(String id) async {
+  Future<void> eliminarRutina(String id) async {
     final db = await databaseHelper.database;
     await db.delete(
       RutinaDb.tabla,
@@ -161,7 +160,7 @@ class RecordLocalDataSource {
   }
 
   // Método privado para corregir datos inconsistentes
-  Future<void> _fixInconsistentCompletedSessions(Database db) async {
+  Future<void> _corregirSesionesCompletadasInconsistentes(Database db) async {
     try {
       // Buscar sesiones completed sin timestamps
       final inconsistentSessions = await db.query(
@@ -181,8 +180,7 @@ class RecordLocalDataSource {
         // Asignar timestamps basados en created_at si faltan
         final createdDate = DateTime.parse(createdAt);
         final estimatedStartTime = createdDate;
-        final estimatedEndTime =
-            createdDate.add(const Duration(minutes: 45)); // Duración estimada
+        final estimatedEndTime = createdDate.add(const Duration(minutes: 45));
 
         await db.update(
           RutinaSesionDb.tabla,

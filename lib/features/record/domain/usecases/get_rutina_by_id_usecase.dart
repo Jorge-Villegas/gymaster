@@ -11,7 +11,7 @@ class GetRutinaByIdUseCase extends UseCase<RecordRutina, GetRutinaByIdParams> {
 
   @override
   Future<Either<Failure, RecordRutina>> call(GetRutinaByIdParams params) async {
-    return await repository.getRutinaById(params.id);
+    return await repository.obtenerRutinaPorId(params.id);
   }
 }
 

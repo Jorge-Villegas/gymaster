@@ -11,7 +11,7 @@ class SaveRutinaUseCase extends UseCase<void, SaveRutinaParams> {
 
   @override
   Future<Either<Failure, void>> call(SaveRutinaParams params) async {
-    return await repository.saveRutina(params.rutina);
+    return await repository.guardarRutina(params.rutina);
   }
 }
 
