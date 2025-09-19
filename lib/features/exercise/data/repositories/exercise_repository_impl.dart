@@ -11,9 +11,9 @@ class ExerciseRepositoryImpl implements ExerciseRepository {
   ExerciseRepositoryImpl({required this.localDataSource});
 
   @override
-  Future<Either<Failure, List<Exercise>>> getAllExercises() async {
+  Future<Either<Failure, List<Exercise>>> obtenerTodosLosEjercicios() async {
     try {
-      final exercises = await localDataSource.getAllExercises();
+      final exercises = await localDataSource.obtenerTodosLosEjercicios();
       return Right(exercises);
     } on ServerException {
       return Left(
@@ -27,7 +27,7 @@ class ExerciseRepositoryImpl implements ExerciseRepository {
   @override
   Future<Either<Failure, Exercise>> getExerciseById(String id) async {
     try {
-      final exercise = await localDataSource.getExerciseById(id);
+      final exercise = await localDataSource.obtenerEjercicioPorId(id);
       if (exercise == null) {
         return Left(
           NoRecordsFailure(errorMessage: 'No se encontró el ejercicio'),
@@ -48,7 +48,7 @@ class ExerciseRepositoryImpl implements ExerciseRepository {
       String muscleId) async {
     try {
       final exerciseModels =
-          await localDataSource.getExercisesByMuscle(muscleId);
+          await localDataSource.obtenerEjerciciosPorMusculo(muscleId);
       final exercises = exerciseModels.map((model) => model).toList();
 
       // ✅ Validación adicional
@@ -71,7 +71,7 @@ class ExerciseRepositoryImpl implements ExerciseRepository {
   @override
   Future<Either<Failure, List<Exercise>>> searchExercises(String query) async {
     try {
-      final exercises = await localDataSource.searchExercises(query);
+      final exercises = await localDataSource.buscarEjercicios(query);
       return Right(exercises);
     } on ServerException {
       return Left(ServerFailure(errorMessage: 'Error al buscar ejercicios'));
@@ -91,7 +91,8 @@ class ExerciseRepositoryImpl implements ExerciseRepository {
     String? equipment,
   }) async {
     try {
-      final exercises = await localDataSource.getExercisesByMuscle(muscleGroup);
+      final exercises =
+          await localDataSource.obtenerEjerciciosPorMusculo(muscleGroup);
       // TODO: Implementar filtros por dificultad y equipamiento
       return Right(exercises);
     } on ServerException {

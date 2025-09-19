@@ -3,7 +3,7 @@ import 'package:gymaster/core/error/failures.dart';
 import 'package:gymaster/features/exercise/domain/entities/exercise.dart';
 
 abstract interface class ExerciseRepository {
-  Future<Either<Failure, List<Exercise>>> getAllExercises();
+  Future<Either<Failure, List<Exercise>>> obtenerTodosLosEjercicios();
   Future<Either<Failure, Exercise>> getExerciseById(String id);
   Future<Either<Failure, List<Exercise>>> getExercisesByMuscle(String muscleId);
   Future<Either<Failure, List<Exercise>>> searchExercises(String query);

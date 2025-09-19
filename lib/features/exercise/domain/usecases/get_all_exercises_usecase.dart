@@ -11,6 +11,6 @@ class GetAllExercisesUseCase implements UseCase<List<Exercise>, NoParams> {
 
   @override
   Future<Either<Failure, List<Exercise>>> call(NoParams params) async {
-    return await repository.getAllExercises();
+    return await repository.obtenerTodosLosEjercicios();
   }
 }
