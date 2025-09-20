@@ -10,7 +10,7 @@ part 'exercise_state.dart';
 
 class ExerciseCubit extends Cubit<ExerciseState> {
   final ObtenerTodosLosEjerciciosUseCase getAllExercisesUseCase;
-  final ObtenerEjerciciosPorMusculoUseCase getExercisesByMuscleUseCase;
+  final ObtenerEjerciciosCatalogoPorMusculoUseCase getExercisesByMuscleUseCase;
 
   ExerciseCubit({
     required this.getAllExercisesUseCase,
@@ -34,7 +34,7 @@ class ExerciseCubit extends Cubit<ExerciseState> {
     debugPrint('Filtrando ejercicios por músculo: $muscleId');
 
     final result = await getExercisesByMuscleUseCase(
-      ObtenerEjerciciosPorMusculoParams(muscleId: muscleId),
+      ObtenerEjerciciosCatalogoPorMusculoParams(muscleId: muscleId),
     );
 
     result.fold(

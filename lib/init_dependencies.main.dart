@@ -42,7 +42,7 @@ void _initRoutine() {
     ..registerFactory(() => ObtenerTodasLasSeriesUseCase(serviceLocator()))
     ..registerFactory(() => ObtenerTodosLosMusculosUseCase(serviceLocator()))
     ..registerFactory(
-        () => ObtenerEjerciciosPorMusculoUseCase(serviceLocator()))
+        () => ObtenerEjerciciosRutinaPorMusculoUseCase(serviceLocator()))
     ..registerFactory(() => AgregarEjercicioARutinaUseCase(serviceLocator()))
     ..registerFactory(() => ObtenerEjerciciosPorRutinaUseCase(serviceLocator()))
     ..registerFactory(() => ActualizarSerieUseCase(serviceLocator()))
@@ -136,7 +136,7 @@ void _initRecord() {
       () => GuardarRutinaUseCase(repository: serviceLocator()),
     )
     ..registerLazySingleton(
-      () => EliminarRutinaPlantillaUseCase(serviceLocator()),
+      () => EliminarRutinaHistorialUseCase(repository: serviceLocator()),
     )
     ..registerCachedFactory(
       () => ObtenerRutinasCompletadasConEjerciciosUseCase(serviceLocator()),
@@ -166,7 +166,7 @@ void _initExercise() {
     // Use cases
     ..registerFactory(() => ObtenerTodosLosEjerciciosUseCase(serviceLocator()))
     ..registerFactory(
-        () => ObtenerEjerciciosPorMusculoUseCase(serviceLocator()))
+        () => ObtenerEjerciciosCatalogoPorMusculoUseCase(serviceLocator()))
     // Cubit
     ..registerFactory(
       () => ExerciseCubit(
