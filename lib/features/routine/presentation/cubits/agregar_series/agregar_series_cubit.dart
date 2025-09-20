@@ -1,9 +1,9 @@
-import 'package:gymaster/features/routine/domain/usecases/add_ejercicio_rutina_usecase.dart';
+import 'package:gymaster/features/routine/domain/usecases/agregar_ejercicio_a_rutina_usecase.dart';
 import 'package:gymaster/features/routine/presentation/cubits/agregar_series/agregar_series_state.dart';
 import 'package:bloc/bloc.dart';
 
 class AgregarSeriesCubit extends Cubit<AgregarSeriesState> {
-  final AddEjercicioRutinaUsecase _addEjercicioRutinaUsecase;
+  final AgregarEjercicioARutinaUseCase _addEjercicioRutinaUsecase;
 
   AgregarSeriesCubit(this._addEjercicioRutinaUsecase)
       : super(AgregarSeriesLoaded.initial());
@@ -107,7 +107,7 @@ class AgregarSeriesCubit extends Cubit<AgregarSeriesState> {
         }
 
         // Crear una nueva instancia de EjercicioRutina
-        final ejercicioRutina = AddEjercicioRutinaParams(
+        final ejercicioRutina = AgregarEjercicioARutinaParams(
           idSesion: idSesion,
           idRutina: rutinaId,
           idEjercicio: ejercicioId,

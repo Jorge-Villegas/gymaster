@@ -6,11 +6,11 @@ import 'package:gymaster/features/routine/domain/entities/rutina_data.dart';
 import 'package:gymaster/features/routine/domain/repositories/rutine_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
-class ObtenerRutinaDetalle
+class ObtenerDetalleRutinaUseCase
     implements UseCase<RutinaData, ObtenerRutinaDetalleParams> {
   final RoutineRepository repository;
 
-  ObtenerRutinaDetalle(this.repository);
+  ObtenerDetalleRutinaUseCase(this.repository);
 
   @override
   Future<Either<Failure, RutinaData>> call(

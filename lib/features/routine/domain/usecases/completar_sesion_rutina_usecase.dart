@@ -3,22 +3,22 @@ import 'package:gymaster/core/error/failures.dart';
 import 'package:gymaster/core/usecase/usecase.dart';
 import 'package:gymaster/features/routine/domain/repositories/rutine_repository.dart';
 
-class CompleteRoutineSessionUseCase
-    implements UseCase<bool, CompleteRoutineSessionParams> {
+class CompletarSesionRutinaUseCase
+    implements UseCase<bool, CompletarSesionRutinaParams> {
   final RoutineRepository repository;
 
-  CompleteRoutineSessionUseCase(this.repository);
+  CompletarSesionRutinaUseCase(this.repository);
 
   @override
   Future<Either<Failure, bool>> call(
-    CompleteRoutineSessionParams params,
+    CompletarSesionRutinaParams params,
   ) async {
     return await repository.completeRoutineSession(params.sessionId);
   }
 }
 
-class CompleteRoutineSessionParams {
+class CompletarSesionRutinaParams {
   final String sessionId;
 
-  CompleteRoutineSessionParams({required this.sessionId});
+  CompletarSesionRutinaParams({required this.sessionId});
 }

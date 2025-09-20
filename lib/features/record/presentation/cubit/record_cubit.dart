@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymaster/core/error/failures.dart';
 import 'package:gymaster/core/usecase/usecase.dart';
 import 'package:gymaster/features/record/domain/entities/record_rutina.dart';
-import 'package:gymaster/features/record/domain/usecases/eliminar_rutina_usecase.dart';
+import 'package:gymaster/features/record/domain/usecases/eliminar_rutina_historial_usecase.dart';
 import 'package:gymaster/features/record/domain/usecases/obtener_rutinas_completadas_con_ejercicios_usecase.dart';
 import 'package:gymaster/features/record/domain/usecases/obtener_rutina_por_id_usecase.dart';
 import 'package:gymaster/features/record/domain/usecases/guardar_rutina_usecase.dart';
@@ -13,7 +13,7 @@ class RecordCubit extends Cubit<RecordState> {
       getAllCompletedRoutinesWithExercises;
   final ObtenerRutinaPorIdUseCase getRutinaByIdUseCase;
   final GuardarRutinaUseCase saveRutinaUseCase;
-  final EliminarRutinaUseCase deleteRutinaUseCase;
+  final EliminarRutinaHistorialUseCase deleteRutinaUseCase;
 
   RecordCubit({
     required this.getAllCompletedRoutinesWithExercises,
@@ -63,7 +63,8 @@ class RecordCubit extends Cubit<RecordState> {
 
   Future<void> deleteRutina(String id) async {
     emit(RecordLoading());
-    final result = await deleteRutinaUseCase(EliminarRutinaParams(id: id));
+    final result =
+        await deleteRutinaUseCase(EliminarRutinaHistorialParams(id: id));
     result.fold(
       (failure) => emit(RecordError(_mapFailureToMessage(failure))),
       (_) => getAllRutinas(),

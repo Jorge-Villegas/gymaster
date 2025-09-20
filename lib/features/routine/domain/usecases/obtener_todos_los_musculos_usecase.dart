@@ -4,10 +4,11 @@ import 'package:gymaster/features/routine/domain/entities/musculo.dart';
 import 'package:gymaster/features/routine/domain/repositories/rutine_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
-class GetAllMusculoUsecase implements UseCase<List<Musculo>, NoParams> {
+class ObtenerTodosLosMusculosUseCase
+    implements UseCase<List<Musculo>, NoParams> {
   final RoutineRepository repository;
 
-  GetAllMusculoUsecase(this.repository);
+  ObtenerTodosLosMusculosUseCase(this.repository);
 
   @override
   Future<Either<Failure, List<Musculo>>> call(NoParams params) async {

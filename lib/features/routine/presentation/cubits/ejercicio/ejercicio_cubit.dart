@@ -3,16 +3,17 @@ import 'package:equatable/equatable.dart';
 import 'package:gymaster/core/database/models/rutina_sesion_db.dart';
 import 'package:gymaster/core/error/timeout_helper.dart';
 import 'package:gymaster/features/routine/domain/entities/ejercicios_por_musculo.dart';
-import 'package:gymaster/features/routine/domain/usecases/get_all_ejercicios_by_musculo_usecase.dart';
-import 'package:gymaster/features/routine/domain/usecases/get_all_ejercicios_by_rutina.dart';
-import 'package:gymaster/features/routine/domain/usecases/get_last_routine_session_by_routine_id_usecase.dart';
+import 'package:gymaster/features/routine/domain/usecases/obtener_ejercicios_rutina_por_musculo_usecase.dart';
+import 'package:gymaster/features/routine/domain/usecases/obtener_ejercicios_por_rutina_usecase.dart';
+import 'package:gymaster/features/routine/domain/usecases/obtener_ultima_sesion_por_rutina_id_usecase.dart';
 
 part 'ejercicio_state.dart';
 
 class EjercicioCubit extends Cubit<EjercicioState> {
-  final GetAllEjerciciosByMusculoUseCase getAllEjerciciosByMusculoUseCase;
-  final GetAllEjerciciosByRutinaUseCase getAllEjerciciosByRutinaUseCase;
-  final GetLastRoutineSessionByRoutineId getLastRoutineSessionByRoutineId;
+  final ObtenerEjerciciosRutinaPorMusculoUseCase
+      getAllEjerciciosByMusculoUseCase;
+  final ObtenerEjerciciosPorRutinaUseCase getAllEjerciciosByRutinaUseCase;
+  final ObtenerUltimaSesionPorRutinaIdUseCase getLastRoutineSessionByRoutineId;
 
   EjercicioCubit({
     required this.getLastRoutineSessionByRoutineId,
@@ -27,7 +28,7 @@ class EjercicioCubit extends Cubit<EjercicioState> {
     emit(EjercicioLoading());
 
     final ejercicios = await getAllEjerciciosByMusculoUseCase(
-      GetAllEjerciciosByMusculoParams(musculoId: musculoId),
+      ObtenerEjerciciosRutinaPorMusculoParams(musculoId: musculoId),
     );
 
     ejercicios.fold((failure) => emit(EjercicioError(failure.errorMessage)), (
@@ -38,7 +39,7 @@ class EjercicioCubit extends Cubit<EjercicioState> {
       //obtenermos la ultima session de la rutina
       final resultSession = await runWithTimeout(
         () => getLastRoutineSessionByRoutineId(
-          GetLastRoutineSessionByRoutineIdParams(idRoutine: rutinaId),
+          ObtenerUltimaSesionPorRutinaIdParams(idRoutine: rutinaId),
         ),
       );
 
@@ -48,7 +49,7 @@ class EjercicioCubit extends Cubit<EjercicioState> {
 
       final ejerciciosSeleccionadosResult =
           await getAllEjerciciosByRutinaUseCase(
-        GetAllEjerciciosByRutinaParams(
+        ObtenerEjerciciosPorRutinaParams(
           id: rutinaId,
           idRoutineSession: session!.id,
         ),

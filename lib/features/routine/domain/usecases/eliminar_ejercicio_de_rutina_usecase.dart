@@ -3,14 +3,15 @@ import 'package:gymaster/core/error/failures.dart';
 import 'package:gymaster/core/usecase/usecase.dart';
 import 'package:gymaster/features/routine/domain/repositories/rutine_repository.dart';
 
-class DeleteEjercicioRutinaUseCase
-    implements UseCase<void, DeleteEjercicioRutinaParams> {
+class EliminarEjercicioDeRutinaUseCase
+    implements UseCase<void, EliminarEjercicioDeRutinaParams> {
   final RoutineRepository repository;
 
-  DeleteEjercicioRutinaUseCase(this.repository);
+  EliminarEjercicioDeRutinaUseCase(this.repository);
 
   @override
-  Future<Either<Failure, bool>> call(DeleteEjercicioRutinaParams params) async {
+  Future<Either<Failure, bool>> call(
+      EliminarEjercicioDeRutinaParams params) async {
     return await repository.deleteEjercicioRutina(
       params.idEjercicio,
       params.idSesion,
@@ -18,11 +19,11 @@ class DeleteEjercicioRutinaUseCase
   }
 }
 
-class DeleteEjercicioRutinaParams {
+class EliminarEjercicioDeRutinaParams {
   final String idEjercicio;
   final String idSesion;
 
-  DeleteEjercicioRutinaParams({
+  EliminarEjercicioDeRutinaParams({
     required this.idEjercicio,
     required this.idSesion,
   });

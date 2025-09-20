@@ -4,22 +4,22 @@ import 'package:gymaster/core/error/failures.dart';
 import 'package:gymaster/core/usecase/usecase.dart';
 import 'package:gymaster/features/routine/domain/repositories/rutine_repository.dart';
 
-class GetLastRoutineSessionByRoutineId
-    implements UseCase<RutinaSesionDb, GetLastRoutineSessionByRoutineIdParams> {
+class ObtenerUltimaSesionPorRutinaIdUseCase
+    implements UseCase<RutinaSesionDb, ObtenerUltimaSesionPorRutinaIdParams> {
   final RoutineRepository repository;
 
-  GetLastRoutineSessionByRoutineId(this.repository);
+  ObtenerUltimaSesionPorRutinaIdUseCase(this.repository);
 
   @override
   Future<Either<Failure, RutinaSesionDb>> call(
-    GetLastRoutineSessionByRoutineIdParams params,
+    ObtenerUltimaSesionPorRutinaIdParams params,
   ) async {
     return await repository.getLastRoutineSessionByRoutineId(params.idRoutine);
   }
 }
 
-class GetLastRoutineSessionByRoutineIdParams {
+class ObtenerUltimaSesionPorRutinaIdParams {
   final String idRoutine;
 
-  GetLastRoutineSessionByRoutineIdParams({required this.idRoutine});
+  ObtenerUltimaSesionPorRutinaIdParams({required this.idRoutine});
 }

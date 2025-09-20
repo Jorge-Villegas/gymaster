@@ -1,5 +1,5 @@
 import 'package:gymaster/features/routine/domain/entities/ejercicios_de_rutina.dart';
-import 'package:gymaster/features/routine/domain/usecases/update_serie.dart';
+import 'package:gymaster/features/routine/domain/usecases/actualizar_serie_usecase.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:gymaster/shared/utils/enum.dart';
@@ -7,7 +7,7 @@ import 'package:gymaster/shared/utils/enum.dart';
 part 'realizar_ejercicio_rutina_state.dart';
 
 class RealizarEjercicioRutinaCubit extends Cubit<RealizarEjercicioRutinaState> {
-  final UpdateSerieUseCase updateSerieUseCase;
+  final ActualizarSerieUseCase updateSerieUseCase;
 
   RealizarEjercicioRutinaCubit(this.updateSerieUseCase)
       : super(RealizarEjercicioRutinaInitial());
@@ -35,7 +35,8 @@ class RealizarEjercicioRutinaCubit extends Cubit<RealizarEjercicioRutinaState> {
       );
       _updateData(ejercicio: currentState.ejercicio, serie: updatedSerie);
       updateSerieUseCase(
-        UpdateSerieParams(id: currentState.serie.id, peso: updatedSerie.peso),
+        ActualizarSerieParams(
+            id: currentState.serie.id, peso: updatedSerie.peso),
       );
     }
   }
@@ -48,7 +49,8 @@ class RealizarEjercicioRutinaCubit extends Cubit<RealizarEjercicioRutinaState> {
         final updatedSerie = currentState.serie.copyWith(peso: newPeso);
         _updateData(ejercicio: currentState.ejercicio, serie: updatedSerie);
         updateSerieUseCase(
-          UpdateSerieParams(id: currentState.serie.id, peso: updatedSerie.peso),
+          ActualizarSerieParams(
+              id: currentState.serie.id, peso: updatedSerie.peso),
         );
       }
     }
@@ -62,7 +64,7 @@ class RealizarEjercicioRutinaCubit extends Cubit<RealizarEjercicioRutinaState> {
       );
       _updateData(ejercicio: currentState.ejercicio, serie: updatedSerie);
       updateSerieUseCase(
-        UpdateSerieParams(
+        ActualizarSerieParams(
           id: currentState.serie.id,
           repeticiones: updatedSerie.repeticiones,
         ),
@@ -80,7 +82,7 @@ class RealizarEjercicioRutinaCubit extends Cubit<RealizarEjercicioRutinaState> {
         );
         _updateData(ejercicio: currentState.ejercicio, serie: updatedSerie);
         updateSerieUseCase(
-          UpdateSerieParams(
+          ActualizarSerieParams(
             id: currentState.serie.id,
             repeticiones: updatedSerie.repeticiones,
           ),

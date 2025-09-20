@@ -3,14 +3,15 @@ import 'package:gymaster/core/usecase/usecase.dart';
 import 'package:gymaster/features/routine/domain/repositories/rutine_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
-class UpdateExerciseStatusUseCase
-    implements UseCase<void, UpdateExerciseStatusParams> {
+class ActualizarEstadoEjercicioUseCase
+    implements UseCase<void, ActualizarEstadoEjercicioParams> {
   final RoutineRepository repository;
 
-  UpdateExerciseStatusUseCase(this.repository);
+  ActualizarEstadoEjercicioUseCase(this.repository);
 
   @override
-  Future<Either<Failure, void>> call(UpdateExerciseStatusParams params) async {
+  Future<Either<Failure, void>> call(
+      ActualizarEstadoEjercicioParams params) async {
     return await repository.updateExerciseStatusById(
       exerciseId: params.exerciseId,
       routineSessionId: params.routineSessionId,
@@ -19,12 +20,12 @@ class UpdateExerciseStatusUseCase
   }
 }
 
-class UpdateExerciseStatusParams {
+class ActualizarEstadoEjercicioParams {
   final String exerciseId;
   final String routineSessionId;
   final String statusExercise;
 
-  UpdateExerciseStatusParams({
+  ActualizarEstadoEjercicioParams({
     required this.exerciseId,
     required this.routineSessionId,
     required this.statusExercise,

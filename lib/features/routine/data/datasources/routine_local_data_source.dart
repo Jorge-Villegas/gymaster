@@ -1,7 +1,7 @@
 import 'package:gymaster/core/database/database_helper.dart';
 import 'package:gymaster/core/database/models/models.dart';
 import 'package:gymaster/core/error/exceptions.dart';
-import 'package:gymaster/features/routine/domain/usecases/add_ejercicio_rutina_usecase.dart';
+import 'package:gymaster/features/routine/domain/usecases/agregar_ejercicio_a_rutina_usecase.dart';
 import 'package:gymaster/shared/utils/enum.dart';
 import 'package:gymaster/shared/utils/uuid_generator.dart';
 import 'package:sqflite/sqflite.dart';
@@ -603,7 +603,9 @@ class RoutineLocalDataSource {
       final db = await databaseHelper.database;
       final result = await db.update(
         SessionEjercicioDb.tabla,
-        {'${SessionEjercicioDb.columnStatus}': EstadoEjercicioSesion.completado.name},
+        {
+          SessionEjercicioDb.columnStatus: EstadoEjercicioSesion.completado.name
+        },
         where: 'id = ?',
         whereArgs: [id],
       );
@@ -654,7 +656,8 @@ class RoutineLocalDataSource {
         // Eliminar el ejercicio de la sesión
         await txn.delete(
           SessionEjercicioDb.tabla,
-          where: '${SessionEjercicioDb.columnExerciseId}  = ? AND ${SessionEjercicioDb.columnSessionId}  = ?',
+          where:
+              '${SessionEjercicioDb.columnExerciseId}  = ? AND ${SessionEjercicioDb.columnSessionId}  = ?',
           whereArgs: [exerciseId, routineSessionId],
         );
 

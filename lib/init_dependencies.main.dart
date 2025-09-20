@@ -36,23 +36,24 @@ void _initRoutine() {
       ),
     )
     // Use cases
-    ..registerFactory(() => AddRoutineUseCase(serviceLocator()))
-    ..registerFactory(() => DeleteRoutineUseCase(serviceLocator()))
-    ..registerFactory(() => GetAllRoutineUsecase(serviceLocator()))
-    ..registerFactory(() => GetAllSerieUseCase(serviceLocator()))
-    ..registerFactory(() => GetAllMusculoUsecase(serviceLocator()))
-    ..registerFactory(() => GetAllEjerciciosByMusculoUseCase(serviceLocator()))
-    ..registerFactory(() => AddEjercicioRutinaUsecase(serviceLocator()))
-    ..registerFactory(() => GetAllEjerciciosByRutinaUseCase(serviceLocator()))
-    ..registerFactory(() => UpdateSerieUseCase(serviceLocator()))
-    ..registerFactory(() => GetRoutineByNameUseCase(serviceLocator()))
-    ..registerFactory(() => DeleteEjercicioRutinaUseCase(serviceLocator()))
-    ..registerFactory(() => StartRoutineSessionUseCase(serviceLocator()))
-    ..registerFactory(() => StopRoutineSessionUseCase(serviceLocator()))
-    ..registerFactory(() => CompleteRoutineSessionUseCase(serviceLocator()))
-    ..registerFactory(() => UpdateExerciseStatusUseCase(serviceLocator()))
+    ..registerFactory(() => AgregarRutinaUseCase(serviceLocator()))
+    ..registerFactory(() => EliminarRutinaPlantillaUseCase(serviceLocator()))
+    ..registerFactory(() => ObtenerTodasLasRutinasUseCase(serviceLocator()))
+    ..registerFactory(() => ObtenerTodasLasSeriesUseCase(serviceLocator()))
+    ..registerFactory(() => ObtenerTodosLosMusculosUseCase(serviceLocator()))
+    ..registerFactory(
+        () => ObtenerEjerciciosPorMusculoUseCase(serviceLocator()))
+    ..registerFactory(() => AgregarEjercicioARutinaUseCase(serviceLocator()))
+    ..registerFactory(() => ObtenerEjerciciosPorRutinaUseCase(serviceLocator()))
+    ..registerFactory(() => ActualizarSerieUseCase(serviceLocator()))
+    ..registerFactory(() => ObtenerRutinaPorNombreUseCase(serviceLocator()))
+    ..registerFactory(() => EliminarEjercicioDeRutinaUseCase(serviceLocator()))
+    ..registerFactory(() => IniciarSesionRutinaUseCase(serviceLocator()))
+    ..registerFactory(() => FinalizarSesionRutinaUseCase(serviceLocator()))
+    ..registerFactory(() => CompletarSesionRutinaUseCase(serviceLocator()))
+    ..registerFactory(() => ActualizarEstadoEjercicioUseCase(serviceLocator()))
     ..registerCachedFactory(
-      () => GetLastRoutineSessionByRoutineId(serviceLocator()),
+      () => ObtenerUltimaSesionPorRutinaIdUseCase(serviceLocator()),
     )
     //Cubit
     ..registerFactory(
@@ -135,7 +136,7 @@ void _initRecord() {
       () => GuardarRutinaUseCase(repository: serviceLocator()),
     )
     ..registerLazySingleton(
-      () => EliminarRutinaUseCase(repository: serviceLocator()),
+      () => EliminarRutinaPlantillaUseCase(serviceLocator()),
     )
     ..registerCachedFactory(
       () => ObtenerRutinasCompletadasConEjerciciosUseCase(serviceLocator()),

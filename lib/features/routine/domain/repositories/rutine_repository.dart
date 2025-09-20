@@ -9,7 +9,7 @@ import 'package:gymaster/features/routine/domain/entities/routine.dart';
 import 'package:gymaster/features/routine/domain/entities/rutina_data.dart';
 import 'package:gymaster/features/routine/domain/entities/serie.dart';
 
-import '../usecases/add_ejercicio_rutina_usecase.dart';
+import '../usecases/agregar_ejercicio_a_rutina_usecase.dart';
 
 abstract interface class RoutineRepository {
   Future<Either<Failure, Routine>> addRoutine({

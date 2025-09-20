@@ -3,13 +3,14 @@ import 'package:gymaster/core/usecase/usecase.dart';
 import 'package:gymaster/features/routine/domain/repositories/rutine_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
-class GetAllSerieUseCase implements UseCase<void, SerieParams> {
+class ObtenerTodasLasSeriesUseCase
+    implements UseCase<void, ObtenerTodasLasSeriesParams> {
   final RoutineRepository repository;
 
-  GetAllSerieUseCase(this.repository);
+  ObtenerTodasLasSeriesUseCase(this.repository);
 
   @override
-  Future<Either<Failure, void>> call(SerieParams params) async {
+  Future<Either<Failure, void>> call(ObtenerTodasLasSeriesParams params) async {
     return await repository.getAllEjercicioByRutinaId(
       rutinaId: params.id,
       idRoutineSession: params.idRoutineSession,
@@ -17,9 +18,10 @@ class GetAllSerieUseCase implements UseCase<void, SerieParams> {
   }
 }
 
-class SerieParams {
+class ObtenerTodasLasSeriesParams {
   final String id;
   final String idRoutineSession;
 
-  SerieParams({required this.id, required this.idRoutineSession});
+  ObtenerTodasLasSeriesParams(
+      {required this.id, required this.idRoutineSession});
 }

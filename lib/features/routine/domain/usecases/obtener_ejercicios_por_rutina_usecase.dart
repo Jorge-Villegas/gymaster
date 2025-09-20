@@ -4,15 +4,15 @@ import 'package:gymaster/features/routine/domain/entities/ejercicios_de_rutina.d
 import 'package:gymaster/features/routine/domain/repositories/rutine_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
-class GetAllEjerciciosByRutinaUseCase
-    implements UseCase<EjerciciosDeRutina, GetAllEjerciciosByRutinaParams> {
+class ObtenerEjerciciosPorRutinaUseCase
+    implements UseCase<EjerciciosDeRutina, ObtenerEjerciciosPorRutinaParams> {
   final RoutineRepository repository;
 
-  GetAllEjerciciosByRutinaUseCase(this.repository);
+  ObtenerEjerciciosPorRutinaUseCase(this.repository);
 
   @override
   Future<Either<Failure, EjerciciosDeRutina>> call(
-    GetAllEjerciciosByRutinaParams params,
+    ObtenerEjerciciosPorRutinaParams params,
   ) async {
     return await repository.getAllEjercicioByRutinaId(
       rutinaId: params.id,
@@ -21,11 +21,11 @@ class GetAllEjerciciosByRutinaUseCase
   }
 }
 
-class GetAllEjerciciosByRutinaParams {
+class ObtenerEjerciciosPorRutinaParams {
   final String id;
   final String idRoutineSession;
 
-  GetAllEjerciciosByRutinaParams({
+  ObtenerEjerciciosPorRutinaParams({
     required this.id,
     required this.idRoutineSession,
   });

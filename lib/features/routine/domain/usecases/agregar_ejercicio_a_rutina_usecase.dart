@@ -3,15 +3,16 @@ import 'package:gymaster/core/usecase/usecase.dart';
 import 'package:gymaster/features/routine/domain/repositories/rutine_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
-class AddEjercicioRutinaUsecase
-    extends UseCase<void, AddEjercicioRutinaParams> {
-  final RoutineRepository _routineRepository;
+class AgregarEjercicioARutinaUseCase
+    extends UseCase<void, AgregarEjercicioARutinaParams> {
+  final RoutineRepository repositorio;
 
-  AddEjercicioRutinaUsecase(this._routineRepository);
+  AgregarEjercicioARutinaUseCase(this.repositorio);
 
   @override
-  Future<Either<Failure, void>> call(AddEjercicioRutinaParams params) async {
-    return await _routineRepository.addEjericioRutina(
+  Future<Either<Failure, void>> call(
+      AgregarEjercicioARutinaParams params) async {
+    return await repositorio.addEjericioRutina(
       idRutina: params.idRutina,
       idSesion: params.idSesion,
       idEjercicio: params.idEjercicio,
@@ -20,14 +21,14 @@ class AddEjercicioRutinaUsecase
   }
 }
 
-class AddEjercicioRutinaParams {
+class AgregarEjercicioARutinaParams {
   int? id;
   final String idRutina;
   final String idEjercicio;
   final String idSesion;
   final List<DataSerie> dataSeries;
 
-  AddEjercicioRutinaParams({
+  AgregarEjercicioARutinaParams({
     this.id,
     required this.idRutina,
     required this.idSesion,

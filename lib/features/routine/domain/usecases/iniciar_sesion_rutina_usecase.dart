@@ -3,14 +3,14 @@ import 'package:gymaster/core/error/failures.dart';
 import 'package:gymaster/core/usecase/usecase.dart';
 import 'package:gymaster/features/routine/domain/repositories/rutine_repository.dart';
 
-class StartRoutineSessionUseCase
-    extends UseCase<bool, StartRoutineSessionParams> {
+class IniciarSesionRutinaUseCase
+    extends UseCase<bool, IniciarSesionRutinaParams> {
   final RoutineRepository repository;
 
-  StartRoutineSessionUseCase(this.repository);
+  IniciarSesionRutinaUseCase(this.repository);
 
   @override
-  Future<Either<Failure, bool>> call(StartRoutineSessionParams params) async {
+  Future<Either<Failure, bool>> call(IniciarSesionRutinaParams params) async {
     return await repository.startRoutineSession(
       params.sessionId,
       params.rutinaId,
@@ -18,9 +18,9 @@ class StartRoutineSessionUseCase
   }
 }
 
-class StartRoutineSessionParams {
+class IniciarSesionRutinaParams {
   final String sessionId;
   final String rutinaId;
 
-  StartRoutineSessionParams({required this.sessionId, required this.rutinaId});
+  IniciarSesionRutinaParams({required this.sessionId, required this.rutinaId});
 }

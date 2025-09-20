@@ -1,19 +1,19 @@
 import 'package:gymaster/core/usecase/usecase.dart';
 import 'package:gymaster/features/routine/domain/entities/routine.dart';
-import 'package:gymaster/features/routine/domain/usecases/add_routine_usecase.dart';
-import 'package:gymaster/features/routine/domain/usecases/delete_routine_usecase.dart';
-import 'package:gymaster/features/routine/domain/usecases/get_all_routine_usecase.dart';
+import 'package:gymaster/features/routine/domain/usecases/agregar_rutina_usecase.dart';
+import 'package:gymaster/features/routine/domain/usecases/eliminar_rutina_plantilla_usecase.dart';
+import 'package:gymaster/features/routine/domain/usecases/obtener_todas_las_rutinas_usecase.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:gymaster/features/routine/domain/usecases/get_routine_by_name_usecase.dart';
+import 'package:gymaster/features/routine/domain/usecases/obtener_rutina_por_nombre_usecase.dart';
 
 part 'routine_state.dart';
 
 class RoutineCubit extends Cubit<RoutineState> {
-  final AddRoutineUseCase addRoutineUseCase;
-  final GetAllRoutineUsecase getAllRoutineUseCase;
-  final DeleteRoutineUseCase deleteRoutineUseCase;
-  final GetRoutineByNameUseCase getRoutineByNameUseCase;
+  final AgregarRutinaUseCase addRoutineUseCase;
+  final ObtenerTodasLasRutinasUseCase getAllRoutineUseCase;
+  final EliminarRutinaPlantillaUseCase deleteRoutineUseCase;
+  final ObtenerRutinaPorNombreUseCase getRoutineByNameUseCase;
 
   RoutineCubit({
     required this.addRoutineUseCase,
@@ -34,7 +34,7 @@ class RoutineCubit extends Cubit<RoutineState> {
   }) async {
     emit(RoutineLoading());
     final result = await addRoutineUseCase(
-      AddRoutineParams(
+      AgregarRutinaParams(
         name: name,
         description: description,
         creationDate: creationDate,
@@ -60,7 +60,7 @@ class RoutineCubit extends Cubit<RoutineState> {
     emit(RoutineLoading());
 
     final result = await addRoutineUseCase(
-      AddRoutineParams(
+      AgregarRutinaParams(
         name: name,
         description: description,
         creationDate: creationDate,
@@ -86,7 +86,8 @@ class RoutineCubit extends Cubit<RoutineState> {
 
   void deleteRoutine({required String id}) async {
     emit(RoutineLoading());
-    final result = await deleteRoutineUseCase(DeleteRoutineParams(id: id));
+    final result =
+        await deleteRoutineUseCase(EliminarRutinaPlantillaParams(id: id));
     result.fold(
       (l) => emit(RoutineError('Error al eliminar rutina')),
       (r) => emit(RoutineDeleteSuccess()),
@@ -95,7 +96,8 @@ class RoutineCubit extends Cubit<RoutineState> {
 
   void searchRoutineByName(String name) async {
     emit(RoutineLoading());
-    final result = await getRoutineByNameUseCase(RoutineNameParams(name: name));
+    final result =
+        await getRoutineByNameUseCase(ObtenerRutinaPorNombreParams(name: name));
     result.fold(
       (failure) => emit(RoutineError('Error al buscar rutinas')),
       (routines) => emit(RoutineGetByNameSuccess(routines)),

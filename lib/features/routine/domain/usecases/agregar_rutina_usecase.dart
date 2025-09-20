@@ -4,13 +4,13 @@ import 'package:gymaster/features/routine/domain/entities/routine.dart';
 import 'package:gymaster/features/routine/domain/repositories/rutine_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
-class AddRoutineUseCase implements UseCase<Routine, AddRoutineParams> {
+class AgregarRutinaUseCase implements UseCase<Routine, AgregarRutinaParams> {
   final RoutineRepository _routineRepository;
 
-  AddRoutineUseCase(this._routineRepository);
+  AgregarRutinaUseCase(this._routineRepository);
 
   @override
-  Future<Either<Failure, Routine>> call(AddRoutineParams params) async {
+  Future<Either<Failure, Routine>> call(AgregarRutinaParams params) async {
     return await _routineRepository.addRoutine(
       name: params.name,
       description: params.description,
@@ -22,7 +22,7 @@ class AddRoutineUseCase implements UseCase<Routine, AddRoutineParams> {
   }
 }
 
-class AddRoutineParams {
+class AgregarRutinaParams {
   final String name;
   String? description;
   final DateTime creationDate;
@@ -30,7 +30,7 @@ class AddRoutineParams {
   final int color;
   final String imagenDireccion;
 
-  AddRoutineParams({
+  AgregarRutinaParams({
     required this.name,
     this.description,
     required this.creationDate,

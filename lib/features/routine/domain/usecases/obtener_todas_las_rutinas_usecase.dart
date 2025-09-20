@@ -4,10 +4,11 @@ import 'package:gymaster/features/routine/domain/entities/routine.dart';
 import 'package:gymaster/features/routine/domain/repositories/rutine_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
-class GetAllRoutineUsecase implements UseCase<List<Routine>, NoParams> {
+class ObtenerTodasLasRutinasUseCase
+    implements UseCase<List<Routine>, NoParams> {
   final RoutineRepository repository;
 
-  GetAllRoutineUsecase(this.repository);
+  ObtenerTodasLasRutinasUseCase(this.repository);
 
   @override
   Future<Either<Failure, List<Routine>>> call(NoParams params) async {

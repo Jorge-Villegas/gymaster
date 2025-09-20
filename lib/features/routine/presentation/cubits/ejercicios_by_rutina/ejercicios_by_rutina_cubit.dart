@@ -5,28 +5,28 @@ import 'package:gymaster/core/database/database_helper.dart';
 import 'package:gymaster/core/database/models/models.dart';
 import 'package:gymaster/core/error/timeout_helper.dart';
 import 'package:gymaster/features/routine/domain/entities/ejercicios_de_rutina.dart';
-import 'package:gymaster/features/routine/domain/usecases/complete_routine_session_usecase.dart';
-import 'package:gymaster/features/routine/domain/usecases/delete_ejercicio_rutina_usecase.dart';
-import 'package:gymaster/features/routine/domain/usecases/get_all_ejercicios_by_rutina.dart';
-import 'package:gymaster/features/routine/domain/usecases/get_last_routine_session_by_routine_id_usecase.dart';
-import 'package:gymaster/features/routine/domain/usecases/start_routine_session_usecase.dart';
-import 'package:gymaster/features/routine/domain/usecases/stop_routine_session_usecase.dart';
-import 'package:gymaster/features/routine/domain/usecases/update_exercise_status_usecase.dart';
-import 'package:gymaster/features/routine/domain/usecases/update_serie.dart';
+import 'package:gymaster/features/routine/domain/usecases/completar_sesion_rutina_usecase.dart';
+import 'package:gymaster/features/routine/domain/usecases/eliminar_ejercicio_de_rutina_usecase.dart';
+import 'package:gymaster/features/routine/domain/usecases/obtener_ejercicios_por_rutina_usecase.dart';
+import 'package:gymaster/features/routine/domain/usecases/obtener_ultima_sesion_por_rutina_id_usecase.dart';
+import 'package:gymaster/features/routine/domain/usecases/iniciar_sesion_rutina_usecase.dart';
+import 'package:gymaster/features/routine/domain/usecases/finalizar_sesion_rutina_usecase.dart';
+import 'package:gymaster/features/routine/domain/usecases/actualizar_estado_ejercicio_usecase.dart';
+import 'package:gymaster/features/routine/domain/usecases/actualizar_serie_usecase.dart';
 import 'package:gymaster/features/routine/presentation/cubits/rutina/routine_cubit.dart';
 import 'package:gymaster/shared/utils/enum.dart';
 
 part 'ejercicios_by_rutina_state.dart';
 
 class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
-  final GetAllEjerciciosByRutinaUseCase getAllEjerciciosByRutinaUseCase;
-  final UpdateSerieUseCase updateSerieUseCase;
-  final DeleteEjercicioRutinaUseCase deleteEjercicioRutinaUseCase;
-  final GetLastRoutineSessionByRoutineId getLastRoutineSessionByRoutineId;
-  final StartRoutineSessionUseCase startRoutineSessionUseCase;
-  final StopRoutineSessionUseCase stopRoutineSessionUseCase;
-  final CompleteRoutineSessionUseCase completeRoutineSessionUseCase;
-  final UpdateExerciseStatusUseCase updateExerciseStatusUseCase;
+  final ObtenerEjerciciosPorRutinaUseCase getAllEjerciciosByRutinaUseCase;
+  final ActualizarSerieUseCase updateSerieUseCase;
+  final EliminarEjercicioDeRutinaUseCase deleteEjercicioRutinaUseCase;
+  final ObtenerUltimaSesionPorRutinaIdUseCase getLastRoutineSessionByRoutineId;
+  final IniciarSesionRutinaUseCase startRoutineSessionUseCase;
+  final FinalizarSesionRutinaUseCase stopRoutineSessionUseCase;
+  final CompletarSesionRutinaUseCase completeRoutineSessionUseCase;
+  final ActualizarEstadoEjercicioUseCase updateExerciseStatusUseCase;
 
   EjerciciosByRutinaCubit(
     this.deleteEjercicioRutinaUseCase,
@@ -61,7 +61,7 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
       final updatedSerie = serie.copyWith(peso: newPeso);
       _updateSerie(currentState, updatedSerie);
       updateSerieUseCase(
-        UpdateSerieParams(id: updatedSerie.id, peso: updatedSerie.peso),
+        ActualizarSerieParams(id: updatedSerie.id, peso: updatedSerie.peso),
       );
     }
   }
@@ -80,7 +80,7 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
       final updatedSerie = serie.copyWith(repeticiones: newRepeticiones);
       _updateSerie(currentState, updatedSerie);
       updateSerieUseCase(
-        UpdateSerieParams(
+        ActualizarSerieParams(
           id: updatedSerie.id,
           repeticiones: updatedSerie.repeticiones,
         ),
@@ -94,7 +94,7 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
     //obtenermos la ultima session de la rutina
     final resultSession = await runWithTimeout(
       () => getLastRoutineSessionByRoutineId(
-        GetLastRoutineSessionByRoutineIdParams(idRoutine: idRutina),
+        ObtenerUltimaSesionPorRutinaIdParams(idRoutine: idRutina),
       ),
     );
 
@@ -116,7 +116,7 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
       //obtenermos la ultima session de la rutina
       final resultSession = await runWithTimeout(
         () => getLastRoutineSessionByRoutineId(
-          GetLastRoutineSessionByRoutineIdParams(idRoutine: idRutina),
+          ObtenerUltimaSesionPorRutinaIdParams(idRoutine: idRutina),
         ),
       );
 
@@ -128,7 +128,7 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
 
       final result = await runWithTimeout(
         () => getAllEjerciciosByRutinaUseCase(
-          GetAllEjerciciosByRutinaParams(
+          ObtenerEjerciciosPorRutinaParams(
             id: idRutina,
             idRoutineSession: session!.id,
           ),
@@ -246,7 +246,7 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
     );
 
     await updateExerciseStatusUseCase(
-      UpdateExerciseStatusParams(
+      ActualizarEstadoEjercicioParams(
         exerciseId: updatedEjercicio.id,
         statusExercise: updatedEjercicio.estado,
         routineSessionId: currentState.ejerciciosDeRutina.session,
@@ -274,7 +274,7 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
       ),
     );
 
-    updateSerieUseCase(UpdateSerieParams(id: serie.id, realizado: true));
+    updateSerieUseCase(ActualizarSerieParams(id: serie.id, realizado: true));
 
     return updatedSerie;
   }
@@ -322,7 +322,7 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
     } else {
       // Si no hay más series ni ejercicios, emite el estado de rutina completada
       final result = await completeRoutineSessionUseCase(
-        CompleteRoutineSessionParams(
+        CompletarSesionRutinaParams(
           sessionId: currentState.ejerciciosDeRutina.session,
         ),
       );
@@ -418,7 +418,8 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
           // Find the session_exercise_id for this exercise
           final sessionExerciseRows = await txn.query(
             SessionEjercicioDb.tabla,
-            where: '${SessionEjercicioDb.columnSessionId} = ? AND ${SessionEjercicioDb.columnExerciseId} = ?',
+            where:
+                '${SessionEjercicioDb.columnSessionId} = ? AND ${SessionEjercicioDb.columnExerciseId} = ?',
             whereArgs: [routineSessionId, ejercicio.id],
           );
 
@@ -481,7 +482,8 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
     String idSesion,
   ) async {
     final result = await deleteEjercicioRutinaUseCase(
-      DeleteEjercicioRutinaParams(idEjercicio: idEjercicio, idSesion: idSesion),
+      EliminarEjercicioDeRutinaParams(
+          idEjercicio: idEjercicio, idSesion: idSesion),
     );
 
     return result.fold((failure) => false, (success) => success);
@@ -495,7 +497,7 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
 
     // 1. Intentar iniciar la rutina
     final result = await startRoutineSessionUseCase(
-      StartRoutineSessionParams(
+      IniciarSesionRutinaParams(
         sessionId: routineSessionId,
         rutinaId: rutinaId,
       ),
@@ -517,7 +519,7 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
         // 2. Obtener la sesión actualizada
         RutinaSesionDb? updatedSession;
         final sessionResult = await getLastRoutineSessionByRoutineId(
-          GetLastRoutineSessionByRoutineIdParams(idRoutine: rutinaId),
+          ObtenerUltimaSesionPorRutinaIdParams(idRoutine: rutinaId),
         );
 
         final hasSession = sessionResult.fold(
@@ -537,7 +539,7 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
 
         // 3. Obtener los ejercicios de la sesión actualizada
         final ejerciciosResult = await getAllEjerciciosByRutinaUseCase(
-          GetAllEjerciciosByRutinaParams(
+          ObtenerEjerciciosPorRutinaParams(
             id: rutinaId,
             idRoutineSession: updatedSession!.id,
           ),
@@ -578,7 +580,7 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
   Future<bool> stopRoutine({required String routineSessionId}) async {
     final currentState = state as EjerciciosByRutinaSuccess;
     final result = await stopRoutineSessionUseCase(
-      StopRoutineSessionParams(sessionId: routineSessionId),
+      FinalizarSesionRutinaParams(sessionId: routineSessionId),
     );
 
     return result.fold((failure) => false, (success) {
@@ -596,7 +598,7 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
   Future<bool> completeRoutine({required String routineSessionId}) async {
     final currentState = state as EjerciciosByRutinaSuccess;
     final result = await completeRoutineSessionUseCase(
-      CompleteRoutineSessionParams(sessionId: routineSessionId),
+      CompletarSesionRutinaParams(sessionId: routineSessionId),
     );
 
     return result.fold((failure) {
@@ -636,7 +638,7 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
     try {
       // Usar startRoutineSession para crear una nueva sesión automáticamente
       final result = await startRoutineSessionUseCase(
-        StartRoutineSessionParams(
+        IniciarSesionRutinaParams(
           sessionId: rutina.session,
           rutinaId: rutina.rutinaId,
         ),

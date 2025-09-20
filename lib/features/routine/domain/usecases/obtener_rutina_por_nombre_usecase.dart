@@ -4,20 +4,21 @@ import 'package:gymaster/features/routine/domain/entities/routine.dart';
 import 'package:gymaster/features/routine/domain/repositories/rutine_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
-class GetRoutineByNameUseCase
-    implements UseCase<List<Routine>, RoutineNameParams> {
+class ObtenerRutinaPorNombreUseCase
+    implements UseCase<List<Routine>, ObtenerRutinaPorNombreParams> {
   final RoutineRepository repository;
 
-  GetRoutineByNameUseCase(this.repository);
+  ObtenerRutinaPorNombreUseCase(this.repository);
 
   @override
-  Future<Either<Failure, List<Routine>>> call(RoutineNameParams params) async {
+  Future<Either<Failure, List<Routine>>> call(
+      ObtenerRutinaPorNombreParams params) async {
     return await repository.getRoutineByName(name: params.name);
   }
 }
 
-class RoutineNameParams {
+class ObtenerRutinaPorNombreParams {
   final String name;
 
-  RoutineNameParams({required this.name});
+  ObtenerRutinaPorNombreParams({required this.name});
 }

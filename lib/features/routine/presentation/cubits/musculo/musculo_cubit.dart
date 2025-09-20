@@ -1,12 +1,12 @@
 import 'package:gymaster/core/usecase/usecase.dart';
 import 'package:gymaster/features/routine/domain/entities/musculo.dart';
-import 'package:gymaster/features/routine/domain/usecases/get_all_musculos_usecase.dart';
+import 'package:gymaster/features/routine/domain/usecases/obtener_todos_los_musculos_usecase.dart';
 import 'package:bloc/bloc.dart';
 
 part 'musculo_state.dart';
 
 class MusculoCubit extends Cubit<MusculoState> {
-  final GetAllMusculoUsecase getAllMusculoUsecase;
+  final ObtenerTodosLosMusculosUseCase getAllMusculoUsecase;
 
   MusculoCubit({
     required this.getAllMusculoUsecase,
