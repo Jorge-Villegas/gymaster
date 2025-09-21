@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/generated/assets.gen.dart';
-import 'package:gymaster/shared/widgets/custom_elevated_button.dart';
+import 'package:gymaster/shared/widgets/chiclet_button.dart';
 
 class EjerciciosVaciosWidget extends StatelessWidget {
   final String rutinaId;
@@ -12,6 +12,16 @@ class EjerciciosVaciosWidget extends StatelessWidget {
     required this.rutinaId,
     required this.sessionId,
   });
+
+  /// Navega a la pantalla de agregar ejercicios
+  void _navegarAAgregarEjercicios(BuildContext context) {
+    context.push('/agregar-ejercicios/$rutinaId/$sessionId').then((_) {
+      if (context.mounted) {
+        // TODO: Implementar refresh de ejercicios después de agregar
+        // context.read<EjerciciosByRutinaCubit>().getAllEjercicios(idRutina: rutinaId);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +51,7 @@ class EjerciciosVaciosWidget extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               Text(
-                'No hay ejercicios aún',
+                '¡Tu rutina está lista para comenzar!',
                 style: textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -49,32 +59,27 @@ class EjerciciosVaciosWidget extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               Text(
-                'Agrega ejercicios para comenzar tu rutina',
-                style: textTheme.bodyMedium?.copyWith(
+                'Agrega tus ejercicios favoritos y comienza a entrenar hoy',
+                style: textTheme.bodyLarge?.copyWith(
                   color: Colors.grey[600],
+                  height: 1.4,
                 ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 32),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: CustomElevatedButton(
-                  onPressed: () {
-                    context
-                        .push('/agregar-ejercicios/$rutinaId/$sessionId')
-                        .then((
-                      _,
-                    ) {
-                      if (context.mounted) {
-                        // Llama a getAllEjercicios después de que se cierra la pantalla AgregarEjerciciosPage
-                        // BlocProvider.of<EjerciciosByRutinaCubit>(
-                        //   context,
-                        //   listen: false,
-                        // ).getAllEjercicios(idRutina: rutinaId);
-                      }
-                    });
-                  },
-                  text: 'Agregar Ejercicio',
+              SizedBox(
+                width: double.infinity,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: ChicletButton(
+                    texto: 'Agregar Ejercicio',
+                    tamano: TamanoBotonChiclet.grande,
+                    estilo: EstiloBotonChiclet.relleno,
+                    radioBorde: 16,
+                    conSombreado: true,
+                    grosorSombreado: 6.0,
+                    onPressed: () => _navegarAAgregarEjercicios(context),
+                  ),
                 ),
               ),
               const Spacer(),
