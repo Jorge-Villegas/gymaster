@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gymaster/features/record/presentation/widgets/series_control_button.dart';
 import 'package:gymaster/shared/utils/text_formatter.dart';
 import 'package:gymaster/shared/utils/verificador_tipo_archivo.dart';
+import 'package:gymaster/shared/widgets/chiclet_button.dart';
 
 class EncabezadoEjercicioWidget extends StatelessWidget {
   final String nombreEjercicio;
@@ -58,10 +59,18 @@ class EncabezadoEjercicioWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              width: 40,
-              height: 40,
-              child: SeriesControlButton(
-                icon: Icons.remove,
+              width: 45,
+              height: 45,
+              child: ChicletButton(
+                texto: '',
+                icono: Icons.remove,
+                colorFondo: Colors.white,
+                colorTexto: Colors.black,
+                estilo: EstiloBotonChiclet.contorno,
+                tamano: TamanoBotonChiclet.pequeno,
+                radioBorde: 20,
+                paddingHorizontal: 4,
+                paddingVertical: 4,
                 onPressed: onDecrement,
               ),
             ),
@@ -89,10 +98,18 @@ class EncabezadoEjercicioWidget extends StatelessWidget {
             ),
             const SizedBox(width: 15),
             SizedBox(
-              width: 40,
-              height: 40,
-              child: SeriesControlButton(
-                icon: Icons.add,
+              width: 45,
+              height: 45,
+              child: ChicletButton(
+                texto: '',
+                icono: Icons.add,
+                colorFondo: Colors.white,
+                colorTexto: Colors.black,
+                estilo: EstiloBotonChiclet.contorno,
+                tamano: TamanoBotonChiclet.mediano,
+                radioBorde: 20,
+                paddingHorizontal: 4,
+                paddingVertical: 4,
                 onPressed: onIncrement,
               ),
             ),
