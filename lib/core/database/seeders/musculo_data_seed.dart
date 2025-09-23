@@ -99,7 +99,7 @@ class MusculosDataSeed {
       for (final musculo in musculos) {
         final existingMuscles = await database.query(
           MusculoDb.tabla,
-          where: 'name = ?',
+          where: '${MusculoDb.columnaNombre} = ?',
           whereArgs: [musculo.nombre],
         );
 

@@ -2912,7 +2912,7 @@ class EjercicioDataSeed {
       String idMusculo;
       // Buscamos el músculo
       for (final nombreMusculo in listaNombresMusculos) {
-        final musculo = await buscarMusculoPorNombre(nombreMusculo);
+        final musculo = await buscarMusculoPorNombre(txn, nombreMusculo);
         if (musculo == null) {
           // Si no existe el músculo lo agregamos
           final nuevoMusculo = MusculoDb(
@@ -2920,7 +2920,7 @@ class EjercicioDataSeed {
             nombre: nombreMusculo,
             fechaCreacion: DateTime.now().toIso8601String(),
           );
-          await insertarMusculo(nuevoMusculo);
+          await insertarMusculo(txn, nuevoMusculo);
           idMusculo = nuevoMusculo.id;
         } else {
           idMusculo = musculo.id;
@@ -2928,6 +2928,7 @@ class EjercicioDataSeed {
 
         // Insertar la relación en la tabla EjercicioMusculo
         final result = await insertarEjercicioMusculo(
+          txn: txn,
           ejercicioId: ejercicio.id,
           musculoId: idMusculo,
         );
@@ -2942,16 +2943,16 @@ class EjercicioDataSeed {
 
   //funcion que almacena las relaciones entre ejercicios y musculo
   Future<bool> insertarEjercicioMusculo({
+    required DatabaseExecutor txn,
     required String ejercicioId,
     required String musculoId,
   }) async {
     try {
-      final db = await DatabaseHelper.instance.database;
       final ejercicioMusculo = EjercicioMusculoDbModel(
         ejercicioId: ejercicioId,
         musculoId: musculoId,
       );
-      final result = await db.insert(
+      final result = await txn.insert(
         EjercicioMusculoDbModel.tabla,
         ejercicioMusculo.toJson(),
       );
@@ -2962,10 +2963,10 @@ class EjercicioDataSeed {
     }
   }
 
-  Future<MusculoDb?> buscarMusculoPorNombre(String nombreMusculo) async {
+  Future<MusculoDb?> buscarMusculoPorNombre(
+      DatabaseExecutor txn, String nombreMusculo) async {
     try {
-      final db = await DatabaseHelper.instance.database;
-      final res = await db.query(
+      final res = await txn.query(
         MusculoDb.tabla,
         where: '${MusculoDb.columnaNombre} = ?',
         whereArgs: [nombreMusculo],
@@ -2982,10 +2983,10 @@ class EjercicioDataSeed {
   }
 
   // Insertar el músculo
-  Future<String?> insertarMusculo(MusculoDb musculo) async {
+  Future<String?> insertarMusculo(
+      DatabaseExecutor txn, MusculoDb musculo) async {
     try {
-      final db = await DatabaseHelper.instance.database;
-      await db.insert(MusculoDb.tabla, musculo.toJson());
+      await txn.insert(MusculoDb.tabla, musculo.toJson());
       return musculo.id;
     } catch (e) {
       print('Error al insertar el músculo: $e');
