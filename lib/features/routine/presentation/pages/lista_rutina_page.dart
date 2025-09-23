@@ -9,7 +9,7 @@ import 'package:gymaster/features/routine/presentation/cubits/rutina/routine_cub
 import 'package:gymaster/features/routine/presentation/pages/agregar_rutina_page.dart';
 import 'package:gymaster/features/routine/presentation/pages/routine_search_delegate.dart';
 import 'package:gymaster/features/routine/presentation/widgets/routine_card.dart';
-import 'package:gymaster/shared/widgets/custom_elevated_button.dart';
+import 'package:gymaster/shared/widgets/chiclet_button.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shimmer/shimmer.dart';
@@ -20,35 +20,68 @@ class ListaRutinasPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: _builAddRoutineButton(context),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      backgroundColor: Colors.grey[200],
+      backgroundColor: AppColors.backgroundLight,
       body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-        child: SafeArea(
-          child: Column(
-            children: [
-              const SizedBox(height: 10),
-              _buildHeader(context),
-              const SizedBox(height: 20),
-              _buildSearchBar(context),
-              const SizedBox(height: 10),
-              _buildRoutineList(),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              AppColors.backgroundLight,
+              Colors.white,
+              AppColors.backgroundLight.withOpacity(0.8),
             ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            stops: const [0.0, 0.3, 1.0],
+          ),
+        ),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+            child: Column(
+              children: [
+                const SizedBox(height: 10),
+                _buildHeader(context),
+                const SizedBox(height: 20),
+                _buildSearchBar(context),
+                const SizedBox(height: 10),
+                _buildRoutineList(),
+              ],
+            ),
           ),
         ),
       ),
+      // Botón flotante mejorado con ChicletButton estilo
+      floatingActionButton: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.primary.withAlpha((0.3 * 255).toInt()),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: ChicletButton(
+          texto: '',
+          icono: Icons.add,
+          tamano: TamanoBotonChiclet.grande,
+          estilo: EstiloBotonChiclet.relleno,
+          radioBorde: 16,
+          ancho: 64,
+          alto: 64,
+          colorFondo: AppColors.primary,
+          conSombreado: false, // Ya tiene sombra personalizada
+          onPressed: () => _navegarAAgregarRutina(context),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 
-  Widget _builAddRoutineButton(BuildContext context) {
-    return FloatingActionButton(
-      onPressed: () => Navigator.push(
-        context,
-        MaterialPageRoute(builder: (_) => const AgregarRutinaPage()),
-      ),
-      child: const Icon(Icons.add),
-    );
+  /// Navega a la página de agregar rutina
+  void _navegarAAgregarRutina(BuildContext context) {
+    context.go('/rutina/create');
   }
 
   Widget _buildHeader(BuildContext context) {
@@ -81,7 +114,7 @@ class ListaRutinasPage extends StatelessWidget {
           _getMotivationalMessage(),
           style: EmotionalTextStyles.encouragement.copyWith(
             fontSize: 16,
-            color: AppColors.energeticCoral,
+            color: AppColors.warmOrange,
           ),
         ),
         const SizedBox(height: 8),
@@ -143,143 +176,363 @@ class ListaRutinasPage extends StatelessWidget {
   }
 
   Widget _buildSearchBar(BuildContext context) {
-    return BlocBuilder<RoutineCubit, RoutineState>(
-      builder: (context, state) {
-        if (state is RoutineError) {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'Rutinas',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.black,
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 8),
+      child: BlocBuilder<RoutineCubit, RoutineState>(
+        builder: (context, state) {
+          if (state is RoutineError) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Mis Rutinas',
+                  style: EmotionalTextStyles.motivational.copyWith(
+                    color: AppColors.primary,
+                    fontSize: 24,
+                  ),
                 ),
-              ),
-              IconButton(
-                icon: const Icon(Icons.add),
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) => const AgregarRutinaPage(),
-                    ),
-                  );
-                },
-              ),
-            ],
-          );
-        }
-        if (state is RoutineGetAllSuccess) {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'Rutinas',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.black,
+                ChicletButton(
+                  texto: '',
+                  icono: Icons.add_rounded,
+                  tamano: TamanoBotonChiclet.mediano,
+                  estilo: EstiloBotonChiclet.contorno,
+                  colorFondo: AppColors.energyOrange.withOpacity(0.1),
+                  colorBorde: AppColors.energyOrange,
+                  colorTexto: AppColors.energyOrange,
+                  radioBorde: 12,
+                  onPressed: () => _navegarAAgregarRutina(context),
                 ),
-              ),
-              IconButton(
-                icon: const Icon(IconsaxPlusLinear.search_normal_1),
-                onPressed: () async {
-                  final routineCubit = BlocProvider.of<RoutineCubit>(context);
-                  final result = await showSearch(
-                    context: context,
-                    delegate: RoutineSearchDelegate(),
-                  );
-                  if (result != null && context.mounted) {
-                    routineCubit.getAllRoutine();
-                  }
-                },
-              ),
-            ],
-          );
-        }
-        return const SizedBox();
-      },
+              ],
+            );
+          }
+
+          if (state is RoutineGetAllSuccess) {
+            return Row(
+              children: [
+                // Título de sección con contador emocional
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Mis Rutinas',
+                        style: EmotionalTextStyles.motivational.copyWith(
+                          color: AppColors.primary,
+                          fontSize: 24,
+                        ),
+                      ),
+                      if (state.routines.isNotEmpty)
+                        Text(
+                          '${state.routines.length} rutina${state.routines.length == 1 ? '' : 's'} para conquistar',
+                          style: EmotionalTextStyles.encouragement.copyWith(
+                            color: AppColors.warmOrange,
+                            fontSize: 14,
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 12),
+                // Botón de búsqueda mejorado
+                ChicletButton(
+                  texto: '',
+                  icono: IconsaxPlusLinear.search_normal_1,
+                  tamano: TamanoBotonChiclet.mediano,
+                  estilo: EstiloBotonChiclet.contorno,
+                  colorFondo: AppColors.calmBlue.withOpacity(0.1),
+                  colorBorde: AppColors.calmBlue,
+                  colorTexto: AppColors.calmBlue,
+                  radioBorde: 12,
+                  conSombreado: true,
+                  grosorSombreado: 2.0,
+                  onPressed: () async {
+                    final routineCubit = BlocProvider.of<RoutineCubit>(context);
+                    final result = await showSearch(
+                      context: context,
+                      delegate: RoutineSearchDelegate(),
+                    );
+                    if (result != null && context.mounted) {
+                      routineCubit.getAllRoutine();
+                    }
+                  },
+                ),
+              ],
+            );
+          }
+
+          return Container(); // Estado por defecto
+        },
+      ),
     );
   }
 
   Widget _buildRoutineList() {
     return Expanded(
-      child: Scaffold(
-        backgroundColor: Colors.grey[200],
-        body: BlocBuilder<RoutineCubit, RoutineState>(
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Colors.transparent,
+              AppColors.backgroundLight.withOpacity(0.3),
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: BlocBuilder<RoutineCubit, RoutineState>(
           builder: (context, state) {
             if (state is RoutineLoading) {
-              return Shimmer.fromColors(
-                baseColor: Colors.grey[300]!,
-                highlightColor: Colors.grey[100]!,
-                period: const Duration(seconds: 1),
-                child: ListView.builder(
-                  itemCount: 5, // Número de elementos de carga
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Container(
-                        height: 100,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
+              return Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  children: [
+                    // Mensaje motivacional de carga
+                    Container(
+                      padding: const EdgeInsets.all(20),
+                      margin: const EdgeInsets.only(bottom: 16),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            AppColors.calmBlue.withOpacity(0.1),
+                            AppColors.peacefulBlue.withOpacity(0.05),
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(
+                          color: AppColors.calmBlue.withOpacity(0.2),
+                          width: 1,
                         ),
                       ),
-                    );
-                  },
+                      child: Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: AppColors.calmBlue.withOpacity(0.2),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Icon(
+                              Icons.fitness_center,
+                              color: AppColors.calmBlue,
+                              size: 20,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              'Preparando tus rutinas increíbles...',
+                              style: EmotionalTextStyles.friendly.copyWith(
+                                fontSize: 16,
+                                color: AppColors.calmBlue,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    // Shimmer mejorado
+                    Expanded(
+                      child: Shimmer.fromColors(
+                        baseColor: AppColors.calmBlue.withOpacity(0.1),
+                        highlightColor: AppColors.peacefulBlue.withOpacity(0.3),
+                        period: const Duration(milliseconds: 1200),
+                        child: ListView.builder(
+                          itemCount: 4, // Menos elementos para mejor UX
+                          itemBuilder: (context, index) {
+                            return Container(
+                              margin: const EdgeInsets.only(bottom: 16),
+                              child: Card(
+                                elevation: 2,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                child: Container(
+                                  height: 120,
+                                  padding: const EdgeInsets.all(16),
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Colors.white,
+                                        AppColors.backgroundLight,
+                                      ],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                    ),
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        width: 80,
+                                        height: 80,
+                                        decoration: BoxDecoration(
+                                          color: AppColors.calmBlue
+                                              .withOpacity(0.2),
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 16),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              height: 20,
+                                              width: double.infinity,
+                                              decoration: BoxDecoration(
+                                                color: AppColors.calmBlue
+                                                    .withOpacity(0.2),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                            ),
+                                            const SizedBox(height: 8),
+                                            Container(
+                                              height: 16,
+                                              width: 120,
+                                              decoration: BoxDecoration(
+                                                color: AppColors.peacefulBlue
+                                                    .withOpacity(0.2),
+                                                borderRadius:
+                                                    BorderRadius.circular(6),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               );
             }
             if (state is RoutineError) {
-              // return Center(child: Text(state.message));
-              // return Column(
-              //   children: [
-              //     Center(
-              //       child: Lottie.asset('assets/lottie/alzando_pesas.json'),
-              //     ),
-              //     const Text(
-              //       'Cada gran cambio comienza con un primer paso. Agrega tu primera rutina ahoraCada gran cambio comienza con un primer paso. Agrega tu primera rutina ahora',
-              //     ),
-              //   ],
-              // );
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Center(
-                    child: Lottie.asset(
-                      'assets/lottie/alzando_pesas.json',
-                      width: 200,
-                      height: 200,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Text(
-                      'Cada gran cambio comienza con un primer paso. Agrega tu primera rutina ahora.',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black54,
+              return Container(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Animación Lottie emocional
+                    Container(
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            AppColors.energyOrange.withOpacity(0.1),
+                            AppColors.warmOrange.withOpacity(0.05),
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: AppColors.energyOrange.withOpacity(0.2),
+                          width: 2,
+                        ),
+                      ),
+                      child: Lottie.asset(
+                        'assets/lottie/alzando_pesas.json',
+                        width: 200,
+                        height: 200,
+                        repeat: true,
+                        animate: true,
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 20),
-                  CustomElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => const AgregarRutinaPage(),
+                    const SizedBox(height: 32),
+                    // Título motivacional
+                    Text(
+                      '¡Tu historia fitness comienza aquí!',
+                      textAlign: TextAlign.center,
+                      style: EmotionalTextStyles.motivational.copyWith(
+                        fontSize: 26,
+                        color: AppColors.primary,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    // Mensaje inspirador
+                    Container(
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            AppColors.inspirationPink.withOpacity(0.1),
+                            AppColors.celebrationPurple.withOpacity(0.05),
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
                         ),
-                      );
-                    },
-                    text: 'Agregar Rutina',
-                    borderRadius: 10,
-                    height: 40,
-                  ),
-                ],
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Text(
+                        'Cada gran transformación empieza con una decisión. '
+                        'Tu primera rutina será el primer paso hacia la mejor versión de ti mismo. '
+                        '¡Vamos a crear algo increíble juntos! 💪',
+                        textAlign: TextAlign.center,
+                        style: EmotionalTextStyles.friendly.copyWith(
+                          fontSize: 16,
+                          color: AppColors.textDark,
+                          height: 1.4,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+                    // Botón principal mejorado
+                    ChicletButton(
+                      texto: '¡Crear Mi Primera Rutina!',
+                      icono: Icons.rocket_launch_rounded,
+                      tamano: TamanoBotonChiclet.grande,
+                      estilo: EstiloBotonChiclet.relleno,
+                      colorFondo: AppColors.primary,
+                      radioBorde: 20,
+                      conSombreado: true,
+                      grosorSombreado: 8.0,
+                      onPressed: () => _navegarAAgregarRutina(context),
+                    ),
+                    const SizedBox(height: 16),
+                    // Botón secundario de ayuda
+                    ChicletButton(
+                      texto: 'Necesito ayuda para empezar',
+                      icono: Icons.help_outline_rounded,
+                      tamano: TamanoBotonChiclet.grande,
+                      estilo: EstiloBotonChiclet.contorno,
+                      colorBorde: AppColors.calmBlue,
+                      colorTexto: AppColors.calmBlue,
+                      radioBorde: 16,
+                      onPressed: () {
+                        // TODO: Implementar guía de inicio
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              '¡Próximamente tendremos una guía completa para ti!',
+                              style: EmotionalTextStyles.friendly.copyWith(
+                                color: Colors.white,
+                                fontSize: 14,
+                              ),
+                            ),
+                            backgroundColor: AppColors.calmBlue,
+                            behavior: SnackBarBehavior.floating,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
               );
             }
             if (state is RoutineAddSuccess) {
@@ -287,51 +540,174 @@ class ListaRutinasPage extends StatelessWidget {
             }
             if (state is RoutineGetAllSuccess) {
               if (state.routines.isEmpty) {
-                return Column(
-                  children: [
-                    Center(
-                      child: Lottie.network(
-                        'https://lottie.host/69088e50-d3a1-4fcc-8c18-8fcee60c44f0/8UbSvpBZAe.lottiehttps://lottie.host/69088e50-d3a1-4fcc-8c18-8fcee60c44f0/8UbSvpBZAe.lottie',
+                // Estado vacío con diseño emocional mejorado
+                return Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // Ilustración motivacional
+                      Container(
+                        padding: const EdgeInsets.all(24),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              AppColors.successGreen.withOpacity(0.1),
+                              AppColors.victoryGreen.withOpacity(0.05),
+                            ],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                          ),
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(
+                            color: AppColors.successGreen.withOpacity(0.2),
+                            width: 2,
+                          ),
+                        ),
+                        child: Icon(
+                          Icons.fitness_center_rounded,
+                          size: 120,
+                          color: AppColors.successGreen.withOpacity(0.7),
+                        ),
                       ),
-                    ),
-                    const Text(
-                      'Cada gran cambio comienza con un primer paso. Agrega tu primera rutina ahoraCada gran cambio comienza con un primer paso. Agrega tu primera rutina ahora',
-                    ),
-                  ],
+                      const SizedBox(height: 32),
+                      // Mensaje inspirador
+                      Text(
+                        '¡Es hora de comenzar tu transformación!',
+                        textAlign: TextAlign.center,
+                        style: EmotionalTextStyles.motivational.copyWith(
+                          fontSize: 24,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      Container(
+                        padding: const EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              AppColors.achievementGold.withOpacity(0.1),
+                              AppColors.warmOrange.withOpacity(0.05),
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Text(
+                          'Tu gimnasio personal está listo. '
+                          'Crear tu primera rutina es el primer paso hacia '
+                          'lograr todos tus objetivos fitness. '
+                          '¡Hagámoslo realidad juntos! 🎯',
+                          textAlign: TextAlign.center,
+                          style: EmotionalTextStyles.encouragement.copyWith(
+                            fontSize: 16,
+                            color: AppColors.textDark,
+                            height: 1.4,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 32),
+                      // Botón principal
+                      ChicletButton(
+                        texto: '¡Empezar Mi Rutina!',
+                        icono: Icons.play_arrow_rounded,
+                        tamano: TamanoBotonChiclet.grande,
+                        estilo: EstiloBotonChiclet.relleno,
+                        colorFondo: AppColors.primary,
+                        radioBorde: 18,
+                        conSombreado: true,
+                        grosorSombreado: 6.0,
+                        onPressed: () => _navegarAAgregarRutina(context),
+                      ),
+                    ],
+                  ),
                 );
               }
-              return ListView.separated(
-                itemCount: state.routines.length,
-                separatorBuilder: (_, __) =>
-                    Container(height: 10, color: Colors.grey[200]),
-                itemBuilder: (context, i) {
-                  final rutina = state.routines[i];
-                  final cantidadTexto = _getCantidadTexto(
-                    rutina.cantidadEjercicios,
-                  );
 
-                  // Limita el retraso máximo a 1500 milisegundos (15 * 100)
-                  final delay = Duration(milliseconds: 50 * (i < 5 ? i : 5));
+              // Lista de rutinas existentes con animaciones mejoradas
+              return Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: ListView.separated(
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: state.routines.length,
+                  separatorBuilder: (_, __) => const SizedBox(height: 12),
+                  itemBuilder: (context, i) {
+                    final rutina = state.routines[i];
+                    final cantidadTexto = _getCantidadTexto(
+                      rutina.cantidadEjercicios,
+                    );
 
-                  return FadeInLeft(
-                    delay: delay,
-                    child: RoutineCard(
-                      color: rutina.color,
-                      title: rutina.name,
-                      cantidadEjerciciosPorSeries: cantidadTexto,
-                      imagenDireccion: rutina.imagenDireccion,
-                      onTap: () {
-                        BlocProvider.of<EjerciciosByRutinaCubit>(
-                          context,
-                        ).getAllEjercicios(idRutina: rutina.id!);
-                        context.push('/rutina/detalle/${rutina.id!}');
-                      },
-                    ),
-                  );
-                },
+                    // Animación escalonada mejorada
+                    final delay = Duration(milliseconds: 80 * (i < 6 ? i : 6));
+
+                    return FadeInLeft(
+                      delay: delay,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.primary.withOpacity(0.1),
+                              offset: const Offset(0, 4),
+                              blurRadius: 12,
+                              spreadRadius: 0,
+                            ),
+                          ],
+                        ),
+                        child: RoutineCard(
+                          color: rutina.color,
+                          title: rutina.name,
+                          cantidadEjerciciosPorSeries: cantidadTexto,
+                          imagenDireccion: rutina.imagenDireccion,
+                          onTap: () {
+                            BlocProvider.of<EjerciciosByRutinaCubit>(
+                              context,
+                            ).getAllEjercicios(idRutina: rutina.id!);
+                            context.push('/rutina/detalle/${rutina.id!}');
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                ),
               );
             } else {
-              return const Center(child: Text('Error al cargar las rutinas'));
+              // Estado por defecto con mensaje amigable
+              return Container(
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.refresh_rounded,
+                      size: 64,
+                      color: AppColors.calmBlue.withOpacity(0.6),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Preparando tu experiencia fitness...',
+                      style: EmotionalTextStyles.friendly.copyWith(
+                        color: AppColors.calmBlue,
+                        fontSize: 18,
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    ChicletButton(
+                      texto: 'Actualizar',
+                      icono: Icons.refresh,
+                      tamano: TamanoBotonChiclet.mediano,
+                      estilo: EstiloBotonChiclet.contorno,
+                      colorBorde: AppColors.calmBlue,
+                      colorTexto: AppColors.calmBlue,
+                      radioBorde: 12,
+                      onPressed: () {
+                        BlocProvider.of<RoutineCubit>(context).getAllRoutine();
+                      },
+                    ),
+                  ],
+                ),
+              );
             }
           },
         ),

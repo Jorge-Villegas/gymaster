@@ -6,7 +6,7 @@ enum EstadoSesionRutina { pendiente, en_progreso, completado, cancelado }
 
 enum EstadoEjercicioSesion { pendiente, en_progreso, completado, cancelado }
 
-enum EstadoSerieEjercicio { pendiente, completado, fallida }
+enum EstadoSerieEjercicio { pendiente, completado, fallida, cancelado }
 
 enum AccionRegistroAuditoria { insert, update, delete }
 

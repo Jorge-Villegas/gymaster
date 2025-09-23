@@ -313,6 +313,23 @@ class RoutineLocalDataSource {
     }
   }
 
+  Future<List<RutinaSesionDb>> getAllSessionsByRoutineId(
+      String routineId) async {
+    try {
+      final db = await databaseHelper.database;
+      final result = await db.query(
+        RutinaSesionDb.tabla,
+        where: '${RutinaSesionDb.columnaRutinaId} = ?',
+        whereArgs: [routineId],
+        orderBy: '${RutinaSesionDb.columnaFechaCreacion} DESC',
+      );
+
+      return result.map((json) => RutinaSesionDb.fromJson(json)).toList();
+    } catch (e) {
+      return [];
+    }
+  }
+
   Future<List<SessionEjercicioDb>> getSessionExercisesByRoutineSessionId(
     String routineSessionId,
   ) async {
@@ -623,7 +640,7 @@ class RoutineLocalDataSource {
       final db = await databaseHelper.database;
 
       final result = await db.transaction((txn) async {
-        // Verificar si el ejercicio está en la sesión
+        // 1. Verificar si el ejercicio está en la sesión
         final sessionExercise = await txn.query(
           SessionEjercicioDb.tabla,
           where:
@@ -632,15 +649,17 @@ class RoutineLocalDataSource {
         );
 
         if (sessionExercise.isEmpty) {
-          throw ServerException();
+          // El ejercicio no está en la sesión
+          return false;
         }
 
-        // Verificar si el ejercicio tiene series completadas o en proceso
+        final sessionExerciseId = sessionExercise.first['id'] as String;
+
+        // 2. Verificar si el ejercicio tiene series completadas o en proceso
         final exerciseSets = await txn.query(
           SerieEjercicioDb.tabla,
-          where:
-              '${SerieEjercicioDb.columnaEjercicioSesionId} IN (SELECT id FROM ${SessionEjercicioDb.tabla} WHERE ${SessionEjercicioDb.columnExerciseId} = ? AND ${SessionEjercicioDb.columnSessionId} = ?)',
-          whereArgs: [exerciseId, routineSessionId],
+          where: '${SerieEjercicioDb.columnaEjercicioSesionId} = ?',
+          whereArgs: [sessionExerciseId],
         );
 
         final hasCompletedOrInProgressSets = exerciseSets.any((set) {
@@ -653,31 +672,28 @@ class RoutineLocalDataSource {
           return false;
         }
 
-        // Eliminar el ejercicio de la sesión
-        await txn.delete(
-          SessionEjercicioDb.tabla,
-          where:
-              '${SessionEjercicioDb.columnExerciseId}  = ? AND ${SessionEjercicioDb.columnSessionId}  = ?',
-          whereArgs: [exerciseId, routineSessionId],
-        );
-
-        // Eliminar los sets de ejercicio asociados
+        // 3. Primero eliminar todas las series del ejercicio
         await txn.delete(
           SerieEjercicioDb.tabla,
-          where: '''
-              ${SerieEjercicioDb.columnaEjercicioSesionId} IN (
-                SELECT id FROM ${SessionEjercicioDb.tabla} 
-                WHERE ejercicio_id = ? AND ${SessionEjercicioDb.columnSessionId} = ?)
-            ''',
+          where: '${SerieEjercicioDb.columnaEjercicioSesionId} = ?',
+          whereArgs: [sessionExerciseId],
+        );
+
+        // 4. Luego eliminar el ejercicio de la sesión
+        final deletedRows = await txn.delete(
+          SessionEjercicioDb.tabla,
+          where:
+              '${SessionEjercicioDb.columnExerciseId} = ? AND ${SessionEjercicioDb.columnSessionId} = ?',
           whereArgs: [exerciseId, routineSessionId],
         );
 
-        return true;
+        return deletedRows > 0;
       });
 
       return result;
     } catch (e) {
-      throw ServerException();
+      print('Error al eliminar ejercicio de la sesión: $e');
+      return false; // Cambiado de throw ServerException() a return false
     }
   }
 
@@ -690,25 +706,66 @@ class RoutineLocalDataSource {
     try {
       final db = await databaseHelper.database;
 
-      final values = {RutinaSesionDb.columnaEstado: status};
+      return await db.transaction((txn) async {
+        final values = {RutinaSesionDb.columnaEstado: status};
 
-      if (startTime != null) {
-        values[RutinaSesionDb.columnaHoraInicio] = startTime.toIso8601String();
-      }
+        if (startTime != null) {
+          values[RutinaSesionDb.columnaHoraInicio] =
+              startTime.toIso8601String();
+        }
 
-      if (endTime != null) {
-        values[RutinaSesionDb.columnaHoraFin] = endTime.toIso8601String();
-      }
+        if (endTime != null) {
+          values[RutinaSesionDb.columnaHoraFin] = endTime.toIso8601String();
+        }
 
-      final result = await db.update(
-        RutinaSesionDb.tabla,
-        values,
-        where: '${RutinaSesionDb.columnaId} = ?',
-        whereArgs: [sessionId],
-      );
+        final routineResult = await txn.update(
+          RutinaSesionDb.tabla,
+          values,
+          where: '${RutinaSesionDb.columnaId} = ?',
+          whereArgs: [sessionId],
+        );
 
-      return result > 0;
+        if (status == EstadoSesionRutina.cancelado.name) {
+          print('🔄 Aplicando cancelación en cascada para sesión: $sessionId');
+          final sessionExercises = await txn.query(
+            SessionEjercicioDb.tabla,
+            where: '${SessionEjercicioDb.columnSessionId} = ?',
+            whereArgs: [sessionId],
+          );
+          final sessionExerciseResult = await txn.update(
+            SessionEjercicioDb.tabla,
+            {
+              SessionEjercicioDb.columnStatus:
+                  EstadoEjercicioSesion.cancelado.name
+            },
+            where: '${SessionEjercicioDb.columnSessionId} = ?',
+            whereArgs: [sessionId],
+          );
+          print('📝 Session_exercise actualizados: $sessionExerciseResult');
+          for (final sessionExercise in sessionExercises) {
+            final sessionExerciseId = sessionExercise['id'] as String;
+
+            final seriesResult = await txn.update(
+              SerieEjercicioDb.tabla,
+              {
+                SerieEjercicioDb.columnaEstado:
+                    EstadoSerieEjercicio.cancelado.name
+              },
+              where: '${SerieEjercicioDb.columnaEjercicioSesionId} = ?',
+              whereArgs: [sessionExerciseId],
+            );
+
+            print(
+                '📊 Series actualizadas para ejercicio $sessionExerciseId: $seriesResult');
+          }
+
+          print('✅ Cancelación en cascada completada exitosamente');
+        }
+
+        return routineResult > 0;
+      });
     } catch (e) {
+      print('❌ Error en cancelación en cascada: $e');
       throw ServerException();
     }
   }
@@ -750,30 +807,57 @@ class RoutineLocalDataSource {
         return null;
       }
 
-      return result.first[SessionEjercicioDb.columnStatus] as String?;
+      // ✅ CORRECCION: Usar la columna correcta para el estado de la sesión
+      return result.first[RutinaSesionDb.columnaEstado] as String?;
     } catch (e) {
       throw ServerException();
     }
   }
 
-  //verificar que todas mis session_exercise estaen completadas por su id
+  //verificar que todas mis session_exercise estan completadas por su id
   Future<bool> checkAllSessionExercisesCompleted(
     String routineSessionId,
   ) async {
     try {
       final db = await databaseHelper.database;
-      final result = await db.query(
+
+      // ✅ CORRECCION: Verificar correctamente si todos están completados
+      // Primero obtenemos el total de ejercicios en la sesión
+      final totalResult = await db.query(
         SessionEjercicioDb.tabla,
-        columns: ['COUNT(*) as count'],
+        columns: ['COUNT(*) as total'],
+        where: '${SessionEjercicioDb.columnSessionId} = ?',
+        whereArgs: [routineSessionId],
+      );
+
+      final totalEjercicios = Sqflite.firstIntValue(totalResult) ?? 0;
+
+      if (totalEjercicios == 0) {
+        print('❌ No hay ejercicios en la sesión $routineSessionId');
+        return false; // No hay ejercicios, no puede estar completada
+      }
+
+      // Ahora contamos cuántos están completados
+      final completedResult = await db.query(
+        SessionEjercicioDb.tabla,
+        columns: ['COUNT(*) as completed'],
         where:
-            '${SessionEjercicioDb.columnSessionId} = ? AND ${SessionEjercicioDb.columnStatus} != ?',
+            '${SessionEjercicioDb.columnSessionId} = ? AND ${SessionEjercicioDb.columnStatus} = ?',
         whereArgs: [routineSessionId, EstadoEjercicioSesion.completado.name],
       );
 
-      final count = Sqflite.firstIntValue(result) ?? 0;
+      final ejerciciosCompletados = Sqflite.firstIntValue(completedResult) ?? 0;
 
-      return count == 0;
+      print('🔍 Verificación de ejercicios completados:');
+      print('   - Total ejercicios: $totalEjercicios');
+      print('   - Ejercicios completados: $ejerciciosCompletados');
+      print(
+          '   - ¿Todos completados?: ${ejerciciosCompletados == totalEjercicios}');
+
+      // Retorna true solo si TODOS los ejercicios están completados
+      return ejerciciosCompletados == totalEjercicios;
     } catch (e) {
+      print('❌ Error verificando ejercicios completados: $e');
       throw ServerException();
     }
   }

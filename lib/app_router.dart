@@ -60,10 +60,10 @@ final GoRouter router = GoRouter(
       name: 'listarEjercicios',
       builder: (context, state) {
         return ListarEjerciciosPage(
-          sessionId: state.pathParameters['sesionId']!,
-          musculoId: state.pathParameters['musculoId']!,
+          idSesion: state.pathParameters['sesionId']!,
+          idMusculo: state.pathParameters['musculoId']!,
           nombreMusculo: state.pathParameters['nombreMusculo']!,
-          rutinaId: state.pathParameters['rutinaId']!,
+          idRutina: state.pathParameters['rutinaId']!,
         );
       },
     ),
@@ -89,11 +89,11 @@ final GoRouter router = GoRouter(
         // Extrae el objeto enviado a través de "extra".
         final data = state.extra as Map<String, dynamic>?;
         return AgregarEjercicioRutinaPage(
-          sesionId: state.pathParameters['sesionId']!,
-          ejercicioId: state.pathParameters['ejercicioId']!,
-          rutinaId: state.pathParameters['rutinaId']!,
-          ejercicioNombre: state.pathParameters['ejercicioNombre']!,
-          ejercicioImagenDireccion: data?['ejercicioImagenDireccion'],
+          idSesion: state.pathParameters['sesionId']!,
+          idEjercicio: state.pathParameters['ejercicioId']!,
+          idRutina: state.pathParameters['rutinaId']!,
+          nombreEjercicio: state.pathParameters['ejercicioNombre']!,
+          direccionImagenEjercicio: data?['ejercicioImagenDireccion'],
         );
       },
     ),

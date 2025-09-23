@@ -28,7 +28,8 @@ class AgregarSeriesCubit extends Cubit<AgregarSeriesState> {
   void decrementarSeries() {
     final currentState = state;
     if (currentState is AgregarSeriesLoaded) {
-      if (currentState.cantidadSeries > 0) {
+      if (currentState.cantidadSeries > 1) {
+        // Cambié > 0 por > 1
         emit(
           currentState.copyWith(
             cantidadSeries: currentState.cantidadSeries - 1,

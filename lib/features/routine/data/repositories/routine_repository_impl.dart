@@ -209,27 +209,18 @@ class RoutineRepositoryImpl implements RoutineRepository {
       // Obtener rutina
       final rutina = await localDataSource.getRutinaById(rutinaId);
 
+      // IMPORTANTE: Ya no creamos sesión aquí, debe venir del parámetro
       RutinaSesionDb? session = await localDataSource.getRoutineSessionById(
         idRoutineSession,
       );
 
-      // Si no hay sesión, devolvemos un error
-      // Creamos una sesión ya que sería la primera vez que entra a la rutina
+      // Si no hay sesión, devolvemos un error - la sesión debe haberse creado antes
       if (session == null) {
-        final newSession = RutinaSesionDb(
-          id: idGenerator.generateId(),
-          rutinaId: rutinaId,
-          estado: EstadoSesionRutina.pendiente.name,
-          fechaCreacion: DateTime.now().toString(),
+        print('❌ Error: No se encontró la sesión $idRoutineSession');
+        return Left(
+          ServerFailure(
+              errorMessage: 'No se encontró la sesión de rutina especificada'),
         );
-        final result = await localDataSource.createRoutineSession(newSession);
-        if (!result) {
-          print('No se pudo crear la sesión');
-          return Left(
-            ServerFailure(errorMessage: 'No se pudo crear la sesión'),
-          );
-        }
-        session = newSession;
       }
 
       // Obtenemos los ejercicios de la rutina de esa sesión (session_exercise y exercise)
@@ -283,10 +274,6 @@ class RoutineRepositoryImpl implements RoutineRepository {
         status: session.estado,
       );
 
-      print(
-        'Ejercicios de rutina: ${ejercicio_de_rutina.ejerciciosDeRutinaModelToJson(ejerciciosDeRutinaConDetalles)}',
-      );
-
       return Right(ejerciciosDeRutinaConDetalles);
     } on ServerException {
       return Left(
@@ -314,7 +301,7 @@ class RoutineRepositoryImpl implements RoutineRepository {
         repeticiones: repeticiones,
         estado: realizado == true
             ? EstadoSerieEjercicio.completado.name
-            : 'not completed',
+            : EstadoSerieEjercicio.pendiente.name,
         tiempoDescanso: tiempoDescanso,
       );
 
@@ -542,12 +529,20 @@ class RoutineRepositoryImpl implements RoutineRepository {
   Future<Either<Failure, RutinaSesionDb>> getLastRoutineSessionByRoutineId(
     String id,
   ) async {
+    print('🔍 Buscando última sesión para rutina: $id');
+
     RutinaSesionDb? session =
         await localDataSource.getLastRoutineSessionByRoutineId(id);
 
     if (session != null) {
+      print('✅ Sesión encontrada: ${session.id} con estado: ${session.estado}');
       return Right(session);
     }
+
+    print('📝 No hay sesión existente. Creando nueva sesión pendiente...');
+
+    // Buscar si hay alguna sesión anterior con ejercicios para copiar
+    final allPreviousSessions = await _getPreviousSessionsWithExercises(id);
 
     final newSession = RutinaSesionDb(
       id: idGenerator.generateId(),
@@ -555,13 +550,90 @@ class RoutineRepositoryImpl implements RoutineRepository {
       estado: EstadoSesionRutina.pendiente.name,
       fechaCreacion: DateTime.now().toString(),
     );
+
     final result = await localDataSource.createRoutineSession(newSession);
 
     if (!result) {
+      print('❌ Error: No se pudo crear la sesión');
       return Left(ServerFailure(errorMessage: 'No se pudo crear la session'));
     }
 
+    // Si existe una sesión anterior con ejercicios, copiarlos a la nueva sesión
+    if (allPreviousSessions.isNotEmpty) {
+      print('🔄 Copiando ejercicios de sesión anterior...');
+      await _copyExercisesFromSession(
+          allPreviousSessions.first.id, newSession.id);
+    }
+
+    print('✅ Nueva sesión creada: ${newSession.id}');
     return Right(newSession);
+  }
+
+  Future<List<RutinaSesionDb>> _getPreviousSessionsWithExercises(
+      String routineId) async {
+    try {
+      // Buscar todas las sesiones de esta rutina ordenadas por fecha descendente
+      final allSessions =
+          await localDataSource.getAllSessionsByRoutineId(routineId);
+
+      // Filtrar solo las que tienen ejercicios
+      List<RutinaSesionDb> sessionsWithExercises = [];
+
+      for (var session in allSessions) {
+        final exercises = await localDataSource
+            .getSessionExercisesByRoutineSessionId(session.id);
+        if (exercises.isNotEmpty) {
+          sessionsWithExercises.add(session);
+        }
+      }
+
+      return sessionsWithExercises;
+    } catch (e) {
+      print('⚠️ Error buscando sesiones anteriores: $e');
+      return [];
+    }
+  }
+
+  Future<void> _copyExercisesFromSession(
+      String fromSessionId, String toSessionId) async {
+    try {
+      final sessionExercises = await localDataSource
+          .getSessionExercisesByRoutineSessionId(fromSessionId);
+
+      for (var sessionExercise in sessionExercises) {
+        final newSessionExerciseId = idGenerator.generateId();
+        final newSessionExercise = SessionEjercicioDb(
+          id: newSessionExerciseId,
+          sessionId: toSessionId,
+          exerciseId: sessionExercise.exerciseId,
+          status: EstadoEjercicioSesion.pendiente.name,
+          orderIndex: sessionExercise.orderIndex,
+        );
+
+        await localDataSource.insertSessionExercise(newSessionExercise);
+
+        // Copiar series
+        final exerciseSets = await localDataSource
+            .getExerciseSetsBySessionExerciseId(sessionExercise.id);
+
+        for (var set in exerciseSets) {
+          final newSet = SerieEjercicioDb(
+            id: idGenerator.generateId(),
+            ejercicioSesionId: newSessionExerciseId,
+            peso: set.peso,
+            repeticiones: set.repeticiones,
+            tiempoDescanso: set.tiempoDescanso,
+            estado: EstadoSerieEjercicio.pendiente.name,
+          );
+
+          await localDataSource.insertExerciseSet(newSet);
+        }
+      }
+
+      print('✅ Ejercicios copiados exitosamente');
+    } catch (e) {
+      print('❌ Error copiando ejercicios: $e');
+    }
   }
 
   @override
@@ -666,96 +738,141 @@ class RoutineRepositoryImpl implements RoutineRepository {
     String routineId,
   ) async {
     try {
-      // Verificar si la sesión actual está completada o cancelada
-      final currentSession = await localDataSource.getRoutineSessionById(
-        sessionId,
-      );
+      print(
+          '🚀 startRoutineSession: sessionId=$sessionId, routineId=$routineId');
 
-      if (currentSession != null &&
-          (currentSession.estado == EstadoSesionRutina.completado.name ||
-              currentSession.estado == EstadoSesionRutina.cancelado.name)) {
-        // Crear una nueva sesión con estado pendiente (no en progreso)
-        // Esto permite que se muestre el botón "Iniciar entrenamiento"
-        final newSession = RutinaSesionDb(
-          id: idGenerator.generateId(),
-          rutinaId: routineId,
-          estado: EstadoSesionRutina.pendiente.name, // Cambiar a pendiente
-          horaInicio: null, // No establecer tiempo hasta que realmente inicie
-          horaFin: null, // Asegurar que endTime sea null para sesiones nuevas
-          fechaCreacion: DateTime.now().toString(),
-        );
+      // Verificar si la sesión actual existe y su estado
+      final currentSession =
+          await localDataSource.getRoutineSessionById(sessionId);
 
-        final sessionCreated = await localDataSource.createRoutineSession(
-          newSession,
-        );
-        if (!sessionCreated) {
-          return Left(
-            ServerFailure(errorMessage: 'No se pudo crear la sesión nueva'),
-          );
-        }
-
-        // Obtener todos los ejercicios y sus series de la sesión completada (sessionId)
-        final sessionExercises = await localDataSource
-            .getSessionExercisesByRoutineSessionId(sessionId);
-
-        // Copiar cada ejercicio y sus series a la nueva sesión
-        for (var sessionExercise in sessionExercises) {
-          // Crear nuevo session_exercise para la nueva sesión
-          final newSessionExerciseId = idGenerator.generateId();
-          final newSessionExercise = SessionEjercicioDb(
-            id: newSessionExerciseId,
-            sessionId: newSession.id,
-            exerciseId: sessionExercise.exerciseId,
-            status: EstadoEjercicioSesion.pendiente.name,
-            orderIndex: sessionExercise.orderIndex,
-          );
-
-          await localDataSource.insertSessionExercise(newSessionExercise);
-
-          // Obtener todas las series del ejercicio original
-          final exerciseSets = await localDataSource
-              .getExerciseSetsBySessionExerciseId(sessionExercise.id);
-
-          // Copiar cada serie para el nuevo ejercicio, reiniciando el estado
-          for (var set in exerciseSets) {
-            final newSet = SerieEjercicioDb(
-              id: idGenerator.generateId(),
-              ejercicioSesionId: newSessionExerciseId,
-              peso: set.peso,
-              repeticiones: set.repeticiones,
-              tiempoDescanso: set.tiempoDescanso,
-              estado: EstadoSerieEjercicio
-                  .pendiente.name, // Reiniciar estado a pendiente
-            );
-
-            await localDataSource.insertExerciseSet(newSet);
-          }
-        }
-
-        // Retornar la información sobre la nueva sesión creada para poder navegar a ella
-        return const Right(true);
+      if (currentSession == null) {
+        print('❌ Error: No se encontró la sesión $sessionId');
+        return Left(ServerFailure(
+            errorMessage: 'No se encontró la sesión especificada'));
       }
 
-      // Verificar si la sesión actual está en pendiente y necesita ser iniciada
-      if (currentSession != null &&
-          currentSession.estado == EstadoSesionRutina.pendiente.name) {
-        // Actualizar la sesión de pendiente a en_progreso
+      print('📋 Estado actual de la sesión: ${currentSession.estado}');
+
+      // Si la sesión está completada o cancelada, necesitamos crear una nueva
+      if (currentSession.estado == EstadoSesionRutina.completado.name ||
+          currentSession.estado == EstadoSesionRutina.cancelado.name) {
+        print('🔄 Sesión completada/cancelada. Creando nueva sesión...');
+
+        // Verificar si ya existe una sesión pendiente más reciente para esta rutina
+        final latestSession =
+            await localDataSource.getLastRoutineSessionByRoutineId(routineId);
+
+        if (latestSession != null &&
+            latestSession.id != sessionId &&
+            latestSession.estado == EstadoSesionRutina.pendiente.name) {
+          print(
+              '✅ Ya existe una sesión pendiente más reciente: ${latestSession.id}');
+          return const Right(true);
+        }
+
+        // Crear nueva sesión limpia
+        return await _createFreshSessionFromCompleted(sessionId, routineId);
+      }
+
+      // Si la sesión está pendiente, cambiarla a en_progreso
+      if (currentSession.estado == EstadoSesionRutina.pendiente.name) {
+        print('▶️ Iniciando sesión pendiente...');
         final result = await localDataSource.updateRoutineSessionStatus(
           sessionId: sessionId,
           status: EstadoSesionRutina.en_progreso.name,
           startTime: DateTime.now(),
         );
+        print('✅ Sesión iniciada: $result');
         return Right(result);
       }
 
-      // Si la sesión actual no estaba completada ni pendiente, solo actualizamos su estado a en_progreso
-      final result = await localDataSource.updateRoutineSessionStatus(
-        sessionId: sessionId,
-        status: EstadoSesionRutina.en_progreso.name,
-        startTime: DateTime.now(),
-      );
-      return Right(result);
+      // Si ya está en progreso, no hacer nada
+      if (currentSession.estado == EstadoSesionRutina.en_progreso.name) {
+        print('ℹ️ La sesión ya está en progreso');
+        return const Right(true);
+      }
+
+      print('⚠️ Estado de sesión no manejado: ${currentSession.estado}');
+      return const Right(false);
     } catch (e) {
+      print('❌ Error en startRoutineSession: $e');
+      return Left(ServerFailure(errorMessage: e.toString()));
+    }
+  }
+
+  Future<Either<Failure, bool>> _createFreshSessionFromCompleted(
+      String completedSessionId, String routineId) async {
+    try {
+      // Crear nueva sesión
+      final newSession = RutinaSesionDb(
+        id: idGenerator.generateId(),
+        rutinaId: routineId,
+        estado: EstadoSesionRutina.pendiente.name,
+        horaInicio: null,
+        horaFin: null,
+        fechaCreacion: DateTime.now().toString(),
+      );
+
+      print('📝 Creando nueva sesión: ${newSession.id}');
+
+      final sessionCreated =
+          await localDataSource.createRoutineSession(newSession);
+      if (!sessionCreated) {
+        return Left(
+            ServerFailure(errorMessage: 'No se pudo crear la sesión nueva'));
+      }
+
+      // Verificar si la nueva sesión ya tiene ejercicios (evitar duplicación)
+      final existingExercises = await localDataSource
+          .getSessionExercisesByRoutineSessionId(newSession.id);
+
+      if (existingExercises.isNotEmpty) {
+        print('ℹ️ La nueva sesión ya tiene ejercicios, no se duplicarán');
+        return const Right(true);
+      }
+
+      // Obtener ejercicios de la sesión completada para copiarlos
+      final sessionExercises = await localDataSource
+          .getSessionExercisesByRoutineSessionId(completedSessionId);
+
+      print(
+          '📋 Copiando ${sessionExercises.length} ejercicios de sesión completada...');
+
+      // Copiar cada ejercicio y sus series a la nueva sesión
+      for (var sessionExercise in sessionExercises) {
+        final newSessionExerciseId = idGenerator.generateId();
+        final newSessionExercise = SessionEjercicioDb(
+          id: newSessionExerciseId,
+          sessionId: newSession.id,
+          exerciseId: sessionExercise.exerciseId,
+          status: EstadoEjercicioSesion.pendiente.name,
+          orderIndex: sessionExercise.orderIndex,
+        );
+
+        await localDataSource.insertSessionExercise(newSessionExercise);
+
+        // Copiar series reiniciando estados
+        final exerciseSets = await localDataSource
+            .getExerciseSetsBySessionExerciseId(sessionExercise.id);
+
+        for (var set in exerciseSets) {
+          final newSet = SerieEjercicioDb(
+            id: idGenerator.generateId(),
+            ejercicioSesionId: newSessionExerciseId,
+            peso: set.peso,
+            repeticiones: set.repeticiones,
+            tiempoDescanso: set.tiempoDescanso,
+            estado: EstadoSerieEjercicio.pendiente.name,
+          );
+
+          await localDataSource.insertExerciseSet(newSet);
+        }
+      }
+
+      print('✅ Nueva sesión creada exitosamente con ejercicios copiados');
+      return const Right(true);
+    } catch (e) {
+      print('❌ Error creando sesión fresca: $e');
       return Left(ServerFailure(errorMessage: e.toString()));
     }
   }
@@ -787,33 +904,48 @@ class RoutineRepositoryImpl implements RoutineRepository {
   @override
   Future<Either<Failure, bool>> completeRoutineSession(String sessionId) async {
     try {
+      print('🏁 Iniciando completar sesión de rutina: $sessionId');
+
       // Verificar si esta rutina está en proceso
       final routineSessionStatus =
           await localDataSource.getRoutineSessionStatusById(sessionId);
 
+      print('📋 Estado actual de la sesión: $routineSessionStatus');
+
       if (routineSessionStatus == EstadoSesionRutina.completado.name) {
+        print('⚠️ La sesión ya está completada');
         return Left(
           ServerFailure(errorMessage: 'La sesión ya ha sido completada'),
         );
       }
 
+      print('🔍 Verificando si todos los ejercicios están completados...');
       final allSessionExercisesCompleted =
           await localDataSource.checkAllSessionExercisesCompleted(sessionId);
 
+      print(
+          '✅ ¿Todos los ejercicios completados?: $allSessionExercisesCompleted');
+
       if (!allSessionExercisesCompleted) {
+        print('❌ No todos los ejercicios están completados');
         return Left(
           ServerFailure(
             errorMessage: 'No se han completado todos los ejercicios',
           ),
         );
       }
+
+      print('💾 Actualizando estado de la sesión a completado...');
       final updateResult = await localDataSource.updateRoutineSessionStatus(
         sessionId: sessionId,
         status: EstadoSesionRutina.completado.name,
         endTime: DateTime.now(),
       );
+
+      print('🎉 Rutina marcada como completada: $updateResult');
       return Right(updateResult);
     } catch (e) {
+      print('❌ Error completando rutina: $e');
       return Left(ServerFailure(errorMessage: e.toString()));
     }
   }

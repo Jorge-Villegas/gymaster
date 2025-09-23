@@ -3,6 +3,7 @@ import 'package:gymaster/core/database/models/models.dart';
 import 'package:gymaster/core/generated/assets.gen.dart';
 import 'package:gymaster/shared/utils/logger.dart';
 import 'package:gymaster/shared/utils/uuid_generator.dart';
+import 'package:sqflite/sqflite.dart';
 
 class EjercicioDataSeed {
   final IdGenerator idGenerator;
@@ -2851,19 +2852,22 @@ class EjercicioDataSeed {
         ),
       ]);
 
-      await _insertarEjercicio(trapecio, ['trapecio']);
-      await _insertarEjercicio(ejerciciosHombro, ['hombro']);
-      await _insertarEjercicio(ejerciciosPecho, ['pecho']);
-      await _insertarEjercicio(ejerciciosTriceps, ['triceps']);
-      await _insertarEjercicio(antebrazo, ['antebrazo']);
-      await _insertarEjercicio(abdominales, ['abdomen']);
-      await _insertarEjercicio(espalda, ['espalda']);
-      await _insertarEjercicio(espaldaBaja, ['espalda baja']);
-      await _insertarEjercicio(gluteos, ['gluteo']);
-      await _insertarEjercicio(cuadriceps, ['cuadriceps']);
-      await _insertarEjercicio(femorales, ['femorales']);
-      await _insertarEjercicio(pantorrilla, ['pantorrilla']);
-      await _insertarEjercicio(biceps, ['biceps']);
+      final db = await DatabaseHelper.instance.database;
+      await db.transaction((txn) async {
+        await _insertarEjercicio(txn, trapecio, ['trapecio']);
+        await _insertarEjercicio(txn, ejerciciosHombro, ['hombro']);
+        await _insertarEjercicio(txn, ejerciciosPecho, ['pecho']);
+        await _insertarEjercicio(txn, ejerciciosTriceps, ['triceps']);
+        await _insertarEjercicio(txn, antebrazo, ['antebrazo']);
+        await _insertarEjercicio(txn, abdominales, ['abdomen']);
+        await _insertarEjercicio(txn, espalda, ['espalda']);
+        await _insertarEjercicio(txn, espaldaBaja, ['espalda baja']);
+        await _insertarEjercicio(txn, gluteos, ['gluteo']);
+        await _insertarEjercicio(txn, cuadriceps, ['cuadriceps']);
+        await _insertarEjercicio(txn, femorales, ['femorales']);
+        await _insertarEjercicio(txn, pantorrilla, ['pantorrilla']);
+        await _insertarEjercicio(txn, biceps, ['biceps']);
+      });
     } catch (e) {
       logger.e('Error al almacenar los músculos en la base de datos: $e');
       // throw Exception('Error al almacenar los músculos en la base de datos');
@@ -2871,10 +2875,11 @@ class EjercicioDataSeed {
   }
 
   Future<int> _insertarEjercicio(
+    DatabaseExecutor txn,
     List<EjercicioDb> ejercicios,
     List<String>? listaNombresMusculos,
   ) async {
-    final db = await DatabaseHelper.instance.database;
+    // final db = await DatabaseHelper.instance.database;
     int res = 0;
 
     for (var ejercicio in ejercicios) {
@@ -2886,7 +2891,7 @@ class EjercicioDataSeed {
       );
 
       // Verificar si el ejercicio ya existe
-      final existingEjercicio = await db.query(
+      final existingEjercicio = await txn.query(
         EjercicioDb.tabla,
         where: '${EjercicioDb.columnaNombre} = ?',
         whereArgs: [ejercicio.nombre],
@@ -2894,7 +2899,7 @@ class EjercicioDataSeed {
 
       if (existingEjercicio.isEmpty) {
         // Agregamos el ejercicio si no existe
-        res += await db.insert(EjercicioDb.tabla, ejercicio.toJson());
+        res += await txn.insert(EjercicioDb.tabla, ejercicio.toJson());
       } else {
         // Si el ejercicio ya existe, actualizamos su ID
         ejercicio = ejercicio.copyWith(

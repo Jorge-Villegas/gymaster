@@ -49,6 +49,7 @@ class DatabaseHelper {
     final path = join(dbPath, _databaseName);
 
     debugPrint(path);
+    print(path);
 
     return await openDatabase(
       path,

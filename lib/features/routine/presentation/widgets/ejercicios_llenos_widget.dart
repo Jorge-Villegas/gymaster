@@ -2,19 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/emotional_text_styles.dart';
 import 'package:gymaster/shared/utils/haptic_feedback_helper.dart';
 import 'package:gymaster/shared/utils/audio_feedback_helper.dart';
 import 'package:gymaster/features/routine/domain/entities/ejercicios_de_rutina.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
 import 'package:gymaster/features/routine/presentation/widgets/custom_cart.dart';
 import 'package:gymaster/shared/utils/enum.dart';
+import 'package:gymaster/shared/widgets/chiclet_button.dart';
+import 'package:animate_do/animate_do.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 
 class EjerciciosLlenosWidget extends StatelessWidget {
   const EjerciciosLlenosWidget({super.key});
 
-  iniciarRutina(BuildContext context, String sessionId, String rutinaId) async {
-    // Feedback emocional al iniciar rutina
+  Future<void> iniciarRutina(
+      BuildContext context, String sessionId, String rutinaId) async {
     await HapticFeedbackHelper.vibracionMotivacionalInicioRutina();
     await AudioFeedbackHelper.reproducirSonidoMotivacional();
 
@@ -24,62 +27,81 @@ class EjerciciosLlenosWidget extends StatelessWidget {
         );
   }
 
-  mostrarDialogoPararEntrenamiento(BuildContext context, String sessionId) {
+  void mostrarDialogoPararEntrenamiento(
+      BuildContext context, String sessionId) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-        title: const Column(
-          // Usar Column para apilar icono y título
-          mainAxisSize: MainAxisSize.min, // Ajustar tamaño al contenido
-          children: [
-            Icon(Icons.warning, color: Colors.red, size: 40), // Icono arriba
-            SizedBox(height: 10),
-            Text(
-              'Parar entrenamiento',
-              textAlign: TextAlign.center, // Centrar texto del título
-              style: TextStyle(
-                color: Colors.red,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-        content: const Text(
-          '¿Estás seguro de que deseas parar el entrenamiento?',
-          textAlign: TextAlign.center, // Centrar texto del contenido
-          style: TextStyle(fontSize: 16),
-        ),
-        actionsAlignment: MainAxisAlignment.center, // Centrar botones
-        actions: [
-          TextButton(
-            onPressed: () {
-              context.pop();
-            },
-            style: TextButton.styleFrom(foregroundColor: Colors.grey),
-            child: const Text('Cancelar'),
+      barrierDismissible: false,
+      builder: (context) => FadeIn(
+        duration: const Duration(milliseconds: 300),
+        child: AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
           ),
-          ElevatedButton(
-            onPressed: () {
-              context.read<EjerciciosByRutinaCubit>().stopRoutine(
-                    routineSessionId: sessionId,
-                  );
-              context.pop();
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
-            child: const Text(
-              'Aceptar',
-              style: TextStyle(color: Colors.white),
+          backgroundColor: Colors.white,
+          elevation: 0,
+          content: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Título emocional
+                Text(
+                  '¿Pausar entrenamiento?',
+                  style: EmotionalTextStyles.energetic.copyWith(
+                    color: AppColors.primary,
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 12),
+                // Mensaje motivacional
+                Text(
+                  '¡No te rindas ahora! Tu progreso se guardará.',
+                  style: EmotionalTextStyles.friendly.copyWith(
+                    color: AppColors.textSecondary,
+                    fontSize: 16,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 32),
+                // Botones con ChicletButton
+                Row(
+                  children: [
+                    Expanded(
+                      child: ChicletButton(
+                        onPressed: () => context.pop(),
+                        texto: 'Continuar',
+                        icono: Icons.fitness_center_rounded,
+                        tamano: TamanoBotonChiclet.mediano,
+                        estilo: EstiloBotonChiclet.contorno,
+                        colorBorde: AppColors.successGreen,
+                        colorTexto: AppColors.successGreen,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: ChicletButton(
+                        onPressed: () {
+                          context.read<EjerciciosByRutinaCubit>().stopRoutine(
+                                routineSessionId: sessionId,
+                              );
+                          context.pop();
+                        },
+                        texto: 'Pausar',
+                        icono: Icons.pause_rounded,
+                        tamano: TamanoBotonChiclet.mediano,
+                        estilo: EstiloBotonChiclet.relleno,
+                        colorFondo: AppColors.motivationRed,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }
@@ -106,182 +128,230 @@ class EjerciciosLlenosWidget extends StatelessWidget {
     EjerciciosDeRutina ejerciciosDeRutina,
     EjerciciosByRutinaSuccess state,
   ) {
-    print('routine_session = ${state.ejerciciosDeRutina.session}');
-    final textTheme = Theme.of(context).textTheme;
-    final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
     String getButtonText = 'Estado desconocido';
     IconData getIconPath = Icons.error;
     Color getButtonColor = Colors.grey;
-    Color getBackgroundColor = Colors.grey.withAlpha(25);
 
     if (ejerciciosDeRutina.estado == EstadoSesionRutina.pendiente.name ||
         ejerciciosDeRutina.estado == EstadoSesionRutina.completado.name ||
         ejerciciosDeRutina.estado == EstadoSesionRutina.cancelado.name) {
-      getButtonText = 'Iniciar entrenamiento';
+      getButtonText = '¡Iniciar entrenamiento!';
       getIconPath = IconsaxPlusLinear.play;
-      getButtonColor = Colors.green;
-      getBackgroundColor = getButtonColor.withAlpha((0.1 * 255).toInt());
+      getButtonColor = AppColors.successGreen;
     }
     if (ejerciciosDeRutina.estado == EstadoSesionRutina.en_progreso.name) {
-      getButtonText = 'Parar entrenamiento';
+      getButtonText = 'Pausar entrenamiento';
       getIconPath = IconsaxPlusLinear.stop;
-      getButtonColor = Colors.red;
-      getBackgroundColor = Colors.red.withAlpha(25);
+      getButtonColor = AppColors.motivationRed;
     }
-
-    print('estado = ${ejerciciosDeRutinaModelToJson(ejerciciosDeRutina)}');
 
     return Column(
       children: [
-        InkWell(
-          onTap: () {
-            if (ejerciciosDeRutina.estado ==
-                EstadoSesionRutina.pendiente.name) {
-              iniciarRutina(
-                context,
-                state.ejerciciosDeRutina.session,
-                state.ejerciciosDeRutina.rutinaId,
-              );
-              context.push('/detalle-ejercicio');
-            }
-
-            // Removido: No debería llamar iniciarRutina para rutinas completadas
-            // porque ya se maneja automáticamente en _handleEjerciciosResult
-
-            if (ejerciciosDeRutina.estado ==
-                EstadoSesionRutina.en_progreso.name) {
-              mostrarDialogoPararEntrenamiento(
-                context,
-                state.ejerciciosDeRutina.session,
-              );
-            }
-          },
+        // Botón principal de acción con ChicletButton
+        FadeInDown(
+          duration: const Duration(milliseconds: 600),
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-            color: getBackgroundColor,
+            width: double.infinity,
+            margin: const EdgeInsets.all(16),
+            child: ChicletButton(
+              onPressed: () {
+                if (ejerciciosDeRutina.estado ==
+                    EstadoSesionRutina.pendiente.name) {
+                  iniciarRutina(
+                    context,
+                    state.ejerciciosDeRutina.session,
+                    state.ejerciciosDeRutina.rutinaId,
+                  );
+                  context.push('/detalle-ejercicio');
+                }
+
+                if (ejerciciosDeRutina.estado ==
+                    EstadoSesionRutina.en_progreso.name) {
+                  mostrarDialogoPararEntrenamiento(
+                    context,
+                    state.ejerciciosDeRutina.session,
+                  );
+                }
+              },
+              texto: getButtonText,
+              icono: getIconPath,
+              tamano: TamanoBotonChiclet.grande,
+              estilo: EstiloBotonChiclet.relleno,
+              colorFondo: getButtonColor,
+              conSombreado: true,
+              grosorSombreado: 6.0,
+            ),
+          ),
+        ),
+        // Header de contador de ejercicios
+        FadeInUp(
+          delay: const Duration(milliseconds: 200),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            margin: const EdgeInsets.symmetric(horizontal: 16),
+            decoration: BoxDecoration(
+              color: AppColors.successGreen.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(
+                color: AppColors.successGreen.withValues(alpha: 0.2),
+              ),
+            ),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  padding: const EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: getButtonColor,
-                  ),
-                  child: Icon(getIconPath, color: Colors.white, size: 15),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.fitness_center_rounded,
+                      color: AppColors.successGreen,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Ejercicios listos',
+                      style: EmotionalTextStyles.friendly.copyWith(
+                        color: AppColors.successGreen,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 10),
-                Text(
-                  getButtonText,
-                  style: textTheme.labelMedium?.copyWith(
-                    color: isDarkTheme ? Colors.white : getButtonColor,
-                    fontWeight: FontWeight.bold,
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: AppColors.successGreen,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
+                    ejerciciosDeRutina.ejercicios.length.toString(),
+                    style: EmotionalTextStyles.energetic.copyWith(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ],
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Ejercicios',
-                style: textTheme.bodyMedium?.copyWith(
-                  color: isDarkTheme ? Colors.white : Colors.black,
-                ),
-              ),
-              Text(
-                ejerciciosDeRutina.ejercicios.length.toString(),
-                style: textTheme.labelMedium,
-              ),
-            ],
-          ),
-        ),
+        // Lista de ejercicios con animaciones
         Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: ReorderableListView.builder(
-              onReorder: (oldIndex, newIndex) {
-                if (newIndex > oldIndex) {
-                  newIndex -= 1;
-                }
-                final ejercicio = ejerciciosDeRutina.ejercicios.removeAt(
-                  oldIndex,
-                );
-                ejerciciosDeRutina.ejercicios.insert(newIndex, ejercicio);
+          child: FadeInUp(
+            delay: const Duration(milliseconds: 400),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: ReorderableListView.builder(
+                onReorder: (oldIndex, newIndex) {
+                  if (newIndex > oldIndex) {
+                    newIndex -= 1;
+                  }
+                  final ejercicio = ejerciciosDeRutina.ejercicios.removeAt(
+                    oldIndex,
+                  );
+                  ejerciciosDeRutina.ejercicios.insert(newIndex, ejercicio);
 
-                // Actualizar el orden en el Cubit
-                context.read<EjerciciosByRutinaCubit>().updateEjercicioOrder(
-                      ejerciciosDeRutina.ejercicios,
-                      state.ejerciciosDeRutina.session,
-                    );
-              },
-              itemCount: ejerciciosDeRutina.ejercicios.length,
-              buildDefaultDragHandles: false,
-              itemBuilder: (context, i) {
-                final ejercicio = ejerciciosDeRutina.ejercicios[i];
-                final pesos =
-                    ejercicio.series.map((serie) => serie.peso).toList();
-                return Dismissible(
-                  key: ValueKey(ejercicio.id),
-                  direction: DismissDirection.endToStart,
-                  onDismissed: (direction) {
-                    context.read<EjerciciosByRutinaCubit>().deleteEjercicio(
-                          ejercicio.id,
-                          state.ejerciciosDeRutina.session,
-                          context, // Pasar context para actualizar RoutineCubit
-                        );
-                    // Eliminar el ejercicio de la lista y actualizar el estado
-                    ejerciciosDeRutina.ejercicios.removeAt(i);
-                    // Notificar al framework que el estado ha cambiado
-                    (context as Element).markNeedsBuild();
-                  },
-                  confirmDismiss: (direction) async {
-                    final result = await context
-                        .read<EjerciciosByRutinaCubit>()
-                        .checkCanDeleteEjercicio(
-                          ejercicio.id,
-                          state.ejerciciosDeRutina.session,
-                        );
-                    return result;
-                  },
-                  background: Container(
-                    color: Colors.red,
-                    alignment: Alignment.centerRight,
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: const Icon(Icons.delete, color: Colors.white),
-                  ),
-                  child: CustomCard(
-                    index: i,
-                    colorFondo: Colors.white,
-                    ejercicioId: ejercicio.id,
-                    estadoEjercicio: ejercicio.estado,
-                    nombreEjercicio: ejercicio.nombre,
-                    numeroSeries: ejercicio.series.length,
-                    imagenDireccion: ejercicio.imagenDireccion,
-                    pesos: pesos,
-                    onDismissed: () {
-                      context.read<EjerciciosByRutinaCubit>().deleteEjercicio(
+                  // Actualizar el orden en el Cubit
+                  context.read<EjerciciosByRutinaCubit>().updateEjercicioOrder(
+                        ejerciciosDeRutina.ejercicios,
+                        state.ejerciciosDeRutina.session,
+                      );
+                },
+                itemCount: ejerciciosDeRutina.ejercicios.length,
+                buildDefaultDragHandles: false,
+                itemBuilder: (context, i) {
+                  final ejercicio = ejerciciosDeRutina.ejercicios[i];
+                  final pesos =
+                      ejercicio.series.map((serie) => serie.peso).toList();
+                  return Dismissible(
+                    key: ValueKey(ejercicio.id),
+                    direction: DismissDirection.endToStart,
+                    confirmDismiss: (direction) async {
+                      // Intentar eliminar del backend
+                      final result = await context
+                          .read<EjerciciosByRutinaCubit>()
+                          .checkCanDeleteEjercicio(
                             ejercicio.id,
                             state.ejerciciosDeRutina.session,
-                            context, // Pasar context para actualizar RoutineCubit
                           );
-                    },
-                    onTap: () {
-                      // Si la rutina está en ejecución, permitir navegar al ejercicio seleccionado
-                      if (ejerciciosDeRutina.estado ==
-                          EstadoSesionRutina.en_progreso.name) {
-                        // Navegar a la pantalla de detalle de ejercicio
-                        context.push('/detalle-ejercicio');
+
+                      if (result) {
+                        // Si se eliminó exitosamente, actualizar la UI a través del Cubit
+                        context
+                            .read<EjerciciosByRutinaCubit>()
+                            .getAllEjercicios(
+                              idRutina: state.ejerciciosDeRutina.rutinaId,
+                            );
                       }
+
+                      return result; // Solo permite el dismiss si se eliminó exitosamente
                     },
-                    height: 125,
-                  ),
-                );
-              },
+                    onDismissed: (direction) {
+                      // Ya no es necesario hacer nada aquí, la eliminación se hizo en confirmDismiss
+                      // Solo mostrar feedback al usuario si es necesario
+                    },
+                    background: Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.motivationRed,
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      alignment: Alignment.centerRight,
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      margin: const EdgeInsets.symmetric(vertical: 6),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.delete_rounded,
+                            color: Colors.white,
+                            size: 28,
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            'Eliminar',
+                            style: EmotionalTextStyles.friendly.copyWith(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(vertical: 6),
+                      child: CustomCard(
+                        index: i,
+                        colorFondo: Colors.white,
+                        ejercicioId: ejercicio.id,
+                        estadoEjercicio: ejercicio.estado,
+                        nombreEjercicio: ejercicio.nombre,
+                        numeroSeries: ejercicio.series.length,
+                        imagenDireccion: ejercicio.imagenDireccion,
+                        pesos: pesos,
+                        onDismissed: () {
+                          context
+                              .read<EjerciciosByRutinaCubit>()
+                              .deleteEjercicio(
+                                ejercicio.id,
+                                state.ejerciciosDeRutina.session,
+                                context,
+                              );
+                        },
+                        onTap: () {
+                          if (ejerciciosDeRutina.estado ==
+                              EstadoSesionRutina.en_progreso.name) {
+                            context.push('/detalle-ejercicio');
+                          }
+                        },
+                        height: 125,
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
           ),
         ),

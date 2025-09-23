@@ -37,7 +37,6 @@ class CustomCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('CustomCard: $estadoEjercicio');
     return GestureDetector(
       onTap: onTap,
       child: Dismissible(

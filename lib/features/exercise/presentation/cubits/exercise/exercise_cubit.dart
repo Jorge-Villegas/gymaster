@@ -31,19 +31,15 @@ class ExerciseCubit extends Cubit<ExerciseState> {
   Future<void> filterByMuscle(String muscleId) async {
     emit(ExerciseLoading());
 
-    debugPrint('Filtrando ejercicios por músculo: $muscleId');
-
     final result = await getExercisesByMuscleUseCase(
       ObtenerEjerciciosCatalogoPorMusculoParams(muscleId: muscleId),
     );
 
     result.fold(
       (failure) {
-        debugPrint('Error al filtrar ejercicios: ${failure.errorMessage}');
         emit(ExerciseError(failure.errorMessage));
       },
       (exercises) {
-        debugPrint('Ejercicios filtrados encontrados: ${exercises.length}');
         emit(
           ExerciseLoaded(
             exercises: exercises,

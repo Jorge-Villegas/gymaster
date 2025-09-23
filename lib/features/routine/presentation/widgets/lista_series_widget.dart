@@ -33,7 +33,7 @@ class _ListaSeriesWidgetState extends State<ListaSeriesWidget> {
   String? _expandedField; // 'peso' o 'repeticiones'
 
   /// Incrementa el peso de la serie en el índice dado en 5 kg.
-  _incrementPeso(int index) {
+  void _incrementPeso(int index) {
     double currentValue =
         double.tryParse(widget.pesoControllers[index].text) ?? 0.0;
     currentValue += 5;
@@ -41,7 +41,7 @@ class _ListaSeriesWidgetState extends State<ListaSeriesWidget> {
   }
 
   /// Decrementa el peso de la serie en el índice dado en 5 kg.
-  _decrementPeso(int index) {
+  void _decrementPeso(int index) {
     double currentValue =
         double.tryParse(widget.pesoControllers[index].text) ?? 0.0;
     if (currentValue <= 0) return;
@@ -50,7 +50,7 @@ class _ListaSeriesWidgetState extends State<ListaSeriesWidget> {
   }
 
   /// Incrementa las repeticiones de la serie en el índice dado en 1.
-  _incrementRepeticiones(int index) {
+  void _incrementRepeticiones(int index) {
     int currentValue =
         int.tryParse(widget.repeticionesControllers[index].text) ?? 0;
     currentValue += 1;
@@ -58,7 +58,7 @@ class _ListaSeriesWidgetState extends State<ListaSeriesWidget> {
   }
 
   /// Decrementa las repeticiones de la serie en el índice dado en 1.
-  _decrementRepeticiones(int index) {
+  void _decrementRepeticiones(int index) {
     int currentValue =
         int.tryParse(widget.repeticionesControllers[index].text) ?? 0;
     if (currentValue <= 0) return;
@@ -83,6 +83,14 @@ class _ListaSeriesWidgetState extends State<ListaSeriesWidget> {
 
   @override
   Widget build(BuildContext context) {
+    // Verificar que tengamos suficientes controladores
+    if (widget.pesoControllers.length < widget.cantidadSeries ||
+        widget.repeticionesControllers.length < widget.cantidadSeries) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
     for (var controller in widget.pesoControllers) {
       if (controller.text.isEmpty) {
         controller.text = '40.00';
@@ -94,89 +102,85 @@ class _ListaSeriesWidgetState extends State<ListaSeriesWidget> {
       }
     }
 
-    return Expanded(
-      child: Column(
-        children: [
-          const Padding(
-            // Mantener Padding para los encabezados
-            padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
-            child: Row(
-              children: [
-                SizedBox(width: 40),
-                Expanded(
-                  child: Text(
-                    'Peso (kg)',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
+    return Column(
+      children: [
+        const Padding(
+          // Mantener Padding para los encabezados
+          padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+          child: Row(
+            children: [
+              SizedBox(width: 40),
+              Expanded(
+                child: Text(
+                  'Peso (kg)',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(width: 80),
-                Expanded(
-                  child: Text(
-                    'Repeticiones',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
+              ),
+              SizedBox(width: 80),
+              Expanded(
+                child: Text(
+                  'Repeticiones',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(width: 72),
-              ],
-            ),
+              ),
+              SizedBox(width: 72),
+            ],
           ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: widget.cantidadSeries,
-              itemBuilder: (context, index) {
-                final bool isPesoExpanded =
-                    _expandedSerieIndex == index && _expandedField == 'peso';
-                final bool isRepeticionesExpanded =
-                    _expandedSerieIndex == index &&
-                        _expandedField == 'repeticiones';
+        ),
+        // Usar Column en lugar de ListView para evitar conflictos de scroll
+        ...List.generate(
+          widget.cantidadSeries,
+          (index) {
+            final bool isPesoExpanded =
+                _expandedSerieIndex == index && _expandedField == 'peso';
+            final bool isRepeticionesExpanded = _expandedSerieIndex == index &&
+                _expandedField == 'repeticiones';
 
-                return GestureDetector(
-                  // Detectar tap fuera del elemento activo para colapsar
-                  onTap: () {
-                    if (_expandedSerieIndex == index) {
-                      setState(() {
-                        _expandedSerieIndex = null;
-                        _expandedField = null;
-                      });
-                    }
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 4.0, horizontal: 8.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          // Envuelve el número de serie para controlar ancho
-                          width: 40, // Ancho fijo para alineación
-                          child: Text(
-                            ' ${index + 1}:',
-                            style: const TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        // SECCIÓN DE PESO
-                        Expanded(
-                          child: _buildPesoSection(index, isPesoExpanded),
-                        ),
-                        const SizedBox(width: 10),
-                        // SECCIÓN DE REPETICIONES
-                        Expanded(
-                          child: _buildRepeticionesSection(
-                              index, isRepeticionesExpanded),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
+            return GestureDetector(
+              // Detectar tap fuera del elemento activo para colapsar
+              onTap: () {
+                if (_expandedSerieIndex == index) {
+                  setState(() {
+                    _expandedSerieIndex = null;
+                    _expandedField = null;
+                  });
+                }
               },
-            ),
-          ),
-        ],
-      ),
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      // Envuelve el número de serie para controlar ancho
+                      width: 40, // Ancho fijo para alineación
+                      child: Text(
+                        ' ${index + 1}:',
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    // SECCIÓN DE PESO
+                    Expanded(
+                      child: _buildPesoSection(index, isPesoExpanded),
+                    ),
+                    const SizedBox(width: 10),
+                    // SECCIÓN DE REPETICIONES
+                    Expanded(
+                      child: _buildRepeticionesSection(
+                          index, isRepeticionesExpanded),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      ],
     );
   }
 

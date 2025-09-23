@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:gymaster/features/record/presentation/widgets/series_control_button.dart';
 import 'package:gymaster/shared/utils/text_formatter.dart';
 import 'package:gymaster/shared/utils/verificador_tipo_archivo.dart';
 import 'package:gymaster/shared/widgets/chiclet_button.dart';

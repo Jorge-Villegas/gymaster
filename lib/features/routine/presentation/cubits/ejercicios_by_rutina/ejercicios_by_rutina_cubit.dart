@@ -198,25 +198,136 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
   }
 
   void avanzarSerie() async {
-    if (state is! EjerciciosByRutinaSuccess) return;
+    print('🚀 avanzarSerie() iniciado');
+    if (state is! EjerciciosByRutinaSuccess) {
+      print('❌ Estado no es EjerciciosByRutinaSuccess: ${state.runtimeType}');
+      return;
+    }
     final currentState = state as EjerciciosByRutinaSuccess;
-    final updatedSerie = await _markSerieAsCompleted(currentState);
-    _updateSerie(currentState, updatedSerie);
+    print(
+        '✅ Estado válido. Ejercicio: ${currentState.ejercicioIndex}, Serie: ${currentState.serieIndex}');
 
-    // Verificar si estamos en la última serie del ejercicio actual
-    final ejercicios = currentState.ejerciciosDeRutina.ejercicios;
+    // 1. Marcar la serie como completada en la base de datos
+    final updatedSerie = await _markSerieAsCompleted(currentState);
+    print('✅ Serie marcada como completada en BD');
+
+    // 2. Actualizar el estado local con la serie completada
+    _updateSerie(currentState, updatedSerie);
+    print('✅ Estado local actualizado');
+
+    // 3. Ahora trabajar con el estado actualizado para decidir si avanzar
+    if (state is! EjerciciosByRutinaSuccess) {
+      print('❌ Error: Estado no es válido después de actualizar');
+      return;
+    }
+
+    final newState = state as EjerciciosByRutinaSuccess;
+    final ejercicios = newState.ejerciciosDeRutina.ejercicios;
     final ejercicioIndex = ejercicios.indexWhere(
-      (e) => e.id == currentState.ejercicioIndex,
+      (e) => e.id == newState.ejercicioIndex,
     );
     final serieIndex = ejercicios[ejercicioIndex].series.indexWhere(
-          (s) => s.id == currentState.serieIndex,
+          (s) => s.id == newState.serieIndex,
         );
 
-    // Si no es la última serie del ejercicio actual, avanzar a la siguiente serie
+    print('📊 Ejercicio index: $ejercicioIndex, Serie index: $serieIndex');
+    print('📊 Total series: ${ejercicios[ejercicioIndex].series.length}');
+
+    // 4. Verificar si hay más series en el ejercicio actual
     if (serieIndex + 1 < ejercicios[ejercicioIndex].series.length) {
-      _emitNextSerieState();
+      print('⏭️ Avanzando a siguiente serie del mismo ejercicio');
+      // Emitir directamente el estado con la siguiente serie
+      emit(
+        EjerciciosByRutinaSuccess(
+          ejerciciosDeRutina: newState.ejerciciosDeRutina,
+          ejercicioIndex: newState.ejercicioIndex,
+          serieIndex: ejercicios[ejercicioIndex].series[serieIndex + 1].id,
+        ),
+      );
+      print(
+          '✅ Estado emitido con siguiente serie: ${ejercicios[ejercicioIndex].series[serieIndex + 1].id}');
+    } else {
+      print('🏁 Última serie del ejercicio completada');
+      // Verificar si hay más ejercicios en la rutina
+      if (ejercicioIndex + 1 < ejercicios.length) {
+        print('⏭️ Avanzando al siguiente ejercicio');
+
+        // IMPORTANTE: Marcar el ejercicio como completado en la BASE DE DATOS
+        print(
+            '💾 Marcando ejercicio ${ejercicios[ejercicioIndex].id} como completado en BD...');
+        await updateExerciseStatusUseCase(
+          ActualizarEstadoEjercicioParams(
+            exerciseId: ejercicios[ejercicioIndex].id,
+            routineSessionId: newState.ejerciciosDeRutina.session,
+            statusExercise: EstadoEjercicioSesion.completado.name,
+          ),
+        );
+        print('✅ Ejercicio marcado como completado en BD');
+
+        // Marcar el ejercicio actual como completado y avanzar al siguiente
+        final updatedEjercicio = ejercicios[ejercicioIndex].copyWith(
+          estado: EstadoEjercicio.completado.name,
+        );
+        final updatedEjercicios = List<Ejercicio>.from(ejercicios)
+          ..[ejercicioIndex] = updatedEjercicio;
+        emit(
+          EjerciciosByRutinaSuccess(
+            ejerciciosDeRutina: newState.ejerciciosDeRutina.copyWith(
+              ejercicios: updatedEjercicios,
+            ),
+            ejercicioIndex: ejercicios[ejercicioIndex + 1].id,
+            serieIndex: ejercicios[ejercicioIndex + 1].series.first.id,
+          ),
+        );
+        print(
+            '✅ Avanzado al siguiente ejercicio: ${ejercicios[ejercicioIndex + 1].id}');
+      } else {
+        print('🎉 ¡Rutina completada! No hay más ejercicios');
+
+        // IMPORTANTE: Marcar el último ejercicio como completado en la BASE DE DATOS
+        print(
+            '💾 Marcando último ejercicio ${ejercicios[ejercicioIndex].id} como completado en BD...');
+        await updateExerciseStatusUseCase(
+          ActualizarEstadoEjercicioParams(
+            exerciseId: ejercicios[ejercicioIndex].id,
+            routineSessionId: newState.ejerciciosDeRutina.session,
+            statusExercise: EstadoEjercicioSesion.completado.name,
+          ),
+        );
+        print('✅ Último ejercicio marcado como completado en BD');
+
+        // Completar la rutina
+        final result = await completeRoutineSessionUseCase(
+          CompletarSesionRutinaParams(
+            sessionId: newState.ejerciciosDeRutina.session,
+          ),
+        );
+
+        result.fold(
+          (failure) => emit(EjerciciosByRutinaError(failure.errorMessage)),
+          (success) {
+            // Calcular estadísticas del entrenamiento completado
+            final rutina = newState.ejerciciosDeRutina;
+            final totalEjercicios = rutina.ejercicios.length;
+            final totalSeries = rutina.ejercicios
+                .expand((ejercicio) => ejercicio.series)
+                .length;
+
+            emit(
+              EjerciciosByRutinaCompleted(
+                rutinaName: rutina.nombre,
+                totalEjercicios: totalEjercicios,
+                totalSeries: totalSeries,
+                tiempoTotal:
+                    Duration.zero, // Puedes calcular esto si tienes timestamps
+                fechaCompletado: DateTime.now(),
+              ),
+            );
+            print('✅ Rutina completada exitosamente');
+          },
+        );
+      }
     }
-    // Si es la última serie, no hacemos nada aquí para permitir que la UI muestre los botones expandibles
   }
 
   // Método para avanzar explícitamente al siguiente ejercicio (usado por el botón de avanzar)

@@ -33,7 +33,7 @@ class ChicletButton extends StatefulWidget {
     this.onPressed,
     this.radioBorde = 24,
     this.paddingHorizontal = 16,
-    this.paddingVertical = 12,
+    this.paddingVertical = 8, // Reducido de 12 a 8 para mejor proporción
     this.ancho,
     this.alto,
     this.estaCargando = false,
@@ -143,10 +143,7 @@ class _ChicletButtonState extends State<ChicletButton>
                 onTapUp: _manejarSoltarBoton,
                 onTapCancel: _manejarCancelarPresionBoton,
                 child: Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: widget.paddingHorizontal,
-                    vertical: widget.paddingVertical,
-                  ),
+                  padding: _obtenerPaddingOptimo(),
                   child: _buildContent(configuracionColor, configuracionTamano),
                 ),
               ),
@@ -155,6 +152,28 @@ class _ChicletButtonState extends State<ChicletButton>
         );
       },
     );
+  }
+
+  // Método para obtener el padding óptimo según el tamaño
+  EdgeInsets _obtenerPaddingOptimo() {
+    switch (widget.tamano) {
+      case TamanoBotonChiclet.pequeno:
+        return EdgeInsets.symmetric(
+          horizontal:
+              widget.paddingHorizontal * 0.8, // Reducir padding horizontal
+          vertical: widget.paddingVertical * 0.6, // Reducir padding vertical
+        );
+      case TamanoBotonChiclet.mediano:
+        return EdgeInsets.symmetric(
+          horizontal: widget.paddingHorizontal,
+          vertical: widget.paddingVertical,
+        );
+      case TamanoBotonChiclet.grande:
+        return EdgeInsets.symmetric(
+          horizontal: widget.paddingHorizontal * 1.2, // Aumentar padding
+          vertical: widget.paddingVertical * 1.1,
+        );
+    }
   }
 
   Widget _buildContent(
@@ -198,17 +217,20 @@ class _ChicletButtonState extends State<ChicletButton>
             color: configuracionColor.colorTexto,
             size: configuracionTamano.tamanoIcono,
           ),
-          // Solo agregar espaciado si hay texto
           if (widget.texto.isNotEmpty) const SizedBox(width: 8),
         ],
-        // Solo mostrar texto si no está vacío
         if (widget.texto.isNotEmpty)
-          Text(
-            widget.texto,
-            style: TextStyle(
-              color: configuracionColor.colorTexto,
-              fontWeight: FontWeight.bold,
-              fontSize: configuracionTamano.tamanoFuente,
+          Flexible(
+            child: Text(
+              widget.texto,
+              style: TextStyle(
+                color: configuracionColor.colorTexto,
+                fontWeight: FontWeight.bold,
+                fontSize: configuracionTamano.tamanoFuente,
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              softWrap: false,
             ),
           ),
       ],
@@ -219,7 +241,7 @@ class _ChicletButtonState extends State<ChicletButton>
     switch (widget.tamano) {
       case TamanoBotonChiclet.pequeno:
         return _ConfiruacionTamano(
-          altura: 36,
+          altura: 40, // Aumentado de 36 a 40 para mejor legibilidad
           tamanoFuente: 14,
           tamanoIcono: 16,
           elevacion: 2,

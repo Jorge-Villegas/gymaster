@@ -24,7 +24,7 @@ class AgregarSeriesLoaded extends AgregarSeriesState {
     return AgregarSeriesLoaded(
       pesos: List.filled(10, 0.0),
       repeticiones: List.filled(10, 0),
-      cantidadSeries: 0,
+      cantidadSeries: 1,
     );
   }
 

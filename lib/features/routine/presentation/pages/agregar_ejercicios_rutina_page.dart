@@ -2,31 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/config/app_config.dart';
+import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/emotional_text_styles.dart';
 import 'package:gymaster/features/routine/presentation/cubits/agregar_series/agregar_series_cubit.dart';
 import 'package:gymaster/features/routine/presentation/cubits/agregar_series/agregar_series_state.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicio/ejercicio_cubit.dart';
 import 'package:gymaster/features/routine/presentation/cubits/rutina/routine_cubit.dart';
 import 'package:gymaster/features/routine/presentation/widgets/encabezado_ejercicio_widget.dart';
 import 'package:gymaster/features/routine/presentation/widgets/lista_series_widget.dart';
+import 'package:gymaster/shared/utils/snackbar_helper.dart';
 import 'package:gymaster/shared/utils/text_formatter.dart';
-import 'package:gymaster/shared/widgets/show_custom_snack_bar.dart';
+import 'package:gymaster/shared/widgets/chiclet_button.dart';
+import 'package:animate_do/animate_do.dart';
 
 class AgregarEjercicioRutinaPage extends StatefulWidget {
-  final String ejercicioNombre;
-  final String sesionId;
-  final String ejercicioImagenDireccion;
-  final String ejercicioId;
-  final String rutinaId;
+  final String nombreEjercicio;
+  final String idSesion;
+  final String direccionImagenEjercicio;
+  final String idEjercicio;
+  final String idRutina;
 
   const AgregarEjercicioRutinaPage({
     super.key,
-    required this.sesionId,
-    required this.ejercicioNombre,
-    required this.ejercicioId,
-    required this.rutinaId,
-    String? ejercicioImagenDireccion,
-  }) : ejercicioImagenDireccion =
-            ejercicioImagenDireccion ?? AppConfig.defaultImagePath;
+    required this.idSesion,
+    required this.nombreEjercicio,
+    required this.idEjercicio,
+    required this.idRutina,
+    String? direccionImagenEjercicio,
+  }) : direccionImagenEjercicio =
+            direccionImagenEjercicio ?? AppConfig.defaultImagePath;
 
   @override
   State<AgregarEjercicioRutinaPage> createState() =>
@@ -35,122 +39,112 @@ class AgregarEjercicioRutinaPage extends StatefulWidget {
 
 class _AgregarEjercicioRutinaPageState
     extends State<AgregarEjercicioRutinaPage> {
-  final _formKey = GlobalKey<FormState>();
-  final List<TextEditingController> _pesoControllers = [];
-  final List<TextEditingController> _repeticionesControllers = [];
+  final _claveFomulario = GlobalKey<FormState>();
+  final List<TextEditingController> _controladoresPeso = [];
+  final List<TextEditingController> _controladoresRepeticiones = [];
 
   @override
   void initState() {
     super.initState();
+    _controladoresPeso.add(TextEditingController());
+    _controladoresRepeticiones.add(TextEditingController());
     context.read<AgregarSeriesCubit>().iniciar();
-    context.read<AgregarSeriesCubit>().stream.listen((state) {
-      if (state is AgregarSeriesLoaded) {
-        // Mientras la cantidad de controladores de peso sea menor que la cantidad de series en el estado...
-        while (_pesoControllers.length < state.cantidadSeries) {
-          _pesoControllers.add(TextEditingController());
-          _repeticionesControllers.add(TextEditingController());
-        }
+  }
 
-        //Mientras la cantidad de controladores de peso sea mayor que la cantidad de series en el estado...
-        while (_pesoControllers.length > state.cantidadSeries) {
-          _pesoControllers.removeLast();
-          _repeticionesControllers.removeLast();
-        }
-      }
-    });
+  void _sincronizarControladores(int cantidadSeries) {
+    while (_controladoresPeso.length < cantidadSeries) {
+      _controladoresPeso.add(TextEditingController());
+      _controladoresRepeticiones.add(TextEditingController());
+    }
+
+    while (_controladoresPeso.length > cantidadSeries) {
+      _controladoresPeso.removeLast().dispose();
+      _controladoresRepeticiones.removeLast().dispose();
+    }
   }
 
   @override
   void dispose() {
-    for (var controller in _pesoControllers) {
+    for (var controller in _controladoresPeso) {
       controller.dispose();
     }
-    for (var controller in _repeticionesControllers) {
+    for (var controller in _controladoresRepeticiones) {
       controller.dispose();
     }
     super.dispose();
   }
 
   void _guardarDatos() async {
-    FocusScope.of(context).unfocus(); // Ocultar teclado
+    FocusScope.of(context).unfocus();
 
-    // Verificamos si existe al menos una serie
-    if (_pesoControllers.isEmpty || _repeticionesControllers.isEmpty) {
-      showCustomSnackBar(
-        context: context,
-        message: 'Por favor, agregue al menos una serie',
-        type: SnackBarType.error,
+    if (_controladoresPeso.isEmpty || _controladoresRepeticiones.isEmpty) {
+      SnackbarHelper().showCustomSnackBar(
+        context,
+        'Por favor, agregue al menos una serie',
+        SnackBarType.error,
       );
       return;
     }
 
-    // Validamos si la validación pasa
-    if (!_formKey.currentState!.validate()) {
-      showCustomSnackBar(
-        context: context,
-        message: 'Por favor, complete todos los campos',
-        type: SnackBarType.error,
+    if (!_claveFomulario.currentState!.validate()) {
+      SnackbarHelper().showCustomSnackBar(
+        context,
+        'Por favor, complete todos los campos',
+        SnackBarType.error,
       );
       return;
     }
 
-    List<double?> pesos = _pesoControllers
+    List<double?> pesos = _controladoresPeso
         .map((controller) => TextFormatter.stringToDouble(controller.text))
         .toList();
-    List<int?> repeticiones = _repeticionesControllers
+    List<int?> repeticiones = _controladoresRepeticiones
         .map((controller) => TextFormatter.stringToInt(controller.text))
         .toList();
 
     if (pesos.contains(null) || repeticiones.contains(null)) {
-      showCustomSnackBar(
-        context: context,
-        message: 'Por favor, ingrese números válidos',
-        type: SnackBarType.error,
+      SnackbarHelper().showCustomSnackBar(
+        context,
+        'Por favor, ingrese números válidos',
+        SnackBarType.error,
       );
       return;
     }
 
-    // Guardar los datos de forma asíncrona
-    final resul = await context.read<AgregarSeriesCubit>().guardarDatos(
-          idSesion: widget.sesionId,
-          rutinaId: widget.rutinaId,
-          ejercicioId: widget.ejercicioId,
+    final resultado = await context.read<AgregarSeriesCubit>().guardarDatos(
+          idSesion: widget.idSesion,
+          rutinaId: widget.idRutina,
+          ejercicioId: widget.idEjercicio,
           pesos: pesos.cast<double>(),
           repeticiones: repeticiones.cast<int>(),
         );
 
-    // Verificar si el widget sigue montado antes de usar el contexto
     if (!mounted) return;
 
-    if (resul) {
-      // Llamar al EjercicioCubit para actualizar el estado
-      context.read<EjercicioCubit>().ejercicioAgregado(id: widget.ejercicioId);
-
-      // Forzar recarga del listado de rutinas
+    if (resultado) {
+      context.read<EjercicioCubit>().ejercicioAgregado(id: widget.idEjercicio);
       context.read<RoutineCubit>().getAllRoutine();
-
       context.pop();
 
-      showCustomSnackBar(
-        context: context,
-        message: 'El ejercicio ha sido guardado',
-        type: SnackBarType.success,
-        duration: 2,
+      SnackbarHelper().showCustomSnackBar(
+        context,
+        '¡Ejercicio guardado con éxito! 💪',
+        SnackBarType.success,
       );
     } else {
       final state = context.read<AgregarSeriesCubit>().state;
       if (state is AgregarSeriesError) {
-        showCustomSnackBar(
-          context: context,
-          message: state.message,
-          type: SnackBarType.error,
+        SnackbarHelper().showCustomSnackBar(
+          context,
+          state.message,
+          SnackBarType.error,
         );
         context.pop();
       } else {
-        showCustomSnackBar(
-          context: context,
-          message: 'Error inesperado al guardar el ejercicio',
-          type: SnackBarType.error,
+        SnackbarHelper().showCustomSnackBar(
+          context,
+          'Error inesperado al guardar el ejercicio',
+          SnackBarType.error,
         );
       }
     }
@@ -159,52 +153,212 @@ class _AgregarEjercicioRutinaPageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(244, 248, 252, 1.0),
-      appBar: AppBar(title: const Text('Agregar Ejercicio a Rutina')),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: BlocBuilder<AgregarSeriesCubit, AgregarSeriesState>(
-          builder: (context, state) {
-            if (state is AgregarSeriesLoaded) {
-              final heroTag = 'exercise-image-${widget.ejercicioId}';
-              return Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    EncabezadoEjercicioWidget(
-                      heroTag: heroTag,
-                      nombreEjercicio: widget.ejercicioNombre,
-                      cantidadSeries: state.cantidadSeries,
-                      urlImage: widget.ejercicioImagenDireccion,
-                      onIncrement: () {
-                        context.read<AgregarSeriesCubit>().incrementarSeries();
-                      },
-                      onDecrement: () {
-                        context.read<AgregarSeriesCubit>().decrementarSeries();
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                    ListaSeriesWidget(
-                      cantidadSeries: state.cantidadSeries,
-                      pesoControllers: _pesoControllers,
-                      repeticionesControllers: _repeticionesControllers,
-                    ),
-                    const SizedBox(height: 20),
-                    Center(
-                      child: FloatingActionButton.extended(
-                        onPressed: _guardarDatos,
-                        label: const Text('Guardar'),
-                        icon: const Icon(Icons.save),
-                      ),
-                    ),
-                  ],
+      backgroundColor: AppColors.backgroundLight,
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              AppColors.backgroundLight,
+              Colors.white,
+              AppColors.backgroundLight.withOpacity(0.8),
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            stops: const [0.0, 0.3, 1.0],
+          ),
+        ),
+        child: SafeArea(
+          child: Column(
+            children: [
+              _construirHeaderEmocional(),
+              Expanded(
+                child: BlocListener<AgregarSeriesCubit, AgregarSeriesState>(
+                  listener: (context, state) {
+                    if (state is AgregarSeriesLoaded) {
+                      _sincronizarControladores(state.cantidadSeries);
+                    }
+                  },
+                  child: BlocBuilder<AgregarSeriesCubit, AgregarSeriesState>(
+                    builder: (context, state) {
+                      if (state is AgregarSeriesLoaded) {
+                        final etiquetaHero =
+                            'exercise-image-${widget.idEjercicio}';
+                        return FadeInUp(
+                          duration: const Duration(milliseconds: 600),
+                          child: Form(
+                            key: _claveFomulario,
+                            child: SingleChildScrollView(
+                              physics: const BouncingScrollPhysics(),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20),
+                                    child: EncabezadoEjercicioWidget(
+                                      heroTag: etiquetaHero,
+                                      nombreEjercicio: widget.nombreEjercicio,
+                                      cantidadSeries: state.cantidadSeries,
+                                      urlImage: widget.direccionImagenEjercicio,
+                                      onIncrement: () {
+                                        context
+                                            .read<AgregarSeriesCubit>()
+                                            .incrementarSeries();
+                                      },
+                                      onDecrement: () {
+                                        context
+                                            .read<AgregarSeriesCubit>()
+                                            .decrementarSeries();
+                                      },
+                                    ),
+                                  ),
+                                  const SizedBox(height: 24),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20),
+                                    child: ListaSeriesWidget(
+                                      cantidadSeries: state.cantidadSeries,
+                                      pesoControllers: _controladoresPeso,
+                                      repeticionesControllers:
+                                          _controladoresRepeticiones,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 32),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20),
+                                    child: Center(
+                                      child: _construirBotonGuardar(),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 20),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      } else {
+                        return _construirEstadoCarga();
+                      }
+                    },
+                  ),
                 ),
-              );
-            } else {
-              return const Center(child: CircularProgressIndicator());
-            }
-          },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Widget del header emocional motivacional
+  Widget _construirHeaderEmocional() {
+    return FadeInDown(
+      duration: const Duration(milliseconds: 800),
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        child: Row(
+          children: [
+            // Botón de volver minimalista
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.energyOrange.withValues(alpha: 0.15),
+                    offset: const Offset(0, 2),
+                    blurRadius: 8,
+                  ),
+                ],
+              ),
+              child: IconButton(
+                onPressed: () => context.pop(),
+                icon: Icon(
+                  Icons.arrow_back_ios_rounded,
+                  color: AppColors.energyOrange,
+                  size: 20,
+                ),
+                padding: const EdgeInsets.all(12),
+              ),
+            ),
+            const SizedBox(width: 16),
+            // Título emocional simple
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '¡Configura tu poder!',
+                    style: EmotionalTextStyles.energetic.copyWith(
+                      color: AppColors.primary,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Widget del botón guardar motivacional
+  Widget _construirBotonGuardar() {
+    return FadeInUp(
+      duration: const Duration(milliseconds: 600),
+      child: ChicletButton(
+        onPressed: _guardarDatos,
+        texto: '¡Guardar ejercicio!',
+        tamano: TamanoBotonChiclet.grande,
+        estilo: EstiloBotonChiclet.relleno,
+        colorFondo: AppColors.successGreen,
+      ),
+    );
+  }
+
+  // Widget de estado de carga emocional
+  Widget _construirEstadoCarga() {
+    return FadeIn(
+      duration: const Duration(milliseconds: 600),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: 80,
+              height: 80,
+              decoration: BoxDecoration(
+                color: AppColors.energyOrange.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: const Center(
+                child: CircularProgressIndicator(
+                  valueColor:
+                      AlwaysStoppedAnimation<Color>(AppColors.energyOrange),
+                  strokeWidth: 3,
+                ),
+              ),
+            ),
+            const SizedBox(height: 24),
+            Text(
+              'Preparando tu entrenamiento...',
+              style: EmotionalTextStyles.friendly.copyWith(
+                color: AppColors.primary,
+                fontSize: 18,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              '¡Casi listo para entrenar! 💪',
+              style: EmotionalTextStyles.encouragement.copyWith(
+                color: AppColors.textSecondary,
+                fontSize: 14,
+              ),
+            ),
+          ],
         ),
       ),
     );
