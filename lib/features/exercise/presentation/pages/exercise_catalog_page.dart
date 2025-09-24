@@ -90,77 +90,64 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
     );
   }
 
-  /// Header emocional siguiendo principio de Proximidad y Von Restorff
+  /// Header emocional coherente con DetalleRutinaScreen
   Widget _buildEmotionalHeader(BuildContext context) {
     return FadeInDown(
       duration: const Duration(milliseconds: 800),
       child: Container(
         padding: const EdgeInsets.all(20),
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              AppColors.primary.withValues(alpha: 0.1),
-              AppColors.energyOrange.withValues(alpha: 0.1),
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-            color: AppColors.primary.withValues(alpha: 0.2),
-            width: 1,
-          ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
           children: [
-            Row(
-              children: [
-                // Icono destacado (Von Restorff)
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: AppColors.energyOrange,
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.energyOrange.withValues(alpha: 0.3),
-                        blurRadius: 8,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
+            // Botón de volver minimalista
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.energyOrange.withValues(alpha: 0.1),
+                    offset: const Offset(0, 2),
+                    blurRadius: 8,
                   ),
-                  child: const Icon(
-                    IconsaxPlusLinear.weight,
-                    color: Colors.white,
-                    size: 24,
-                  ),
+                ],
+              ),
+              child: IconButton(
+                onPressed: () => context.go('/'),
+                icon: Icon(
+                  Icons.arrow_back_ios_rounded,
+                  color: AppColors.energyOrange,
+                  size: 20,
                 ),
-                const SizedBox(width: 16),
-                // Agrupación de texto (Proximidad)
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Catálogo de Ejercicios',
-                        style: EstilosTextoEmocional.motivacional.copyWith(
-                          fontSize: 22,
-                          color: AppColors.primary,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        'Descubre tu próximo desafío',
-                        style: EstilosTextoEmocional.recuperacion.copyWith(
-                          color: AppColors.textSecondary,
-                        ),
-                      ),
-                    ],
+                padding: const EdgeInsets.all(12),
+              ),
+            ),
+            const SizedBox(width: 16),
+            // Título emocional coherente
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Catálogo de Ejercicios',
+                    style: EstilosTextoEmocional.energetico.copyWith(
+                      color: AppColors.primary,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                ),
-              ],
+                  const SizedBox(height: 4),
+                  Text(
+                    '¡Descubre tu próximo desafío! 🏋️‍♂️',
+                    style: EstilosTextoEmocional.amigable.copyWith(
+                      color: AppColors.energyOrange,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
