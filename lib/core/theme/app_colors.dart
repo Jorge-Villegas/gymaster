@@ -11,8 +11,10 @@ class AppColors {
 
   // Colores de texto
   static const Color textLight = Color.fromRGBO(255, 255, 255, 1); // Blanco
-  static const Color textDark = Color.fromRGBO(0, 0, 0, 1); // Negro
+  static const Color textDark = Color(0xFF22223B); // Gris oscuro moderno
   static const Color textSecondary = Color(0xFF7F7F7F);
+  // Gris medio para textos largos (más claro que textDark)
+  static const Color textMedium = Color(0xFF6D6A7C); // Gris medio moderno
 
   // Colores para botones
   static const Color buttonPrimary = Color(0xFF675BE0); // Morado

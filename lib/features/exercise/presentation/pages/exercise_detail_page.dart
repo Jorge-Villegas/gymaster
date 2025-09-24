@@ -1,10 +1,15 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/emotional_text_styles.dart';
 import 'package:gymaster/features/exercise/domain/entities/exercise.dart';
-import 'package:gymaster/shared/utils/text_formatter.dart';
+import 'package:gymaster/shared/utils/string_utils.dart';
 import 'package:gymaster/shared/utils/verificador_tipo_archivo.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 
-class ExerciseDetailPage extends StatelessWidget {
+class ExerciseDetailPage extends StatefulWidget {
   final Exercise exercise;
 
   const ExerciseDetailPage({
@@ -13,294 +18,543 @@ class ExerciseDetailPage extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+  State<ExerciseDetailPage> createState() => _ExerciseDetailPageState();
+}
 
+class _ExerciseDetailPageState extends State<ExerciseDetailPage>
+    with TickerProviderStateMixin {
+  late AnimationController _animationController;
+  bool _isFavorite = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      duration: const Duration(milliseconds: 600),
+      vsync: this,
+    );
+    _animationController.forward();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: colorScheme.surface,
+      backgroundColor: Colors.grey[50],
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
-          _buildMinimalAppBar(context, exercise),
+          _buildEmotionalAppBar(context),
           SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 0),
             sliver: SliverToBoxAdapter(
-              child: _buildMinimalContent(context, exercise),
+              child: _buildEmotionalContent(context),
             ),
           ),
         ],
       ),
-      floatingActionButton: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        child: FloatingActionButton.extended(
-          elevation: 2,
-          onPressed: () {},
-          backgroundColor: colorScheme.primary,
-          icon: Icon(Icons.favorite_border, color: colorScheme.onPrimary),
-          label: Text(
-            'Añadir a Favoritos',
-            style: TextStyle(
-              color: colorScheme.onPrimary,
-              fontWeight: FontWeight.w500,
+      floatingActionButton: _buildEmotionalFAB(context),
+    );
+  }
+
+  /// AppBar emocional siguiendo diseño coherente con el catálogo
+  Widget _buildEmotionalAppBar(BuildContext context) {
+    return SliverAppBar(
+      expandedHeight: MediaQuery.of(context).size.height * 0.5,
+      stretch: true,
+      pinned: true,
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      leading: FadeInLeft(
+        duration: const Duration(milliseconds: 600),
+        child: Container(
+          margin: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                offset: const Offset(0, 2),
+                blurRadius: 8,
+              ),
+            ],
+          ),
+          child: IconButton(
+            onPressed: () => context.go('/exercise-catalog'),
+            icon: Icon(
+              Icons.arrow_back_ios_rounded,
+              color: AppColors.primary,
+              size: 20,
             ),
+            padding: const EdgeInsets.all(8),
+          ),
+        ),
+      ),
+      flexibleSpace: FlexibleSpaceBar(
+        stretchModes: const [
+          StretchMode.blurBackground,
+          StretchMode.zoomBackground,
+        ],
+        titlePadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        title: FadeInUp(
+          duration: const Duration(milliseconds: 800),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.95),
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.15),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Text(
+              capitalizarPrimeraLetra(widget.exercise.name),
+              style: EstilosTextoEmocional.energetico.copyWith(
+                color: AppColors.textDark,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 0.5,
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ),
+        background: Hero(
+          tag: 'exercise-image-${widget.exercise.id}',
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              _buildExerciseImage(widget.exercise.imagePath),
+              // Overlay sutil para legibilidad
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.transparent,
+                      Colors.black.withOpacity(0.1),
+                      Colors.black.withOpacity(0.3),
+                    ],
+                    stops: const [0.0, 0.7, 1.0],
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
     );
   }
 
-  Widget _buildMinimalAppBar(BuildContext context, Exercise exercise) {
-    return SliverAppBar(
-      expandedHeight: MediaQuery.of(context).size.height * 0.45,
-      stretch: true,
-      pinned: true,
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      flexibleSpace: FlexibleSpaceBar(
-        stretchModes: const [
-          StretchMode.blurBackground,
-          StretchMode.zoomBackground
+  /// Contenido emocional siguiendo principios UX
+  Widget _buildEmotionalContent(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 24),
+
+        // Sección de músculos objetivo con diseño emocional
+        _buildEmotionalMuscleSection(),
+
+        const SizedBox(height: 32),
+
+        // Descripción con diseño emocional
+        _buildEmotionalDescription(),
+
+        // Variaciones si existen
+        if (widget.exercise.variations.isNotEmpty) ...[
+          const SizedBox(height: 32),
+          _buildEmotionalVariations(),
         ],
-        titlePadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-        title: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [Colors.black87, Colors.black54],
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
+
+        const SizedBox(height: 120), // Espacio para FAB
+      ],
+    );
+  }
+
+  /// Sección de músculos objetivo con diseño emocional
+  Widget _buildEmotionalMuscleSection() {
+    return FadeInRight(
+      duration: const Duration(milliseconds: 600),
+      delay: const Duration(milliseconds: 200),
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.all(24),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 2),
             ),
-            borderRadius: BorderRadius.circular(12),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                blurRadius: 8,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: Text(
-            TextFormatter.capitalize(exercise.name),
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w600,
-              fontSize: 22,
-              letterSpacing: 0.3,
-            ),
-          ),
+          ],
         ),
-        background: Hero(
-          tag: 'exercise-image-${exercise.id}',
-          child: Material(
-            type: MaterialType.transparency,
-            child: Stack(
-              fit: StackFit.expand,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Título con icono emocional
+            Row(
               children: [
-                _buildExerciseImage(exercise.imagePath),
-                DecoratedBox(
+                Container(
+                  padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.transparent,
-                        Colors.black.withAlpha(200),
-                      ],
-                      stops: const [0.5, 1.0],
+                    color: AppColors.primary.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Icon(
+                    IconsaxPlusLinear.activity,
+                    color: AppColors.primary,
+                    size: 24,
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Text(
+                    'Músculos Trabajados 💪',
+                    style: TextStyle(
+                      letterSpacing: 1.2,
+                      height: 1.1,
+                      fontSize: 20,
+                      color: AppColors.primary,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
               ],
             ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildMinimalContent(BuildContext context, Exercise exercise) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 32),
-          _buildMuscleChips(exercise.targetMuscles),
-          const SizedBox(height: 32),
-          _buildMinimalDescription(exercise.description),
-          if (exercise.variations.isNotEmpty) ...[
-            const SizedBox(height: 32),
-            _buildMinimalVariations(context, exercise.variations),
+            const SizedBox(height: 20),
+            // Chips de músculos con diseño emocional
+            Wrap(
+              spacing: 12,
+              runSpacing: 12,
+              children: widget.exercise.targetMuscles.map((muscle) {
+                return Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: AppColors.primary.withOpacity(0.25),
+                      width: 1.5,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.primary.withOpacity(0.06),
+                        blurRadius: 6,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        IconsaxPlusLinear.weight,
+                        size: 16,
+                        color: AppColors.primary,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        capitalizarPrimeraLetra(muscle),
+                        style: TextStyle(
+                          color: AppColors.primary,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }).toList(),
+            ),
           ],
-          const SizedBox(height: 60),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildMuscleChips(List<String> muscles) {
-    return Container(
-      margin: const EdgeInsets.only(top: 8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Músculos Objetivo',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-              color: Colors.black87,
-            ),
-          ),
-          const SizedBox(height: 12),
-          Builder(
-            builder: (context) {
-              final colorScheme = Theme.of(context).colorScheme;
-              return Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: muscles
-                    .map((muscle) => Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 8),
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                colorScheme.primary.withAlpha(50),
-                                colorScheme.primary.withAlpha(25),
-                              ],
-                            ),
-                            borderRadius: BorderRadius.circular(25),
-                            border: Border.all(
-                              color: colorScheme.primary.withAlpha(75),
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                Icons.fitness_center,
-                                size: 14,
-                                color: colorScheme.primary,
-                              ),
-                              const SizedBox(width: 8),
-                              Text(
-                                TextFormatter.capitalize(muscle),
-                                style: TextStyle(
-                                  color: colorScheme.primary,
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ))
-                    .toList(),
-              );
-            },
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildMinimalDescription(String description) {
-    return Container(
-      margin: const EdgeInsets.only(top: 32),
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withAlpha(8),
-            blurRadius: 10,
-            spreadRadius: 0,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Descripción',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-              color: Colors.black87,
-            ),
-          ),
-          const SizedBox(height: 12),
-          Text(
-            TextFormatter.capitalize(description).isNotEmpty
-                ? TextFormatter.capitalize(description)
-                : 'No hay descripción disponible.',
-            style: TextStyle(
-              color: Colors.grey.shade700,
-              fontSize: 15,
-              height: 1.6,
-              letterSpacing: 0.3,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildMinimalVariations(
-      BuildContext context, List<String> variations) {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'Variaciones',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-          ),
         ),
-        const SizedBox(height: 12),
-        ...variations.map((variation) => Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              child: Row(
-                children: [
-                  Container(
-                    width: 24,
-                    height: 24,
-                    alignment: Alignment.center,
-                    child: Text(
-                      '${variations.indexOf(variation) + 1}',
-                      style: TextStyle(
-                        color: colorScheme.primary,
-                        fontWeight: FontWeight.w500,
+      ),
+    );
+  }
+
+  /// Descripción con diseño emocional
+  Widget _buildEmotionalDescription() {
+    return FadeInLeft(
+      duration: const Duration(milliseconds: 600),
+      delay: const Duration(milliseconds: 400),
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.all(24),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Título con icono emocional
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: AppColors.energyOrange.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Icon(
+                    IconsaxPlusLinear.document_text,
+                    color: AppColors.energyOrange,
+                    size: 24,
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Text(
+                    'Descripción del Ejercicio 📖',
+                    style: TextStyle(
+                      letterSpacing: 1.2,
+                      height: 1.1,
+                      fontSize: 20,
+                      color: AppColors.primary,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            Text(
+              widget.exercise.description.isNotEmpty
+                  ? capitalizarPrimeraLetra(widget.exercise.description)
+                  : '¡Este ejercicio te ayudará a fortalecer y desarrollar los músculos trabajados de manera efectiva! 💪✨',
+              style: TextStyle(
+                fontSize: 16,
+                color: AppColors.textMedium,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// Variaciones con diseño emocional
+  Widget _buildEmotionalVariations() {
+    return FadeInUp(
+      duration: const Duration(milliseconds: 600),
+      delay: const Duration(milliseconds: 600),
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.all(24),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Título con icono emocional
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: AppColors.successGreen.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Icon(
+                    IconsaxPlusLinear.refresh,
+                    color: AppColors.successGreen,
+                    size: 24,
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Text(
+                    'Variaciones Disponibles 🔄',
+                    style: EstilosTextoEmocional.energetico.copyWith(
+                      fontSize: 20,
+                      color: AppColors.primary,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            ...widget.exercise.variations.asMap().entries.map((entry) {
+              final index = entry.key;
+              final variation = entry.value;
+              return Container(
+                margin: const EdgeInsets.only(bottom: 12),
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.grey[50],
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: Colors.grey[200]!,
+                    width: 1,
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 32,
+                      height: 32,
+                      decoration: BoxDecoration(
+                        color: AppColors.primary,
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Center(
+                        child: Text(
+                          '${index + 1}',
+                          style: EstilosTextoEmocional.energetico.copyWith(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      variation,
-                      style: const TextStyle(fontSize: 14),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Text(
+                        capitalizarPrimeraLetra(variation),
+                        style: EstilosTextoEmocional.amigable.copyWith(
+                          fontSize: 15,
+                          color: AppColors.textDark,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            )),
-      ],
+                  ],
+                ),
+              );
+            }),
+          ],
+        ),
+      ),
     );
   }
 
+  /// FAB emocional con animación
+  Widget _buildEmotionalFAB(BuildContext context) {
+    return FadeInUp(
+      duration: const Duration(milliseconds: 800),
+      delay: const Duration(milliseconds: 800),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.15),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: FloatingActionButton.extended(
+          elevation: 0,
+          backgroundColor:
+              _isFavorite ? AppColors.motivationRed : AppColors.primary,
+          onPressed: () {
+            setState(() {
+              _isFavorite = !_isFavorite;
+            });
+
+            // Mostrar feedback emocional
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  _isFavorite
+                      ? '¡Ejercicio agregado a favoritos! ❤️'
+                      : 'Ejercicio removido de favoritos 💔',
+                  style: EstilosTextoEmocional.aliento
+                      .copyWith(color: Colors.white),
+                ),
+                backgroundColor: _isFavorite
+                    ? AppColors.motivationRed
+                    : AppColors.textSecondary,
+                behavior: SnackBarBehavior.floating,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12)),
+                duration: const Duration(seconds: 2),
+              ),
+            );
+          },
+          icon: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 300),
+            child: Icon(
+              _isFavorite ? IconsaxPlusLinear.heart : IconsaxPlusLinear.heart,
+              key: ValueKey(_isFavorite),
+              color: Colors.white,
+              size: 24,
+            ),
+          ),
+          label: Text(
+            _isFavorite ? 'En Favoritos ❤️' : 'Agregar a Favoritos',
+            style: EstilosTextoEmocional.aliento.copyWith(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Imagen del ejercicio con manejo de errores emocional
   Widget _buildExerciseImage(String imagePath) {
     if (imagePath.isEmpty) {
       return Container(
-        color: Colors.grey[200],
-        child: const Icon(
-          Icons.fitness_center,
-          size: 64,
-          color: Colors.grey,
+        decoration: BoxDecoration(
+          color: Colors.grey[300],
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                IconsaxPlusLinear.weight,
+                color: Colors.white,
+                size: 64,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                '¡Imagen próximamente! 💪',
+                style: EstilosTextoEmocional.aliento.copyWith(
+                  color: Colors.white,
+                  fontSize: 18,
+                ),
+              ),
+            ],
+          ),
         ),
       );
     }
@@ -308,19 +562,15 @@ class ExerciseDetailPage extends StatelessWidget {
     if (VerificadorTipoArchivo.esSvg(imagePath)) {
       return Container(
         decoration: BoxDecoration(
-          color: Colors.grey[100],
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Colors.grey[100]!,
-              Colors.grey[200]!,
-            ],
-          ),
+          color: Colors.grey[200],
         ),
         child: SvgPicture.asset(
           imagePath,
           fit: BoxFit.cover,
+          colorFilter: ColorFilter.mode(
+            AppColors.primary.withValues(alpha: 0.8),
+            BlendMode.srcATop,
+          ),
         ),
       );
     }
@@ -330,8 +580,29 @@ class ExerciseDetailPage extends StatelessWidget {
       fit: BoxFit.cover,
       errorBuilder: (context, error, stackTrace) {
         return Container(
-          color: Colors.grey[200],
-          child: Icon(Icons.error, size: 64, color: Colors.grey[400]),
+          decoration: BoxDecoration(
+            color: Colors.grey[400],
+          ),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  IconsaxPlusLinear.danger,
+                  color: Colors.white,
+                  size: 48,
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  'Error al cargar imagen 😔',
+                  style: EstilosTextoEmocional.recuperacion.copyWith(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                ),
+              ],
+            ),
+          ),
         );
       },
     );
