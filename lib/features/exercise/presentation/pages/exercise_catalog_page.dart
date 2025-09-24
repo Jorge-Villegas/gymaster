@@ -8,6 +8,7 @@ import 'package:gymaster/core/theme/emotional_text_styles.dart';
 import 'package:gymaster/features/exercise/domain/entities/exercise.dart';
 import 'package:gymaster/features/exercise/presentation/cubits/exercise/exercise_cubit.dart';
 import 'package:gymaster/features/routine/presentation/cubits/musculo/musculo_cubit.dart';
+import 'package:gymaster/shared/utils/string_utils.dart';
 import 'package:gymaster/shared/utils/verificador_tipo_archivo.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:shimmer/shimmer.dart';
@@ -326,7 +327,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                           return Padding(
                             padding: const EdgeInsets.only(right: 8),
                             child: _buildMuscleFilterChip(
-                              label: muscle.nombre,
+                              label: capitalizarPrimeraLetra(muscle.nombre),
                               isSelected: isSelected,
                               onSelected: () {
                                 setState(() {
@@ -416,7 +417,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
               const SizedBox(width: 6),
             ],
             Text(
-              label,
+              capitalizarPrimeraLetra(label),
               style: EmotionalTextStyles.friendly.copyWith(
                 fontSize: 14,
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
@@ -658,7 +659,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        exercise.name,
+                        capitalizarPrimeraLetra(exercise.name),
                         style: EmotionalTextStyles.energetic.copyWith(
                           fontSize: 16,
                           color: AppColors.primary,
