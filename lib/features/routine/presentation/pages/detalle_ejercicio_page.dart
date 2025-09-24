@@ -158,60 +158,74 @@ class DetalleEjercicioScreen extends StatelessWidget {
   }
 
   Widget _buildExerciseImage(String imagenDireccion) {
-    return Container(
-      height: 200,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.energyOrange.withValues(alpha: 0.1),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
+    return Center(
+      child: AspectRatio(
+        aspectRatio: 1.2,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            gradient: LinearGradient(
+              colors: [
+                AppColors.energyOrange.withOpacity(0.08),
+                AppColors.primary.withOpacity(0.08),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.energyOrange.withOpacity(0.12),
+                blurRadius: 16,
+                offset: const Offset(0, 6),
+              ),
+            ],
           ),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
-        child: imagenDireccion.isNotEmpty
-            ? Image.asset(
-                imagenDireccion,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) =>
-                    _buildImagePlaceholder(),
-              )
-            : _buildImagePlaceholder(),
+          clipBehavior: Clip.antiAlias,
+          child: _buildImageWidget(imagenDireccion),
+        ),
       ),
     );
   }
 
+// Admite SVG, PNG/JPG y fallback
+  Widget _buildImageWidget(String imagenDireccion) {
+    if (VerificadorTipoArchivo.esSvg(imagenDireccion)) {
+      return SvgPicture.asset(
+        imagenDireccion,
+        fit: BoxFit.contain,
+        semanticsLabel: 'Ilustración del ejercicio',
+        placeholderBuilder: (context) => _buildImagePlaceholder(),
+      );
+    }
+    if (VerificadorTipoArchivo.esImagen(imagenDireccion)) {
+      return Image.asset(
+        imagenDireccion,
+        fit: BoxFit.cover,
+        alignment: Alignment.center,
+        errorBuilder: (context, error, stackTrace) => _buildImagePlaceholder(),
+      );
+    }
+    return _buildImagePlaceholder();
+  }
+
   Widget _buildImagePlaceholder() {
     return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            AppColors.energyOrange.withValues(alpha: 0.1),
-            AppColors.motivationRed.withValues(alpha: 0.1),
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
+      color: Colors.grey[100],
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
               Icons.fitness_center_rounded,
-              size: 48,
+              size: 56,
               color: AppColors.energyOrange,
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 10),
             Text(
-              '¡Visualiza tu fuerza!',
+              'Imagen no disponible',
               style: EmotionalTextStyles.friendly.copyWith(
                 color: AppColors.textSecondary,
-                fontSize: 14,
+                fontSize: 15,
               ),
             ),
           ],
@@ -436,8 +450,8 @@ class DetalleEjercicioScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildEmotionalActionButtons(BuildContext context, Ejercicio ejercicio,
-      EjerciciosByRutinaSuccess state) {
+  Widget _buildEmotionalDynamicActionButtons(BuildContext context,
+      Ejercicio ejercicio, EjerciciosByRutinaSuccess state) {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -454,19 +468,8 @@ class DetalleEjercicioScreen extends StatelessWidget {
         top: false,
         child: Column(
           children: [
-            // Botón principal - Completar Serie
-            Pulse(
-              infinite: true,
-              duration: const Duration(seconds: 2),
-              child: ChicletButton(
-                onPressed: () => _handleCompleteSerie(context, state),
-                texto: '¡Completar Serie!',
-                icono: Icons.check_circle_rounded,
-                tamano: TamanoBotonChiclet.grande,
-                estilo: EstiloBotonChiclet.relleno,
-                colorFondo: AppColors.celebrationPurple,
-              ),
-            ),
+            // Botón principal dinámico
+            _buildMainActionButton(context, state),
 
             const SizedBox(height: 12),
 
@@ -500,6 +503,82 @@ class DetalleEjercicioScreen extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildMainActionButton(
+      BuildContext context, EjerciciosByRutinaSuccess state) {
+    // Encontrar ejercicio actual
+    final ejercicioActual =
+        state.ejerciciosDeRutina.ejercicios.firstWhereOrNull(
+      (e) => e.id == state.ejercicioIndex,
+    );
+
+    if (ejercicioActual == null) {
+      // Fallback si no se encuentra el ejercicio
+      return Pulse(
+        infinite: true,
+        duration: const Duration(seconds: 2),
+        child: ChicletButton(
+          onPressed: () => _handleCompleteSerie(context, state),
+          texto: '¡Completar Serie!',
+          icono: Icons.check_circle_rounded,
+          tamano: TamanoBotonChiclet.grande,
+          estilo: EstiloBotonChiclet.relleno,
+          colorFondo: AppColors.celebrationPurple,
+        ),
+      );
+    }
+
+    // Contar series completadas vs totales
+    final seriesCompletadas =
+        ejercicioActual.series.where((s) => s.estado == 'completado').length;
+    final totalSeries = ejercicioActual.series.length;
+
+    // Encontrar índice del ejercicio actual
+    final ejercicioIndexNum = state.ejerciciosDeRutina.ejercicios.indexWhere(
+      (e) => e.id == state.ejercicioIndex,
+    );
+    final esUltimoEjercicio =
+        ejercicioIndexNum >= state.ejerciciosDeRutina.ejercicios.length - 1;
+    final todasSeriesCompletadas = seriesCompletadas >= totalSeries;
+
+    String textoBoton;
+    IconData iconoBoton;
+    Color colorBoton;
+    VoidCallback accionBoton;
+
+    if (!todasSeriesCompletadas) {
+      // Aún hay series por completar
+      textoBoton = '¡Completar Serie ${seriesCompletadas + 1}!';
+      iconoBoton = Icons.check_circle_rounded;
+      colorBoton = AppColors.celebrationPurple;
+      accionBoton = () => _handleCompleteSerie(context, state);
+    } else if (!esUltimoEjercicio) {
+      // Series completadas, hay más ejercicios
+      textoBoton = '¡Siguiente Ejercicio!';
+      iconoBoton = Icons.arrow_forward_rounded;
+      colorBoton = AppColors.energyOrange;
+      accionBoton = () => _handleNextExercise(context, state);
+    } else {
+      // Último ejercicio, todas las series completadas
+      textoBoton = '¡Rutina Completada!';
+      iconoBoton = Icons.celebration_rounded;
+      colorBoton = AppColors.achievementGold;
+      accionBoton = () => _handleFinishRoutine(context, state);
+    }
+
+    return Pulse(
+      infinite: true,
+      duration: const Duration(seconds: 2),
+      child: ChicletButton(
+        onPressed: accionBoton,
+        texto: textoBoton,
+        icono: iconoBoton,
+        tamano: TamanoBotonChiclet.grande,
+        estilo: EstiloBotonChiclet.relleno,
+        colorFondo: colorBoton,
       ),
     );
   }
@@ -592,6 +671,65 @@ class DetalleEjercicioScreen extends StatelessWidget {
             tamano: TamanoBotonChiclet.mediano,
             estilo: EstiloBotonChiclet.relleno,
             colorFondo: AppColors.energyOrange,
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _handleNextExercise(
+      BuildContext context, EjerciciosByRutinaSuccess state) {
+    print('⏭️ _handleNextExercise llamado');
+    // Usar el método existente del cubit para avanzar al siguiente ejercicio
+    context.read<EjerciciosByRutinaCubit>().avanzarAlSiguienteEjercicio();
+    print('✅ avanzarAlSiguienteEjercicio() ejecutado');
+  }
+
+  void _handleFinishRoutine(
+      BuildContext context, EjerciciosByRutinaSuccess state) {
+    print('🏁 _handleFinishRoutine llamado');
+
+    // Mostrar diálogo de felicitación antes de finalizar
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        title: Text(
+          '🎉 ¡Felicitaciones!',
+          style: EmotionalTextStyles.energetic.copyWith(
+            color: AppColors.achievementGold,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.celebration_rounded,
+              size: 64,
+              color: AppColors.achievementGold,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Has completado toda la rutina.\n¡Excelente trabajo!',
+              style: EmotionalTextStyles.friendly.copyWith(
+                color: AppColors.textSecondary,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+        actions: [
+          ChicletButton(
+            onPressed: () {
+              Navigator.pop(context);
+              // Finalizar la rutina usando el nuevo método específico
+              context.read<EjerciciosByRutinaCubit>().finalizarRutina();
+            },
+            texto: '¡Finalizar!',
+            tamano: TamanoBotonChiclet.mediano,
+            estilo: EstiloBotonChiclet.relleno,
+            colorFondo: AppColors.achievementGold,
           ),
         ],
       ),
@@ -773,7 +911,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
               // Barra Motivacional
               SlideInDown(
                 duration: const Duration(milliseconds: 500),
-                child: _buildMotivationalBar(serieActualIndex + 1, totalSeries),
+                child: _buildMotivationalBar(serieActualIndex, totalSeries),
               ),
 
               // Contenido Principal
@@ -811,9 +949,8 @@ class DetalleEjercicioScreen extends StatelessWidget {
                   ),
                 ),
               ),
-
-              // Botones de acción
-              _buildEmotionalActionButtons(context, ejercicio, state),
+              // Botones de acción dinámicos con diseño emocional
+              _buildEmotionalDynamicActionButtons(context, ejercicio, state),
             ],
           ),
         ),

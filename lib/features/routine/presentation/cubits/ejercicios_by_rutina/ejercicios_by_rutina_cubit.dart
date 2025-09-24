@@ -248,92 +248,106 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
           '✅ Estado emitido con siguiente serie: ${ejercicios[ejercicioIndex].series[serieIndex + 1].id}');
     } else {
       print('🏁 Última serie del ejercicio completada');
-      // Verificar si hay más ejercicios en la rutina
-      if (ejercicioIndex + 1 < ejercicios.length) {
-        print('⏭️ Avanzando al siguiente ejercicio');
+      // NUEVO: NO avanzar automáticamente, solo actualizar el estado
+      // Marcar el ejercicio como completado en la BASE DE DATOS
+      print(
+          '💾 Marcando ejercicio ${ejercicios[ejercicioIndex].id} como completado en BD...');
+      await updateExerciseStatusUseCase(
+        ActualizarEstadoEjercicioParams(
+          exerciseId: ejercicios[ejercicioIndex].id,
+          routineSessionId: newState.ejerciciosDeRutina.session,
+          statusExercise: EstadoEjercicioSesion.completado.name,
+        ),
+      );
+      print('✅ Ejercicio marcado como completado en BD');
 
-        // IMPORTANTE: Marcar el ejercicio como completado en la BASE DE DATOS
-        print(
-            '💾 Marcando ejercicio ${ejercicios[ejercicioIndex].id} como completado en BD...');
-        await updateExerciseStatusUseCase(
-          ActualizarEstadoEjercicioParams(
-            exerciseId: ejercicios[ejercicioIndex].id,
-            routineSessionId: newState.ejerciciosDeRutina.session,
-            statusExercise: EstadoEjercicioSesion.completado.name,
+      // Marcar el ejercicio actual como completado pero mantener el estado actual
+      final updatedEjercicio = ejercicios[ejercicioIndex].copyWith(
+        estado: EstadoEjercicio.completado.name,
+      );
+      final updatedEjercicios = List<Ejercicio>.from(ejercicios)
+        ..[ejercicioIndex] = updatedEjercicio;
+
+      emit(
+        EjerciciosByRutinaSuccess(
+          ejerciciosDeRutina: newState.ejerciciosDeRutina.copyWith(
+            ejercicios: updatedEjercicios,
           ),
-        );
-        print('✅ Ejercicio marcado como completado en BD');
-
-        // Marcar el ejercicio actual como completado y avanzar al siguiente
-        final updatedEjercicio = ejercicios[ejercicioIndex].copyWith(
-          estado: EstadoEjercicio.completado.name,
-        );
-        final updatedEjercicios = List<Ejercicio>.from(ejercicios)
-          ..[ejercicioIndex] = updatedEjercicio;
-        emit(
-          EjerciciosByRutinaSuccess(
-            ejerciciosDeRutina: newState.ejerciciosDeRutina.copyWith(
-              ejercicios: updatedEjercicios,
-            ),
-            ejercicioIndex: ejercicios[ejercicioIndex + 1].id,
-            serieIndex: ejercicios[ejercicioIndex + 1].series.first.id,
-          ),
-        );
-        print(
-            '✅ Avanzado al siguiente ejercicio: ${ejercicios[ejercicioIndex + 1].id}');
-      } else {
-        print('🎉 ¡Rutina completada! No hay más ejercicios');
-
-        // IMPORTANTE: Marcar el último ejercicio como completado en la BASE DE DATOS
-        print(
-            '💾 Marcando último ejercicio ${ejercicios[ejercicioIndex].id} como completado en BD...');
-        await updateExerciseStatusUseCase(
-          ActualizarEstadoEjercicioParams(
-            exerciseId: ejercicios[ejercicioIndex].id,
-            routineSessionId: newState.ejerciciosDeRutina.session,
-            statusExercise: EstadoEjercicioSesion.completado.name,
-          ),
-        );
-        print('✅ Último ejercicio marcado como completado en BD');
-
-        // Completar la rutina
-        final result = await completeRoutineSessionUseCase(
-          CompletarSesionRutinaParams(
-            sessionId: newState.ejerciciosDeRutina.session,
-          ),
-        );
-
-        result.fold(
-          (failure) => emit(EjerciciosByRutinaError(failure.errorMessage)),
-          (success) {
-            // Calcular estadísticas del entrenamiento completado
-            final rutina = newState.ejerciciosDeRutina;
-            final totalEjercicios = rutina.ejercicios.length;
-            final totalSeries = rutina.ejercicios
-                .expand((ejercicio) => ejercicio.series)
-                .length;
-
-            emit(
-              EjerciciosByRutinaCompleted(
-                rutinaName: rutina.nombre,
-                totalEjercicios: totalEjercicios,
-                totalSeries: totalSeries,
-                tiempoTotal:
-                    Duration.zero, // Puedes calcular esto si tienes timestamps
-                fechaCompletado: DateTime.now(),
-              ),
-            );
-            print('✅ Rutina completada exitosamente');
-          },
-        );
-      }
+          ejercicioIndex:
+              newState.ejercicioIndex, // Mantener el mismo ejercicio
+          serieIndex: newState.serieIndex, // Mantener la misma serie
+        ),
+      );
+      print(
+          '✅ Ejercicio marcado como completado, esperando acción del usuario');
     }
   }
 
   // Método para avanzar explícitamente al siguiente ejercicio (usado por el botón de avanzar)
   void avanzarAlSiguienteEjercicio() async {
     if (state is! EjerciciosByRutinaSuccess) return;
-    _emitNextSerieState();
+    final currentState = state as EjerciciosByRutinaSuccess;
+    final ejercicios = currentState.ejerciciosDeRutina.ejercicios;
+    final ejercicioIndex = ejercicios.indexWhere(
+      (e) => e.id == currentState.ejercicioIndex,
+    );
+
+    print(
+        '⏭️ avanzarAlSiguienteEjercicio() - Ejercicio actual: $ejercicioIndex');
+
+    if (ejercicioIndex + 1 < ejercicios.length) {
+      // Hay siguiente ejercicio, avanzar
+      print(
+          '🚀 Avanzando al siguiente ejercicio: ${ejercicios[ejercicioIndex + 1].id}');
+      emit(
+        EjerciciosByRutinaSuccess(
+          ejerciciosDeRutina: currentState.ejerciciosDeRutina,
+          ejercicioIndex: ejercicios[ejercicioIndex + 1].id,
+          serieIndex: ejercicios[ejercicioIndex + 1].series.first.id,
+        ),
+      );
+      print('✅ Avanzado al siguiente ejercicio exitosamente');
+    } else {
+      print('❌ No hay más ejercicios para avanzar');
+    }
+  }
+
+  // Método para finalizar explícitamente la rutina (usado por el botón de finalizar)
+  void finalizarRutina() async {
+    if (state is! EjerciciosByRutinaSuccess) return;
+    final currentState = state as EjerciciosByRutinaSuccess;
+
+    print('🏁 finalizarRutina() - Completando rutina...');
+
+    // Completar la rutina
+    final result = await completeRoutineSessionUseCase(
+      CompletarSesionRutinaParams(
+        sessionId: currentState.ejerciciosDeRutina.session,
+      ),
+    );
+
+    result.fold(
+      (failure) => emit(EjerciciosByRutinaError(failure.errorMessage)),
+      (success) {
+        // Calcular estadísticas del entrenamiento completado
+        final rutina = currentState.ejerciciosDeRutina;
+        final totalEjercicios = rutina.ejercicios.length;
+        final totalSeries =
+            rutina.ejercicios.expand((ejercicio) => ejercicio.series).length;
+
+        emit(
+          EjerciciosByRutinaCompleted(
+            rutinaName: rutina.nombre,
+            totalEjercicios: totalEjercicios,
+            totalSeries: totalSeries,
+            tiempoTotal:
+                Duration.zero, // Puedes calcular esto si tienes timestamps
+            fechaCompletado: DateTime.now(),
+          ),
+        );
+        print('✅ Rutina completada exitosamente por el usuario');
+      },
+    );
   }
 
   Future<Serie> _markSerieAsCompleted(
@@ -388,76 +402,6 @@ class EjerciciosByRutinaCubit extends Cubit<EjerciciosByRutinaState> {
     updateSerieUseCase(ActualizarSerieParams(id: serie.id, realizado: true));
 
     return updatedSerie;
-  }
-
-  void _emitNextSerieState() async {
-    if (state is! EjerciciosByRutinaSuccess) return;
-    final currentState = state as EjerciciosByRutinaSuccess;
-    final ejercicios = currentState.ejerciciosDeRutina.ejercicios;
-    final ejercicioIndex = ejercicios.indexWhere(
-      (e) => e.id == currentState.ejercicioIndex,
-    );
-    final serieIndex = ejercicios[ejercicioIndex].series.indexWhere(
-          (s) => s.id == currentState.serieIndex,
-        );
-
-    if (serieIndex + 1 < ejercicios[ejercicioIndex].series.length) {
-      // Avanza a la siguiente serie del ejercicio actual
-      emit(
-        EjerciciosByRutinaSuccess(
-          ejerciciosDeRutina: currentState.ejerciciosDeRutina,
-          ejercicioIndex: currentState.ejercicioIndex,
-          serieIndex: ejercicios[ejercicioIndex].series[serieIndex + 1].id,
-        ),
-      );
-      return;
-    } else if (ejercicioIndex + 1 < ejercicios.length) {
-      // Avanza al siguiente ejercicio y reinicia el índice de la serie
-      final updatedEjercicio = ejercicios[ejercicioIndex].copyWith(
-        estado: EstadoEjercicio.completado.name,
-      );
-      // Actualizar la lista de ejercicios con el ejercicio completado
-      final updatedEjercicios = List<Ejercicio>.from(ejercicios)
-        ..[ejercicioIndex] = updatedEjercicio;
-
-      emit(
-        EjerciciosByRutinaSuccess(
-          ejerciciosDeRutina: currentState.ejerciciosDeRutina.copyWith(
-            ejercicios: updatedEjercicios,
-          ),
-          ejercicioIndex: ejercicios[ejercicioIndex + 1].id,
-          serieIndex: ejercicios[ejercicioIndex + 1].series.first.id,
-        ),
-      );
-      return;
-    } else {
-      // Si no hay más series ni ejercicios, emite el estado de rutina completada
-      final result = await completeRoutineSessionUseCase(
-        CompletarSesionRutinaParams(
-          sessionId: currentState.ejerciciosDeRutina.session,
-        ),
-      );
-
-      result.fold((l) => emit(EjerciciosByRutinaError(l.errorMessage)), (r) {
-        // Calcular estadísticas del entrenamiento completado
-        final rutina = currentState.ejerciciosDeRutina;
-        final totalEjercicios = rutina.ejercicios.length;
-        final totalSeries =
-            rutina.ejercicios.expand((ejercicio) => ejercicio.series).length;
-
-        // Calcular tiempo total (estimado desde el inicio de la sesión)
-        final tiempoTotal = DateTime.now().difference(rutina.fechaCreacion);
-
-        emit(EjerciciosByRutinaCompleted(
-          rutinaName: rutina.nombre,
-          totalEjercicios: totalEjercicios,
-          totalSeries: totalSeries,
-          tiempoTotal: tiempoTotal,
-          fechaCompletado: DateTime.now(),
-        ));
-      });
-      return;
-    }
   }
 
   void _updateSerie(
