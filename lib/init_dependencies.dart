@@ -5,6 +5,7 @@ import 'package:gymaster/features/exercise/data/repositories/exercise_repository
 import 'package:gymaster/features/exercise/domain/repositories/exercise_repository.dart';
 import 'package:gymaster/features/exercise/domain/usecases/obtener_todos_los_ejercicios_usecase.dart';
 import 'package:gymaster/features/exercise/domain/usecases/obtener_ejercicios_por_musculo_usecase.dart';
+import 'package:gymaster/features/exercise/domain/usecases/buscar_ejercicios_usecase.dart';
 import 'package:gymaster/features/exercise/presentation/cubits/exercise/exercise_cubit.dart';
 import 'package:gymaster/features/record/data/implements/implements.dart';
 import 'package:gymaster/features/record/data/sources/record_local_data_source.dart';

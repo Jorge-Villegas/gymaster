@@ -115,7 +115,8 @@ class ExerciseLocalDataSource {
       final db = await databaseHelper.database;
       final ejercicios = await db.query(
         EjercicioDb.tabla,
-        where: 'name LIKE ? OR ${EjercicioDb.columnaDescripcion} LIKE ?',
+        where:
+            '${EjercicioDb.columnaNombre} LIKE ? OR ${EjercicioDb.columnaDescripcion} LIKE ?',
         whereArgs: ['%$query%', '%$query%'],
       );
 

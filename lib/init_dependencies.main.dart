@@ -167,11 +167,13 @@ void _initExercise() {
     ..registerFactory(() => ObtenerTodosLosEjerciciosUseCase(serviceLocator()))
     ..registerFactory(
         () => ObtenerEjerciciosCatalogoPorMusculoUseCase(serviceLocator()))
+    ..registerFactory(() => BuscarEjerciciosUseCase(serviceLocator()))
     // Cubit
     ..registerFactory(
       () => ExerciseCubit(
         getAllExercisesUseCase: serviceLocator(),
         getExercisesByMuscleUseCase: serviceLocator(),
+        buscarEjerciciosUseCase: serviceLocator(),
       ),
     );
 }
