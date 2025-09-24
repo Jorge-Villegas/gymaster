@@ -101,7 +101,7 @@ class RutinaCanceladaWidget extends StatelessWidget {
                   icon: const Icon(Icons.refresh_rounded),
                   label: Text(
                     'Reintentar Rutina',
-                    style: EmotionalTextStyles.encouragement.copyWith(
+                    style: EstilosTextoEmocional.aliento.copyWith(
                       color: Colors.white,
                       fontSize: 18,
                     ),
@@ -120,7 +120,7 @@ class RutinaCanceladaWidget extends StatelessWidget {
                 // Mensaje motivacional
                 Text(
                   '¡No te rindas! Puedes intentarlo de nuevo 💪',
-                  style: EmotionalTextStyles.encouragement.copyWith(
+                  style: EstilosTextoEmocional.aliento.copyWith(
                     color: AppColors.warmOrange,
                     fontSize: 16,
                   ),

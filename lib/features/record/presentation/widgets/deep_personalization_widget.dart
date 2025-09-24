@@ -170,7 +170,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
             children: [
               Text(
                 'Personalización Profunda',
-                style: EmotionalTextStyles.motivational.copyWith(
+                style: EstilosTextoEmocional.motivacional.copyWith(
                   fontSize: 20,
                   color: Theme.of(context).colorScheme.onSurface,
                 ),
@@ -215,7 +215,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
               const SizedBox(width: 8),
               Text(
                 'Insights Personalizados',
-                style: EmotionalTextStyles.encouragement.copyWith(
+                style: EstilosTextoEmocional.aliento.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -224,7 +224,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
           const SizedBox(height: 12),
           Text(
             _getPersonalizedInsight(),
-            style: EmotionalTextStyles.achievement.copyWith(
+            style: EstilosTextoEmocional.logro.copyWith(
               fontSize: 16,
               color: AppColors.achievementGold,
             ),
@@ -327,7 +327,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
             const SizedBox(width: 8),
             Text(
               title,
-              style: EmotionalTextStyles.encouragement.copyWith(
+              style: EstilosTextoEmocional.aliento.copyWith(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
               ),
@@ -397,7 +397,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
             const SizedBox(width: 8),
             Text(
               'Configuraciones Avanzadas',
-              style: EmotionalTextStyles.encouragement.copyWith(
+              style: EstilosTextoEmocional.aliento.copyWith(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
               ),
@@ -491,7 +491,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
             const SizedBox(width: 8),
             Text(
               'Guardar Preferencias',
-              style: EmotionalTextStyles.motivational.copyWith(
+              style: EstilosTextoEmocional.motivacional.copyWith(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,

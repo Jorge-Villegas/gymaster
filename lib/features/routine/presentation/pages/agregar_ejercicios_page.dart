@@ -67,7 +67,7 @@ class AgregarEjerciciosPage extends StatelessWidget {
                 children: [
                   Text(
                     '¡Elige tu enfoque!',
-                    style: EmotionalTextStyles.energetic.copyWith(
+                    style: EstilosTextoEmocional.energetico.copyWith(
                       color: AppColors.primary,
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -76,7 +76,7 @@ class AgregarEjerciciosPage extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     'Selecciona el grupo muscular 💪',
-                    style: EmotionalTextStyles.friendly.copyWith(
+                    style: EstilosTextoEmocional.amigable.copyWith(
                       color: AppColors.energyOrange,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
@@ -200,7 +200,7 @@ class AgregarEjerciciosPage extends StatelessWidget {
             const SizedBox(height: 24),
             Text(
               '¡No te preocupes!',
-              style: EmotionalTextStyles.encouragement.copyWith(
+              style: EstilosTextoEmocional.aliento.copyWith(
                 color: AppColors.primary,
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -212,7 +212,7 @@ class AgregarEjerciciosPage extends StatelessWidget {
               child: Text(
                 mensaje,
                 textAlign: TextAlign.center,
-                style: EmotionalTextStyles.friendly.copyWith(
+                style: EstilosTextoEmocional.amigable.copyWith(
                   color: AppColors.textSecondary,
                   fontSize: 16,
                 ),
@@ -394,7 +394,8 @@ class AgregarEjerciciosPage extends StatelessWidget {
                             children: [
                               Text(
                                 musculo.nombre,
-                                style: EmotionalTextStyles.energetic.copyWith(
+                                style:
+                                    EstilosTextoEmocional.energetico.copyWith(
                                   color: AppColors.primary,
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
@@ -403,7 +404,7 @@ class AgregarEjerciciosPage extends StatelessWidget {
                               const SizedBox(height: 6),
                               Text(
                                 '¡Vamos a entrenar este grupo!',
-                                style: EmotionalTextStyles.friendly.copyWith(
+                                style: EstilosTextoEmocional.amigable.copyWith(
                                   color: AppColors.textSecondary,
                                   fontSize: 14,
                                 ),

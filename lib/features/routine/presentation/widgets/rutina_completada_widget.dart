@@ -254,7 +254,7 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
               scale: 1.0 + (_scaleAnimation.value * 0.3),
               child: Text(
                 '${_totalRutinasCompletadas.iconoProgreso} ¡Felicidades! ${_totalRutinasCompletadas.iconoProgreso}',
-                style: EmotionalTextStyles.celebration.copyWith(
+                style: EstilosTextoEmocional.celebracion.copyWith(
                   fontSize: 32,
                 ),
                 textAlign: TextAlign.center,
@@ -300,7 +300,7 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
         // Mensaje personalizado
         Text(
           mensajePersonalizado,
-          style: EmotionalTextStyles.encouragement.copyWith(
+          style: EstilosTextoEmocional.aliento.copyWith(
             fontSize: 18,
             color: Theme.of(context).colorScheme.onSurface,
           ),
@@ -324,7 +324,7 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
         children: [
           Text(
             subtituloContextual,
-            style: EmotionalTextStyles.encouragement.copyWith(
+            style: EstilosTextoEmocional.aliento.copyWith(
               fontSize: 16,
               color: AppColors.successGreen,
               fontWeight: FontWeight.w600,

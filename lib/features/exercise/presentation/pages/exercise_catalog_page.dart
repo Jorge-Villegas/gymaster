@@ -145,7 +145,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                     children: [
                       Text(
                         'Catálogo de Ejercicios',
-                        style: EmotionalTextStyles.motivational.copyWith(
+                        style: EstilosTextoEmocional.motivacional.copyWith(
                           fontSize: 22,
                           color: AppColors.primary,
                         ),
@@ -153,7 +153,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                       const SizedBox(height: 4),
                       Text(
                         'Descubre tu próximo desafío',
-                        style: EmotionalTextStyles.recovery.copyWith(
+                        style: EstilosTextoEmocional.recuperacion.copyWith(
                           color: AppColors.textSecondary,
                         ),
                       ),
@@ -260,14 +260,14 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
           const SizedBox(height: 4),
           Text(
             value,
-            style: EmotionalTextStyles.energetic.copyWith(
+            style: EstilosTextoEmocional.energetico.copyWith(
               fontSize: 16,
               color: color,
             ),
           ),
           Text(
             title,
-            style: EmotionalTextStyles.recovery.copyWith(
+            style: EstilosTextoEmocional.recuperacion.copyWith(
               fontSize: 12,
               color: AppColors.textSecondary,
             ),
@@ -295,7 +295,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                     padding: const EdgeInsets.only(left: 4, bottom: 12),
                     child: Text(
                       'Grupos Musculares',
-                      style: EmotionalTextStyles.energetic.copyWith(
+                      style: EstilosTextoEmocional.energetico.copyWith(
                         fontSize: 16,
                         color: AppColors.primary,
                       ),
@@ -418,7 +418,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
             ],
             Text(
               capitalizarPrimeraLetra(label),
-              style: EmotionalTextStyles.friendly.copyWith(
+              style: EstilosTextoEmocional.amigable.copyWith(
                 fontSize: 14,
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
                 color: isSelected
@@ -469,7 +469,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                     const SizedBox(height: 16),
                     Text(
                       state.message,
-                      style: EmotionalTextStyles.friendly.copyWith(
+                      style: EstilosTextoEmocional.amigable.copyWith(
                         color: AppColors.textSecondary,
                       ),
                       textAlign: TextAlign.center,
@@ -497,14 +497,14 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                       const SizedBox(height: 16),
                       Text(
                         'No se encontraron ejercicios',
-                        style: EmotionalTextStyles.friendly.copyWith(
+                        style: EstilosTextoEmocional.amigable.copyWith(
                           color: AppColors.textSecondary,
                         ),
                       ),
                       const SizedBox(height: 8),
                       Text(
                         'Intenta con otro grupo muscular',
-                        style: EmotionalTextStyles.recovery.copyWith(
+                        style: EstilosTextoEmocional.recuperacion.copyWith(
                           color: AppColors.textSecondary,
                         ),
                       ),
@@ -660,7 +660,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                     children: [
                       Text(
                         capitalizarPrimeraLetra(exercise.name),
-                        style: EmotionalTextStyles.energetic.copyWith(
+                        style: EstilosTextoEmocional.energetico.copyWith(
                           fontSize: 16,
                           color: AppColors.primary,
                         ),
@@ -689,7 +689,8 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                             ),
                             child: Text(
                               muscle,
-                              style: EmotionalTextStyles.recovery.copyWith(
+                              style:
+                                  EstilosTextoEmocional.recuperacion.copyWith(
                                 fontSize: 11,
                                 color: AppColors.calmBlue,
                               ),

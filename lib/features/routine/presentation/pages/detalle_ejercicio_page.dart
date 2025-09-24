@@ -223,7 +223,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
             const SizedBox(height: 10),
             Text(
               'Imagen no disponible',
-              style: EmotionalTextStyles.friendly.copyWith(
+              style: EstilosTextoEmocional.amigable.copyWith(
                 color: AppColors.textSecondary,
                 fontSize: 15,
               ),
@@ -258,7 +258,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
           // Título motivacional
           Text(
             '¡Tu objetivo ahora!',
-            style: EmotionalTextStyles.energetic.copyWith(
+            style: EstilosTextoEmocional.energetico.copyWith(
               color: AppColors.primary,
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -316,7 +316,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             value,
-            style: EmotionalTextStyles.energetic.copyWith(
+            style: EstilosTextoEmocional.energetico.copyWith(
               color: color,
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -325,7 +325,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             label,
-            style: EmotionalTextStyles.friendly.copyWith(
+            style: EstilosTextoEmocional.amigable.copyWith(
               color: AppColors.textSecondary,
               fontSize: 12,
             ),
@@ -356,7 +356,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
         children: [
           Text(
             '¡Ajusta tu entrenamiento!',
-            style: EmotionalTextStyles.energetic.copyWith(
+            style: EstilosTextoEmocional.energetico.copyWith(
               color: AppColors.primary,
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -405,7 +405,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
         Expanded(
           child: Text(
             title,
-            style: EmotionalTextStyles.friendly.copyWith(
+            style: EstilosTextoEmocional.amigable.copyWith(
               color: AppColors.textSecondary,
               fontSize: 16,
               fontWeight: FontWeight.w500,
@@ -428,7 +428,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
               alignment: Alignment.center,
               child: Text(
                 '$value',
-                style: EmotionalTextStyles.energetic.copyWith(
+                style: EstilosTextoEmocional.energetico.copyWith(
                   color: color,
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -600,13 +600,13 @@ class DetalleEjercicioScreen extends StatelessWidget {
       builder: (context) => AlertDialog(
         title: Text(
           '¿Pausar entrenamiento?',
-          style: EmotionalTextStyles.energetic.copyWith(
+          style: EstilosTextoEmocional.energetico.copyWith(
             color: AppColors.primary,
           ),
         ),
         content: Text(
           '¡No te rindas ahora! Estás haciendo un gran trabajo.',
-          style: EmotionalTextStyles.friendly.copyWith(
+          style: EstilosTextoEmocional.amigable.copyWith(
             color: AppColors.textSecondary,
           ),
         ),
@@ -642,7 +642,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
       builder: (context) => AlertDialog(
         title: Text(
           '¡Tiempo de descanso!',
-          style: EmotionalTextStyles.energetic.copyWith(
+          style: EstilosTextoEmocional.energetico.copyWith(
             color: AppColors.energyOrange,
           ),
         ),
@@ -657,7 +657,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               'Descansa 60 segundos y vuelve más fuerte.',
-              style: EmotionalTextStyles.friendly.copyWith(
+              style: EstilosTextoEmocional.amigable.copyWith(
                 color: AppColors.textSecondary,
               ),
               textAlign: TextAlign.center,
@@ -696,7 +696,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
       builder: (context) => AlertDialog(
         title: Text(
           '🎉 ¡Felicitaciones!',
-          style: EmotionalTextStyles.energetic.copyWith(
+          style: EstilosTextoEmocional.energetico.copyWith(
             color: AppColors.achievementGold,
           ),
           textAlign: TextAlign.center,
@@ -712,7 +712,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               'Has completado toda la rutina.\n¡Excelente trabajo!',
-              style: EmotionalTextStyles.friendly.copyWith(
+              style: EstilosTextoEmocional.amigable.copyWith(
                 color: AppColors.textSecondary,
               ),
               textAlign: TextAlign.center,
@@ -816,7 +816,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
                     const SizedBox(height: 24),
                     Text(
                       '¡Ups! Algo salió mal',
-                      style: EmotionalTextStyles.energetic.copyWith(
+                      style: EstilosTextoEmocional.energetico.copyWith(
                         color: AppColors.primary,
                         fontSize: 22,
                       ),
@@ -825,7 +825,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
                     const SizedBox(height: 12),
                     Text(
                       message,
-                      style: EmotionalTextStyles.friendly.copyWith(
+                      style: EstilosTextoEmocional.amigable.copyWith(
                         color: AppColors.textSecondary,
                         fontSize: 16,
                       ),
@@ -1002,7 +1002,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
                 children: [
                   Text(
                     TextFormatter.capitalize(exerciseName),
-                    style: EmotionalTextStyles.energetic.copyWith(
+                    style: EstilosTextoEmocional.energetico.copyWith(
                       color: AppColors.primary,
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -1013,7 +1013,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     'Serie $serieActual de $totalSeries 💪',
-                    style: EmotionalTextStyles.friendly.copyWith(
+                    style: EstilosTextoEmocional.amigable.copyWith(
                       color: AppColors.energyOrange,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
@@ -1040,7 +1040,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
               child: Center(
                 child: Text(
                   '$serieActual',
-                  style: EmotionalTextStyles.counter.copyWith(
+                  style: EstilosTextoEmocional.contador.copyWith(
                     color: Colors.white,
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -1097,7 +1097,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
           Expanded(
             child: Text(
               _getMotivationalMessage(serieActual, totalSeries),
-              style: EmotionalTextStyles.motivational.copyWith(
+              style: EstilosTextoEmocional.motivacional.copyWith(
                 fontSize: 14,
                 color: AppColors.motivationRed,
                 fontWeight: FontWeight.w600,
@@ -1114,7 +1114,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
             ),
             child: Text(
               '$serieActual/$totalSeries',
-              style: EmotionalTextStyles.counter.copyWith(
+              style: EstilosTextoEmocional.contador.copyWith(
                 fontSize: 12,
                 color: AppColors.energyOrange,
                 fontWeight: FontWeight.bold,

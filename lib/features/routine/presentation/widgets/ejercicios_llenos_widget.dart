@@ -48,7 +48,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                 // Título emocional
                 Text(
                   '¿Pausar entrenamiento?',
-                  style: EmotionalTextStyles.energetic.copyWith(
+                  style: EstilosTextoEmocional.energetico.copyWith(
                     color: AppColors.primary,
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
@@ -59,7 +59,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                 // Mensaje motivacional
                 Text(
                   '¡No te rindas ahora! Tu progreso se guardará.',
-                  style: EmotionalTextStyles.friendly.copyWith(
+                  style: EstilosTextoEmocional.amigable.copyWith(
                     color: AppColors.textSecondary,
                     fontSize: 16,
                   ),
@@ -209,7 +209,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                     const SizedBox(width: 8),
                     Text(
                       'Ejercicios listos',
-                      style: EmotionalTextStyles.friendly.copyWith(
+                      style: EstilosTextoEmocional.amigable.copyWith(
                         color: AppColors.successGreen,
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
@@ -226,7 +226,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                   ),
                   child: Text(
                     ejerciciosDeRutina.ejercicios.length.toString(),
-                    style: EmotionalTextStyles.energetic.copyWith(
+                    style: EstilosTextoEmocional.energetico.copyWith(
                       color: Colors.white,
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -311,7 +311,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                           const SizedBox(height: 4),
                           Text(
                             'Eliminar',
-                            style: EmotionalTextStyles.friendly.copyWith(
+                            style: EstilosTextoEmocional.amigable.copyWith(
                               color: Colors.white,
                               fontSize: 12,
                               fontWeight: FontWeight.w600,

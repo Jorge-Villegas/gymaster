@@ -106,13 +106,13 @@ class ListaRutinasPage extends StatelessWidget {
         // Saludo emocional personalizado
         Text(
           '$timeGreeting, Jorge $emoji',
-          style: EmotionalTextStyles.greeting,
+          style: EstilosTextoEmocional.saludo,
         ),
         const SizedBox(height: 4),
         // Mensaje motivacional dinámico
         Text(
           _getMotivationalMessage(),
-          style: EmotionalTextStyles.encouragement.copyWith(
+          style: EstilosTextoEmocional.aliento.copyWith(
             fontSize: 16,
             color: AppColors.warmOrange,
           ),
@@ -186,7 +186,7 @@ class ListaRutinasPage extends StatelessWidget {
               children: [
                 Text(
                   'Mis Rutinas',
-                  style: EmotionalTextStyles.motivational.copyWith(
+                  style: EstilosTextoEmocional.motivacional.copyWith(
                     color: AppColors.primary,
                     fontSize: 24,
                   ),
@@ -216,7 +216,7 @@ class ListaRutinasPage extends StatelessWidget {
                     children: [
                       Text(
                         'Mis Rutinas',
-                        style: EmotionalTextStyles.motivational.copyWith(
+                        style: EstilosTextoEmocional.motivacional.copyWith(
                           color: AppColors.primary,
                           fontSize: 24,
                         ),
@@ -224,7 +224,7 @@ class ListaRutinasPage extends StatelessWidget {
                       if (state.routines.isNotEmpty)
                         Text(
                           '${state.routines.length} rutina${state.routines.length == 1 ? '' : 's'} para conquistar',
-                          style: EmotionalTextStyles.encouragement.copyWith(
+                          style: EstilosTextoEmocional.aliento.copyWith(
                             color: AppColors.warmOrange,
                             fontSize: 14,
                           ),
@@ -323,7 +323,7 @@ class ListaRutinasPage extends StatelessWidget {
                           Expanded(
                             child: Text(
                               'Preparando tus rutinas increíbles...',
-                              style: EmotionalTextStyles.friendly.copyWith(
+                              style: EstilosTextoEmocional.amigable.copyWith(
                                 fontSize: 16,
                                 color: AppColors.calmBlue,
                               ),
@@ -456,7 +456,7 @@ class ListaRutinasPage extends StatelessWidget {
                     Text(
                       '¡Tu historia fitness comienza aquí!',
                       textAlign: TextAlign.center,
-                      style: EmotionalTextStyles.motivational.copyWith(
+                      style: EstilosTextoEmocional.motivacional.copyWith(
                         fontSize: 26,
                         color: AppColors.primary,
                       ),
@@ -481,7 +481,7 @@ class ListaRutinasPage extends StatelessWidget {
                         'Tu primera rutina será el primer paso hacia la mejor versión de ti mismo. '
                         '¡Vamos a crear algo increíble juntos! 💪',
                         textAlign: TextAlign.center,
-                        style: EmotionalTextStyles.friendly.copyWith(
+                        style: EstilosTextoEmocional.amigable.copyWith(
                           fontSize: 16,
                           color: AppColors.textDark,
                           height: 1.4,
@@ -517,7 +517,7 @@ class ListaRutinasPage extends StatelessWidget {
                           SnackBar(
                             content: Text(
                               '¡Próximamente tendremos una guía completa para ti!',
-                              style: EmotionalTextStyles.friendly.copyWith(
+                              style: EstilosTextoEmocional.amigable.copyWith(
                                 color: Colors.white,
                                 fontSize: 14,
                               ),
@@ -575,7 +575,7 @@ class ListaRutinasPage extends StatelessWidget {
                       Text(
                         '¡Es hora de comenzar tu transformación!',
                         textAlign: TextAlign.center,
-                        style: EmotionalTextStyles.motivational.copyWith(
+                        style: EstilosTextoEmocional.motivacional.copyWith(
                           fontSize: 24,
                           color: AppColors.primary,
                         ),
@@ -600,7 +600,7 @@ class ListaRutinasPage extends StatelessWidget {
                           'lograr todos tus objetivos fitness. '
                           '¡Hagámoslo realidad juntos! 🎯',
                           textAlign: TextAlign.center,
-                          style: EmotionalTextStyles.encouragement.copyWith(
+                          style: EstilosTextoEmocional.aliento.copyWith(
                             fontSize: 16,
                             color: AppColors.textDark,
                             height: 1.4,
@@ -687,7 +687,7 @@ class ListaRutinasPage extends StatelessWidget {
                     const SizedBox(height: 16),
                     Text(
                       'Preparando tu experiencia fitness...',
-                      style: EmotionalTextStyles.friendly.copyWith(
+                      style: EstilosTextoEmocional.amigable.copyWith(
                         color: AppColors.calmBlue,
                         fontSize: 18,
                       ),

@@ -281,7 +281,7 @@ class _CelebracionRutinaPageState extends State<CelebracionRutinaPage>
               scale: 1.0 + (_escalaEstadisticas.value * 0.3),
               child: Text(
                 '${_totalRutinasCompletadas.iconoProgreso} ¡Felicidades! ${_totalRutinasCompletadas.iconoProgreso}',
-                style: EmotionalTextStyles.celebration.copyWith(
+                style: EstilosTextoEmocional.celebracion.copyWith(
                   fontSize: esMovil ? 32 : 40,
                   fontWeight: FontWeight.bold,
                 ),
@@ -293,7 +293,7 @@ class _CelebracionRutinaPageState extends State<CelebracionRutinaPage>
         SizedBox(height: esMovil ? 8 : 12),
         Text(
           subtituloContextual,
-          style: EmotionalTextStyles.encouragement.copyWith(
+          style: EstilosTextoEmocional.aliento.copyWith(
             fontSize: esMovil ? 16 : 18,
             color: Colors.grey[800],
           ),

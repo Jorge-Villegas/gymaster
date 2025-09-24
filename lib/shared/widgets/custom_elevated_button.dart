@@ -164,27 +164,27 @@ class _CustomElevatedButtonState extends State<CustomElevatedButton>
 
     switch (widget.emotionalType) {
       case EmotionalButtonType.energetic:
-        return EmotionalTextStyles.energetic.copyWith(
+        return EstilosTextoEmocional.energetico.copyWith(
           color: baseColor,
           fontSize: 16,
         );
       case EmotionalButtonType.success:
-        return EmotionalTextStyles.encouragement.copyWith(
+        return EstilosTextoEmocional.aliento.copyWith(
           color: baseColor,
           fontSize: 16,
         );
       case EmotionalButtonType.achievement:
-        return EmotionalTextStyles.achievement.copyWith(
+        return EstilosTextoEmocional.logro.copyWith(
           color: baseColor,
           fontSize: 16,
         );
       case EmotionalButtonType.motivation:
-        return EmotionalTextStyles.motivational.copyWith(
+        return EstilosTextoEmocional.motivacional.copyWith(
           color: baseColor,
           fontSize: 16,
         );
       case EmotionalButtonType.calm:
-        return EmotionalTextStyles.restful.copyWith(
+        return EstilosTextoEmocional.descanso.copyWith(
           color: baseColor,
           fontSize: 16,
         );

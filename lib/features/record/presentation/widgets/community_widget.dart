@@ -129,7 +129,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
             children: [
               Text(
                 'Comunidad GyMaster',
-                style: EmotionalTextStyles.motivational.copyWith(
+                style: EstilosTextoEmocional.motivacional.copyWith(
                   fontSize: 20,
                   color: Theme.of(context).colorScheme.onSurface,
                 ),
@@ -170,7 +170,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
             children: [
               Text(
                 'Tu Posición en la Comunidad',
-                style: EmotionalTextStyles.encouragement.copyWith(
+                style: EstilosTextoEmocional.aliento.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -235,7 +235,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
         const SizedBox(height: 4),
         Text(
           userValue,
-          style: EmotionalTextStyles.celebration.copyWith(
+          style: EstilosTextoEmocional.celebracion.copyWith(
             fontSize: 18,
             color: AppColors.successGreen,
           ),
@@ -265,7 +265,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
             const SizedBox(width: 8),
             Text(
               'Comparación Motivacional',
-              style: EmotionalTextStyles.encouragement.copyWith(
+              style: EstilosTextoEmocional.aliento.copyWith(
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -301,7 +301,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
           Expanded(
             child: Text(
               message.text,
-              style: EmotionalTextStyles.achievement.copyWith(
+              style: EstilosTextoEmocional.logro.copyWith(
                 fontSize: 16,
                 color: AppColors.motivationRed,
               ),
@@ -373,7 +373,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
               const SizedBox(width: 8),
               Text(
                 'Apoyo de la Comunidad',
-                style: EmotionalTextStyles.encouragement.copyWith(
+                style: EstilosTextoEmocional.aliento.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -382,7 +382,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
           const SizedBox(height: 12),
           Text(
             _getCommunityMessage(),
-            style: EmotionalTextStyles.celebration.copyWith(
+            style: EstilosTextoEmocional.celebracion.copyWith(
               fontSize: 16,
               color: AppColors.energyOrange,
             ),

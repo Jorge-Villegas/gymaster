@@ -124,7 +124,7 @@ class _ProgressVisualizationWidgetState
             children: [
               Text(
                 'Tu Journey Fitness',
-                style: EmotionalTextStyles.motivational.copyWith(
+                style: EstilosTextoEmocional.motivacional.copyWith(
                   fontSize: 20,
                   color: Theme.of(context).colorScheme.onSurface,
                 ),
@@ -199,7 +199,7 @@ class _ProgressVisualizationWidgetState
           const SizedBox(height: 8),
           Text(
             value,
-            style: EmotionalTextStyles.celebration.copyWith(
+            style: EstilosTextoEmocional.celebracion.copyWith(
               fontSize: 20,
               color: color,
             ),
@@ -231,7 +231,7 @@ class _ProgressVisualizationWidgetState
             const SizedBox(width: 8),
             Text(
               'Línea de Tiempo de Logros',
-              style: EmotionalTextStyles.encouragement.copyWith(
+              style: EstilosTextoEmocional.aliento.copyWith(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
@@ -345,7 +345,7 @@ class _ProgressVisualizationWidgetState
               const SizedBox(width: 8),
               Text(
                 'Impacto Emocional',
-                style: EmotionalTextStyles.encouragement.copyWith(
+                style: EstilosTextoEmocional.aliento.copyWith(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
@@ -356,7 +356,7 @@ class _ProgressVisualizationWidgetState
           Text(
             MensajesEmocionalesService.obtenerEstadisticasContext(
                 widget.totalRutinasCompletadas),
-            style: EmotionalTextStyles.achievement.copyWith(
+            style: EstilosTextoEmocional.logro.copyWith(
               fontSize: 18,
               color: AppColors.motivationRed,
             ),

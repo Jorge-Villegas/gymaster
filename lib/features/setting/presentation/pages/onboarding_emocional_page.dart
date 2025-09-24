@@ -112,7 +112,7 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
             children: [
               Text(
                 '${currentPage + 1} de 4',
-                style: EmotionalTextStyles.friendly,
+                style: EstilosTextoEmocional.amigable,
               ),
               if (currentPage > 0)
                 IconButton(
@@ -144,12 +144,12 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
           const SizedBox(height: 20),
           const Text(
             '¿Qué te motiva a entrenar?',
-            style: EmotionalTextStyles.motivational,
+            style: EstilosTextoEmocional.motivacional,
           ),
           const SizedBox(height: 10),
           const Text(
             'Selecciona todo lo que te inspire 💪',
-            style: EmotionalTextStyles.friendly,
+            style: EstilosTextoEmocional.amigable,
           ),
           const SizedBox(height: 30),
           Expanded(
@@ -212,12 +212,12 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
           const SizedBox(height: 20),
           const Text(
             '¿Cuáles son tus mayores desafíos?',
-            style: EmotionalTextStyles.motivational,
+            style: EstilosTextoEmocional.motivacional,
           ),
           const SizedBox(height: 10),
           const Text(
             'Conocerlos nos ayuda a ayudarte mejor 🤝',
-            style: EmotionalTextStyles.friendly,
+            style: EstilosTextoEmocional.amigable,
           ),
           const SizedBox(height: 30),
           Expanded(
@@ -280,12 +280,12 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
           const SizedBox(height: 20),
           const Text(
             '¿Cómo esperas sentirte después de entrenar?',
-            style: EmotionalTextStyles.motivational,
+            style: EstilosTextoEmocional.motivacional,
           ),
           const SizedBox(height: 10),
           const Text(
             'Esto nos ayuda a diseñar la experiencia perfecta ✨',
-            style: EmotionalTextStyles.friendly,
+            style: EstilosTextoEmocional.amigable,
           ),
           const SizedBox(height: 30),
           Expanded(
@@ -346,12 +346,12 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
           const SizedBox(height: 20),
           const Text(
             '¿Cómo te gusta que te motivemos?',
-            style: EmotionalTextStyles.motivational,
+            style: EstilosTextoEmocional.motivacional,
           ),
           const SizedBox(height: 10),
           const Text(
             'Personaliza tus recordatorios para mantenerte motivado 🔔',
-            style: EmotionalTextStyles.friendly,
+            style: EstilosTextoEmocional.amigable,
           ),
           const SizedBox(height: 30),
           // Configuraciones de notificación aquí

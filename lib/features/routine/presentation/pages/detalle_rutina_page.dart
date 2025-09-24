@@ -114,7 +114,7 @@ class DetalleRutinaScreen extends StatelessWidget {
                   if (state is EjerciciosByRutinaSuccess)
                     Text(
                       TextFormatter.capitalize(state.ejerciciosDeRutina.nombre),
-                      style: EmotionalTextStyles.energetic.copyWith(
+                      style: EstilosTextoEmocional.energetico.copyWith(
                         color: AppColors.primary,
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -125,7 +125,7 @@ class DetalleRutinaScreen extends StatelessWidget {
                   else
                     Text(
                       'Mi Rutina',
-                      style: EmotionalTextStyles.energetic.copyWith(
+                      style: EstilosTextoEmocional.energetico.copyWith(
                         color: AppColors.primary,
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -134,7 +134,7 @@ class DetalleRutinaScreen extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     '¡Hora de brillar! 💪',
-                    style: EmotionalTextStyles.friendly.copyWith(
+                    style: EstilosTextoEmocional.amigable.copyWith(
                       color: AppColors.celebrationPurple,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
@@ -236,7 +236,7 @@ class DetalleRutinaScreen extends StatelessWidget {
                   const SizedBox(width: 12),
                   Text(
                     'Preparando tu rutina perfecta...',
-                    style: EmotionalTextStyles.friendly.copyWith(
+                    style: EstilosTextoEmocional.amigable.copyWith(
                       color: AppColors.calmBlue,
                       fontSize: 16,
                     ),
@@ -304,7 +304,7 @@ class DetalleRutinaScreen extends StatelessWidget {
                   const SizedBox(height: 16),
                   Text(
                     'Ops, algo salió mal',
-                    style: EmotionalTextStyles.motivational.copyWith(
+                    style: EstilosTextoEmocional.motivacional.copyWith(
                       fontSize: 20,
                       color: AppColors.motivationRed,
                     ),
@@ -313,7 +313,7 @@ class DetalleRutinaScreen extends StatelessWidget {
                   Text(
                     state.message,
                     textAlign: TextAlign.center,
-                    style: EmotionalTextStyles.friendly.copyWith(
+                    style: EstilosTextoEmocional.amigable.copyWith(
                       color: AppColors.textDark,
                       fontSize: 14,
                     ),
@@ -361,7 +361,7 @@ class DetalleRutinaScreen extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             'Cargando tu rutina...',
-            style: EmotionalTextStyles.friendly.copyWith(
+            style: EstilosTextoEmocional.amigable.copyWith(
               color: AppColors.calmBlue,
               fontSize: 18,
             ),

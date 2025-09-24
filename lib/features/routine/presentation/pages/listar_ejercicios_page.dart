@@ -118,7 +118,7 @@ class ListarEjerciciosPage extends StatelessWidget {
                 children: [
                   Text(
                     '¡Elige tu ejercicio!',
-                    style: EmotionalTextStyles.energetic.copyWith(
+                    style: EstilosTextoEmocional.energetico.copyWith(
                       color: AppColors.primary,
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -127,7 +127,7 @@ class ListarEjerciciosPage extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     TextFormatter.capitalize(nombreMusculo),
-                    style: EmotionalTextStyles.friendly.copyWith(
+                    style: EstilosTextoEmocional.amigable.copyWith(
                       color: AppColors.motivationRed,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
@@ -181,7 +181,7 @@ class ListarEjerciciosPage extends StatelessWidget {
                       children: [
                         Text(
                           'Cargando ejercicios...',
-                          style: EmotionalTextStyles.energetic.copyWith(
+                          style: EstilosTextoEmocional.energetico.copyWith(
                             color: AppColors.primary,
                             fontSize: 16,
                           ),
@@ -189,7 +189,7 @@ class ListarEjerciciosPage extends StatelessWidget {
                         const SizedBox(height: 4),
                         Text(
                           'Preparando los mejores ejercicios para ti',
-                          style: EmotionalTextStyles.friendly.copyWith(
+                          style: EstilosTextoEmocional.amigable.copyWith(
                             color: AppColors.textSecondary,
                             fontSize: 12,
                           ),
@@ -299,7 +299,7 @@ class ListarEjerciciosPage extends StatelessWidget {
               const SizedBox(height: 24),
               Text(
                 '¡Ups! Algo salió mal',
-                style: EmotionalTextStyles.energetic.copyWith(
+                style: EstilosTextoEmocional.energetico.copyWith(
                   color: AppColors.primary,
                   fontSize: 20,
                 ),
@@ -308,7 +308,7 @@ class ListarEjerciciosPage extends StatelessWidget {
               const SizedBox(height: 12),
               Text(
                 mensajeError,
-                style: EmotionalTextStyles.friendly.copyWith(
+                style: EstilosTextoEmocional.amigable.copyWith(
                   color: AppColors.textSecondary,
                   fontSize: 14,
                 ),
@@ -368,7 +368,7 @@ class ListarEjerciciosPage extends StatelessWidget {
                   Expanded(
                     child: Text(
                       '${state.ejercicios.length} ejercicios disponibles',
-                      style: EmotionalTextStyles.encouragement.copyWith(
+                      style: EstilosTextoEmocional.aliento.copyWith(
                         color: AppColors.successGreen,
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
@@ -501,7 +501,7 @@ class ListarEjerciciosPage extends StatelessWidget {
                                     children: [
                                       Text(
                                         ejercicio.nombre,
-                                        style: EmotionalTextStyles.encouragement
+                                        style: EstilosTextoEmocional.aliento
                                             .copyWith(
                                           color: ejercicio.seleccionado
                                               ? AppColors.successGreen
@@ -519,7 +519,7 @@ class ListarEjerciciosPage extends StatelessWidget {
                                         ejercicio.seleccionado
                                             ? '¡Ya agregado!'
                                             : 'Toca para agregar',
-                                        style: EmotionalTextStyles.friendly
+                                        style: EstilosTextoEmocional.amigable
                                             .copyWith(
                                           color: ejercicio.seleccionado
                                               ? AppColors.successGreen
@@ -587,7 +587,7 @@ class ListarEjerciciosPage extends StatelessWidget {
               const SizedBox(height: 24),
               Text(
                 'No hay ejercicios disponibles',
-                style: EmotionalTextStyles.energetic.copyWith(
+                style: EstilosTextoEmocional.energetico.copyWith(
                   color: AppColors.primary,
                   fontSize: 20,
                 ),
@@ -596,7 +596,7 @@ class ListarEjerciciosPage extends StatelessWidget {
               const SizedBox(height: 12),
               Text(
                 'No encontramos ejercicios para ${TextFormatter.capitalize(nombreMusculo)} en este momento.',
-                style: EmotionalTextStyles.friendly.copyWith(
+                style: EstilosTextoEmocional.amigable.copyWith(
                   color: AppColors.textSecondary,
                   fontSize: 14,
                 ),

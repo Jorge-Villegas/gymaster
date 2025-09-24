@@ -271,7 +271,7 @@ class _EpicCelebrationWidgetState extends State<EpicCelebrationWidget>
   Widget _buildMainTitle() {
     return Text(
       widget.achievementTitle,
-      style: EmotionalTextStyles.celebration.copyWith(
+      style: EstilosTextoEmocional.celebracion.copyWith(
         fontSize: 32,
         color: Colors.white,
         fontWeight: FontWeight.bold,
@@ -300,7 +300,7 @@ class _EpicCelebrationWidgetState extends State<EpicCelebrationWidget>
       ),
       child: Text(
         widget.achievementDescription,
-        style: EmotionalTextStyles.encouragement.copyWith(
+        style: EstilosTextoEmocional.aliento.copyWith(
           fontSize: 18,
           color: Colors.white,
           height: 1.4,
@@ -341,7 +341,7 @@ class _EpicCelebrationWidgetState extends State<EpicCelebrationWidget>
         const SizedBox(height: 8),
         Text(
           value,
-          style: EmotionalTextStyles.achievement.copyWith(
+          style: EstilosTextoEmocional.logro.copyWith(
             fontSize: 20,
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -400,7 +400,7 @@ class _EpicCelebrationWidgetState extends State<EpicCelebrationWidget>
                 const SizedBox(width: 12),
                 Text(
                   '¡CONTINUAR!',
-                  style: EmotionalTextStyles.motivational.copyWith(
+                  style: EstilosTextoEmocional.motivacional.copyWith(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: AppColors.achievementGold,

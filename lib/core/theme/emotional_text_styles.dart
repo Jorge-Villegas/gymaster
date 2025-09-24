@@ -4,12 +4,12 @@ import 'package:gymaster/core/theme/app_colors.dart';
 /// Estilos de texto emocionales para GyMaster
 /// Implementa diseño visceral siguiendo principios de Donald Norman
 /// Utiliza ZonaPro para elementos motivacionales y Montserrat para legibilidad
-class EmotionalTextStyles {
+class EstilosTextoEmocional {
   // === ESTILOS MOTIVACIONALES ===
 
   /// Estilo para títulos motivacionales principales
   /// Usa: Pantallas de bienvenida, headers inspiradores
-  static const TextStyle motivational = TextStyle(
+  static const TextStyle motivacional = TextStyle(
     fontWeight: FontWeight.bold,
     fontSize: 28,
     letterSpacing: 1.5,
@@ -19,7 +19,7 @@ class EmotionalTextStyles {
 
   /// Estilo para celebraciones épicas
   /// Usa: Completar rutinas, logros importantes
-  static const TextStyle celebration = TextStyle(
+  static const TextStyle celebracion = TextStyle(
     fontWeight: FontWeight.bold,
     fontSize: 34,
     letterSpacing: 2.5,
@@ -29,7 +29,7 @@ class EmotionalTextStyles {
 
   /// Estilo para mensajes de aliento
   /// Usa: Motivación durante ejercicios, ánimos suaves
-  static const TextStyle encouragement = TextStyle(
+  static const TextStyle aliento = TextStyle(
     fontWeight: FontWeight.w600,
     fontSize: 20,
     letterSpacing: 0.8,
@@ -39,7 +39,7 @@ class EmotionalTextStyles {
 
   /// Estilo para logros y achievements
   /// Usa: Insignias, records personales, hitos
-  static const TextStyle achievement = TextStyle(
+  static const TextStyle logro = TextStyle(
     fontWeight: FontWeight.bold,
     fontSize: 24,
     letterSpacing: 1.8,
@@ -51,7 +51,7 @@ class EmotionalTextStyles {
 
   /// Estilo para llamadas a la acción energéticas
   /// Usa: "¡Comencemos!", "¡Dale que puedes!", botones principales
-  static const TextStyle energetic = TextStyle(
+  static const TextStyle energetico = TextStyle(
     fontWeight: FontWeight.bold,
     fontSize: 22,
     letterSpacing: 1.2,
@@ -61,7 +61,7 @@ class EmotionalTextStyles {
 
   /// Estilo para contadores y números importantes
   /// Usa: Repeticiones, series, tiempo, records
-  static const TextStyle counter = TextStyle(
+  static const TextStyle contador = TextStyle(
     fontWeight: FontWeight.w800,
     fontSize: 48,
     letterSpacing: 0.5,
@@ -73,7 +73,7 @@ class EmotionalTextStyles {
 
   /// Estilo para momentos de descanso
   /// Usa: Temporizadores de descanso, ejercicios de respiración
-  static const TextStyle restful = TextStyle(
+  static const TextStyle descanso = TextStyle(
     fontWeight: FontWeight.w500,
     fontSize: 18,
     letterSpacing: 0.5,
@@ -83,7 +83,7 @@ class EmotionalTextStyles {
 
   /// Estilo para información de recuperación
   /// Usa: Consejos de descanso, hidratación, estiramientos
-  static const TextStyle recovery = TextStyle(
+  static const TextStyle recuperacion = TextStyle(
     fontWeight: FontWeight.w400,
     fontSize: 16,
     letterSpacing: 0.3,
@@ -95,7 +95,7 @@ class EmotionalTextStyles {
 
   /// Estilo para recordatorios amigables
   /// Usa: "¿Cómo te sientes hoy?", recordatorios suaves
-  static const TextStyle friendly = TextStyle(
+  static const TextStyle amigable = TextStyle(
     fontWeight: FontWeight.w600,
     fontSize: 18,
     letterSpacing: 0.4,
@@ -105,7 +105,7 @@ class EmotionalTextStyles {
 
   /// Estilo para progress indicators emocionales
   /// Usa: "¡Vas genial!", "50% completado", progress text
-  static const TextStyle progress = TextStyle(
+  static const TextStyle progreso = TextStyle(
     fontWeight: FontWeight.w700,
     fontSize: 16,
     letterSpacing: 1.0,
@@ -115,7 +115,7 @@ class EmotionalTextStyles {
 
   /// Estilo para saludos personalizados
   /// Usa: "¡Hola Jorge!", saludos en homepage
-  static const TextStyle greeting = TextStyle(
+  static const TextStyle saludo = TextStyle(
     fontWeight: FontWeight.bold,
     fontSize: 26,
     letterSpacing: 1.0,
@@ -126,59 +126,57 @@ class EmotionalTextStyles {
   // === MÉTODOS HELPER PARA PERSONALIZACIÓN ===
 
   /// Crea variante del estilo motivacional con color personalizado
-  static TextStyle motivationalWithColor(Color color) {
-    return motivational.copyWith(color: color);
+  static TextStyle motivacionalConColor(Color color) {
+    return motivacional.copyWith(color: color);
   }
 
   /// Crea variante del estilo celebración con tamaño personalizado
-  static TextStyle celebrationWithSize(double fontSize) {
-    return celebration.copyWith(fontSize: fontSize);
+  static TextStyle celebracionConTamanio(double fontSize) {
+    return celebracion.copyWith(fontSize: fontSize);
   }
 
   /// Crea variante del estilo aliento con intensidad
   /// intensity: 0.0 (suave) a 1.0 (intenso)
-  static TextStyle encouragementWithIntensity(double intensity) {
+  static TextStyle alientoConIntensidad(double intensity) {
     final color = Color.lerp(AppColors.calmBlue, AppColors.successGreen,
             intensity.clamp(0.0, 1.0)) ??
         AppColors.successGreen;
 
     final fontSize = 16 + (8 * intensity.clamp(0.0, 1.0));
 
-    return encouragement.copyWith(
+    return aliento.copyWith(
       color: color,
       fontSize: fontSize,
     );
   }
 
   /// Estilo para estado anímico según humor del usuario
-  static TextStyle moodBasedStyle(String mood) {
+  static TextStyle estiloPorEstadoDeAnimo(String mood) {
     switch (mood.toLowerCase()) {
       case 'energético':
       case 'motivado':
-        return energetic;
+        return energetico;
       case 'cansado':
       case 'relajado':
-        return restful;
+        return descanso;
       case 'feliz':
       case 'celebrando':
-        return celebration;
+        return celebracion;
       default:
-        return encouragement;
+        return aliento;
     }
   }
 }
 
 /// Extensión para facilitar el uso de estilos emocionales en widgets
-extension EmotionalTextStylesExtension on TextStyle {
-  /// Convierte cualquier TextStyle a versión emocional energética
-  TextStyle get energized => copyWith(
+extension EstilosTextoEmocionalExtension on TextStyle {
+  TextStyle get energetizado => copyWith(
         fontWeight: FontWeight.bold,
         color: AppColors.energyOrange,
         letterSpacing: 1.2,
       );
 
-  /// Convierte cualquier TextStyle a versión emocional calmada
-  TextStyle get calmed => copyWith(
+  TextStyle get calmado => copyWith(
         fontWeight: FontWeight.w500,
         color: AppColors.calmBlue,
         letterSpacing: 0.5,

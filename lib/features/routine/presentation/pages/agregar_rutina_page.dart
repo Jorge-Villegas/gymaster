@@ -318,7 +318,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                 children: [
                   Text(
                     '¡Crea tu rutina perfecta!',
-                    style: EmotionalTextStyles.energetic.copyWith(
+                    style: EstilosTextoEmocional.energetico.copyWith(
                       color: AppColors.primary,
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -329,7 +329,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                   const SizedBox(height: 4),
                   Text(
                     'Personaliza cada detalle para tu éxito',
-                    style: EmotionalTextStyles.friendly.copyWith(
+                    style: EstilosTextoEmocional.amigable.copyWith(
                       color: AppColors.celebrationPurple,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
@@ -553,7 +553,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
               const SizedBox(width: 12),
               Text(
                 'Elige tu color de poder',
-                style: EmotionalTextStyles.energetic.copyWith(
+                style: EstilosTextoEmocional.energetico.copyWith(
                   color: AppColors.primary,
                   fontSize: 18,
                 ),
@@ -563,7 +563,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
           const SizedBox(height: 8),
           Text(
             'Cada color transmite una energía única para tu entrenamiento',
-            style: EmotionalTextStyles.friendly.copyWith(
+            style: EstilosTextoEmocional.amigable.copyWith(
               color: AppColors.textSecondary,
             ),
           ),
@@ -670,7 +670,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
               const SizedBox(width: 12),
               Text(
                 'Selecciona el ícono perfecto',
-                style: EmotionalTextStyles.energetic.copyWith(
+                style: EstilosTextoEmocional.energetico.copyWith(
                   color: AppColors.primary,
                   fontSize: 18,
                 ),
@@ -680,7 +680,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
           const SizedBox(height: 8),
           Text(
             'Representa visualmente el tipo de entrenamiento que vas a hacer',
-            style: EmotionalTextStyles.friendly.copyWith(
+            style: EstilosTextoEmocional.amigable.copyWith(
               color: AppColors.textSecondary,
             ),
           ),
@@ -731,7 +731,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                       const SizedBox(width: 8),
                       Text(
                         nombreCategoria,
-                        style: EmotionalTextStyles.encouragement.copyWith(
+                        style: EstilosTextoEmocional.aliento.copyWith(
                           color: colorCategoria,
                           fontWeight: FontWeight.bold,
                           fontSize: 14,

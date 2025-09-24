@@ -191,7 +191,7 @@ class _Phase3EmotionalIntegrationWidgetState
                   children: [
                     Text(
                       'Conexión Emocional',
-                      style: EmotionalTextStyles.celebration.copyWith(
+                      style: EstilosTextoEmocional.celebracion.copyWith(
                         fontSize: 24,
                         color: Theme.of(context).colorScheme.onSurface,
                       ),
@@ -254,7 +254,7 @@ class _Phase3EmotionalIntegrationWidgetState
         children: [
           Text(
             value,
-            style: EmotionalTextStyles.achievement.copyWith(
+            style: EstilosTextoEmocional.logro.copyWith(
               fontSize: 18,
               color: color,
               fontWeight: FontWeight.bold,
@@ -376,7 +376,7 @@ class _Phase3EmotionalIntegrationWidgetState
               const SizedBox(width: 8),
               Text(
                 'Tu Journey Emocional',
-                style: EmotionalTextStyles.motivational.copyWith(
+                style: EstilosTextoEmocional.motivacional.copyWith(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
@@ -386,7 +386,7 @@ class _Phase3EmotionalIntegrationWidgetState
           const SizedBox(height: 16),
           Text(
             _getEmotionalJourneyInsight(),
-            style: EmotionalTextStyles.achievement.copyWith(
+            style: EstilosTextoEmocional.logro.copyWith(
               fontSize: 16,
               color: AppColors.motivationRed,
             ),
@@ -427,7 +427,7 @@ class _Phase3EmotionalIntegrationWidgetState
               const SizedBox(width: 8),
               Text(
                 'Insights Comportamentales',
-                style: EmotionalTextStyles.motivational.copyWith(
+                style: EstilosTextoEmocional.motivacional.copyWith(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
@@ -520,7 +520,7 @@ class _Phase3EmotionalIntegrationWidgetState
               const SizedBox(width: 8),
               Text(
                 'Recomendaciones Personalizadas',
-                style: EmotionalTextStyles.motivational.copyWith(
+                style: EstilosTextoEmocional.motivacional.copyWith(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
@@ -552,7 +552,7 @@ class _Phase3EmotionalIntegrationWidgetState
           children: [
             Text(
               title,
-              style: EmotionalTextStyles.achievement.copyWith(
+              style: EstilosTextoEmocional.logro.copyWith(
                 fontSize: 16,
                 color: AppColors.successGreen,
                 fontWeight: FontWeight.bold,
@@ -606,7 +606,7 @@ class _Phase3EmotionalIntegrationWidgetState
         icon: const Icon(Icons.celebration, color: Colors.white),
         label: Text(
           'Celebrar',
-          style: EmotionalTextStyles.motivational.copyWith(
+          style: EstilosTextoEmocional.motivacional.copyWith(
             color: Colors.white,
             fontWeight: FontWeight.bold,
           ),

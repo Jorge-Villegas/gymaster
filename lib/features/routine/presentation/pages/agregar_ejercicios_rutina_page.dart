@@ -290,7 +290,7 @@ class _AgregarEjercicioRutinaPageState
                 children: [
                   Text(
                     '¡Configura tu poder!',
-                    style: EmotionalTextStyles.energetic.copyWith(
+                    style: EstilosTextoEmocional.energetico.copyWith(
                       color: AppColors.primary,
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -345,7 +345,7 @@ class _AgregarEjercicioRutinaPageState
             const SizedBox(height: 24),
             Text(
               'Preparando tu entrenamiento...',
-              style: EmotionalTextStyles.friendly.copyWith(
+              style: EstilosTextoEmocional.amigable.copyWith(
                 color: AppColors.primary,
                 fontSize: 18,
               ),
@@ -353,7 +353,7 @@ class _AgregarEjercicioRutinaPageState
             const SizedBox(height: 8),
             Text(
               '¡Casi listo para entrenar! 💪',
-              style: EmotionalTextStyles.encouragement.copyWith(
+              style: EstilosTextoEmocional.aliento.copyWith(
                 color: AppColors.textSecondary,
                 fontSize: 14,
               ),
