@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gymaster/features/exercise/presentation/pages/exercise_catalog_page.dart';
+import 'package:gymaster/features/exercise/presentation/pages/favorites_page.dart';
 import 'package:gymaster/features/record/presentation/pages/historial_ejercicios_page.dart';
 import 'package:gymaster/features/routine/presentation/pages/lista_rutina_page.dart';
 import 'package:gymaster/features/setting/presentation/pages/setting_page.dart';
@@ -30,6 +31,7 @@ class _BottomNavigationBarExampleState
 
   final List<Widget> _pages = <Widget>[
     const ListaRutinasPage(),
+    const FavoritesPage(),
     const ExerciseCatalogPage(), // Nueva página de catálogo
     HistorialEjerciciosPage(),
     const SettingPage(),
@@ -51,6 +53,11 @@ class _BottomNavigationBarExampleState
             icon: Icon(IconsaxPlusLinear.weight),
             activeIcon: Icon(IconsaxPlusBold.weight),
             label: 'Rutinas',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(IconsaxPlusLinear.heart),
+            activeIcon: Icon(IconsaxPlusBold.heart),
+            label: 'Favoritos',
           ),
           BottomNavigationBarItem(
             icon: Icon(IconsaxPlusLinear.activity),

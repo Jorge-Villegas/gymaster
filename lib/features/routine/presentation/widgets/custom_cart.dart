@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:gymaster/features/exercise/presentation/cubits/favorito_ejercicio_cubit.dart';
+import 'package:gymaster/features/exercise/presentation/cubits/favorito_ejercicio_state.dart';
 import 'package:gymaster/shared/utils/enum.dart';
 import 'package:gymaster/shared/utils/text_formatter.dart';
 import 'package:gymaster/shared/utils/verificador_tipo_archivo.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 
 class CustomCard extends StatelessWidget {
   final String ejercicioId;
@@ -111,6 +115,8 @@ class CustomCard extends StatelessWidget {
                               ),
                             ),
                           ),
+                        // Indicador sutil de favorito
+                        _buildFavoriteIndicator(),
                       ],
                     ),
                   ),
@@ -180,5 +186,42 @@ class CustomCard extends StatelessWidget {
       return Image.asset(imagenDireccion);
     }
     return const Icon(Icons.error);
+  }
+
+  /// Indicador sutil de favorito superpuesto en la esquina inferior derecha
+  Widget _buildFavoriteIndicator() {
+    return BlocBuilder<FavoritoEjercicioCubit, FavoritoEjercicioState>(
+      builder: (context, state) {
+        final favoritosCubit = context.read<FavoritoEjercicioCubit>();
+        final esFavorito = favoritosCubit.esEjercicioFavoritoSync(ejercicioId);
+
+        // Solo mostrar si es favorito
+        if (!esFavorito) return const SizedBox.shrink();
+
+        return Positioned(
+          bottom: 4,
+          right: 4,
+          child: Container(
+            padding: const EdgeInsets.all(4),
+            decoration: BoxDecoration(
+              color: Colors.red.shade600,
+              borderRadius: BorderRadius.circular(8),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withAlpha((0.3 * 255).toInt()),
+                  offset: const Offset(0, 1),
+                  blurRadius: 3,
+                ),
+              ],
+            ),
+            child: Icon(
+              IconsaxPlusBold.heart,
+              color: Colors.white,
+              size: 12,
+            ),
+          ),
+        );
+      },
+    );
   }
 }

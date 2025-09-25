@@ -4,18 +4,18 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/core/theme/emotional_text_styles.dart';
+import 'package:gymaster/features/exercise/presentation/cubits/favorito_ejercicio_cubit.dart';
+import 'package:gymaster/features/exercise/presentation/cubits/favorito_ejercicio_state.dart';
 import 'package:gymaster/features/routine/domain/entities/ejercicios_de_rutina.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
 import 'package:gymaster/features/routine/presentation/widgets/rutina_cancelada_widget.dart';
 import 'package:gymaster/features/routine/presentation/widgets/rutina_completada_widget.dart';
-import 'package:gymaster/shared/utils/enum.dart';
 import 'package:gymaster/shared/utils/text_formatter.dart';
 import 'package:gymaster/shared/utils/verificador_tipo_archivo.dart';
 import 'package:gymaster/shared/widgets/chiclet_button.dart';
 import 'package:animate_do/animate_do.dart';
 // ignore: depend_on_referenced_packages
 import 'package:collection/collection.dart';
-import 'package:iconsax_plus/iconsax_plus.dart';
 
 class CustomDataTable extends StatelessWidget {
   final List<String> headers;
@@ -920,10 +920,15 @@ class DetalleEjercicioScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(20),
                   child: Column(
                     children: [
-                      // Imagen del ejercicio con animación
+                      // Imagen del ejercicio con animación e indicador de favorito
                       FadeInUp(
                         duration: const Duration(milliseconds: 600),
-                        child: _buildExerciseImage(ejercicio.imagenDireccion),
+                        child: Stack(
+                          children: [
+                            _buildExerciseImage(ejercicio.imagenDireccion),
+                            _buildExerciseFavoriteIndicator(ejercicio.id),
+                          ],
+                        ),
                       ),
 
                       const SizedBox(height: 24),
@@ -1141,419 +1146,40 @@ String _getMotivationalMessage(int serieActual, int totalSeries) {
   }
 }
 
-Widget _construirDetallesEjercicio(
-  BuildContext context, {
-  required EjerciciosByRutinaSuccess state,
-  required String imagenDireccion,
-}) {
-  final colorScheme = Theme.of(context).colorScheme;
+Widget _buildExerciseFavoriteIndicator(String? ejercicioId) {
+  if (ejercicioId == null) return const SizedBox.shrink();
 
-  final ejercicios = state.ejerciciosDeRutina.ejercicios;
-  // Asegurar que ejercicioIndex sea válido
-  final currentEjercicioIndex =
-      ejercicios.indexWhere((e) => e.id == state.ejercicioIndex);
-  if (currentEjercicioIndex == -1) {
-    return const SizedBox.shrink();
-  }
+  return BlocBuilder<FavoritoEjercicioCubit, FavoritoEjercicioState>(
+    builder: (context, state) {
+      final isFavorite = state is FavoritoEjercicioObtenerTodosSuccess &&
+          state.ejerciciosFavoritos.any((fav) => fav.id == ejercicioId);
 
-  final ejercicio = ejercicios[currentEjercicioIndex];
+      if (!isFavorite) return const SizedBox.shrink();
 
-  // Preparar datos para la tabla, incluyendo estado de completado
-  final tableData = ejercicio.series.map((serie) {
-    return [
-      '${ejercicio.series.indexOf(serie) + 1}', // Serie
-      '${serie.peso} kg', // Peso
-      '${serie.repeticiones} x', // Repeticiones
-    ];
-  }).toList();
-
-  final completedRows = ejercicio.series
-      .map((serie) => serie.estado == EstadoSerieEjercicio.completado.name)
-      .toList();
-
-  return Card(
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-    elevation: 2, // Elevación sutil
-    clipBehavior: Clip.antiAlias,
-    child: Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          // Opcional: Temporizadores - Hacerlos funcionales o eliminarlos si son decorativos
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              _buildTimerInfo(context, IconsaxPlusLinear.timer, '120 seg'),
-              _buildTimerInfo(context, IconsaxPlusLinear.timer_1, '20 min'),
-            ],
-          ),
-          const SizedBox(height: 16),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              // Imagen a la izquierda
-              _construirWidgetImagen(
-                imagenDireccion,
-                width: 120,
-                height: 120,
-              ),
-              const SizedBox(width: 16),
-              // Tabla a la derecha
-              Expanded(
-                child: CustomDataTable(
-                  headers: const ['Serie', 'Peso', 'Reps'],
-                  data: tableData,
-                  completedRows: completedRows,
-                  showActions: false,
-                  backgroundColor: Colors.transparent,
-                  headerColor: Colors.transparent,
-                  bodyTextColor: colorScheme.onSurfaceVariant,
-                  headerTextColor: colorScheme.onSurfaceVariant.withAlpha(175),
-                  cellTextAlign: TextAlign.center,
-                  rowHeight: 36.0, // Ajustar altura de fila
-                  // Usar colores del tema para las filas
-                  rowColors: ejercicio.series.map((serie) {
-                    bool isCompleted =
-                        serie.estado == EstadoSerieEjercicio.completado.name;
-                    return isCompleted
-                        ? Colors.green.shade50
-                        : Colors.grey.shade100;
-                  }).toList(),
-                ),
+      return Positioned(
+        bottom: 8,
+        right: 8,
+        child: Container(
+          width: 32,
+          height: 32,
+          decoration: BoxDecoration(
+            color: Colors.white.withValues(alpha: 0.9),
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.1),
+                offset: const Offset(0, 2),
+                blurRadius: 4,
               ),
             ],
           ),
-          const SizedBox(height: 16),
-          // Indicador de progreso mejorado
-          _buildExerciseProgressIndicator(
-              context, ejercicios, currentEjercicioIndex),
-        ],
-      ),
-    ),
-  );
-}
-
-// Ayudante para mostrar información del temporizador
-Widget _buildTimerInfo(BuildContext context, IconData iconData, String label) {
-  final textTheme = Theme.of(context).textTheme;
-  final colorScheme = Theme.of(context).colorScheme;
-  return Row(
-    children: [
-      Icon(
-        iconData,
-        color: colorScheme.onSurfaceVariant,
-        size: 16,
-      ),
-      const SizedBox(width: 4),
-      Text(
-        label,
-        style:
-            textTheme.bodySmall?.copyWith(color: colorScheme.onSurfaceVariant),
-      ),
-    ],
-  );
-}
-
-// Widget de Indicador de Progreso Mejorado
-Widget _buildExerciseProgressIndicator(BuildContext context,
-    List<Ejercicio> ejercicios, int currentEjercicioIndex) {
-  final colorScheme = Theme.of(context).colorScheme;
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: List.generate(ejercicios.length, (index) {
-      final ejercicio = ejercicios[index];
-      final isCompleted = ejercicio.estado == EstadoEjercicio.completado.name;
-      final isInProgress = ejercicio.estado == EstadoEjercicio.en_progreso.name;
-      final isCurrent = index == currentEjercicioIndex;
-
-      Color color;
-      double radius =
-          isCurrent ? 5.0 : 4.0; // Radio ligeramente mayor para el actual
-
-      if (isCompleted) {
-        color = Colors.green; // Completado
-      } else if (isCurrent || isInProgress) {
-        color = colorScheme.primary; // Actual o En Progreso
-      } else {
-        color = colorScheme.outline.withAlpha(125); // Pendiente
-      }
-
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 3.0),
-        child: CircleAvatar(radius: radius, backgroundColor: color),
-      );
-    }),
-  );
-}
-
-Widget _construirWidgetImagen(String direccionImagen,
-    {double width = 150, double height = 150}) {
-  // Envolver el widget de imagen con un SizedBox para forzar dimensiones fijas
-  return SizedBox(
-    width: width,
-    height: height,
-    child: _buildImageContent(direccionImagen, width, height),
-  );
-}
-
-// Función auxiliar para construir el contenido real de la imagen
-Widget _buildImageContent(String direccionImagen, double width, double height) {
-  if (VerificadorTipoArchivo.esSvg(direccionImagen)) {
-    return SvgPicture.asset(
-      direccionImagen,
-      // Ancho/Alto eliminados de aquí, manejados por SizedBox
-      // Asegurar que la imagen encaje bien dentro de los límites
-      fit: BoxFit.contain,
-      semanticsLabel: 'Ilustración del ejercicio',
-    );
-  }
-  if (VerificadorTipoArchivo.esImagen(direccionImagen)) {
-    return Image.asset(
-      direccionImagen,
-      // Ancho/Alto eliminados de aquí, manejados por SizedBox
-      // Asegurar que la imagen encaje bien dentro de los límites
-      fit: BoxFit.contain,
-      semanticLabel: 'Ilustración del ejercicio',
-      // Añadir constructor de errores para mejor manejo si la imagen falla al cargar
-      errorBuilder: (context, error, stackTrace) =>
-          _buildErrorPlaceholder(width, height),
-    );
-  }
-  // Icono de fallback (ya dentro de SizedBox)
-  return _buildErrorPlaceholder(width, height);
-}
-
-// Ayudante para mostrar marcador de posición/error
-Widget _buildErrorPlaceholder(double width, double height) {
-  return Container(
-    color: Colors.grey[200],
-    child: const Center(
-      // Centrar el icono
-      child: Icon(
-        Icons.image_not_supported_outlined,
-        size: 50,
-        color: Colors.grey,
-        semanticLabel: 'Error al cargar la imagen',
-      ),
-    ),
-  );
-}
-
-Widget _construirEstadisticasEjercicio({
-  required String nombreEjercicio,
-  required BuildContext context,
-  required int repeticiones,
-  required double peso,
-  required int totalSeries,
-  required int serieActual,
-}) {
-  final textTheme = Theme.of(context).textTheme;
-  final colorScheme = Theme.of(context).colorScheme;
-
-  return Column(
-    // No se necesita Container/Padding extra aquí si el padre lo maneja
-    children: <Widget>[
-      // Contador de Series
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment:
-            CrossAxisAlignment.baseline, // Alinear texto correctamente
-        textBaseline: TextBaseline.alphabetic,
-        children: <Widget>[
-          Text('Serie',
-              style: textTheme.titleMedium
-                  ?.copyWith(color: colorScheme.onSurfaceVariant)),
-          const SizedBox(width: 8),
-          Text(
-            '$serieActual',
-            style: textTheme.titleLarge?.copyWith(
-              color: colorScheme.primary,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Text(
-            ' / $totalSeries',
-            style: textTheme.titleMedium?.copyWith(color: colorScheme.outline),
-          ),
-        ],
-      ),
-      const SizedBox(height: 4),
-      // Nombre del Ejercicio
-      Text(
-        TextFormatter.capitalize(nombreEjercicio),
-        textAlign: TextAlign.center,
-        style: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
-      ),
-      const SizedBox(height: 16),
-      // Fila de Peso
-      _construirFilaControl(
-        context: context,
-        label: 'Peso',
-        value: peso,
-        unit: 'kg',
-        onDecrement: () =>
-            context.read<EjerciciosByRutinaCubit>().disminuirPeso(),
-        onIncrement: () =>
-            context.read<EjerciciosByRutinaCubit>().aumentarPeso(),
-      ),
-      const SizedBox(height: 12),
-      // Fila de Repeticiones
-      _construirFilaControl(
-        context: context,
-        label: 'Reps',
-        value: repeticiones.toDouble(), // Usar double por consistencia
-        unit: '', // Sin unidad para repeticiones
-        isInteger: true, // Indicar que es un valor entero
-        onDecrement: () =>
-            context.read<EjerciciosByRutinaCubit>().disminuirRepeticiones(),
-        onIncrement: () =>
-            context.read<EjerciciosByRutinaCubit>().aumentarRepeticiones(),
-      ),
-    ],
-  );
-}
-
-// Widget de Control de Fila Refactorizado
-Widget _construirFilaControl({
-  required BuildContext context,
-  required String label,
-  required double value,
-  required String unit,
-  required VoidCallback onDecrement,
-  required VoidCallback onIncrement,
-  bool isInteger = false,
-}) {
-  final textTheme = Theme.of(context).textTheme;
-  final colorScheme = Theme.of(context).colorScheme;
-
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween, // Espaciar elementos
-    children: <Widget>[
-      // Etiqueta
-      Expanded(
-        flex: 2, // Dar algo de espacio a la etiqueta
-        // Mantenido como titleMedium
-        child: Text(label,
-            style: textTheme.titleMedium
-                ?.copyWith(color: colorScheme.onSurfaceVariant)),
-      ),
-      // Botón de Decremento con ChicletButton outlined
-      Expanded(
-        flex: 1,
-        child: ChicletButton(
-          texto: '',
-          icono: IconsaxPlusLinear.minus,
-          estilo: EstiloBotonChiclet.contorno,
-          tamano: TamanoBotonChiclet.mediano,
-          colorFondo: colorScheme.surface,
-          colorTexto: colorScheme.onSurface,
-          colorBorde: colorScheme.surface,
-          radioBorde: 20,
-          conSombreado: true,
-          conBordes: true,
-          onPressed: onDecrement,
-        ),
-      ),
-      // Visualización del Valor
-      Expanded(
-        flex: 2, // Dar más espacio al valor
-        child: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 200),
-          transitionBuilder: (Widget child, Animation<double> animation) {
-            return FadeTransition(
-                opacity: animation,
-                child: ScaleTransition(scale: animation, child: child));
-          },
-          child: Text(
-            isInteger ? '${value.toInt()}' : '$value $unit'.trim(),
-            key: ValueKey<double>(value),
-            textAlign: TextAlign.center,
-            style: textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600),
+          child: const Icon(
+            Icons.favorite,
+            color: AppColors.motivationRed,
+            size: 20,
           ),
         ),
-      ),
-      // Botón de Incremento con ChicletButton outlined
-      Expanded(
-        flex: 1,
-        child: ChicletButton(
-          texto: '',
-          icono: IconsaxPlusLinear.add,
-          estilo: EstiloBotonChiclet.contorno,
-          tamano: TamanoBotonChiclet.mediano,
-          colorFondo: colorScheme.surface,
-          colorTexto: colorScheme.onSurface,
-          colorBorde: colorScheme.surface,
-          radioBorde: 20,
-          conSombreado: true,
-          conBordes: true,
-          onPressed: onIncrement,
-        ),
-      ),
-    ],
-  );
-} // Constructor de Botón de Acción Actualizado con ChicletButtons
-
-Widget _buildActionButtons(BuildContext context, Ejercicio ejercicio,
-    EjerciciosByRutinaSuccess state) {
-  bool todasLasSeriesCompletadas = ejercicio.series.every(
-    (serie) => serie.estado == EstadoSerieEjercicio.completado.name,
-  );
-
-  // Verificar si este es el último ejercicio y todas sus series están hechas
-  final ejercicios = state.ejerciciosDeRutina.ejercicios;
-  final currentEjercicioIndex =
-      ejercicios.indexWhere((e) => e.id == state.ejercicioIndex);
-  final isLastExercise = currentEjercicioIndex == ejercicios.length - 1;
-
-  if (todasLasSeriesCompletadas) {
-    if (isLastExercise) {
-      return ChicletButton(
-        texto: 'Finalizar Rutina',
-        colorFondo: AppColors.celebrationPurple,
-        colorTexto: Colors.white,
-        onPressed: () {
-          // Marcar el último ejercicio como completado antes de finalizar
-          context.read<EjerciciosByRutinaCubit>().completeRoutine(
-              routineSessionId: state.ejerciciosDeRutina.session);
-        },
-        estaHabilitado: true,
-        tamano: TamanoBotonChiclet.grande,
-        estilo: EstiloBotonChiclet.relleno,
-        radioBorde: 28,
-        ancho: double.infinity,
       );
-    } else {
-      return ChicletButton(
-        texto: 'Siguiente Ejercicio',
-        colorFondo: AppColors.secondary,
-        colorTexto: Colors.white,
-        onPressed: () => context
-            .read<EjerciciosByRutinaCubit>()
-            .avanzarAlSiguienteEjercicio(),
-        estaHabilitado: true,
-        tamano: TamanoBotonChiclet.grande,
-        estilo: EstiloBotonChiclet.relleno,
-        radioBorde: 28,
-        ancho: double.infinity,
-        conSombreado: true,
-        conBordes: true,
-      );
-    }
-  } else {
-    return ChicletButton(
-      texto: 'Completar Serie',
-      colorFondo: AppColors.success,
-      colorTexto: Colors.white,
-      onPressed: () => context.read<EjerciciosByRutinaCubit>().avanzarSerie(),
-      estaCargando: false,
-      estaHabilitado: true,
-      tamano: TamanoBotonChiclet.grande,
-      estilo: EstiloBotonChiclet.relleno,
-      radioBorde: 28,
-      ancho: double.infinity,
-      conSombreado: true,
-      conBordes: true,
-    );
-  }
+    },
+  );
 }

@@ -20,6 +20,7 @@ void _initDatabaseHelper() {
 
 void _initIdGenerator() {
   serviceLocator.registerLazySingleton<IdGenerator>(() => UuidGenerator());
+  serviceLocator.registerLazySingleton<UuidGenerator>(() => UuidGenerator());
 }
 
 void _initRoutine() {
@@ -159,21 +160,47 @@ void _initExercise() {
     ..registerFactory<ExerciseLocalDataSource>(
       () => ExerciseLocalDataSource(serviceLocator()),
     )
+    ..registerFactory<FavoritoEjercicioLocalDataSource>(
+      () => FavoritoEjercicioLocalDataSource(
+        databaseHelper: serviceLocator(),
+        uuidGenerator: serviceLocator(),
+      ),
+    )
     // Repository
     ..registerLazySingleton<ExerciseRepository>(
       () => ExerciseRepositoryImpl(localDataSource: serviceLocator()),
     )
-    // Use cases
+    ..registerFactory<FavoritoEjercicioRepository>(
+      () => FavoritoEjercicioRepositoryImpl(
+        localDataSource: serviceLocator(),
+        exerciseRepository: serviceLocator(),
+      ),
+    )
+    // Use cases - Ejercicios regulares
     ..registerFactory(() => ObtenerTodosLosEjerciciosUseCase(serviceLocator()))
     ..registerFactory(
         () => ObtenerEjerciciosCatalogoPorMusculoUseCase(serviceLocator()))
     ..registerFactory(() => BuscarEjerciciosUseCase(serviceLocator()))
-    // Cubit
+    // Use cases - Ejercicios favoritos
+    ..registerFactory(() => AgregarEjercicioAFavoritosUseCase(serviceLocator()))
+    ..registerFactory(
+        () => RemoverEjercicioDeFavoritosUseCase(serviceLocator()))
+    ..registerFactory(() => VerificarEjercicioFavoritoUseCase(serviceLocator()))
+    ..registerFactory(() => ObtenerEjerciciosFavoritosUseCase(serviceLocator()))
+    // Cubits
     ..registerFactory(
       () => ExerciseCubit(
         getAllExercisesUseCase: serviceLocator(),
         getExercisesByMuscleUseCase: serviceLocator(),
         buscarEjerciciosUseCase: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => FavoritoEjercicioCubit(
+        agregarEjercicioAFavoritosUseCase: serviceLocator(),
+        removerEjercicioDeFavoritosUseCase: serviceLocator(),
+        verificarEjercicioFavoritoUseCase: serviceLocator(),
+        obtenerEjerciciosFavoritosUseCase: serviceLocator(),
       ),
     );
 }

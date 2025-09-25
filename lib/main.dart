@@ -21,6 +21,7 @@ import 'package:gymaster/features/setting/presentation/cubits/app_start/app_star
 import 'package:gymaster/features/setting/presentation/cubits/onboarding/onboarding_cubit.dart';
 import 'package:gymaster/init_dependencies.dart';
 import 'package:gymaster/features/exercise/presentation/cubits/exercise/exercise_cubit.dart';
+import 'package:gymaster/features/exercise/presentation/cubits/favorito_ejercicio_cubit.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -60,6 +61,7 @@ class Proveedores extends StatelessWidget {
         BlocProvider(create: (_) => serviceLocator<RecordCubit>()),
         BlocProvider(create: (_) => serviceLocator<SelectedRoutineCubit>()),
         BlocProvider(create: (_) => serviceLocator<ExerciseCubit>()),
+        BlocProvider(create: (_) => serviceLocator<FavoritoEjercicioCubit>()),
       ],
       child: const MyApp(),
     );

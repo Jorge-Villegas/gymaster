@@ -122,9 +122,9 @@ class _EpicCelebrationWidgetState extends State<EpicCelebrationWidget>
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              AppColors.achievementGold.withOpacity(0.95),
-              AppColors.energyOrange.withOpacity(0.95),
-              AppColors.motivationRed.withOpacity(0.95),
+              AppColors.achievementGold.withValues(alpha: 0.95),
+              AppColors.energyOrange.withValues(alpha: 0.95),
+              AppColors.motivationRed.withValues(alpha: 0.95),
             ],
           ),
         ),
@@ -237,11 +237,11 @@ class _EpicCelebrationWidgetState extends State<EpicCelebrationWidget>
             width: 120,
             height: 120,
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.9),
+              color: Colors.white.withValues(alpha: 0.9),
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.achievementGold.withOpacity(0.5),
+                  color: AppColors.achievementGold.withValues(alpha: 0.5),
                   blurRadius: 20,
                   spreadRadius: 5,
                 ),
@@ -291,10 +291,10 @@ class _EpicCelebrationWidgetState extends State<EpicCelebrationWidget>
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.15),
+        color: Colors.white.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: Colors.white.withOpacity(0.3),
+          color: Colors.white.withValues(alpha: 0.3),
           width: 2,
         ),
       ),
@@ -314,10 +314,10 @@ class _EpicCelebrationWidgetState extends State<EpicCelebrationWidget>
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.1),
+        color: Colors.white.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: Colors.white.withOpacity(0.2),
+          color: Colors.white.withValues(alpha: 0.2),
         ),
       ),
       child: Row(
@@ -350,7 +350,7 @@ class _EpicCelebrationWidgetState extends State<EpicCelebrationWidget>
         Text(
           label,
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: Colors.white.withOpacity(0.8),
+                color: Colors.white.withValues(alpha: 0.8),
                 fontWeight: FontWeight.w500,
               ),
         ),
@@ -423,7 +423,7 @@ class _EpicCelebrationWidgetState extends State<EpicCelebrationWidget>
         icon: Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: Colors.black.withOpacity(0.3),
+            color: Colors.black.withValues(alpha: 0.3),
             shape: BoxShape.circle,
           ),
           child: const Icon(

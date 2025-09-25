@@ -7,6 +7,8 @@ import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/core/theme/emotional_text_styles.dart';
 import 'package:gymaster/features/exercise/domain/entities/exercise.dart';
 import 'package:gymaster/features/exercise/presentation/cubits/exercise/exercise_cubit.dart';
+import 'package:gymaster/features/exercise/presentation/cubits/favorito_ejercicio_cubit.dart';
+import 'package:gymaster/features/exercise/presentation/cubits/favorito_ejercicio_state.dart';
 import 'package:gymaster/features/routine/presentation/cubits/musculo/musculo_cubit.dart';
 import 'package:gymaster/shared/utils/string_utils.dart';
 import 'package:gymaster/shared/utils/verificador_tipo_archivo.dart';
@@ -835,23 +837,29 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
             padding: const EdgeInsets.all(16),
             child: Row(
               children: [
-                // Imagen del ejercicio (Proximidad)
+                // Imagen del ejercicio con corazón de favorito superpuesto
                 Hero(
                   tag: 'exercise-image-${exercise.id}',
-                  child: Container(
-                    width: 64,
-                    height: 64,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: AppColors.primary.withValues(alpha: 0.1),
-                        width: 1,
+                  child: Stack(
+                    children: [
+                      Container(
+                        width: 64,
+                        height: 64,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: AppColors.primary.withValues(alpha: 0.1),
+                            width: 1,
+                          ),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: _buildExerciseImage(exercise.imagePath),
+                        ),
                       ),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: _buildExerciseImage(exercise.imagePath),
-                    ),
+                      // Corazón de favorito sutil superpuesto
+                      _buildOverlayFavoriteIndicator(exercise),
+                    ],
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -1071,6 +1079,70 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
 
     context.read<ExerciseCubit>().clearFilters();
     FocusScope.of(context).unfocus();
+  }
+
+  /// Indicador sutil de favorito superpuesto en la esquina inferior derecha
+  Widget _buildOverlayFavoriteIndicator(Exercise exercise) {
+    return BlocBuilder<FavoritoEjercicioCubit, FavoritoEjercicioState>(
+      builder: (context, state) {
+        final favoritosCubit = context.read<FavoritoEjercicioCubit>();
+        final esFavorito = favoritosCubit.esEjercicioFavoritoSync(exercise.id);
+
+        // Solo mostrar si es favorito
+        if (!esFavorito) return const SizedBox.shrink();
+
+        return Positioned(
+          bottom: 4,
+          right: 4,
+          child: GestureDetector(
+            onTap: () async {
+              // Feedback háptico para mejor experiencia emocional
+              await favoritosCubit.toggleFavorito(exercise.id);
+
+              // Mostrar mensaje emocional de feedback
+              if (mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      '💔 ${exercise.name} removido de favoritos',
+                      style: EstilosTextoEmocional.aliento.copyWith(
+                        color: Colors.white,
+                        fontSize: 14,
+                      ),
+                    ),
+                    backgroundColor: AppColors.energyOrange,
+                    behavior: SnackBarBehavior.floating,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    duration: const Duration(seconds: 2),
+                  ),
+                );
+              }
+            },
+            child: Container(
+              padding: const EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                color: Colors.red.shade600,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.3),
+                    offset: const Offset(0, 2),
+                    blurRadius: 4,
+                  ),
+                ],
+              ),
+              child: Icon(
+                IconsaxPlusBold.heart,
+                color: Colors.white,
+                size: 14,
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 
   /// Muestra diálogo de filtros avanzados (placeholder)

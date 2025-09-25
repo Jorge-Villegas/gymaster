@@ -1,10 +1,13 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/core/theme/emotional_text_styles.dart';
 import 'package:gymaster/features/exercise/domain/entities/exercise.dart';
+import 'package:gymaster/features/exercise/presentation/cubits/favorito_ejercicio_cubit.dart';
+import 'package:gymaster/features/exercise/presentation/cubits/favorito_ejercicio_state.dart';
 import 'package:gymaster/shared/utils/string_utils.dart';
 import 'package:gymaster/shared/utils/verificador_tipo_archivo.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
@@ -24,7 +27,6 @@ class ExerciseDetailPage extends StatefulWidget {
 class _ExerciseDetailPageState extends State<ExerciseDetailPage>
     with TickerProviderStateMixin {
   late AnimationController _animationController;
-  bool _isFavorite = false;
 
   @override
   void initState() {
@@ -79,7 +81,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withValues(alpha: 0.1),
                 offset: const Offset(0, 2),
                 blurRadius: 8,
               ),
@@ -107,11 +109,11 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.95),
+              color: Colors.white.withValues(alpha: 0.95),
               borderRadius: BorderRadius.circular(16),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.15),
+                  color: Colors.black.withValues(alpha: 0.15),
                   blurRadius: 8,
                   offset: const Offset(0, 2),
                 ),
@@ -144,8 +146,8 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                     end: Alignment.bottomCenter,
                     colors: [
                       Colors.transparent,
-                      Colors.black.withOpacity(0.1),
-                      Colors.black.withOpacity(0.3),
+                      Colors.black.withValues(alpha: 0.1),
+                      Colors.black.withValues(alpha: 0.3),
                     ],
                     stops: const [0.0, 0.7, 1.0],
                   ),
@@ -197,7 +199,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 10,
               offset: const Offset(0, 2),
             ),
@@ -212,7 +214,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: AppColors.primary.withOpacity(0.1),
+                    color: AppColors.primary.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
@@ -246,15 +248,15 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                   padding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: AppColors.calmBlue.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
-                      color: AppColors.primary.withOpacity(0.25),
+                      color: AppColors.calmBlue.withValues(alpha: 0.25),
                       width: 1.5,
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.primary.withOpacity(0.06),
+                        color: AppColors.calmBlue.withValues(alpha: 0.06),
                         blurRadius: 6,
                         offset: const Offset(0, 2),
                       ),
@@ -263,16 +265,10 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(
-                        IconsaxPlusLinear.weight,
-                        size: 16,
-                        color: AppColors.primary,
-                      ),
-                      const SizedBox(width: 8),
                       Text(
                         capitalizarPrimeraLetra(muscle),
                         style: TextStyle(
-                          color: AppColors.primary,
+                          color: AppColors.calmBlue,
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
                         ),
@@ -301,7 +297,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 10,
               offset: const Offset(0, 2),
             ),
@@ -316,7 +312,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: AppColors.energyOrange.withOpacity(0.1),
+                    color: AppColors.energyOrange.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
@@ -369,7 +365,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 10,
               offset: const Offset(0, 2),
             ),
@@ -384,7 +380,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: AppColors.successGreen.withOpacity(0.1),
+                    color: AppColors.successGreen.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
@@ -472,58 +468,88 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
           borderRadius: BorderRadius.circular(30),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.15),
+              color: Colors.black.withValues(alpha: 0.15),
               blurRadius: 12,
               offset: const Offset(0, 4),
             ),
           ],
         ),
-        child: FloatingActionButton.extended(
-          elevation: 0,
-          backgroundColor:
-              _isFavorite ? AppColors.motivationRed : AppColors.primary,
-          onPressed: () {
-            setState(() {
-              _isFavorite = !_isFavorite;
-            });
+        child: BlocBuilder<FavoritoEjercicioCubit, FavoritoEjercicioState>(
+          builder: (context, state) {
+            final favoritosCubit = context.read<FavoritoEjercicioCubit>();
+            final esFavorito =
+                favoritosCubit.esEjercicioFavoritoSync(widget.exercise.id);
 
-            // Mostrar feedback emocional
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  _isFavorite
-                      ? '¡Ejercicio agregado a favoritos! ❤️'
-                      : 'Ejercicio removido de favoritos 💔',
-                  style: EstilosTextoEmocional.aliento
-                      .copyWith(color: Colors.white),
+            return FloatingActionButton.extended(
+              elevation: 0,
+              backgroundColor:
+                  esFavorito ? AppColors.motivationRed : AppColors.primary,
+              onPressed: () async {
+                // Usar el cubit para toggle de favoritos
+                await favoritosCubit.toggleFavorito(widget.exercise.id);
+
+                // Mostrar feedback emocional mejorado
+                final nuevoEstado = !esFavorito;
+                if (mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Row(
+                        children: [
+                          Icon(
+                            nuevoEstado
+                                ? IconsaxPlusBold.heart
+                                : IconsaxPlusLinear.heart_slash,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              nuevoEstado
+                                  ? '¡${widget.exercise.name} agregado a favoritos!'
+                                  : '${widget.exercise.name} removido de favoritos',
+                              style: EstilosTextoEmocional.aliento
+                                  .copyWith(color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      ),
+                      backgroundColor: nuevoEstado
+                          ? AppColors.motivationRed
+                          : AppColors.textSecondary,
+                      behavior: SnackBarBehavior.floating,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12)),
+                      duration: const Duration(seconds: 2),
+                    ),
+                  );
+                }
+              },
+              icon: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 300),
+                transitionBuilder: (child, animation) {
+                  return ScaleTransition(
+                    scale: animation,
+                    child: child,
+                  );
+                },
+                child: Icon(
+                  esFavorito ? IconsaxPlusBold.heart : IconsaxPlusLinear.heart,
+                  key: ValueKey(esFavorito),
+                  color: Colors.white,
+                  size: 24,
                 ),
-                backgroundColor: _isFavorite
-                    ? AppColors.motivationRed
-                    : AppColors.textSecondary,
-                behavior: SnackBarBehavior.floating,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12)),
-                duration: const Duration(seconds: 2),
+              ),
+              label: Text(
+                esFavorito ? 'En Favoritos ❤️' : 'Agregar a Favoritos',
+                style: EstilosTextoEmocional.aliento.copyWith(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             );
           },
-          icon: AnimatedSwitcher(
-            duration: const Duration(milliseconds: 300),
-            child: Icon(
-              _isFavorite ? IconsaxPlusLinear.heart : IconsaxPlusLinear.heart,
-              key: ValueKey(_isFavorite),
-              color: Colors.white,
-              size: 24,
-            ),
-          ),
-          label: Text(
-            _isFavorite ? 'En Favoritos ❤️' : 'Agregar a Favoritos',
-            style: EstilosTextoEmocional.aliento.copyWith(
-              color: Colors.white,
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
         ),
       ),
     );

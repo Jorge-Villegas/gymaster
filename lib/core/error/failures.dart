@@ -46,3 +46,11 @@ class NotFoundFailure extends Failure {
 class UnexpectedFailure extends Failure {
   UnexpectedFailure({required super.errorMessage});
 }
+
+/// Falla que ocurre cuando hay un error en la base de datos.
+///
+/// Esta falla se utiliza para indicar que una operación de base de datos
+/// ha fallado debido a problemas de conexión, SQL mal formado, etc.
+class DatabaseFailure extends Failure {
+  DatabaseFailure({required super.errorMessage});
+}

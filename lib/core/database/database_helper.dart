@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:gymaster/core/database/models/favorito_ejercicio_db_model.dart';
 import 'package:gymaster/core/database/models/logro_db_model.dart';
 import 'package:gymaster/core/database/models/models.dart';
 // ignore: depend_on_referenced_packages
@@ -11,7 +12,7 @@ import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 class DatabaseHelper {
   static const _databaseName = 'database_gymaster.db';
   static const _databaseVersion =
-      3; // Incrementamos la versión para user_motivation
+      4; // Incrementamos la versión para ejercicios_favoritos
 
   // Singleton
   DatabaseHelper._privateConstructor();
@@ -217,6 +218,14 @@ class DatabaseHelper {
         )
       ''');
 
+    // Crear tabla de ejercicios favoritos
+    await db.execute(FavoritoEjercicioDbModel.createTableSql);
+
+    // Crear índices para performance
+    for (String indexSql in FavoritoEjercicioDbModel.createIndexesSql) {
+      await db.execute(indexSql);
+    }
+
     // Llama al seeder para llenar la base de datos con datos iniciales
     // await DatabaseSeeder(idGenerator: UuidGenerator()).seedGenerateDatabase();
   }
@@ -242,9 +251,9 @@ class DatabaseHelper {
       // Migrar user_motivation para la nueva estructura en versión 3
       debugPrint('🔄 Iniciando migración de user_motivation...');
 
-      // Hacer backup de datos existentes
-      final List<Map<String, dynamic>> existingData =
-          await db.query('user_motivation');
+      // Hacer backup de datos existentes (no usado por ahora)
+      // final List<Map<String, dynamic>> existingData =
+      //     await db.query('user_motivation');
 
       // Eliminar tabla antigua
       await db.execute('DROP TABLE IF EXISTS user_motivation');
@@ -265,6 +274,21 @@ class DatabaseHelper {
       ''');
 
       debugPrint('🔄 Migración completada: Tabla user_motivation actualizada');
+    }
+
+    if (oldVersion < 4) {
+      // Agregar tabla ejercicios_favoritos en versión 4
+      debugPrint('🔄 Iniciando migración para ejercicios_favoritos...');
+
+      await db.execute(FavoritoEjercicioDbModel.createTableSql);
+
+      // Crear índices para performance
+      for (String indexSql in FavoritoEjercicioDbModel.createIndexesSql) {
+        await db.execute(indexSql);
+      }
+
+      debugPrint(
+          '🔄 Migración completada: Tabla ejercicios_favoritos agregada');
     }
   }
 

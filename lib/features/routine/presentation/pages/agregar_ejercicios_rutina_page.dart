@@ -78,7 +78,7 @@ class _AgregarEjercicioRutinaPageState
     FocusScope.of(context).unfocus();
 
     if (_controladoresPeso.isEmpty || _controladoresRepeticiones.isEmpty) {
-      SnackbarHelper().showCustomSnackBar(
+      SnackbarHelper.showSafeSnackBar(
         context,
         'Por favor, agregue al menos una serie',
         SnackBarType.error,
@@ -87,7 +87,7 @@ class _AgregarEjercicioRutinaPageState
     }
 
     if (!_claveFomulario.currentState!.validate()) {
-      SnackbarHelper().showCustomSnackBar(
+      SnackbarHelper.showSafeSnackBar(
         context,
         'Por favor, complete todos los campos',
         SnackBarType.error,
@@ -103,7 +103,7 @@ class _AgregarEjercicioRutinaPageState
         .toList();
 
     if (pesos.contains(null) || repeticiones.contains(null)) {
-      SnackbarHelper().showCustomSnackBar(
+      SnackbarHelper.showSafeSnackBar(
         context,
         'Por favor, ingrese números válidos',
         SnackBarType.error,
@@ -126,7 +126,7 @@ class _AgregarEjercicioRutinaPageState
       context.read<RoutineCubit>().getAllRoutine();
       context.pop();
 
-      SnackbarHelper().showCustomSnackBar(
+      SnackbarHelper.showSafeSnackBar(
         context,
         '¡Ejercicio guardado con éxito! 💪',
         SnackBarType.success,
@@ -134,14 +134,14 @@ class _AgregarEjercicioRutinaPageState
     } else {
       final state = context.read<AgregarSeriesCubit>().state;
       if (state is AgregarSeriesError) {
-        SnackbarHelper().showCustomSnackBar(
+        SnackbarHelper.showSafeSnackBar(
           context,
           state.message,
           SnackBarType.error,
         );
         context.pop();
       } else {
-        SnackbarHelper().showCustomSnackBar(
+        SnackbarHelper.showSafeSnackBar(
           context,
           'Error inesperado al guardar el ejercicio',
           SnackBarType.error,

@@ -7,6 +7,16 @@ import 'package:gymaster/features/exercise/domain/usecases/obtener_todos_los_eje
 import 'package:gymaster/features/exercise/domain/usecases/obtener_ejercicios_por_musculo_usecase.dart';
 import 'package:gymaster/features/exercise/domain/usecases/buscar_ejercicios_usecase.dart';
 import 'package:gymaster/features/exercise/presentation/cubits/exercise/exercise_cubit.dart';
+
+// Favoritos imports
+import 'package:gymaster/features/exercise/data/datasources/favorito_ejercicio_local_data_source.dart';
+import 'package:gymaster/features/exercise/data/repositories/favorito_ejercicio_repository_impl.dart';
+import 'package:gymaster/features/exercise/domain/repositories/favorito_ejercicio_repository.dart';
+import 'package:gymaster/features/exercise/domain/usecases/agregar_ejercicio_a_favoritos_usecase.dart';
+import 'package:gymaster/features/exercise/domain/usecases/remover_ejercicio_de_favoritos_usecase.dart';
+import 'package:gymaster/features/exercise/domain/usecases/verificar_ejercicio_favorito_usecase.dart';
+import 'package:gymaster/features/exercise/domain/usecases/obtener_ejercicios_favoritos_usecase.dart';
+import 'package:gymaster/features/exercise/presentation/cubits/favorito_ejercicio_cubit.dart';
 import 'package:gymaster/features/record/data/implements/implements.dart';
 import 'package:gymaster/features/record/data/sources/record_local_data_source.dart';
 import 'package:gymaster/features/record/domain/repositories/repositories.dart';

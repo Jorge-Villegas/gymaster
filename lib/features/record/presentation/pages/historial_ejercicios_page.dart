@@ -367,7 +367,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
     if (!foundNextRoutine && !_isMessageShown) {
       _isMessageShown = true; // Evitar mensajes repetidos
 
-      SnackbarHelper().showCustomSnackBar(
+      SnackbarHelper.showSafeSnackBar(
         context,
         "No hay más rutinas registradas después de esta fecha.",
         SnackBarType.info,
@@ -401,7 +401,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
 
     if (!foundPreviousRoutine && !_isMessageShown) {
       _isMessageShown = true; // Evitar mensajes repetidos
-      SnackbarHelper().showCustomSnackBar(
+      SnackbarHelper.showSafeSnackBar(
         context,
         "No hay más rutinas registradas antes de esta fecha.",
         SnackBarType.info,

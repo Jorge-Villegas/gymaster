@@ -181,7 +181,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
       final rutinaId = (routineCubit.state as RoutineAddSuccess).rutina.id!;
 
       // Mostrar mensaje de éxito motivacional
-      SnackbarHelper().showCustomSnackBar(
+      SnackbarHelper.showSafeSnackBar(
         context,
         "¡Rutina '$nombreRutina' creada con éxito! 🎉",
         SnackBarType.success,
@@ -199,7 +199,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
       mensajeError = mensaje;
     });
 
-    SnackbarHelper().showCustomSnackBar(
+    SnackbarHelper.showSafeSnackBar(
       context,
       mensaje,
       SnackBarType.error,

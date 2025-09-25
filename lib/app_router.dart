@@ -16,6 +16,7 @@ import 'package:gymaster/theme_preview_page.dart';
 import 'package:gymaster/features/exercise/domain/entities/exercise.dart';
 import 'package:gymaster/features/exercise/presentation/pages/exercise_catalog_page.dart';
 import 'package:gymaster/features/exercise/presentation/pages/exercise_detail_page.dart';
+import 'package:gymaster/features/exercise/presentation/pages/favorites_page.dart';
 
 /// Configuración de GoRouter
 final GoRouter router = GoRouter(
@@ -157,6 +158,11 @@ final GoRouter router = GoRouter(
         final exercise = state.extra as Exercise;
         return ExerciseDetailPage(exercise: exercise);
       },
+    ),
+    GoRoute(
+      path: '/favorites',
+      name: 'favorites',
+      builder: (context, state) => const FavoritesPage(),
     ),
   ],
 );
