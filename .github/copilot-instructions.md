@@ -1143,6 +1143,34 @@ serviceLocator.registerCachedFactory(
 );
 ```
 
+# 🟡 Nota sobre Color Opacity en Flutter
+
+Desde Flutter 3.22, el método `.withOpacity(double)` está **deprecado** y genera el warning:
+
+> 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss.
+
+En vez de:
+
+```dart
+color: Colors.white.withOpacity(0.8)
+```
+
+Usa SIEMPRE:
+
+```dart
+color: Colors.white.withValues(alpha: 0.8)
+```
+
+Esto evita errores de precisión y warnings en el análisis de Dart/Flutter.
+
+**Referencia:**
+https://api.flutter.dev/flutter/dart-ui/Color/withOpacity.html
+
+**Resumen:**
+
+- No uses `.withOpacity()`
+- Usa `.withValues(alpha: ...)` para todos los colores con transparencia
+
 # 🧠 Diseño Emocional en Apps de Fitness
 
 ---
