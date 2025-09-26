@@ -23,6 +23,10 @@ abstract interface class RoutineRepository {
 
   Future<Either<Failure, void>> deleteRoutine({required String id});
 
+  Future<Either<Failure, void>> restoreRoutine({required String id});
+
+  Future<Either<Failure, List<Routine>>> getDeletedRoutines();
+
   Future<Either<Failure, void>> updateRoutine({
     required String id,
     String? name,

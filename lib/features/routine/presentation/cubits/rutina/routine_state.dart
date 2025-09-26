@@ -15,7 +15,25 @@ final class RoutineAddSuccess extends RoutineState {
 
 final class RoutineUpdateSuccess extends RoutineState {}
 
-final class RoutineDeleteSuccess extends RoutineState {}
+final class RoutineDeleteSuccess extends RoutineState {
+  final String deletedRoutineId;
+  final String message;
+
+  RoutineDeleteSuccess(this.deletedRoutineId, this.message);
+}
+
+final class RoutineRestoreSuccess extends RoutineState {
+  final String restoredRoutineId;
+  final String message;
+
+  RoutineRestoreSuccess(this.restoredRoutineId, this.message);
+}
+
+final class RoutineDeletedListSuccess extends RoutineState {
+  final List<Routine> deletedRoutines;
+
+  RoutineDeletedListSuccess(this.deletedRoutines);
+}
 
 final class RoutineGetAllSuccess extends RoutineState {
   final List<Routine> routines;

@@ -1,8 +1,11 @@
 import 'package:gymaster/core/usecase/usecase.dart';
+import 'package:gymaster/core/error/failures.dart';
 import 'package:gymaster/features/routine/domain/entities/routine.dart';
 import 'package:gymaster/features/routine/domain/usecases/agregar_rutina_usecase.dart';
 import 'package:gymaster/features/routine/domain/usecases/eliminar_rutina_plantilla_usecase.dart';
 import 'package:gymaster/features/routine/domain/usecases/obtener_todas_las_rutinas_usecase.dart';
+import 'package:gymaster/features/routine/domain/usecases/restore_routine_usecase.dart';
+import 'package:gymaster/features/routine/domain/usecases/get_deleted_routines_usecase.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:gymaster/features/routine/domain/usecases/obtener_rutina_por_nombre_usecase.dart';
@@ -13,6 +16,8 @@ class RoutineCubit extends Cubit<RoutineState> {
   final AgregarRutinaUseCase addRoutineUseCase;
   final ObtenerTodasLasRutinasUseCase getAllRoutineUseCase;
   final EliminarRutinaPlantillaUseCase deleteRoutineUseCase;
+  final RestoreRoutineUseCase? restoreRoutineUseCase;
+  final GetDeletedRoutinesUseCase? getDeletedRoutinesUseCase;
   final ObtenerRutinaPorNombreUseCase getRoutineByNameUseCase;
 
   RoutineCubit({
@@ -20,11 +25,13 @@ class RoutineCubit extends Cubit<RoutineState> {
     required this.getAllRoutineUseCase,
     required this.deleteRoutineUseCase,
     required this.getRoutineByNameUseCase,
+    this.restoreRoutineUseCase,
+    this.getDeletedRoutinesUseCase,
   }) : super(RoutineInitial()) {
     getAllRoutine();
   }
 
-  addRoutine({
+  Future<void> addRoutine({
     required String name,
     String? description,
     required DateTime creationDate,
@@ -84,13 +91,21 @@ class RoutineCubit extends Cubit<RoutineState> {
     );
   }
 
-  void deleteRoutine({required String id}) async {
+  /// Elimina lógicamente una rutina
+  void deleteRoutine({required String id, String? routineName}) async {
     emit(RoutineLoading());
     final result =
         await deleteRoutineUseCase(EliminarRutinaPlantillaParams(id: id));
     result.fold(
-      (l) => emit(RoutineError('Error al eliminar rutina')),
-      (r) => emit(RoutineDeleteSuccess()),
+      (failure) => emit(RoutineError(failure.errorMessage)),
+      (_) {
+        final message = routineName != null
+            ? '¡Rutina "$routineName" eliminada exitosamente! 🗑️'
+            : '¡Rutina eliminada exitosamente! 🗑️';
+        emit(RoutineDeleteSuccess(id, message));
+        // Actualizar la lista después de eliminar
+        getAllRoutine();
+      },
     );
   }
 
@@ -101,6 +116,43 @@ class RoutineCubit extends Cubit<RoutineState> {
     result.fold(
       (failure) => emit(RoutineError('Error al buscar rutinas')),
       (routines) => emit(RoutineGetByNameSuccess(routines)),
+    );
+  }
+
+  /// Restaura una rutina eliminada lógicamente
+  void restoreRoutine({required String id, String? routineName}) async {
+    if (restoreRoutineUseCase == null) {
+      emit(RoutineError('Funcionalidad no disponible'));
+      return;
+    }
+
+    emit(RoutineLoading());
+    final result = await restoreRoutineUseCase!(RestoreRoutineParams(id: id));
+    result.fold(
+      (failure) => emit(RoutineError(failure.errorMessage)),
+      (_) {
+        final message = routineName != null
+            ? '¡Rutina "$routineName" restaurada exitosamente! ✨'
+            : '¡Rutina restaurada exitosamente! ✨';
+        emit(RoutineRestoreSuccess(id, message));
+        // Actualizar la lista después de restaurar
+        getAllRoutine();
+      },
+    );
+  }
+
+  /// Obtiene todas las rutinas eliminadas (papelera)
+  void getDeletedRoutines() async {
+    if (getDeletedRoutinesUseCase == null) {
+      emit(RoutineError('Funcionalidad no disponible'));
+      return;
+    }
+
+    emit(RoutineLoading());
+    final result = await getDeletedRoutinesUseCase!(NoParams());
+    result.fold(
+      (failure) => emit(RoutineError(failure.errorMessage)),
+      (deletedRoutines) => emit(RoutineDeletedListSuccess(deletedRoutines)),
     );
   }
 }

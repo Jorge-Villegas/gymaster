@@ -378,17 +378,35 @@ class RoutineRepositoryImpl implements RoutineRepository {
   @override
   Future<Either<Failure, void>> deleteRoutine({required String id}) async {
     try {
+      final result = await localDataSource.deleteRutina(id: id);
+
+      if (!result) {
+        return Left(
+          ServerFailure(
+            errorMessage:
+                'No se pudo eliminar la rutina. Por favor, inténtalo de nuevo.',
+          ),
+        );
+      }
+
+      return const Right(null);
+    } on NoRecordsException {
       return Left(
-        ServerFailure(
-          errorMessage:
-              'Error del servidor: No se pudo actualizar la rutina. Por favor, inténtalo de nuevo más tarde.',
+        NoRecordsFailure(
+          errorMessage: 'La rutina no existe o ya fue eliminada.',
         ),
       );
     } on ServerException {
       return Left(
         ServerFailure(
           errorMessage:
-              'Error del servidor: No se pudo actualizar la rutina. Por favor, inténtalo de nuevo más tarde.',
+              'Error del servidor: No se pudo eliminar la rutina. Por favor, inténtalo de nuevo más tarde.',
+        ),
+      );
+    } catch (e) {
+      return Left(
+        UnexpectedFailure(
+          errorMessage: 'Ocurrió un error inesperado al eliminar la rutina.',
         ),
       );
     }
@@ -965,6 +983,75 @@ class RoutineRepositoryImpl implements RoutineRepository {
       return const Right(null);
     } catch (e) {
       return Left(ServerFailure(errorMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> restoreRoutine({required String id}) async {
+    try {
+      final result = await localDataSource.restoreRutina(id: id);
+
+      if (!result) {
+        return Left(
+          ServerFailure(
+            errorMessage:
+                'No se pudo restaurar la rutina. Por favor, inténtalo de nuevo.',
+          ),
+        );
+      }
+
+      return const Right(null);
+    } on NoRecordsException {
+      return Left(
+        NoRecordsFailure(
+          errorMessage: 'La rutina no existe en la papelera.',
+        ),
+      );
+    } on ServerException {
+      return Left(
+        ServerFailure(
+          errorMessage:
+              'Error del servidor: No se pudo restaurar la rutina. Por favor, inténtalo de nuevo más tarde.',
+        ),
+      );
+    } catch (e) {
+      return Left(
+        UnexpectedFailure(
+          errorMessage: 'Ocurrió un error inesperado al restaurar la rutina.',
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<RoutineModel>>> getDeletedRoutines() async {
+    try {
+      final result = await localDataSource.getDeletedRutinas();
+      List<RoutineModel> routines = [];
+
+      for (var rutina in result) {
+        final cantEjercicio = await localDataSource.getEjerciciosByRutinaId(
+          rutina.id,
+        );
+        routines.add(
+          RoutineModel.fromDatabase(
+            serieDB: rutina,
+            cantidadEjercicios: cantEjercicio.length,
+          ),
+        );
+      }
+
+      return right(routines);
+    } on NoRecordsException {
+      return Left(
+        NoRecordsFailure(errorMessage: 'No hay rutinas en la papelera.'),
+      );
+    } on ServerException {
+      return Left(ServerFailure(errorMessage: 'Error del servidor.'));
+    } catch (e) {
+      return Left(
+        UnexpectedFailure(errorMessage: 'Ocurrió un error inesperado.'),
+      );
     }
   }
 }

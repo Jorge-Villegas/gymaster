@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:gymaster/shared/utils/text_formatter.dart';
 import 'package:gymaster/shared/utils/haptic_feedback_helper.dart';
+import 'package:gymaster/features/routine/presentation/widgets/delete_routine_dialog.dart';
 
 class RoutineCard extends StatefulWidget {
   final VoidCallback onTap;
@@ -10,6 +12,8 @@ class RoutineCard extends StatefulWidget {
   final int color;
   final String? imagenDireccion;
   final int index; // Para animación escalonada
+  final String? routineId; // ID para eliminación
+  final VoidCallback? onDeleted; // Callback para notificar eliminación
 
   const RoutineCard({
     super.key,
@@ -19,6 +23,8 @@ class RoutineCard extends StatefulWidget {
     required this.cantidadEjerciciosPorSeries,
     this.imagenDireccion,
     this.index = 0,
+    this.routineId,
+    this.onDeleted,
   });
 
   @override
@@ -28,7 +34,6 @@ class RoutineCard extends StatefulWidget {
 class _RoutineCardState extends State<RoutineCard>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
-  late Animation<double> _scaleAnimation;
   late Animation<double> _slideAnimation;
   bool _isPressed = false;
 
@@ -39,14 +44,6 @@ class _RoutineCardState extends State<RoutineCard>
       duration: const Duration(milliseconds: 200),
       vsync: this,
     );
-
-    _scaleAnimation = Tween<double>(
-      begin: 1.0,
-      end: 0.95,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeInOut,
-    ));
 
     // Animación de entrada escalonada
     _slideAnimation = Tween<double>(
@@ -89,6 +86,33 @@ class _RoutineCardState extends State<RoutineCard>
     setState(() {
       _isPressed = false;
     });
+  }
+
+  void _handleMenuAction(String action) {
+    switch (action) {
+      case 'delete':
+        _showDeleteDialog();
+        break;
+    }
+  }
+
+  void _showDeleteDialog() {
+    if (widget.routineId == null) return;
+
+    HapticFeedbackHelper.vibracionSeleccion();
+
+    showDialog(
+      context: context,
+      builder: (context) => DeleteRoutineDialog(
+        routineName: widget.title,
+        routineId: widget.routineId!,
+        onDeleted: () {
+          if (widget.onDeleted != null) {
+            widget.onDeleted!();
+          }
+        },
+      ),
+    );
   }
 
   @override
@@ -142,6 +166,46 @@ class _RoutineCardState extends State<RoutineCard>
                         ),
                       ),
                     ),
+                    // Botón de menú contextual
+                    if (widget.routineId != null)
+                      Positioned(
+                        top: 8,
+                        right: 8,
+                        child: PopupMenuButton<String>(
+                          onSelected: _handleMenuAction,
+                          icon: Icon(
+                            IconsaxPlusLinear.more,
+                            color: Colors.white.withValues(alpha: 0.8),
+                            size: 20,
+                          ),
+                          color: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          itemBuilder: (BuildContext context) => [
+                            PopupMenuItem<String>(
+                              value: 'delete',
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    IconsaxPlusLinear.trash,
+                                    color: Colors.red.shade600,
+                                    size: 18,
+                                  ),
+                                  const SizedBox(width: 12),
+                                  Text(
+                                    'Eliminar rutina',
+                                    style: TextStyle(
+                                      color: Colors.red.shade600,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                   ],
                 ),
               ),

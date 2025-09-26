@@ -15,6 +15,7 @@ class RutinaDb {
   static const String columnaRutaImagen = 'ruta_imagen';
   static const String columnaFechaCreacion = 'fecha_creacion';
   static const String columnaFechaActualizacion = 'fecha_actualizacion';
+  static const String columnaFechaEliminacion = 'deleted_at';
 
   final String id;
   final String usuarioId;
@@ -24,6 +25,7 @@ class RutinaDb {
   final String? rutaImagen;
   final String fechaCreacion;
   final String? fechaActualizacion;
+  final String? fechaEliminacion;
 
   RutinaDb({
     required this.id,
@@ -34,6 +36,7 @@ class RutinaDb {
     this.rutaImagen,
     required this.fechaCreacion,
     this.fechaActualizacion,
+    this.fechaEliminacion,
   });
 
   RutinaDb copyWith({
@@ -45,6 +48,7 @@ class RutinaDb {
     String? imagePath,
     String? createdAt,
     String? updatedAt,
+    String? deletedAt,
   }) =>
       RutinaDb(
         id: id ?? this.id,
@@ -55,6 +59,7 @@ class RutinaDb {
         rutaImagen: imagePath ?? rutaImagen,
         fechaCreacion: createdAt ?? fechaCreacion,
         fechaActualizacion: updatedAt ?? fechaActualizacion,
+        fechaEliminacion: deletedAt ?? fechaEliminacion,
       );
 
   factory RutinaDb.fromJson(Map<String, dynamic> json) => RutinaDb(
@@ -66,6 +71,7 @@ class RutinaDb {
         rutaImagen: json["ruta_imagen"],
         fechaCreacion: json["fecha_creacion"],
         fechaActualizacion: json["fecha_actualizacion"],
+        fechaEliminacion: json["deleted_at"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -77,5 +83,9 @@ class RutinaDb {
         "ruta_imagen": rutaImagen,
         "fecha_creacion": fechaCreacion,
         "fecha_actualizacion": fechaActualizacion,
+        "deleted_at": fechaEliminacion,
       };
+
+  /// Verifica si la rutina está eliminada lógicamente
+  bool get isDeleted => fechaEliminacion != null;
 }

@@ -45,6 +45,8 @@ import 'package:gymaster/features/routine/domain/usecases/iniciar_sesion_rutina_
 import 'package:gymaster/features/routine/domain/usecases/finalizar_sesion_rutina_usecase.dart';
 import 'package:gymaster/features/routine/domain/usecases/actualizar_estado_ejercicio_usecase.dart';
 import 'package:gymaster/features/routine/domain/usecases/actualizar_serie_usecase.dart';
+import 'package:gymaster/features/routine/domain/usecases/restore_routine_usecase.dart';
+import 'package:gymaster/features/routine/domain/usecases/get_deleted_routines_usecase.dart';
 import 'package:gymaster/features/routine/presentation/cubits/agregar_series/agregar_series_cubit.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicio/ejercicio_cubit.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';

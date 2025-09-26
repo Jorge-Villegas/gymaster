@@ -56,6 +56,8 @@ void _initRoutine() {
     ..registerCachedFactory(
       () => ObtenerUltimaSesionPorRutinaIdUseCase(serviceLocator()),
     )
+    ..registerFactory(() => RestoreRoutineUseCase(serviceLocator()))
+    ..registerFactory(() => GetDeletedRoutinesUseCase(serviceLocator()))
     //Cubit
     ..registerFactory(
       () => RoutineCubit(
@@ -63,6 +65,8 @@ void _initRoutine() {
         getAllRoutineUseCase: serviceLocator(),
         deleteRoutineUseCase: serviceLocator(),
         getRoutineByNameUseCase: serviceLocator(),
+        restoreRoutineUseCase: serviceLocator(),
+        getDeletedRoutinesUseCase: serviceLocator(),
       ),
     )
     ..registerFactory(

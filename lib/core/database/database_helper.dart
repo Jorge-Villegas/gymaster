@@ -12,7 +12,7 @@ import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 class DatabaseHelper {
   static const _databaseName = 'database_gymaster.db';
   static const _databaseVersion =
-      4; // Incrementamos la versión para ejercicios_favoritos
+      5; // Incrementamos la versión para eliminación lógica de rutinas
 
   // Singleton
   DatabaseHelper._privateConstructor();
@@ -83,6 +83,7 @@ class DatabaseHelper {
            ${RutinaDb.columnaRutaImagen}      TEXT,
            ${RutinaDb.columnaFechaCreacion}   DATETIME DEFAULT CURRENT_TIMESTAMP,
            ${RutinaDb.columnaFechaActualizacion}    DATETIME,
+           ${RutinaDb.columnaFechaEliminacion}      DATETIME,
           FOREIGN KEY (${RutinaDb.columnaUsuarioId})   REFERENCES user  (id)  ON DELETE CASCADE
         )
       ''');
@@ -289,6 +290,20 @@ class DatabaseHelper {
 
       debugPrint(
           '🔄 Migración completada: Tabla ejercicios_favoritos agregada');
+    }
+
+    if (oldVersion < 5) {
+      // Agregar columna deleted_at para eliminación lógica en versión 5
+      debugPrint(
+          '🔄 Iniciando migración para eliminación lógica de rutinas...');
+
+      await db.execute('''
+        ALTER TABLE ${RutinaDb.tabla} 
+        ADD COLUMN ${RutinaDb.columnaFechaEliminacion} DATETIME
+      ''');
+
+      debugPrint(
+          '🔄 Migración completada: Columna deleted_at agregada a rutinas');
     }
   }
 

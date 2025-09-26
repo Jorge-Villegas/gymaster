@@ -17,6 +17,8 @@ class RoutineLocalDataSource {
       final db = await databaseHelper.database;
       final rutinas = await db.query(
         RutinaDb.tabla,
+        where:
+            '${RutinaDb.columnaFechaEliminacion} IS NULL', // Solo rutinas no eliminadas
         orderBy: '${RutinaDb.columnaFechaCreacion} DESC',
       );
       if (rutinas.isEmpty) {
@@ -79,12 +81,20 @@ class RoutineLocalDataSource {
       final db = await databaseHelper.database;
       final rutina = await db.query(
         RutinaDb.tabla,
-        where: '${RutinaDb.columnaId} = ?',
+        where:
+            '${RutinaDb.columnaId} = ? AND ${RutinaDb.columnaFechaEliminacion} IS NULL',
         whereArgs: [id],
       );
+      if (rutina.isEmpty) {
+        throw NoRecordsException();
+      }
       return RutinaDb.fromJson(rutina.first);
     } catch (e) {
-      throw ServerException();
+      if (e is NoRecordsException) {
+        rethrow;
+      } else {
+        throw ServerException();
+      }
     }
   }
 
@@ -905,6 +915,106 @@ class RoutineLocalDataSource {
       return result > 0;
     } catch (e) {
       throw ServerException();
+    }
+  }
+
+  /// Elimina lógicamente una rutina marcándola con fecha de eliminación
+  Future<bool> deleteRutina({required String id}) async {
+    try {
+      final db = await databaseHelper.database;
+      final now = DateTime.now().toIso8601String();
+
+      // Verificar que la rutina existe y no está eliminada
+      final existingRutina = await db.query(
+        RutinaDb.tabla,
+        where:
+            '${RutinaDb.columnaId} = ? AND ${RutinaDb.columnaFechaEliminacion} IS NULL',
+        whereArgs: [id],
+      );
+
+      if (existingRutina.isEmpty) {
+        throw NoRecordsException();
+      }
+
+      // Actualizar con fecha de eliminación (soft delete)
+      final result = await db.update(
+        RutinaDb.tabla,
+        {
+          RutinaDb.columnaFechaEliminacion: now,
+          RutinaDb.columnaFechaActualizacion: now,
+        },
+        where: '${RutinaDb.columnaId} = ?',
+        whereArgs: [id],
+      );
+
+      return result > 0;
+    } catch (e) {
+      if (e is NoRecordsException) {
+        rethrow;
+      } else {
+        throw ServerException();
+      }
+    }
+  }
+
+  /// Restaura una rutina eliminada lógicamente
+  Future<bool> restoreRutina({required String id}) async {
+    try {
+      final db = await databaseHelper.database;
+      final now = DateTime.now().toIso8601String();
+
+      // Verificar que la rutina existe y está eliminada
+      final existingRutina = await db.query(
+        RutinaDb.tabla,
+        where:
+            '${RutinaDb.columnaId} = ? AND ${RutinaDb.columnaFechaEliminacion} IS NOT NULL',
+        whereArgs: [id],
+      );
+
+      if (existingRutina.isEmpty) {
+        throw NoRecordsException();
+      }
+
+      // Restaurar eliminando la fecha de eliminación
+      final result = await db.update(
+        RutinaDb.tabla,
+        {
+          RutinaDb.columnaFechaEliminacion: null,
+          RutinaDb.columnaFechaActualizacion: now,
+        },
+        where: '${RutinaDb.columnaId} = ?',
+        whereArgs: [id],
+      );
+
+      return result > 0;
+    } catch (e) {
+      if (e is NoRecordsException) {
+        rethrow;
+      } else {
+        throw ServerException();
+      }
+    }
+  }
+
+  /// Obtiene rutinas eliminadas lógicamente (papelera)
+  Future<List<RutinaDb>> getDeletedRutinas() async {
+    try {
+      final db = await databaseHelper.database;
+      final rutinas = await db.query(
+        RutinaDb.tabla,
+        where: '${RutinaDb.columnaFechaEliminacion} IS NOT NULL',
+        orderBy: '${RutinaDb.columnaFechaEliminacion} DESC',
+      );
+      if (rutinas.isEmpty) {
+        throw NoRecordsException();
+      }
+      return rutinas.map((rutina) => RutinaDb.fromJson(rutina)).toList();
+    } catch (e) {
+      if (e is NoRecordsException) {
+        rethrow;
+      } else {
+        throw ServerException();
+      }
     }
   }
 

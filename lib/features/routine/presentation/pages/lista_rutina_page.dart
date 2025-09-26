@@ -660,11 +660,22 @@ class ListaRutinasPage extends StatelessWidget {
                           title: rutina.name,
                           cantidadEjerciciosPorSeries: cantidadTexto,
                           imagenDireccion: rutina.imagenDireccion,
+                          routineId: rutina.id,
                           onTap: () {
                             BlocProvider.of<EjerciciosByRutinaCubit>(
                               context,
                             ).getAllEjercicios(idRutina: rutina.id!);
                             context.push('/rutina/detalle/${rutina.id!}');
+                          },
+                          onDeleted: () {
+                            // Eliminar la rutina usando el cubit
+                            if (rutina.id != null) {
+                              BlocProvider.of<RoutineCubit>(context)
+                                  .deleteRoutine(
+                                id: rutina.id!,
+                                routineName: rutina.name,
+                              );
+                            }
                           },
                         ),
                       ),
