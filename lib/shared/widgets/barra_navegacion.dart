@@ -4,6 +4,7 @@ import 'package:gymaster/features/exercise/presentation/pages/favorites_page.dar
 import 'package:gymaster/features/record/presentation/pages/historial_ejercicios_page.dart';
 import 'package:gymaster/features/routine/presentation/pages/lista_rutina_page.dart';
 import 'package:gymaster/features/setting/presentation/pages/setting_page.dart';
+import 'package:gymaster/shared/widgets/pagina_con_menu_lateral.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 
 void main() => runApp(const BottomNavigationBarExampleApp());
@@ -45,54 +46,58 @@ class _BottomNavigationBarExampleState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _pages[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(IconsaxPlusLinear.weight),
-            activeIcon: Icon(IconsaxPlusBold.weight),
-            label: 'Rutinas',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(IconsaxPlusLinear.heart),
-            activeIcon: Icon(IconsaxPlusBold.heart),
-            label: 'Favoritos',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(IconsaxPlusLinear.activity),
-            activeIcon: Icon(IconsaxPlusBold.activity),
-            label: 'Ejercicios',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(IconsaxPlusLinear.chart),
-            activeIcon: Icon(IconsaxPlusBold.chart),
-            label: 'Historial',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(IconsaxPlusLinear.setting_2),
-            activeIcon: Icon(IconsaxPlusBold.setting_2),
-            label: 'Ajustes',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        selectedItemColor:
-            Theme.of(context).primaryColor, // Usar el color primario del tema
-        unselectedItemColor: Theme.of(
-          context,
-        ).textTheme.bodyMedium?.color?.withValues(
-              alpha: (0.6 * 255).roundToDouble(),
-            ), // Color del texto con opacidad
-        backgroundColor: Theme.of(
-          context,
-        ).scaffoldBackgroundColor, // Fondo de acuerdo al tema
-        selectedFontSize: 14,
-        unselectedFontSize: 14,
-        iconSize: 24,
-        type: BottomNavigationBarType.fixed,
-        selectedLabelStyle: const TextStyle(height: 1.5),
-        unselectedLabelStyle: const TextStyle(height: 1.5),
+    return PaginaConMenuLateral(
+      selectedIndex: _selectedIndex,
+      onMenuSelected: _onItemTapped,
+      contenidoPrincipal: Scaffold(
+        body: _pages[_selectedIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(IconsaxPlusLinear.weight),
+              activeIcon: Icon(IconsaxPlusBold.weight),
+              label: 'Rutinas',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(IconsaxPlusLinear.heart),
+              activeIcon: Icon(IconsaxPlusBold.heart),
+              label: 'Favoritos',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(IconsaxPlusLinear.activity),
+              activeIcon: Icon(IconsaxPlusBold.activity),
+              label: 'Ejercicios',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(IconsaxPlusLinear.chart),
+              activeIcon: Icon(IconsaxPlusBold.chart),
+              label: 'Historial',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(IconsaxPlusLinear.setting_2),
+              activeIcon: Icon(IconsaxPlusBold.setting_2),
+              label: 'Ajustes',
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped,
+          selectedItemColor:
+              Theme.of(context).primaryColor, // Usar el color primario del tema
+          unselectedItemColor: Theme.of(
+            context,
+          ).textTheme.bodyMedium?.color?.withValues(
+                alpha: (0.6 * 255).roundToDouble(),
+              ), // Color del texto con opacidad
+          backgroundColor: Theme.of(
+            context,
+          ).scaffoldBackgroundColor, // Fondo de acuerdo al tema
+          selectedFontSize: 14,
+          unselectedFontSize: 14,
+          iconSize: 24,
+          type: BottomNavigationBarType.fixed,
+          selectedLabelStyle: const TextStyle(height: 1.5),
+          unselectedLabelStyle: const TextStyle(height: 1.5),
+        ),
       ),
     );
   }

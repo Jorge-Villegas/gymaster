@@ -9,6 +9,9 @@ class AppColors {
   static const Color backgroundLight = Color.fromRGBO(244, 248, 252, 1);
   static const Color backgroundDark = Color.fromRGBO(14, 18, 22, 1);
 
+  // Color azul oscuro para menú lateral (GyMaster)
+  static const Color menuDarkBlue = Color(0xFF17203A);
+
   // Colores de texto
   static const Color textLight = Color.fromRGBO(255, 255, 255, 1); // Blanco
   static const Color textDark = Color(0xFF22223B); // Gris oscuro moderno
