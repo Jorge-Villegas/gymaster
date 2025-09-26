@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/shared/widgets/chiclet_button.dart';
 
 class ChicletButtonTestPage extends StatelessWidget {
@@ -9,8 +10,8 @@ class ChicletButtonTestPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Test ChicletButton'),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
+        backgroundColor: AppColors.fondoPrincipalClaro,
+        foregroundColor: AppColors.textoPrincipalClaro,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -25,7 +26,7 @@ class ChicletButtonTestPage extends StatelessWidget {
               height: 120,
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.blue.withOpacity(0.1),
+                color: AppColors.primario.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
@@ -56,7 +57,7 @@ class ChicletButtonTestPage extends StatelessWidget {
                           'Texto secundario más pequeño',
                           style: TextStyle(
                             fontSize: 14,
-                            color: Colors.grey[600],
+                            color: AppColors.textoSecundarioClaro,
                           ),
                         ),
                       ],

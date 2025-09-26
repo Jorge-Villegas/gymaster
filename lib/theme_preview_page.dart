@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/core/theme/app_theme.dart';
 
 class ThemePreviewPage extends StatefulWidget {
@@ -224,8 +225,8 @@ class _ThemePreviewPageState extends State<ThemePreviewPage> {
                 // Verificación explícita de la fuente
                 Text(
                   'Fuente actual: ${Theme.of(context).textTheme.bodyLarge?.fontFamily ?? "No definida"}',
-                  style: const TextStyle(
-                    color: Colors.red,
+                  style: TextStyle(
+                    color: AppColors.errorAmigable,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

@@ -266,7 +266,8 @@ class _AgregarEjercicioRutinaPageState
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.energyOrange.withValues(alpha: 0.15),
+                    color:
+                        AppColors.motivacionPrincipal.withValues(alpha: 0.15),
                     offset: const Offset(0, 2),
                     blurRadius: 8,
                   ),
@@ -276,7 +277,7 @@ class _AgregarEjercicioRutinaPageState
                 onPressed: () => context.pop(),
                 icon: Icon(
                   Icons.arrow_back_ios_rounded,
-                  color: AppColors.energyOrange,
+                  color: AppColors.motivacionPrincipal,
                   size: 20,
                 ),
                 padding: const EdgeInsets.all(12),
@@ -314,7 +315,7 @@ class _AgregarEjercicioRutinaPageState
         texto: '¡Guardar ejercicio!',
         tamano: TamanoBotonChiclet.grande,
         estilo: EstiloBotonChiclet.relleno,
-        colorFondo: AppColors.successGreen,
+        colorFondo: AppColors.exitoCompletado,
       ),
     );
   }
@@ -331,13 +332,13 @@ class _AgregarEjercicioRutinaPageState
               width: 80,
               height: 80,
               decoration: BoxDecoration(
-                color: AppColors.energyOrange.withOpacity(0.1),
+                color: AppColors.motivacionPrincipal.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: const Center(
+              child: Center(
                 child: CircularProgressIndicator(
-                  valueColor:
-                      AlwaysStoppedAnimation<Color>(AppColors.energyOrange),
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                      AppColors.motivacionPrincipal),
                   strokeWidth: 3,
                 ),
               ),

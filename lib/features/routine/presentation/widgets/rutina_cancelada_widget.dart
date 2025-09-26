@@ -109,7 +109,8 @@ class RutinaCanceladaWidget extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size.fromHeight(56),
                     elevation: 4,
-                    backgroundColor: AppColors.energyOrange, // Color emocional
+                    backgroundColor:
+                        AppColors.motivacionPrincipal, // Color emocional
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
@@ -121,7 +122,7 @@ class RutinaCanceladaWidget extends StatelessWidget {
                 Text(
                   '¡No te rindas! Puedes intentarlo de nuevo 💪',
                   style: EstilosTextoEmocional.aliento.copyWith(
-                    color: AppColors.warmOrange,
+                    color: AppColors.energiaActiva,
                     fontSize: 16,
                   ),
                   textAlign: TextAlign.center,

@@ -127,7 +127,7 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
             value: progress,
             backgroundColor: Colors.grey[300],
             valueColor:
-                const AlwaysStoppedAnimation<Color>(AppColors.energyOrange),
+                AlwaysStoppedAnimation<Color>(AppColors.motivacionPrincipal),
             minHeight: 6,
           ),
         ],
@@ -142,12 +142,12 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 20),
-          const Text(
+          Text(
             '¿Qué te motiva a entrenar?',
             style: EstilosTextoEmocional.motivacional,
           ),
           const SizedBox(height: 10),
-          const Text(
+          Text(
             'Selecciona todo lo que te inspire 💪',
             style: EstilosTextoEmocional.amigable,
           ),
@@ -210,12 +210,12 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 20),
-          const Text(
+          Text(
             '¿Cuáles son tus mayores desafíos?',
             style: EstilosTextoEmocional.motivacional,
           ),
           const SizedBox(height: 10),
-          const Text(
+          Text(
             'Conocerlos nos ayuda a ayudarte mejor 🤝',
             style: EstilosTextoEmocional.amigable,
           ),
@@ -278,12 +278,12 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 20),
-          const Text(
+          Text(
             '¿Cómo esperas sentirte después de entrenar?',
             style: EstilosTextoEmocional.motivacional,
           ),
           const SizedBox(height: 10),
-          const Text(
+          Text(
             'Esto nos ayuda a diseñar la experiencia perfecta ✨',
             style: EstilosTextoEmocional.amigable,
           ),
@@ -344,12 +344,12 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 20),
-          const Text(
+          Text(
             '¿Cómo te gusta que te motivemos?',
             style: EstilosTextoEmocional.motivacional,
           ),
           const SizedBox(height: 10),
-          const Text(
+          Text(
             'Personaliza tus recordatorios para mantenerte motivado 🔔',
             style: EstilosTextoEmocional.amigable,
           ),
@@ -433,10 +433,14 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.energyOrange : Colors.grey[100],
+          color: isSelected
+              ? AppColors.motivacionPrincipal
+              : AppColors.fondoSecundarioClaro,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isSelected ? AppColors.energyOrange : Colors.grey[300]!,
+            color: isSelected
+                ? AppColors.motivacionPrincipal
+                : AppColors.textoSecundarioClaro,
             width: isSelected ? 2 : 1,
           ),
         ),
@@ -494,7 +498,7 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
                         }
                       : null,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.energyOrange,
+                    backgroundColor: AppColors.motivacionPrincipal,
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                   ),

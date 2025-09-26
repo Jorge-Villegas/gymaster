@@ -76,8 +76,8 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                         icono: Icons.fitness_center_rounded,
                         tamano: TamanoBotonChiclet.mediano,
                         estilo: EstiloBotonChiclet.contorno,
-                        colorBorde: AppColors.successGreen,
-                        colorTexto: AppColors.successGreen,
+                        colorBorde: AppColors.exitoCompletado,
+                        colorTexto: AppColors.exitoCompletado,
                       ),
                     ),
                     const SizedBox(width: 12),
@@ -93,7 +93,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                         icono: Icons.pause_rounded,
                         tamano: TamanoBotonChiclet.mediano,
                         estilo: EstiloBotonChiclet.relleno,
-                        colorFondo: AppColors.motivationRed,
+                        colorFondo: AppColors.motivacionPrincipal,
                       ),
                     ),
                   ],
@@ -137,12 +137,12 @@ class EjerciciosLlenosWidget extends StatelessWidget {
         ejerciciosDeRutina.estado == EstadoSesionRutina.cancelado.name) {
       getButtonText = '¡Iniciar entrenamiento!';
       getIconPath = IconsaxPlusLinear.play;
-      getButtonColor = AppColors.successGreen;
+      getButtonColor = AppColors.exitoCompletado;
     }
     if (ejerciciosDeRutina.estado == EstadoSesionRutina.en_progreso.name) {
       getButtonText = 'Pausar entrenamiento';
       getIconPath = IconsaxPlusLinear.stop;
-      getButtonColor = AppColors.motivationRed;
+      getButtonColor = AppColors.motivacionPrincipal;
     }
 
     return Column(
@@ -190,10 +190,10 @@ class EjerciciosLlenosWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             margin: const EdgeInsets.symmetric(horizontal: 16),
             decoration: BoxDecoration(
-              color: AppColors.successGreen.withValues(alpha: 0.1),
+              color: AppColors.exitoCompletado.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
-                color: AppColors.successGreen.withValues(alpha: 0.2),
+                color: AppColors.exitoCompletado.withValues(alpha: 0.2),
               ),
             ),
             child: Row(
@@ -203,14 +203,14 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.fitness_center_rounded,
-                      color: AppColors.successGreen,
+                      color: AppColors.exitoCompletado,
                       size: 20,
                     ),
                     const SizedBox(width: 8),
                     Text(
                       'Ejercicios listos',
                       style: EstilosTextoEmocional.amigable.copyWith(
-                        color: AppColors.successGreen,
+                        color: AppColors.exitoCompletado,
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                       ),
@@ -221,7 +221,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
-                    color: AppColors.successGreen,
+                    color: AppColors.exitoCompletado,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
@@ -294,7 +294,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                     },
                     background: Container(
                       decoration: BoxDecoration(
-                        color: AppColors.motivationRed,
+                        color: AppColors.motivacionPrincipal,
                         borderRadius: BorderRadius.circular(16),
                       ),
                       alignment: Alignment.centerRight,

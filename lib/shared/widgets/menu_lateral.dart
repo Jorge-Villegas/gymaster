@@ -140,7 +140,7 @@ class _MenuLateralState extends State<MenuLateral> {
             top: mediaPadding.top,
             bottom: math.max(0, mediaPadding.bottom - 60),
           ),
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             // Fondo azul oscuro que ocupa toda la altura sin bordes redondeados
             color: AppColors.menuDarkBlue,
             // Sin borderRadius para que ocupe toda la pantalla de arriba a abajo

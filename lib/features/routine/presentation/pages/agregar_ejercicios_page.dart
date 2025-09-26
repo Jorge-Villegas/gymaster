@@ -38,12 +38,12 @@ class AgregarEjerciciosPage extends StatelessWidget {
             // Botón de volver minimalista
             Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColors.fondoPrincipalClaro,
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: const Color.fromARGB(255, 248, 243, 242)
-                        .withValues(alpha: 0.1),
+                    color:
+                        AppColors.textoSecundarioClaro.withValues(alpha: 0.1),
                     offset: const Offset(0, 2),
                     blurRadius: 8,
                   ),
@@ -53,7 +53,7 @@ class AgregarEjerciciosPage extends StatelessWidget {
                 onPressed: () => context.pop(),
                 icon: Icon(
                   Icons.arrow_back_ios_rounded,
-                  color: AppColors.energyOrange,
+                  color: AppColors.motivacionPrincipal,
                   size: 20,
                 ),
                 padding: const EdgeInsets.all(12),
@@ -77,7 +77,7 @@ class AgregarEjerciciosPage extends StatelessWidget {
                   Text(
                     'Selecciona el grupo muscular 💪',
                     style: EstilosTextoEmocional.amigable.copyWith(
-                      color: AppColors.energyOrange,
+                      color: AppColors.motivacionPrincipal,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ),
@@ -88,11 +88,11 @@ class AgregarEjerciciosPage extends StatelessWidget {
             // Botón de búsqueda opcional
             Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColors.fondoPrincipalClaro,
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.motivationRed.withValues(alpha: 0.1),
+                    color: AppColors.motivacionPrincipal.withValues(alpha: 0.1),
                     offset: const Offset(0, 2),
                     blurRadius: 8,
                   ),
@@ -102,7 +102,7 @@ class AgregarEjerciciosPage extends StatelessWidget {
                 onPressed: () => _mostrarBusqueda(context),
                 icon: Icon(
                   Icons.search_rounded,
-                  color: AppColors.motivationRed,
+                  color: AppColors.motivacionPrincipal,
                   size: 20,
                 ),
                 padding: const EdgeInsets.all(12),
@@ -137,7 +137,7 @@ class AgregarEjerciciosPage extends StatelessWidget {
           gradient: LinearGradient(
             colors: [
               AppColors.backgroundLight,
-              Colors.white,
+              AppColors.fondoPrincipalClaro,
               AppColors.backgroundLight.withValues(alpha: 0.8),
             ],
             begin: Alignment.topCenter,
@@ -188,13 +188,13 @@ class AgregarEjerciciosPage extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: AppColors.warmOrange.withValues(alpha: 0.1),
+                color: AppColors.motivacionPrincipal.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Icon(
                 Icons.fitness_center_rounded,
                 size: 80,
-                color: AppColors.warmOrange,
+                color: AppColors.motivacionPrincipal,
               ),
             ),
             const SizedBox(height: 24),
@@ -224,7 +224,7 @@ class AgregarEjerciciosPage extends StatelessWidget {
               icono: Icons.refresh_rounded,
               tamano: TamanoBotonChiclet.grande,
               estilo: EstiloBotonChiclet.relleno,
-              colorFondo: AppColors.motivationRed,
+              colorFondo: AppColors.motivacionPrincipal,
               onPressed: () => context.read<MusculoCubit>().getAllMusculo(),
             ),
           ],
@@ -237,7 +237,7 @@ class AgregarEjerciciosPage extends StatelessWidget {
   Widget _buildShimmerLoadingEffect() {
     return Shimmer.fromColors(
       baseColor: AppColors.backgroundLight,
-      highlightColor: Colors.white,
+      highlightColor: AppColors.fondoPrincipalClaro,
       child: ListView.builder(
         itemCount: 8,
         padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -245,7 +245,7 @@ class AgregarEjerciciosPage extends StatelessWidget {
           return Container(
             margin: const EdgeInsets.symmetric(vertical: 6.0),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.fondoPrincipalClaro,
               borderRadius: BorderRadius.circular(16),
               boxShadow: [
                 BoxShadow(
@@ -264,7 +264,7 @@ class AgregarEjerciciosPage extends StatelessWidget {
                     width: 64,
                     height: 64,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: AppColors.fondoPrincipalClaro,
                       borderRadius: BorderRadius.circular(16),
                     ),
                   ),
@@ -278,7 +278,7 @@ class AgregarEjerciciosPage extends StatelessWidget {
                           height: 18.0,
                           width: double.infinity,
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: AppColors.fondoPrincipalClaro,
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
@@ -287,7 +287,7 @@ class AgregarEjerciciosPage extends StatelessWidget {
                           height: 14.0,
                           width: 150,
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: AppColors.fondoPrincipalClaro,
                             borderRadius: BorderRadius.circular(6),
                           ),
                         ),
@@ -299,7 +299,7 @@ class AgregarEjerciciosPage extends StatelessWidget {
                     width: 42,
                     height: 42,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: AppColors.fondoPrincipalClaro,
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
@@ -328,7 +328,7 @@ class AgregarEjerciciosPage extends StatelessWidget {
             child: Container(
               margin: const EdgeInsets.symmetric(vertical: 6.0),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColors.fondoPrincipalClaro,
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
@@ -416,14 +416,14 @@ class AgregarEjerciciosPage extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: AppColors.achievementGold
+                            color: AppColors.logroDesbloqueado
                                 .withValues(alpha: 0.15),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Icon(
                             Icons.arrow_forward_ios_rounded,
                             size: 18,
-                            color: AppColors.achievementGold,
+                            color: AppColors.logroDesbloqueado,
                           ),
                         ),
                       ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
+import 'package:gymaster/core/theme/app_colors.dart';
 
 class CustomDataTable extends StatelessWidget {
   final List<String> headers;
@@ -24,7 +25,7 @@ class CustomDataTable extends StatelessWidget {
   final double? maxHeight;
   final double? minHeight;
 
-  const CustomDataTable({
+  CustomDataTable({
     super.key,
     required this.headers,
     required this.data,
@@ -33,9 +34,9 @@ class CustomDataTable extends StatelessWidget {
     this.onRowSelected,
     this.onRemoveRow,
     this.showActions = true,
-    this.backgroundColor = const Color(0xFFE3F2FD),
-    this.selectionColor = const Color(0xFFBBDEFB),
-    this.headerColor = const Color(0xFF1976D2),
+    Color? backgroundColor,
+    Color? selectionColor,
+    Color? headerColor,
     this.headerTextColor = Colors.white,
     this.headerTextSize = 16.0,
     this.bodyTextColor = Colors.black,
@@ -47,7 +48,9 @@ class CustomDataTable extends StatelessWidget {
     this.cellTextAlign = TextAlign.left,
     this.maxHeight,
     this.minHeight,
-  });
+  })  : backgroundColor = backgroundColor ?? AppColors.tableBackgroundColor,
+        selectionColor = selectionColor ?? AppColors.tableSelectionColor,
+        headerColor = headerColor ?? AppColors.tableHeaderColor;
 
   @override
   Widget build(BuildContext context) {

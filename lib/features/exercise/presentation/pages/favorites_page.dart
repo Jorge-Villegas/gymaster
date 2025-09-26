@@ -302,11 +302,11 @@ class _FavoritesPageState extends State<FavoritesPage>
                               vertical: 4,
                             ),
                             decoration: BoxDecoration(
-                              color: AppColors.calmBlue.withValues(alpha: 0.1),
+                              color: AppColors.descansoActivo.withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(
                                 color:
-                                    AppColors.calmBlue.withValues(alpha: 0.3),
+                                    AppColors.descansoActivo.withValues(alpha: 0.3),
                                 width: 0.5,
                               ),
                             ),
@@ -315,7 +315,7 @@ class _FavoritesPageState extends State<FavoritesPage>
                               style:
                                   EstilosTextoEmocional.recuperacion.copyWith(
                                 fontSize: 12,
-                                color: AppColors.calmBlue,
+                                color: AppColors.descansoActivo,
                               ),
                             ),
                           );
@@ -353,16 +353,16 @@ class _FavoritesPageState extends State<FavoritesPage>
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: AppColors.motivationRed.withValues(alpha: 0.1),
+          color: AppColors.motivacionPrincipal.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: AppColors.motivationRed.withValues(alpha: 0.3),
+            color: AppColors.motivacionPrincipal.withValues(alpha: 0.3),
             width: 1,
           ),
         ),
         child: Icon(
           IconsaxPlusBold.heart,
-          color: AppColors.motivationRed,
+          color: AppColors.motivacionPrincipal,
           size: 20,
         ),
       ),
@@ -381,7 +381,7 @@ class _FavoritesPageState extends State<FavoritesPage>
           children: [
             Icon(
               IconsaxPlusLinear.heart_slash,
-              color: AppColors.motivationRed,
+              color: AppColors.motivacionPrincipal,
               size: 24,
             ),
             const SizedBox(width: 8),
@@ -424,7 +424,7 @@ class _FavoritesPageState extends State<FavoritesPage>
               _loadFavorites();
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.motivationRed,
+              backgroundColor: AppColors.motivacionPrincipal,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
@@ -609,7 +609,7 @@ class _FavoritesPageState extends State<FavoritesPage>
                 Icon(
                   IconsaxPlusLinear.emoji_sad,
                   size: 64,
-                  color: AppColors.motivationRed.withValues(alpha: 0.7),
+                  color: AppColors.motivacionPrincipal.withValues(alpha: 0.7),
                 ),
                 const SizedBox(height: 24),
                 Text(

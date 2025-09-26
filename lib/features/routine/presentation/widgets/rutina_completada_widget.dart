@@ -211,7 +211,7 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
               borderRadius: BorderRadius.circular(heroSize / 2),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.achievementGold.withOpacity(0.4),
+                  color: AppColors.logroDesbloqueado.withOpacity(0.4),
                   blurRadius: 30,
                   spreadRadius: 10,
                 ),
@@ -271,14 +271,14 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                AppColors.achievementGold.withOpacity(0.9),
-                AppColors.motivationRed.withOpacity(0.8),
+                AppColors.logroDesbloqueado.withOpacity(0.9),
+                AppColors.motivacionPrincipal.withOpacity(0.8),
               ],
             ),
             borderRadius: BorderRadius.circular(24),
             boxShadow: [
               BoxShadow(
-                color: AppColors.achievementGold.withOpacity(0.3),
+                color: AppColors.logroDesbloqueado.withOpacity(0.3),
                 blurRadius: 12,
                 offset: const Offset(0, 4),
               ),
@@ -326,7 +326,7 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
             subtituloContextual,
             style: EstilosTextoEmocional.aliento.copyWith(
               fontSize: 16,
-              color: AppColors.successGreen,
+              color: AppColors.exitoCompletado,
               fontWeight: FontWeight.w600,
             ),
             textAlign: TextAlign.center,
@@ -336,7 +336,7 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
             MensajesEmocionalesService.obtenerEstadisticasContext(
                 _totalRutinasCompletadas),
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: AppColors.motivationRed,
+                  color: AppColors.motivacionPrincipal,
                   fontWeight: FontWeight.w500,
                 ),
             textAlign: TextAlign.center,
@@ -382,7 +382,7 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
                     titulo: 'Ejercicios',
                     textoCuerpo: widget.state.totalEjercicios.toString(),
                     icono: Icons.fitness_center,
-                    colorFondo: AppColors.motivationRed,
+                    colorFondo: AppColors.motivacionPrincipal,
                   ),
                 ),
                 // Card de Completado
@@ -393,7 +393,7 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
                     titulo: 'Tiempo',
                     textoCuerpo: _formatearTiempo(widget.state.tiempoTotal),
                     icono: Icons.timer,
-                    colorFondo: AppColors.successGreen,
+                    colorFondo: AppColors.exitoCompletado,
                   ),
                 ),
               ],
@@ -438,7 +438,7 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
                 ChicletButton(
                   texto: 'Continuar Entrenando',
                   icono: Icons.fitness_center,
-                  colorFondo: AppColors.successGreen,
+                  colorFondo: AppColors.exitoCompletado,
                   colorTexto: Colors.white,
                   onPressed: () => _navegarAlInicio(context),
                   radioBorde: 16,
@@ -455,8 +455,8 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
                   texto: 'Ver Mi Progreso',
                   icono: Icons.trending_up,
                   colorFondo: Colors.white,
-                  colorTexto: AppColors.successGreen,
-                  colorBorde: AppColors.successGreen,
+                  colorTexto: AppColors.exitoCompletado,
+                  colorBorde: AppColors.exitoCompletado,
                   onPressed: () => _navegarAlHistorial(context),
                   radioBorde: 16,
                   paddingHorizontal: 30,

@@ -89,7 +89,7 @@ class DetalleRutinaScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.celebrationPurple.withValues(alpha: 0.1),
+                    color: AppColors.exitoCompletado.withValues(alpha: 0.1),
                     offset: const Offset(0, 2),
                     blurRadius: 8,
                   ),
@@ -99,7 +99,7 @@ class DetalleRutinaScreen extends StatelessWidget {
                 onPressed: () => context.go('/'),
                 icon: Icon(
                   Icons.arrow_back_ios_rounded,
-                  color: AppColors.celebrationPurple,
+                  color: AppColors.exitoCompletado,
                   size: 20,
                 ),
                 padding: const EdgeInsets.all(12),
@@ -135,7 +135,7 @@ class DetalleRutinaScreen extends StatelessWidget {
                   Text(
                     '¡Hora de brillar! 💪',
                     style: EstilosTextoEmocional.amigable.copyWith(
-                      color: AppColors.celebrationPurple,
+                      color: AppColors.exitoCompletado,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ),
@@ -150,11 +150,12 @@ class DetalleRutinaScreen extends StatelessWidget {
                 width: 48,
                 height: 48,
                 decoration: BoxDecoration(
-                  color: AppColors.energyOrange,
+                  color: AppColors.motivacionPrincipal,
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.energyOrange.withValues(alpha: 0.3),
+                      color:
+                          AppColors.motivacionPrincipal.withValues(alpha: 0.3),
                       offset: const Offset(0, 4),
                       blurRadius: 12,
                     ),
@@ -217,8 +218,8 @@ class DetalleRutinaScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    AppColors.calmBlue.withOpacity(0.1),
-                    AppColors.peacefulBlue.withOpacity(0.05),
+                    AppColors.descansoActivo.withOpacity(0.1),
+                    AppColors.recuperacionCompleta.withOpacity(0.05),
                   ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
@@ -230,14 +231,14 @@ class DetalleRutinaScreen extends StatelessWidget {
                 children: [
                   Icon(
                     Icons.fitness_center,
-                    color: AppColors.calmBlue,
+                    color: AppColors.descansoActivo,
                     size: 24,
                   ),
                   const SizedBox(width: 12),
                   Text(
                     'Preparando tu rutina perfecta...',
                     style: EstilosTextoEmocional.amigable.copyWith(
-                      color: AppColors.calmBlue,
+                      color: AppColors.descansoActivo,
                       fontSize: 16,
                     ),
                   ),
@@ -247,8 +248,8 @@ class DetalleRutinaScreen extends StatelessWidget {
             // Shimmer loading mejorado
             Expanded(
               child: Shimmer.fromColors(
-                baseColor: AppColors.calmBlue.withOpacity(0.1),
-                highlightColor: AppColors.peacefulBlue.withOpacity(0.3),
+                baseColor: AppColors.descansoActivo.withOpacity(0.1),
+                highlightColor: AppColors.relajacionProfunda.withOpacity(0.3),
                 period: const Duration(milliseconds: 1200),
                 child: ListView.builder(
                   itemCount: 3,
@@ -260,7 +261,7 @@ class DetalleRutinaScreen extends StatelessWidget {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
-                          color: AppColors.calmBlue.withOpacity(0.2),
+                          color: AppColors.descansoActivo.withOpacity(0.2),
                           width: 1,
                         ),
                       ),
@@ -286,8 +287,8 @@ class DetalleRutinaScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    AppColors.motivationRed.withOpacity(0.1),
-                    AppColors.fireRed.withOpacity(0.05),
+                    AppColors.motivacionPrincipal.withOpacity(0.1),
+                    AppColors.errorAmigable.withOpacity(0.05),
                   ],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
@@ -298,7 +299,7 @@ class DetalleRutinaScreen extends StatelessWidget {
                 children: [
                   Icon(
                     Icons.error_outline_rounded,
-                    color: AppColors.motivationRed,
+                    color: AppColors.motivacionPrincipal,
                     size: 48,
                   ),
                   const SizedBox(height: 16),
@@ -306,7 +307,7 @@ class DetalleRutinaScreen extends StatelessWidget {
                     'Ops, algo salió mal',
                     style: EstilosTextoEmocional.motivacional.copyWith(
                       fontSize: 20,
-                      color: AppColors.motivationRed,
+                      color: AppColors.motivacionPrincipal,
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -356,13 +357,13 @@ class DetalleRutinaScreen extends StatelessWidget {
           Icon(
             Icons.fitness_center_outlined,
             size: 64,
-            color: AppColors.calmBlue.withOpacity(0.6),
+            color: AppColors.descansoActivo.withOpacity(0.6),
           ),
           const SizedBox(height: 16),
           Text(
             'Cargando tu rutina...',
             style: EstilosTextoEmocional.amigable.copyWith(
-              color: AppColors.calmBlue,
+              color: AppColors.descansoActivo,
               fontSize: 18,
             ),
           ),

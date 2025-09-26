@@ -48,7 +48,7 @@ class _ChicletButtonDemoPageState extends State<ChicletButtonDemoPage> {
             ChicletButton(
               texto: 'Pausar',
               icono: Icons.pause,
-              colorFondo: AppColors.calmBlue,
+              colorFondo: AppColors.descansoActivo,
               colorTexto: Colors.white,
               onPressed: _pausarRutina,
               estaHabilitado: true,
@@ -60,7 +60,7 @@ class _ChicletButtonDemoPageState extends State<ChicletButtonDemoPage> {
             ChicletButton(
               texto: 'Terminar Rutina',
               icono: Icons.check_circle_outline,
-              colorFondo: AppColors.motivationRed,
+              colorFondo: AppColors.motivacionPrincipal,
               colorTexto: Colors.white,
               onPressed: _mostrarDialogoTerminarRutina,
               tamano: TamanoBotonChiclet.grande,
@@ -128,7 +128,7 @@ class _ChicletButtonDemoPageState extends State<ChicletButtonDemoPage> {
               ChicletButton(
                 texto: 'Iniciar Rutina',
                 icono: Icons.play_arrow,
-                colorFondo: AppColors.energyOrange,
+                colorFondo: AppColors.motivacionPrincipal,
                 colorTexto: Colors.white,
                 onPressed: _iniciarRutina,
                 estaCargando: _isLoading,
@@ -156,7 +156,7 @@ class _ChicletButtonDemoPageState extends State<ChicletButtonDemoPage> {
           children: [
             Row(
               children: [
-                const Icon(
+                Icon(
                   Icons.fitness_center,
                   color: AppColors.primary,
                   size: 28,
@@ -174,7 +174,7 @@ class _ChicletButtonDemoPageState extends State<ChicletButtonDemoPage> {
                       ),
                       Text(
                         '$_musculoActual • Serie $_serieActual/$_totalSeries',
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: AppColors.textSecondary,
                           fontSize: 14,
                         ),
@@ -213,7 +213,7 @@ class _ChicletButtonDemoPageState extends State<ChicletButtonDemoPage> {
       children: [
         Text(
           label,
-          style: const TextStyle(
+          style: TextStyle(
             color: AppColors.textSecondary,
             fontSize: 12,
             fontWeight: FontWeight.w500,
@@ -268,7 +268,7 @@ class _ChicletButtonDemoPageState extends State<ChicletButtonDemoPage> {
           ChicletButton(
             texto: 'Descansando... 01:30',
             icono: Icons.access_time,
-            colorFondo: AppColors.restTeal,
+            colorFondo: AppColors.recuperacionCompleta,
             colorTexto: Colors.white,
             onPressed: _terminarDescanso,
             estaHabilitado: true,
@@ -282,7 +282,7 @@ class _ChicletButtonDemoPageState extends State<ChicletButtonDemoPage> {
         ChicletButton(
           texto: 'Pausar',
           icono: Icons.pause,
-          colorFondo: AppColors.calmBlue,
+          colorFondo: AppColors.descansoActivo,
           colorTexto: Colors.white,
           onPressed: _pausarRutina,
           tamano: TamanoBotonChiclet.mediano,
@@ -295,7 +295,7 @@ class _ChicletButtonDemoPageState extends State<ChicletButtonDemoPage> {
         ChicletButton(
           texto: 'Terminar',
           icono: Icons.check_circle_outline,
-          colorFondo: AppColors.motivationRed,
+          colorFondo: AppColors.motivacionPrincipal,
           colorTexto: Colors.white,
           onPressed: _mostrarDialogoTerminarRutina,
           tamano: TamanoBotonChiclet.grande,
@@ -338,7 +338,7 @@ class _ChicletButtonDemoPageState extends State<ChicletButtonDemoPage> {
               child: ChicletButton(
                 texto: 'Editar Peso',
                 icono: Icons.edit,
-                colorFondo: AppColors.focusIndigo,
+                colorFondo: AppColors.secundario,
                 colorTexto: Colors.white,
                 onPressed: _editarPeso,
                 tamano: TamanoBotonChiclet.mediano,
@@ -354,7 +354,7 @@ class _ChicletButtonDemoPageState extends State<ChicletButtonDemoPage> {
               child: ChicletButton(
                 texto: 'Agregar Ejercicio',
                 icono: Icons.add_circle,
-                colorFondo: AppColors.achievementGold,
+                colorFondo: AppColors.logroDesbloqueado,
                 colorTexto: Colors.white,
                 onPressed: _agregarEjercicio,
                 estaHabilitado: true,
@@ -367,7 +367,7 @@ class _ChicletButtonDemoPageState extends State<ChicletButtonDemoPage> {
               child: ChicletButton(
                 texto: 'Ver Historial',
                 icono: Icons.history,
-                colorFondo: AppColors.peacefulBlue,
+                colorFondo: AppColors.descansoActivo,
                 colorTexto: Colors.white,
                 onPressed: _verHistorial,
                 tamano: TamanoBotonChiclet.pequeno,
@@ -394,7 +394,7 @@ class _ChicletButtonDemoPageState extends State<ChicletButtonDemoPage> {
         ChicletButton(
           texto: '¡Rutina Completada!',
           icono: Icons.celebration,
-          colorFondo: AppColors.celebrationPurple,
+          colorFondo: AppColors.exitoCompletado,
           colorTexto: Colors.white,
           onPressed: _celebrarLogro,
           tamano: TamanoBotonChiclet.grande,
@@ -409,7 +409,7 @@ class _ChicletButtonDemoPageState extends State<ChicletButtonDemoPage> {
         ChicletButton(
           texto: '¡Nuevo Record Personal!',
           icono: Icons.emoji_events,
-          colorFondo: AppColors.achievementGold,
+          colorFondo: AppColors.logroDesbloqueado,
           colorTexto: Colors.white,
           onPressed: _celebrarRecord,
           tamano: TamanoBotonChiclet.grande,
@@ -513,7 +513,7 @@ class _ChicletButtonDemoPageState extends State<ChicletButtonDemoPage> {
               icono: IconsaxPlusLinear.minus,
               estilo: EstiloBotonChiclet.contorno,
               tamano: TamanoBotonChiclet.pequeno,
-              colorFondo: AppColors.motivationRed,
+              colorFondo: AppColors.motivacionPrincipal,
               onPressed: () => _mostrarSnackbar('Eliminar elemento'),
             ),
             // Botón configuración (text)
@@ -531,7 +531,7 @@ class _ChicletButtonDemoPageState extends State<ChicletButtonDemoPage> {
               icono: IconsaxPlusLinear.edit,
               estilo: EstiloBotonChiclet.relleno,
               tamano: TamanoBotonChiclet.mediano,
-              colorFondo: AppColors.energyOrange,
+              colorFondo: AppColors.motivacionPrincipal,
               onPressed: () => _mostrarSnackbar('Editar'),
             ),
           ],
@@ -549,7 +549,7 @@ class _ChicletButtonDemoPageState extends State<ChicletButtonDemoPage> {
               icono: IconsaxPlusLinear.heart,
               estilo: EstiloBotonChiclet.contorno,
               tamano: TamanoBotonChiclet.pequeno,
-              colorFondo: AppColors.motivationRed,
+              colorFondo: AppColors.motivacionPrincipal,
               radioBorde: 18,
               onPressed: () => _mostrarSnackbar('Favorito - Pequeño'),
             ),
@@ -559,7 +559,7 @@ class _ChicletButtonDemoPageState extends State<ChicletButtonDemoPage> {
               icono: IconsaxPlusLinear.star,
               estilo: EstiloBotonChiclet.relleno,
               tamano: TamanoBotonChiclet.mediano,
-              colorFondo: AppColors.achievementGold,
+              colorFondo: AppColors.logroDesbloqueado,
               radioBorde: 24,
               onPressed: () => _mostrarSnackbar('Estrella - Mediano'),
             ),
@@ -569,7 +569,7 @@ class _ChicletButtonDemoPageState extends State<ChicletButtonDemoPage> {
               icono: IconsaxPlusLinear.crown,
               estilo: EstiloBotonChiclet.relleno,
               tamano: TamanoBotonChiclet.grande,
-              colorFondo: AppColors.celebrationPurple,
+              colorFondo: AppColors.exitoCompletado,
               radioBorde: 28,
               onPressed: () => _mostrarSnackbar('Corona - Grande'),
             ),
@@ -588,7 +588,7 @@ class _ChicletButtonDemoPageState extends State<ChicletButtonDemoPage> {
               child: ChicletButton(
                 texto: 'Filled',
                 estilo: EstiloBotonChiclet.relleno,
-                colorFondo: AppColors.energyOrange,
+                colorFondo: AppColors.motivacionPrincipal,
                 onPressed: () => _mostrarSnackbar('Estilo filled'),
               ),
             ),
@@ -597,7 +597,7 @@ class _ChicletButtonDemoPageState extends State<ChicletButtonDemoPage> {
               child: ChicletButton(
                 texto: 'Outlined',
                 estilo: EstiloBotonChiclet.contorno,
-                colorFondo: AppColors.calmBlue,
+                colorFondo: AppColors.descansoActivo,
                 onPressed: () => _mostrarSnackbar('Estilo outlined'),
               ),
             ),
@@ -606,7 +606,7 @@ class _ChicletButtonDemoPageState extends State<ChicletButtonDemoPage> {
               child: ChicletButton(
                 texto: 'Text',
                 estilo: EstiloBotonChiclet.texto,
-                colorFondo: AppColors.achievementGold,
+                colorFondo: AppColors.logroDesbloqueado,
                 onPressed: () => _mostrarSnackbar('Estilo text'),
               ),
             ),
@@ -698,14 +698,13 @@ class _ChicletButtonDemoPageState extends State<ChicletButtonDemoPage> {
 
   void _celebrarLogro() async {
     await HapticFeedbackHelper.vibracionLogro();
-    _mostrarSnackbar('¡Celebrando logro! 🎉',
-        color: AppColors.celebrationPurple);
+    _mostrarSnackbar('¡Celebrando logro! 🎉', color: AppColors.exitoCompletado);
   }
 
   void _celebrarRecord() async {
     await HapticFeedbackHelper.vibracionLogro();
     _mostrarSnackbar('¡Nuevo Record Personal! 🏆',
-        color: AppColors.achievementGold);
+        color: AppColors.logroDesbloqueado);
   }
 
   void _mostrarDialogoTerminarRutina() {
@@ -725,7 +724,7 @@ class _ChicletButtonDemoPageState extends State<ChicletButtonDemoPage> {
           ChicletButton(
             texto: 'Terminar Rutina',
             icono: Icons.check_circle_outline,
-            colorFondo: AppColors.motivationRed,
+            colorFondo: AppColors.motivacionPrincipal,
             colorTexto: Colors.white,
             onPressed: () {
               Navigator.pop(context);
@@ -748,7 +747,7 @@ class _ChicletButtonDemoPageState extends State<ChicletButtonDemoPage> {
       _enDescanso = false;
       _serieActual = 1;
     });
-    _mostrarSnackbar('Rutina terminada', color: AppColors.motivationRed);
+    _mostrarSnackbar('Rutina terminada', color: AppColors.motivacionPrincipal);
   }
 
   void _mostrarSnackbar(String mensaje, {Color? color}) {

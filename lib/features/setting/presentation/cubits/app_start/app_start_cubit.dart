@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gymaster/core/error/failures.dart';
 import 'package:gymaster/features/setting/domain/usecases/is_onboarding_completed_usecase.dart';
 
 part 'app_start_state.dart';

@@ -325,7 +325,7 @@ class _CelebracionRutinaPageState extends State<CelebracionRutinaPage>
               titulo: 'Ejercicios',
               textoCuerpo: widget.estadoCompletado.totalEjercicios.toString(),
               icono: Icons.fitness_center,
-              colorFondo: AppColors.motivationRed,
+              colorFondo: AppColors.motivacionPrincipal,
             ),
           ),
           SizedBox(width: esMovil ? 8 : 16),
@@ -334,7 +334,7 @@ class _CelebracionRutinaPageState extends State<CelebracionRutinaPage>
               titulo: 'Series',
               textoCuerpo: widget.estadoCompletado.totalSeries.toString(),
               icono: Icons.repeat,
-              colorFondo: AppColors.successGreen,
+              colorFondo: AppColors.exitoCompletado,
             ),
           ),
           SizedBox(width: esMovil ? 8 : 16),
@@ -344,7 +344,7 @@ class _CelebracionRutinaPageState extends State<CelebracionRutinaPage>
               textoCuerpo:
                   _obtenerTiempoFormateado(widget.estadoCompletado.tiempoTotal),
               icono: Icons.timer,
-              colorFondo: AppColors.achievementGold,
+              colorFondo: AppColors.logroDesbloqueado,
             ),
           ),
         ],
@@ -362,10 +362,10 @@ class _CelebracionRutinaPageState extends State<CelebracionRutinaPage>
           context.go('/'); // Volver al inicio
         },
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.achievementGold,
+          backgroundColor: AppColors.logroDesbloqueado,
           foregroundColor: Colors.white,
           elevation: 8,
-          shadowColor: AppColors.achievementGold.withValues(alpha: 0.4),
+          shadowColor: AppColors.logroDesbloqueado.withValues(alpha: 0.4),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),

@@ -218,13 +218,13 @@ class _RoutineActionFeedbackState extends State<RoutineActionFeedback>
   Color _getBackgroundColor() {
     switch (widget.type) {
       case RoutineActionType.delete:
-        return AppColors.motivationRed;
+        return AppColors.errorAmigable;
       case RoutineActionType.restore:
-        return AppColors.successGreen;
+        return AppColors.exitoCompletado;
       case RoutineActionType.success:
-        return AppColors.successGreen;
+        return AppColors.exitoCompletado;
       case RoutineActionType.error:
-        return AppColors.motivationRed;
+        return AppColors.errorAmigable;
     }
   }
 
@@ -239,28 +239,6 @@ class _RoutineActionFeedbackState extends State<RoutineActionFeedback>
       case RoutineActionType.error:
         return IconsaxPlusLinear.danger;
     }
-  }
-
-  /// Muestra el feedback de acción emocional
-  static void show({
-    required BuildContext context,
-    required String message,
-    required RoutineActionType type,
-    VoidCallback? onUndo,
-    Duration duration = const Duration(seconds: 4),
-  }) {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      isDismissible: true,
-      builder: (context) => RoutineActionFeedback(
-        message: message,
-        type: type,
-        onUndo: onUndo,
-        duration: duration,
-      ),
-    );
   }
 }
 

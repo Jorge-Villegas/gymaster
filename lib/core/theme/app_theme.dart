@@ -7,20 +7,20 @@ class AppTheme {
   static final ThemeData darkTheme = ThemeData(
     fontFamily: 'Poppins',
     useMaterial3: true,
-    colorScheme: const ColorScheme.dark(
+    colorScheme: ColorScheme.dark(
       primary: AppColors.primary,
       secondary: AppColors.secondary,
       surface: AppColors.backgroundDark,
-      error: AppColors.motivationRed, // Error emocional
+      error: AppColors.errorAmigable, // Error emocional
       onPrimary: Colors.white,
       onSecondary: Colors.white,
       onSurface: AppColors.textLight,
       // Colores adicionales emocionales
-      tertiary: AppColors.energyOrange,
+      tertiary: AppColors.motivacionPrincipal,
       onTertiary: Colors.white,
     ),
     scaffoldBackgroundColor: AppColors.backgroundDark,
-    textTheme: const TextTheme(
+    textTheme: TextTheme(
       bodyLarge: TextStyle(fontSize: 20.0, color: AppColors.textLight),
       bodyMedium: TextStyle(fontSize: 18.0, color: AppColors.textLight),
       bodySmall: TextStyle(fontSize: 16.0, color: AppColors.textLight),
@@ -34,25 +34,26 @@ class AppTheme {
       displayMedium: TextStyle(fontSize: 30.0, color: AppColors.textLight),
       displaySmall: TextStyle(fontSize: 26.0, color: AppColors.textLight),
     ),
-    appBarTheme: const AppBarTheme(
+    appBarTheme: AppBarTheme(
       centerTitle: true,
       elevation: 0,
       backgroundColor: AppColors.backgroundDark,
     ),
-    floatingActionButtonTheme: const FloatingActionButtonThemeData(
-      backgroundColor: AppColors.energyOrange, // FAB emocional
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: AppColors.motivacionPrincipal, // FAB emocional
       foregroundColor: Colors.white,
       elevation: 6,
     ),
-    inputDecorationTheme: const InputDecorationTheme(
+    inputDecorationTheme: InputDecorationTheme(
       floatingLabelStyle: TextStyle(color: AppColors.primary),
       border: OutlineInputBorder(),
       enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: AppColors.calmBlue), // Border emocional
+        borderSide:
+            BorderSide(color: AppColors.descansoActivo), // Border emocional
       ),
       focusedBorder: OutlineInputBorder(
         borderSide:
-            BorderSide(color: AppColors.energyOrange), // Focus emocional
+            BorderSide(color: AppColors.motivacionPrincipal), // Focus emocional
       ),
     ),
   );
@@ -60,20 +61,20 @@ class AppTheme {
   static final ThemeData lightTheme = ThemeData(
     fontFamily: 'Poppins',
     useMaterial3: true,
-    colorScheme: const ColorScheme.light(
+    colorScheme: ColorScheme.light(
       primary: AppColors.primary,
       secondary: AppColors.secondary,
       surface: AppColors.backgroundLight,
-      error: AppColors.motivationRed, // Error emocional
+      error: AppColors.errorAmigable, // Error emocional
       onPrimary: Colors.white,
       onSecondary: Colors.white,
       onSurface: AppColors.textDark,
       // Colores adicionales emocionales
-      tertiary: AppColors.energyOrange,
+      tertiary: AppColors.motivacionPrincipal,
       onTertiary: Colors.white,
     ),
     scaffoldBackgroundColor: AppColors.backgroundLight,
-    textTheme: const TextTheme(
+    textTheme: TextTheme(
       bodyLarge: TextStyle(fontSize: 20.0, color: AppColors.textDark),
       bodyMedium: TextStyle(fontSize: 18.0, color: AppColors.textDark),
       bodySmall: TextStyle(fontSize: 16.0, color: AppColors.textDark),
@@ -87,25 +88,26 @@ class AppTheme {
       displayMedium: TextStyle(fontSize: 30.0, color: AppColors.textDark),
       displaySmall: TextStyle(fontSize: 26.0, color: AppColors.textDark),
     ),
-    appBarTheme: const AppBarTheme(
+    appBarTheme: AppBarTheme(
       centerTitle: true,
       elevation: 0,
       backgroundColor: AppColors.backgroundLight,
     ),
-    floatingActionButtonTheme: const FloatingActionButtonThemeData(
-      backgroundColor: AppColors.energyOrange, // FAB emocional
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: AppColors.motivacionPrincipal, // FAB emocional
       foregroundColor: Colors.white,
       elevation: 6,
     ),
-    inputDecorationTheme: const InputDecorationTheme(
+    inputDecorationTheme: InputDecorationTheme(
       floatingLabelStyle: TextStyle(color: AppColors.primary),
       border: OutlineInputBorder(),
       enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: AppColors.calmBlue), // Border emocional
+        borderSide:
+            BorderSide(color: AppColors.descansoActivo), // Border emocional
       ),
       focusedBorder: OutlineInputBorder(
         borderSide:
-            BorderSide(color: AppColors.energyOrange), // Focus emocional
+            BorderSide(color: AppColors.motivacionPrincipal), // Focus emocional
       ),
     ),
   );

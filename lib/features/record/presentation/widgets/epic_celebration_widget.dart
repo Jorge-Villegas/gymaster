@@ -122,9 +122,9 @@ class _EpicCelebrationWidgetState extends State<EpicCelebrationWidget>
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              AppColors.achievementGold.withValues(alpha: 0.95),
-              AppColors.energyOrange.withValues(alpha: 0.95),
-              AppColors.motivationRed.withValues(alpha: 0.95),
+              AppColors.logroDesbloqueado.withValues(alpha: 0.95),
+              AppColors.motivacionPrincipal.withValues(alpha: 0.95),
+              AppColors.motivacionPrincipal.withValues(alpha: 0.95),
             ],
           ),
         ),
@@ -182,11 +182,11 @@ class _EpicCelebrationWidgetState extends State<EpicCelebrationWidget>
 
   Color _getConfettiColor(int index) {
     final colors = [
-      AppColors.achievementGold,
-      AppColors.successGreen,
-      AppColors.energyOrange,
-      AppColors.calmBlue,
-      AppColors.motivationRed,
+      AppColors.logroDesbloqueado,
+      AppColors.exitoCompletado,
+      AppColors.motivacionPrincipal,
+      AppColors.descansoActivo,
+      AppColors.motivacionPrincipal,
     ];
     return colors[index % colors.length];
   }
@@ -241,7 +241,7 @@ class _EpicCelebrationWidgetState extends State<EpicCelebrationWidget>
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.achievementGold.withValues(alpha: 0.5),
+                  color: AppColors.logroDesbloqueado.withValues(alpha: 0.5),
                   blurRadius: 20,
                   spreadRadius: 5,
                 ),
@@ -386,7 +386,7 @@ class _EpicCelebrationWidgetState extends State<EpicCelebrationWidget>
             onPressed: widget.onDismiss,
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.white,
-              foregroundColor: AppColors.achievementGold,
+              foregroundColor: AppColors.logroDesbloqueado,
               padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30),
@@ -403,7 +403,7 @@ class _EpicCelebrationWidgetState extends State<EpicCelebrationWidget>
                   style: EstilosTextoEmocional.motivacional.copyWith(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.achievementGold,
+                    color: AppColors.logroDesbloqueado,
                   ),
                 ),
               ],

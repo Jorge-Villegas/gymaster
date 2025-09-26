@@ -114,7 +114,7 @@ class ListaRutinasPage extends StatelessWidget {
           _getMotivationalMessage(),
           style: EstilosTextoEmocional.aliento.copyWith(
             fontSize: 16,
-            color: AppColors.warmOrange,
+            color: AppColors.motivacionPrincipal,
           ),
         ),
         const SizedBox(height: 8),
@@ -127,8 +127,8 @@ class ListaRutinasPage extends StatelessWidget {
             },
             icon: const Icon(Icons.refresh_rounded),
             style: IconButton.styleFrom(
-              backgroundColor: AppColors.calmBlue.withOpacity(0.1),
-              foregroundColor: AppColors.calmBlue,
+              backgroundColor: AppColors.descansoActivo.withOpacity(0.1),
+              foregroundColor: AppColors.descansoActivo,
             ),
           ),
         ),
@@ -196,9 +196,9 @@ class ListaRutinasPage extends StatelessWidget {
                   icono: Icons.add_rounded,
                   tamano: TamanoBotonChiclet.mediano,
                   estilo: EstiloBotonChiclet.contorno,
-                  colorFondo: AppColors.energyOrange.withOpacity(0.1),
-                  colorBorde: AppColors.energyOrange,
-                  colorTexto: AppColors.energyOrange,
+                  colorFondo: AppColors.motivacionPrincipal.withOpacity(0.1),
+                  colorBorde: AppColors.motivacionPrincipal,
+                  colorTexto: AppColors.motivacionPrincipal,
                   radioBorde: 12,
                   onPressed: () => _navegarAAgregarRutina(context),
                 ),
@@ -225,7 +225,7 @@ class ListaRutinasPage extends StatelessWidget {
                         Text(
                           '${state.routines.length} rutina${state.routines.length == 1 ? '' : 's'} para conquistar',
                           style: EstilosTextoEmocional.aliento.copyWith(
-                            color: AppColors.warmOrange,
+                            color: AppColors.motivacionPrincipal,
                             fontSize: 14,
                           ),
                         ),
@@ -239,9 +239,9 @@ class ListaRutinasPage extends StatelessWidget {
                   icono: IconsaxPlusLinear.search_normal_1,
                   tamano: TamanoBotonChiclet.mediano,
                   estilo: EstiloBotonChiclet.contorno,
-                  colorFondo: AppColors.calmBlue.withOpacity(0.1),
-                  colorBorde: AppColors.calmBlue,
-                  colorTexto: AppColors.calmBlue,
+                  colorFondo: AppColors.descansoActivo.withOpacity(0.1),
+                  colorBorde: AppColors.descansoActivo,
+                  colorTexto: AppColors.descansoActivo,
                   radioBorde: 12,
                   conSombreado: true,
                   grosorSombreado: 2.0,
@@ -293,15 +293,15 @@ class ListaRutinasPage extends StatelessWidget {
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            AppColors.calmBlue.withOpacity(0.1),
-                            AppColors.peacefulBlue.withOpacity(0.05),
+                            AppColors.descansoActivo.withOpacity(0.1),
+                            AppColors.descansoActivo.withOpacity(0.05),
                           ],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
-                          color: AppColors.calmBlue.withOpacity(0.2),
+                          color: AppColors.descansoActivo.withOpacity(0.2),
                           width: 1,
                         ),
                       ),
@@ -310,12 +310,12 @@ class ListaRutinasPage extends StatelessWidget {
                           Container(
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              color: AppColors.calmBlue.withOpacity(0.2),
+                              color: AppColors.descansoActivo.withOpacity(0.2),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Icon(
                               Icons.fitness_center,
-                              color: AppColors.calmBlue,
+                              color: AppColors.descansoActivo,
                               size: 20,
                             ),
                           ),
@@ -325,7 +325,7 @@ class ListaRutinasPage extends StatelessWidget {
                               'Preparando tus rutinas increíbles...',
                               style: EstilosTextoEmocional.amigable.copyWith(
                                 fontSize: 16,
-                                color: AppColors.calmBlue,
+                                color: AppColors.descansoActivo,
                               ),
                             ),
                           ),
@@ -335,8 +335,9 @@ class ListaRutinasPage extends StatelessWidget {
                     // Shimmer mejorado
                     Expanded(
                       child: Shimmer.fromColors(
-                        baseColor: AppColors.calmBlue.withOpacity(0.1),
-                        highlightColor: AppColors.peacefulBlue.withOpacity(0.3),
+                        baseColor: AppColors.descansoActivo.withOpacity(0.1),
+                        highlightColor:
+                            AppColors.descansoActivo.withOpacity(0.3),
                         period: const Duration(milliseconds: 1200),
                         child: ListView.builder(
                           itemCount: 4, // Menos elementos para mejor UX
@@ -368,7 +369,7 @@ class ListaRutinasPage extends StatelessWidget {
                                         width: 80,
                                         height: 80,
                                         decoration: BoxDecoration(
-                                          color: AppColors.calmBlue
+                                          color: AppColors.descansoActivo
                                               .withOpacity(0.2),
                                           borderRadius:
                                               BorderRadius.circular(12),
@@ -386,7 +387,7 @@ class ListaRutinasPage extends StatelessWidget {
                                               height: 20,
                                               width: double.infinity,
                                               decoration: BoxDecoration(
-                                                color: AppColors.calmBlue
+                                                color: AppColors.descansoActivo
                                                     .withOpacity(0.2),
                                                 borderRadius:
                                                     BorderRadius.circular(8),
@@ -397,7 +398,7 @@ class ListaRutinasPage extends StatelessWidget {
                                               height: 16,
                                               width: 120,
                                               decoration: BoxDecoration(
-                                                color: AppColors.peacefulBlue
+                                                color: AppColors.descansoActivo
                                                     .withOpacity(0.2),
                                                 borderRadius:
                                                     BorderRadius.circular(6),
@@ -431,15 +432,15 @@ class ListaRutinasPage extends StatelessWidget {
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            AppColors.energyOrange.withOpacity(0.1),
-                            AppColors.warmOrange.withOpacity(0.05),
+                            AppColors.motivacionPrincipal.withOpacity(0.1),
+                            AppColors.motivacionPrincipal.withOpacity(0.05),
                           ],
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
                         ),
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
-                          color: AppColors.energyOrange.withOpacity(0.2),
+                          color: AppColors.motivacionPrincipal.withOpacity(0.2),
                           width: 2,
                         ),
                       ),
@@ -468,8 +469,8 @@ class ListaRutinasPage extends StatelessWidget {
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            AppColors.inspirationPink.withOpacity(0.1),
-                            AppColors.celebrationPurple.withOpacity(0.05),
+                            AppColors.primario.withOpacity(0.1),
+                            AppColors.exitoCompletado.withOpacity(0.05),
                           ],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
@@ -508,8 +509,8 @@ class ListaRutinasPage extends StatelessWidget {
                       icono: Icons.help_outline_rounded,
                       tamano: TamanoBotonChiclet.grande,
                       estilo: EstiloBotonChiclet.contorno,
-                      colorBorde: AppColors.calmBlue,
-                      colorTexto: AppColors.calmBlue,
+                      colorBorde: AppColors.descansoActivo,
+                      colorTexto: AppColors.descansoActivo,
                       radioBorde: 16,
                       onPressed: () {
                         // TODO: Implementar guía de inicio
@@ -522,7 +523,7 @@ class ListaRutinasPage extends StatelessWidget {
                                 fontSize: 14,
                               ),
                             ),
-                            backgroundColor: AppColors.calmBlue,
+                            backgroundColor: AppColors.descansoActivo,
                             behavior: SnackBarBehavior.floating,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
@@ -552,22 +553,22 @@ class ListaRutinasPage extends StatelessWidget {
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
-                              AppColors.successGreen.withOpacity(0.1),
-                              AppColors.victoryGreen.withOpacity(0.05),
+                              AppColors.exitoCompletado.withOpacity(0.1),
+                              AppColors.exitoCompletado.withOpacity(0.05),
                             ],
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                           ),
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(
-                            color: AppColors.successGreen.withOpacity(0.2),
+                            color: AppColors.exitoCompletado.withOpacity(0.2),
                             width: 2,
                           ),
                         ),
                         child: Icon(
                           Icons.fitness_center_rounded,
                           size: 120,
-                          color: AppColors.successGreen.withOpacity(0.7),
+                          color: AppColors.exitoCompletado.withOpacity(0.7),
                         ),
                       ),
                       const SizedBox(height: 32),
@@ -586,8 +587,8 @@ class ListaRutinasPage extends StatelessWidget {
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
-                              AppColors.achievementGold.withOpacity(0.1),
-                              AppColors.warmOrange.withOpacity(0.05),
+                              AppColors.logroDesbloqueado.withOpacity(0.1),
+                              AppColors.motivacionPrincipal.withOpacity(0.05),
                             ],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
@@ -693,13 +694,13 @@ class ListaRutinasPage extends StatelessWidget {
                     Icon(
                       Icons.refresh_rounded,
                       size: 64,
-                      color: AppColors.calmBlue.withOpacity(0.6),
+                      color: AppColors.descansoActivo.withOpacity(0.6),
                     ),
                     const SizedBox(height: 16),
                     Text(
                       'Preparando tu experiencia fitness...',
                       style: EstilosTextoEmocional.amigable.copyWith(
-                        color: AppColors.calmBlue,
+                        color: AppColors.descansoActivo,
                         fontSize: 18,
                       ),
                     ),
@@ -709,8 +710,8 @@ class ListaRutinasPage extends StatelessWidget {
                       icono: Icons.refresh,
                       tamano: TamanoBotonChiclet.mediano,
                       estilo: EstiloBotonChiclet.contorno,
-                      colorBorde: AppColors.calmBlue,
-                      colorTexto: AppColors.calmBlue,
+                      colorBorde: AppColors.descansoActivo,
+                      colorTexto: AppColors.descansoActivo,
                       radioBorde: 12,
                       onPressed: () {
                         BlocProvider.of<RoutineCubit>(context).getAllRoutine();

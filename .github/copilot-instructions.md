@@ -1351,3 +1351,44 @@ Al conectar con las emociones de los usuarios, no solo mejoras la usabilidad, si
 
 ¿Necesitas ayuda para aplicar esto a tu app específica?  
 ¡Estaré encantado de asistirte! 😊
+
+# 🎨 Guía Obligatoria de Diseño Visual y Tipografía GyMaster
+
+Siempre que diseñes o modifiques interfaces en GyMaster, sigue estas reglas para lograr una UI profesional, coherente y motivadora:
+
+## 1. Diseño emocional (Norman)
+
+- **Visceral:** Usa colores, tipografías y animaciones atractivas.
+- **Conductual:** Interfaz fácil, feedback inmediato, microinteracciones.
+- **Reflexivo:** Mensajes empáticos, logros, comunidad y personalización.
+
+## 2. Regla de Espaciado de 8 Puntos
+
+- Usa SIEMPRE múltiplos de 8 para márgenes, paddings y separación entre elementos: `0, 8, 16, 24, 32, 40, 48...`
+- Esto mantiene la interfaz ordenada, consistente y fácil de escalar.
+
+## 3. Tipografía (Regla estricta)
+
+- Solo puedes usar **4 tamaños de fuente**: 12, 15, 18 y 24 px (ajustables a tu tema, pero solo 4)
+- Solo puedes usar **2 pesos**: Light (300) y SemiBold (600), y sus variantes itálicas
+- No se permite usar otros tamaños ni otros pesos
+
+## 4. Buenas prácticas GyMaster
+
+- Nombres de variables y widgets en español para el dominio fitness.
+- Widgets reutilizables y funciones pequeñas.
+- Colores y fuentes centralizados en AppColors y AppTheme.
+- No uses `.withOpacity()`, usa `.withValues(alpha: ...)` para transparencias.
+
+**Resumen:**
+Aplica siempre diseño emocional, la regla de 8 puntos y la tipografía limitada para lograr interfaces atractivas, ordenadas y motivadoras en GyMaster.
+
+# 5. Sistema de color HSB (Obligatorio)
+
+- Define y documenta todos los colores principales usando el sistema HSB (Hue, Saturation, Brightness).
+- Crea variaciones de color (hover, disabled, fondos, etc.) ajustando hue, saturación y brillo, no solo usando opacidad o mezclando con negro.
+- Para implementar en Flutter, usa `HSVColor.fromAHSV(1, hue, saturation, value).toColor()` y documenta los valores HSB originales en AppColors.
+- Ejemplo: Azul primario HSB(210, 70%, 90%) → `HSVColor.fromAHSV(1, 210, 0.7, 0.9).toColor()`
+
+**Resumen:**
+Sigue el patrón HSB para lograr una paleta flexible, profesional y fácil de mantener en GyMaster.

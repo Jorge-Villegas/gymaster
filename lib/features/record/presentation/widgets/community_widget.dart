@@ -73,13 +73,13 @@ class _CommunityWidgetState extends State<CommunityWidget>
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              AppColors.calmBlue.withOpacity(0.1),
-              AppColors.successGreen.withOpacity(0.1),
+              AppColors.descansoActivo.withOpacity(0.1),
+              AppColors.exitoCompletado.withOpacity(0.1),
             ],
           ),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: AppColors.calmBlue.withOpacity(0.3),
+            color: AppColors.descansoActivo.withOpacity(0.3),
             width: 2,
           ),
         ),
@@ -110,12 +110,12 @@ class _CommunityWidgetState extends State<CommunityWidget>
               child: Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: AppColors.calmBlue.withOpacity(0.2),
+                  color: AppColors.descansoActivo.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.groups,
-                  color: AppColors.calmBlue,
+                  color: AppColors.descansoActivo,
                   size: 24,
                 ),
               ),
@@ -157,10 +157,10 @@ class _CommunityWidgetState extends State<CommunityWidget>
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.achievementGold.withOpacity(0.1),
+        color: AppColors.logroDesbloqueado.withOpacity(0.1),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: AppColors.achievementGold.withOpacity(0.3),
+          color: AppColors.logroDesbloqueado.withOpacity(0.3),
         ),
       ),
       child: Column(
@@ -178,7 +178,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
                 padding:
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
-                  color: AppColors.achievementGold,
+                  color: AppColors.logroDesbloqueado,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
@@ -223,7 +223,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
       String title, String userValue, String avgValue, IconData icon) {
     return Column(
       children: [
-        Icon(icon, color: AppColors.successGreen, size: 20),
+        Icon(icon, color: AppColors.exitoCompletado, size: 20),
         const SizedBox(height: 8),
         Text(
           title,
@@ -237,7 +237,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
           userValue,
           style: EstilosTextoEmocional.celebracion.copyWith(
             fontSize: 18,
-            color: AppColors.successGreen,
+            color: AppColors.exitoCompletado,
           ),
         ),
         Text(
@@ -257,9 +257,9 @@ class _CommunityWidgetState extends State<CommunityWidget>
       children: [
         Row(
           children: [
-            const Icon(
+            Icon(
               Icons.trending_up,
-              color: AppColors.motivationRed,
+              color: AppColors.motivacionPrincipal,
               size: 20,
             ),
             const SizedBox(width: 8),
@@ -285,10 +285,10 @@ class _CommunityWidgetState extends State<CommunityWidget>
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.motivationRed.withOpacity(0.1),
+        color: AppColors.motivacionPrincipal.withOpacity(0.1),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: AppColors.motivationRed.withOpacity(0.3),
+          color: AppColors.motivacionPrincipal.withOpacity(0.3),
         ),
       ),
       child: Row(
@@ -303,7 +303,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
               message.text,
               style: EstilosTextoEmocional.logro.copyWith(
                 fontSize: 16,
-                color: AppColors.motivationRed,
+                color: AppColors.motivacionPrincipal,
               ),
             ),
           ),
@@ -339,9 +339,9 @@ class _CommunityWidgetState extends State<CommunityWidget>
           borderRadius: BorderRadius.circular(10),
           child: LinearProgressIndicator(
             value: progress > 1 ? 1 : progress,
-            backgroundColor: AppColors.calmBlue.withOpacity(0.2),
+            backgroundColor: AppColors.descansoActivo.withOpacity(0.2),
             valueColor:
-                const AlwaysStoppedAnimation<Color>(AppColors.successGreen),
+                AlwaysStoppedAnimation<Color>(AppColors.exitoCompletado),
             minHeight: 8,
           ),
         ),
@@ -355,8 +355,8 @@ class _CommunityWidgetState extends State<CommunityWidget>
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            AppColors.energyOrange.withOpacity(0.1),
-            AppColors.achievementGold.withOpacity(0.1),
+            AppColors.motivacionPrincipal.withOpacity(0.1),
+            AppColors.logroDesbloqueado.withOpacity(0.1),
           ],
         ),
         borderRadius: BorderRadius.circular(12),
@@ -365,9 +365,9 @@ class _CommunityWidgetState extends State<CommunityWidget>
         children: [
           Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.favorite,
-                color: AppColors.energyOrange,
+                color: AppColors.motivacionPrincipal,
                 size: 20,
               ),
               const SizedBox(width: 8),
@@ -384,7 +384,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
             _getCommunityMessage(),
             style: EstilosTextoEmocional.celebracion.copyWith(
               fontSize: 16,
-              color: AppColors.energyOrange,
+              color: AppColors.motivacionPrincipal,
             ),
             textAlign: TextAlign.center,
           ),
@@ -415,7 +415,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
           count,
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
                 fontWeight: FontWeight.bold,
-                color: AppColors.energyOrange,
+                color: AppColors.motivacionPrincipal,
               ),
         ),
       ],

@@ -166,7 +166,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
             gradient: LinearGradient(
               colors: [
-                AppColors.energyOrange.withOpacity(0.08),
+                AppColors.motivacionPrincipal.withOpacity(0.08),
                 AppColors.primary.withOpacity(0.08),
               ],
               begin: Alignment.topLeft,
@@ -174,7 +174,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
             ),
             boxShadow: [
               BoxShadow(
-                color: AppColors.energyOrange.withOpacity(0.12),
+                color: AppColors.motivacionPrincipal.withOpacity(0.12),
                 blurRadius: 16,
                 offset: const Offset(0, 6),
               ),
@@ -218,7 +218,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
             Icon(
               Icons.fitness_center_rounded,
               size: 56,
-              color: AppColors.energyOrange,
+              color: AppColors.motivacionPrincipal,
             ),
             const SizedBox(height: 10),
             Text(
@@ -275,7 +275,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
                   icon: Icons.repeat_rounded,
                   value: '${serie.repeticiones}',
                   label: 'Repeticiones',
-                  color: AppColors.motivationRed,
+                  color: AppColors.motivacionPrincipal,
                 ),
               ),
               const SizedBox(width: 12),
@@ -284,7 +284,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
                   icon: Icons.fitness_center_rounded,
                   value: '${serie.peso}',
                   label: 'Peso (kg)',
-                  color: AppColors.energyOrange,
+                  color: AppColors.motivacionPrincipal,
                 ),
               ),
             ],
@@ -369,7 +369,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
           _buildControlSection(
             title: 'Repeticiones',
             value: serie.repeticiones,
-            color: AppColors.motivationRed,
+            color: AppColors.motivacionPrincipal,
             onIncrement: () =>
                 context.read<EjerciciosByRutinaCubit>().aumentarRepeticiones(),
             onDecrement: () =>
@@ -382,7 +382,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
           _buildControlSection(
             title: 'Peso (kg)',
             value: serie.peso.round(),
-            color: AppColors.energyOrange,
+            color: AppColors.motivacionPrincipal,
             onIncrement: () =>
                 context.read<EjerciciosByRutinaCubit>().aumentarPeso(),
             onDecrement: () =>
@@ -495,8 +495,8 @@ class DetalleEjercicioScreen extends StatelessWidget {
                     icono: Icons.timer_rounded,
                     tamano: TamanoBotonChiclet.mediano,
                     estilo: EstiloBotonChiclet.contorno,
-                    colorBorde: AppColors.energyOrange,
-                    colorTexto: AppColors.energyOrange,
+                    colorBorde: AppColors.motivacionPrincipal,
+                    colorTexto: AppColors.motivacionPrincipal,
                   ),
                 ),
               ],
@@ -526,7 +526,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
           icono: Icons.check_circle_rounded,
           tamano: TamanoBotonChiclet.grande,
           estilo: EstiloBotonChiclet.relleno,
-          colorFondo: AppColors.celebrationPurple,
+          colorFondo: AppColors.exitoCompletado,
         ),
       );
     }
@@ -553,19 +553,19 @@ class DetalleEjercicioScreen extends StatelessWidget {
       // Aún hay series por completar
       textoBoton = '¡Completar Serie ${seriesCompletadas + 1}!';
       iconoBoton = Icons.check_circle_rounded;
-      colorBoton = AppColors.celebrationPurple;
+      colorBoton = AppColors.exitoCompletado;
       accionBoton = () => _handleCompleteSerie(context, state);
     } else if (!esUltimoEjercicio) {
       // Series completadas, hay más ejercicios
       textoBoton = '¡Siguiente Ejercicio!';
       iconoBoton = Icons.arrow_forward_rounded;
-      colorBoton = AppColors.energyOrange;
+      colorBoton = AppColors.motivacionPrincipal;
       accionBoton = () => _handleNextExercise(context, state);
     } else {
       // Último ejercicio, todas las series completadas
       textoBoton = '¡Rutina Completada!';
       iconoBoton = Icons.celebration_rounded;
-      colorBoton = AppColors.achievementGold;
+      colorBoton = AppColors.logroDesbloqueado;
       accionBoton = () => _handleFinishRoutine(context, state);
     }
 
@@ -616,7 +616,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
             texto: 'Continuar',
             tamano: TamanoBotonChiclet.pequeno,
             estilo: EstiloBotonChiclet.relleno,
-            colorFondo: AppColors.celebrationPurple,
+            colorFondo: AppColors.exitoCompletado,
           ),
           ChicletButton(
             onPressed: () {
@@ -643,7 +643,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
         title: Text(
           '¡Tiempo de descanso!',
           style: EstilosTextoEmocional.energetico.copyWith(
-            color: AppColors.energyOrange,
+            color: AppColors.motivacionPrincipal,
           ),
         ),
         content: Column(
@@ -652,7 +652,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
             Icon(
               Icons.timer_rounded,
               size: 48,
-              color: AppColors.energyOrange,
+              color: AppColors.motivacionPrincipal,
             ),
             const SizedBox(height: 16),
             Text(
@@ -670,7 +670,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
             texto: 'Entendido',
             tamano: TamanoBotonChiclet.mediano,
             estilo: EstiloBotonChiclet.relleno,
-            colorFondo: AppColors.energyOrange,
+            colorFondo: AppColors.motivacionPrincipal,
           ),
         ],
       ),
@@ -697,7 +697,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
         title: Text(
           '🎉 ¡Felicitaciones!',
           style: EstilosTextoEmocional.energetico.copyWith(
-            color: AppColors.achievementGold,
+            color: AppColors.logroDesbloqueado,
           ),
           textAlign: TextAlign.center,
         ),
@@ -707,7 +707,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
             Icon(
               Icons.celebration_rounded,
               size: 64,
-              color: AppColors.achievementGold,
+              color: AppColors.logroDesbloqueado,
             ),
             const SizedBox(height: 16),
             Text(
@@ -729,7 +729,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
             texto: '¡Finalizar!',
             tamano: TamanoBotonChiclet.mediano,
             estilo: EstiloBotonChiclet.relleno,
-            colorFondo: AppColors.achievementGold,
+            colorFondo: AppColors.logroDesbloqueado,
           ),
         ],
       ),
@@ -755,10 +755,10 @@ class DetalleEjercicioScreen extends StatelessWidget {
           child: FadeIn(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 CircularProgressIndicator(
-                  valueColor:
-                      AlwaysStoppedAnimation<Color>(AppColors.energyOrange),
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                      AppColors.motivacionPrincipal),
                 ),
                 SizedBox(height: 16),
                 Text(
@@ -804,13 +804,14 @@ class DetalleEjercicioScreen extends StatelessWidget {
                       width: 100,
                       height: 100,
                       decoration: BoxDecoration(
-                        color: AppColors.motivationRed.withValues(alpha: 0.1),
+                        color: AppColors.motivacionPrincipal
+                            .withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Icon(
                         Icons.warning_rounded,
                         size: 48,
-                        color: AppColors.motivationRed,
+                        color: AppColors.motivacionPrincipal,
                       ),
                     ),
                     const SizedBox(height: 24),
@@ -839,7 +840,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
                         icono: Icons.home_rounded,
                         tamano: TamanoBotonChiclet.grande,
                         estilo: EstiloBotonChiclet.relleno,
-                        colorFondo: AppColors.motivationRed,
+                        colorFondo: AppColors.motivacionPrincipal,
                       ),
                     ),
                   ],
@@ -983,7 +984,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.energyOrange.withValues(alpha: 0.1),
+                    color: AppColors.motivacionPrincipal.withValues(alpha: 0.1),
                     offset: const Offset(0, 2),
                     blurRadius: 8,
                   ),
@@ -993,7 +994,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
                 onPressed: () => context.pop(),
                 icon: Icon(
                   Icons.arrow_back_ios_rounded,
-                  color: AppColors.energyOrange,
+                  color: AppColors.motivacionPrincipal,
                   size: 20,
                 ),
                 padding: const EdgeInsets.all(12),
@@ -1019,7 +1020,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
                   Text(
                     'Serie $serieActual de $totalSeries 💪',
                     style: EstilosTextoEmocional.amigable.copyWith(
-                      color: AppColors.energyOrange,
+                      color: AppColors.motivacionPrincipal,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ),
@@ -1032,11 +1033,11 @@ class DetalleEjercicioScreen extends StatelessWidget {
               width: 48,
               height: 48,
               decoration: BoxDecoration(
-                color: AppColors.motivationRed,
+                color: AppColors.motivacionPrincipal,
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.motivationRed.withValues(alpha: 0.3),
+                    color: AppColors.motivacionPrincipal.withValues(alpha: 0.3),
                     offset: const Offset(0, 4),
                     blurRadius: 12,
                   ),
@@ -1068,15 +1069,15 @@ class DetalleEjercicioScreen extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            AppColors.motivationRed.withOpacity(0.1),
-            AppColors.energyOrange.withOpacity(0.1),
+            AppColors.motivacionPrincipal.withOpacity(0.1),
+            AppColors.motivacionPrincipal.withOpacity(0.1),
           ],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
         ),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: AppColors.energyOrange.withOpacity(0.2),
+          color: AppColors.motivacionPrincipal.withOpacity(0.2),
           width: 1,
         ),
       ),
@@ -1086,7 +1087,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(6),
             decoration: BoxDecoration(
-              color: AppColors.energyOrange,
+              color: AppColors.motivacionPrincipal,
               borderRadius: BorderRadius.circular(8),
             ),
             child: const Icon(
@@ -1104,7 +1105,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
               _getMotivationalMessage(serieActual, totalSeries),
               style: EstilosTextoEmocional.motivacional.copyWith(
                 fontSize: 14,
-                color: AppColors.motivationRed,
+                color: AppColors.motivacionPrincipal,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -1114,14 +1115,14 @@ class DetalleEjercicioScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
-              color: AppColors.energyOrange.withOpacity(0.2),
+              color: AppColors.motivacionPrincipal.withOpacity(0.2),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Text(
               '$serieActual/$totalSeries',
               style: EstilosTextoEmocional.contador.copyWith(
                 fontSize: 12,
-                color: AppColors.energyOrange,
+                color: AppColors.motivacionPrincipal,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -1173,9 +1174,9 @@ Widget _buildExerciseFavoriteIndicator(String? ejercicioId) {
               ),
             ],
           ),
-          child: const Icon(
+          child: Icon(
             Icons.favorite,
-            color: AppColors.motivationRed,
+            color: AppColors.motivacionPrincipal,
             size: 20,
           ),
         ),

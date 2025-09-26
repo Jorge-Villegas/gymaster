@@ -49,7 +49,7 @@ class _DeleteRoutineDialogState extends State<DeleteRoutineDialog> {
           children: [
             Icon(
               IconsaxPlusLinear.trash,
-              color: AppColors.motivationRed,
+              color: AppColors.motivacionPrincipal,
               size: 24,
             ),
             const SizedBox(width: 12),
@@ -68,7 +68,7 @@ class _DeleteRoutineDialogState extends State<DeleteRoutineDialog> {
           children: [
             RichText(
               text: TextSpan(
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 16,
                   color: AppColors.textSecondary,
                 ),
@@ -78,9 +78,9 @@ class _DeleteRoutineDialogState extends State<DeleteRoutineDialog> {
                   ),
                   TextSpan(
                     text: '"${widget.routineName}"',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: AppColors.energyOrange,
+                      color: AppColors.motivacionPrincipal,
                     ),
                   ),
                   const TextSpan(
@@ -94,10 +94,10 @@ class _DeleteRoutineDialogState extends State<DeleteRoutineDialog> {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: AppColors.calmBlue.withValues(alpha: 0.1),
+                color: AppColors.descansoActivo.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(
-                  color: AppColors.calmBlue.withValues(alpha: 0.3),
+                  color: AppColors.descansoActivo.withValues(alpha: 0.3),
                 ),
               ),
               child: Row(
@@ -105,7 +105,7 @@ class _DeleteRoutineDialogState extends State<DeleteRoutineDialog> {
                   Icon(
                     IconsaxPlusLinear.info_circle,
                     size: 16,
-                    color: AppColors.calmBlue,
+                    color: AppColors.descansoActivo,
                   ),
                   const SizedBox(width: 8),
                   Expanded(
@@ -113,7 +113,7 @@ class _DeleteRoutineDialogState extends State<DeleteRoutineDialog> {
                       'Tu progreso se mantendrá seguro',
                       style: TextStyle(
                         fontSize: 12,
-                        color: AppColors.calmBlue,
+                        color: AppColors.descansoActivo,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -126,7 +126,7 @@ class _DeleteRoutineDialogState extends State<DeleteRoutineDialog> {
         actions: [
           TextButton(
             onPressed: _isDeleting ? null : _handleCancel,
-            child: const Text(
+            child: Text(
               'Cancelar',
               style: TextStyle(
                 color: AppColors.textSecondary,
@@ -136,7 +136,7 @@ class _DeleteRoutineDialogState extends State<DeleteRoutineDialog> {
           ElevatedButton(
             onPressed: _isDeleting ? null : _handleDeleteConfirmed,
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.motivationRed,
+              backgroundColor: AppColors.motivacionPrincipal,
               foregroundColor: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -184,7 +184,7 @@ class _DeleteRoutineDialogState extends State<DeleteRoutineDialog> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('Rutina "${widget.routineName}" eliminada correctamente'),
-        backgroundColor: AppColors.successGreen,
+        backgroundColor: AppColors.exitoCompletado,
         action: SnackBarAction(
           label: 'Deshacer',
           textColor: Colors.white,
@@ -210,7 +210,7 @@ class _DeleteRoutineDialogState extends State<DeleteRoutineDialog> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(error),
-        backgroundColor: AppColors.motivationRed,
+        backgroundColor: AppColors.motivacionPrincipal,
       ),
     );
   }

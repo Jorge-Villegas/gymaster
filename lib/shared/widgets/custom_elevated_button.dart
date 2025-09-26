@@ -142,17 +142,17 @@ class _CustomElevatedButtonState extends State<CustomElevatedButton>
 
     switch (widget.emotionalType) {
       case EmotionalButtonType.energetic:
-        return AppColors.energyOrange;
+        return AppColors.motivacionPrincipal;
       case EmotionalButtonType.success:
-        return AppColors.successGreen;
+        return AppColors.exitoCompletado;
       case EmotionalButtonType.achievement:
-        return AppColors.achievementGold;
+        return AppColors.logroDesbloqueado;
       case EmotionalButtonType.motivation:
-        return AppColors.motivationRed;
+        return AppColors.errorAmigable;
       case EmotionalButtonType.calm:
-        return AppColors.calmBlue;
+        return AppColors.descansoActivo;
       case EmotionalButtonType.warning:
-        return AppColors.warmOrange;
+        return AppColors.advertenciaSutil;
       case EmotionalButtonType.neutral:
         return Theme.of(context).colorScheme.primary;
     }

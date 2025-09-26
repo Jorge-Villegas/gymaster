@@ -150,16 +150,16 @@ class _DeleteRoutineDialogState extends State<DeleteRoutineDialog>
               width: 80,
               height: 80,
               decoration: BoxDecoration(
-                color: AppColors.motivationRed.withValues(alpha: 0.1),
+                color: AppColors.errorAmigable.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(40),
                 border: Border.all(
-                  color: AppColors.motivationRed.withValues(alpha: 0.3),
+                  color: AppColors.errorAmigable.withValues(alpha: 0.3),
                   width: 2,
                 ),
               ),
               child: Icon(
                 IconsaxPlusLinear.trash,
-                color: AppColors.motivationRed,
+                color: AppColors.errorAmigable,
                 size: 36,
               ),
             ),
@@ -268,7 +268,7 @@ class _DeleteRoutineDialogState extends State<DeleteRoutineDialog>
     return ElevatedButton(
       onPressed: _handleConfirm,
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.motivationRed,
+        backgroundColor: AppColors.errorAmigable,
         padding: const EdgeInsets.symmetric(vertical: 16),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),

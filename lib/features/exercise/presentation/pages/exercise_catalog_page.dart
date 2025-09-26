@@ -120,7 +120,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.energyOrange.withValues(alpha: 0.1),
+                        color: AppColors.motivacionPrincipal.withValues(alpha: 0.1),
                         offset: const Offset(0, 2),
                         blurRadius: 8,
                       ),
@@ -130,7 +130,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                     onPressed: () => context.go('/'),
                     icon: Icon(
                       Icons.arrow_back_ios_rounded,
-                      color: AppColors.energyOrange,
+                      color: AppColors.motivacionPrincipal,
                       size: 20,
                     ),
                     padding: const EdgeInsets.all(12),
@@ -175,7 +175,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
         Text(
           '¡Descubre tu próximo desafío! 🏋️‍♂️',
           style: EstilosTextoEmocional.amigable.copyWith(
-            color: AppColors.energyOrange,
+            color: AppColors.motivacionPrincipal,
             fontSize: 16,
             fontWeight: FontWeight.w500,
           ),
@@ -200,13 +200,13 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: AppColors.energyOrange.withValues(alpha: 0.2),
+              color: AppColors.motivacionPrincipal.withValues(alpha: 0.2),
               offset: const Offset(0, 4),
               blurRadius: 16,
             ),
           ],
           border: Border.all(
-            color: AppColors.energyOrange.withValues(alpha: 0.5),
+            color: AppColors.motivacionPrincipal.withValues(alpha: 0.5),
             width: 2,
           ),
         ),
@@ -227,12 +227,12 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
               margin: const EdgeInsets.all(12),
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: AppColors.energyOrange.withValues(alpha: 0.1),
+                color: AppColors.motivacionPrincipal.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(
                 IconsaxPlusLinear.search_normal_1,
-                color: AppColors.energyOrange,
+                color: AppColors.motivacionPrincipal,
                 size: 20,
               ),
             ),
@@ -276,13 +276,13 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
         height: 48,
         decoration: BoxDecoration(
           color:
-              _isSearchExpanded ? AppColors.calmBlue : AppColors.energyOrange,
+              _isSearchExpanded ? AppColors.descansoActivo : AppColors.motivacionPrincipal,
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
               color: (_isSearchExpanded
-                      ? AppColors.calmBlue
-                      : AppColors.energyOrange)
+                      ? AppColors.descansoActivo
+                      : AppColors.motivacionPrincipal)
                   .withValues(alpha: 0.3),
               offset: const Offset(0, 4),
               blurRadius: 12,
@@ -345,7 +345,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                 icon: IconsaxPlusLinear.activity,
                 title: 'Total',
                 value: '$totalExercises',
-                color: AppColors.calmBlue,
+                color: AppColors.descansoActivo,
               ),
             ),
             const SizedBox(width: 12),
@@ -356,8 +356,8 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                 title: filterInfo,
                 value: '$filteredCount',
                 color: filteredCount < totalExercises
-                    ? AppColors.energyOrange
-                    : AppColors.successGreen,
+                    ? AppColors.motivacionPrincipal
+                    : AppColors.exitoCompletado,
               ),
             ),
             const SizedBox(width: 12),
@@ -380,8 +380,8 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              AppColors.calmBlue,
-              AppColors.calmBlue.withValues(alpha: 0.8)
+              AppColors.descansoActivo,
+              AppColors.descansoActivo.withValues(alpha: 0.8)
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -389,7 +389,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: AppColors.calmBlue.withValues(alpha: 0.3),
+              color: AppColors.descansoActivo.withValues(alpha: 0.3),
               offset: const Offset(0, 4),
               blurRadius: 12,
             ),
@@ -579,7 +579,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
           gradient: isSelected
               ? LinearGradient(
                   colors: isSpecial
-                      ? [AppColors.energyOrange, AppColors.motivationRed]
+                      ? [AppColors.motivacionPrincipal, AppColors.motivacionPrincipal]
                       : [AppColors.primary, AppColors.secondary],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
@@ -591,7 +591,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
             color: isSelected
                 ? Colors.transparent
                 : isSpecial
-                    ? AppColors.energyOrange.withValues(alpha: 0.3)
+                    ? AppColors.motivacionPrincipal.withValues(alpha: 0.3)
                     : AppColors.primary.withValues(alpha: 0.3),
             width: 1.5,
           ),
@@ -599,7 +599,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
               ? [
                   BoxShadow(
                     color:
-                        (isSpecial ? AppColors.energyOrange : AppColors.primary)
+                        (isSpecial ? AppColors.motivacionPrincipal : AppColors.primary)
                             .withValues(alpha: 0.3),
                     blurRadius: 8,
                     offset: const Offset(0, 2),
@@ -628,7 +628,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                 color: isSelected
                     ? Colors.white
                     : isSpecial
-                        ? AppColors.energyOrange
+                        ? AppColors.motivacionPrincipal
                         : AppColors.primary,
               ),
             ),
@@ -668,7 +668,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                     Icon(
                       IconsaxPlusLinear.warning_2,
                       size: 64,
-                      color: AppColors.motivationRed.withValues(alpha: 0.5),
+                      color: AppColors.motivacionPrincipal.withValues(alpha: 0.5),
                     ),
                     const SizedBox(height: 16),
                     Text(
@@ -696,7 +696,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                       Icon(
                         IconsaxPlusLinear.search_normal,
                         size: 64,
-                        color: AppColors.calmBlue.withValues(alpha: 0.5),
+                        color: AppColors.descansoActivo.withValues(alpha: 0.5),
                       ),
                       const SizedBox(height: 16),
                       Text(
@@ -889,11 +889,11 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                               vertical: 3,
                             ),
                             decoration: BoxDecoration(
-                              color: AppColors.calmBlue.withValues(alpha: 0.1),
+                              color: AppColors.descansoActivo.withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(
                                 color:
-                                    AppColors.calmBlue.withValues(alpha: 0.3),
+                                    AppColors.descansoActivo.withValues(alpha: 0.3),
                                 width: 0.5,
                               ),
                             ),
@@ -902,7 +902,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                               style:
                                   EstilosTextoEmocional.recuperacion.copyWith(
                                 fontSize: 11,
-                                color: AppColors.calmBlue,
+                                color: AppColors.descansoActivo,
                               ),
                             ),
                           );
@@ -916,12 +916,12 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: AppColors.energyOrange.withValues(alpha: 0.1),
+                    color: AppColors.motivacionPrincipal.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
                     IconsaxPlusLinear.arrow_right_3,
-                    color: AppColors.energyOrange,
+                    color: AppColors.motivacionPrincipal,
                     size: 20,
                   ),
                 ),
@@ -939,7 +939,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              AppColors.calmBlue.withValues(alpha: 0.1),
+              AppColors.descansoActivo.withValues(alpha: 0.1),
               AppColors.primary.withValues(alpha: 0.1),
             ],
             begin: Alignment.topLeft,
@@ -962,7 +962,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
             end: Alignment.bottomRight,
             colors: [
               AppColors.primary.withValues(alpha: 0.05),
-              AppColors.energyOrange.withValues(alpha: 0.05),
+              AppColors.motivacionPrincipal.withValues(alpha: 0.05),
             ],
           ),
         ),
@@ -984,7 +984,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
           end: Alignment.bottomRight,
           colors: [
             AppColors.primary.withValues(alpha: 0.05),
-            AppColors.energyOrange.withValues(alpha: 0.05),
+            AppColors.motivacionPrincipal.withValues(alpha: 0.05),
           ],
         ),
       ),
@@ -996,8 +996,8 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  AppColors.motivationRed.withValues(alpha: 0.1),
-                  AppColors.energyOrange.withValues(alpha: 0.1),
+                  AppColors.motivacionPrincipal.withValues(alpha: 0.1),
+                  AppColors.motivacionPrincipal.withValues(alpha: 0.1),
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -1005,7 +1005,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
             ),
             child: Icon(
               IconsaxPlusLinear.danger,
-              color: AppColors.motivationRed.withValues(alpha: 0.6),
+              color: AppColors.motivacionPrincipal.withValues(alpha: 0.6),
               size: 24,
             ),
           );
@@ -1110,7 +1110,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                         fontSize: 14,
                       ),
                     ),
-                    backgroundColor: AppColors.energyOrange,
+                    backgroundColor: AppColors.motivacionPrincipal,
                     behavior: SnackBarBehavior.floating,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -1155,7 +1155,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
   //         '¡Filtros avanzados próximamente! 🚀',
   //         style: EstilosTextoEmocional.aliento.copyWith(color: Colors.white),
   //       ),
-  //       backgroundColor: AppColors.energyOrange,
+  //       backgroundColor: AppColors.motivacionPrincipal,
   //       behavior: SnackBarBehavior.floating,
   //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
   //     ),

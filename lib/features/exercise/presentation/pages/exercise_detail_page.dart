@@ -248,15 +248,15 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                   padding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                   decoration: BoxDecoration(
-                    color: AppColors.calmBlue.withValues(alpha: 0.1),
+                    color: AppColors.descansoActivo.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
-                      color: AppColors.calmBlue.withValues(alpha: 0.25),
+                      color: AppColors.descansoActivo.withValues(alpha: 0.25),
                       width: 1.5,
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.calmBlue.withValues(alpha: 0.06),
+                        color: AppColors.descansoActivo.withValues(alpha: 0.06),
                         blurRadius: 6,
                         offset: const Offset(0, 2),
                       ),
@@ -268,7 +268,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                       Text(
                         capitalizarPrimeraLetra(muscle),
                         style: TextStyle(
-                          color: AppColors.calmBlue,
+                          color: AppColors.descansoActivo,
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
                         ),
@@ -312,12 +312,12 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: AppColors.energyOrange.withValues(alpha: 0.1),
+                    color: AppColors.motivacionPrincipal.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
                     IconsaxPlusLinear.document_text,
-                    color: AppColors.energyOrange,
+                    color: AppColors.motivacionPrincipal,
                     size: 24,
                   ),
                 ),
@@ -380,12 +380,12 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: AppColors.successGreen.withValues(alpha: 0.1),
+                    color: AppColors.exitoCompletado.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
                     IconsaxPlusLinear.refresh,
-                    color: AppColors.successGreen,
+                    color: AppColors.exitoCompletado,
                     size: 24,
                   ),
                 ),
@@ -483,7 +483,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
             return FloatingActionButton.extended(
               elevation: 0,
               backgroundColor:
-                  esFavorito ? AppColors.motivationRed : AppColors.primary,
+                  esFavorito ? AppColors.motivacionPrincipal : AppColors.primary,
               onPressed: () async {
                 // Usar el cubit para toggle de favoritos
                 await favoritosCubit.toggleFavorito(widget.exercise.id);
@@ -515,7 +515,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                         ],
                       ),
                       backgroundColor: nuevoEstado
-                          ? AppColors.motivationRed
+                          ? AppColors.motivacionPrincipal
                           : AppColors.textSecondary,
                       behavior: SnackBarBehavior.floating,
                       shape: RoundedRectangleBorder(

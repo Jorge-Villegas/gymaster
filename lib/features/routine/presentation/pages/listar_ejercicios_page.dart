@@ -94,7 +94,7 @@ class ListarEjerciciosPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.motivationRed.withValues(alpha: 0.1),
+                    color: AppColors.motivacionPrincipal.withValues(alpha: 0.1),
                     offset: const Offset(0, 2),
                     blurRadius: 8,
                   ),
@@ -104,7 +104,7 @@ class ListarEjerciciosPage extends StatelessWidget {
                 onPressed: () => context.pop(),
                 icon: Icon(
                   Icons.arrow_back_ios_rounded,
-                  color: AppColors.motivationRed,
+                  color: AppColors.motivacionPrincipal,
                   size: 20,
                 ),
                 padding: const EdgeInsets.all(12),
@@ -128,7 +128,7 @@ class ListarEjerciciosPage extends StatelessWidget {
                   Text(
                     TextFormatter.capitalize(nombreMusculo),
                     style: EstilosTextoEmocional.amigable.copyWith(
-                      color: AppColors.motivationRed,
+                      color: AppColors.motivacionPrincipal,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ),
@@ -154,7 +154,7 @@ class ListarEjerciciosPage extends StatelessWidget {
               margin: const EdgeInsets.only(bottom: 20),
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: AppColors.energyOrange.withValues(alpha: 0.1),
+                color: AppColors.motivacionPrincipal.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Row(
@@ -163,13 +163,14 @@ class ListarEjerciciosPage extends StatelessWidget {
                     width: 40,
                     height: 40,
                     decoration: BoxDecoration(
-                      color: AppColors.energyOrange.withValues(alpha: 0.3),
+                      color:
+                          AppColors.motivacionPrincipal.withValues(alpha: 0.3),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: const Center(
+                    child: Center(
                       child: CircularProgressIndicator(
                         valueColor: AlwaysStoppedAnimation<Color>(
-                            AppColors.energyOrange),
+                            AppColors.motivacionPrincipal),
                         strokeWidth: 2,
                       ),
                     ),
@@ -285,14 +286,14 @@ class ListarEjerciciosPage extends StatelessWidget {
                 width: 120,
                 height: 120,
                 decoration: BoxDecoration(
-                  color: AppColors.motivationRed.withOpacity(0.1),
+                  color: AppColors.motivacionPrincipal.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(24),
                 ),
                 child: Center(
                   child: Icon(
                     Icons.warning_rounded,
                     size: 64,
-                    color: AppColors.motivationRed,
+                    color: AppColors.motivacionPrincipal,
                   ),
                 ),
               ),
@@ -326,7 +327,7 @@ class ListarEjerciciosPage extends StatelessWidget {
                 icono: Icons.refresh_rounded,
                 tamano: TamanoBotonChiclet.mediano,
                 estilo: EstiloBotonChiclet.relleno,
-                colorFondo: AppColors.motivationRed,
+                colorFondo: AppColors.motivacionPrincipal,
               ),
             ],
           ),
@@ -352,16 +353,16 @@ class ListarEjerciciosPage extends StatelessWidget {
               margin: const EdgeInsets.only(bottom: 16, top: 8),
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
-                color: AppColors.successGreen.withValues(alpha: 0.1),
+                color: AppColors.exitoCompletado.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(
-                    color: AppColors.successGreen.withValues(alpha: 0.2)),
+                    color: AppColors.exitoCompletado.withValues(alpha: 0.2)),
               ),
               child: Row(
                 children: [
                   Icon(
                     IconsaxPlusLinear.task_square,
-                    color: AppColors.successGreen,
+                    color: AppColors.exitoCompletado,
                     size: 20,
                   ),
                   const SizedBox(width: 12),
@@ -369,7 +370,7 @@ class ListarEjerciciosPage extends StatelessWidget {
                     child: Text(
                       '${state.ejercicios.length} ejercicios disponibles',
                       style: EstilosTextoEmocional.aliento.copyWith(
-                        color: AppColors.successGreen,
+                        color: AppColors.exitoCompletado,
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                       ),
@@ -377,7 +378,7 @@ class ListarEjerciciosPage extends StatelessWidget {
                   ),
                   Icon(
                     Icons.fitness_center_rounded,
-                    color: AppColors.successGreen,
+                    color: AppColors.exitoCompletado,
                     size: 18,
                   ),
                 ],
@@ -408,12 +409,13 @@ class ListarEjerciciosPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(16),
                         border: ejercicio.seleccionado
                             ? Border.all(
-                                color: AppColors.successGreen, width: 2)
+                                color: AppColors.exitoCompletado, width: 2)
                             : Border.all(color: Colors.grey.shade200, width: 1),
                         boxShadow: [
                           BoxShadow(
                             color: ejercicio.seleccionado
-                                ? AppColors.successGreen.withValues(alpha: 0.2)
+                                ? AppColors.exitoCompletado
+                                    .withValues(alpha: 0.2)
                                 : Colors.grey.withValues(alpha: 0.1),
                             offset: const Offset(0, 4),
                             blurRadius: ejercicio.seleccionado ? 12 : 8,
@@ -450,13 +452,13 @@ class ListarEjerciciosPage extends StatelessWidget {
                                     height: 64,
                                     decoration: BoxDecoration(
                                       color: ejercicio.seleccionado
-                                          ? AppColors.successGreen
+                                          ? AppColors.exitoCompletado
                                               .withValues(alpha: 0.1)
                                           : AppColors.backgroundLight,
                                       borderRadius: BorderRadius.circular(12),
                                       border: Border.all(
                                         color: ejercicio.seleccionado
-                                            ? AppColors.successGreen
+                                            ? AppColors.exitoCompletado
                                                 .withValues(alpha: 0.3)
                                             : Colors.grey.shade300,
                                         width: 1,
@@ -470,7 +472,7 @@ class ListarEjerciciosPage extends StatelessWidget {
                                               fit: BoxFit.cover,
                                               colorFilter: ColorFilter.mode(
                                                 ejercicio.seleccionado
-                                                    ? AppColors.successGreen
+                                                    ? AppColors.exitoCompletado
                                                     : AppColors.primary,
                                                 BlendMode.srcIn,
                                               ),
@@ -483,7 +485,8 @@ class ListarEjerciciosPage extends StatelessWidget {
                                                 return Icon(
                                                   Icons.fitness_center_rounded,
                                                   color: ejercicio.seleccionado
-                                                      ? AppColors.successGreen
+                                                      ? AppColors
+                                                          .exitoCompletado
                                                       : AppColors.primary,
                                                   size: 32,
                                                 );
@@ -504,7 +507,7 @@ class ListarEjerciciosPage extends StatelessWidget {
                                         style: EstilosTextoEmocional.aliento
                                             .copyWith(
                                           color: ejercicio.seleccionado
-                                              ? AppColors.successGreen
+                                              ? AppColors.exitoCompletado
                                               : AppColors.primary,
                                           fontSize: 16,
                                           fontWeight: ejercicio.seleccionado
@@ -522,7 +525,7 @@ class ListarEjerciciosPage extends StatelessWidget {
                                         style: EstilosTextoEmocional.amigable
                                             .copyWith(
                                           color: ejercicio.seleccionado
-                                              ? AppColors.successGreen
+                                              ? AppColors.exitoCompletado
                                               : AppColors.textSecondary,
                                           fontSize: 12,
                                         ),
@@ -535,7 +538,7 @@ class ListarEjerciciosPage extends StatelessWidget {
                                     width: 40,
                                     height: 40,
                                     decoration: BoxDecoration(
-                                      color: AppColors.successGreen,
+                                      color: AppColors.exitoCompletado,
                                       borderRadius: BorderRadius.circular(12),
                                     ),
                                     child: Icon(
@@ -573,14 +576,14 @@ class ListarEjerciciosPage extends StatelessWidget {
                 width: 120,
                 height: 120,
                 decoration: BoxDecoration(
-                  color: AppColors.calmBlue.withValues(alpha: 0.1),
+                  color: AppColors.descansoActivo.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(24),
                 ),
                 child: Center(
                   child: Icon(
                     Icons.search_off_rounded,
                     size: 64,
-                    color: AppColors.calmBlue,
+                    color: AppColors.descansoActivo,
                   ),
                 ),
               ),

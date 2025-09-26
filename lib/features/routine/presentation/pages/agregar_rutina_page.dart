@@ -290,7 +290,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.celebrationPurple.withValues(alpha: 0.1),
+                    color: AppColors.exitoCompletado.withValues(alpha: 0.1),
                     offset: const Offset(0, 2),
                     blurRadius: 8,
                   ),
@@ -303,7 +303,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                 },
                 icon: Icon(
                   Icons.arrow_back_ios_rounded,
-                  color: AppColors.celebrationPurple,
+                  color: AppColors.exitoCompletado,
                   size: 20,
                 ),
                 padding: const EdgeInsets.all(12),
@@ -330,7 +330,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                   Text(
                     'Personaliza cada detalle para tu éxito',
                     style: EstilosTextoEmocional.amigable.copyWith(
-                      color: AppColors.celebrationPurple,
+                      color: AppColors.exitoCompletado,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ),
