@@ -1385,10 +1385,31 @@ Aplica siempre diseño emocional, la regla de 8 puntos y la tipografía limitada
 
 # 5. Sistema de color HSB (Obligatorio)
 
-- Define y documenta todos los colores principales usando el sistema HSB (Hue, Saturation, Brightness).
-- Crea variaciones de color (hover, disabled, fondos, etc.) ajustando hue, saturación y brillo, no solo usando opacidad o mezclando con negro.
-- Para implementar en Flutter, usa `HSVColor.fromAHSV(1, hue, saturation, value).toColor()` y documenta los valores HSB originales en AppColors.
-- Ejemplo: Azul primario HSB(210, 70%, 90%) → `HSVColor.fromAHSV(1, 210, 0.7, 0.9).toColor()`
+**Referencia obligatoria:** [The HSB Color System: A Practicioner's Primer](https://www.learnui.design/blog/the-hsb-color-system-practicioners-primer.html)
+
+**Contexto:**
+La paleta de colores de GyMaster (ver `AppColors`) está diseñada siguiendo los principios del sistema HSB (Hue, Saturation, Brightness) tal como se explica en el artículo anterior. Esto permite crear una paleta profesional, flexible y fácil de mantener, donde todas las variaciones (hover, disabled, fondos, etc.) se generan ajustando matiz, saturación y brillo, y no simplemente mezclando con blanco/negro u opacidad.
+
+**Reglas obligatorias:**
+
+- Todos los colores principales y sus variaciones deben estar definidos en HSB, documentando los valores de matiz, saturación y brillo en los comentarios de `AppColors`.
+- Las variaciones (hover, fondo, deshabilitado, etc.) deben generarse ajustando H, S o B, nunca solo con opacidad ni mezclando con negro/blanco.
+- Para implementar en Flutter, usa `HSVColor.fromAHSV(1, hue, saturation, value).toColor()` y documenta el valor HSB original en el comentario.
+- Está **prohibido** usar colores fuera de la paleta de `AppColors` o definir colores en RGB/hex sin su referencia HSB y justificación.
+- Si necesitas un nuevo color, primero define su HSB y justifica su relación con la paleta base (por ejemplo, variación de matiz, saturación o brillo de un color existente).
+
+**Ejemplo de implementación:**
+
+```dart
+// Púrpura principal HSB(258°, 65%, 76%)
+static const Color primario = Color(0xFF6B46C1); // HSB: 258°, 65%, 76%
+// Variación cálida: matiz -15°
+static const Color primarioCalido = Color(0xFF8B46C1); // HSB: 243°, 65%, 76%
+// ...
+```
 
 **Resumen:**
-Sigue el patrón HSB para lograr una paleta flexible, profesional y fácil de mantener en GyMaster.
+
+- La paleta de `AppColors` es la única fuente de verdad para colores.
+- Todas las decisiones de color deben basarse en el sistema HSB y el artículo de learnui.design.
+- No se permite el uso de otros sistemas de color ni la definición arbitraria de colores.

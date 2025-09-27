@@ -482,8 +482,9 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
 
             return FloatingActionButton.extended(
               elevation: 0,
-              backgroundColor:
-                  esFavorito ? AppColors.motivacionPrincipal : AppColors.primary,
+              backgroundColor: esFavorito
+                  ? AppColors.motivacionPrincipal
+                  : AppColors.primary,
               onPressed: () async {
                 // Usar el cubit para toggle de favoritos
                 await favoritosCubit.toggleFavorito(widget.exercise.id);
@@ -541,7 +542,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                 ),
               ),
               label: Text(
-                esFavorito ? 'En Favoritos ❤️' : 'Agregar a Favoritos',
+                esFavorito ? 'En Favoritos' : 'Agregar a Favoritos',
                 style: EstilosTextoEmocional.aliento.copyWith(
                   color: Colors.white,
                   fontSize: 16,
