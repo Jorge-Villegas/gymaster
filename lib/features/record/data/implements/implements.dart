@@ -110,9 +110,6 @@ class RecordRepositoryImpl implements RecordRepository {
             continue;
           }
 
-          print(
-              '✅ Rutina ${rutina.nombre} ${rutinaSession.rutinaId} procesada con ${ejercicios.length} ejercicios');
-
           resultadoRutinas.add(
             RecordRutina(
               id: rutina.id,

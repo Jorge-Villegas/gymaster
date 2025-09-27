@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gymaster/core/theme/espaciado.dart';
+import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 
 class LoadingDialogPage extends StatelessWidget {
   const LoadingDialogPage({super.key});
@@ -11,17 +13,20 @@ class LoadingDialogPage extends StatelessWidget {
       ),
       body: Center(
         child: Container(
-          padding: const EdgeInsets.all(20),
+          padding: Espaciado.rellenoMd,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(10),
           ),
-          child: const Column(
+          child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              CircularProgressIndicator(),
-              SizedBox(height: 16),
-              Text('Cargando...'),
+              const CircularProgressIndicator(),
+              Espaciado.separacionVerticalSm,
+              Text(
+                'Cargando...',
+                style: TipografiaGyMaster.textoPrincipal,
+              ),
             ],
           ),
         ),

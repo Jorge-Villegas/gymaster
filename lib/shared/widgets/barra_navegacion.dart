@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/features/exercise/presentation/pages/exercise_catalog_page.dart';
 import 'package:gymaster/features/exercise/presentation/pages/favorites_page.dart';
 import 'package:gymaster/features/record/presentation/pages/historial_ejercicios_page.dart';
@@ -91,8 +92,8 @@ class _BottomNavigationBarExampleState
           backgroundColor: Theme.of(
             context,
           ).scaffoldBackgroundColor, // Fondo de acuerdo al tema
-          selectedFontSize: 14,
-          unselectedFontSize: 14,
+          selectedFontSize: TipografiaGyMaster.textoSecundario.fontSize!,
+          unselectedFontSize: TipografiaGyMaster.textoSecundario.fontSize!,
           iconSize: 24,
           type: BottomNavigationBarType.fixed,
           selectedLabelStyle: const TextStyle(height: 1.5),

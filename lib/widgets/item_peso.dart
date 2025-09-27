@@ -1,5 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:gymaster/core/theme/tipografia_gymaster.dart';
+import 'package:gymaster/core/theme/espaciado.dart';
 
 // ignore: must_be_immutable
 class ItemPesoWidget extends StatefulWidget {
@@ -22,21 +24,21 @@ class _ItemPesoWidgetState extends State<ItemPesoWidget> {
       children: [
         Text(
           '${widget.items.toString()}  : ',
-          style: const TextStyle(fontSize: 15),
+          style: TipografiaGyMaster.textoPrincipal,
         ),
         SizedBox(
           width: 60,
           child: TextField(
             controller: _controller,
             keyboardType: TextInputType.number,
-            style: const TextStyle(fontSize: 20),
+            style: TipografiaGyMaster.contadorPesoTiempo,
             onChanged: (value) {
               setState(() {});
             },
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(2.5),
+          padding: Espaciado.rellenoXs,
           child: TextButton(
             style: TextButton.styleFrom(
               foregroundColor: Colors.black45,

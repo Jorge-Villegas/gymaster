@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:gymaster/core/theme/espaciado.dart';
+import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/shared/models/elemento_menu_modelo.dart';
 
 class FilaMenuLateral extends StatelessWidget {
@@ -34,10 +36,9 @@ class FilaMenuLateral extends StatelessWidget {
 
         // Botón del elemento del menú - estilo flutter-samples
         CupertinoButton(
-          padding: const EdgeInsets.all(12),
+          padding: Espaciado.rellenoSm,
           pressedOpacity: 1,
           onPressed: () {
-            print('FilaMenuLateral: Tap detectado para ${elementoMenu.titulo}');
             alPresionarMenu?.call();
           },
           child: Row(
@@ -57,11 +58,8 @@ class FilaMenuLateral extends StatelessWidget {
               const SizedBox(width: 14),
               Text(
                 elementoMenu.titulo,
-                style: const TextStyle(
+                style: TipografiaGyMaster.subtitulo.copyWith(
                   color: Colors.white,
-                  fontFamily: "Inter",
-                  fontWeight: FontWeight.w600,
-                  fontSize: 17,
                 ),
               )
             ],

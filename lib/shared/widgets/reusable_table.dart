@@ -163,7 +163,8 @@ class CustomDataTable extends StatelessWidget {
                             child: Center(
                               child: IconButton(
                                 icon: const Icon(IconsaxPlusLinear.trash),
-                                color: Colors.red[300],
+                                color: AppColors.errorAmigable
+                                    .withValues(alpha: 0.7),
                                 onPressed: () {
                                   if (onRemoveRow != null) {
                                     onRemoveRow!(rowIndex);

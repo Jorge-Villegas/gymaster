@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 
 class EtiquetaRutina extends StatelessWidget {
   final String text;
@@ -23,7 +24,9 @@ class EtiquetaRutina extends StatelessWidget {
         radius: 25,
         child: Text(
           text,
-          style: TextStyle(color: Colors.grey[600], fontSize: 14),
+          style: TipografiaGyMaster.textoSecundario.copyWith(
+            color: Colors.grey[600],
+          ),
         ),
       );
     }
@@ -41,7 +44,9 @@ class EtiquetaRutina extends StatelessWidget {
       radius: 25,
       child: Text(
         text,
-        style: const TextStyle(color: Colors.white, fontSize: 14),
+        style: TipografiaGyMaster.textoSecundario.copyWith(
+          color: Colors.white,
+        ),
       ),
     );
   }

@@ -120,7 +120,8 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.motivacionPrincipal.withValues(alpha: 0.1),
+                        color: AppColors.motivacionPrincipal
+                            .withValues(alpha: 0.1),
                         offset: const Offset(0, 2),
                         blurRadius: 8,
                       ),
@@ -164,7 +165,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
         Text(
           'Catálogo de Ejercicios',
           style: EstilosTextoEmocional.energetico.copyWith(
-            color: AppColors.primary,
+            color: AppColors.secundario, // Azul confianza más profesional
             fontSize: 24,
             fontWeight: FontWeight.bold,
           ),
@@ -175,7 +176,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
         Text(
           '¡Descubre tu próximo desafío! 🏋️‍♂️',
           style: EstilosTextoEmocional.amigable.copyWith(
-            color: AppColors.motivacionPrincipal,
+            color: AppColors.energiaActiva, // Naranja dorado más sutil
             fontSize: 16,
             fontWeight: FontWeight.w500,
           ),
@@ -200,13 +201,15 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: AppColors.motivacionPrincipal.withValues(alpha: 0.2),
+              color: AppColors.descansoActivo
+                  .withValues(alpha: 0.15), // Azul más suave
               offset: const Offset(0, 4),
               blurRadius: 16,
             ),
           ],
           border: Border.all(
-            color: AppColors.motivacionPrincipal.withValues(alpha: 0.5),
+            color: AppColors.descansoActivo
+                .withValues(alpha: 0.4), // Azul más suave
             width: 2,
           ),
         ),
@@ -227,12 +230,13 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
               margin: const EdgeInsets.all(12),
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: AppColors.motivacionPrincipal.withValues(alpha: 0.1),
+                color: AppColors.descansoActivo
+                    .withValues(alpha: 0.1), // Azul suave
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(
                 IconsaxPlusLinear.search_normal_1,
-                color: AppColors.motivacionPrincipal,
+                color: AppColors.descansoActivo, // Azul suave
                 size: 20,
               ),
             ),
@@ -275,15 +279,16 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
         width: 48,
         height: 48,
         decoration: BoxDecoration(
-          color:
-              _isSearchExpanded ? AppColors.descansoActivo : AppColors.motivacionPrincipal,
+          color: _isSearchExpanded
+              ? AppColors.informacionUtil
+              : AppColors.secundario, // Azules profesionales
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
               color: (_isSearchExpanded
-                      ? AppColors.descansoActivo
-                      : AppColors.motivacionPrincipal)
-                  .withValues(alpha: 0.3),
+                      ? AppColors.informacionUtil
+                      : AppColors.secundario)
+                  .withValues(alpha: 0.25), // Sombra más sutil
               offset: const Offset(0, 4),
               blurRadius: 12,
             ),
@@ -469,7 +474,8 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                       'Grupos Musculares',
                       style: EstilosTextoEmocional.energetico.copyWith(
                         fontSize: 16,
-                        color: AppColors.primary,
+                        color: AppColors
+                            .secundario, // Azul confianza más profesional
                       ),
                     ),
                   ),
@@ -579,8 +585,14 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
           gradient: isSelected
               ? LinearGradient(
                   colors: isSpecial
-                      ? [AppColors.motivacionPrincipal, AppColors.motivacionPrincipal]
-                      : [AppColors.primary, AppColors.secondary],
+                      ? [
+                          AppColors.energiaActiva,
+                          AppColors.logroDesbloqueado
+                        ] // Dorado cálido para "Todos"
+                      : [
+                          AppColors.secundario,
+                          AppColors.descansoActivo
+                        ], // Azules suaves para músculos
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 )
@@ -591,16 +603,19 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
             color: isSelected
                 ? Colors.transparent
                 : isSpecial
-                    ? AppColors.motivacionPrincipal.withValues(alpha: 0.3)
-                    : AppColors.primary.withValues(alpha: 0.3),
+                    ? AppColors.energiaActiva
+                        .withValues(alpha: 0.4) // Dorado más sutil
+                    : AppColors.secundario
+                        .withValues(alpha: 0.3), // Azul más sutil
             width: 1.5,
           ),
           boxShadow: isSelected
               ? [
                   BoxShadow(
-                    color:
-                        (isSpecial ? AppColors.motivacionPrincipal : AppColors.primary)
-                            .withValues(alpha: 0.3),
+                    color: (isSpecial
+                            ? AppColors.energiaActiva
+                            : AppColors.secundario)
+                        .withValues(alpha: 0.25), // Sombra más sutil
                     blurRadius: 8,
                     offset: const Offset(0, 2),
                   ),
@@ -628,8 +643,9 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                 color: isSelected
                     ? Colors.white
                     : isSpecial
-                        ? AppColors.motivacionPrincipal
-                        : AppColors.primary,
+                        ? AppColors.energiaActiva // Dorado cálido para "Todos"
+                        : AppColors
+                            .secundario, // Azul profesional para músculos
               ),
             ),
           ],
@@ -668,7 +684,8 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                     Icon(
                       IconsaxPlusLinear.warning_2,
                       size: 64,
-                      color: AppColors.motivacionPrincipal.withValues(alpha: 0.5),
+                      color:
+                          AppColors.motivacionPrincipal.withValues(alpha: 0.5),
                     ),
                     const SizedBox(height: 16),
                     Text(
@@ -889,11 +906,12 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                               vertical: 3,
                             ),
                             decoration: BoxDecoration(
-                              color: AppColors.descansoActivo.withValues(alpha: 0.1),
+                              color: AppColors.descansoActivo
+                                  .withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(
-                                color:
-                                    AppColors.descansoActivo.withValues(alpha: 0.3),
+                                color: AppColors.descansoActivo
+                                    .withValues(alpha: 0.3),
                                 width: 0.5,
                               ),
                             ),

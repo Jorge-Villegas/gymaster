@@ -1,6 +1,7 @@
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 
 class Temporizador extends StatefulWidget {
   const Temporizador({super.key});
@@ -63,9 +64,9 @@ class _TemporizadorState extends State<Temporizador> {
 
           // Estilo de texto para texto de cuenta regresiva.
           textStyle: TextStyle(
-            fontSize: 50.0,
+            fontSize: TipografiaGyMaster.tamanoLg, // 24px (el máximo permitido)
             color: colorScheme.onPrimary,
-            fontWeight: FontWeight.bold,
+            fontWeight: TipografiaGyMaster.pesoSemiBold,
           ),
 
           // Formato para el Texto de Cuenta Regresiva.

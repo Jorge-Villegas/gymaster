@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:gymaster/core/theme/app_colors.dart';
 
 /// Widget de confeti para celebraciones de logros en GyMaster
 /// Implementa efectos de partículas coloridas para feedback emocional positivo
@@ -33,13 +34,14 @@ class ConfettiWidget extends StatefulWidget {
     this.duracionAnimacionConfeti = const Duration(seconds: 3),
     this.cantidadParticulasConfeti = 50,
     this.coloresParticulasConfeti = const [
-      Colors.red,
-      Colors.blue,
-      Colors.green,
-      Colors.yellow,
-      Colors.purple,
-      Colors.orange,
-      Colors.pink,
+      // Usando colores HSB más suaves del sistema
+      Color(0xFF4CAF50), // Verde natural
+      Color(0xFF2196F3), // Azul cálido
+      Color(0xFFFFC107), // Dorado suave
+      Color(0xFF9C27B0), // Púrpura equilibrado
+      Color(0xFFFF9800), // Naranja cálido
+      Color(0xFF00BCD4), // Turquesa
+      Color(0xFFE91E63), // Rosa coral
     ],
     this.particulasCaenDesdeArriba = true,
     this.tamanoParticulaConfeti = 8.0,
@@ -355,13 +357,21 @@ class CelebracionConfeti extends StatelessWidget {
       case TipoCelebracion.rutinaCompletada:
         return [Colors.green, Colors.lightGreen, Colors.teal];
       case TipoCelebracion.recordPersonal:
-        return [Colors.amber, Colors.orange, Colors.deepOrange];
+        return [
+          AppColors.logroDesbloqueado,
+          AppColors.energiaActiva,
+          AppColors.motivacionPrincipal
+        ];
       case TipoCelebracion.metaSemanal:
         return [Colors.blue, Colors.lightBlue, Colors.cyan];
       case TipoCelebracion.logroMensual:
         return [Colors.purple, Colors.deepPurple, Colors.indigo];
       case TipoCelebracion.subidaDeNivel:
-        return [Colors.red, Colors.pink, Colors.deepOrange];
+        return [
+          AppColors.impulsoEntrenamiento,
+          AppColors.motivacionPrincipal,
+          AppColors.energiaActiva
+        ];
     }
   }
 

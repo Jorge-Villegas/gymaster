@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/core/theme/emotional_text_styles.dart';
+import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/shared/utils/haptic_feedback_helper.dart';
 
 /// Custom elevated button con diseño emocional
@@ -166,34 +167,34 @@ class _CustomElevatedButtonState extends State<CustomElevatedButton>
       case EmotionalButtonType.energetic:
         return EstilosTextoEmocional.energetico.copyWith(
           color: baseColor,
-          fontSize: 16,
+          fontSize: TipografiaGyMaster.textoPrincipal.fontSize,
         );
       case EmotionalButtonType.success:
         return EstilosTextoEmocional.aliento.copyWith(
           color: baseColor,
-          fontSize: 16,
+          fontSize: TipografiaGyMaster.textoPrincipal.fontSize,
         );
       case EmotionalButtonType.achievement:
         return EstilosTextoEmocional.logro.copyWith(
           color: baseColor,
-          fontSize: 16,
+          fontSize: TipografiaGyMaster.textoPrincipal.fontSize,
         );
       case EmotionalButtonType.motivation:
         return EstilosTextoEmocional.motivacional.copyWith(
           color: baseColor,
-          fontSize: 16,
+          fontSize: TipografiaGyMaster.textoPrincipal.fontSize,
         );
       case EmotionalButtonType.calm:
         return EstilosTextoEmocional.descanso.copyWith(
           color: baseColor,
-          fontSize: 16,
+          fontSize: TipografiaGyMaster.textoPrincipal.fontSize,
         );
       case EmotionalButtonType.warning:
       case EmotionalButtonType.neutral:
         return TextStyle(
           color: baseColor,
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
+          fontSize: TipografiaGyMaster.textoPrincipal.fontSize,
+          fontWeight: TipografiaGyMaster.pesoSemiBold,
         );
     }
   }

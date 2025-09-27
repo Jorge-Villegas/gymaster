@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gymaster/core/theme/tipografia_gymaster.dart';
+import 'package:gymaster/core/theme/espaciado.dart';
 
 class CustomInput extends StatelessWidget {
   final TextEditingController controller;
@@ -34,7 +36,7 @@ class CustomInput extends StatelessWidget {
     this.width = double.infinity,
     this.height = 50.0,
     this.icon = Icons.person,
-    this.focusedColor = Colors.red,
+    this.focusedColor = const Color(0xFFFF6B35), // Naranja suave HSB
     this.isPassword = false,
     this.keyboardType = TextInputType.text,
     this.suffixIcon,
@@ -48,8 +50,7 @@ class CustomInput extends StatelessWidget {
       controller: controller,
       onChanged: onChanged,
       onSubmitted: onSubmitted,
-      style: const TextStyle(
-        fontSize: 17,
+      style: TipografiaGyMaster.textoPrincipal.copyWith(
         color: Colors.white,
       ),
       inputFormatters: [
@@ -58,7 +59,7 @@ class CustomInput extends StatelessWidget {
         ),
       ],
       decoration: InputDecoration(
-        contentPadding: const EdgeInsets.symmetric(vertical: 15),
+        contentPadding: Espaciado.rellenoVerticalSm,
         suffixIcon: suffixIcon,
         hintText: label,
         hintStyle: const TextStyle(

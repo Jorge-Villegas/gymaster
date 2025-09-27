@@ -54,6 +54,17 @@ class $AssetsLottieGen {
   List<String> get values => [alzandoPesas];
 }
 
+class $AssetsSamplesGen {
+  const $AssetsSamplesGen();
+
+  /// Directory path: assets/samples/animations
+  $AssetsSamplesAnimationsGen get animations =>
+      const $AssetsSamplesAnimationsGen();
+
+  /// Directory path: assets/samples/ui
+  $AssetsSamplesUiGen get ui => const $AssetsSamplesUiGen();
+}
+
 class $AssetsIconsOtrosGen {
   const $AssetsIconsOtrosGen();
 
@@ -64,9 +75,21 @@ class $AssetsIconsOtrosGen {
   SvgGenImage get bicicletaDeSpinning =>
       const SvgGenImage('assets/icons/otros/bicicleta-de-spinning.svg');
 
+  /// File path: assets/icons/otros/corazon.svg
+  SvgGenImage get corazon =>
+      const SvgGenImage('assets/icons/otros/corazon.svg');
+
+  /// File path: assets/icons/otros/ejercicio.svg
+  SvgGenImage get ejercicio =>
+      const SvgGenImage('assets/icons/otros/ejercicio.svg');
+
   /// File path: assets/icons/otros/estirar.svg
   SvgGenImage get estirar =>
       const SvgGenImage('assets/icons/otros/estirar.svg');
+
+  /// File path: assets/icons/otros/fuerza-brazos.svg
+  SvgGenImage get fuerzaBrazos =>
+      const SvgGenImage('assets/icons/otros/fuerza-brazos.svg');
 
   /// File path: assets/icons/otros/gym-equipamiento.svg
   SvgGenImage get gymEquipamiento =>
@@ -89,17 +112,28 @@ class $AssetsIconsOtrosGen {
   /// File path: assets/icons/otros/pierna.svg
   SvgGenImage get pierna => const SvgGenImage('assets/icons/otros/pierna.svg');
 
+  /// File path: assets/icons/otros/quemar.svg
+  SvgGenImage get quemar => const SvgGenImage('assets/icons/otros/quemar.svg');
+
+  /// File path: assets/icons/otros/yoga.svg
+  SvgGenImage get yoga => const SvgGenImage('assets/icons/otros/yoga.svg');
+
   /// List of all assets
   List<SvgGenImage> get values => [
         biceps,
         bicicletaDeSpinning,
+        corazon,
+        ejercicio,
         estirar,
+        fuerzaBrazos,
         gymEquipamiento,
         manosConOpesas,
         pantorrillas,
         pesas,
         pesas1,
-        pierna
+        pierna,
+        quemar,
+        yoga
       ];
 }
 
@@ -196,6 +230,28 @@ class $AssetsImagenesOtrosGen {
   /// List of all assets
   List<AssetGenImage> get values =>
       [personaConPesaNegro, personaConPesaRojo, personaConPesasAzul];
+}
+
+class $AssetsSamplesAnimationsGen {
+  const $AssetsSamplesAnimationsGen();
+
+  /// File path: assets/samples/animations/custom_caret.png
+  AssetGenImage get customCaret =>
+      const AssetGenImage('assets/samples/animations/custom_caret.png');
+
+  /// File path: assets/samples/animations/grid_magnification.png
+  AssetGenImage get gridMagnification =>
+      const AssetGenImage('assets/samples/animations/grid_magnification.png');
+
+  /// List of all assets
+  List<AssetGenImage> get values => [customCaret, gridMagnification];
+}
+
+class $AssetsSamplesUiGen {
+  const $AssetsSamplesUiGen();
+
+  /// Directory path: assets/samples/ui/rive_app
+  $AssetsSamplesUiRiveAppGen get riveApp => const $AssetsSamplesUiRiveAppGen();
 }
 
 class $AssetsImagenesMusculosAbdomenGen {
@@ -2198,12 +2254,160 @@ class $AssetsImagenesMusculosTricepsGen {
       ];
 }
 
+class $AssetsSamplesUiRiveAppGen {
+  const $AssetsSamplesUiRiveAppGen();
+
+  /// File path: assets/samples/ui/rive_app/course_rive.png
+  AssetGenImage get courseRive =>
+      const AssetGenImage('assets/samples/ui/rive_app/course_rive.png');
+
+  /// Directory path: assets/samples/ui/rive_app/images
+  $AssetsSamplesUiRiveAppImagesGen get images =>
+      const $AssetsSamplesUiRiveAppImagesGen();
+
+  /// Directory path: assets/samples/ui/rive_app/rive
+  $AssetsSamplesUiRiveAppRiveGen get rive =>
+      const $AssetsSamplesUiRiveAppRiveGen();
+
+  /// List of all assets
+  List<AssetGenImage> get values => [courseRive];
+}
+
+class $AssetsSamplesUiRiveAppImagesGen {
+  const $AssetsSamplesUiRiveAppImagesGen();
+
+  /// Directory path: assets/samples/ui/rive_app/images/avatars
+  $AssetsSamplesUiRiveAppImagesAvatarsGen get avatars =>
+      const $AssetsSamplesUiRiveAppImagesAvatarsGen();
+
+  /// Directory path: assets/samples/ui/rive_app/images/backgrounds
+  $AssetsSamplesUiRiveAppImagesBackgroundsGen get backgrounds =>
+      const $AssetsSamplesUiRiveAppImagesBackgroundsGen();
+
+  /// File path: assets/samples/ui/rive_app/images/icon_email.png
+  AssetGenImage get iconEmail =>
+      const AssetGenImage('assets/samples/ui/rive_app/images/icon_email.png');
+
+  /// File path: assets/samples/ui/rive_app/images/icon_lock.png
+  AssetGenImage get iconLock =>
+      const AssetGenImage('assets/samples/ui/rive_app/images/icon_lock.png');
+
+  /// File path: assets/samples/ui/rive_app/images/logo_apple.png
+  AssetGenImage get logoApple =>
+      const AssetGenImage('assets/samples/ui/rive_app/images/logo_apple.png');
+
+  /// File path: assets/samples/ui/rive_app/images/logo_email.png
+  AssetGenImage get logoEmail =>
+      const AssetGenImage('assets/samples/ui/rive_app/images/logo_email.png');
+
+  /// File path: assets/samples/ui/rive_app/images/logo_google.png
+  AssetGenImage get logoGoogle =>
+      const AssetGenImage('assets/samples/ui/rive_app/images/logo_google.png');
+
+  /// Directory path: assets/samples/ui/rive_app/images/topics
+  $AssetsSamplesUiRiveAppImagesTopicsGen get topics =>
+      const $AssetsSamplesUiRiveAppImagesTopicsGen();
+
+  /// List of all assets
+  List<AssetGenImage> get values =>
+      [iconEmail, iconLock, logoApple, logoEmail, logoGoogle];
+}
+
+class $AssetsSamplesUiRiveAppRiveGen {
+  const $AssetsSamplesUiRiveAppRiveGen();
+
+  /// File path: assets/samples/ui/rive_app/rive/button.riv
+  String get button => 'assets/samples/ui/rive_app/rive/button.riv';
+
+  /// File path: assets/samples/ui/rive_app/rive/check.riv
+  String get check => 'assets/samples/ui/rive_app/rive/check.riv';
+
+  /// File path: assets/samples/ui/rive_app/rive/confetti.riv
+  String get confetti => 'assets/samples/ui/rive_app/rive/confetti.riv';
+
+  /// File path: assets/samples/ui/rive_app/rive/icons.riv
+  String get icons => 'assets/samples/ui/rive_app/rive/icons.riv';
+
+  /// File path: assets/samples/ui/rive_app/rive/menu_button.riv
+  String get menuButton => 'assets/samples/ui/rive_app/rive/menu_button.riv';
+
+  /// File path: assets/samples/ui/rive_app/rive/shapes.riv
+  String get shapes => 'assets/samples/ui/rive_app/rive/shapes.riv';
+
+  /// List of all assets
+  List<String> get values =>
+      [button, check, confetti, icons, menuButton, shapes];
+}
+
+class $AssetsSamplesUiRiveAppImagesAvatarsGen {
+  const $AssetsSamplesUiRiveAppImagesAvatarsGen();
+
+  /// File path: assets/samples/ui/rive_app/images/avatars/avatar_1.jpg
+  AssetGenImage get avatar1 => const AssetGenImage(
+      'assets/samples/ui/rive_app/images/avatars/avatar_1.jpg');
+
+  /// File path: assets/samples/ui/rive_app/images/avatars/avatar_2.jpg
+  AssetGenImage get avatar2 => const AssetGenImage(
+      'assets/samples/ui/rive_app/images/avatars/avatar_2.jpg');
+
+  /// File path: assets/samples/ui/rive_app/images/avatars/avatar_3.jpg
+  AssetGenImage get avatar3 => const AssetGenImage(
+      'assets/samples/ui/rive_app/images/avatars/avatar_3.jpg');
+
+  /// File path: assets/samples/ui/rive_app/images/avatars/avatar_4.jpg
+  AssetGenImage get avatar4 => const AssetGenImage(
+      'assets/samples/ui/rive_app/images/avatars/avatar_4.jpg');
+
+  /// File path: assets/samples/ui/rive_app/images/avatars/avatar_5.jpg
+  AssetGenImage get avatar5 => const AssetGenImage(
+      'assets/samples/ui/rive_app/images/avatars/avatar_5.jpg');
+
+  /// File path: assets/samples/ui/rive_app/images/avatars/avatar_6.jpg
+  AssetGenImage get avatar6 => const AssetGenImage(
+      'assets/samples/ui/rive_app/images/avatars/avatar_6.jpg');
+
+  /// File path: assets/samples/ui/rive_app/images/avatars/avatar_default.jpg
+  AssetGenImage get avatarDefault => const AssetGenImage(
+      'assets/samples/ui/rive_app/images/avatars/avatar_default.jpg');
+
+  /// List of all assets
+  List<AssetGenImage> get values =>
+      [avatar1, avatar2, avatar3, avatar4, avatar5, avatar6, avatarDefault];
+}
+
+class $AssetsSamplesUiRiveAppImagesBackgroundsGen {
+  const $AssetsSamplesUiRiveAppImagesBackgroundsGen();
+
+  /// File path: assets/samples/ui/rive_app/images/backgrounds/spline.png
+  AssetGenImage get spline => const AssetGenImage(
+      'assets/samples/ui/rive_app/images/backgrounds/spline.png');
+
+  /// List of all assets
+  List<AssetGenImage> get values => [spline];
+}
+
+class $AssetsSamplesUiRiveAppImagesTopicsGen {
+  const $AssetsSamplesUiRiveAppImagesTopicsGen();
+
+  /// File path: assets/samples/ui/rive_app/images/topics/topic_1.png
+  AssetGenImage get topic1 => const AssetGenImage(
+      'assets/samples/ui/rive_app/images/topics/topic_1.png');
+
+  /// File path: assets/samples/ui/rive_app/images/topics/topic_2.png
+  AssetGenImage get topic2 => const AssetGenImage(
+      'assets/samples/ui/rive_app/images/topics/topic_2.png');
+
+  /// List of all assets
+  List<AssetGenImage> get values => [topic1, topic2];
+}
+
 class Assets {
   const Assets._();
 
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagenesGen imagenes = $AssetsImagenesGen();
   static const $AssetsLottieGen lottie = $AssetsLottieGen();
+  static const $AssetsSamplesGen samples = $AssetsSamplesGen();
 }
 
 class AssetGenImage {

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gymaster/core/theme/espaciado.dart';
+import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/features/setting/presentation/cubit/setting_cubit.dart';
 import 'package:gymaster/features/setting/presentation/cubit/setting_state.dart';
 import 'package:gymaster/shared/models/elemento_menu_modelo.dart';
@@ -80,9 +82,6 @@ class _MenuLateralState extends State<MenuLateral> {
     setState(() {
       _menuSeleccionado = menu.titulo;
     });
-
-    // Debug: Mostrar mensaje para confirmar que el tap funciona
-    print('Menu seleccionado: ${menu.titulo}');
 
     // Navegar a la página correspondiente usando el índice
     if (menu.indiceNavegacion != null && widget.onMenuSelected != null) {
@@ -207,21 +206,17 @@ class _MenuLateralState extends State<MenuLateral> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 "Usuario GyMaster",
-                style: TextStyle(
+                style: TipografiaGyMaster.subtitulo.copyWith(
                   color: Colors.white,
-                  fontSize: 17,
-                  fontFamily: "Inter",
                 ),
               ),
               const SizedBox(height: 2),
               Text(
                 "Entrenador Personal",
-                style: TextStyle(
+                style: TipografiaGyMaster.textoPrincipal.copyWith(
                   color: Colors.white.withValues(alpha: 0.7),
-                  fontSize: 15,
-                  fontFamily: "Inter",
                 ),
               )
             ],
@@ -233,7 +228,7 @@ class _MenuLateralState extends State<MenuLateral> {
 
   Widget _construirControlTema(ThemeData tema, bool esTemaOscuro) {
     return Padding(
-      padding: const EdgeInsets.all(20),
+      padding: Espaciado.rellenoMd,
       child: Row(
         children: [
           SizedBox(
@@ -249,14 +244,11 @@ class _MenuLateralState extends State<MenuLateral> {
             ),
           ),
           const SizedBox(width: 14),
-          const Expanded(
+          Expanded(
             child: Text(
               "Tema Oscuro",
-              style: TextStyle(
+              style: TipografiaGyMaster.subtitulo.copyWith(
                 color: Colors.white,
-                fontSize: 17,
-                fontFamily: "Inter",
-                fontWeight: FontWeight.w600,
               ),
             ),
           ),

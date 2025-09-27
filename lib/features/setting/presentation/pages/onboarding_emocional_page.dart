@@ -44,7 +44,7 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.message),
-                backgroundColor: Colors.red,
+                backgroundColor: AppColors.errorAmigable,
               ),
             );
           }

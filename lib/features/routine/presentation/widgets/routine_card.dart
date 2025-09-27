@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
+import 'package:gymaster/core/theme/espaciado.dart';
+import 'package:gymaster/core/theme/tipografia_gymaster.dart';
+import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/shared/utils/text_formatter.dart';
 import 'package:gymaster/shared/utils/haptic_feedback_helper.dart';
 import 'package:gymaster/features/routine/presentation/widgets/delete_routine_dialog.dart';
@@ -144,23 +147,22 @@ class _RoutineCardState extends State<RoutineCard>
                     ),
                     Positioned.fill(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 25),
+                        padding: Espaciado.rellenoHorizontalLg,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               TextFormatter.capitalize(widget.title),
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
+                              style: TipografiaGyMaster.subtitulo.copyWith(
                                 color: colorTitle,
                               ),
                             ),
                             Text(
                               widget.cantidadEjerciciosPorSeries,
-                              style: const TextStyle(
-                                  color: colorSubtitle, fontSize: 18),
+                              style: TipografiaGyMaster.subtitulo.copyWith(
+                                color: colorSubtitle,
+                              ),
                             ),
                           ],
                         ),
@@ -189,14 +191,14 @@ class _RoutineCardState extends State<RoutineCard>
                                 children: [
                                   Icon(
                                     IconsaxPlusLinear.trash,
-                                    color: Colors.red.shade600,
+                                    color: AppColors.errorAmigable,
                                     size: 18,
                                   ),
                                   const SizedBox(width: 12),
                                   Text(
                                     'Eliminar rutina',
                                     style: TextStyle(
-                                      color: Colors.red.shade600,
+                                      color: AppColors.errorAmigable,
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),

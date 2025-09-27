@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/tipografia_gymaster.dart';
+import 'package:gymaster/core/theme/espaciado.dart';
 
 class ItemsPesosWidget extends StatefulWidget {
   final int items;
@@ -34,20 +36,20 @@ class _ItemsPesosWidgetState extends State<ItemsPesosWidget> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('1  :    ', style: TextStyle(fontSize: 15)),
+            Text('1  :    ', style: TipografiaGyMaster.textoPrincipal),
             SizedBox(
               width: 60,
               child: TextField(
                 controller: _controller1,
                 keyboardType: TextInputType.number,
-                style: const TextStyle(fontSize: 20),
+                style: TipografiaGyMaster.contadorPesoTiempo,
                 onChanged: (value) {
                   setState(() {});
                 },
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(2.5),
+              padding: Espaciado.rellenoXs,
               child: TextButton(
                 style: TextButton.styleFrom(
                   foregroundColor: AppColors.textoSecundarioClaro,
@@ -77,20 +79,20 @@ class _ItemsPesosWidgetState extends State<ItemsPesosWidget> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('2  :    ', style: TextStyle(fontSize: 15)),
+            Text('2  :    ', style: TipografiaGyMaster.textoPrincipal),
             SizedBox(
               width: 60,
               child: TextField(
                 controller: _controller2,
                 keyboardType: TextInputType.number,
-                style: const TextStyle(fontSize: 20),
+                style: TipografiaGyMaster.contadorPesoTiempo,
                 onChanged: (value) {
                   setState(() {});
                 },
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(2.5),
+              padding: Espaciado.rellenoXs,
               child: TextButton(
                 style: TextButton.styleFrom(
                   foregroundColor: AppColors.textoSecundarioClaro,
@@ -120,20 +122,20 @@ class _ItemsPesosWidgetState extends State<ItemsPesosWidget> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('3  :    ', style: TextStyle(fontSize: 15)),
+            Text('3  :    ', style: TipografiaGyMaster.textoPrincipal),
             SizedBox(
               width: 60,
               child: TextField(
                 controller: _controller1,
                 keyboardType: TextInputType.number,
-                style: const TextStyle(fontSize: 20),
+                style: TipografiaGyMaster.contadorPesoTiempo,
                 onChanged: (value) {
                   setState(() {});
                 },
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(2.5),
+              padding: Espaciado.rellenoXs,
               child: TextButton(
                 style: TextButton.styleFrom(
                   foregroundColor: AppColors.textoSecundarioClaro,

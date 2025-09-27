@@ -5,6 +5,7 @@ import '../cubits/mood_detector/mood_detector_cubit.dart';
 import '../cubits/mood_detector/mood_detector_state.dart';
 import '../../../../../shared/utils/haptic_feedback_helper.dart';
 import '../../../../../shared/widgets/custom_elevated_button.dart';
+import '../../../../../core/theme/app_colors.dart';
 
 /// Widget para detectar y registrar el estado anímico del usuario
 /// Proporciona 4 opciones emocionales específicas para GyMaster
@@ -378,7 +379,7 @@ class _MoodDetectorWidgetState extends State<MoodDetectorWidget>
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
-        backgroundColor: Colors.red,
+        backgroundColor: AppColors.errorAmigable,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),

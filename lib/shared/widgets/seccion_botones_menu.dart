@@ -53,8 +53,6 @@ class SeccionBotonesMenu extends StatelessWidget {
                   elementoMenu: elemento,
                   menuSeleccionado: menuSeleccionado,
                   alPresionarMenu: () {
-                    print(
-                        'SeccionBotonesMenu: Tap detectado para ${elemento.titulo}');
                     alPresionarMenu?.call(elemento);
                   },
                 ),

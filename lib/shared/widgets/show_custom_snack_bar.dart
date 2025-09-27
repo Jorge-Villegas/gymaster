@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gymaster/core/theme/espaciado.dart';
+import 'package:gymaster/core/theme/tipografia_gymaster.dart';
+import 'package:gymaster/core/theme/app_colors.dart';
 
 /// Enumeración de los tipos de mensajes que puede mostrar el SnackBar.
 enum SnackBarType { success, error, info, warning }
@@ -21,19 +24,19 @@ void showCustomSnackBar({
 
   switch (type) {
     case SnackBarType.success:
-      backgroundColor = Colors.green;
+      backgroundColor = AppColors.exitoCompletado;
       icon = Icons.check;
       break;
     case SnackBarType.error:
-      backgroundColor = Colors.red;
+      backgroundColor = AppColors.errorAmigable;
       icon = Icons.error;
       break;
     case SnackBarType.info:
-      backgroundColor = Colors.blue;
+      backgroundColor = AppColors.informacionUtil;
       icon = Icons.info;
       break;
     case SnackBarType.warning:
-      backgroundColor = Colors.yellow;
+      backgroundColor = AppColors.advertenciaSutil;
       icon = Icons.warning;
       break;
   }
@@ -48,15 +51,20 @@ void showCustomSnackBar({
         elevation: 5,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+          padding: EdgeInsets.symmetric(
+            horizontal: Espaciado.md,
+            vertical: Espaciado.sm,
+          ),
           child: Row(
             children: [
-              Icon(icon, size: 20, color: Colors.white),
-              const SizedBox(width: 20),
+              Icon(icon, size: Espaciado.md, color: Colors.white),
+              Espaciado.separacionHorizontalMd,
               Expanded(
                 child: Text(
                   message,
-                  style: const TextStyle(fontSize: 16, color: Colors.white),
+                  style: TipografiaGyMaster.textoPrincipal.copyWith(
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ],

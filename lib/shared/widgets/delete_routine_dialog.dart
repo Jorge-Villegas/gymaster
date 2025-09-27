@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/core/theme/emotional_text_styles.dart';
+import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/shared/utils/haptic_feedback_helper.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 
@@ -176,9 +177,9 @@ class _DeleteRoutineDialogState extends State<DeleteRoutineDialog>
       child: Text(
         '¿Eliminar rutina? 🗑️',
         style: EstilosTextoEmocional.energetico.copyWith(
-          fontSize: 22,
+          fontSize: TipografiaGyMaster.titulo.fontSize,
           color: AppColors.textDark,
-          fontWeight: FontWeight.bold,
+          fontWeight: TipografiaGyMaster.pesoSemiBold,
         ),
         textAlign: TextAlign.center,
       ),
@@ -193,7 +194,7 @@ class _DeleteRoutineDialogState extends State<DeleteRoutineDialog>
         textAlign: TextAlign.center,
         text: TextSpan(
           style: EstilosTextoEmocional.amigable.copyWith(
-            fontSize: 16,
+            fontSize: TipografiaGyMaster.textoPrincipal.fontSize,
             color: AppColors.textMedium,
             height: 1.4,
           ),
@@ -257,8 +258,8 @@ class _DeleteRoutineDialogState extends State<DeleteRoutineDialog>
         'Cancelar',
         style: EstilosTextoEmocional.amigable.copyWith(
           color: AppColors.textSecondary,
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
+          fontSize: TipografiaGyMaster.textoPrincipal.fontSize,
+          fontWeight: TipografiaGyMaster.pesoSemiBold,
         ),
       ),
     );
@@ -279,8 +280,8 @@ class _DeleteRoutineDialogState extends State<DeleteRoutineDialog>
         'Eliminar',
         style: EstilosTextoEmocional.aliento.copyWith(
           color: Colors.white,
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
+          fontSize: TipografiaGyMaster.textoPrincipal.fontSize,
+          fontWeight: TipografiaGyMaster.pesoSemiBold,
         ),
       ),
     );

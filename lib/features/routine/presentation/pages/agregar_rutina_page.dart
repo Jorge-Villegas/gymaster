@@ -23,6 +23,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
   String iconoSeleccionado = Assets.icons.otros.biceps.path;
 
   final List<Map<String, dynamic>> iconosTematicos = [
+    // === ICONOS DE FUERZA ===
     {
       'ruta': Assets.icons.otros.biceps.path,
       'nombre': 'Fuerza Superior',
@@ -44,6 +45,24 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
       'categoria': 'fuerza'
     },
     {
+      'ruta': Assets.icons.otros.gymEquipamiento.path,
+      'nombre': 'Máquinas',
+      'categoria': 'fuerza'
+    },
+    {
+      'ruta': Assets.icons.otros.fuerzaBrazos.path,
+      'nombre': 'Fuerza Brazos',
+      'categoria': 'fuerza'
+    },
+    {
+      'ruta': 'assets/icons/colors/fuerza.png',
+      'nombre': 'Potencia Total',
+      'categoria': 'fuerza',
+      'esImagen': true // Indicador para manejar PNG vs SVG
+    },
+
+    // === ICONOS DE CARDIO ===
+    {
       'ruta': Assets.icons.otros.pierna.path,
       'nombre': 'Tren Inferior',
       'categoria': 'cardio'
@@ -59,14 +78,45 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
       'categoria': 'cardio'
     },
     {
+      'ruta': 'assets/icons/colors/biciclera-de-spinnig.png',
+      'nombre': 'Spinning Colorido',
+      'categoria': 'cardio',
+      'esImagen': true
+    },
+    {
+      'ruta': Assets.icons.otros.corazon.path,
+      'nombre': 'Cardio Saludable',
+      'categoria': 'cardio'
+    },
+    {
+      'ruta': Assets.icons.otros.quemar.path,
+      'nombre': 'Quemar Grasa',
+      'categoria': 'cardio'
+    },
+    {
+      'ruta': 'assets/icons/colors/quemar.png',
+      'nombre': 'Quemar Calorías',
+      'categoria': 'cardio',
+      'esImagen': true
+    },
+
+    // === ICONOS DE RECOVERY/BIENESTAR ===
+    {
       'ruta': Assets.icons.otros.estirar.path,
       'nombre': 'Flexibilidad',
       'categoria': 'recovery'
     },
     {
-      'ruta': Assets.icons.otros.gymEquipamiento.path,
-      'nombre': 'Máquinas',
-      'categoria': 'fuerza'
+      'ruta': Assets.icons.otros.yoga.path,
+      'nombre': 'Yoga & Meditación',
+      'categoria': 'recovery'
+    },
+
+    // === ICONOS GENERALES ===
+    {
+      'ruta': Assets.icons.otros.ejercicio.path,
+      'nombre': 'Ejercicio General',
+      'categoria': 'general'
     },
   ];
 
@@ -686,7 +736,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
           ),
           const SizedBox(height: 20),
           // Agrupación por categorías
-          ...['fuerza', 'cardio', 'recovery'].map((categoria) {
+          ...['fuerza', 'cardio', 'recovery', 'general'].map((categoria) {
             final iconosCategoria = iconosTematicos
                 .where((icono) => icono['categoria'] == categoria)
                 .toList();
@@ -699,18 +749,24 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
             switch (categoria) {
               case 'fuerza':
                 nombreCategoria = 'Fuerza & Músculo';
-                colorCategoria = Colors.red.shade600;
+                colorCategoria =
+                    AppColors.impulsoEntrenamiento; // Usando colores HSB
                 iconoCategoria = Icons.fitness_center_rounded;
                 break;
               case 'cardio':
                 nombreCategoria = 'Cardio & Resistencia';
-                colorCategoria = Colors.blue.shade600;
+                colorCategoria = AppColors.descansoActivo; // Azul suave HSB
                 iconoCategoria = Icons.directions_run_rounded;
                 break;
               case 'recovery':
                 nombreCategoria = 'Flexibilidad & Descanso';
-                colorCategoria = Colors.green.shade600;
+                colorCategoria = AppColors.exitoCompletado; // Verde natural HSB
                 iconoCategoria = Icons.self_improvement_rounded;
+                break;
+              case 'general':
+                nombreCategoria = 'Ejercicio General';
+                colorCategoria = AppColors.energiaActiva; // Naranja dorado HSB
+                iconoCategoria = Icons.sports_gymnastics_rounded;
                 break;
               default:
                 return const SizedBox.shrink();
@@ -795,16 +851,10 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                                       : null,
                                 ),
                                 child: Center(
-                                  child: SvgPicture.asset(
+                                  child: _construirIconoWidget(
+                                    iconoData,
                                     rutaIcono,
-                                    width: estaSeleccionado ? 28 : 24,
-                                    height: estaSeleccionado ? 28 : 24,
-                                    colorFilter: ColorFilter.mode(
-                                      estaSeleccionado
-                                          ? Colors.white
-                                          : Colors.grey.shade600,
-                                      BlendMode.srcIn,
-                                    ),
+                                    estaSeleccionado,
                                   ),
                                 ),
                               ),
@@ -831,7 +881,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                     },
                   ),
                 ),
-                if (categoria != 'recovery') const SizedBox(height: 24),
+                if (categoria != 'general') const SizedBox(height: 24),
               ],
             );
           }),
@@ -854,5 +904,44 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
         estaCargando: estaGuardando,
       ),
     );
+  }
+
+  // Método helper para construir iconos (SVG o PNG)
+  Widget _construirIconoWidget(
+    Map<String, dynamic> iconoData,
+    String rutaIcono,
+    bool estaSeleccionado,
+  ) {
+    final esImagen = iconoData['esImagen'] == true;
+    final tamano = estaSeleccionado ? 28.0 : 24.0;
+
+    if (esImagen) {
+      // Para iconos PNG coloridos
+      return Image.asset(
+        rutaIcono,
+        width: tamano,
+        height: tamano,
+        fit: BoxFit.contain,
+        errorBuilder: (context, error, stackTrace) {
+          // Fallback a un icono por defecto si no se encuentra la imagen
+          return Icon(
+            Icons.fitness_center_rounded,
+            size: tamano,
+            color: estaSeleccionado ? Colors.white : Colors.grey.shade600,
+          );
+        },
+      );
+    } else {
+      // Para iconos SVG (comportamiento original)
+      return SvgPicture.asset(
+        rutaIcono,
+        width: tamano,
+        height: tamano,
+        colorFilter: ColorFilter.mode(
+          estaSeleccionado ? Colors.white : Colors.grey.shade600,
+          BlendMode.srcIn,
+        ),
+      );
+    }
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 
 class CustomInputField extends StatelessWidget {
   final String text;
@@ -18,9 +19,7 @@ class CustomInputField extends StatelessWidget {
       decoration: InputDecoration(
         border: const OutlineInputBorder(),
         labelText: text,
-        labelStyle: const TextStyle(
-          fontSize: 14,
-        ),
+        labelStyle: TipografiaGyMaster.textoSecundario,
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {

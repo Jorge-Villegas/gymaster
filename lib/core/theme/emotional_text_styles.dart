@@ -10,8 +10,8 @@ class EstilosTextoEmocional {
   /// Estilo para títulos motivacionales principales
   /// Usa: Pantallas de bienvenida, headers inspiradores
   static TextStyle motivacional = TextStyle(
-    fontWeight: FontWeight.bold,
-    fontSize: 28,
+    fontWeight: FontWeight.w600, // SemiBold
+    fontSize: 24,
     letterSpacing: 1.5,
     height: 1.2,
     color: AppColors.motivacionPrincipal,
@@ -20,9 +20,9 @@ class EstilosTextoEmocional {
   /// Estilo para celebraciones épicas
   /// Usa: Completar rutinas, logros importantes
   static TextStyle celebracion = TextStyle(
-    fontWeight: FontWeight.bold,
-    fontSize: 34,
-    letterSpacing: 2.5,
+    fontWeight: FontWeight.w600, // SemiBold
+    fontSize: 24,
+    letterSpacing: 1.5,
     height: 1.1,
     color: AppColors.logroDesbloqueado,
   );
@@ -30,8 +30,8 @@ class EstilosTextoEmocional {
   /// Estilo para mensajes de aliento
   /// Usa: Motivación durante ejercicios, ánimos suaves
   static TextStyle aliento = TextStyle(
-    fontWeight: FontWeight.w600,
-    fontSize: 20,
+    fontWeight: FontWeight.w600, // SemiBold
+    fontSize: 18,
     letterSpacing: 0.8,
     height: 1.3,
     color: AppColors.exitoCompletado,
@@ -40,9 +40,9 @@ class EstilosTextoEmocional {
   /// Estilo para logros y achievements
   /// Usa: Insignias, records personales, hitos
   static TextStyle logro = TextStyle(
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.w600, // SemiBold
     fontSize: 24,
-    letterSpacing: 1.8,
+    letterSpacing: 1.2,
     height: 1.2,
     color: AppColors.logroDesbloqueado,
   );
@@ -52,8 +52,8 @@ class EstilosTextoEmocional {
   /// Estilo para llamadas a la acción energéticas
   /// Usa: "¡Comencemos!", "¡Dale que puedes!", botones principales
   static TextStyle energetico = TextStyle(
-    fontWeight: FontWeight.bold,
-    fontSize: 22,
+    fontWeight: FontWeight.w600, // SemiBold
+    fontSize: 18,
     letterSpacing: 1.2,
     height: 1.1,
     color: AppColors.impulsoEntrenamiento,
@@ -62,8 +62,8 @@ class EstilosTextoEmocional {
   /// Estilo para contadores y números importantes
   /// Usa: Repeticiones, series, tiempo, records
   static TextStyle contador = TextStyle(
-    fontWeight: FontWeight.w800,
-    fontSize: 48,
+    fontWeight: FontWeight.w600, // SemiBold
+    fontSize: 24,
     letterSpacing: 0.5,
     height: 1.0,
     color: AppColors.errorAmigable,
@@ -74,7 +74,7 @@ class EstilosTextoEmocional {
   /// Estilo para momentos de descanso
   /// Usa: Temporizadores de descanso, ejercicios de respiración
   static TextStyle descanso = TextStyle(
-    fontWeight: FontWeight.w500,
+    fontWeight: FontWeight.w300, // Light
     fontSize: 18,
     letterSpacing: 0.5,
     height: 1.4,
@@ -84,8 +84,8 @@ class EstilosTextoEmocional {
   /// Estilo para información de recuperación
   /// Usa: Consejos de descanso, hidratación, estiramientos
   static TextStyle recuperacion = TextStyle(
-    fontWeight: FontWeight.w400,
-    fontSize: 16,
+    fontWeight: FontWeight.w300, // Light
+    fontSize: 15,
     letterSpacing: 0.3,
     height: 1.5,
     color: AppColors.exitoCompletado,
@@ -96,7 +96,7 @@ class EstilosTextoEmocional {
   /// Estilo para recordatorios amigables
   /// Usa: "¿Cómo te sientes hoy?", recordatorios suaves
   static TextStyle amigable = TextStyle(
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w300, // Light
     fontSize: 18,
     letterSpacing: 0.4,
     height: 1.3,
@@ -106,8 +106,8 @@ class EstilosTextoEmocional {
   /// Estilo para progress indicators emocionales
   /// Usa: "¡Vas genial!", "50% completado", progress text
   static TextStyle progreso = TextStyle(
-    fontWeight: FontWeight.w700,
-    fontSize: 16,
+    fontWeight: FontWeight.w600, // SemiBold
+    fontSize: 15,
     letterSpacing: 1.0,
     height: 1.2,
     color: AppColors.motivacionPrincipal,
@@ -116,8 +116,8 @@ class EstilosTextoEmocional {
   /// Estilo para saludos personalizados
   /// Usa: "¡Hola Jorge!", saludos en homepage
   static TextStyle saludo = TextStyle(
-    fontWeight: FontWeight.bold,
-    fontSize: 26,
+    fontWeight: FontWeight.w600, // SemiBold
+    fontSize: 18,
     letterSpacing: 1.0,
     height: 1.2,
     color: AppColors.motivacionPrincipal,
@@ -142,7 +142,7 @@ class EstilosTextoEmocional {
             AppColors.exitoCompletado, intensity.clamp(0.0, 1.0)) ??
         AppColors.exitoCompletado;
 
-    final fontSize = 16 + (8 * intensity.clamp(0.0, 1.0));
+    final fontSize = 15 + (3 * intensity.clamp(0.0, 1.0));
 
     return aliento.copyWith(
       color: color,
@@ -171,13 +171,13 @@ class EstilosTextoEmocional {
 /// Extensión para facilitar el uso de estilos emocionales en widgets
 extension EstilosTextoEmocionalExtension on TextStyle {
   TextStyle get energetizado => copyWith(
-        fontWeight: FontWeight.bold,
+        fontWeight: FontWeight.w600, // SemiBold
         color: AppColors.motivacionPrincipal,
         letterSpacing: 1.2,
       );
 
   TextStyle get calmado => copyWith(
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w300, // Light
         color: AppColors.descansoActivo,
         letterSpacing: 0.5,
       );

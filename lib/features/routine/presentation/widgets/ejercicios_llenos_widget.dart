@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/core/theme/emotional_text_styles.dart';
+import 'package:gymaster/core/theme/espaciado.dart';
+import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/shared/utils/haptic_feedback_helper.dart';
 import 'package:gymaster/shared/utils/audio_feedback_helper.dart';
 import 'package:gymaster/features/routine/domain/entities/ejercicios_de_rutina.dart';
@@ -50,8 +52,8 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                   '¿Pausar entrenamiento?',
                   style: EstilosTextoEmocional.energetico.copyWith(
                     color: AppColors.primary,
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
+                    fontSize: TipografiaGyMaster.titulo.fontSize,
+                    fontWeight: TipografiaGyMaster.pesoSemiBold,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -61,7 +63,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                   '¡No te rindas ahora! Tu progreso se guardará.',
                   style: EstilosTextoEmocional.amigable.copyWith(
                     color: AppColors.textSecondary,
-                    fontSize: 16,
+                    fontSize: TipografiaGyMaster.textoPrincipal.fontSize,
                   ),
                   textAlign: TextAlign.center,
                 ),
