@@ -1,175 +1,338 @@
 import 'package:flutter/material.dart';
 
+/// Paleta de colores HSB-optimizada para aplicación de gimnasio
+/// Implementa principios del sistema HSB para máxima flexibilidad y armonía visual
+/// Diseñada para público joven (17-25 años) con enfoque en pesas y fuerza
 class AppColors {
-  // ==============================================
-  // PALETA PRINCIPAL HSB - MOTIVACIÓN Y ENERGÍA
-  // ==============================================
+  // === COLORES PRIMARIOS (BASE HSB: H=258°, S=65%, B=76%) ===
 
-  // COLOR PRIMARIO - Naranja motivacional (HSB: 15°, 75%, 95%)
-  // Transmite energía, motivación y acción sin ser agresivo
-  static final Color primario = HSVColor.fromAHSV(1, 15, 0.75, 0.95).toColor();
-  static final Color primarioHover =
-      HSVColor.fromAHSV(1, 18, 0.80, 0.98).toColor(); // Más saturado
-  static final Color primarioDisabled =
-      HSVColor.fromAHSV(1, 15, 0.35, 0.75).toColor(); // Menos saturado
+  /// Color principal - Púrpura base (HSB: 258°, 65%, 76%)
+  static const Color primario = Color(0xFF6B46C1);
 
-  // COLOR SECUNDARIO - Azul confianza (HSB: 210°, 65%, 85%)
-  // Para elementos de apoyo y navegación
-  static final Color secundario =
-      HSVColor.fromAHSV(1, 210, 0.65, 0.85).toColor();
-  static final Color secundarioHover =
-      HSVColor.fromAHSV(1, 215, 0.70, 0.90).toColor();
-  static final Color secundarioDisabled =
-      HSVColor.fromAHSV(1, 210, 0.30, 0.65).toColor();
+  /// Variación cálida del primario - Movido -15° hacia magenta (HSB: 243°, 65%, 76%)
+  static const Color primarioCalido = Color(0xFF8B46C1);
 
-  // ==============================================
-  // COLORES EMOCIONALES - ESTADOS DEL GIMNASIO
-  // ==============================================
+  /// Variación fría del primario - Movido +15° hacia azul (HSB: 273°, 65%, 76%)
+  static const Color primarioFrio = Color(0xFF464BC1);
 
-  // MOTIVACIÓN Y ENERGÍA - Tonos cálidos sutiles
-  static final Color motivacionPrincipal =
-      HSVColor.fromAHSV(1, 12, 0.70, 0.92).toColor(); // Naranja coral suave
-  static final Color energiaActiva =
-      HSVColor.fromAHSV(1, 25, 0.68, 0.88).toColor(); // Naranja dorado
-  static final Color impulsoEntrenamiento =
-      HSVColor.fromAHSV(1, 8, 0.72, 0.90).toColor(); // Rojo anaranjado suave
+  /// Primario claro - Menor saturación para visibilidad controlada (HSB: 258°, 35%, 85%)
+  static const Color primarioClaro = Color(0xFF9B7FDB);
 
-  // ÉXITO Y LOGROS - Verdes naturales y dorados
-  static final Color exitoCompletado =
-      HSVColor.fromAHSV(1, 140, 0.60, 0.80).toColor(); // Verde bosque suave
-  static final Color logroDesbloqueado =
-      HSVColor.fromAHSV(1, 45, 0.75, 0.88).toColor(); // Dorado cálido
-  static final Color metaAlcanzada =
-      HSVColor.fromAHSV(1, 150, 0.55, 0.85).toColor(); // Verde esmeralda claro
+  /// Primario oscuro RICO - "Removiendo blanco" (HSB: 258°, 80%, 55%)
+  static const Color primarioOscuro = Color(0xFF4A2B8C);
 
-  // CALMA Y RECUPERACIÓN - Azules y turquesas relajantes
-  static final Color descansoActivo =
-      HSVColor.fromAHSV(1, 195, 0.50, 0.82).toColor(); // Azul cielo suave
-  static final Color recuperacionCompleta =
-      HSVColor.fromAHSV(1, 180, 0.55, 0.78).toColor(); // Turquesa calmante
-  static final Color relajacionProfunda =
-      HSVColor.fromAHSV(1, 205, 0.45, 0.85).toColor(); // Azul pacífico
+  /// Primario muy oscuro RICO - Máxima riqueza (HSB: 258°, 85%, 40%)
+  static const Color primarioProfundo = Color(0xFF2F1B5C);
 
-  // ADVERTENCIA Y ERRORES - Sutiles pero claros
-  static final Color advertenciaSutil =
-      HSVColor.fromAHSV(1, 35, 0.65, 0.90).toColor(); // Amarillo cálido
-  static final Color errorAmigable =
-      HSVColor.fromAHSV(1, 5, 0.60, 0.88).toColor(); // Rojo coral suave
-  static final Color informacionUtil =
-      HSVColor.fromAHSV(1, 200, 0.55, 0.80).toColor(); // Azul información
+  // ===============================================================
+  // === COLORES SECUNDARIOS (BASE HSB: H=191°, S=92%, B=70%) ===
+  // ===============================================================
 
-  // NIVELES DE DIFICULTAD - Graduación natural
-  static final Color nivelPrincipiante =
-      HSVColor.fromAHSV(1, 145, 0.58, 0.82).toColor(); // Verde amigable
-  static final Color nivelIntermedio =
-      HSVColor.fromAHSV(1, 38, 0.70, 0.90).toColor(); // Naranja cálido
-  static final Color nivelAvanzado =
-      HSVColor.fromAHSV(1, 8, 0.65, 0.85).toColor(); // Rojo coral desafío
+  /// Color secundario - Teal base (HSB: 191°, 92%, 70%)
+  static const Color secundario = Color(0xFF0891B2);
 
-  // COMPONENTES UI - TABLAS Y ELEMENTOS ESPECÍFICOS
-  static final Color tablaFondoClaro =
-      HSVColor.fromAHSV(1, 210, 0.12, 0.96).toColor(); // Azul muy claro
-  static final Color tablaSeleccionClaro = HSVColor.fromAHSV(1, 205, 0.20, 0.92)
-      .toColor(); // Azul claro seleccionado
-  static final Color tablaEncabezadoClaro =
-      HSVColor.fromAHSV(1, 210, 0.70, 0.75).toColor(); // Azul encabezado
-  static final Color tablaDivisorClaro =
-      HSVColor.fromAHSV(1, 0, 0, 0.88).toColor(); // Gris divisor
+  /// Variación cálida del secundario - Hacia cyan (HSB: 176°, 92%, 70%)
+  static const Color secundarioCalido = Color(0xFF08B29F);
 
-  // ==============================================
-  // FONDOS Y SUPERFICIES
-  // ==============================================
+  /// Variación fría del secundario - Hacia azul (HSB: 206°, 92%, 70%)
+  static const Color secundarioFrio = Color(0xFF0865B2);
 
-  // Fondos modo claro
-  static final Color fondoPrincipalClaro =
-      HSVColor.fromAHSV(1, 0, 0, 0.98).toColor(); // Blanco cálido
-  static final Color fondoSecundarioClaro =
-      HSVColor.fromAHSV(1, 210, 0.08, 0.96).toColor(); // Gris azulado muy claro
-  static final Color fondoTarjetaClaro =
-      HSVColor.fromAHSV(1, 0, 0, 1.0).toColor(); // Blanco puro
+  /// Secundario claro - Reducida saturación (HSB: 191°, 50%, 80%)
+  static const Color secundarioClaro = Color(0xFF66B8CC);
 
-  // Fondos modo oscuro
-  static final Color fondoPrincipalOscuro =
-      HSVColor.fromAHSV(1, 220, 0.15, 0.08).toColor(); // Azul muy oscuro
-  static final Color fondoSecundarioOscuro =
-      HSVColor.fromAHSV(1, 215, 0.12, 0.12).toColor(); // Gris azulado oscuro
-  static final Color fondoTarjetaOscuro =
-      HSVColor.fromAHSV(1, 220, 0.10, 0.15).toColor(); // Gris oscuro cálido
+  /// Secundario oscuro RICO - "Removiendo blanco" (HSB: 191°, 95%, 50%)
+  static const Color secundarioOscuro = Color(0xFF046680);
 
-  // Menú lateral
-  static final Color menuLateralOscuro =
-      HSVColor.fromAHSV(1, 225, 0.35, 0.22).toColor(); // Azul profundo
+  /// Secundario muy oscuro RICO (HSB: 191°, 95%, 35%)
+  static const Color secundarioProfundo = Color(0xFF024759);
 
-  // ==============================================
-  // TEXTOS Y TIPOGRAFÍA
-  // ==============================================
+  // ===============================================================
+  // === COLORES DE ACENTO CON VARIACIONES HSB ===
+  // ===============================================================
 
-  // Textos modo claro
-  static final Color textoPrincipalClaro =
-      HSVColor.fromAHSV(1, 220, 0.08, 0.15).toColor(); // Gris muy oscuro
-  static final Color textoSecundarioClaro =
-      HSVColor.fromAHSV(1, 215, 0.05, 0.45).toColor(); // Gris medio
-  static final Color textoTerciarioClaro =
-      HSVColor.fromAHSV(1, 210, 0.03, 0.65).toColor(); // Gris claro
+  /// Acento dorado principal (HSB: 38°, 93%, 96%)
+  static const Color acento = Color(0xFFF59E0B);
 
-  // Textos modo oscuro
-  static final Color textoPrincipalOscuro =
-      HSVColor.fromAHSV(1, 0, 0, 0.95).toColor(); // Blanco cálido
-  static final Color textoSecundarioOscuro =
-      HSVColor.fromAHSV(1, 210, 0.05, 0.75).toColor(); // Gris claro
-  static final Color textoTerciarioOscuro =
-      HSVColor.fromAHSV(1, 215, 0.08, 0.55).toColor(); // Gris medio
+  /// Acento cálido - Hacia naranja (HSB: 28°, 93%, 96%)
+  static const Color acentoCalido = Color(0xFFF5730B);
 
-  // ==============================================
-  // ALIAS PARA COMPATIBILIDAD
-  // ==============================================
+  /// Acento frío - Hacia amarillo (HSB: 48°, 93%, 96%)
+  static const Color acentoFrio = Color(0xFFF5C80B);
 
-  // Colores principales (para compatibilidad con código existente)
-  static Color get primary => primario;
-  static Color get secondary => secundario;
+  /// Acento suave - Baja saturación para elementos sutiles (HSB: 38°, 40%, 90%)
+  static const Color acentoSuave = Color(0xFFE5C582);
 
-  // Estados de botones
-  static Color get success => exitoCompletado;
-  static Color get error => errorAmigable;
-  static Color get warning => advertenciaSutil;
-  static Color get info => informacionUtil;
+  // ===============================================================
+  // === ESTADOS CON VARIACIONES RICAS ===
+  // ===============================================================
+
+  /// Éxito verde esmeralda (HSB: 158°, 89%, 73%)
+  static const Color exito = Color(0xFF10B981);
+
+  /// Éxito oscuro RICO - "Removiendo blanco" (HSB: 158°, 92%, 50%)
+  static const Color exitoOscuro = Color(0xFF0A6B47);
+
+  /// Advertencia coral (HSB: 0°, 58%, 100%)
+  static const Color advertencia = Color(0xFFFF6B6B);
+
+  /// Advertencia oscura RICA (HSB: 0°, 75%, 70%)
+  static const Color advertenciaOscura = Color(0xFFB82C2C);
+
+  /// Error rojo profesional (HSB: 0°, 81%, 86%)
+  static const Color error = Color(0xFFDC2626);
+
+  /// Error oscuro RICO (HSB: 0°, 90%, 60%)
+  static const Color errorOscuro = Color(0xFF991B1B);
+
+  /// Información azul (HSB: 217°, 76%, 96%)
+  static const Color informacion = Color(0xFF3B82F6);
+
+  /// Información oscura RICA (HSB: 217°, 85%, 65%)
+  static const Color informacionOscura = Color(0xFF1E3A8A);
+
+  // ===============================================================
+  // === NEUTROS CON MATICES SUTILES ===
+  // ===============================================================
+
+  /// Fondo principal - Gris azulado con matiz frío (HSB: 222°, 65%, 11%)
+  static const Color fondo = Color(0xFF0F172A);
+
+  /// Fondo secundario - Matiz consistente (HSB: 222°, 58%, 18%)
+  static const Color fondoSecundario = Color(0xFF1E293B);
+
+  /// Fondo terciario - Progresión armónica (HSB: 222°, 50%, 25%)
+  static const Color fondoTerciario = Color(0xFF334155);
+
+  /// Superficie principal manteniendo armonía de matiz
+  static const Color superficie = Color(0xFF1E293B);
+
+  /// Superficie elevada con mayor luminosidad
+  static const Color superficieElevada = Color(0xFF334155);
+
+  // ===============================================================
+  // === TEXTO CON VARIACIONES CONTROLADAS ===
+  // ===============================================================
+
+  /// Texto principal - Máximo contraste
+  static const Color textoPrincipal = Color(0xFFFFFFFF);
+
+  /// Texto secundario - Saturación reducida para jerarquía (HSB: 222°, 15%, 82%)
+  static const Color textoSecundario = Color(0xFFCBD5E1);
+
+  /// Texto terciario - Mayor reducción de saturación (HSB: 222°, 20%, 65%)
+  static const Color textoTerciario = Color(0xFF94A3B8);
+
+  /// Texto deshabilitado - Mínima saturación (HSB: 222°, 25%, 45%)
+  static const Color textoDeshabilitado = Color(0xFF64748B);
+
+  /// Texto sobre primario - Calculado para contraste óptimo
+  static const Color textoSobrePrimario = Color(0xFFFFFFFF);
+
+  /// Texto sobre secundario
+  static const Color textoSobreSecundario = Color(0xFFFFFFFF);
+
+  // ===============================================================
+  // === BORDES Y DIVISORES CON MATICES ===
+  // ===============================================================
+
+  /// Borde principal con matiz sutil (HSB: 222°, 35%, 35%)
+  static const Color borde = Color(0xFF475569);
+
+  /// Divisor con menor saturación para sutileza (HSB: 222°, 40%, 28%)
+  static const Color divisor = Color(0xFF374151);
+
+  /// Borde activo/foco - Usando primario con menor saturación
+  static const Color bordeActivo = Color(0xFF9B7FDB);
+
+  // === COLORES ESPECÍFICOS PARA GYM CON VARIACIONES HSB ===
+
+  /// Peso/carga - Azul acero con matiz armónico (HSB: 210°, 35%, 55%)
+  static const Color peso = Color(0xFF64748B);
+
+  /// Series completadas - Verde mint rico (HSB: 158°, 75%, 85%)
+  static const Color serieCompletada = Color(0xFF34D399);
+
+  /// Series pendientes - Verde desaturado (HSB: 158°, 25%, 70%)
+  static const Color seriePendiente = Color(0xFF9CB3A3);
+
+  /// Repeticiones - Púrpura con variación de matiz (HSB: 270°, 65%, 85%)
+  static const Color repeticiones = Color(0xFFA855F7);
+
+  /// Tiempo/descanso - Lavanda con matiz ajustado (HSB: 280°, 45%, 75%)
+  static const Color tiempoDescanso = Color(0xFF9F7FBF);
+
+  /// Progreso activo - Dorado con alta saturación (HSB: 38°, 93%, 96%)
+  static const Color progresoActivo = Color(0xFFF59E0B);
+
+  /// Progreso completado - Dorado desaturado para sutileza (HSB: 38°, 50%, 85%)
+  static const Color progresoCompletado = Color(0xFFD4B574);
+
+  // ===============================================================
+  // === GRADIENTES OPTIMIZADOS CON HSB ===
+  // ===============================================================
+
+  /// Gradiente primario con variaciones armónicas de matiz
+  static const LinearGradient gradientePrimario = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [
+      primarioCalido, // Matiz -15°
+      primario, // Matiz base
+      primarioFrio, // Matiz +15°
+    ],
+    stops: [0.0, 0.5, 1.0],
+  );
+
+  /// Gradiente secundario con progresión HSB
+  static const LinearGradient gradienteSecundario = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [
+      secundarioCalido,
+      secundario,
+      secundarioFrio,
+    ],
+    stops: [0.0, 0.5, 1.0],
+  );
+
+  /// Gradiente de fondo con "remoción de blanco" progresiva
+  static const LinearGradient gradienteFondo = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [
+      fondo, // Más oscuro, más saturado
+      fondoSecundario, // Progresión media
+      fondoTerciario, // Más claro, menos saturado
+    ],
+  );
+
+  /// Gradiente de progreso con matices cálidos
+  static const LinearGradient gradienteProgreso = LinearGradient(
+    begin: Alignment.centerLeft,
+    end: Alignment.centerRight,
+    colors: [
+      acentoFrio, // Amarillo (matiz +10°)
+      acento, // Dorado base
+      acentoCalido, // Naranja (matiz -10°)
+    ],
+  );
+
+  // ===============================================================
+  // === FUNCIONES AUXILIARES PARA GENERAR VARIACIONES HSB ===
+  // ===============================================================
+
+  /// Genera una variación de matiz de un color base
+  /// [baseColor] Color base en hex
+  /// [hueDelta] Cambio en grados del matiz (-180 a 180)
+  static Color generateHueVariation(Color baseColor, double hueDelta) {
+    // Nota: En Flutter, necesitarías una librería como 'hsv_color' para manipular HSV
+    // Esta es una implementación conceptual
+    return baseColor; // Placeholder - implementar con librería HSV
+  }
+
+  /// Genera una variación "removiendo blanco" (más saturado y menos brillante)
+  /// [baseColor] Color base
+  /// [factor] Factor de intensidad (0.0 a 1.0)
+  static Color generateRichDark(Color baseColor, double factor) {
+    // Implementación conceptual para "remover blanco"
+    return baseColor; // Placeholder - implementar con librería HSV
+  }
+
+  // ===============================================================
+  // === SOMBRAS CON COLORES TINTADOS ===
+  // ===============================================================
+
+  /// Sombra suave con tinte primario sutil
+  static const List<BoxShadow> sombraSuave = [
+    BoxShadow(
+      color: Color(0x1A6B46C1), // Primario con 10% opacidad
+      blurRadius: 8,
+      offset: Offset(0, 2),
+    ),
+  ];
+
+  /// Sombra fuerte con tinte secundario
+  static const List<BoxShadow> sombraFuerte = [
+    BoxShadow(
+      color: Color(0x260891B2), // Secundario con 15% opacidad
+      blurRadius: 16,
+      offset: Offset(0, 4),
+    ),
+  ];
+
+  /// Sombra de éxito
+  static const List<BoxShadow> sombraExito = [
+    BoxShadow(
+      color: Color(0x1A10B981), // Verde éxito con opacidad
+      blurRadius: 12,
+      offset: Offset(0, 3),
+    ),
+  ];
+
+  // ===============================================================
+  // === ALIAS PARA COMPATIBILIDAD CON CÓDIGO EXISTENTE ===
+  // ===============================================================
+
+  // Mapeo de nombres antiguos a nuevos colores para compatibilidad
+  static Color get motivacionPrincipal => acento;
+  static Color get energiaActiva => acentoCalido;
+  static Color get impulsoEntrenamiento => primarioCalido;
+  static Color get exitoCompletado => exito;
+  static Color get logroDesbloqueado => acento;
+  static Color get metaAlcanzada => serieCompletada;
+  static Color get descansoActivo => secundarioClaro;
+  static Color get recuperacionCompleta => tiempoDescanso;
+  static Color get relajacionProfunda => primarioClaro;
+  static Color get advertenciaSutil => advertencia;
+  static Color get errorAmigable => error;
+  static Color get informacionUtil => informacion;
+  static Color get nivelPrincipiante => exito;
+  static Color get nivelIntermedio => acento;
+  static Color get nivelAvanzado => error;
 
   // Fondos
-  static Color get backgroundLight => fondoPrincipalClaro;
-  static Color get backgroundDark => fondoPrincipalOscuro;
-  static Color get menuDarkBlue => menuLateralOscuro;
+  static Color get fondoPrincipalClaro => Color(0xFFF8FAFC);
+  static Color get fondoSecundarioClaro => Color(0xFFF1F5F9);
+  static Color get fondoTarjetaClaro => Color(0xFFFFFFFF);
+  static Color get fondoPrincipalOscuro => fondo;
+  static Color get fondoSecundarioOscuro => fondoSecundario;
+  static Color get fondoTarjetaOscuro => superficie;
+  static Color get menuLateralOscuro => fondoTerciario;
 
   // Textos
+  static Color get textoPrincipalClaro => Color(0xFF0F172A);
+  static Color get textoSecundarioClaro => textoTerciario;
+  static Color get textoTerciarioClaro => textoDeshabilitado;
+  static Color get textoPrincipalOscuro => textoPrincipal;
+  static Color get textoSecundarioOscuro => textoSecundario;
+  static Color get textoTerciarioOscuro => textoTerciario;
+
+  // Tablas
+  static Color get tablaFondoClaro => Color(0xFFF8FAFC);
+  static Color get tablaSeleccionClaro => primarioClaro.withValues(alpha: 0.1);
+  static Color get tablaEncabezadoClaro => primarioClaro;
+  static Color get tablaDivisorClaro => divisor;
+
+  // Getters de compatibilidad (manteniendo inglés para APIs externas)
+  static Color get primary => primario;
+  static Color get secondary => secundario;
+  static Color get success => exito;
+  static Color get warning => advertencia;
+  static Color get info => informacion;
+  static Color get backgroundLight => fondoPrincipalClaro;
+  static Color get backgroundDark => fondoPrincipalOscuro;
   static Color get textLight => textoPrincipalOscuro;
   static Color get textDark => textoPrincipalClaro;
   static Color get textSecondary => textoSecundarioClaro;
   static Color get textMedium => textoTerciarioClaro;
-
-  // Botones (para compatibilidad)
   static Color get buttonPrimary => primario;
   static Color get buttonSecondary => secundario;
-
-  // Niveles de ejercicios (para compatibilidad)
   static Color get beginnerColor => nivelPrincipiante;
   static Color get intermediateColor => nivelIntermedio;
   static Color get advancedColor => nivelAvanzado;
-
-  // Tablas (para componentes UI)
   static Color get tableBackgroundColor => tablaFondoClaro;
   static Color get tableSelectionColor => tablaSeleccionClaro;
   static Color get tableHeaderColor => tablaEncabezadoClaro;
   static Color get tableDividerColor => tablaDivisorClaro;
-
-  // ==============================================
-  // COLORES LEGACY (MANTENER TEMPORALMENTE)
-  // ==============================================
-
-  @Deprecated('Use motivacionPrincipal instead')
-  static const Color energyOrange = Color(0xFFFF6B35);
-  @Deprecated('Use motivacionPrincipal instead')
-  static const Color motivationRed = Color(0xFFE74C3C);
-  @Deprecated('Use exitoCompletado instead')
-  static const Color successGreen = Color(0xFF27AE60);
-  @Deprecated('Use descansoActivo instead')
-  static const Color calmBlue = Color(0xFF3498DB);
+  static Color get menuDarkBlue => menuLateralOscuro;
 }
