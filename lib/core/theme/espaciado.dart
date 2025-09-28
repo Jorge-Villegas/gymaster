@@ -15,6 +15,7 @@ class Espaciado {
   // ==============================================
 
   static const double cero = 0;
+  static const double xxs = 4; // Extra extra pequeño
   static const double xs = 8; // Extra pequeño
   static const double sm = 16; // Pequeño
   static const double md = 24; // Mediano
@@ -28,6 +29,7 @@ class Espaciado {
   // ==============================================
 
   /// Padding pequeño para elementos compactos
+  static const EdgeInsets rellenoXxs = EdgeInsets.all(xxs);
   static const EdgeInsets rellenoXs = EdgeInsets.all(xs);
   static const EdgeInsets rellenoSm = EdgeInsets.all(sm);
   static const EdgeInsets rellenoMd = EdgeInsets.all(md);
@@ -63,6 +65,7 @@ class Espaciado {
   // ==============================================
 
   /// Separadores verticales
+  static const Widget separacionVerticalXxs = SizedBox(height: xxs);
   static const Widget separacionVerticalXs = SizedBox(height: xs);
   static const Widget separacionVerticalSm = SizedBox(height: sm);
   static const Widget separacionVerticalMd = SizedBox(height: md);
@@ -70,6 +73,7 @@ class Espaciado {
   static const Widget separacionVerticalXl = SizedBox(height: xl);
 
   /// Separadores horizontales
+  static const Widget separacionHorizontalXxs = SizedBox(width: xxs);
   static const Widget separacionHorizontalXs = SizedBox(width: xs);
   static const Widget separacionHorizontalSm = SizedBox(width: sm);
   static const Widget separacionHorizontalMd = SizedBox(width: md);

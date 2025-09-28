@@ -43,9 +43,21 @@ class SelectedRoutineCubit extends Cubit<SelectedRoutineState> {
     if (state is SelectedRoutineLoaded) {
       final rutina = (state as SelectedRoutineLoaded).rutina;
       final ejercicios = List<RecordEjercicios>.from(rutina.ejercicios);
-      final series = ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex];
-      ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex] =
-          series.copyWith(peso: series.peso + 1);
+
+      // Crear una copia profunda del ejercicio y sus series
+      final ejercicioOriginal = ejercicios[ejercicioIndex];
+      final seriesOriginales =
+          List<SeriesDelEjercicio>.from(ejercicioOriginal.seriesDelEjercicio);
+      final serieOriginal = seriesOriginales[seriesIndex];
+
+      // Actualizar la serie específica
+      seriesOriginales[seriesIndex] =
+          serieOriginal.copyWith(peso: serieOriginal.peso + 1);
+
+      // Actualizar el ejercicio con las nuevas series
+      ejercicios[ejercicioIndex] =
+          ejercicioOriginal.copyWith(seriesDelEjercicio: seriesOriginales);
+
       emit(
         SelectedRoutineLoaded(rutina: rutina.copyWith(ejercicios: ejercicios)),
       );
@@ -56,14 +68,25 @@ class SelectedRoutineCubit extends Cubit<SelectedRoutineState> {
     if (state is SelectedRoutineLoaded) {
       final rutina = (state as SelectedRoutineLoaded).rutina;
       final ejercicios = List<RecordEjercicios>.from(rutina.ejercicios);
-      final series = ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex];
-      if (series.peso > 0) {
-        ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex] =
-            series.copyWith(peso: series.peso - 1);
+
+      // Crear una copia profunda del ejercicio y sus series
+      final ejercicioOriginal = ejercicios[ejercicioIndex];
+      final seriesOriginales =
+          List<SeriesDelEjercicio>.from(ejercicioOriginal.seriesDelEjercicio);
+      final serieOriginal = seriesOriginales[seriesIndex];
+
+      if (serieOriginal.peso > 0) {
+        // Actualizar la serie específica
+        seriesOriginales[seriesIndex] =
+            serieOriginal.copyWith(peso: serieOriginal.peso - 1);
+
+        // Actualizar el ejercicio con las nuevas series
+        ejercicios[ejercicioIndex] =
+            ejercicioOriginal.copyWith(seriesDelEjercicio: seriesOriginales);
+
         emit(
           SelectedRoutineLoaded(
-            rutina: rutina.copyWith(ejercicios: ejercicios),
-          ),
+              rutina: rutina.copyWith(ejercicios: ejercicios)),
         );
       }
     }
@@ -73,9 +96,21 @@ class SelectedRoutineCubit extends Cubit<SelectedRoutineState> {
     if (state is SelectedRoutineLoaded) {
       final rutina = (state as SelectedRoutineLoaded).rutina;
       final ejercicios = List<RecordEjercicios>.from(rutina.ejercicios);
-      final series = ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex];
-      ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex] =
-          series.copyWith(repeticiones: series.repeticiones + 1);
+
+      // Crear una copia profunda del ejercicio y sus series
+      final ejercicioOriginal = ejercicios[ejercicioIndex];
+      final seriesOriginales =
+          List<SeriesDelEjercicio>.from(ejercicioOriginal.seriesDelEjercicio);
+      final serieOriginal = seriesOriginales[seriesIndex];
+
+      // Actualizar la serie específica
+      seriesOriginales[seriesIndex] =
+          serieOriginal.copyWith(repeticiones: serieOriginal.repeticiones + 1);
+
+      // Actualizar el ejercicio con las nuevas series
+      ejercicios[ejercicioIndex] =
+          ejercicioOriginal.copyWith(seriesDelEjercicio: seriesOriginales);
+
       emit(
         SelectedRoutineLoaded(rutina: rutina.copyWith(ejercicios: ejercicios)),
       );
@@ -86,14 +121,25 @@ class SelectedRoutineCubit extends Cubit<SelectedRoutineState> {
     if (state is SelectedRoutineLoaded) {
       final rutina = (state as SelectedRoutineLoaded).rutina;
       final ejercicios = List<RecordEjercicios>.from(rutina.ejercicios);
-      final series = ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex];
-      if (series.repeticiones > 0) {
-        ejercicios[ejercicioIndex].seriesDelEjercicio[seriesIndex] =
-            series.copyWith(repeticiones: series.repeticiones - 1);
+
+      // Crear una copia profunda del ejercicio y sus series
+      final ejercicioOriginal = ejercicios[ejercicioIndex];
+      final seriesOriginales =
+          List<SeriesDelEjercicio>.from(ejercicioOriginal.seriesDelEjercicio);
+      final serieOriginal = seriesOriginales[seriesIndex];
+
+      if (serieOriginal.repeticiones > 0) {
+        // Actualizar la serie específica
+        seriesOriginales[seriesIndex] = serieOriginal.copyWith(
+            repeticiones: serieOriginal.repeticiones - 1);
+
+        // Actualizar el ejercicio con las nuevas series
+        ejercicios[ejercicioIndex] =
+            ejercicioOriginal.copyWith(seriesDelEjercicio: seriesOriginales);
+
         emit(
           SelectedRoutineLoaded(
-            rutina: rutina.copyWith(ejercicios: ejercicios),
-          ),
+              rutina: rutina.copyWith(ejercicios: ejercicios)),
         );
       }
     }

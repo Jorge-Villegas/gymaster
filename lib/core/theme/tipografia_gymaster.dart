@@ -11,17 +11,32 @@ class TipografiaGyMaster {
   // ==============================================
   // TAMAÑOS PERMITIDOS (solo estos 4)
   // ==============================================
+  /// Etiquetas, ayudas, info secundaria, badges
+  static const double tamanoXs = 12.0;
 
-  static const double tamanoXs = 12.0; // Texto secundario, etiquetas
-  static const double tamanoSm = 15.0; // Texto normal, párrafos
-  static const double tamanoMd = 18.0; // Subtítulos, elementos importantes
-  static const double tamanoLg = 24.0; // Títulos principales
+  /// Texto de botones, inputs, subtítulos secundarios
+  static const double tamanoSm = 14.0;
+
+  /// Texto base, párrafos, descripciones principales
+  static const double tamanoMd = 16.0;
+
+  /// Subtítulos, encabezados de sección, cards
+  static const double tamanoLg = 18.0;
+
+  /// Títulos destacados, headers de pantalla
+  static const double tamanoXl = 20.0;
+
+  /// Títulos principales, hero, números grandes
+  static const double tamano2xl = 24.0;
 
   // ==============================================
   // PESOS PERMITIDOS (solo estos 2)
   // ==============================================
 
+  /// Peso ligero para lectura cómoda
   static const FontWeight pesoLigero = FontWeight.w300; // Light
+
+  /// Peso semi-bold para énfasis y jerarquía
   static const FontWeight pesoSemiBold = FontWeight.w600; // SemiBold
 
   // ==============================================
