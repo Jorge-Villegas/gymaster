@@ -120,9 +120,6 @@ class _RoutineCardState extends State<RoutineCard>
 
   @override
   Widget build(BuildContext context) {
-    const Color colorTitle = Colors.black;
-    const Color colorSubtitle = Colors.black45;
-
     return AnimatedBuilder(
       animation: _slideAnimation,
       builder: (context, child) {
@@ -154,14 +151,20 @@ class _RoutineCardState extends State<RoutineCard>
                           children: [
                             Text(
                               TextFormatter.capitalize(widget.title),
-                              style: TipografiaGyMaster.subtitulo.copyWith(
-                                color: colorTitle,
+                              style: TextStyle(
+                                fontSize: TipografiaGyMaster.tamanoXl,
+                                fontWeight: TipografiaGyMaster.pesoSemiBold,
+                                color: AppColors.textoPrincipalClaro,
+                                height: 1.3,
                               ),
                             ),
                             Text(
                               widget.cantidadEjerciciosPorSeries,
-                              style: TipografiaGyMaster.subtitulo.copyWith(
-                                color: colorSubtitle,
+                              style: TextStyle(
+                                fontSize: TipografiaGyMaster.tamanoMd,
+                                fontWeight: TipografiaGyMaster.pesoLigero,
+                                color: AppColors.textoPrincipalClaro,
+                                height: 1.3,
                               ),
                             ),
                           ],

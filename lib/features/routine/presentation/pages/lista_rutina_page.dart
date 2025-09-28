@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/theme/emotional_text_styles.dart';
 import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
 import 'package:gymaster/features/routine/presentation/cubits/rutina/routine_cubit.dart';
 import 'package:gymaster/features/routine/presentation/pages/agregar_rutina_page.dart';
@@ -186,9 +187,10 @@ class ListaRutinasPage extends StatelessWidget {
               children: [
                 Text(
                   'Mis Rutinas',
-                  style: EstilosTextoEmocional.motivacional.copyWith(
-                    color: AppColors.primary,
-                    fontSize: 24,
+                  style: TextStyle(
+                    fontWeight: TipografiaGyMaster.pesoSemiBold,
+                    fontSize: TipografiaGyMaster.tamanoLg,
+                    color: AppColors.motivacionPrincipal,
                   ),
                 ),
                 ChicletButton(
@@ -196,7 +198,8 @@ class ListaRutinasPage extends StatelessWidget {
                   icono: Icons.add_rounded,
                   tamano: TamanoBotonChiclet.mediano,
                   estilo: EstiloBotonChiclet.contorno,
-                  colorFondo: AppColors.motivacionPrincipal.withOpacity(0.1),
+                  colorFondo:
+                      AppColors.motivacionPrincipal.withValues(alpha: 0.1),
                   colorBorde: AppColors.motivacionPrincipal,
                   colorTexto: AppColors.motivacionPrincipal,
                   radioBorde: 12,
@@ -216,17 +219,21 @@ class ListaRutinasPage extends StatelessWidget {
                     children: [
                       Text(
                         'Mis Rutinas',
-                        style: EstilosTextoEmocional.motivacional.copyWith(
-                          color: AppColors.primary,
-                          fontSize: 24,
+                        style: TextStyle(
+                          fontWeight: TipografiaGyMaster.pesoSemiBold,
+                          fontSize: TipografiaGyMaster.tamano2xl,
+                          color: AppColors.primario,
+                          height: 1.2,
                         ),
                       ),
                       if (state.routines.isNotEmpty)
                         Text(
                           '${state.routines.length} rutina${state.routines.length == 1 ? '' : 's'} para conquistar',
-                          style: EstilosTextoEmocional.aliento.copyWith(
+                          style: TextStyle(
+                            fontWeight: TipografiaGyMaster.pesoLigero,
+                            fontSize: TipografiaGyMaster.tamanoMd,
+                            height: 1.3,
                             color: AppColors.motivacionPrincipal,
-                            fontSize: 14,
                           ),
                         ),
                     ],
@@ -239,7 +246,7 @@ class ListaRutinasPage extends StatelessWidget {
                   icono: IconsaxPlusLinear.search_normal_1,
                   tamano: TamanoBotonChiclet.mediano,
                   estilo: EstiloBotonChiclet.contorno,
-                  colorFondo: AppColors.descansoActivo.withOpacity(0.1),
+                  colorFondo: AppColors.descansoActivo.withValues(alpha: 0.1),
                   colorBorde: AppColors.descansoActivo,
                   colorTexto: AppColors.descansoActivo,
                   radioBorde: 12,

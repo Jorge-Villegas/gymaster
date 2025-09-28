@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/core/theme/emotional_text_styles.dart';
+import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/features/exercise/domain/entities/exercise.dart';
 import 'package:gymaster/features/exercise/presentation/cubits/exercise/exercise_cubit.dart';
 import 'package:gymaster/features/exercise/presentation/cubits/favorito_ejercicio_cubit.dart';
@@ -887,9 +888,11 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                     children: [
                       Text(
                         capitalizarPrimeraLetra(exercise.name),
-                        style: EstilosTextoEmocional.energetico.copyWith(
-                          fontSize: 16,
-                          color: AppColors.primary,
+                        style: TextStyle(
+                          fontWeight: TipografiaGyMaster.pesoSemiBold,
+                          fontSize: TipografiaGyMaster.tamanoLg,
+                          height: 1.1,
+                          color: AppColors.primario,
                         ),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,

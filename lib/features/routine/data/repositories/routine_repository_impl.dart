@@ -547,17 +547,12 @@ class RoutineRepositoryImpl implements RoutineRepository {
   Future<Either<Failure, RutinaSesionDb>> getLastRoutineSessionByRoutineId(
     String id,
   ) async {
-    print('🔍 Buscando última sesión para rutina: $id');
-
     RutinaSesionDb? session =
         await localDataSource.getLastRoutineSessionByRoutineId(id);
 
     if (session != null) {
-      print('✅ Sesión encontrada: ${session.id} con estado: ${session.estado}');
       return Right(session);
     }
-
-    print('📝 No hay sesión existente. Creando nueva sesión pendiente...');
 
     // Buscar si hay alguna sesión anterior con ejercicios para copiar
     final allPreviousSessions = await _getPreviousSessionsWithExercises(id);

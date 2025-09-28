@@ -70,9 +70,6 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
   /// Navega a la lista de ejercicios del músculo seleccionado
   void _navegarAAgregarEjercicio(BuildContext context, String ejercicioId,
       String nombreEjercicio, String? imagenDireccion) {
-    debugPrint(
-        'Navegando a agregar ejercicio - Ejercicio: $nombreEjercicio, ID: $ejercicioId, Rutina: ${widget.idRutina}, Sesión: ${widget.idSesion}');
-    debugPrint('🖼️ Imagen del ejercicio: $imagenDireccion');
     context.push(
       '/agregar-ejercicio-rutina/${widget.idRutina}/$ejercicioId/$nombreEjercicio/${widget.idSesion}',
       extra: {
