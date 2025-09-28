@@ -169,9 +169,8 @@ class FavoritoEjercicioRepositoryImpl implements FavoritoEjercicioRepository {
           await localDataSource.obtenerIdsFavoritosParaEjercicios();
 
       if (idsFavoritos.isEmpty) {
-        return Left(NoRecordsFailure(
-          errorMessage: 'No tienes ejercicios en favoritos aún',
-        ));
+        // Devolver lista vacía en lugar de error cuando no hay favoritos
+        return const Right([]);
       }
 
       // Obtener datos completos de cada ejercicio

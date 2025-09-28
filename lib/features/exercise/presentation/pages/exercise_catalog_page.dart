@@ -473,10 +473,10 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                     padding: const EdgeInsets.only(left: 4, bottom: 12),
                     child: Text(
                       'Grupos Musculares',
-                      style: EstilosTextoEmocional.energetico.copyWith(
-                        fontSize: 16,
-                        color: AppColors
-                            .secundario, // Azul confianza más profesional
+                      style: TextStyle(
+                        fontWeight: TipografiaGyMaster.pesoSemiBold,
+                        fontSize: TipografiaGyMaster.tamanoLg,
+                        color: AppColors.primarioCalido,
                       ),
                     ),
                   ),

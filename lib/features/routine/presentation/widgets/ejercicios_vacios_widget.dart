@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/generated/assets.gen.dart';
+import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/shared/widgets/chiclet_button.dart';
 
 class EjerciciosVaciosWidget extends StatelessWidget {
@@ -52,17 +54,23 @@ class EjerciciosVaciosWidget extends StatelessWidget {
               const SizedBox(height: 24),
               Text(
                 '¡Tu rutina está lista para comenzar!',
-                style: textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
+                style: TextStyle(
+                  fontSize: isSmallScreen
+                      ? TipografiaGyMaster.tamanoLg
+                      : TipografiaGyMaster.tamanoXl,
+                  fontWeight: TipografiaGyMaster.pesoSemiBold,
+                  color: AppColors.textDark,
                 ),
-                textAlign: TextAlign.center,
               ),
               const SizedBox(height: 12),
               Text(
                 'Agrega tus ejercicios favoritos y comienza a entrenar hoy',
-                style: textTheme.bodyLarge?.copyWith(
-                  color: Colors.grey[600],
-                  height: 1.4,
+                style: TextStyle(
+                  fontSize: isSmallScreen
+                      ? TipografiaGyMaster.tamanoMd
+                      : TipografiaGyMaster.tamanoLg,
+                  fontWeight: TipografiaGyMaster.pesoLigero,
+                  color: AppColors.textSecondary,
                 ),
                 textAlign: TextAlign.center,
               ),

@@ -765,7 +765,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                 shape: BoxShape.circle,
               ),
               child: Icon(
-                Icons.calendar_today_outlined,
+                IconsaxPlusLinear.calendar_remove,
                 size: 64,
                 color: AppColors.primary,
               ),
@@ -774,7 +774,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
             Text(
               'Sin rutinas esta fecha',
               style: TextStyle(
-                fontSize: TipografiaGyMaster.tamanoLg,
+                fontSize: TipografiaGyMaster.tamanoXl,
                 fontWeight: TipografiaGyMaster.pesoSemiBold,
                 color: AppColors.textDark,
               ),

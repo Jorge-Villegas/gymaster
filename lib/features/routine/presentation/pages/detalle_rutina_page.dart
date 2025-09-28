@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/core/theme/emotional_text_styles.dart';
+import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
 import 'package:gymaster/features/routine/presentation/widgets/ejercicios_llenos_widget.dart';
 import 'package:gymaster/features/routine/presentation/widgets/ejercicios_vacios_widget.dart';
@@ -44,18 +45,7 @@ class DetalleRutinaScreen extends StatelessWidget {
         return Scaffold(
           backgroundColor: AppColors.backgroundLight,
           body: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  AppColors.backgroundLight,
-                  Colors.white,
-                  AppColors.backgroundLight.withOpacity(0.8),
-                ],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                stops: const [0.0, 0.3, 1.0],
-              ),
-            ),
+            color: AppColors.backgroundLight,
             child: SafeArea(
               child: Column(
                 children: [
@@ -99,7 +89,7 @@ class DetalleRutinaScreen extends StatelessWidget {
                 onPressed: () => context.go('/'),
                 icon: Icon(
                   Icons.arrow_back_ios_rounded,
-                  color: AppColors.exitoCompletado,
+                  color: AppColors.primario,
                   size: 20,
                 ),
                 padding: const EdgeInsets.all(12),
@@ -114,10 +104,11 @@ class DetalleRutinaScreen extends StatelessWidget {
                   if (state is EjerciciosByRutinaSuccess)
                     Text(
                       TextFormatter.capitalize(state.ejerciciosDeRutina.nombre),
-                      style: EstilosTextoEmocional.energetico.copyWith(
-                        color: AppColors.primary,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
+                      style: TextStyle(
+                        fontWeight: TipografiaGyMaster.pesoSemiBold,
+                        fontSize: TipografiaGyMaster.tamanoXl,
+                        color: AppColors.impulsoEntrenamiento,
+                        height: 1.1,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -125,19 +116,23 @@ class DetalleRutinaScreen extends StatelessWidget {
                   else
                     Text(
                       'Mi Rutina',
-                      style: EstilosTextoEmocional.energetico.copyWith(
-                        color: AppColors.primary,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
+                      style: TextStyle(
+                        fontWeight: TipografiaGyMaster.pesoLigero,
+                        fontSize: TipografiaGyMaster.tamanoMd,
+                        letterSpacing: 1.2,
+                        height: 1.1,
+                        color: AppColors.primarioCalido,
                       ),
                     ),
                   const SizedBox(height: 4),
                   Text(
-                    '¡Hora de brillar! 💪',
-                    style: EstilosTextoEmocional.amigable.copyWith(
-                      color: AppColors.exitoCompletado,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
+                    '¡Hora de brillar!',
+                    style: TextStyle(
+                      fontWeight: TipografiaGyMaster.pesoLigero,
+                      fontSize: TipografiaGyMaster.tamanoMd,
+                      letterSpacing: 0.4,
+                      height: 1.3,
+                      color: AppColors.primarioCalido,
                     ),
                   ),
                 ],
@@ -146,22 +141,25 @@ class DetalleRutinaScreen extends StatelessWidget {
             // Botón de agregar ejercicios minimalista
             if (state is EjerciciosByRutinaSuccess &&
                 state is! EjerciciosByRutinaCompleted)
+              // Botón de actualizar
               Container(
-                width: 48,
-                height: 48,
                 decoration: BoxDecoration(
-                  color: AppColors.motivacionPrincipal,
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
-                      color:
-                          AppColors.motivacionPrincipal.withValues(alpha: 0.3),
-                      offset: const Offset(0, 4),
-                      blurRadius: 12,
+                      color: AppColors.primary.withValues(alpha: 0.1),
+                      offset: const Offset(0, 2),
+                      blurRadius: 8,
                     ),
                   ],
                 ),
                 child: IconButton(
+                  icon: Icon(
+                    Icons.add_rounded,
+                    color: AppColors.primario,
+                    size: 20,
+                  ),
                   onPressed: () {
                     final sessionId = state.ejerciciosDeRutina.session;
                     context
@@ -175,12 +173,7 @@ class DetalleRutinaScreen extends StatelessWidget {
                       }
                     });
                   },
-                  icon: const Icon(
-                    Icons.add_rounded,
-                    color: Colors.white,
-                    size: 24,
-                  ),
-                  padding: EdgeInsets.zero,
+                  padding: const EdgeInsets.all(12),
                 ),
               ),
           ],

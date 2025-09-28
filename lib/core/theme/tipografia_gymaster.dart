@@ -29,6 +29,9 @@ class TipografiaGyMaster {
   /// Títulos principales, hero, números grandes
   static const double tamano2xl = 24.0;
 
+  /// Títulos principales, hero, números grandes
+  static const double tamano3xl = 30.0;
+
   // ==============================================
   // PESOS PERMITIDOS (solo estos 2)
   // ==============================================
