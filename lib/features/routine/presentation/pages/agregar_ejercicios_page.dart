@@ -73,14 +73,14 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
     context.read<MusculoCubit>().getAllMusculo();
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
+      backgroundColor: AppColors.fondoPrincipalClaro,
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              AppColors.backgroundLight,
               AppColors.fondoPrincipalClaro,
-              AppColors.backgroundLight.withValues(alpha: 0.8),
+              AppColors.fondoPrincipalClaro,
+              AppColors.fondoPrincipalClaro.withValues(alpha: 0.8),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -142,20 +142,20 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: AppColors.motivacionPrincipal.withValues(alpha: 0.1),
+                color: AppColors.acento.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Icon(
                 Icons.fitness_center_rounded,
                 size: 80,
-                color: AppColors.motivacionPrincipal,
+                color: AppColors.acento,
               ),
             ),
             const SizedBox(height: 24),
             Text(
               '¡No te preocupes!',
               style: EstilosTextoEmocional.aliento.copyWith(
-                color: AppColors.primary,
+                color: AppColors.primario,
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
@@ -167,7 +167,7 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
                 mensaje,
                 textAlign: TextAlign.center,
                 style: EstilosTextoEmocional.amigable.copyWith(
-                  color: AppColors.textSecondary,
+                  color: AppColors.textoTerciario,
                   fontSize: 16,
                 ),
               ),
@@ -178,7 +178,7 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
               icono: Icons.refresh_rounded,
               tamano: TamanoBotonChiclet.grande,
               estilo: EstiloBotonChiclet.relleno,
-              colorFondo: AppColors.motivacionPrincipal,
+              colorFondo: AppColors.acento,
               onPressed: () => context.read<MusculoCubit>().getAllMusculo(),
             ),
           ],
@@ -190,7 +190,7 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
   /// Construye el efecto de carga shimmer con diseño emocional
   Widget _buildShimmerLoadingEffect() {
     return Shimmer.fromColors(
-      baseColor: AppColors.backgroundLight,
+      baseColor: AppColors.fondoPrincipalClaro,
       highlightColor: AppColors.fondoPrincipalClaro,
       child: ListView.builder(
         itemCount: 8,
@@ -203,7 +203,7 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
               borderRadius: BorderRadius.circular(16),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.primary.withValues(alpha: 0.05),
+                  color: AppColors.primario.withValues(alpha: 0.05),
                   blurRadius: 8,
                   offset: const Offset(0, 2),
                 ),
@@ -286,7 +286,7 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.primary.withValues(alpha: 0.08),
+                    color: AppColors.primario.withValues(alpha: 0.08),
                     blurRadius: 12,
                     offset: const Offset(0, 4),
                   ),
@@ -312,7 +312,8 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
                             borderRadius: BorderRadius.circular(16),
                             boxShadow: [
                               BoxShadow(
-                                color: AppColors.primary.withValues(alpha: 0.1),
+                                color:
+                                    AppColors.primario.withValues(alpha: 0.1),
                                 blurRadius: 8,
                                 offset: const Offset(0, 2),
                               ),
@@ -327,7 +328,7 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
                                       musculo.imagenDirecion,
                                       fit: BoxFit.contain,
                                       colorFilter: ColorFilter.mode(
-                                        AppColors.primary,
+                                        AppColors.primario,
                                         BlendMode.srcIn,
                                       ),
                                     ),
@@ -360,7 +361,7 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
                               Text(
                                 '¡Vamos a entrenar este grupo!',
                                 style: EstilosTextoEmocional.amigable.copyWith(
-                                  color: AppColors.textSecondary,
+                                  color: AppColors.textoTerciario,
                                   fontSize: 14,
                                 ),
                               ),
@@ -371,14 +372,13 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
                         Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: AppColors.logroDesbloqueado
-                                .withValues(alpha: 0.15),
+                            color: AppColors.acento.withValues(alpha: 0.15),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Icon(
                             Icons.arrow_forward_ios_rounded,
                             size: 18,
-                            color: AppColors.logroDesbloqueado,
+                            color: AppColors.acento,
                           ),
                         ),
                       ],

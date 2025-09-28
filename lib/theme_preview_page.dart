@@ -226,7 +226,7 @@ class _ThemePreviewPageState extends State<ThemePreviewPage> {
                 Text(
                   'Fuente actual: ${Theme.of(context).textTheme.bodyLarge?.fontFamily ?? "No definida"}',
                   style: TextStyle(
-                    color: AppColors.errorAmigable,
+                    color: AppColors.error,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

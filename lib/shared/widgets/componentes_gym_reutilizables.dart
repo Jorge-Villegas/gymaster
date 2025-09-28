@@ -125,9 +125,7 @@ class TarjetaEjercicio extends StatelessWidget {
           padding: Espaciado.relleno24y16,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
-            color: completado
-                ? AppColors.exitoCompletado.withValues(alpha: 0.1)
-                : null,
+            color: completado ? AppColors.exito.withValues(alpha: 0.1) : null,
           ),
           child: Row(
             children: [
@@ -174,8 +172,8 @@ class TarjetaEjercicio extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: completado
-                      ? AppColors.exitoCompletado
-                      : AppColors.textoTerciarioClaro,
+                      ? AppColors.exito
+                      : AppColors.textoDeshabilitado,
                 ),
                 child: completado
                     ? Icon(
@@ -315,13 +313,13 @@ class MensajeEstado extends StatelessWidget {
   Color _obtenerColorFondoSegunTipo() {
     switch (tipo) {
       case TipoMensaje.exito:
-        return AppColors.exitoCompletado.withValues(alpha: 0.1);
+        return AppColors.exito.withValues(alpha: 0.1);
       case TipoMensaje.error:
-        return AppColors.errorAmigable.withValues(alpha: 0.1);
+        return AppColors.error.withValues(alpha: 0.1);
       case TipoMensaje.advertencia:
-        return AppColors.advertenciaSutil.withValues(alpha: 0.1);
+        return AppColors.advertencia.withValues(alpha: 0.1);
       case TipoMensaje.motivacional:
-        return AppColors.motivacionPrincipal.withValues(alpha: 0.1);
+        return AppColors.acento.withValues(alpha: 0.1);
     }
   }
 

@@ -278,20 +278,20 @@ class _ChicletButtonState extends State<ChicletButton>
     } else {
       switch (widget.estilo) {
         case EstiloBotonChiclet.relleno:
-          colorFondo = widget.colorFondo ?? AppColors.primary;
+          colorFondo = widget.colorFondo ?? AppColors.primario;
           colorTexto = widget.colorTexto ?? Colors.white;
           break;
         case EstiloBotonChiclet.contorno:
           colorFondo = Colors.white;
           colorTexto =
-              widget.colorTexto ?? widget.colorFondo ?? AppColors.primary;
+              widget.colorTexto ?? widget.colorFondo ?? AppColors.primario;
           colorBorde =
-              widget.colorBorde ?? widget.colorFondo ?? AppColors.primary;
+              widget.colorBorde ?? widget.colorFondo ?? AppColors.primario;
           break;
         case EstiloBotonChiclet.texto:
           colorFondo = Colors.transparent;
           colorTexto =
-              widget.colorTexto ?? widget.colorFondo ?? AppColors.primary;
+              widget.colorTexto ?? widget.colorFondo ?? AppColors.primario;
           break;
       }
     }

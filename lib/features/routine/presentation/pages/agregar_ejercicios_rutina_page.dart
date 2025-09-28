@@ -155,14 +155,14 @@ class _AgregarEjercicioRutinaPageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
+      backgroundColor: AppColors.fondoPrincipalClaro,
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              AppColors.backgroundLight,
+              AppColors.fondoPrincipalClaro,
               Colors.white,
-              AppColors.backgroundLight.withOpacity(0.8),
+              AppColors.fondoPrincipalClaro.withOpacity(0.8),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -268,8 +268,7 @@ class _AgregarEjercicioRutinaPageState
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color:
-                        AppColors.motivacionPrincipal.withValues(alpha: 0.15),
+                    color: AppColors.acento.withValues(alpha: 0.15),
                     offset: const Offset(0, 2),
                     blurRadius: 8,
                   ),
@@ -279,7 +278,7 @@ class _AgregarEjercicioRutinaPageState
                 onPressed: () => context.pop(),
                 icon: Icon(
                   Icons.arrow_back_ios_rounded,
-                  color: AppColors.motivacionPrincipal,
+                  color: AppColors.acento,
                   size: 20,
                 ),
                 padding: const EdgeInsets.all(12),
@@ -294,7 +293,7 @@ class _AgregarEjercicioRutinaPageState
                   Text(
                     '¡Configura tu poder!',
                     style: EstilosTextoEmocional.energetico.copyWith(
-                      color: AppColors.primary,
+                      color: AppColors.primario,
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
@@ -317,7 +316,7 @@ class _AgregarEjercicioRutinaPageState
         texto: '¡Guardar ejercicio!',
         tamano: TamanoBotonChiclet.grande,
         estilo: EstiloBotonChiclet.relleno,
-        colorFondo: AppColors.exitoCompletado,
+        colorFondo: AppColors.exito,
       ),
     );
   }
@@ -334,13 +333,12 @@ class _AgregarEjercicioRutinaPageState
               width: 80,
               height: 80,
               decoration: BoxDecoration(
-                color: AppColors.motivacionPrincipal.withOpacity(0.1),
+                color: AppColors.acento.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Center(
                 child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                      AppColors.motivacionPrincipal),
+                  valueColor: AlwaysStoppedAnimation<Color>(AppColors.acento),
                   strokeWidth: 3,
                 ),
               ),
@@ -349,7 +347,7 @@ class _AgregarEjercicioRutinaPageState
             Text(
               'Preparando tu entrenamiento...',
               style: EstilosTextoEmocional.amigable.copyWith(
-                color: AppColors.primary,
+                color: AppColors.primario,
                 fontSize: 18,
               ),
             ),
@@ -357,7 +355,7 @@ class _AgregarEjercicioRutinaPageState
             Text(
               '¡Casi listo para entrenar! 💪',
               style: EstilosTextoEmocional.aliento.copyWith(
-                color: AppColors.textSecondary,
+                color: AppColors.textoTerciario,
                 fontSize: 14,
               ),
             ),

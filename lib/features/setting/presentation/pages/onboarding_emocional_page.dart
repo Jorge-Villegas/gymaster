@@ -44,7 +44,7 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.message),
-                backgroundColor: AppColors.errorAmigable,
+                backgroundColor: AppColors.error,
               ),
             );
           }
@@ -126,8 +126,7 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
           LinearProgressIndicator(
             value: progress,
             backgroundColor: Colors.grey[300],
-            valueColor:
-                AlwaysStoppedAnimation<Color>(AppColors.motivacionPrincipal),
+            valueColor: AlwaysStoppedAnimation<Color>(AppColors.acento),
             minHeight: 6,
           ),
         ],
@@ -433,14 +432,10 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: isSelected
-              ? AppColors.motivacionPrincipal
-              : AppColors.fondoSecundarioClaro,
+          color: isSelected ? AppColors.acento : AppColors.fondoSecundarioClaro,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isSelected
-                ? AppColors.motivacionPrincipal
-                : AppColors.textoSecundarioClaro,
+            color: isSelected ? AppColors.acento : AppColors.textoTerciario,
             width: isSelected ? 2 : 1,
           ),
         ),
@@ -498,7 +493,7 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
                         }
                       : null,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.motivacionPrincipal,
+                    backgroundColor: AppColors.acento,
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                   ),

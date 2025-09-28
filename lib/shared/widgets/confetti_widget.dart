@@ -357,20 +357,16 @@ class CelebracionConfeti extends StatelessWidget {
       case TipoCelebracion.rutinaCompletada:
         return [Colors.green, Colors.lightGreen, Colors.teal];
       case TipoCelebracion.recordPersonal:
-        return [
-          AppColors.logroDesbloqueado,
-          AppColors.energiaActiva,
-          AppColors.motivacionPrincipal
-        ];
+        return [AppColors.acento, AppColors.acentoCalido, AppColors.acento];
       case TipoCelebracion.metaSemanal:
         return [Colors.blue, Colors.lightBlue, Colors.cyan];
       case TipoCelebracion.logroMensual:
         return [Colors.purple, Colors.deepPurple, Colors.indigo];
       case TipoCelebracion.subidaDeNivel:
         return [
-          AppColors.impulsoEntrenamiento,
-          AppColors.motivacionPrincipal,
-          AppColors.energiaActiva
+          AppColors.primarioCalido,
+          AppColors.acento,
+          AppColors.acentoCalido
         ];
     }
   }

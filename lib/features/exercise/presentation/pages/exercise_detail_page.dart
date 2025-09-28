@@ -91,7 +91,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
             onPressed: () => context.go('/exercise-catalog'),
             icon: Icon(
               Icons.arrow_back_ios_rounded,
-              color: AppColors.primary,
+              color: AppColors.primario,
               size: 20,
             ),
             padding: const EdgeInsets.all(8),
@@ -122,7 +122,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
             child: Text(
               capitalizarPrimeraLetra(widget.exercise.name),
               style: EstilosTextoEmocional.energetico.copyWith(
-                color: AppColors.textDark,
+                color: AppColors.textoPrincipalClaro,
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 letterSpacing: 0.5,
@@ -214,12 +214,12 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: AppColors.primary.withValues(alpha: 0.1),
+                    color: AppColors.primario.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
                     IconsaxPlusLinear.activity,
-                    color: AppColors.primary,
+                    color: AppColors.primario,
                     size: 24,
                   ),
                 ),
@@ -231,7 +231,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                       letterSpacing: 1.2,
                       height: 1.1,
                       fontSize: 20,
-                      color: AppColors.primary,
+                      color: AppColors.primario,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -248,15 +248,16 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                   padding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                   decoration: BoxDecoration(
-                    color: AppColors.descansoActivo.withValues(alpha: 0.1),
+                    color: AppColors.secundarioClaro.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
-                      color: AppColors.descansoActivo.withValues(alpha: 0.25),
+                      color: AppColors.secundarioClaro.withValues(alpha: 0.25),
                       width: 1.5,
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.descansoActivo.withValues(alpha: 0.06),
+                        color:
+                            AppColors.secundarioClaro.withValues(alpha: 0.06),
                         blurRadius: 6,
                         offset: const Offset(0, 2),
                       ),
@@ -268,7 +269,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                       Text(
                         capitalizarPrimeraLetra(muscle),
                         style: TextStyle(
-                          color: AppColors.descansoActivo,
+                          color: AppColors.secundarioClaro,
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
                         ),
@@ -312,12 +313,12 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: AppColors.motivacionPrincipal.withValues(alpha: 0.1),
+                    color: AppColors.acento.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
                     IconsaxPlusLinear.document_text,
-                    color: AppColors.motivacionPrincipal,
+                    color: AppColors.acento,
                     size: 24,
                   ),
                 ),
@@ -329,7 +330,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                       letterSpacing: 1.2,
                       height: 1.1,
                       fontSize: 20,
-                      color: AppColors.primary,
+                      color: AppColors.primario,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -343,7 +344,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                   : '¡Este ejercicio te ayudará a fortalecer y desarrollar los músculos trabajados de manera efectiva! 💪✨',
               style: TextStyle(
                 fontSize: 16,
-                color: AppColors.textMedium,
+                color: AppColors.textoDeshabilitado,
               ),
             ),
           ],
@@ -380,12 +381,12 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: AppColors.exitoCompletado.withValues(alpha: 0.1),
+                    color: AppColors.exito.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
                     IconsaxPlusLinear.refresh,
-                    color: AppColors.exitoCompletado,
+                    color: AppColors.exito,
                     size: 24,
                   ),
                 ),
@@ -395,7 +396,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                     'Variaciones Disponibles 🔄',
                     style: EstilosTextoEmocional.energetico.copyWith(
                       fontSize: 20,
-                      color: AppColors.primary,
+                      color: AppColors.primario,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -423,7 +424,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                       width: 32,
                       height: 32,
                       decoration: BoxDecoration(
-                        color: AppColors.primary,
+                        color: AppColors.primario,
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Center(
@@ -443,7 +444,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                         capitalizarPrimeraLetra(variation),
                         style: EstilosTextoEmocional.amigable.copyWith(
                           fontSize: 15,
-                          color: AppColors.textDark,
+                          color: AppColors.textoPrincipalClaro,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -482,9 +483,8 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
 
             return FloatingActionButton.extended(
               elevation: 0,
-              backgroundColor: esFavorito
-                  ? AppColors.motivacionPrincipal
-                  : AppColors.primary,
+              backgroundColor:
+                  esFavorito ? AppColors.acento : AppColors.primario,
               onPressed: () async {
                 // Usar el cubit para toggle de favoritos
                 await favoritosCubit.toggleFavorito(widget.exercise.id);
@@ -516,8 +516,8 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                         ],
                       ),
                       backgroundColor: nuevoEstado
-                          ? AppColors.motivacionPrincipal
-                          : AppColors.textSecondary,
+                          ? AppColors.acento
+                          : AppColors.textoTerciario,
                       behavior: SnackBarBehavior.floating,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12)),
@@ -595,7 +595,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
           imagePath,
           fit: BoxFit.cover,
           colorFilter: ColorFilter.mode(
-            AppColors.primary.withValues(alpha: 0.8),
+            AppColors.primario.withValues(alpha: 0.8),
             BlendMode.srcATop,
           ),
         ),

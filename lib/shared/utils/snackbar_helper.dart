@@ -31,19 +31,19 @@ class SnackbarHelper {
 
       switch (type) {
         case SnackBarType.success:
-          backgroundColor = AppColors.exitoCompletado;
+          backgroundColor = AppColors.exito;
           icon = Icons.check;
           break;
         case SnackBarType.error:
-          backgroundColor = AppColors.errorAmigable;
+          backgroundColor = AppColors.error;
           icon = Icons.error;
           break;
         case SnackBarType.info:
-          backgroundColor = AppColors.informacionUtil;
+          backgroundColor = AppColors.informacion;
           icon = Icons.info;
           break;
         case SnackBarType.warning:
-          backgroundColor = AppColors.advertenciaSutil;
+          backgroundColor = AppColors.advertencia;
           icon = Icons.warning;
           break;
       }
@@ -116,19 +116,19 @@ class SnackbarHelper {
 
     switch (type) {
       case SnackBarType.success:
-        backgroundColor = AppColors.exitoCompletado;
+        backgroundColor = AppColors.exito;
         icon = Icons.check;
         break;
       case SnackBarType.error:
-        backgroundColor = AppColors.errorAmigable;
+        backgroundColor = AppColors.error;
         icon = Icons.error;
         break;
       case SnackBarType.info:
-        backgroundColor = AppColors.informacionUtil;
+        backgroundColor = AppColors.informacion;
         icon = Icons.info;
         break;
       case SnackBarType.warning:
-        backgroundColor = AppColors.advertenciaSutil;
+        backgroundColor = AppColors.advertencia;
         icon = Icons.warning;
         break;
     }

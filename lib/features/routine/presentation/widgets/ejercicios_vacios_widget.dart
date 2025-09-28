@@ -59,7 +59,7 @@ class EjerciciosVaciosWidget extends StatelessWidget {
                       ? TipografiaGyMaster.tamanoLg
                       : TipografiaGyMaster.tamanoXl,
                   fontWeight: TipografiaGyMaster.pesoSemiBold,
-                  color: AppColors.textDark,
+                  color: AppColors.textoPrincipalClaro,
                 ),
               ),
               const SizedBox(height: 12),
@@ -70,7 +70,7 @@ class EjerciciosVaciosWidget extends StatelessWidget {
                       ? TipografiaGyMaster.tamanoMd
                       : TipografiaGyMaster.tamanoLg,
                   fontWeight: TipografiaGyMaster.pesoLigero,
-                  color: AppColors.textSecondary,
+                  color: AppColors.textoTerciario,
                 ),
                 textAlign: TextAlign.center,
               ),

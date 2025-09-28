@@ -14,7 +14,7 @@ class EstilosTextoEmocional {
     fontSize: 24,
     letterSpacing: 1.5,
     height: 1.2,
-    color: AppColors.motivacionPrincipal,
+    color: AppColors.acento,
   );
 
   /// Estilo para celebraciones épicas
@@ -24,7 +24,7 @@ class EstilosTextoEmocional {
     fontSize: 24,
     letterSpacing: 1.5,
     height: 1.1,
-    color: AppColors.logroDesbloqueado,
+    color: AppColors.acento,
   );
 
   /// Estilo para mensajes de aliento
@@ -34,7 +34,7 @@ class EstilosTextoEmocional {
     fontSize: 18,
     letterSpacing: 0.8,
     height: 1.3,
-    color: AppColors.exitoCompletado,
+    color: AppColors.exito,
   );
 
   /// Estilo para logros y achievements
@@ -44,7 +44,7 @@ class EstilosTextoEmocional {
     fontSize: 24,
     letterSpacing: 1.2,
     height: 1.2,
-    color: AppColors.logroDesbloqueado,
+    color: AppColors.acento,
   );
 
   // === ESTILOS ENERGÉTICOS ===
@@ -56,7 +56,7 @@ class EstilosTextoEmocional {
     fontSize: 18,
     letterSpacing: 1.2,
     height: 1.1,
-    color: AppColors.impulsoEntrenamiento,
+    color: AppColors.primarioCalido,
   );
 
   /// Estilo para contadores y números importantes
@@ -66,7 +66,7 @@ class EstilosTextoEmocional {
     fontSize: 24,
     letterSpacing: 0.5,
     height: 1.0,
-    color: AppColors.errorAmigable,
+    color: AppColors.error,
   );
 
   // === ESTILOS CALMADOS ===
@@ -78,7 +78,7 @@ class EstilosTextoEmocional {
     fontSize: 18,
     letterSpacing: 0.5,
     height: 1.4,
-    color: AppColors.descansoActivo,
+    color: AppColors.secundarioClaro,
   );
 
   /// Estilo para información de recuperación
@@ -88,7 +88,7 @@ class EstilosTextoEmocional {
     fontSize: 15,
     letterSpacing: 0.3,
     height: 1.5,
-    color: AppColors.exitoCompletado,
+    color: AppColors.exito,
   );
 
   // === ESTILOS ESPECIALES ===
@@ -110,7 +110,7 @@ class EstilosTextoEmocional {
     fontSize: 15,
     letterSpacing: 1.0,
     height: 1.2,
-    color: AppColors.motivacionPrincipal,
+    color: AppColors.acento,
   );
 
   /// Estilo para saludos personalizados
@@ -120,7 +120,7 @@ class EstilosTextoEmocional {
     fontSize: 18,
     letterSpacing: 1.0,
     height: 1.2,
-    color: AppColors.motivacionPrincipal,
+    color: AppColors.acento,
   );
 
   // === MÉTODOS HELPER PARA PERSONALIZACIÓN ===
@@ -138,9 +138,9 @@ class EstilosTextoEmocional {
   /// Crea variante del estilo aliento con intensidad
   /// intensity: 0.0 (suave) a 1.0 (intenso)
   static TextStyle alientoConIntensidad(double intensity) {
-    final color = Color.lerp(AppColors.descansoActivo,
-            AppColors.exitoCompletado, intensity.clamp(0.0, 1.0)) ??
-        AppColors.exitoCompletado;
+    final color = Color.lerp(AppColors.secundarioClaro, AppColors.exito,
+            intensity.clamp(0.0, 1.0)) ??
+        AppColors.exito;
 
     final fontSize = 15 + (3 * intensity.clamp(0.0, 1.0));
 
@@ -172,13 +172,13 @@ class EstilosTextoEmocional {
 extension EstilosTextoEmocionalExtension on TextStyle {
   TextStyle get energetizado => copyWith(
         fontWeight: FontWeight.w600, // SemiBold
-        color: AppColors.motivacionPrincipal,
+        color: AppColors.acento,
         letterSpacing: 1.2,
       );
 
   TextStyle get calmado => copyWith(
         fontWeight: FontWeight.w300, // Light
-        color: AppColors.descansoActivo,
+        color: AppColors.secundarioClaro,
         letterSpacing: 0.5,
       );
 }

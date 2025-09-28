@@ -109,12 +109,24 @@ class AppColors {
   /// Superficie elevada con mayor luminosidad
   static const Color superficieElevada = Color(0xFF334155);
 
+  /// Fondo principal claro - Versión para temas claros
+  static const Color fondoPrincipalClaro = Color(0xFFF8FAFC);
+
+  /// Fondo secundario claro - Versión para temas claros
+  static const Color fondoSecundarioClaro = Color(0xFFF1F5F9);
+
+  /// Fondo de tarjeta claro - Versión para temas claros
+  static const Color fondoTarjetaClaro = Color(0xFFFFFFFF);
+
   // ===============================================================
   // === TEXTO CON VARIACIONES CONTROLADAS ===
   // ===============================================================
 
   /// Texto principal - Máximo contraste
   static const Color textoPrincipal = Color(0xFFFFFFFF);
+
+  /// Texto principal claro - Versión para temas claros
+  static const Color textoPrincipalClaro = Color(0xFFF8FAFC);
 
   /// Texto secundario - Saturación reducida para jerarquía (HSB: 222°, 15%, 82%)
   static const Color textoSecundario = Color(0xFFCBD5E1);
@@ -268,71 +280,4 @@ class AppColors {
       offset: Offset(0, 3),
     ),
   ];
-
-  // ===============================================================
-  // === ALIAS PARA COMPATIBILIDAD CON CÓDIGO EXISTENTE ===
-  // ===============================================================
-
-  // Mapeo de nombres antiguos a nuevos colores para compatibilidad
-  static Color get motivacionPrincipal => acento;
-  static Color get energiaActiva => acentoCalido;
-  static Color get impulsoEntrenamiento => primarioCalido;
-  static Color get exitoCompletado => exito;
-  static Color get logroDesbloqueado => acento;
-  static Color get metaAlcanzada => serieCompletada;
-  static Color get descansoActivo => secundarioClaro;
-  static Color get recuperacionCompleta => tiempoDescanso;
-  static Color get relajacionProfunda => primarioClaro;
-  static Color get advertenciaSutil => advertencia;
-  static Color get errorAmigable => error;
-  static Color get informacionUtil => informacion;
-  static Color get nivelPrincipiante => exito;
-  static Color get nivelIntermedio => acento;
-  static Color get nivelAvanzado => error;
-
-  // Fondos
-  static Color get fondoPrincipalClaro => Color(0xFFF8FAFC);
-  static Color get fondoSecundarioClaro => Color(0xFFF1F5F9);
-  static Color get fondoTarjetaClaro => Color(0xFFFFFFFF);
-  static Color get fondoPrincipalOscuro => fondo;
-  static Color get fondoSecundarioOscuro => fondoSecundario;
-  static Color get fondoTarjetaOscuro => superficie;
-  static Color get menuLateralOscuro => fondoTerciario;
-
-  // Textos
-  static Color get textoPrincipalClaro => Color(0xFF0F172A);
-  static Color get textoSecundarioClaro => textoTerciario;
-  static Color get textoTerciarioClaro => textoDeshabilitado;
-  static Color get textoPrincipalOscuro => textoPrincipal;
-  static Color get textoSecundarioOscuro => textoSecundario;
-  static Color get textoTerciarioOscuro => textoTerciario;
-
-  // Tablas
-  static Color get tablaFondoClaro => Color(0xFFF8FAFC);
-  static Color get tablaSeleccionClaro => primarioClaro.withValues(alpha: 0.1);
-  static Color get tablaEncabezadoClaro => primarioClaro;
-  static Color get tablaDivisorClaro => divisor;
-
-  // Getters de compatibilidad (manteniendo inglés para APIs externas)
-  static Color get primary => primario;
-  static Color get secondary => secundario;
-  static Color get success => exito;
-  static Color get warning => advertencia;
-  static Color get info => informacion;
-  static Color get backgroundLight => fondoPrincipalClaro;
-  static Color get backgroundDark => fondoPrincipalOscuro;
-  static Color get textLight => textoPrincipalOscuro;
-  static Color get textDark => textoPrincipalClaro;
-  static Color get textSecondary => textoSecundarioClaro;
-  static Color get textMedium => textoTerciarioClaro;
-  static Color get buttonPrimary => primario;
-  static Color get buttonSecondary => secundario;
-  static Color get beginnerColor => nivelPrincipiante;
-  static Color get intermediateColor => nivelIntermedio;
-  static Color get advancedColor => nivelAvanzado;
-  static Color get tableBackgroundColor => tablaFondoClaro;
-  static Color get tableSelectionColor => tablaSeleccionClaro;
-  static Color get tableHeaderColor => tablaEncabezadoClaro;
-  static Color get tableDividerColor => tablaDivisorClaro;
-  static Color get menuDarkBlue => menuLateralOscuro;
 }

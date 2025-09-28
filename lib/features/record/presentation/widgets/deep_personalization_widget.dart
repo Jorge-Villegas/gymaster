@@ -114,13 +114,13 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              AppColors.descansoActivo.withOpacity(0.1),
-              AppColors.logroDesbloqueado.withOpacity(0.1),
+              AppColors.secundarioClaro.withOpacity(0.1),
+              AppColors.acento.withOpacity(0.1),
             ],
           ),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: AppColors.descansoActivo.withOpacity(0.3),
+            color: AppColors.secundarioClaro.withOpacity(0.3),
             width: 2,
           ),
         ),
@@ -154,12 +154,12 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
         Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: AppColors.descansoActivo.withOpacity(0.2),
+            color: AppColors.secundarioClaro.withOpacity(0.2),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Icon(
             Icons.psychology,
-            color: AppColors.descansoActivo,
+            color: AppColors.secundarioClaro,
             size: 24,
           ),
         ),
@@ -196,10 +196,10 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.logroDesbloqueado.withOpacity(0.1),
+        color: AppColors.acento.withOpacity(0.1),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: AppColors.logroDesbloqueado.withOpacity(0.3),
+          color: AppColors.acento.withOpacity(0.3),
         ),
       ),
       child: Column(
@@ -209,7 +209,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
             children: [
               Icon(
                 Icons.insights,
-                color: AppColors.logroDesbloqueado,
+                color: AppColors.acento,
                 size: 20,
               ),
               const SizedBox(width: 8),
@@ -226,7 +226,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
             _getPersonalizedInsight(),
             style: EstilosTextoEmocional.logro.copyWith(
               fontSize: 16,
-              color: AppColors.logroDesbloqueado,
+              color: AppColors.acento,
             ),
           ),
         ],
@@ -250,7 +250,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
     return _buildPreferenceSection(
       'Estilo de Motivación',
       Icons.flash_on,
-      AppColors.motivacionPrincipal,
+      AppColors.acento,
       [
         ('gentle', 'Suave', 'Motivación amable y comprensiva'),
         ('balanced', 'Equilibrado', 'Combinación de amabilidad y firmeza'),
@@ -266,7 +266,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
     return _buildPreferenceSection(
       'Intensidad de Celebraciones',
       Icons.celebration,
-      AppColors.exitoCompletado,
+      AppColors.exito,
       [
         ('minimal', 'Mínima', 'Reconocimiento sutil'),
         ('medium', 'Moderada', 'Balance perfecto'),
@@ -282,7 +282,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
     return _buildPreferenceSection(
       'Enfoque de Progreso',
       Icons.trending_up,
-      AppColors.motivacionPrincipal,
+      AppColors.acento,
       [
         ('consistency', 'Consistencia', 'Enfoque en hábitos diarios'),
         ('milestones', 'Hitos', 'Celebrar grandes logros'),
@@ -298,7 +298,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
     return _buildPreferenceSection(
       'Tono Emocional',
       Icons.sentiment_satisfied,
-      AppColors.descansoActivo,
+      AppColors.secundarioClaro,
       [
         ('encouraging', 'Alentador', 'Siempre positivo y comprensivo'),
         ('realistic', 'Realista', 'Honesto pero motivador'),
@@ -393,7 +393,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
       children: [
         Row(
           children: [
-            Icon(Icons.settings, color: AppColors.descansoActivo, size: 18),
+            Icon(Icons.settings, color: AppColors.secundarioClaro, size: 18),
             const SizedBox(width: 8),
             Text(
               'Configuraciones Avanzadas',
@@ -429,7 +429,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
           min: 0.0,
           max: 1.0,
           divisions: 10,
-          activeColor: AppColors.motivacionPrincipal,
+          activeColor: AppColors.acento,
           onChanged: (value) => setState(() => _motivationFrequency = value),
         ),
       ],
@@ -464,7 +464,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
           Switch(
             value: value,
             onChanged: onChanged,
-            activeThumbColor: AppColors.exitoCompletado,
+            activeThumbColor: AppColors.exito,
           ),
         ],
       ),
@@ -477,7 +477,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
       child: ElevatedButton(
         onPressed: _savePreferences,
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.logroDesbloqueado,
+          backgroundColor: AppColors.acento,
           foregroundColor: Colors.white,
           padding: const EdgeInsets.symmetric(vertical: 16),
           shape: RoundedRectangleBorder(

@@ -151,16 +151,16 @@ class _DeleteRoutineDialogState extends State<DeleteRoutineDialog>
               width: 80,
               height: 80,
               decoration: BoxDecoration(
-                color: AppColors.errorAmigable.withValues(alpha: 0.1),
+                color: AppColors.error.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(40),
                 border: Border.all(
-                  color: AppColors.errorAmigable.withValues(alpha: 0.3),
+                  color: AppColors.error.withValues(alpha: 0.3),
                   width: 2,
                 ),
               ),
               child: Icon(
                 IconsaxPlusLinear.trash,
-                color: AppColors.errorAmigable,
+                color: AppColors.error,
                 size: 36,
               ),
             ),
@@ -178,7 +178,7 @@ class _DeleteRoutineDialogState extends State<DeleteRoutineDialog>
         '¿Eliminar rutina? 🗑️',
         style: EstilosTextoEmocional.energetico.copyWith(
           fontSize: TipografiaGyMaster.titulo.fontSize,
-          color: AppColors.textDark,
+          color: AppColors.textoPrincipalClaro,
           fontWeight: TipografiaGyMaster.pesoSemiBold,
         ),
         textAlign: TextAlign.center,
@@ -195,7 +195,7 @@ class _DeleteRoutineDialogState extends State<DeleteRoutineDialog>
         text: TextSpan(
           style: EstilosTextoEmocional.amigable.copyWith(
             fontSize: TipografiaGyMaster.textoPrincipal.fontSize,
-            color: AppColors.textMedium,
+            color: AppColors.textoDeshabilitado,
             height: 1.4,
           ),
           children: [
@@ -206,7 +206,7 @@ class _DeleteRoutineDialogState extends State<DeleteRoutineDialog>
               text: '"${widget.routineName}"',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: AppColors.primary,
+                color: AppColors.primario,
               ),
             ),
             const TextSpan(
@@ -250,14 +250,14 @@ class _DeleteRoutineDialogState extends State<DeleteRoutineDialog>
           borderRadius: BorderRadius.circular(12),
         ),
         side: BorderSide(
-          color: AppColors.textSecondary.withValues(alpha: 0.3),
+          color: AppColors.textoTerciario.withValues(alpha: 0.3),
           width: 1.5,
         ),
       ),
       child: Text(
         'Cancelar',
         style: EstilosTextoEmocional.amigable.copyWith(
-          color: AppColors.textSecondary,
+          color: AppColors.textoTerciario,
           fontSize: TipografiaGyMaster.textoPrincipal.fontSize,
           fontWeight: TipografiaGyMaster.pesoSemiBold,
         ),
@@ -269,7 +269,7 @@ class _DeleteRoutineDialogState extends State<DeleteRoutineDialog>
     return ElevatedButton(
       onPressed: _handleConfirm,
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.errorAmigable,
+        backgroundColor: AppColors.error,
         padding: const EdgeInsets.symmetric(vertical: 16),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),

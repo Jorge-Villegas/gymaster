@@ -274,14 +274,14 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
+      backgroundColor: AppColors.fondoPrincipalClaro,
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              AppColors.backgroundLight,
+              AppColors.fondoPrincipalClaro,
               Colors.white,
-              AppColors.backgroundLight.withOpacity(0.8),
+              AppColors.fondoPrincipalClaro.withOpacity(0.8),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -340,7 +340,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.exitoCompletado.withValues(alpha: 0.1),
+                    color: AppColors.exito.withValues(alpha: 0.1),
                     offset: const Offset(0, 2),
                     blurRadius: 8,
                   ),
@@ -353,7 +353,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                 },
                 icon: Icon(
                   Icons.arrow_back_ios_rounded,
-                  color: AppColors.exitoCompletado,
+                  color: AppColors.exito,
                   size: 20,
                 ),
                 padding: const EdgeInsets.all(12),
@@ -369,7 +369,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                   Text(
                     '¡Crea tu rutina perfecta!',
                     style: EstilosTextoEmocional.energetico.copyWith(
-                      color: AppColors.primary,
+                      color: AppColors.primario,
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
@@ -380,7 +380,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                   Text(
                     'Personaliza cada detalle para tu éxito',
                     style: EstilosTextoEmocional.amigable.copyWith(
-                      color: AppColors.exitoCompletado,
+                      color: AppColors.exito,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ),
@@ -604,7 +604,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
               Text(
                 'Elige tu color de poder',
                 style: EstilosTextoEmocional.energetico.copyWith(
-                  color: AppColors.primary,
+                  color: AppColors.primario,
                   fontSize: 18,
                 ),
               ),
@@ -614,7 +614,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
           Text(
             'Cada color transmite una energía única para tu entrenamiento',
             style: EstilosTextoEmocional.amigable.copyWith(
-              color: AppColors.textSecondary,
+              color: AppColors.textoTerciario,
             ),
           ),
           const SizedBox(height: 20),
@@ -677,8 +677,8 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                           nombre,
                           style: TextStyle(
                             color: estaSeleccionado
-                                ? AppColors.primary
-                                : AppColors.textSecondary,
+                                ? AppColors.primario
+                                : AppColors.textoTerciario,
                             fontSize: 11,
                             fontWeight: estaSeleccionado
                                 ? FontWeight.bold
@@ -721,7 +721,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
               Text(
                 'Selecciona el ícono perfecto',
                 style: EstilosTextoEmocional.energetico.copyWith(
-                  color: AppColors.primary,
+                  color: AppColors.primario,
                   fontSize: 18,
                 ),
               ),
@@ -731,7 +731,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
           Text(
             'Representa visualmente el tipo de entrenamiento que vas a hacer',
             style: EstilosTextoEmocional.amigable.copyWith(
-              color: AppColors.textSecondary,
+              color: AppColors.textoTerciario,
             ),
           ),
           const SizedBox(height: 20),
@@ -749,23 +749,22 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
             switch (categoria) {
               case 'fuerza':
                 nombreCategoria = 'Fuerza & Músculo';
-                colorCategoria =
-                    AppColors.impulsoEntrenamiento; // Usando colores HSB
+                colorCategoria = AppColors.primarioCalido; // Usando colores HSB
                 iconoCategoria = Icons.fitness_center_rounded;
                 break;
               case 'cardio':
                 nombreCategoria = 'Cardio & Resistencia';
-                colorCategoria = AppColors.descansoActivo; // Azul suave HSB
+                colorCategoria = AppColors.secundarioClaro; // Azul suave HSB
                 iconoCategoria = Icons.directions_run_rounded;
                 break;
               case 'recovery':
                 nombreCategoria = 'Flexibilidad & Descanso';
-                colorCategoria = AppColors.exitoCompletado; // Verde natural HSB
+                colorCategoria = AppColors.exito; // Verde natural HSB
                 iconoCategoria = Icons.self_improvement_rounded;
                 break;
               case 'general':
                 nombreCategoria = 'Ejercicio General';
-                colorCategoria = AppColors.energiaActiva; // Naranja dorado HSB
+                colorCategoria = AppColors.acentoCalido; // Naranja dorado HSB
                 iconoCategoria = Icons.sports_gymnastics_rounded;
                 break;
               default:
@@ -863,8 +862,8 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                                 nombreIcono,
                                 style: TextStyle(
                                   color: estaSeleccionado
-                                      ? AppColors.primary
-                                      : AppColors.textSecondary,
+                                      ? AppColors.primario
+                                      : AppColors.textoTerciario,
                                   fontSize: 10,
                                   fontWeight: estaSeleccionado
                                       ? FontWeight.bold

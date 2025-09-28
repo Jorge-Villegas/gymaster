@@ -211,7 +211,7 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
               borderRadius: BorderRadius.circular(heroSize / 2),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.logroDesbloqueado.withOpacity(0.4),
+                  color: AppColors.acento.withOpacity(0.4),
                   blurRadius: 30,
                   spreadRadius: 10,
                 ),
@@ -271,14 +271,14 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                AppColors.logroDesbloqueado.withOpacity(0.9),
-                AppColors.motivacionPrincipal.withOpacity(0.8),
+                AppColors.acento.withOpacity(0.9),
+                AppColors.acento.withOpacity(0.8),
               ],
             ),
             borderRadius: BorderRadius.circular(24),
             boxShadow: [
               BoxShadow(
-                color: AppColors.logroDesbloqueado.withOpacity(0.3),
+                color: AppColors.acento.withOpacity(0.3),
                 blurRadius: 12,
                 offset: const Offset(0, 4),
               ),
@@ -326,7 +326,7 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
             subtituloContextual,
             style: EstilosTextoEmocional.aliento.copyWith(
               fontSize: 16,
-              color: AppColors.exitoCompletado,
+              color: AppColors.exito,
               fontWeight: FontWeight.w600,
             ),
             textAlign: TextAlign.center,
@@ -336,7 +336,7 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
             MensajesEmocionalesService.obtenerEstadisticasContext(
                 _totalRutinasCompletadas),
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: AppColors.motivacionPrincipal,
+                  color: AppColors.acento,
                   fontWeight: FontWeight.w500,
                 ),
             textAlign: TextAlign.center,
@@ -382,7 +382,7 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
                     titulo: 'Ejercicios',
                     textoCuerpo: widget.state.totalEjercicios.toString(),
                     icono: Icons.fitness_center,
-                    colorFondo: AppColors.motivacionPrincipal,
+                    colorFondo: AppColors.acento,
                   ),
                 ),
                 // Card de Completado
@@ -393,7 +393,7 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
                     titulo: 'Tiempo',
                     textoCuerpo: _formatearTiempo(widget.state.tiempoTotal),
                     icono: Icons.timer,
-                    colorFondo: AppColors.exitoCompletado,
+                    colorFondo: AppColors.exito,
                   ),
                 ),
               ],
@@ -438,7 +438,7 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
                 ChicletButton(
                   texto: 'Continuar Entrenando',
                   icono: Icons.fitness_center,
-                  colorFondo: AppColors.exitoCompletado,
+                  colorFondo: AppColors.exito,
                   colorTexto: Colors.white,
                   onPressed: () => _navegarAlInicio(context),
                   radioBorde: 16,
@@ -455,8 +455,8 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
                   texto: 'Ver Mi Progreso',
                   icono: Icons.trending_up,
                   colorFondo: Colors.white,
-                  colorTexto: AppColors.exitoCompletado,
-                  colorBorde: AppColors.exitoCompletado,
+                  colorTexto: AppColors.exito,
+                  colorBorde: AppColors.exito,
                   onPressed: () => _navegarAlHistorial(context),
                   radioBorde: 16,
                   paddingHorizontal: 30,

@@ -194,14 +194,14 @@ class _RoutineCardState extends State<RoutineCard>
                                 children: [
                                   Icon(
                                     IconsaxPlusLinear.trash,
-                                    color: AppColors.errorAmigable,
+                                    color: AppColors.error,
                                     size: 18,
                                   ),
                                   const SizedBox(width: 12),
                                   Text(
                                     'Eliminar rutina',
                                     style: TextStyle(
-                                      color: AppColors.errorAmigable,
+                                      color: AppColors.error,
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),

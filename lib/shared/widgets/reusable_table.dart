@@ -48,9 +48,10 @@ class CustomDataTable extends StatelessWidget {
     this.cellTextAlign = TextAlign.left,
     this.maxHeight,
     this.minHeight,
-  })  : backgroundColor = backgroundColor ?? AppColors.tableBackgroundColor,
-        selectionColor = selectionColor ?? AppColors.tableSelectionColor,
-        headerColor = headerColor ?? AppColors.tableHeaderColor;
+  })  : backgroundColor = backgroundColor ?? Color(0xFFF8FAFC),
+        selectionColor =
+            selectionColor ?? AppColors.primarioClaro.withValues(alpha: 0.1),
+        headerColor = headerColor ?? AppColors.primarioClaro;
 
   @override
   Widget build(BuildContext context) {
@@ -163,8 +164,7 @@ class CustomDataTable extends StatelessWidget {
                             child: Center(
                               child: IconButton(
                                 icon: const Icon(IconsaxPlusLinear.trash),
-                                color: AppColors.errorAmigable
-                                    .withValues(alpha: 0.7),
+                                color: AppColors.error.withValues(alpha: 0.7),
                                 onPressed: () {
                                   if (onRemoveRow != null) {
                                     onRemoveRow!(rowIndex);

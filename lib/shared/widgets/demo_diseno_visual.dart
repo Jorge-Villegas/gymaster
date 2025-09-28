@@ -174,11 +174,11 @@ class PaginaDemostracionDiseno extends StatelessWidget {
               _buildEjemploEspaciado(
                   'SM - 16px', Espaciado.sm, AppColors.secundario),
               _buildEjemploEspaciado(
-                  'MD - 24px', Espaciado.md, AppColors.motivacionPrincipal),
+                  'MD - 24px', Espaciado.md, AppColors.acento),
               _buildEjemploEspaciado(
-                  'LG - 32px', Espaciado.lg, AppColors.exitoCompletado),
+                  'LG - 32px', Espaciado.lg, AppColors.exito),
               _buildEjemploEspaciado(
-                  'XL - 40px', Espaciado.xl, AppColors.energiaActiva),
+                  'XL - 40px', Espaciado.xl, AppColors.acentoCalido),
               Espaciado.separacionVerticalSm,
               Text(
                 'Padding pre-configurados:',
@@ -253,7 +253,7 @@ class PaginaDemostracionDiseno extends StatelessWidget {
           descripcionSeries: '6 ejercicios • 18 series totales',
           grupoMuscular: 'Pecho, Tríceps',
           estadoRutina: 'Completada',
-          colorPersonalizado: AppColors.motivacionPrincipal,
+          colorPersonalizado: AppColors.acento,
         ),
 
         TarjetaEjercicio(
@@ -322,12 +322,12 @@ class PaginaDemostracionDiseno extends StatelessWidget {
           children: [
             _buildEjemploColor('Primario', AppColors.primario),
             _buildEjemploColor('Secundario', AppColors.secundario),
-            _buildEjemploColor('Motivación', AppColors.motivacionPrincipal),
-            _buildEjemploColor('Éxito', AppColors.exitoCompletado),
-            _buildEjemploColor('Energía', AppColors.energiaActiva),
-            _buildEjemploColor('Descanso', AppColors.descansoActivo),
-            _buildEjemploColor('Advertencia', AppColors.advertenciaSutil),
-            _buildEjemploColor('Error', AppColors.errorAmigable),
+            _buildEjemploColor('Motivación', AppColors.acento),
+            _buildEjemploColor('Éxito', AppColors.exito),
+            _buildEjemploColor('Energía', AppColors.acentoCalido),
+            _buildEjemploColor('Descanso', AppColors.secundarioClaro),
+            _buildEjemploColor('Advertencia', AppColors.advertencia),
+            _buildEjemploColor('Error', AppColors.error),
           ],
         ),
       ],

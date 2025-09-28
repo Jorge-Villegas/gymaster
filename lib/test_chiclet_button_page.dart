@@ -57,7 +57,7 @@ class ChicletButtonTestPage extends StatelessWidget {
                           'Texto secundario más pequeño',
                           style: TextStyle(
                             fontSize: 14,
-                            color: AppColors.textoSecundarioClaro,
+                            color: AppColors.textoTerciario,
                           ),
                         ),
                       ],

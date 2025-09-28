@@ -51,7 +51,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                 Text(
                   '¿Pausar entrenamiento?',
                   style: EstilosTextoEmocional.energetico.copyWith(
-                    color: AppColors.primary,
+                    color: AppColors.primario,
                     fontSize: TipografiaGyMaster.titulo.fontSize,
                     fontWeight: TipografiaGyMaster.pesoSemiBold,
                   ),
@@ -62,7 +62,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                 Text(
                   '¡No te rindas ahora! Tu progreso se guardará.',
                   style: EstilosTextoEmocional.amigable.copyWith(
-                    color: AppColors.textSecondary,
+                    color: AppColors.textoTerciario,
                     fontSize: TipografiaGyMaster.textoPrincipal.fontSize,
                   ),
                   textAlign: TextAlign.center,
@@ -78,8 +78,8 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                         icono: Icons.fitness_center_rounded,
                         tamano: TamanoBotonChiclet.mediano,
                         estilo: EstiloBotonChiclet.contorno,
-                        colorBorde: AppColors.exitoCompletado,
-                        colorTexto: AppColors.exitoCompletado,
+                        colorBorde: AppColors.exito,
+                        colorTexto: AppColors.exito,
                       ),
                     ),
                     const SizedBox(width: 12),
@@ -95,7 +95,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                         icono: Icons.pause_rounded,
                         tamano: TamanoBotonChiclet.mediano,
                         estilo: EstiloBotonChiclet.relleno,
-                        colorFondo: AppColors.motivacionPrincipal,
+                        colorFondo: AppColors.acento,
                       ),
                     ),
                   ],
@@ -139,12 +139,12 @@ class EjerciciosLlenosWidget extends StatelessWidget {
         ejerciciosDeRutina.estado == EstadoSesionRutina.cancelado.name) {
       getButtonText = '¡Iniciar entrenamiento!';
       getIconPath = IconsaxPlusLinear.play;
-      getButtonColor = AppColors.exitoCompletado;
+      getButtonColor = AppColors.exito;
     }
     if (ejerciciosDeRutina.estado == EstadoSesionRutina.en_progreso.name) {
       getButtonText = 'Pausar entrenamiento';
       getIconPath = IconsaxPlusLinear.stop;
-      getButtonColor = AppColors.motivacionPrincipal;
+      getButtonColor = AppColors.acento;
     }
 
     return Column(
@@ -192,10 +192,10 @@ class EjerciciosLlenosWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             margin: const EdgeInsets.symmetric(horizontal: 16),
             decoration: BoxDecoration(
-              color: AppColors.exitoCompletado.withValues(alpha: 0.1),
+              color: AppColors.exito.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
-                color: AppColors.exitoCompletado.withValues(alpha: 0.2),
+                color: AppColors.exito.withValues(alpha: 0.2),
               ),
             ),
             child: Row(
@@ -205,14 +205,14 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.fitness_center_rounded,
-                      color: AppColors.exitoCompletado,
+                      color: AppColors.exito,
                       size: 20,
                     ),
                     const SizedBox(width: 8),
                     Text(
                       'Ejercicios listos',
                       style: EstilosTextoEmocional.amigable.copyWith(
-                        color: AppColors.exitoCompletado,
+                        color: AppColors.exito,
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                       ),
@@ -223,7 +223,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
-                    color: AppColors.exitoCompletado,
+                    color: AppColors.exito,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
@@ -296,7 +296,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                     },
                     background: Container(
                       decoration: BoxDecoration(
-                        color: AppColors.motivacionPrincipal,
+                        color: AppColors.acento,
                         borderRadius: BorderRadius.circular(16),
                       ),
                       alignment: Alignment.centerRight,

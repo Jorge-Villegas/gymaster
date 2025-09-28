@@ -162,8 +162,8 @@ class _Phase3EmotionalIntegrationWidgetState
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            AppColors.logroDesbloqueado.withOpacity(0.1),
-            AppColors.descansoActivo.withOpacity(0.1),
+            AppColors.acento.withOpacity(0.1),
+            AppColors.secundarioClaro.withOpacity(0.1),
           ],
         ),
       ),
@@ -175,12 +175,12 @@ class _Phase3EmotionalIntegrationWidgetState
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: AppColors.logroDesbloqueado.withOpacity(0.2),
+                  color: AppColors.acento.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
                   Icons.psychology,
-                  color: AppColors.logroDesbloqueado,
+                  color: AppColors.acento,
                   size: 28,
                 ),
               ),
@@ -230,14 +230,14 @@ class _Phase3EmotionalIntegrationWidgetState
   Widget _buildQuickStatsRow() {
     return Row(
       children: [
-        _buildQuickStat('${widget.userCompletedRoutines}', 'Rutinas',
-            AppColors.logroDesbloqueado),
+        _buildQuickStat(
+            '${widget.userCompletedRoutines}', 'Rutinas', AppColors.acento),
         const SizedBox(width: 20),
         _buildQuickStat(
-            '${widget.userCurrentStreak}', 'Racha', AppColors.exitoCompletado),
+            '${widget.userCurrentStreak}', 'Racha', AppColors.exito),
         const SizedBox(width: 20),
-        _buildQuickStat('${widget.userWeeklyRoutines}', 'Semana',
-            AppColors.motivacionPrincipal),
+        _buildQuickStat(
+            '${widget.userWeeklyRoutines}', 'Semana', AppColors.acento),
       ],
     );
   }
@@ -285,7 +285,7 @@ class _Phase3EmotionalIntegrationWidgetState
       child: TabBar(
         controller: _tabController,
         indicator: BoxDecoration(
-          color: AppColors.logroDesbloqueado,
+          color: AppColors.acento,
           borderRadius: BorderRadius.circular(25),
         ),
         labelColor: Colors.white,
@@ -361,8 +361,8 @@ class _Phase3EmotionalIntegrationWidgetState
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            AppColors.motivacionPrincipal.withOpacity(0.1),
-            AppColors.motivacionPrincipal.withOpacity(0.1),
+            AppColors.acento.withOpacity(0.1),
+            AppColors.acento.withOpacity(0.1),
           ],
         ),
         borderRadius: BorderRadius.circular(16),
@@ -372,7 +372,7 @@ class _Phase3EmotionalIntegrationWidgetState
         children: [
           Row(
             children: [
-              Icon(Icons.timeline, color: AppColors.motivacionPrincipal),
+              Icon(Icons.timeline, color: AppColors.acento),
               const SizedBox(width: 8),
               Text(
                 'Tu Journey Emocional',
@@ -388,7 +388,7 @@ class _Phase3EmotionalIntegrationWidgetState
             _getEmotionalJourneyInsight(),
             style: EstilosTextoEmocional.logro.copyWith(
               fontSize: 16,
-              color: AppColors.motivacionPrincipal,
+              color: AppColors.acento,
             ),
           ),
         ],
@@ -414,16 +414,16 @@ class _Phase3EmotionalIntegrationWidgetState
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppColors.descansoActivo.withOpacity(0.1),
+        color: AppColors.secundarioClaro.withOpacity(0.1),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.descansoActivo.withOpacity(0.3)),
+        border: Border.all(color: AppColors.secundarioClaro.withOpacity(0.3)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(Icons.psychology, color: AppColors.descansoActivo),
+              Icon(Icons.psychology, color: AppColors.secundarioClaro),
               const SizedBox(width: 8),
               Text(
                 'Insights Comportamentales',
@@ -454,7 +454,7 @@ class _Phase3EmotionalIntegrationWidgetState
             height: 6,
             margin: const EdgeInsets.only(top: 8),
             decoration: BoxDecoration(
-              color: AppColors.descansoActivo,
+              color: AppColors.secundarioClaro,
               shape: BoxShape.circle,
             ),
           ),
@@ -507,16 +507,16 @@ class _Phase3EmotionalIntegrationWidgetState
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppColors.exitoCompletado.withOpacity(0.1),
+        color: AppColors.exito.withOpacity(0.1),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.exitoCompletado.withOpacity(0.3)),
+        border: Border.all(color: AppColors.exito.withOpacity(0.3)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(Icons.lightbulb, color: AppColors.exitoCompletado),
+              Icon(Icons.lightbulb, color: AppColors.exito),
               const SizedBox(width: 8),
               Text(
                 'Recomendaciones Personalizadas',
@@ -545,7 +545,7 @@ class _Phase3EmotionalIntegrationWidgetState
         decoration: BoxDecoration(
           color: Colors.white.withOpacity(0.7),
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: AppColors.exitoCompletado.withOpacity(0.2)),
+          border: Border.all(color: AppColors.exito.withOpacity(0.2)),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -554,7 +554,7 @@ class _Phase3EmotionalIntegrationWidgetState
               title,
               style: EstilosTextoEmocional.logro.copyWith(
                 fontSize: 16,
-                color: AppColors.exitoCompletado,
+                color: AppColors.exito,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -602,7 +602,7 @@ class _Phase3EmotionalIntegrationWidgetState
       scale: _fabScaleAnimation,
       child: FloatingActionButton.extended(
         onPressed: _showEpicCelebrationDialog,
-        backgroundColor: AppColors.logroDesbloqueado,
+        backgroundColor: AppColors.acento,
         icon: const Icon(Icons.celebration, color: Colors.white),
         label: Text(
           'Celebrar',

@@ -73,13 +73,13 @@ class _ProgressVisualizationWidgetState
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    AppColors.logroDesbloqueado.withOpacity(0.1),
-                    AppColors.exitoCompletado.withOpacity(0.1),
+                    AppColors.acento.withOpacity(0.1),
+                    AppColors.exito.withOpacity(0.1),
                   ],
                 ),
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
-                  color: AppColors.logroDesbloqueado.withOpacity(0.3),
+                  color: AppColors.acento.withOpacity(0.3),
                   width: 2,
                 ),
               ),
@@ -108,12 +108,12 @@ class _ProgressVisualizationWidgetState
         Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: AppColors.logroDesbloqueado.withOpacity(0.2),
+            color: AppColors.acento.withOpacity(0.2),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Icon(
             Icons.analytics,
-            color: AppColors.logroDesbloqueado,
+            color: AppColors.acento,
             size: 24,
           ),
         ),
@@ -158,25 +158,25 @@ class _ProgressVisualizationWidgetState
         _buildStatCard(
           'Total Rutinas',
           '${widget.totalRutinasCompletadas}',
-          AppColors.logroDesbloqueado,
+          AppColors.acento,
           Icons.fitness_center,
         ),
         _buildStatCard(
           'Esta Semana',
           '${widget.rutinasEstaSemana}',
-          AppColors.exitoCompletado,
+          AppColors.exito,
           Icons.date_range,
         ),
         _buildStatCard(
           'Este Mes',
           '${widget.rutinasEsteMes}',
-          AppColors.motivacionPrincipal,
+          AppColors.acento,
           Icons.calendar_month,
         ),
         _buildStatCard(
           'Racha Actual',
           '${widget.rachaActual} días',
-          AppColors.motivacionPrincipal,
+          AppColors.acento,
           Icons.local_fire_department,
         ),
       ],
@@ -225,7 +225,7 @@ class _ProgressVisualizationWidgetState
           children: [
             Icon(
               Icons.timeline,
-              color: AppColors.exitoCompletado,
+              color: AppColors.exito,
               size: 20,
             ),
             const SizedBox(width: 8),
@@ -270,13 +270,13 @@ class _ProgressVisualizationWidgetState
             height: 40,
             decoration: BoxDecoration(
               color: achieved
-                  ? AppColors.exitoCompletado.withOpacity(0.2)
-                  : AppColors.descansoActivo.withOpacity(0.1),
+                  ? AppColors.exito.withOpacity(0.2)
+                  : AppColors.secundarioClaro.withOpacity(0.1),
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
                 color: achieved
-                    ? AppColors.exitoCompletado
-                    : AppColors.descansoActivo.withOpacity(0.3),
+                    ? AppColors.exito
+                    : AppColors.secundarioClaro.withOpacity(0.3),
                 width: 2,
               ),
             ),
@@ -297,7 +297,7 @@ class _ProgressVisualizationWidgetState
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: achieved
-                            ? AppColors.exitoCompletado
+                            ? AppColors.exito
                             : Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
                 ),
@@ -313,7 +313,7 @@ class _ProgressVisualizationWidgetState
           if (achieved)
             Icon(
               Icons.check_circle,
-              color: AppColors.exitoCompletado,
+              color: AppColors.exito,
               size: 20,
             ),
         ],
@@ -327,8 +327,8 @@ class _ProgressVisualizationWidgetState
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            AppColors.motivacionPrincipal.withOpacity(0.1),
-            AppColors.motivacionPrincipal.withOpacity(0.1),
+            AppColors.acento.withOpacity(0.1),
+            AppColors.acento.withOpacity(0.1),
           ],
         ),
         borderRadius: BorderRadius.circular(16),
@@ -339,7 +339,7 @@ class _ProgressVisualizationWidgetState
             children: [
               Icon(
                 Icons.favorite,
-                color: AppColors.motivacionPrincipal,
+                color: AppColors.acento,
                 size: 20,
               ),
               const SizedBox(width: 8),
@@ -358,7 +358,7 @@ class _ProgressVisualizationWidgetState
                 widget.totalRutinasCompletadas),
             style: EstilosTextoEmocional.logro.copyWith(
               fontSize: 18,
-              color: AppColors.motivacionPrincipal,
+              color: AppColors.acento,
             ),
             textAlign: TextAlign.center,
           ),

@@ -82,9 +82,9 @@ class _FavoritesPageState extends State<FavoritesPage>
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              AppColors.backgroundLight,
+              AppColors.fondoPrincipalClaro,
               Colors.white,
-              AppColors.backgroundLight.withValues(alpha: 0.8),
+              AppColors.fondoPrincipalClaro.withValues(alpha: 0.8),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -182,7 +182,7 @@ class _FavoritesPageState extends State<FavoritesPage>
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withValues(alpha: 0.08),
+            color: AppColors.primario.withValues(alpha: 0.08),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -208,7 +208,7 @@ class _FavoritesPageState extends State<FavoritesPage>
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
-                        color: AppColors.primary.withValues(alpha: 0.1),
+                        color: AppColors.primario.withValues(alpha: 0.1),
                         width: 1,
                       ),
                     ),
@@ -228,7 +228,7 @@ class _FavoritesPageState extends State<FavoritesPage>
                         capitalizarPrimeraLetra(exercise.name),
                         style: EstilosTextoEmocional.energetico.copyWith(
                           fontSize: 18,
-                          color: AppColors.primary,
+                          color: AppColors.primario,
                           fontWeight: FontWeight.bold,
                         ),
                         maxLines: 2,
@@ -246,11 +246,11 @@ class _FavoritesPageState extends State<FavoritesPage>
                               vertical: 4,
                             ),
                             decoration: BoxDecoration(
-                              color: AppColors.descansoActivo
+                              color: AppColors.secundarioClaro
                                   .withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(
-                                color: AppColors.descansoActivo
+                                color: AppColors.secundarioClaro
                                     .withValues(alpha: 0.3),
                                 width: 0.5,
                               ),
@@ -260,7 +260,7 @@ class _FavoritesPageState extends State<FavoritesPage>
                               style:
                                   EstilosTextoEmocional.recuperacion.copyWith(
                                 fontSize: 12,
-                                color: AppColors.descansoActivo,
+                                color: AppColors.secundarioClaro,
                               ),
                             ),
                           );
@@ -272,7 +272,7 @@ class _FavoritesPageState extends State<FavoritesPage>
                         exercise.description,
                         style: EstilosTextoEmocional.recuperacion.copyWith(
                           fontSize: 14,
-                          color: AppColors.textSecondary,
+                          color: AppColors.textoTerciario,
                         ),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
@@ -298,16 +298,16 @@ class _FavoritesPageState extends State<FavoritesPage>
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: AppColors.motivacionPrincipal.withValues(alpha: 0.1),
+          color: AppColors.acento.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: AppColors.motivacionPrincipal.withValues(alpha: 0.3),
+            color: AppColors.acento.withValues(alpha: 0.3),
             width: 1,
           ),
         ),
         child: Icon(
           IconsaxPlusBold.heart,
-          color: AppColors.motivacionPrincipal,
+          color: AppColors.acento,
           size: 20,
         ),
       ),
@@ -326,7 +326,7 @@ class _FavoritesPageState extends State<FavoritesPage>
           children: [
             Icon(
               IconsaxPlusLinear.heart_slash,
-              color: AppColors.motivacionPrincipal,
+              color: AppColors.acento,
               size: 24,
             ),
             const SizedBox(width: 8),
@@ -335,7 +335,7 @@ class _FavoritesPageState extends State<FavoritesPage>
                 'Remover Favorito',
                 style: EstilosTextoEmocional.energetico.copyWith(
                   fontSize: 18,
-                  color: AppColors.textDark,
+                  color: AppColors.textoPrincipalClaro,
                 ),
               ),
             ),
@@ -345,7 +345,7 @@ class _FavoritesPageState extends State<FavoritesPage>
           '¿Estás seguro de que deseas remover "${exercise.name}" de tus favoritos?',
           style: EstilosTextoEmocional.recuperacion.copyWith(
             fontSize: 16,
-            color: AppColors.textSecondary,
+            color: AppColors.textoTerciario,
           ),
         ),
         actions: [
@@ -354,7 +354,7 @@ class _FavoritesPageState extends State<FavoritesPage>
             child: Text(
               'Cancelar',
               style: EstilosTextoEmocional.aliento.copyWith(
-                color: AppColors.textSecondary,
+                color: AppColors.textoTerciario,
               ),
             ),
           ),
@@ -369,7 +369,7 @@ class _FavoritesPageState extends State<FavoritesPage>
               _loadFavorites();
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.motivacionPrincipal,
+              backgroundColor: AppColors.acento,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
@@ -401,13 +401,13 @@ class _FavoritesPageState extends State<FavoritesPage>
                 Container(
                   padding: const EdgeInsets.all(24),
                   decoration: BoxDecoration(
-                    color: AppColors.primary.withValues(alpha: 0.1),
+                    color: AppColors.primario.withValues(alpha: 0.1),
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
                     IconsaxPlusLinear.heart,
                     size: 64,
-                    color: AppColors.primary.withValues(alpha: 0.7),
+                    color: AppColors.primario.withValues(alpha: 0.7),
                   ),
                 ),
                 const SizedBox(height: 24),
@@ -415,7 +415,7 @@ class _FavoritesPageState extends State<FavoritesPage>
                   '¡Aún no tienes favoritos!',
                   style: EstilosTextoEmocional.motivacional.copyWith(
                     fontSize: 24,
-                    color: AppColors.textDark,
+                    color: AppColors.textoPrincipalClaro,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -424,7 +424,7 @@ class _FavoritesPageState extends State<FavoritesPage>
                   'Explora el catálogo de ejercicios y agrega tus favoritos tocando el ❤️ en cada ejercicio.',
                   style: EstilosTextoEmocional.recuperacion.copyWith(
                     fontSize: 16,
-                    color: AppColors.textSecondary,
+                    color: AppColors.textoTerciario,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -436,7 +436,7 @@ class _FavoritesPageState extends State<FavoritesPage>
                   icon: Icon(IconsaxPlusLinear.search_normal_1),
                   label: Text('Explorar Ejercicios'),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
+                    backgroundColor: AppColors.primario,
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(
                       horizontal: 24,
@@ -477,7 +477,7 @@ class _FavoritesPageState extends State<FavoritesPage>
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withValues(alpha: 0.05),
+            color: AppColors.primario.withValues(alpha: 0.05),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -554,14 +554,14 @@ class _FavoritesPageState extends State<FavoritesPage>
                 Icon(
                   IconsaxPlusLinear.emoji_sad,
                   size: 64,
-                  color: AppColors.motivacionPrincipal.withValues(alpha: 0.7),
+                  color: AppColors.acento.withValues(alpha: 0.7),
                 ),
                 const SizedBox(height: 24),
                 Text(
                   'Oops! Algo salió mal',
                   style: EstilosTextoEmocional.motivacional.copyWith(
                     fontSize: 24,
-                    color: AppColors.textDark,
+                    color: AppColors.textoPrincipalClaro,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -570,7 +570,7 @@ class _FavoritesPageState extends State<FavoritesPage>
                   mensaje,
                   style: EstilosTextoEmocional.recuperacion.copyWith(
                     fontSize: 16,
-                    color: AppColors.textSecondary,
+                    color: AppColors.textoTerciario,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -580,7 +580,7 @@ class _FavoritesPageState extends State<FavoritesPage>
                   icon: Icon(IconsaxPlusLinear.refresh),
                   label: Text('Reintentar'),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
+                    backgroundColor: AppColors.primario,
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(
                       horizontal: 24,
@@ -620,12 +620,12 @@ class _FavoritesPageState extends State<FavoritesPage>
   Widget _buildImagePlaceholder() {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.primary.withValues(alpha: 0.1),
+        color: AppColors.primario.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Icon(
         IconsaxPlusLinear.image,
-        color: AppColors.primary.withValues(alpha: 0.5),
+        color: AppColors.primario.withValues(alpha: 0.5),
         size: 32,
       ),
     );

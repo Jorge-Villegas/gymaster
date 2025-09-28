@@ -35,7 +35,7 @@ class _AppStartPageState extends State<AppStartPage> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.message),
-              backgroundColor: AppColors.errorAmigable,
+              backgroundColor: AppColors.error,
             ),
           );
           context.go('/onboarding');

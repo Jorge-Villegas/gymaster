@@ -44,9 +44,9 @@ class DetalleRutinaScreen extends StatelessWidget {
         }
 
         return Scaffold(
-          backgroundColor: AppColors.backgroundLight,
+          backgroundColor: AppColors.fondoPrincipalClaro,
           body: Container(
-            color: AppColors.backgroundLight,
+            color: AppColors.fondoPrincipalClaro,
             child: SafeArea(
               child: Column(
                 children: [
@@ -133,7 +133,7 @@ class DetalleRutinaScreen extends StatelessWidget {
               padding: const EdgeInsets.all(20),
               margin: const EdgeInsets.only(bottom: 20),
               decoration: BoxDecoration(
-                color: AppColors.descansoActivo.withValues(alpha: 0.08),
+                color: AppColors.secundarioClaro.withValues(alpha: 0.08),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Row(
@@ -141,14 +141,14 @@ class DetalleRutinaScreen extends StatelessWidget {
                 children: [
                   Icon(
                     Icons.fitness_center,
-                    color: AppColors.descansoActivo,
+                    color: AppColors.secundarioClaro,
                     size: 24,
                   ),
                   const SizedBox(width: 12),
                   Text(
                     'Preparando tu rutina perfecta...',
                     style: EstilosTextoEmocional.amigable.copyWith(
-                      color: AppColors.descansoActivo,
+                      color: AppColors.secundarioClaro,
                       fontSize: 16,
                     ),
                   ),
@@ -158,8 +158,8 @@ class DetalleRutinaScreen extends StatelessWidget {
             // Shimmer loading mejorado
             Expanded(
               child: Shimmer.fromColors(
-                baseColor: AppColors.descansoActivo.withOpacity(0.1),
-                highlightColor: AppColors.relajacionProfunda.withOpacity(0.3),
+                baseColor: AppColors.secundarioClaro.withOpacity(0.1),
+                highlightColor: AppColors.primarioClaro.withOpacity(0.3),
                 period: const Duration(milliseconds: 1200),
                 child: ListView.builder(
                   itemCount: 3,
@@ -171,7 +171,7 @@ class DetalleRutinaScreen extends StatelessWidget {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
-                          color: AppColors.descansoActivo.withOpacity(0.2),
+                          color: AppColors.secundarioClaro.withOpacity(0.2),
                           width: 1,
                         ),
                       ),
@@ -195,14 +195,14 @@ class DetalleRutinaScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: AppColors.motivacionPrincipal.withValues(alpha: 0.08),
+                color: AppColors.acento.withValues(alpha: 0.08),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Column(
                 children: [
                   Icon(
                     Icons.error_outline_rounded,
-                    color: AppColors.motivacionPrincipal,
+                    color: AppColors.acento,
                     size: 48,
                   ),
                   const SizedBox(height: 16),
@@ -210,7 +210,7 @@ class DetalleRutinaScreen extends StatelessWidget {
                     'Ops, algo salió mal',
                     style: EstilosTextoEmocional.motivacional.copyWith(
                       fontSize: 20,
-                      color: AppColors.motivacionPrincipal,
+                      color: AppColors.acento,
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -218,7 +218,7 @@ class DetalleRutinaScreen extends StatelessWidget {
                     state.message,
                     textAlign: TextAlign.center,
                     style: EstilosTextoEmocional.amigable.copyWith(
-                      color: AppColors.textDark,
+                      color: AppColors.textoPrincipalClaro,
                       fontSize: 14,
                     ),
                   ),
@@ -231,7 +231,7 @@ class DetalleRutinaScreen extends StatelessWidget {
               icono: Icons.refresh_rounded,
               tamano: TamanoBotonChiclet.grande,
               estilo: EstiloBotonChiclet.relleno,
-              colorFondo: AppColors.primary,
+              colorFondo: AppColors.primario,
               radioBorde: 16,
               conSombreado: true,
               grosorSombreado: 4.0,
@@ -260,13 +260,13 @@ class DetalleRutinaScreen extends StatelessWidget {
           Icon(
             Icons.fitness_center_outlined,
             size: 64,
-            color: AppColors.descansoActivo.withOpacity(0.6),
+            color: AppColors.secundarioClaro.withOpacity(0.6),
           ),
           const SizedBox(height: 16),
           Text(
             'Cargando tu rutina...',
             style: EstilosTextoEmocional.amigable.copyWith(
-              color: AppColors.descansoActivo,
+              color: AppColors.secundarioClaro,
               fontSize: 18,
             ),
           ),

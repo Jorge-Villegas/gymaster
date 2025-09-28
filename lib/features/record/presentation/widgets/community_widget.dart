@@ -73,13 +73,13 @@ class _CommunityWidgetState extends State<CommunityWidget>
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              AppColors.descansoActivo.withOpacity(0.1),
-              AppColors.exitoCompletado.withOpacity(0.1),
+              AppColors.secundarioClaro.withOpacity(0.1),
+              AppColors.exito.withOpacity(0.1),
             ],
           ),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: AppColors.descansoActivo.withOpacity(0.3),
+            color: AppColors.secundarioClaro.withOpacity(0.3),
             width: 2,
           ),
         ),
@@ -110,12 +110,12 @@ class _CommunityWidgetState extends State<CommunityWidget>
               child: Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: AppColors.descansoActivo.withOpacity(0.2),
+                  color: AppColors.secundarioClaro.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
                   Icons.groups,
-                  color: AppColors.descansoActivo,
+                  color: AppColors.secundarioClaro,
                   size: 24,
                 ),
               ),
@@ -157,10 +157,10 @@ class _CommunityWidgetState extends State<CommunityWidget>
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.logroDesbloqueado.withOpacity(0.1),
+        color: AppColors.acento.withOpacity(0.1),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: AppColors.logroDesbloqueado.withOpacity(0.3),
+          color: AppColors.acento.withOpacity(0.3),
         ),
       ),
       child: Column(
@@ -178,7 +178,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
                 padding:
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
-                  color: AppColors.logroDesbloqueado,
+                  color: AppColors.acento,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
@@ -223,7 +223,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
       String title, String userValue, String avgValue, IconData icon) {
     return Column(
       children: [
-        Icon(icon, color: AppColors.exitoCompletado, size: 20),
+        Icon(icon, color: AppColors.exito, size: 20),
         const SizedBox(height: 8),
         Text(
           title,
@@ -237,7 +237,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
           userValue,
           style: EstilosTextoEmocional.celebracion.copyWith(
             fontSize: 18,
-            color: AppColors.exitoCompletado,
+            color: AppColors.exito,
           ),
         ),
         Text(
@@ -259,7 +259,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
           children: [
             Icon(
               Icons.trending_up,
-              color: AppColors.motivacionPrincipal,
+              color: AppColors.acento,
               size: 20,
             ),
             const SizedBox(width: 8),
@@ -285,10 +285,10 @@ class _CommunityWidgetState extends State<CommunityWidget>
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.motivacionPrincipal.withOpacity(0.1),
+        color: AppColors.acento.withOpacity(0.1),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: AppColors.motivacionPrincipal.withOpacity(0.3),
+          color: AppColors.acento.withOpacity(0.3),
         ),
       ),
       child: Row(
@@ -303,7 +303,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
               message.text,
               style: EstilosTextoEmocional.logro.copyWith(
                 fontSize: 16,
-                color: AppColors.motivacionPrincipal,
+                color: AppColors.acento,
               ),
             ),
           ),
@@ -339,9 +339,8 @@ class _CommunityWidgetState extends State<CommunityWidget>
           borderRadius: BorderRadius.circular(10),
           child: LinearProgressIndicator(
             value: progress > 1 ? 1 : progress,
-            backgroundColor: AppColors.descansoActivo.withOpacity(0.2),
-            valueColor:
-                AlwaysStoppedAnimation<Color>(AppColors.exitoCompletado),
+            backgroundColor: AppColors.secundarioClaro.withOpacity(0.2),
+            valueColor: AlwaysStoppedAnimation<Color>(AppColors.exito),
             minHeight: 8,
           ),
         ),
@@ -355,8 +354,8 @@ class _CommunityWidgetState extends State<CommunityWidget>
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            AppColors.motivacionPrincipal.withOpacity(0.1),
-            AppColors.logroDesbloqueado.withOpacity(0.1),
+            AppColors.acento.withOpacity(0.1),
+            AppColors.acento.withOpacity(0.1),
           ],
         ),
         borderRadius: BorderRadius.circular(12),
@@ -367,7 +366,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
             children: [
               Icon(
                 Icons.favorite,
-                color: AppColors.motivacionPrincipal,
+                color: AppColors.acento,
                 size: 20,
               ),
               const SizedBox(width: 8),
@@ -384,7 +383,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
             _getCommunityMessage(),
             style: EstilosTextoEmocional.celebracion.copyWith(
               fontSize: 16,
-              color: AppColors.motivacionPrincipal,
+              color: AppColors.acento,
             ),
             textAlign: TextAlign.center,
           ),
@@ -415,7 +414,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
           count,
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
                 fontWeight: FontWeight.bold,
-                color: AppColors.motivacionPrincipal,
+                color: AppColors.acento,
               ),
         ),
       ],

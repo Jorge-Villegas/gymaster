@@ -167,7 +167,7 @@ class _CabeceraReutilizableState extends State<CabeceraReutilizable>
         boxShadow: config.conSombra
             ? [
                 BoxShadow(
-                  color: (config.colorSombra ?? AppColors.primary)
+                  color: (config.colorSombra ?? AppColors.primario)
                       .withValues(alpha: 0.1),
                   offset: const Offset(0, 2),
                   blurRadius: 8,
@@ -199,7 +199,7 @@ class _CabeceraReutilizableState extends State<CabeceraReutilizable>
           style: TextStyle(
             fontWeight: TipografiaGyMaster.pesoSemiBold,
             fontSize: TipografiaGyMaster.tamanoXl,
-            color: AppColors.impulsoEntrenamiento,
+            color: AppColors.primarioCalido,
             height: 1.1,
           ),
           maxLines: 2,
@@ -240,13 +240,13 @@ class _CabeceraReutilizableState extends State<CabeceraReutilizable>
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: AppColors.primary.withValues(alpha: 0.1),
+              color: AppColors.primario.withValues(alpha: 0.1),
               offset: const Offset(0, 2),
               blurRadius: 8,
             ),
           ],
           border: Border.all(
-            color: AppColors.primary.withValues(alpha: 0.2),
+            color: AppColors.primario.withValues(alpha: 0.2),
             width: 2,
           ),
         ),
@@ -254,14 +254,14 @@ class _CabeceraReutilizableState extends State<CabeceraReutilizable>
           controller: _searchController,
           autofocus: true,
           style: TextStyle(
-            color: AppColors.primary,
+            color: AppColors.primario,
             fontSize: TipografiaGyMaster.tamanoMd,
             fontWeight: TipografiaGyMaster.pesoLigero,
           ),
           decoration: InputDecoration(
             hintText: widget.busqueda!.placeholderText,
             hintStyle: TextStyle(
-              color: AppColors.textSecondary,
+              color: AppColors.textoTerciario,
               fontSize: TipografiaGyMaster.tamanoMd,
               fontWeight: TipografiaGyMaster.pesoLigero,
             ),
@@ -273,12 +273,12 @@ class _CabeceraReutilizableState extends State<CabeceraReutilizable>
             prefixIcon: Container(
               margin: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: AppColors.primary.withValues(alpha: 0.1),
+                color: AppColors.primario.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(
                 IconsaxPlusLinear.search_normal,
-                color: AppColors.primary,
+                color: AppColors.primario,
                 size: 20,
               ),
             ),
@@ -286,12 +286,12 @@ class _CabeceraReutilizableState extends State<CabeceraReutilizable>
                 ? IconButton(
                     icon: Container(
                       decoration: BoxDecoration(
-                        color: AppColors.textSecondary.withValues(alpha: 0.1),
+                        color: AppColors.textoTerciario.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Icon(
                         Icons.close_rounded,
-                        color: AppColors.textSecondary,
+                        color: AppColors.textoTerciario,
                         size: 16,
                       ),
                     ),
@@ -554,7 +554,7 @@ class BotonAccionDerecha extends StatelessWidget {
         boxShadow: conSombra
             ? [
                 BoxShadow(
-                  color: AppColors.primary.withValues(alpha: 0.1),
+                  color: AppColors.primario.withValues(alpha: 0.1),
                   offset: const Offset(0, 2),
                   blurRadius: 8,
                 ),

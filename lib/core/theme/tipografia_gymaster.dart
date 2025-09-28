@@ -58,7 +58,7 @@ class TipografiaGyMaster {
   static TextStyle get textoSecundario => TextStyle(
         fontSize: tamanoXs,
         fontWeight: pesoLigero,
-        color: AppColors.textoSecundarioClaro,
+        color: AppColors.textoTerciario,
         height: 1.3,
       );
 
@@ -86,7 +86,7 @@ class TipografiaGyMaster {
   static TextStyle get nombreRutina => TextStyle(
         fontSize: tamanoMd,
         fontWeight: pesoSemiBold,
-        color: AppColors.motivacionPrincipal,
+        color: AppColors.acento,
         height: 1.2,
       );
 
@@ -102,7 +102,7 @@ class TipografiaGyMaster {
   static TextStyle get infoSeriesReps => TextStyle(
         fontSize: tamanoXs,
         fontWeight: pesoLigero,
-        color: AppColors.textoSecundarioClaro,
+        color: AppColors.textoTerciario,
         height: 1.2,
       );
 
@@ -110,7 +110,7 @@ class TipografiaGyMaster {
   static TextStyle get contadorPesoTiempo => TextStyle(
         fontSize: tamanoLg,
         fontWeight: pesoSemiBold,
-        color: AppColors.energiaActiva,
+        color: AppColors.acentoCalido,
         height: 1.0,
       );
 
@@ -126,7 +126,7 @@ class TipografiaGyMaster {
   static TextStyle get estadoEjercicio => TextStyle(
         fontSize: tamanoXs,
         fontWeight: pesoLigero,
-        color: AppColors.exitoCompletado,
+        color: AppColors.exito,
         height: 1.2,
       );
 
@@ -158,7 +158,7 @@ class TipografiaGyMaster {
   static TextStyle get mensajeExito => TextStyle(
         fontSize: tamanoSm,
         fontWeight: pesoSemiBold,
-        color: AppColors.exitoCompletado,
+        color: AppColors.exito,
         height: 1.3,
       );
 
@@ -166,7 +166,7 @@ class TipografiaGyMaster {
   static TextStyle get mensajeError => TextStyle(
         fontSize: tamanoSm,
         fontWeight: pesoSemiBold,
-        color: AppColors.errorAmigable,
+        color: AppColors.error,
         height: 1.3,
       );
 
@@ -174,7 +174,7 @@ class TipografiaGyMaster {
   static TextStyle get mensajeAdvertencia => TextStyle(
         fontSize: tamanoSm,
         fontWeight: pesoLigero,
-        color: AppColors.advertenciaSutil,
+        color: AppColors.advertencia,
         height: 1.3,
       );
 
@@ -182,7 +182,7 @@ class TipografiaGyMaster {
   static TextStyle get mensajeMotivacional => TextStyle(
         fontSize: tamanoMd,
         fontWeight: pesoSemiBold,
-        color: AppColors.motivacionPrincipal,
+        color: AppColors.acento,
         height: 1.2,
       );
 

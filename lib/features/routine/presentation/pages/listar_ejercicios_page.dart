@@ -96,8 +96,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.textoSecundarioClaro
-                            .withValues(alpha: 0.1),
+                        color: AppColors.textoTerciario.withValues(alpha: 0.1),
                         offset: const Offset(0, 2),
                         blurRadius: 8,
                       ),
@@ -107,7 +106,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                     onPressed: () => context.pop(),
                     icon: Icon(
                       Icons.arrow_back_ios_rounded,
-                      color: AppColors.motivacionPrincipal,
+                      color: AppColors.acento,
                       size: 20,
                     ),
                     padding: const EdgeInsets.all(12),
@@ -153,7 +152,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
           style: TextStyle(
             fontWeight: TipografiaGyMaster.pesoLigero,
             fontSize: TipografiaGyMaster.tamanoSm,
-            color: AppColors.motivacionPrincipal,
+            color: AppColors.acento,
           ),
         ),
       ],
@@ -176,13 +175,13 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: AppColors.primary.withValues(alpha: 0.1),
+              color: AppColors.primario.withValues(alpha: 0.1),
               offset: const Offset(0, 2),
               blurRadius: 8,
             ),
           ],
           border: Border.all(
-            color: AppColors.primary.withValues(alpha: 0.2),
+            color: AppColors.primario.withValues(alpha: 0.2),
             width: 2,
           ),
         ),
@@ -190,13 +189,13 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
           controller: _searchController,
           autofocus: true,
           style: EstilosTextoEmocional.amigable.copyWith(
-            color: AppColors.primary,
+            color: AppColors.primario,
             fontSize: 16,
           ),
           decoration: InputDecoration(
             hintText: 'Buscar ejercicios...',
             hintStyle: EstilosTextoEmocional.amigable.copyWith(
-              color: AppColors.textSecondary,
+              color: AppColors.textoTerciario,
               fontSize: 16,
             ),
             border: InputBorder.none,
@@ -207,12 +206,12 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
             prefixIcon: Container(
               margin: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: AppColors.primary.withValues(alpha: 0.1),
+                color: AppColors.primario.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(
                 Icons.search_rounded,
-                color: AppColors.primary,
+                color: AppColors.primario,
                 size: 20,
               ),
             ),
@@ -221,12 +220,12 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                     icon: Container(
                       padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(
-                        color: AppColors.textSecondary.withValues(alpha: 0.1),
+                        color: AppColors.textoTerciario.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Icon(
                         Icons.clear_rounded,
-                        color: AppColors.textSecondary,
+                        color: AppColors.textoTerciario,
                         size: 16,
                       ),
                     ),
@@ -251,12 +250,12 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
         height: 48,
         decoration: BoxDecoration(
           color: _isSearchExpanded
-              ? AppColors.motivacionPrincipal
+              ? AppColors.acento
               : AppColors.fondoPrincipalClaro,
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: AppColors.motivacionPrincipal.withValues(alpha: 0.2),
+              color: AppColors.acento.withValues(alpha: 0.2),
               offset: const Offset(0, 2),
               blurRadius: 8,
             ),
@@ -267,9 +266,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
           child: Icon(
             _isSearchExpanded ? Icons.close_rounded : Icons.search_rounded,
             key: ValueKey(_isSearchExpanded),
-            color: _isSearchExpanded
-                ? Colors.white
-                : AppColors.motivacionPrincipal,
+            color: _isSearchExpanded ? Colors.white : AppColors.acento,
             size: 20,
           ),
         ),
@@ -333,14 +330,14 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
         );
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
+      backgroundColor: AppColors.fondoPrincipalClaro,
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              AppColors.backgroundLight,
               AppColors.fondoPrincipalClaro,
-              AppColors.backgroundLight.withValues(alpha: 0.8),
+              AppColors.fondoPrincipalClaro,
+              AppColors.fondoPrincipalClaro.withValues(alpha: 0.8),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -390,20 +387,20 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: AppColors.motivacionPrincipal.withValues(alpha: 0.1),
+                color: AppColors.acento.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Icon(
                 Icons.fitness_center_rounded,
                 size: 80,
-                color: AppColors.motivacionPrincipal,
+                color: AppColors.acento,
               ),
             ),
             const SizedBox(height: 24),
             Text(
               '¡No te preocupes!',
               style: EstilosTextoEmocional.aliento.copyWith(
-                color: AppColors.primary,
+                color: AppColors.primario,
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
@@ -415,7 +412,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                 mensaje,
                 textAlign: TextAlign.center,
                 style: EstilosTextoEmocional.amigable.copyWith(
-                  color: AppColors.textSecondary,
+                  color: AppColors.textoTerciario,
                   fontSize: 16,
                 ),
               ),
@@ -426,7 +423,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
               icono: Icons.refresh_rounded,
               tamano: TamanoBotonChiclet.grande,
               estilo: EstiloBotonChiclet.relleno,
-              colorFondo: AppColors.motivacionPrincipal,
+              colorFondo: AppColors.acento,
               onPressed: () => context.read<EjercicioCubit>().setEjercicio(
                     musculoId: widget.idMusculo,
                     rutinaId: widget.idRutina,
@@ -441,7 +438,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
   /// Construye el efecto de carga shimmer con diseño emocional
   Widget _buildShimmerLoadingEffect() {
     return Shimmer.fromColors(
-      baseColor: AppColors.backgroundLight,
+      baseColor: AppColors.fondoPrincipalClaro,
       highlightColor: AppColors.fondoPrincipalClaro,
       child: ListView.builder(
         itemCount: 8,
@@ -454,7 +451,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
               borderRadius: BorderRadius.circular(16),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.primary.withValues(alpha: 0.05),
+                  color: AppColors.primario.withValues(alpha: 0.05),
                   blurRadius: 8,
                   offset: const Offset(0, 2),
                 ),
@@ -530,13 +527,13 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                 width: 80,
                 height: 80,
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withValues(alpha: 0.1),
+                  color: AppColors.primario.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Icon(
                   IconsaxPlusLinear.weight,
                   size: 40,
-                  color: AppColors.primary,
+                  color: AppColors.primario,
                 ),
               ),
               const SizedBox(height: 16),
@@ -545,7 +542,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                 style: EstilosTextoEmocional.energetico.copyWith(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.primary,
+                  color: AppColors.primario,
                 ),
               ),
               const SizedBox(height: 8),
@@ -554,7 +551,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                 textAlign: TextAlign.center,
                 style: EstilosTextoEmocional.amigable.copyWith(
                   fontSize: 16,
-                  color: AppColors.textSecondary,
+                  color: AppColors.textoTerciario,
                 ),
               ),
             ],
@@ -582,7 +579,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.primary.withValues(alpha: 0.08),
+                    color: AppColors.primario.withValues(alpha: 0.08),
                     blurRadius: 12,
                     offset: const Offset(0, 4),
                   ),
@@ -607,7 +604,8 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                             borderRadius: BorderRadius.circular(16),
                             boxShadow: [
                               BoxShadow(
-                                color: AppColors.primary.withValues(alpha: 0.1),
+                                color:
+                                    AppColors.primario.withValues(alpha: 0.1),
                                 blurRadius: 8,
                                 offset: const Offset(0, 2),
                               ),
@@ -624,7 +622,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                                           ejercicio.imagenDireccion!,
                                           fit: BoxFit.contain,
                                           colorFilter: ColorFilter.mode(
-                                            AppColors.primary,
+                                            AppColors.primario,
                                             BlendMode.srcIn,
                                           ),
                                         ),
@@ -640,14 +638,14 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                                             width: 64,
                                             height: 64,
                                             decoration: BoxDecoration(
-                                              color: AppColors.primary
+                                              color: AppColors.primario
                                                   .withValues(alpha: 0.1),
                                               borderRadius:
                                                   BorderRadius.circular(15),
                                             ),
                                             child: Icon(
                                               IconsaxPlusLinear.weight,
-                                              color: AppColors.primary,
+                                              color: AppColors.primario,
                                               size: 24,
                                             ),
                                           );
@@ -657,13 +655,13 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                                     width: 64,
                                     height: 64,
                                     decoration: BoxDecoration(
-                                      color: AppColors.primary
+                                      color: AppColors.primario
                                           .withValues(alpha: 0.1),
                                       borderRadius: BorderRadius.circular(15),
                                     ),
                                     child: Icon(
                                       IconsaxPlusLinear.weight,
-                                      color: AppColors.primary,
+                                      color: AppColors.primario,
                                       size: 24,
                                     ),
                                   ),
@@ -680,7 +678,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                                 style: TextStyle(
                                   fontSize: TipografiaGyMaster.tamanoMd,
                                   fontWeight: TipografiaGyMaster.pesoSemiBold,
-                                  color: AppColors.primary,
+                                  color: AppColors.primario,
                                   height: 1.1,
                                 ),
                               ),
@@ -688,7 +686,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                               Text(
                                 TextFormatter.capitalize(widget.nombreMusculo),
                                 style: EstilosTextoEmocional.amigable.copyWith(
-                                  color: AppColors.textSecondary,
+                                  color: AppColors.textoTerciario,
                                   fontSize: 14,
                                 ),
                               ),
@@ -699,14 +697,13 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                         Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: AppColors.logroDesbloqueado
-                                .withValues(alpha: 0.15),
+                            color: AppColors.acento.withValues(alpha: 0.15),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Icon(
                             Icons.fitness_center_rounded,
                             size: 18,
-                            color: AppColors.logroDesbloqueado,
+                            color: AppColors.acento,
                           ),
                         ),
                       ],

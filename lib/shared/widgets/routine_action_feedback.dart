@@ -218,13 +218,13 @@ class _RoutineActionFeedbackState extends State<RoutineActionFeedback>
   Color _getBackgroundColor() {
     switch (widget.type) {
       case RoutineActionType.delete:
-        return AppColors.errorAmigable;
+        return AppColors.error;
       case RoutineActionType.restore:
-        return AppColors.exitoCompletado;
+        return AppColors.exito;
       case RoutineActionType.success:
-        return AppColors.exitoCompletado;
+        return AppColors.exito;
       case RoutineActionType.error:
-        return AppColors.errorAmigable;
+        return AppColors.error;
     }
   }
 

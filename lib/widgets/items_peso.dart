@@ -52,7 +52,7 @@ class _ItemsPesosWidgetState extends State<ItemsPesosWidget> {
               padding: Espaciado.rellenoXs,
               child: TextButton(
                 style: TextButton.styleFrom(
-                  foregroundColor: AppColors.textoSecundarioClaro,
+                  foregroundColor: AppColors.textoTerciario,
                   backgroundColor: AppColors.fondoSecundarioClaro,
                 ),
                 onPressed: () {
@@ -65,7 +65,7 @@ class _ItemsPesosWidgetState extends State<ItemsPesosWidget> {
               padding: const EdgeInsets.all(2.5),
               child: TextButton(
                 style: TextButton.styleFrom(
-                  foregroundColor: AppColors.textoSecundarioClaro,
+                  foregroundColor: AppColors.textoTerciario,
                   backgroundColor: AppColors.fondoSecundarioClaro,
                 ),
                 child: const Icon(Icons.remove),
@@ -95,7 +95,7 @@ class _ItemsPesosWidgetState extends State<ItemsPesosWidget> {
               padding: Espaciado.rellenoXs,
               child: TextButton(
                 style: TextButton.styleFrom(
-                  foregroundColor: AppColors.textoSecundarioClaro,
+                  foregroundColor: AppColors.textoTerciario,
                   backgroundColor: AppColors.fondoSecundarioClaro,
                 ),
                 onPressed: () {
@@ -108,7 +108,7 @@ class _ItemsPesosWidgetState extends State<ItemsPesosWidget> {
               padding: const EdgeInsets.all(2.5),
               child: TextButton(
                 style: TextButton.styleFrom(
-                  foregroundColor: AppColors.textoSecundarioClaro,
+                  foregroundColor: AppColors.textoTerciario,
                   backgroundColor: AppColors.fondoSecundarioClaro,
                 ),
                 child: const Icon(Icons.remove),
@@ -138,7 +138,7 @@ class _ItemsPesosWidgetState extends State<ItemsPesosWidget> {
               padding: Espaciado.rellenoXs,
               child: TextButton(
                 style: TextButton.styleFrom(
-                  foregroundColor: AppColors.textoSecundarioClaro,
+                  foregroundColor: AppColors.textoTerciario,
                   backgroundColor: AppColors.fondoSecundarioClaro,
                 ),
                 onPressed: () {
@@ -151,7 +151,7 @@ class _ItemsPesosWidgetState extends State<ItemsPesosWidget> {
               padding: const EdgeInsets.all(2.5),
               child: TextButton(
                 style: TextButton.styleFrom(
-                  foregroundColor: AppColors.textoSecundarioClaro,
+                  foregroundColor: AppColors.textoTerciario,
                   backgroundColor: AppColors.fondoSecundarioClaro,
                 ),
                 child: const Icon(Icons.remove),
