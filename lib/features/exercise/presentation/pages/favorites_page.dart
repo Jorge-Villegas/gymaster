@@ -109,9 +109,7 @@ class _FavoritesPageState extends State<FavoritesPage>
     return CabeceraReutilizable(
       titulo: 'Ejercicios Favoritos',
       subtitulo: subtitulo,
-      botonIzquierdo: ConfiguracionBotonIzquierdo.volver(
-        colorIcono: Colors.red.shade600,
-      ),
+      botonIzquierdo: ConfiguracionBotonIzquierdo.menu(),
       accionesDerecha: [
         // Icono temático decorativo
         Container(

@@ -42,7 +42,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
     return CabeceraReutilizable(
       titulo: 'Historial de Ejercicios',
       subtitulo: 'Revisa tu progreso y entrenamientos',
-      botonIzquierdo: ConfiguracionBotonIzquierdo.volver(),
+      botonIzquierdo: ConfiguracionBotonIzquierdo.menu(),
       accionesDerecha: [
         BotonAccionDerecha.actualizar(
           onPressed: () {

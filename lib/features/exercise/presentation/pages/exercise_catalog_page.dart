@@ -13,6 +13,7 @@ import 'package:gymaster/features/exercise/presentation/cubits/favorito_ejercici
 import 'package:gymaster/features/routine/presentation/cubits/musculo/musculo_cubit.dart';
 import 'package:gymaster/shared/utils/string_utils.dart';
 import 'package:gymaster/shared/utils/verificador_tipo_archivo.dart';
+import 'package:gymaster/shared/widgets/cabecera_reutilizable.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -25,29 +26,17 @@ class ExerciseCatalogPage extends StatefulWidget {
 
 class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
     with TickerProviderStateMixin {
-  late AnimationController _headerAnimationController;
   late AnimationController _listAnimationController;
-  late AnimationController _searchAnimationController;
-  late TextEditingController _searchController;
   String? _selectedMuscleId;
-  bool _isSearchExpanded = false;
+  String _searchQuery = '';
 
   @override
   void initState() {
     super.initState();
-    _headerAnimationController = AnimationController(
-      duration: const Duration(milliseconds: 800),
-      vsync: this,
-    );
     _listAnimationController = AnimationController(
       duration: const Duration(milliseconds: 600),
       vsync: this,
     );
-    _searchAnimationController = AnimationController(
-      duration: const Duration(milliseconds: 400),
-      vsync: this,
-    );
-    _searchController = TextEditingController();
 
     // Cargar datos y animar entrada
     _loadInitialData();
@@ -55,10 +44,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
 
   @override
   void dispose() {
-    _headerAnimationController.dispose();
     _listAnimationController.dispose();
-    _searchAnimationController.dispose();
-    _searchController.dispose();
     super.dispose();
   }
 
@@ -66,9 +52,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
     context.read<MusculoCubit>().getAllMusculo();
     context.read<ExerciseCubit>().loadAllExercises();
 
-    await Future.delayed(const Duration(milliseconds: 200));
-    _headerAnimationController.forward();
-    await Future.delayed(const Duration(milliseconds: 300));
+    await Future.delayed(const Duration(milliseconds: 500));
     _listAnimationController.forward();
   }
 
@@ -92,365 +76,28 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
         child: SafeArea(
           child: Column(
             children: [
-              _buildEmotionalHeader(context),
-              // _buildSearchAndStats(context),
+              CabeceraReutilizable(
+                titulo: "Catálogo de Ejercicios",
+                subtitulo: "Explora y descubre nuevos ejercicios",
+                busqueda: ConfiguracionBusqueda.ejercicios(
+                  onBusqueda: (query) {
+                    setState(() {
+                      _searchQuery = query;
+                    });
+                    if (query.isNotEmpty) {
+                      context.read<ExerciseCubit>().buscarEjercicios(query);
+                    } else {
+                      context.read<ExerciseCubit>().loadAllExercises();
+                    }
+                  },
+                ),
+                botonIzquierdo: ConfiguracionBotonIzquierdo.menu(),
+              ),
               _buildMuscleGroupFilter(context),
               _buildExerciseList(),
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  /// Header emocional con búsqueda expandible animada
-  Widget _buildEmotionalHeader(BuildContext context) {
-    return FadeInDown(
-      duration: const Duration(milliseconds: 800),
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        child: AnimatedBuilder(
-          animation: _searchAnimationController,
-          builder: (context, child) {
-            return Row(
-              children: [
-                // Botón de volver minimalista
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.motivacionPrincipal
-                            .withValues(alpha: 0.1),
-                        offset: const Offset(0, 2),
-                        blurRadius: 8,
-                      ),
-                    ],
-                  ),
-                  child: IconButton(
-                    onPressed: () => context.go('/'),
-                    icon: Icon(
-                      Icons.arrow_back_ios_rounded,
-                      color: AppColors.motivacionPrincipal,
-                      size: 20,
-                    ),
-                    padding: const EdgeInsets.all(12),
-                  ),
-                ),
-                const SizedBox(width: 16),
-
-                // Área expandible de título/búsqueda
-                Expanded(
-                  child: _isSearchExpanded
-                      ? _buildExpandedSearchField()
-                      : _buildTitleSection(),
-                ),
-                const SizedBox(width: 16),
-
-                // Botón de búsqueda
-                _buildSearchButton(),
-              ],
-            );
-          },
-        ),
-      ),
-    );
-  }
-
-  /// Sección del título cuando no está en modo búsqueda
-  Widget _buildTitleSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Catálogo de Ejercicios',
-          style: EstilosTextoEmocional.energetico.copyWith(
-            color: AppColors.secundario, // Azul confianza más profesional
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-        const SizedBox(height: 4),
-        Text(
-          '¡Descubre tu próximo desafío! 🏋️‍♂️',
-          style: EstilosTextoEmocional.amigable.copyWith(
-            color: AppColors.energiaActiva, // Naranja dorado más sutil
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ],
-    );
-  }
-
-  /// Campo de búsqueda expandido con animación
-  Widget _buildExpandedSearchField() {
-    return SlideTransition(
-      position: Tween<Offset>(
-        begin: const Offset(1.0, 0.0),
-        end: Offset.zero,
-      ).animate(CurvedAnimation(
-        parent: _searchAnimationController,
-        curve: Curves.easeOutCubic,
-      )),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.descansoActivo
-                  .withValues(alpha: 0.15), // Azul más suave
-              offset: const Offset(0, 4),
-              blurRadius: 16,
-            ),
-          ],
-          border: Border.all(
-            color: AppColors.descansoActivo
-                .withValues(alpha: 0.4), // Azul más suave
-            width: 2,
-          ),
-        ),
-        child: TextField(
-          controller: _searchController,
-          autofocus: true,
-          style: EstilosTextoEmocional.amigable.copyWith(
-            color: AppColors.textDark,
-            fontSize: 16,
-          ),
-          decoration: InputDecoration(
-            hintText: '¿Qué ejercicio buscas? 💪',
-            hintStyle: EstilosTextoEmocional.recuperacion.copyWith(
-              color: AppColors.textSecondary,
-              fontSize: 15,
-            ),
-            prefixIcon: Container(
-              margin: const EdgeInsets.all(12),
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: AppColors.descansoActivo
-                    .withValues(alpha: 0.1), // Azul suave
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Icon(
-                IconsaxPlusLinear.search_normal_1,
-                color: AppColors.descansoActivo, // Azul suave
-                size: 20,
-              ),
-            ),
-            suffixIcon: _searchController.text.isNotEmpty
-                ? IconButton(
-                    onPressed: _limpiarBusqueda,
-                    icon: Container(
-                      padding: const EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                        color: AppColors.textSecondary.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Icon(
-                        Icons.close_rounded,
-                        color: AppColors.textSecondary,
-                        size: 16,
-                      ),
-                    ),
-                  )
-                : null,
-            border: InputBorder.none,
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 16,
-            ),
-          ),
-          onChanged: _realizarBusqueda,
-          onSubmitted: _realizarBusqueda,
-        ),
-      ),
-    );
-  }
-
-  /// Botón de búsqueda con animación
-  Widget _buildSearchButton() {
-    return GestureDetector(
-      onTap: _toggleSearch,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        width: 48,
-        height: 48,
-        decoration: BoxDecoration(
-          color: _isSearchExpanded
-              ? AppColors.informacionUtil
-              : AppColors.secundario, // Azules profesionales
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: (_isSearchExpanded
-                      ? AppColors.informacionUtil
-                      : AppColors.secundario)
-                  .withValues(alpha: 0.25), // Sombra más sutil
-              offset: const Offset(0, 4),
-              blurRadius: 12,
-            ),
-          ],
-        ),
-        child: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 200),
-          child: Icon(
-            _isSearchExpanded
-                ? Icons.close_rounded
-                : IconsaxPlusLinear.search_normal_1,
-            key: ValueKey(_isSearchExpanded),
-            color: Colors.white,
-            size: 24,
-          ),
-        ),
-      ),
-    );
-  }
-
-  /// Barra de estadísticas con indicadores de filtrado
-  Widget _buildSearchAndStats(BuildContext context) {
-    return FadeInUp(
-      duration: const Duration(milliseconds: 600),
-      delay: const Duration(milliseconds: 200),
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: _buildStatsRow(),
-      ),
-    );
-  }
-
-  /// Fila de estadísticas con información contextual
-  Widget _buildStatsRow() {
-    return BlocBuilder<ExerciseCubit, ExerciseState>(
-      builder: (context, state) {
-        int totalExercises = 0;
-        int filteredCount = 0;
-        String filterInfo = 'Todos';
-
-        if (state is ExerciseLoaded) {
-          totalExercises = state.exercises.length;
-          filteredCount = state.exercises.length;
-
-          if (state.isFiltered && state.activeFilter != null) {
-            if (state.activeFilter!.startsWith('búsqueda:')) {
-              filterInfo = 'Búsqueda activa';
-            } else {
-              filterInfo = 'Filtro aplicado';
-            }
-          }
-        }
-
-        return Row(
-          children: [
-            // Contador total de ejercicios
-            Expanded(
-              child: _buildStatCard(
-                icon: IconsaxPlusLinear.activity,
-                title: 'Total',
-                value: '$totalExercises',
-                color: AppColors.descansoActivo,
-              ),
-            ),
-            const SizedBox(width: 12),
-            // Contador de ejercicios filtrados
-            Expanded(
-              child: _buildStatCard(
-                icon: IconsaxPlusLinear.filter,
-                title: filterInfo,
-                value: '$filteredCount',
-                color: filteredCount < totalExercises
-                    ? AppColors.motivacionPrincipal
-                    : AppColors.exitoCompletado,
-              ),
-            ),
-            const SizedBox(width: 12),
-            // Botón de acción rápida según el estado
-            _buildQuickActionButton(state),
-          ],
-        );
-      },
-    );
-  }
-
-  /// Botón de acción rápida según el estado
-  Widget _buildQuickActionButton(ExerciseState state) {
-    final bool hasFilters = state is ExerciseLoaded && state.isFiltered;
-
-    // Objetivo futuro: botón de filtros avanzados
-    // Solo mostrar el botón si hay filtros activos
-    if (hasFilters) {
-      return Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              AppColors.descansoActivo,
-              AppColors.descansoActivo.withValues(alpha: 0.8)
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.descansoActivo.withValues(alpha: 0.3),
-              offset: const Offset(0, 4),
-              blurRadius: 12,
-            ),
-          ],
-        ),
-        child: IconButton(
-          onPressed: _limpiarFiltros,
-          icon: Icon(
-            Icons.clear_all_rounded,
-            color: Colors.white,
-            size: 20,
-          ),
-          tooltip: 'Limpiar filtros',
-        ),
-      );
-    }
-    // Si no hay filtros, no mostrar nada
-    return const SizedBox.shrink();
-  }
-
-  Widget _buildStatCard({
-    required IconData icon,
-    required String title,
-    required String value,
-    required Color color,
-  }) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: color.withValues(alpha: 0.3),
-          width: 1,
-        ),
-      ),
-      child: Column(
-        children: [
-          Icon(icon, color: color, size: 20),
-          const SizedBox(height: 4),
-          Text(
-            value,
-            style: EstilosTextoEmocional.energetico.copyWith(
-              fontSize: 16,
-              color: color,
-            ),
-          ),
-          Text(
-            title,
-            style: EstilosTextoEmocional.recuperacion.copyWith(
-              fontSize: 12,
-              color: AppColors.textSecondary,
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -498,10 +145,10 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                             });
 
                             // Mantener búsqueda si está activa
-                            if (_searchController.text.isNotEmpty) {
+                            if (_searchQuery.isNotEmpty) {
                               context
                                   .read<ExerciseCubit>()
-                                  .buscarEjercicios(_searchController.text);
+                                  .buscarEjercicios(_searchQuery);
                             } else {
                               context.read<ExerciseCubit>().clearFilters();
                             }
@@ -524,12 +171,11 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
 
                                 if (isSelected) {
                                   // Desactivar filtro de músculo
-                                  if (_searchController.text.isNotEmpty) {
+                                  if (_searchQuery.isNotEmpty) {
                                     // Mantener solo la búsqueda
                                     context
                                         .read<ExerciseCubit>()
-                                        .buscarEjercicios(
-                                            _searchController.text);
+                                        .buscarEjercicios(_searchQuery);
                                   } else {
                                     context
                                         .read<ExerciseCubit>()
@@ -537,12 +183,12 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                                   }
                                 } else {
                                   // Activar filtro de músculo
-                                  if (_searchController.text.isNotEmpty) {
+                                  if (_searchQuery.isNotEmpty) {
                                     // Combinar búsqueda + músculo
                                     context
                                         .read<ExerciseCubit>()
                                         .buscarEjerciciosEnMusculo(
-                                          query: _searchController.text,
+                                          query: _searchQuery,
                                           muscleId: muscle.id,
                                         );
                                   } else {
@@ -1033,73 +679,6 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
         },
       ),
     );
-  }
-
-  // === MÉTODOS DE BÚSQUEDA Y GESTIÓN DE ESTADO ===
-
-  /// Toggle del estado de búsqueda con animación
-  void _toggleSearch() {
-    setState(() {
-      _isSearchExpanded = !_isSearchExpanded;
-    });
-
-    if (_isSearchExpanded) {
-      _searchAnimationController.forward();
-    } else {
-      _searchAnimationController.reverse();
-      // Limpiar búsqueda al cerrar
-      if (_searchController.text.isNotEmpty) {
-        _limpiarBusqueda();
-      }
-    }
-  }
-
-  /// Realiza búsqueda con debounce y validación UX
-  void _realizarBusqueda(String query) {
-    if (query.trim().isEmpty) {
-      // Si no hay query, mostrar todos los ejercicios
-      context.read<ExerciseCubit>().loadAllExercises();
-      return;
-    }
-
-    // Búsqueda combinada si hay filtro de músculo activo
-    if (_selectedMuscleId != null) {
-      context.read<ExerciseCubit>().buscarEjerciciosEnMusculo(
-            query: query,
-            muscleId: _selectedMuscleId!,
-          );
-    } else {
-      // Búsqueda general
-      context.read<ExerciseCubit>().buscarEjercicios(query);
-    }
-  }
-
-  /// Limpia la búsqueda con animación suave
-  void _limpiarBusqueda() {
-    setState(() {
-      _searchController.clear();
-    });
-
-    // Si hay filtro de músculo, mantenerlo; sino mostrar todos
-    if (_selectedMuscleId != null) {
-      context.read<ExerciseCubit>().filterByMuscle(_selectedMuscleId!);
-    } else {
-      context.read<ExerciseCubit>().loadAllExercises();
-    }
-
-    // Quitar foco del campo de texto
-    FocusScope.of(context).unfocus();
-  }
-
-  /// Limpia todos los filtros activos
-  void _limpiarFiltros() {
-    setState(() {
-      _searchController.clear();
-      _selectedMuscleId = null;
-    });
-
-    context.read<ExerciseCubit>().clearFilters();
-    FocusScope.of(context).unfocus();
   }
 
   /// Indicador sutil de favorito superpuesto en la esquina inferior derecha

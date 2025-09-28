@@ -11,6 +11,7 @@ import 'package:gymaster/features/routine/presentation/pages/agregar_rutina_page
 import 'package:gymaster/features/routine/presentation/pages/routine_search_delegate.dart';
 import 'package:gymaster/features/routine/presentation/widgets/routine_card.dart';
 import 'package:gymaster/shared/widgets/chiclet_button.dart';
+import 'package:gymaster/shared/widgets/cabecera_reutilizable.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shimmer/shimmer.dart';
@@ -23,25 +24,14 @@ class ListaRutinasPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
       body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              AppColors.backgroundLight,
-              Colors.white,
-              AppColors.backgroundLight.withOpacity(0.8),
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            stops: const [0.0, 0.3, 1.0],
-          ),
-        ),
+        color: AppColors.backgroundLight,
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
             child: Column(
               children: [
                 const SizedBox(height: 10),
-                _buildHeader(context),
+                _construirCabeceraReutilizable(context),
                 const SizedBox(height: 20),
                 _buildSearchBar(context),
                 const SizedBox(height: 10),
@@ -85,7 +75,9 @@ class ListaRutinasPage extends StatelessWidget {
     context.go('/rutina/create');
   }
 
-  Widget _buildHeader(BuildContext context) {
+  /// Construye la cabecera usando el componente reutilizable
+  Widget _construirCabeceraReutilizable(BuildContext context) {
+    // Generar saludo dinámico
     final hour = DateTime.now().hour;
     String timeGreeting;
     String emoji;
@@ -101,37 +93,16 @@ class ListaRutinasPage extends StatelessWidget {
       emoji = '🌙';
     }
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Saludo emocional personalizado
-        Text(
-          '$timeGreeting, Jorge $emoji',
-          style: EstilosTextoEmocional.saludo,
-        ),
-        const SizedBox(height: 4),
-        // Mensaje motivacional dinámico
-        Text(
-          _getMotivationalMessage(),
-          style: EstilosTextoEmocional.aliento.copyWith(
-            fontSize: 16,
-            color: AppColors.motivacionPrincipal,
-          ),
-        ),
-        const SizedBox(height: 8),
-        // Botón de refresh con estilo mejorado
-        Align(
-          alignment: Alignment.centerRight,
-          child: IconButton(
-            onPressed: () {
-              BlocProvider.of<RoutineCubit>(context).getAllRoutine();
-            },
-            icon: const Icon(Icons.refresh_rounded),
-            style: IconButton.styleFrom(
-              backgroundColor: AppColors.descansoActivo.withOpacity(0.1),
-              foregroundColor: AppColors.descansoActivo,
-            ),
-          ),
+    return CabeceraReutilizable(
+      titulo: '$timeGreeting, Jorge $emoji',
+      subtitulo: _getMotivationalMessage(),
+      botonIzquierdo: ConfiguracionBotonIzquierdo.menu(),
+      accionesDerecha: [
+        BotonAccionDerecha.actualizar(
+          onPressed: () {
+            BlocProvider.of<RoutineCubit>(context).getAllRoutine();
+          },
+          tooltip: 'Actualizar rutinas',
         ),
       ],
     );

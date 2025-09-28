@@ -20,6 +20,12 @@ class PaginaConMenuLateral extends StatefulWidget {
 
   @override
   State<PaginaConMenuLateral> createState() => _PaginaConMenuLateralState();
+
+  /// Método estático para alternar el menú desde cualquier lugar
+  static void alternarMenuDesdeContext(BuildContext context) {
+    final state = context.findAncestorStateOfType<_PaginaConMenuLateralState>();
+    state?._alternarMenu();
+  }
 }
 
 class _PaginaConMenuLateralState extends State<PaginaConMenuLateral>
@@ -81,8 +87,6 @@ class _PaginaConMenuLateralState extends State<PaginaConMenuLateral>
 
   @override
   Widget build(BuildContext context) {
-    final tema = Theme.of(context);
-
     return Scaffold(
       body: Stack(
         children: [
@@ -156,19 +160,7 @@ class _PaginaConMenuLateralState extends State<PaginaConMenuLateral>
             ),
           ),
 
-          // Botón del menú lateral
-          if (widget.mostrarBotonMenu)
-            AnimatedBuilder(
-              animation: _animacionMenuLateral,
-              builder: (context, child) {
-                return Positioned(
-                  top: MediaQuery.of(context).padding.top + 16,
-                  left: (_animacionMenuLateral.value * 220) + 16,
-                  child: child!,
-                );
-              },
-              child: _construirBotonMenu(tema),
-            ),
+          // Botón del menú ahora se integra en las cabeceras individuales
 
           // Área invisible para cerrar el menú tocando el contenido principal
           if (_menuEstaAbierto)
@@ -190,40 +182,6 @@ class _PaginaConMenuLateralState extends State<PaginaConMenuLateral>
               },
             ),
         ],
-      ),
-    );
-  }
-
-  Widget _construirBotonMenu(ThemeData tema) {
-    return GestureDetector(
-      onTap: _alternarMenu,
-      child: Container(
-        width: 44,
-        height: 44,
-        decoration: BoxDecoration(
-          color: tema.colorScheme.surface,
-          borderRadius: BorderRadius.circular(22),
-          boxShadow: [
-            BoxShadow(
-              color: tema.shadowColor.withValues(alpha: 0.2),
-              blurRadius: 8,
-              offset: const Offset(0, 2),
-            ),
-          ],
-          border: Border.all(
-            color: tema.colorScheme.outline.withValues(alpha: 0.1),
-            width: 1,
-          ),
-        ),
-        child: AnimatedRotation(
-          turns: _menuEstaAbierto ? 0.5 : 0,
-          duration: const Duration(milliseconds: 300),
-          child: Icon(
-            _menuEstaAbierto ? Icons.close : Icons.menu,
-            color: tema.colorScheme.onSurface,
-            size: 24,
-          ),
-        ),
       ),
     );
   }
