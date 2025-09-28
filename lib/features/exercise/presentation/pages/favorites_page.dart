@@ -10,6 +10,7 @@ import 'package:gymaster/features/exercise/presentation/cubits/favorito_ejercici
 import 'package:gymaster/features/exercise/presentation/cubits/favorito_ejercicio_state.dart';
 import 'package:gymaster/shared/utils/string_utils.dart';
 import 'package:gymaster/shared/utils/verificador_tipo_archivo.dart';
+import 'package:gymaster/shared/widgets/cabecera_reutilizable.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -91,101 +92,46 @@ class _FavoritesPageState extends State<FavoritesPage>
           ),
         ),
         child: SafeArea(
-          child: _buildEmotionalHeader(context),
+          child: _construirCabeceraReutilizable(context),
         ),
       ),
     );
   }
 
-  /// Header emocional consistente con el patrón de la app
-  Widget _buildEmotionalHeader(BuildContext context) {
-    return FadeInDown(
-      duration: const Duration(milliseconds: 800),
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        child: Row(
-          children: [
-            // Botón de volver minimalista
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.red.shade600.withValues(alpha: 0.1),
-                    offset: const Offset(0, 2),
-                    blurRadius: 8,
-                  ),
-                ],
-              ),
-              child: IconButton(
-                onPressed: () => context.pop(),
-                icon: Icon(
-                  Icons.arrow_back_ios_rounded,
-                  color: Colors.red.shade600,
-                  size: 20,
-                ),
-                padding: const EdgeInsets.all(12),
-              ),
-            ),
-            const SizedBox(width: 16),
-            // Título emocional
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Ejercicios Favoritos',
-                    style: EstilosTextoEmocional.energetico.copyWith(
-                      color: AppColors.primary,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 4),
-                  BlocBuilder<FavoritoEjercicioCubit, FavoritoEjercicioState>(
-                    builder: (context, state) {
-                      final cantidad = context
-                          .read<FavoritoEjercicioCubit>()
-                          .cantidadFavoritos;
-                      return Text(
-                        cantidad == 0
-                            ? '¡Agrega tus ejercicios favoritos! ❤️'
-                            : '$cantidad favorito${cantidad != 1 ? 's' : ''} guardado${cantidad != 1 ? 's' : ''} ✨',
-                        style: EstilosTextoEmocional.amigable.copyWith(
-                          color: Colors.red.shade600,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ),
-            // Icono temático
-            Container(
-              width: 48,
-              height: 48,
-              decoration: BoxDecoration(
-                color: Colors.red.shade600.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(
-                  color: Colors.red.shade600.withValues(alpha: 0.3),
-                  width: 1,
-                ),
-              ),
-              child: Icon(
-                IconsaxPlusBold.heart,
-                color: Colors.red.shade600,
-                size: 24,
-              ),
-            ),
-          ],
-        ),
+  /// Construye la cabecera usando el componente reutilizable
+  Widget _construirCabeceraReutilizable(BuildContext context) {
+    // Obtener información dinámica del subtítulo
+    final cantidad = context.read<FavoritoEjercicioCubit>().cantidadFavoritos;
+    final subtitulo = cantidad == 0
+        ? '¡Agrega tus ejercicios favoritos! ❤️'
+        : '$cantidad favorito${cantidad != 1 ? 's' : ''} guardado${cantidad != 1 ? 's' : ''} ✨';
+
+    return CabeceraReutilizable(
+      titulo: 'Ejercicios Favoritos',
+      subtitulo: subtitulo,
+      botonIzquierdo: ConfiguracionBotonIzquierdo.volver(
+        colorIcono: Colors.red.shade600,
       ),
+      accionesDerecha: [
+        // Icono temático decorativo
+        Container(
+          width: 48,
+          height: 48,
+          decoration: BoxDecoration(
+            color: Colors.red.shade600.withValues(alpha: 0.1),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: Colors.red.shade600.withValues(alpha: 0.3),
+              width: 1,
+            ),
+          ),
+          child: Icon(
+            IconsaxPlusBold.heart,
+            color: Colors.red.shade600,
+            size: 24,
+          ),
+        ),
+      ],
     );
   }
 
@@ -302,11 +248,12 @@ class _FavoritesPageState extends State<FavoritesPage>
                               vertical: 4,
                             ),
                             decoration: BoxDecoration(
-                              color: AppColors.descansoActivo.withValues(alpha: 0.1),
+                              color: AppColors.descansoActivo
+                                  .withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(
-                                color:
-                                    AppColors.descansoActivo.withValues(alpha: 0.3),
+                                color: AppColors.descansoActivo
+                                    .withValues(alpha: 0.3),
                                 width: 0.5,
                               ),
                             ),

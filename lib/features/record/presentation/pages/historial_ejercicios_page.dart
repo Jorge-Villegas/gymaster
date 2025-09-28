@@ -10,6 +10,7 @@ import 'package:gymaster/features/record/presentation/cubit/record_state.dart';
 import 'package:gymaster/features/record/presentation/pages/detalle_ejercicio_page.dart';
 import 'package:gymaster/shared/utils/snackbar_helper.dart';
 import 'package:gymaster/shared/utils/string_utils.dart';
+import 'package:gymaster/shared/widgets/cabecera_reutilizable.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -36,92 +37,20 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
     BlocProvider.of<RecordCubit>(context).getAllRutinas();
   }
 
-  // Header emocional siguiendo el patrón del catálogo de ejercicios
-  Widget _buildEmotionalHeader(BuildContext context) {
-    return FadeInDown(
-      duration: const Duration(milliseconds: 800),
-      child: Container(
-        padding: Espaciado.rellenoSm,
-        child: Row(
-          children: [
-            // Botón de volver minimalista
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.primary.withValues(alpha: 0.1),
-                    offset: const Offset(0, 2),
-                    blurRadius: 8,
-                  ),
-                ],
-              ),
-              child: IconButton(
-                onPressed: () => Navigator.of(context).pop(),
-                icon: Icon(
-                  Icons.arrow_back_ios_rounded,
-                  color: AppColors.primario,
-                  size: 20,
-                ),
-                padding: const EdgeInsets.all(12),
-              ),
-            ),
-            Espaciado.separacionHorizontalSm,
-            // Título principal
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Historial de Ejercicios',
-                    style: TextStyle(
-                      color: AppColors.primario,
-                      fontSize: TipografiaGyMaster.tamanoXl,
-                      fontWeight: TipografiaGyMaster.pesoSemiBold,
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Text(
-                    'Revisa tu progreso y entrenamientos',
-                    style: TextStyle(
-                      color: AppColors.primarioCalido,
-                      fontSize: TipografiaGyMaster.tamanoSm,
-                      fontWeight: TipografiaGyMaster.pesoLigero,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Espaciado.separacionHorizontalSm,
-            // Botón de actualizar
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.primary.withValues(alpha: 0.1),
-                    offset: const Offset(0, 2),
-                    blurRadius: 8,
-                  ),
-                ],
-              ),
-              child: IconButton(
-                icon: Icon(
-                  Icons.refresh_rounded,
-                  color: AppColors.primario,
-                  size: 20,
-                ),
-                onPressed: () {
-                  BlocProvider.of<RecordCubit>(context).getAllRutinas();
-                },
-                padding: const EdgeInsets.all(12),
-              ),
-            ),
-          ],
+  /// Construye la cabecera usando el componente reutilizable
+  Widget _construirCabeceraReutilizable(BuildContext context) {
+    return CabeceraReutilizable(
+      titulo: 'Historial de Ejercicios',
+      subtitulo: 'Revisa tu progreso y entrenamientos',
+      botonIzquierdo: ConfiguracionBotonIzquierdo.volver(),
+      accionesDerecha: [
+        BotonAccionDerecha.actualizar(
+          onPressed: () {
+            BlocProvider.of<RecordCubit>(context).getAllRutinas();
+          },
+          tooltip: 'Actualizar historial',
         ),
-      ),
+      ],
     );
   }
 
@@ -133,7 +62,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
         child: Column(
           children: [
             // Header emocional mejorado
-            _buildEmotionalHeader(context),
+            _construirCabeceraReutilizable(context),
             // Contenido principal con gradiente
             Expanded(
               child: Container(

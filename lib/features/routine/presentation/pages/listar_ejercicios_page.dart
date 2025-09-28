@@ -138,10 +138,11 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
       children: [
         Text(
           '¡Elige tu ejercicio!',
-          style: EstilosTextoEmocional.energetico.copyWith(
-            color: AppColors.primary,
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
+          style: TextStyle(
+            fontWeight: TipografiaGyMaster.pesoSemiBold,
+            fontSize: TipografiaGyMaster.tamanoLg,
+            color: AppColors.primario,
+            height: 1.1,
           ),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,

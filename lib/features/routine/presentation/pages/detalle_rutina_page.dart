@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/core/theme/emotional_text_styles.dart';
-import 'package:gymaster/core/theme/tipografia_gymaster.dart';
+
 import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
 import 'package:gymaster/features/routine/presentation/widgets/ejercicios_llenos_widget.dart';
 import 'package:gymaster/features/routine/presentation/widgets/ejercicios_vacios_widget.dart';
@@ -11,6 +11,7 @@ import 'package:gymaster/features/routine/presentation/widgets/rutina_completada
 import 'package:gymaster/shared/utils/text_formatter.dart';
 import 'package:gymaster/features/routine/presentation/widgets/rutina_cancelada_widget.dart';
 import 'package:gymaster/shared/widgets/chiclet_button.dart';
+import 'package:gymaster/shared/widgets/cabecera_reutilizable.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -50,7 +51,7 @@ class DetalleRutinaScreen extends StatelessWidget {
               child: Column(
                 children: [
                   // Header personalizado con diseño emocional
-                  _buildEmotionalHeader(context, state),
+                  _construirCabeceraReutilizable(context, state),
                   // Cuerpo de la rutina
                   Expanded(
                     child: _buildBody(context, state),
@@ -64,121 +65,44 @@ class DetalleRutinaScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildEmotionalHeader(
+  /// Construye la cabecera usando el componente reutilizable
+  Widget _construirCabeceraReutilizable(
       BuildContext context, EjerciciosByRutinaState state) {
-    return FadeInDown(
-      duration: const Duration(milliseconds: 800),
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        child: Row(
-          children: [
-            // Botón de volver minimalista
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.exitoCompletado.withValues(alpha: 0.1),
-                    offset: const Offset(0, 2),
-                    blurRadius: 8,
-                  ),
-                ],
-              ),
-              child: IconButton(
-                onPressed: () => context.go('/'),
-                icon: Icon(
-                  Icons.arrow_back_ios_rounded,
-                  color: AppColors.primario,
-                  size: 20,
-                ),
-                padding: const EdgeInsets.all(12),
-              ),
-            ),
-            const SizedBox(width: 16),
-            // Título emocional simple
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (state is EjerciciosByRutinaSuccess)
-                    Text(
-                      TextFormatter.capitalize(state.ejerciciosDeRutina.nombre),
-                      style: TextStyle(
-                        fontWeight: TipografiaGyMaster.pesoSemiBold,
-                        fontSize: TipografiaGyMaster.tamanoXl,
-                        color: AppColors.impulsoEntrenamiento,
-                        height: 1.1,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    )
-                  else
-                    Text(
-                      'Mi Rutina',
-                      style: TextStyle(
-                        fontWeight: TipografiaGyMaster.pesoLigero,
-                        fontSize: TipografiaGyMaster.tamanoMd,
-                        letterSpacing: 1.2,
-                        height: 1.1,
-                        color: AppColors.primarioCalido,
-                      ),
-                    ),
-                  const SizedBox(height: 4),
-                  Text(
-                    '¡Hora de brillar!',
-                    style: TextStyle(
-                      fontWeight: TipografiaGyMaster.pesoLigero,
-                      fontSize: TipografiaGyMaster.tamanoMd,
-                      letterSpacing: 0.4,
-                      height: 1.3,
-                      color: AppColors.primarioCalido,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            // Botón de agregar ejercicios minimalista
-            if (state is EjerciciosByRutinaSuccess &&
-                state is! EjerciciosByRutinaCompleted)
-              // Botón de actualizar
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.primary.withValues(alpha: 0.1),
-                      offset: const Offset(0, 2),
-                      blurRadius: 8,
-                    ),
-                  ],
-                ),
-                child: IconButton(
-                  icon: Icon(
-                    Icons.add_rounded,
-                    color: AppColors.primario,
-                    size: 20,
-                  ),
-                  onPressed: () {
-                    final sessionId = state.ejerciciosDeRutina.session;
-                    context
-                        .push('/agregar-ejercicios/$rutinaId/$sessionId')
-                        .then((_) {
-                      if (context.mounted) {
-                        BlocProvider.of<EjerciciosByRutinaCubit>(
-                          context,
-                          listen: false,
-                        ).getAllEjercicios(idRutina: rutinaId);
-                      }
-                    });
-                  },
-                  padding: const EdgeInsets.all(12),
-                ),
-              ),
-          ],
+    // Determinar título y subtítulo basado en el estado
+    String titulo = 'Mi Rutina';
+    if (state is EjerciciosByRutinaSuccess) {
+      titulo = TextFormatter.capitalize(state.ejerciciosDeRutina.nombre);
+    }
+
+    // Configurar acciones del lado derecho
+    List<Widget> acciones = [];
+    if (state is EjerciciosByRutinaSuccess &&
+        state is! EjerciciosByRutinaCompleted) {
+      acciones.add(
+        BotonAccionDerecha.agregar(
+          onPressed: () {
+            final sessionId = state.ejerciciosDeRutina.session;
+            context.push('/agregar-ejercicios/$rutinaId/$sessionId').then((_) {
+              if (context.mounted) {
+                BlocProvider.of<EjerciciosByRutinaCubit>(
+                  context,
+                  listen: false,
+                ).getAllEjercicios(idRutina: rutinaId);
+              }
+            });
+          },
+          tooltip: 'Agregar ejercicios',
         ),
+      );
+    }
+
+    return CabeceraReutilizable(
+      titulo: titulo,
+      subtitulo: '¡Hora de brillar!',
+      botonIzquierdo: ConfiguracionBotonIzquierdo.volver(
+        accionPersonalizada: () => context.go('/'),
       ),
+      accionesDerecha: acciones.isNotEmpty ? acciones : null,
     );
   }
 
@@ -209,14 +133,7 @@ class DetalleRutinaScreen extends StatelessWidget {
               padding: const EdgeInsets.all(20),
               margin: const EdgeInsets.only(bottom: 20),
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    AppColors.descansoActivo.withOpacity(0.1),
-                    AppColors.recuperacionCompleta.withOpacity(0.05),
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
+                color: AppColors.descansoActivo.withValues(alpha: 0.08),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Row(
@@ -278,14 +195,7 @@ class DetalleRutinaScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    AppColors.motivacionPrincipal.withOpacity(0.1),
-                    AppColors.errorAmigable.withOpacity(0.05),
-                  ],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                ),
+                color: AppColors.motivacionPrincipal.withValues(alpha: 0.08),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Column(
