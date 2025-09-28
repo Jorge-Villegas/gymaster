@@ -10,7 +10,7 @@ import 'package:gymaster/shared/widgets/chiclet_button.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:shimmer/shimmer.dart';
 
-class AgregarEjerciciosPage extends StatelessWidget {
+class AgregarEjerciciosPage extends StatefulWidget {
   final String rutinaid;
   final String sesionId;
 
@@ -20,109 +20,286 @@ class AgregarEjerciciosPage extends StatelessWidget {
     required this.sesionId,
   });
 
+  @override
+  State<AgregarEjerciciosPage> createState() => _AgregarEjerciciosPageState();
+}
+
+class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage>
+    with TickerProviderStateMixin {
+  late AnimationController _headerAnimationController;
+  late AnimationController _searchAnimationController;
+  late TextEditingController _searchController;
+  bool _isSearchExpanded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _headerAnimationController = AnimationController(
+      duration: const Duration(milliseconds: 800),
+      vsync: this,
+    );
+    _searchAnimationController = AnimationController(
+      duration: const Duration(milliseconds: 400),
+      vsync: this,
+    );
+    _searchController = TextEditingController();
+    _loadInitialData();
+  }
+
+  @override
+  void dispose() {
+    _headerAnimationController.dispose();
+    _searchAnimationController.dispose();
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void _loadInitialData() async {
+    await Future.delayed(const Duration(milliseconds: 200));
+    _headerAnimationController.forward();
+  }
+
   /// Navega a la lista de ejercicios del músculo seleccionado
   void _navegarAListaEjercicios(
       BuildContext context, String musculoId, String musculoNombre) {
     context.push(
-        '/listar-ejercicios/$musculoId/$musculoNombre/$rutinaid/$sesionId');
+        '/listar-ejercicios/$musculoId/$musculoNombre/${widget.rutinaid}/${widget.sesionId}');
   }
 
-  /// Construye el header emocional coherente con el resto de la app
+  /// Construye el header emocional con búsqueda expandible
   Widget _construirHeaderEmocional(BuildContext context) {
     return FadeInDown(
       duration: const Duration(milliseconds: 800),
       child: Container(
         padding: const EdgeInsets.all(20),
-        child: Row(
-          children: [
-            // Botón de volver minimalista
-            Container(
-              decoration: BoxDecoration(
-                color: AppColors.fondoPrincipalClaro,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color:
-                        AppColors.textoSecundarioClaro.withValues(alpha: 0.1),
-                    offset: const Offset(0, 2),
-                    blurRadius: 8,
+        child: AnimatedBuilder(
+          animation: _searchAnimationController,
+          builder: (context, child) {
+            return Row(
+              children: [
+                // Botón de volver
+                Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.fondoPrincipalClaro,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.textoSecundarioClaro
+                            .withValues(alpha: 0.1),
+                        offset: const Offset(0, 2),
+                        blurRadius: 8,
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              child: IconButton(
-                onPressed: () => context.pop(),
-                icon: Icon(
-                  Icons.arrow_back_ios_rounded,
-                  color: AppColors.motivacionPrincipal,
-                  size: 20,
-                ),
-                padding: const EdgeInsets.all(12),
-              ),
-            ),
-            const SizedBox(width: 16),
-            // Título emocional
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '¡Elige tu enfoque!',
-                    style: EstilosTextoEmocional.energetico.copyWith(
-                      color: AppColors.primary,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    'Selecciona el grupo muscular 💪',
-                    style: EstilosTextoEmocional.amigable.copyWith(
+                  child: IconButton(
+                    onPressed: () => context.pop(),
+                    icon: Icon(
+                      Icons.arrow_back_ios_rounded,
                       color: AppColors.motivacionPrincipal,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
+                      size: 20,
                     ),
+                    padding: const EdgeInsets.all(12),
                   ),
-                ],
-              ),
-            ),
-            // Botón de búsqueda opcional
-            Container(
-              decoration: BoxDecoration(
-                color: AppColors.fondoPrincipalClaro,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.motivacionPrincipal.withValues(alpha: 0.1),
-                    offset: const Offset(0, 2),
-                    blurRadius: 8,
-                  ),
-                ],
-              ),
-              child: IconButton(
-                onPressed: () => _mostrarBusqueda(context),
-                icon: Icon(
-                  Icons.search_rounded,
-                  color: AppColors.motivacionPrincipal,
-                  size: 20,
                 ),
-                padding: const EdgeInsets.all(12),
-              ),
-            ),
-          ],
+                const SizedBox(width: 16),
+                // Contenido principal (título o búsqueda)
+                Expanded(
+                  child: _isSearchExpanded
+                      ? _buildExpandedSearchField()
+                      : _buildTitleSection(),
+                ),
+                const SizedBox(width: 16),
+                // Botón de búsqueda
+                _buildSearchButton(),
+              ],
+            );
+          },
         ),
       ),
     );
   }
 
-  /// Muestra el delegado de búsqueda personalizado
-  void _mostrarBusqueda(BuildContext context) {
-    // TODO: Implementar búsqueda de músculos
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('🔍 Búsqueda próximamente disponible'),
-        duration: Duration(seconds: 2),
+  /// Sección del título cuando no está en modo búsqueda
+  Widget _buildTitleSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          '¡Elige tu enfoque!',
+          style: EstilosTextoEmocional.energetico.copyWith(
+            color: AppColors.primary,
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        const SizedBox(height: 4),
+        Text(
+          'Selecciona el grupo muscular 💪',
+          style: EstilosTextoEmocional.amigable.copyWith(
+            color: AppColors.motivacionPrincipal,
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ],
+    );
+  }
+
+  /// Campo de búsqueda expandido con animación
+  Widget _buildExpandedSearchField() {
+    return SlideTransition(
+      position: Tween<Offset>(
+        begin: const Offset(1.0, 0.0),
+        end: Offset.zero,
+      ).animate(CurvedAnimation(
+        parent: _searchAnimationController,
+        curve: Curves.easeOutCubic,
+      )),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.primary.withValues(alpha: 0.1),
+              offset: const Offset(0, 2),
+              blurRadius: 8,
+            ),
+          ],
+          border: Border.all(
+            color: AppColors.primary.withValues(alpha: 0.2),
+            width: 2,
+          ),
+        ),
+        child: TextField(
+          controller: _searchController,
+          autofocus: true,
+          style: EstilosTextoEmocional.amigable.copyWith(
+            color: AppColors.primary,
+            fontSize: 16,
+          ),
+          decoration: InputDecoration(
+            hintText: 'Buscar músculos...',
+            hintStyle: EstilosTextoEmocional.amigable.copyWith(
+              color: AppColors.textSecondary,
+              fontSize: 16,
+            ),
+            border: InputBorder.none,
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 12,
+            ),
+            prefixIcon: Container(
+              margin: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: AppColors.primary.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Icon(
+                Icons.search_rounded,
+                color: AppColors.primary,
+                size: 20,
+              ),
+            ),
+            suffixIcon: _searchController.text.isNotEmpty
+                ? IconButton(
+                    icon: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        color: AppColors.textSecondary.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Icon(
+                        Icons.clear_rounded,
+                        color: AppColors.textSecondary,
+                        size: 16,
+                      ),
+                    ),
+                    onPressed: _limpiarBusqueda,
+                  )
+                : null,
+          ),
+          onChanged: _realizarBusqueda,
+          onSubmitted: _realizarBusqueda,
+        ),
       ),
     );
+  }
+
+  /// Botón de búsqueda con animación
+  Widget _buildSearchButton() {
+    return GestureDetector(
+      onTap: _toggleSearch,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        width: 48,
+        height: 48,
+        decoration: BoxDecoration(
+          color: _isSearchExpanded
+              ? AppColors.motivacionPrincipal
+              : AppColors.fondoPrincipalClaro,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.motivacionPrincipal.withValues(alpha: 0.2),
+              offset: const Offset(0, 2),
+              blurRadius: 8,
+            ),
+          ],
+        ),
+        child: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 200),
+          child: Icon(
+            _isSearchExpanded ? Icons.close_rounded : Icons.search_rounded,
+            key: ValueKey(_isSearchExpanded),
+            color: _isSearchExpanded
+                ? Colors.white
+                : AppColors.motivacionPrincipal,
+            size: 20,
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Toggle del estado de búsqueda con animación
+  void _toggleSearch() {
+    setState(() {
+      _isSearchExpanded = !_isSearchExpanded;
+    });
+
+    if (_isSearchExpanded) {
+      _searchAnimationController.forward();
+    } else {
+      _searchAnimationController.reverse();
+      if (_searchController.text.isNotEmpty) {
+        _limpiarBusqueda();
+      }
+    }
+  }
+
+  /// Realiza búsqueda con filtrado de músculos
+  void _realizarBusqueda(String query) {
+    // Aquí puedes implementar la lógica de filtrado de músculos
+    // Por ahora, se puede mostrar un mensaje o filtrar la lista
+    if (query.trim().isEmpty) {
+      context.read<MusculoCubit>().getAllMusculo();
+      return;
+    }
+
+    // TODO: Implementar búsqueda de músculos en el cubit si es necesario
+    context.read<MusculoCubit>().getAllMusculo();
+  }
+
+  /// Limpia la búsqueda
+  void _limpiarBusqueda() {
+    setState(() {
+      _searchController.clear();
+    });
+    context.read<MusculoCubit>().getAllMusculo();
+    FocusScope.of(context).unfocus();
   }
 
   @override

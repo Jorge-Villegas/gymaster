@@ -120,12 +120,51 @@ class EncabezadoEjercicioWidget extends StatelessWidget {
 
   /// Método que construye un widget de imagen.
   Widget _buildImageWidget(String urlImage, double imageSize) {
-    if (VerificadorTipoArchivo.esSvg(urlImage)) {
-      return SvgPicture.asset(urlImage, height: imageSize, fit: BoxFit.cover);
-    } else if (VerificadorTipoArchivo.esImagen(urlImage)) {
-      return Image.asset(urlImage, height: imageSize, fit: BoxFit.cover);
-    } else {
-      return Icon(Icons.error, size: imageSize);
+    debugPrint('🖼️ Intentando cargar imagen: $urlImage');
+
+    if (urlImage.isEmpty) {
+      debugPrint('❌ URL de imagen vacía');
+      return _buildFallbackImage(imageSize);
     }
+
+    if (VerificadorTipoArchivo.esSvg(urlImage)) {
+      return SvgPicture.asset(
+        urlImage,
+        height: imageSize,
+        fit: BoxFit.cover,
+        placeholderBuilder: (context) => _buildFallbackImage(imageSize),
+      );
+    } else if (VerificadorTipoArchivo.esImagen(urlImage)) {
+      return Image.asset(
+        urlImage,
+        height: imageSize,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) {
+          debugPrint('❌ Error cargando imagen: $error');
+          return _buildFallbackImage(imageSize);
+        },
+      );
+    } else {
+      debugPrint('❌ Tipo de archivo no reconocido: $urlImage');
+      return _buildFallbackImage(imageSize);
+    }
+  }
+
+  /// Widget de fallback cuando no se puede cargar la imagen
+  Widget _buildFallbackImage(double imageSize) {
+    return Container(
+      height: imageSize,
+      width: imageSize,
+      decoration: BoxDecoration(
+        color: Colors.grey[200],
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Colors.grey[300]!, width: 2),
+      ),
+      child: Icon(
+        Icons.fitness_center,
+        size: imageSize * 0.4,
+        color: Colors.grey[500],
+      ),
+    );
   }
 }

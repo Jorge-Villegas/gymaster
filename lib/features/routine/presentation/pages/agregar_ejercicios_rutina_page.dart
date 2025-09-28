@@ -46,6 +46,8 @@ class _AgregarEjercicioRutinaPageState
   @override
   void initState() {
     super.initState();
+    debugPrint(
+        '🖼️ Imagen recibida en AgregarEjercicioRutinaPage: ${widget.direccionImagenEjercicio}');
     _controladoresPeso.add(TextEditingController());
     _controladoresRepeticiones.add(TextEditingController());
     context.read<AgregarSeriesCubit>().iniciar();
