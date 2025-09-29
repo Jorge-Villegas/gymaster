@@ -11,16 +11,27 @@ import 'package:iconsax_plus/iconsax_plus.dart';
 void main() => runApp(const BottomNavigationBarExampleApp());
 
 class BottomNavigationBarExampleApp extends StatelessWidget {
-  const BottomNavigationBarExampleApp({super.key});
+  final int initialIndex;
+
+  const BottomNavigationBarExampleApp({
+    super.key,
+    this.initialIndex = 0,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: BottomNavigationBarExample());
+    return MaterialApp(
+        home: BottomNavigationBarExample(initialIndex: initialIndex));
   }
 }
 
 class BottomNavigationBarExample extends StatefulWidget {
-  const BottomNavigationBarExample({super.key});
+  final int initialIndex;
+
+  const BottomNavigationBarExample({
+    super.key,
+    this.initialIndex = 0,
+  });
 
   @override
   State<BottomNavigationBarExample> createState() =>
@@ -29,7 +40,7 @@ class BottomNavigationBarExample extends StatefulWidget {
 
 class _BottomNavigationBarExampleState
     extends State<BottomNavigationBarExample> {
-  int _selectedIndex = 0;
+  late int _selectedIndex;
 
   final List<Widget> _pages = <Widget>[
     const ListaRutinasPage(),
@@ -38,6 +49,12 @@ class _BottomNavigationBarExampleState
     HistorialEjerciciosPage(),
     const SettingPage(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.initialIndex;
+  }
 
   void _onItemTapped(int index) {
     setState(() {

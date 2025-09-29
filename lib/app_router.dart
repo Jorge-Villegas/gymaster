@@ -14,7 +14,7 @@ import 'package:gymaster/shared/widgets/barra_navegacion.dart';
 import 'package:gymaster/shared/widgets/loading_dialog_page.dart';
 import 'package:gymaster/theme_preview_page.dart';
 import 'package:gymaster/features/exercise/domain/entities/exercise.dart';
-import 'package:gymaster/features/exercise/presentation/pages/exercise_catalog_page.dart';
+
 import 'package:gymaster/features/exercise/presentation/pages/exercise_detail_page.dart';
 import 'package:gymaster/features/exercise/presentation/pages/favorites_page.dart';
 
@@ -38,7 +38,19 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/main',
       name: 'listaRutinas',
-      builder: (context, state) => const BottomNavigationBarExampleApp(),
+      builder: (context, state) {
+        // Determinar el índice inicial basado en un parámetro opcional
+        final initialIndex =
+            int.tryParse(state.uri.queryParameters['tab'] ?? '0') ?? 0;
+        return BottomNavigationBarExampleApp(initialIndex: initialIndex);
+      },
+    ),
+    // Rutas específicas para navegar a tabs específicos
+    GoRoute(
+      path: '/exercise-catalog',
+      name: 'exerciseCatalog',
+      builder: (context, state) =>
+          const BottomNavigationBarExampleApp(initialIndex: 2),
     ),
     // Ruta para la pantalla de diálogo de carga
     GoRoute(
@@ -146,11 +158,6 @@ final GoRouter router = GoRouter(
     //-----------------------------------------
     //                Exercise
     //-----------------------------------------
-    GoRoute(
-      path: '/exercise-catalog',
-      name: 'exerciseCatalog',
-      builder: (context, state) => const ExerciseCatalogPage(),
-    ),
     GoRoute(
       path: '/exercise-detail',
       name: 'exerciseDetail',
