@@ -150,7 +150,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
         Text(
           TextFormatter.capitalize(widget.nombreMusculo),
           style: TextStyle(
-            fontWeight: TipografiaGyMaster.pesoLigero,
+            fontWeight: TipografiaGyMaster.pesoRegular,
             fontSize: TipografiaGyMaster.tamanoSm,
             color: AppColors.acento,
           ),

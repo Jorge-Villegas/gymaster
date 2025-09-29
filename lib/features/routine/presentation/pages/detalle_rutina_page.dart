@@ -218,7 +218,7 @@ class DetalleRutinaScreen extends StatelessWidget {
                     state.message,
                     textAlign: TextAlign.center,
                     style: EstilosTextoEmocional.amigable.copyWith(
-                      color: AppColors.textoPrincipalClaro,
+                      color: AppColors.textoPrincipalOscuro,
                       fontSize: 14,
                     ),
                   ),

@@ -335,7 +335,7 @@ class _FavoritesPageState extends State<FavoritesPage>
                 'Remover Favorito',
                 style: EstilosTextoEmocional.energetico.copyWith(
                   fontSize: 18,
-                  color: AppColors.textoPrincipalClaro,
+                  color: AppColors.textoPrincipalOscuro,
                 ),
               ),
             ),
@@ -415,7 +415,7 @@ class _FavoritesPageState extends State<FavoritesPage>
                   '¡Aún no tienes favoritos!',
                   style: EstilosTextoEmocional.motivacional.copyWith(
                     fontSize: 24,
-                    color: AppColors.textoPrincipalClaro,
+                    color: AppColors.textoPrincipalOscuro,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -561,7 +561,7 @@ class _FavoritesPageState extends State<FavoritesPage>
                   'Oops! Algo salió mal',
                   style: EstilosTextoEmocional.motivacional.copyWith(
                     fontSize: 24,
-                    color: AppColors.textoPrincipalClaro,
+                    color: AppColors.textoPrincipalOscuro,
                   ),
                   textAlign: TextAlign.center,
                 ),

@@ -178,7 +178,7 @@ class _DeleteRoutineDialogState extends State<DeleteRoutineDialog>
         '¿Eliminar rutina? 🗑️',
         style: EstilosTextoEmocional.energetico.copyWith(
           fontSize: TipografiaGyMaster.titulo.fontSize,
-          color: AppColors.textoPrincipalClaro,
+          color: AppColors.textoPrincipalOscuro,
           fontWeight: TipografiaGyMaster.pesoSemiBold,
         ),
         textAlign: TextAlign.center,

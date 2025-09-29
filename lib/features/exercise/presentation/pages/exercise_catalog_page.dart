@@ -534,10 +534,10 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                       Text(
                         capitalizarPrimeraLetra(exercise.name),
                         style: TextStyle(
-                          fontWeight: TipografiaGyMaster.pesoSemiBold,
-                          fontSize: TipografiaGyMaster.tamanoLg,
+                          fontWeight: TipografiaGyMaster.pesoRegular,
+                          fontSize: TipografiaGyMaster.tamanoMd,
                           height: 1.1,
-                          color: AppColors.primario,
+                          color: AppColors.textoPrincipalOscuro,
                         ),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,

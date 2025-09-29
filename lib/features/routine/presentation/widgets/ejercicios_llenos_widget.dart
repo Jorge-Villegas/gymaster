@@ -211,10 +211,12 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                     const SizedBox(width: 8),
                     Text(
                       'Ejercicios listos',
-                      style: EstilosTextoEmocional.amigable.copyWith(
+                      style: TextStyle(
+                        fontWeight: TipografiaGyMaster.pesoSemiBold,
+                        fontSize: TipografiaGyMaster.subtitulo.fontSize,
+                        letterSpacing: 0.4,
+                        height: 1.3,
                         color: AppColors.exito,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ],

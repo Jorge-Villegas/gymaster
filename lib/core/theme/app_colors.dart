@@ -123,7 +123,7 @@ class AppColors {
   // ===============================================================
 
   /// Texto principal - Máximo contraste
-  static const Color textoPrincipal = Color(0xFFFFFFFF);
+  static const Color textoPrincipal = Color(0xFF0F172A);
 
   /// Texto principal claro - Versión para temas claros
   static const Color textoPrincipalClaro = Color(0xFFF8FAFC);
@@ -142,6 +142,20 @@ class AppColors {
 
   /// Texto sobre secundario
   static const Color textoSobreSecundario = Color(0xFFFFFFFF);
+
+  // 🆕 NUEVOS COLORES DE TEXTO PARA TEMA CLARO (TEXTOS OSCUROS)
+
+  /// Texto principal oscuro - Para fondos claros (HSB: 222°, 85%, 15%)
+  static const Color textoPrincipalOscuro = Color(0xFF0F172A);
+
+  /// Texto secundario oscuro - Jerarquía sobre fondos claros (HSB: 222°, 65%, 25%)
+  static const Color textoSecundarioOscuro = Color(0xFF1E293B);
+
+  /// Texto terciario oscuro - Menor contraste sobre fondos claros (HSB: 222°, 50%, 40%)
+  static const Color textoTerciarioOscuro = Color(0xFF475569);
+
+  /// Texto deshabilitado oscuro - Estado inactivo sobre fondos claros (HSB: 222°, 35%, 55%)
+  static const Color textoDeshabilitadoOscuro = Color(0xFF64748B);
 
   // ===============================================================
   // === BORDES Y DIVISORES CON MATICES ===

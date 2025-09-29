@@ -296,7 +296,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                             color: AppColors.secundario,
                             fontSize:
                                 TipografiaGyMaster.tamanoSm, // Info secundaria
-                            fontWeight: TipografiaGyMaster.pesoLigero,
+                            fontWeight: TipografiaGyMaster.pesoRegular,
                           ),
                         ),
                       ),
@@ -453,12 +453,12 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                               style: TextStyle(
                                 color: isSelected
                                     ? AppColors.secundario
-                                    : AppColors.textoPrincipalClaro,
+                                    : AppColors.textoPrincipalOscuro,
                                 fontSize:
                                     TipografiaGyMaster.tamanoSm, // Celdas tabla
                                 fontWeight: isSelected
                                     ? TipografiaGyMaster.pesoSemiBold
-                                    : TipografiaGyMaster.pesoLigero,
+                                    : TipografiaGyMaster.pesoRegular,
                               ),
                               textAlign: TextAlign.center,
                             ),
@@ -469,12 +469,12 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                               style: TextStyle(
                                 color: isSelected
                                     ? AppColors.secundario
-                                    : AppColors.textoPrincipalClaro,
+                                    : AppColors.textoPrincipalOscuro,
                                 fontSize:
                                     TipografiaGyMaster.tamanoSm, // Celdas tabla
                                 fontWeight: isSelected
                                     ? TipografiaGyMaster.pesoSemiBold
-                                    : TipografiaGyMaster.pesoLigero,
+                                    : TipografiaGyMaster.pesoRegular,
                               ),
                               textAlign: TextAlign.center,
                             ),
@@ -485,12 +485,12 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                               style: TextStyle(
                                 color: isSelected
                                     ? AppColors.secundario
-                                    : AppColors.textoPrincipalClaro,
+                                    : AppColors.textoPrincipalOscuro,
                                 fontSize:
                                     TipografiaGyMaster.tamanoSm, // Celdas tabla
                                 fontWeight: isSelected
                                     ? TipografiaGyMaster.pesoSemiBold
-                                    : TipografiaGyMaster.pesoLigero,
+                                    : TipografiaGyMaster.pesoRegular,
                               ),
                               textAlign: TextAlign.center,
                             ),
@@ -675,7 +675,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
             child: Text(
               label,
               style: TextStyle(
-                color: AppColors.textoPrincipalClaro,
+                color: AppColors.textoPrincipalOscuro,
                 fontSize: TipografiaGyMaster.tamanoMd,
                 fontWeight: TipografiaGyMaster.pesoSemiBold,
               ),

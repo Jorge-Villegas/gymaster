@@ -39,6 +39,9 @@ class TipografiaGyMaster {
   /// Peso ligero para lectura cómoda
   static const FontWeight pesoLigero = FontWeight.w300; // Light
 
+  /// Peso regular para texto base
+  static const FontWeight pesoRegular = FontWeight.w400; // Regular
+
   /// Peso semi-bold para énfasis y jerarquía
   static const FontWeight pesoSemiBold = FontWeight.w600; // SemiBold
 
@@ -49,15 +52,15 @@ class TipografiaGyMaster {
   /// Texto principal para lectura (15px, ligero)
   static TextStyle get textoPrincipal => TextStyle(
         fontSize: tamanoSm,
-        fontWeight: pesoLigero,
-        color: AppColors.textoPrincipalClaro,
+        fontWeight: pesoRegular,
+        color: AppColors.textoPrincipalOscuro,
         height: 1.4,
       );
 
   /// Texto secundario para información adicional (12px, ligero)
   static TextStyle get textoSecundario => TextStyle(
         fontSize: tamanoXs,
-        fontWeight: pesoLigero,
+        fontWeight: pesoRegular,
         color: AppColors.textoTerciario,
         height: 1.3,
       );
@@ -66,7 +69,7 @@ class TipografiaGyMaster {
   static TextStyle get subtitulo => TextStyle(
         fontSize: tamanoMd,
         fontWeight: pesoSemiBold,
-        color: AppColors.textoPrincipalClaro,
+        color: AppColors.textoPrincipalOscuro,
         height: 1.3,
       );
 
@@ -74,7 +77,7 @@ class TipografiaGyMaster {
   static TextStyle get titulo => TextStyle(
         fontSize: tamanoLg,
         fontWeight: pesoSemiBold,
-        color: AppColors.textoPrincipalClaro,
+        color: AppColors.textoPrincipalOscuro,
         height: 1.2,
       );
 
@@ -94,14 +97,14 @@ class TipografiaGyMaster {
   static TextStyle get nombreEjercicio => TextStyle(
         fontSize: tamanoSm,
         fontWeight: pesoSemiBold,
-        color: AppColors.textoPrincipalClaro,
+        color: AppColors.textoPrincipalOscuro,
         height: 1.3,
       );
 
   /// Estilo para información de series y repeticiones
   static TextStyle get infoSeriesReps => TextStyle(
         fontSize: tamanoXs,
-        fontWeight: pesoLigero,
+        fontWeight: pesoRegular,
         color: AppColors.textoTerciario,
         height: 1.2,
       );
@@ -125,7 +128,7 @@ class TipografiaGyMaster {
   /// Estilo para estado de ejercicio (completado, en progreso)
   static TextStyle get estadoEjercicio => TextStyle(
         fontSize: tamanoXs,
-        fontWeight: pesoLigero,
+        fontWeight: pesoRegular,
         color: AppColors.exito,
         height: 1.2,
       );
@@ -173,7 +176,7 @@ class TipografiaGyMaster {
   /// Mensajes de advertencia (15px, ligero, naranja)
   static TextStyle get mensajeAdvertencia => TextStyle(
         fontSize: tamanoSm,
-        fontWeight: pesoLigero,
+        fontWeight: pesoRegular,
         color: AppColors.advertencia,
         height: 1.3,
       );
@@ -210,7 +213,7 @@ class TipografiaGyMaster {
 
   /// Valida que un peso de fuente esté permitido
   static bool esPesoValido(FontWeight peso) {
-    return peso == pesoLigero || peso == pesoSemiBold;
+    return peso == pesoRegular || peso == pesoSemiBold;
   }
 }
 

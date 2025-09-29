@@ -200,7 +200,7 @@ class ListaRutinasPage extends StatelessWidget {
                         Text(
                           '${state.routines.length} rutina${state.routines.length == 1 ? '' : 's'} para conquistar',
                           style: TextStyle(
-                            fontWeight: TipografiaGyMaster.pesoLigero,
+                            fontWeight: TipografiaGyMaster.pesoRegular,
                             fontSize: TipografiaGyMaster.tamanoMd,
                             height: 1.3,
                             color: AppColors.acento,
@@ -461,7 +461,7 @@ class ListaRutinasPage extends StatelessWidget {
                         textAlign: TextAlign.center,
                         style: EstilosTextoEmocional.amigable.copyWith(
                           fontSize: 16,
-                          color: AppColors.textoPrincipalClaro,
+                          color: AppColors.textoPrincipalOscuro,
                           height: 1.4,
                         ),
                       ),
@@ -580,7 +580,7 @@ class ListaRutinasPage extends StatelessWidget {
                           textAlign: TextAlign.center,
                           style: EstilosTextoEmocional.aliento.copyWith(
                             fontSize: 16,
-                            color: AppColors.textoPrincipalClaro,
+                            color: AppColors.textoPrincipalOscuro,
                             height: 1.4,
                           ),
                         ),

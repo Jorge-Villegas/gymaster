@@ -225,7 +225,7 @@ class _ChicletButtonDemoPageState extends State<ChicletButtonDemoPage> {
           style: TextStyle(
             color: _enDescanso && label == 'Descanso'
                 ? AppColors.advertencia
-                : AppColors.textoPrincipalClaro,
+                : AppColors.textoPrincipalOscuro,
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),

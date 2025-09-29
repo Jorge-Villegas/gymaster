@@ -67,7 +67,7 @@ class AppTheme {
       error: AppColors.error, // Error emocional
       onPrimary: Colors.white,
       onSecondary: Colors.white,
-      onSurface: AppColors.textoPrincipalClaro,
+      onSurface: AppColors.textoPrincipalOscuro,
       // Colores adicionales emocionales
       tertiary: AppColors.acento,
       onTertiary: Colors.white,
@@ -75,29 +75,29 @@ class AppTheme {
     scaffoldBackgroundColor: AppColors.fondoPrincipalClaro,
     textTheme: TextTheme(
       bodyLarge:
-          TextStyle(fontSize: 20.0, color: AppColors.textoPrincipalClaro),
+          TextStyle(fontSize: 20.0, color: AppColors.textoPrincipalOscuro),
       bodyMedium:
-          TextStyle(fontSize: 18.0, color: AppColors.textoPrincipalClaro),
+          TextStyle(fontSize: 18.0, color: AppColors.textoPrincipalOscuro),
       bodySmall:
-          TextStyle(fontSize: 16.0, color: AppColors.textoPrincipalClaro),
+          TextStyle(fontSize: 16.0, color: AppColors.textoPrincipalOscuro),
       labelLarge:
-          TextStyle(fontSize: 16.0, color: AppColors.textoPrincipalClaro),
+          TextStyle(fontSize: 16.0, color: AppColors.textoPrincipalOscuro),
       labelMedium:
-          TextStyle(fontSize: 14.0, color: AppColors.textoPrincipalClaro),
+          TextStyle(fontSize: 14.0, color: AppColors.textoPrincipalOscuro),
       labelSmall:
-          TextStyle(fontSize: 12.0, color: AppColors.textoPrincipalClaro),
+          TextStyle(fontSize: 12.0, color: AppColors.textoPrincipalOscuro),
       titleLarge:
-          TextStyle(fontSize: 24.0, color: AppColors.textoPrincipalClaro),
+          TextStyle(fontSize: 24.0, color: AppColors.textoPrincipalOscuro),
       titleMedium:
-          TextStyle(fontSize: 22.0, color: AppColors.textoPrincipalClaro),
+          TextStyle(fontSize: 22.0, color: AppColors.textoPrincipalOscuro),
       titleSmall:
-          TextStyle(fontSize: 20.0, color: AppColors.textoPrincipalClaro),
+          TextStyle(fontSize: 20.0, color: AppColors.textoPrincipalOscuro),
       displayLarge:
-          TextStyle(fontSize: 34.0, color: AppColors.textoPrincipalClaro),
+          TextStyle(fontSize: 34.0, color: AppColors.textoPrincipalOscuro),
       displayMedium:
-          TextStyle(fontSize: 30.0, color: AppColors.textoPrincipalClaro),
+          TextStyle(fontSize: 30.0, color: AppColors.textoPrincipalOscuro),
       displaySmall:
-          TextStyle(fontSize: 26.0, color: AppColors.textoPrincipalClaro),
+          TextStyle(fontSize: 26.0, color: AppColors.textoPrincipalOscuro),
     ),
     appBarTheme: AppBarTheme(
       centerTitle: true,

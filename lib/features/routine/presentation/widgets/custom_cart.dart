@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/features/exercise/presentation/cubits/favorito_ejercicio_cubit.dart';
 import 'package:gymaster/features/exercise/presentation/cubits/favorito_ejercicio_state.dart';
 import 'package:gymaster/shared/utils/enum.dart';
@@ -57,7 +59,7 @@ class CustomCard extends StatelessWidget {
           child: const Icon(Icons.delete, color: Colors.white),
         ),
         child: SizedBox(
-          height: height, // Establece la altura si se proporciona
+          height: height,
           child: Card(
             elevation: 4,
             shape: RoundedRectangleBorder(
@@ -134,9 +136,10 @@ class CustomCard extends StatelessWidget {
                       children: [
                         Text(
                           TextFormatter.capitalize(nombreEjercicio),
-                          style: const TextStyle(
-                            fontSize: 14.0,
-                            //fontWeight: FontWeight.bold
+                          style: TextStyle(
+                            fontSize: TipografiaGyMaster.tamanoSm,
+                            fontWeight: TipografiaGyMaster.pesoRegular,
+                            color: AppColors.textoPrincipalOscuro,
                           ),
                         ),
                         const SizedBox(height: 4.0),

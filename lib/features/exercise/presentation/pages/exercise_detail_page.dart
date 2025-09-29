@@ -122,7 +122,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
             child: Text(
               capitalizarPrimeraLetra(widget.exercise.name),
               style: EstilosTextoEmocional.energetico.copyWith(
-                color: AppColors.textoPrincipalClaro,
+                color: AppColors.textoPrincipalOscuro,
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 letterSpacing: 0.5,
@@ -444,7 +444,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                         capitalizarPrimeraLetra(variation),
                         style: EstilosTextoEmocional.amigable.copyWith(
                           fontSize: 15,
-                          color: AppColors.textoPrincipalClaro,
+                          color: AppColors.textoPrincipalOscuro,
                           fontWeight: FontWeight.w500,
                         ),
                       ),

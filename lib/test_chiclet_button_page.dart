@@ -11,7 +11,7 @@ class ChicletButtonTestPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Test ChicletButton'),
         backgroundColor: AppColors.fondoPrincipalClaro,
-        foregroundColor: AppColors.textoPrincipalClaro,
+        foregroundColor: AppColors.textoPrincipalOscuro,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

@@ -210,7 +210,7 @@ class _CabeceraReutilizableState extends State<CabeceraReutilizable>
           Text(
             widget.subtitulo!,
             style: TextStyle(
-              fontWeight: TipografiaGyMaster.pesoLigero,
+              fontWeight: TipografiaGyMaster.pesoRegular,
               fontSize: TipografiaGyMaster.tamanoSm,
               letterSpacing: 0.4,
               height: 1.3,
@@ -256,14 +256,14 @@ class _CabeceraReutilizableState extends State<CabeceraReutilizable>
           style: TextStyle(
             color: AppColors.primario,
             fontSize: TipografiaGyMaster.tamanoMd,
-            fontWeight: TipografiaGyMaster.pesoLigero,
+            fontWeight: TipografiaGyMaster.pesoRegular,
           ),
           decoration: InputDecoration(
             hintText: widget.busqueda!.placeholderText,
             hintStyle: TextStyle(
               color: AppColors.textoTerciario,
               fontSize: TipografiaGyMaster.tamanoMd,
-              fontWeight: TipografiaGyMaster.pesoLigero,
+              fontWeight: TipografiaGyMaster.pesoRegular,
             ),
             border: InputBorder.none,
             contentPadding: const EdgeInsets.symmetric(

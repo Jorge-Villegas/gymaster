@@ -154,7 +154,7 @@ class _RoutineCardState extends State<RoutineCard>
                               style: TextStyle(
                                 fontSize: TipografiaGyMaster.tamanoXl,
                                 fontWeight: TipografiaGyMaster.pesoSemiBold,
-                                color: AppColors.textoPrincipalClaro,
+                                color: AppColors.textoPrincipalOscuro,
                                 height: 1.3,
                               ),
                             ),
@@ -162,8 +162,8 @@ class _RoutineCardState extends State<RoutineCard>
                               widget.cantidadEjerciciosPorSeries,
                               style: TextStyle(
                                 fontSize: TipografiaGyMaster.tamanoMd,
-                                fontWeight: TipografiaGyMaster.pesoLigero,
-                                color: AppColors.textoPrincipalClaro,
+                                fontWeight: TipografiaGyMaster.pesoRegular,
+                                color: AppColors.textoPrincipalOscuro,
                                 height: 1.3,
                               ),
                             ),

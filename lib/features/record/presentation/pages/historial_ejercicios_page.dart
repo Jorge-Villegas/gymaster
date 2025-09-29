@@ -224,7 +224,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                       titleTextStyle: TextStyle(
                         fontSize: TipografiaGyMaster.tamanoMd,
                         fontWeight: TipografiaGyMaster.pesoSemiBold,
-                        color: AppColors.textoPrincipalClaro,
+                        color: AppColors.textoPrincipalOscuro,
                       ),
                     ),
                     daysOfWeekStyle: DaysOfWeekStyle(
@@ -409,7 +409,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                                         style: TextStyle(
                                           fontSize: TipografiaGyMaster.tamanoSm,
                                           fontWeight:
-                                              TipografiaGyMaster.pesoLigero,
+                                              TipografiaGyMaster.pesoRegular,
                                           color: Color(rutina.color),
                                         ),
                                       ),
@@ -492,9 +492,9 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                                   capitalizarPrimeraLetra(ejercicio.nombre),
                                   style: TextStyle(
                                     fontSize: TipografiaGyMaster.tamanoMd,
-                                    fontWeight: TipografiaGyMaster.pesoLigero,
+                                    fontWeight: TipografiaGyMaster.pesoRegular,
                                     height: 1.2,
-                                    color: AppColors.textoPrincipalClaro,
+                                    color: AppColors.textoPrincipalOscuro,
                                   ),
                                 ),
                                 subtitle: Column(
@@ -518,8 +518,8 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                                             style: TextStyle(
                                               fontSize:
                                                   TipografiaGyMaster.tamanoSm,
-                                              fontWeight:
-                                                  TipografiaGyMaster.pesoLigero,
+                                              fontWeight: TipografiaGyMaster
+                                                  .pesoRegular,
                                               color: AppColors.textoTerciario,
                                             ),
                                             overflow: TextOverflow.ellipsis,
@@ -673,7 +673,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
             style: TextStyle(
               color: AppColors.textoTerciario,
               fontSize: TipografiaGyMaster.tamanoMd,
-              fontWeight: TipografiaGyMaster.pesoLigero,
+              fontWeight: TipografiaGyMaster.pesoRegular,
             ),
           ),
         ],
@@ -706,7 +706,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
               style: TextStyle(
                 fontSize: TipografiaGyMaster.tamanoXl,
                 fontWeight: TipografiaGyMaster.pesoSemiBold,
-                color: AppColors.textoPrincipalClaro,
+                color: AppColors.primario,
               ),
             ),
             Espaciado.separacionVerticalSm,
@@ -715,7 +715,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: TipografiaGyMaster.tamanoSm,
-                fontWeight: TipografiaGyMaster.pesoLigero,
+                fontWeight: TipografiaGyMaster.pesoRegular,
                 color: AppColors.textoTerciario,
               ),
             ),
@@ -750,7 +750,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
               style: TextStyle(
                 fontSize: TipografiaGyMaster.tamanoLg,
                 fontWeight: TipografiaGyMaster.pesoSemiBold,
-                color: AppColors.textoPrincipalClaro,
+                color: AppColors.textoPrincipalOscuro,
               ),
             ),
             Espaciado.separacionVerticalSm,
@@ -759,7 +759,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: TipografiaGyMaster.tamanoSm,
-                fontWeight: TipografiaGyMaster.pesoLigero,
+                fontWeight: TipografiaGyMaster.pesoRegular,
                 color: AppColors.textoTerciario,
               ),
             ),
