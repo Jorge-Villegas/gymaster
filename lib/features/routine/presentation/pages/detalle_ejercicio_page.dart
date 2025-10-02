@@ -4,6 +4,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/core/theme/emotional_text_styles.dart';
+import 'package:gymaster/core/theme/espaciado.dart';
+import 'package:gymaster/core/theme/tipografia_gymaster.dart';
+
 import 'package:gymaster/features/exercise/presentation/cubits/favorito_ejercicio_cubit.dart';
 import 'package:gymaster/features/exercise/presentation/cubits/favorito_ejercicio_state.dart';
 import 'package:gymaster/features/routine/domain/entities/ejercicios_de_rutina.dart';
@@ -12,6 +15,7 @@ import 'package:gymaster/features/routine/presentation/widgets/rutina_cancelada_
 import 'package:gymaster/features/routine/presentation/widgets/rutina_completada_widget.dart';
 import 'package:gymaster/shared/utils/text_formatter.dart';
 import 'package:gymaster/shared/utils/verificador_tipo_archivo.dart';
+import 'package:gymaster/shared/widgets/cabecera_reutilizable.dart';
 import 'package:gymaster/shared/widgets/chiclet_button.dart';
 import 'package:animate_do/animate_do.dart';
 // ignore: depend_on_referenced_packages
@@ -158,27 +162,15 @@ class DetalleEjercicioScreen extends StatelessWidget {
   }
 
   Widget _buildExerciseImage(String imagenDireccion) {
-    return Center(
+    return Container(
+      margin: Espaciado.rellenoHorizontalMd,
       child: AspectRatio(
         aspectRatio: 1.2,
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            gradient: LinearGradient(
-              colors: [
-                AppColors.acento.withOpacity(0.08),
-                AppColors.primario.withOpacity(0.08),
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.acento.withOpacity(0.12),
-                blurRadius: 16,
-                offset: const Offset(0, 6),
-              ),
-            ],
+            borderRadius: BorderRadius.circular(Espaciado.sm),
+            gradient: AppColors.gradientePrimario,
+            boxShadow: AppColors.sombraSuave,
           ),
           clipBehavior: Clip.antiAlias,
           child: _buildImageWidget(imagenDireccion),
@@ -234,105 +226,34 @@ class DetalleEjercicioScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSimplifiedSeriesDisplay({
-    required Serie serie,
-    required int serieActual,
-    required int totalSeries,
+  /// Widget reutilizable para mostrar un dato centralizado (valor grande, etiqueta y unidad)
+  Widget _buildDatoEjercicioCentral({
+    required String valor,
+    required String etiqueta,
   }) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.primario.withValues(alpha: 0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          valor,
+          style: EstilosTextoEmocional.contador.copyWith(
+            fontSize: TipografiaGyMaster.tamano5xl,
+            color: AppColors.acento,
+            fontWeight: TipografiaGyMaster.pesoSemiBold,
           ),
-        ],
-      ),
-      child: Column(
-        children: [
-          // Título motivacional
-          Text(
-            '¡Tu objetivo ahora!',
-            style: EstilosTextoEmocional.energetico.copyWith(
-              color: AppColors.primario,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-
-          const SizedBox(height: 16),
-
-          // Stats principales
-          Row(
-            children: [
-              Expanded(
-                child: _buildStatCard(
-                  icon: Icons.repeat_rounded,
-                  value: '${serie.repeticiones}',
-                  label: 'Repeticiones',
-                  color: AppColors.acento,
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: _buildStatCard(
-                  icon: Icons.fitness_center_rounded,
-                  value: '${serie.peso}',
-                  label: 'Peso (kg)',
-                  color: AppColors.acento,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildStatCard({
-    required IconData icon,
-    required String value,
-    required String label,
-    required Color color,
-  }) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: color.withValues(alpha: 0.3),
-          width: 1,
+          textAlign: TextAlign.center,
         ),
-      ),
-      child: Column(
-        children: [
-          Icon(icon, color: color, size: 24),
-          const SizedBox(height: 8),
-          Text(
-            value,
-            style: EstilosTextoEmocional.energetico.copyWith(
-              color: color,
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
+        SizedBox(height: Espaciado.xxs),
+        Text(
+          etiqueta,
+          style: EstilosTextoEmocional.amigable.copyWith(
+            fontSize: TipografiaGyMaster.tamanoSm,
+            color: AppColors.textoSecundarioOscuro,
+            fontWeight: TipografiaGyMaster.pesoRegular,
           ),
-          const SizedBox(height: 4),
-          Text(
-            label,
-            style: EstilosTextoEmocional.amigable.copyWith(
-              color: AppColors.textoTerciario,
-              fontSize: 12,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
+          textAlign: TextAlign.center,
+        ),
+      ],
     );
   }
 
@@ -340,30 +261,26 @@ class DetalleEjercicioScreen extends StatelessWidget {
       BuildContext context, Serie serie, EjerciciosByRutinaSuccess state) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(20),
+      margin: Espaciado.rellenoHorizontalMd,
+      padding: Espaciado.rellenoMd,
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.primario.withValues(alpha: 0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
+        color: AppColors.fondoTarjetaClaro,
+        borderRadius: BorderRadius.circular(Espaciado.sm),
+        boxShadow: AppColors.sombraSuave,
       ),
       child: Column(
         children: [
           Text(
             '¡Ajusta tu entrenamiento!',
-            style: EstilosTextoEmocional.energetico.copyWith(
-              color: AppColors.primario,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
+            style: TextStyle(
+              fontWeight: TipografiaGyMaster.pesoSemiBold,
+              fontSize: TipografiaGyMaster.tamanoLg,
+              color: AppColors.primarioCalido,
+              height: 1.1,
             ),
           ),
 
-          const SizedBox(height: 20),
+          SizedBox(height: Espaciado.md),
 
           // Control de repeticiones
           _buildControlSection(
@@ -376,7 +293,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
                 context.read<EjerciciosByRutinaCubit>().disminuirRepeticiones(),
           ),
 
-          const SizedBox(height: 16),
+          SizedBox(height: Espaciado.sm),
 
           // Control de peso
           _buildControlSection(
@@ -405,10 +322,10 @@ class DetalleEjercicioScreen extends StatelessWidget {
         Expanded(
           child: Text(
             title,
-            style: EstilosTextoEmocional.amigable.copyWith(
-              color: AppColors.textoTerciario,
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
+            style: TextStyle(
+              fontWeight: TipografiaGyMaster.pesoRegular,
+              fontSize: TipografiaGyMaster.tamanoLg,
+              color: AppColors.textoPrincipalOscuro,
             ),
           ),
         ),
@@ -418,31 +335,39 @@ class DetalleEjercicioScreen extends StatelessWidget {
               onPressed: onDecrement,
               icono: Icons.remove_rounded,
               texto: '',
+              colorFondo: AppColors.textoTerciario,
+              colorTexto: Colors.white,
               tamano: TamanoBotonChiclet.pequeno,
-              estilo: EstiloBotonChiclet.contorno,
-              colorBorde: color,
-              colorTexto: color,
+              estilo: EstiloBotonChiclet.relleno,
+              paddingHorizontal: 8,
+              paddingVertical: 4,
+              ancho: 36,
+              alto: 36,
             ),
             Container(
-              width: 60,
+              width: Espaciado.xxxl,
               alignment: Alignment.center,
               child: Text(
                 '$value',
-                style: EstilosTextoEmocional.energetico.copyWith(
-                  color: color,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                style: TextStyle(
+                  fontWeight: TipografiaGyMaster.pesoRegular, // SemiBold
+                  fontSize: TipografiaGyMaster.tamano2xl,
+                  color: AppColors.textoPrincipalOscuro,
                 ),
               ),
             ),
             ChicletButton(
               onPressed: onIncrement,
-              icono: Icons.add_rounded,
               texto: '',
+              icono: Icons.add,
+              colorFondo: AppColors.secundario,
+              colorTexto: Colors.white,
               tamano: TamanoBotonChiclet.pequeno,
-              estilo: EstiloBotonChiclet.contorno,
-              colorBorde: color,
-              colorTexto: color,
+              estilo: EstiloBotonChiclet.relleno,
+              paddingHorizontal: 8,
+              paddingVertical: 4,
+              ancho: 36,
+              alto: 36,
             ),
           ],
         ),
@@ -453,16 +378,10 @@ class DetalleEjercicioScreen extends StatelessWidget {
   Widget _buildEmotionalDynamicActionButtons(BuildContext context,
       Ejercicio ejercicio, EjerciciosByRutinaSuccess state) {
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: Espaciado.rellenoMd,
       decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.primario.withValues(alpha: 0.1),
-            blurRadius: 10,
-            offset: const Offset(0, -2),
-          ),
-        ],
+        color: AppColors.fondoTarjetaClaro,
+        boxShadow: AppColors.sombraSuave,
       ),
       child: SafeArea(
         top: false,
@@ -471,7 +390,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
             // Botón principal dinámico
             _buildMainActionButton(context, state),
 
-            const SizedBox(height: 12),
+            SizedBox(height: Espaciado.sm),
 
             // Botones secundarios
             Row(
@@ -487,7 +406,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
                     colorTexto: AppColors.textoTerciario,
                   ),
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: Espaciado.sm),
                 Expanded(
                   child: ChicletButton(
                     onPressed: () => _handleRestTimer(context),
@@ -898,13 +817,14 @@ class DetalleEjercicioScreen extends StatelessWidget {
         child: SafeArea(
           child: Column(
             children: [
-              // Header Emocional Minimalista
-              _buildEmotionalHeader(
-                context: context,
-                exerciseName: ejercicio.nombre,
-                serieActual: serieActualIndex,
-                totalSeries: totalSeries,
-                rutineName: state.ejerciciosDeRutina.nombre,
+              // Header usando CabeceraReutilizable para consistencia
+              CabeceraReutilizable(
+                titulo: TextFormatter.capitalize(ejercicio.nombre),
+                subtitulo:
+                    'Serie $serieActualIndex de $totalSeries • ${state.ejerciciosDeRutina.nombre}',
+                botonIzquierdo: ConfiguracionBotonIzquierdo.volver(),
+                colorFondo: AppColors.fondoPrincipalClaro,
+                relleno: Espaciado.rellenoMd,
               ),
 
               // Barra Motivacional
@@ -913,11 +833,13 @@ class DetalleEjercicioScreen extends StatelessWidget {
                 child: _buildMotivationalBar(serieActualIndex, totalSeries),
               ),
 
+              SizedBox(height: Espaciado.md),
+
               // Contenido Principal
               Expanded(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.all(20),
                   child: Column(
+                    spacing: Espaciado.md,
                     children: [
                       // Imagen del ejercicio con animación e indicador de favorito
                       FadeInUp(
@@ -929,21 +851,37 @@ class DetalleEjercicioScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-
-                      const SizedBox(height: 24),
-
                       // Series simplificadas
                       SlideInLeft(
                         duration: const Duration(milliseconds: 700),
-                        child: _buildSimplifiedSeriesDisplay(
-                          serie: serie,
-                          serieActual: serieActualIndex,
-                          totalSeries: totalSeries,
+                        child: Container(
+                          width: double.infinity,
+                          margin: Espaciado.rellenoHorizontalMd,
+                          padding: Espaciado.rellenoMd,
+                          decoration: BoxDecoration(
+                            color: AppColors.fondoTarjetaClaro,
+                            borderRadius: BorderRadius.circular(Espaciado.sm),
+                            boxShadow: AppColors.sombraSuave,
+                          ),
+                          child: Row(
+                            spacing: Espaciado.md,
+                            children: [
+                              Expanded(
+                                child: _buildDatoEjercicioCentral(
+                                  valor: '${serie.repeticiones}',
+                                  etiqueta: 'Repeticiones',
+                                ),
+                              ),
+                              Expanded(
+                                child: _buildDatoEjercicioCentral(
+                                  valor: '${serie.peso}',
+                                  etiqueta: 'Peso (Kg)',
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-
-                      const SizedBox(height: 24),
-
                       // Controles optimizados
                       SlideInRight(
                         duration: const Duration(milliseconds: 800),
@@ -953,6 +891,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
                   ),
                 ),
               ),
+
               // Botones de acción dinámicos con diseño emocional
               _buildEmotionalDynamicActionButtons(context, ejercicio, state),
             ],
@@ -962,131 +901,38 @@ class DetalleEjercicioScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildEmotionalHeader({
-    required BuildContext context,
-    required String exerciseName,
-    required int serieActual,
-    required int totalSeries,
-    required String rutineName,
-  }) {
-    return FadeInDown(
-      duration: const Duration(milliseconds: 800),
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        child: Row(
-          children: [
-            // Botón de volver minimalista (igual que detalle_rutina)
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.acento.withValues(alpha: 0.1),
-                    offset: const Offset(0, 2),
-                    blurRadius: 8,
-                  ),
-                ],
-              ),
-              child: IconButton(
-                onPressed: () => context.pop(),
-                icon: Icon(
-                  Icons.arrow_back_ios_rounded,
-                  color: AppColors.acento,
-                  size: 20,
-                ),
-                padding: const EdgeInsets.all(12),
-              ),
-            ),
-            const SizedBox(width: 16),
-            // Título emocional simple (igual que detalle_rutina)
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    TextFormatter.capitalize(exerciseName),
-                    style: EstilosTextoEmocional.energetico.copyWith(
-                      color: AppColors.primario,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    'Serie $serieActual de $totalSeries 💪',
-                    style: EstilosTextoEmocional.amigable.copyWith(
-                      color: AppColors.acento,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            // Indicador de progreso minimalista
-            Container(
-              width: 48,
-              height: 48,
-              decoration: BoxDecoration(
-                color: AppColors.acento,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.acento.withValues(alpha: 0.3),
-                    offset: const Offset(0, 4),
-                    blurRadius: 12,
-                  ),
-                ],
-              ),
-              child: Center(
-                child: Text(
-                  '$serieActual',
-                  style: EstilosTextoEmocional.contador.copyWith(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  // _buildEmotionalHeader eliminado - ahora usamos CabeceraReutilizable
 
   /// Construye la barra motivacional con frase de ánimo
   Widget _buildMotivationalBar(int serieActual, int totalSeries) {
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      margin: Espaciado.rellenoHorizontalMd,
+      padding: Espaciado.rellenoSm,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            AppColors.acento.withOpacity(0.1),
-            AppColors.acento.withOpacity(0.1),
+            AppColors.acento.withValues(alpha: 0.1),
+            AppColors.acentoCalido.withValues(alpha: 0.1),
           ],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
         ),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(Espaciado.xs),
         border: Border.all(
-          color: AppColors.acento.withOpacity(0.2),
+          color: AppColors.acento.withValues(alpha: 0.2),
           width: 1,
         ),
       ),
       child: Row(
+        spacing: Espaciado.sm,
         children: [
           // Icono motivacional
           Container(
-            padding: const EdgeInsets.all(6),
+            padding: EdgeInsets.all(Espaciado.xxs + 2),
             decoration: BoxDecoration(
               color: AppColors.acento,
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(Espaciado.xs),
             ),
             child: const Icon(
               Icons.local_fire_department,
@@ -1095,33 +941,33 @@ class DetalleEjercicioScreen extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(width: 12),
-
           // Mensaje motivacional
           Expanded(
             child: Text(
               _getMotivationalMessage(serieActual, totalSeries),
-              style: EstilosTextoEmocional.motivacional.copyWith(
-                fontSize: 14,
+              style: TextStyle(
+                fontWeight: TipografiaGyMaster.pesoRegular,
+                fontSize: TipografiaGyMaster.tamanoMd,
                 color: AppColors.acento,
-                fontWeight: FontWeight.w600,
               ),
             ),
           ),
 
           // Indicador de progreso
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            padding: EdgeInsets.symmetric(
+              horizontal: Espaciado.xs,
+              vertical: Espaciado.xxs,
+            ),
             decoration: BoxDecoration(
-              color: AppColors.acento.withOpacity(0.2),
-              borderRadius: BorderRadius.circular(12),
+              color: AppColors.acento.withValues(alpha: 0.2),
+              borderRadius: BorderRadius.circular(Espaciado.xs),
             ),
             child: Text(
               '$serieActual/$totalSeries',
               style: EstilosTextoEmocional.contador.copyWith(
                 fontSize: 12,
                 color: AppColors.acento,
-                fontWeight: FontWeight.bold,
               ),
             ),
           ),

@@ -32,6 +32,11 @@ class TipografiaGyMaster {
   /// Títulos principales, hero, números grandes
   static const double tamano3xl = 30.0;
 
+  static const double tamano4xl = 36.0;
+
+  // Números que resalten
+  static const double tamano5xl = 48.0;
+
   // ==============================================
   // PESOS PERMITIDOS (solo estos 2)
   // ==============================================

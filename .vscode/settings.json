@@ -1,7 +1,11 @@
 {
     "editor.wordWrap": "on",
-    "editor.lineHeight": 1.3,
-    "editor.fontFamily": "Dank Mono, google sans code",
+    // "editor.lineHeight": 1.3,
+    // "editor.fontFamily": "Dank Mono, google sans code",
+    "editor.lineHeight": 1.4,
+    "editor.fontFamily": "JetBrains Mono",
+    "editor.fontSize": 13,
+    "editor.fontWeight": "300",
     "editor.tokenColorCustomizations": {
         "textMateRules": [
             // {

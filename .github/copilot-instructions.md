@@ -1364,45 +1364,67 @@ Siempre que diseñes o modifiques interfaces en GyMaster, sigue estas reglas par
 
 ## 2. Regla de Espaciado de 8 Puntos
 
-- Usa SIEMPRE múltiplos de 8 para márgenes, paddings y separación entre elementos: `0, 8, 16, 24, 32, 40, 48...`
+- Usa SIEMPRE múltiplos de 8 para márgenes, paddings y separación entre elementos: `0, 4, 8, 16, 24, 32, 40, 48...`
 - Esto mantiene la interfaz ordenada, consistente y fácil de escalar.
+
+```dart
+  // ==============================================
+  // ESPACIADOS BÁSICOS (múltiplos de 8)
+  // ==============================================
+
+  static const double cero = 0;
+  static const double xxs = 4; // Extra extra pequeño
+  static const double xs = 8; // Extra pequeño
+  static const double sm = 16; // Pequeño
+  static const double md = 24; // Mediano
+  static const double lg = 32; // Grande
+  static const double xl = 40; // Extra grande
+  static const double xxl = 48; // Extra extra grande
+  static const double xxxl = 56; // Triple extra grande
+```
 
 ## 3. Tipografía (Regla estricta)
 
 - Solo puedes usar **6 tamaños de fuente**: 12, 14, 16, 18, 20 y 24 px (ajustables a tu tema, pero solo estos)
-- Solo puedes usar **2 pesos**: Light (300) y SemiBold (600), y sus variantes itálicas
+- Solo puedes usar **3 pesos**: Light (300), Regular (400) y SemiBold (600), y sus variantes itálicas
 - No se permite usar otros tamaños ni otros pesos
 
 ```dart
-// TAMAÑOS PERMITIDOS (solo estos 6)
+  // ==============================================
+  // TAMAÑOS PERMITIDOS (solo estos 6)
+  // ==============================================
+  /// Etiquetas, ayudas, info secundaria, badges
+  static const double tamanoXs = 12.0;
+
+  /// Texto de botones, inputs, subtítulos secundarios
+  static const double tamanoSm = 14.0;
+
+  /// Texto base, párrafos, descripciones principales
+  static const double tamanoMd = 16.0;
+
+  /// Subtítulos, encabezados de sección, cards
+  static const double tamanoLg = 18.0;
+
+  /// Títulos destacados, headers de pantalla
+  static const double tamanoXl = 20.0;
+
+  /// Títulos principales, hero, números grandes
+  static const double tamano2xl = 24.0;
+
 // ==============================================
-/// Etiquetas, ayudas, info secundaria, badges
-static const double tamanoXs = 12.0;
-
-/// Texto de botones, inputs, subtítulos secundarios
-static const double tamanoSm = 14.0;
-
-/// Texto base, párrafos, descripciones principales
-static const double tamanoMd = 16.0;
-
-/// Subtítulos, encabezados de sección, cards
-static const double tamanoLg = 18.0;
-
-/// Títulos destacados, headers de pantalla
-static const double tamanoXl = 20.0;
-
-/// Títulos principales, hero, números grandes
-static const double tamano2xl = 24.0;
-
-// ==============================================
-// PESOS PERMITIDOS (solo estos 2)
+// PESOS PERMITIDOS (solo estos 3)
 // ==============================================
 
 /// Peso ligero para lectura cómoda
 static const FontWeight pesoLigero = FontWeight.w300; // Light
 
+/// Peso regular para texto base
+static const FontWeight pesoRegular = FontWeight.w400; // Regular
+
 /// Peso semi-bold para énfasis y jerarquía
 static const FontWeight pesoSemiBold = FontWeight.w600; // SemiBold
+
+
 ```
 
 ## 4. Buenas prácticas GyMaster
