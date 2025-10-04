@@ -5,12 +5,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/core/theme/emotional_text_styles.dart';
+import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/features/exercise/domain/entities/exercise.dart';
 import 'package:gymaster/features/exercise/presentation/cubits/favorito_ejercicio_cubit.dart';
 import 'package:gymaster/features/exercise/presentation/cubits/favorito_ejercicio_state.dart';
 import 'package:gymaster/shared/utils/string_utils.dart';
 import 'package:gymaster/shared/utils/verificador_tipo_archivo.dart';
 import 'package:gymaster/shared/widgets/cabecera_reutilizable.dart';
+import 'package:gymaster/shared/widgets/chiclet_button.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -413,39 +415,31 @@ class _FavoritesPageState extends State<FavoritesPage>
                 const SizedBox(height: 24),
                 Text(
                   '¡Aún no tienes favoritos!',
-                  style: EstilosTextoEmocional.motivacional.copyWith(
-                    fontSize: 24,
-                    color: AppColors.textoPrincipal,
+                  style: TextStyle(
+                    fontWeight: TipografiaGyMaster.pesoSemiBold,
+                    fontSize: TipografiaGyMaster.tamano2xl,
+                    color: AppColors.primario,
                   ),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 12),
                 Text(
                   'Explora el catálogo de ejercicios y agrega tus favoritos tocando el ❤️ en cada ejercicio.',
-                  style: EstilosTextoEmocional.recuperacion.copyWith(
-                    fontSize: 16,
+                  style: TextStyle(
+                    fontWeight: TipografiaGyMaster.pesoRegular,
+                    fontSize: TipografiaGyMaster.tamanoMd,
                     color: AppColors.textoTerciario,
                   ),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 32),
-                ElevatedButton.icon(
+                ChicletButton(
+                  texto: 'Explorar Ejercicios',
+                  icono: IconsaxPlusLinear.search_normal_1,
+                  colorFondo: AppColors.primario,
                   onPressed: () {
                     context.push('/exercise-catalog');
                   },
-                  icon: Icon(IconsaxPlusLinear.search_normal_1),
-                  label: Text('Explorar Ejercicios'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primario,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 24,
-                      vertical: 12,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
                 ),
               ],
             ),
