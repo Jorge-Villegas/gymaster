@@ -10,6 +10,7 @@ Future<void> initDependencies() async {
   _initRecord();
   _initExercise();
   _initEmotionalSystem();
+  _initEstadisticas();
 }
 
 void _initDatabaseHelper() {
@@ -259,6 +260,47 @@ void _initEmotionalSystem() {
       () => AchievementCubit(
         getAchievementUseCase: serviceLocator(),
         achievementRepository: serviceLocator(),
+      ),
+    );
+}
+
+/// Inicializa las dependencias del feature de estadísticas
+void _initEstadisticas() {
+  serviceLocator
+    // Data Layer
+    ..registerFactory<EstadisticasLocalDataSource>(
+      () => EstadisticasLocalDataSource(serviceLocator()),
+    )
+
+    // Domain Layer - Repository
+    ..registerFactory<EstadisticasRepository>(
+      () => EstadisticasRepositoryImpl(serviceLocator()),
+    )
+
+    // Domain Layer - UseCases
+    ..registerFactory(
+      () => ObtenerProgresoEjercicioUseCase(serviceLocator()),
+    )
+    ..registerFactory(
+      () => ObtenerDistribucionMuscularUseCase(serviceLocator()),
+    )
+    ..registerFactory(
+      () => ObtenerRankingEjerciciosUseCase(serviceLocator()),
+    )
+    ..registerFactory(
+      () => ObtenerMusculosOlvidadosUseCase(serviceLocator()),
+    )
+    ..registerFactory(
+      () => ObtenerResumenGeneralUseCase(serviceLocator()),
+    )
+
+    // Presentation Layer - Cubit
+    ..registerFactory(
+      () => EstadisticasCubit(
+        obtenerDistribucionMuscularUseCase: serviceLocator(),
+        obtenerRankingEjerciciosUseCase: serviceLocator(),
+        obtenerMusculosOlvidadosUseCase: serviceLocator(),
+        obtenerResumenGeneralUseCase: serviceLocator(),
       ),
     );
 }

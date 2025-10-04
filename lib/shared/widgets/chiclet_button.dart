@@ -220,17 +220,12 @@ class _ChicletButtonState extends State<ChicletButton>
           if (widget.texto.isNotEmpty) const SizedBox(width: 8),
         ],
         if (widget.texto.isNotEmpty)
-          Flexible(
-            child: Text(
-              widget.texto,
-              style: TextStyle(
-                color: configuracionColor.colorTexto,
-                fontWeight: FontWeight.bold,
-                fontSize: configuracionTamano.tamanoFuente,
-              ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              softWrap: false,
+          Text(
+            widget.texto,
+            style: TextStyle(
+              color: configuracionColor.colorTexto,
+              fontWeight: FontWeight.bold,
+              fontSize: configuracionTamano.tamanoFuente,
             ),
           ),
       ],

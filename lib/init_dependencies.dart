@@ -84,6 +84,17 @@ import 'package:gymaster/features/setting/presentation/cubits/achievement_cubit.
 import 'package:gymaster/features/setting/presentation/cubits/app_start/app_start_cubit.dart';
 import 'package:gymaster/features/setting/presentation/cubits/onboarding/onboarding_cubit.dart';
 
+// Estadísticas imports
+import 'package:gymaster/features/estadisticas/data/datasources/estadisticas_local_data_source.dart';
+import 'package:gymaster/features/estadisticas/data/repositories/estadisticas_repository_impl.dart';
+import 'package:gymaster/features/estadisticas/domain/repositories/estadisticas_repository.dart';
+import 'package:gymaster/features/estadisticas/domain/usecases/obtener_progreso_ejercicio_usecase.dart';
+import 'package:gymaster/features/estadisticas/domain/usecases/obtener_distribucion_muscular_usecase.dart';
+import 'package:gymaster/features/estadisticas/domain/usecases/obtener_ranking_ejercicios_usecase.dart';
+import 'package:gymaster/features/estadisticas/domain/usecases/obtener_musculos_olvidados_usecase.dart';
+import 'package:gymaster/features/estadisticas/domain/usecases/obtener_resumen_general_usecase.dart';
+import 'package:gymaster/features/estadisticas/presentation/cubits/estadisticas_cubit.dart';
+
 import 'package:gymaster/shared/utils/uuid_generator.dart';
 
 part 'init_dependencies.main.dart';

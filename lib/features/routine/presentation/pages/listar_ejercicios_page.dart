@@ -346,9 +346,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
         child: SafeArea(
           child: Column(
             children: [
-              // Header emocional personalizado
               _construirHeaderEmocional(context),
-              // Lista de músculos
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -589,124 +587,137 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                 color: Colors.transparent,
                 child: InkWell(
                   borderRadius: BorderRadius.circular(16),
-                  onTap: () => _navegarAAgregarEjercicio(context, ejercicio.id,
-                      ejercicio.nombre, ejercicio.imagenDireccion),
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Row(
-                      children: [
-                        // Avatar del músculo con diseño emocional
-                        Container(
-                          width: 64,
-                          height: 64,
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFEEEEEE),
-                            borderRadius: BorderRadius.circular(16),
-                            boxShadow: [
-                              BoxShadow(
-                                color:
-                                    AppColors.primario.withValues(alpha: 0.1),
-                                blurRadius: 8,
-                                offset: const Offset(0, 2),
-                              ),
-                            ],
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(15),
-                            child: ejercicio.imagenDireccion != null &&
-                                    ejercicio.imagenDireccion!.isNotEmpty
-                                ? (isSvg
-                                    ? Padding(
-                                        padding: const EdgeInsets.all(12.0),
-                                        child: SvgPicture.asset(
-                                          ejercicio.imagenDireccion!,
-                                          fit: BoxFit.contain,
-                                          colorFilter: ColorFilter.mode(
-                                            AppColors.primario,
-                                            BlendMode.srcIn,
+                  onTap: ejercicio.seleccionado
+                      ? null // Deshabilitado si ya está agregado
+                      : () => _navegarAAgregarEjercicio(context, ejercicio.id,
+                          ejercicio.nombre, ejercicio.imagenDireccion),
+                  child: Opacity(
+                    opacity: ejercicio.seleccionado ? 0.5 : 1.0,
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Row(
+                        children: [
+                          /// Avatar del músculo con diseño emocional
+                          Container(
+                            width: 64,
+                            height: 64,
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFEEEEEE),
+                              borderRadius: BorderRadius.circular(16),
+                              boxShadow: [
+                                BoxShadow(
+                                  color:
+                                      AppColors.primario.withValues(alpha: 0.1),
+                                  blurRadius: 8,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(15),
+                              child: ejercicio.imagenDireccion != null &&
+                                      ejercicio.imagenDireccion!.isNotEmpty
+                                  ? (isSvg
+                                      ? Padding(
+                                          padding: const EdgeInsets.all(12.0),
+                                          child: SvgPicture.asset(
+                                            ejercicio.imagenDireccion!,
+                                            fit: BoxFit.contain,
+                                            colorFilter: ColorFilter.mode(
+                                              AppColors.primario,
+                                              BlendMode.srcIn,
+                                            ),
                                           ),
-                                        ),
-                                      )
-                                    : Image.asset(
-                                        ejercicio.imagenDireccion!,
-                                        fit: BoxFit.cover,
-                                        width: 64,
-                                        height: 64,
-                                        errorBuilder:
-                                            (context, error, stackTrace) {
-                                          return Container(
-                                            width: 64,
-                                            height: 64,
-                                            decoration: BoxDecoration(
-                                              color: AppColors.primario
-                                                  .withValues(alpha: 0.1),
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                            ),
-                                            child: Icon(
-                                              IconsaxPlusLinear.weight,
-                                              color: AppColors.primario,
-                                              size: 24,
-                                            ),
-                                          );
-                                        },
-                                      ))
-                                : Container(
-                                    width: 64,
-                                    height: 64,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.primario
-                                          .withValues(alpha: 0.1),
-                                      borderRadius: BorderRadius.circular(15),
+                                        )
+                                      : Image.asset(
+                                          ejercicio.imagenDireccion!,
+                                          fit: BoxFit.cover,
+                                          width: 64,
+                                          height: 64,
+                                          errorBuilder:
+                                              (context, error, stackTrace) {
+                                            return Container(
+                                              width: 64,
+                                              height: 64,
+                                              decoration: BoxDecoration(
+                                                color: AppColors.primario
+                                                    .withValues(alpha: 0.1),
+                                                borderRadius:
+                                                    BorderRadius.circular(15),
+                                              ),
+                                              child: Icon(
+                                                IconsaxPlusLinear.weight,
+                                                color: AppColors.primario,
+                                                size: 24,
+                                              ),
+                                            );
+                                          },
+                                        ))
+                                  : Container(
+                                      width: 64,
+                                      height: 64,
+                                      decoration: BoxDecoration(
+                                        color: AppColors.primario
+                                            .withValues(alpha: 0.1),
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      child: Icon(
+                                        IconsaxPlusLinear.weight,
+                                        color: AppColors.primario,
+                                        size: 24,
+                                      ),
                                     ),
-                                    child: Icon(
-                                      IconsaxPlusLinear.weight,
-                                      color: AppColors.primario,
-                                      size: 24,
-                                    ),
+                            ),
+                          ),
+                          const SizedBox(width: 20),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  TextFormatter.capitalize(ejercicio.nombre),
+                                  style: TextStyle(
+                                    fontSize: TipografiaGyMaster.tamanoMd,
+                                    fontWeight: TipografiaGyMaster.pesoSemiBold,
+                                    color: AppColors.primario,
+                                    height: 1.1,
                                   ),
-                          ),
-                        ),
-                        const SizedBox(width: 20),
-                        // Información del músculo con tipografía emocional
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                TextFormatter.capitalize(ejercicio.nombre),
-                                style: TextStyle(
-                                  fontSize: TipografiaGyMaster.tamanoMd,
-                                  fontWeight: TipografiaGyMaster.pesoSemiBold,
-                                  color: AppColors.primario,
-                                  height: 1.1,
                                 ),
-                              ),
-                              const SizedBox(height: 6),
-                              Text(
-                                TextFormatter.capitalize(widget.nombreMusculo),
-                                style: EstilosTextoEmocional.amigable.copyWith(
-                                  color: AppColors.textoTerciario,
-                                  fontSize: 14,
+                                const SizedBox(height: 6),
+                                Text(
+                                  TextFormatter.capitalize(
+                                      widget.nombreMusculo),
+                                  style:
+                                      EstilosTextoEmocional.amigable.copyWith(
+                                    color: AppColors.textoTerciario,
+                                    fontSize: 14,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                        // Indicador de acción con diseño emocional
-                        Container(
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            color: AppColors.acento.withValues(alpha: 0.15),
-                            borderRadius: BorderRadius.circular(12),
+
+                          /// Indicador de acción
+                          Container(
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              color: ejercicio.seleccionado
+                                  ? AppColors.exito.withValues(alpha: 0.15)
+                                  : AppColors.acento.withValues(alpha: 0.15),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Icon(
+                              ejercicio.seleccionado
+                                  ? Icons.check_circle_rounded
+                                  : Icons.fitness_center_rounded,
+                              size: 18,
+                              color: ejercicio.seleccionado
+                                  ? AppColors.exito
+                                  : AppColors.acento,
+                            ),
                           ),
-                          child: Icon(
-                            Icons.fitness_center_rounded,
-                            size: 18,
-                            color: AppColors.acento,
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),

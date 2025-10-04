@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/features/exercise/presentation/pages/exercise_catalog_page.dart';
 import 'package:gymaster/features/exercise/presentation/pages/favorites_page.dart';
-import 'package:gymaster/features/record/presentation/pages/historial_ejercicios_page.dart';
+import 'package:gymaster/features/record/presentation/pages/historial_con_estadisticas_page.dart';
 import 'package:gymaster/features/routine/presentation/pages/lista_rutina_page.dart';
 import 'package:gymaster/features/setting/presentation/pages/setting_page.dart';
 import 'package:gymaster/shared/widgets/pagina_con_menu_lateral.dart';
@@ -46,7 +46,7 @@ class _BottomNavigationBarExampleState
     const ListaRutinasPage(),
     const FavoritesPage(),
     const ExerciseCatalogPage(), // Nueva página de catálogo
-    HistorialEjerciciosPage(),
+    const HistorialConEstadisticasPage(),
     const SettingPage(),
   ];
 

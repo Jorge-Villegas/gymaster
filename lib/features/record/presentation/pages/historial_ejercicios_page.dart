@@ -8,6 +8,7 @@ import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/features/record/presentation/cubit/record_cubit.dart';
 import 'package:gymaster/features/record/presentation/cubit/record_state.dart';
 import 'package:gymaster/features/record/presentation/pages/detalle_ejercicio_page.dart';
+import 'package:gymaster/generated/l10n.dart';
 import 'package:gymaster/shared/utils/snackbar_helper.dart';
 import 'package:gymaster/shared/utils/string_utils.dart';
 import 'package:gymaster/shared/widgets/cabecera_reutilizable.dart';
@@ -61,9 +62,8 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
       body: SafeArea(
         child: Column(
           children: [
-            // Header emocional mejorado
-            _construirCabeceraReutilizable(context),
-            // Contenido principal con gradiente
+            // _construirCabeceraReutilizable(context),
+            SizedBox(height: Espaciado.md),
             Expanded(
               child: Container(
                 color: AppColors.fondoPrincipalClaro,
@@ -101,7 +101,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
         ),
         child: Column(
           children: [
-            // Selector de fecha mejorado
+            // Selector de fecha
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -182,7 +182,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                 ),
               ],
             ),
-            // Calendario mejorado con animación
+            // Calendario con animación
             if (_isCalendarVisible)
               FadeInUp(
                 duration: const Duration(milliseconds: 400),
@@ -209,7 +209,6 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                     enabledDayPredicate: (day) {
                       return _hasRutina(day);
                     },
-                    // Estilos mejorados del calendario
                     headerStyle: HeaderStyle(
                       formatButtonVisible: false,
                       titleCentered: true,
@@ -341,7 +340,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                     spacing: Espaciado.sm,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Header de la rutina mejorado
+                      // Header de la rutina
                       Container(
                         padding: Espaciado.rellenoSm,
                         decoration: BoxDecoration(
@@ -604,7 +603,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
       if (_hasRutina(nextDate)) {
         setState(() {
           selectedDate = nextDate;
-          _isMessageShown = false; // Reiniciar el control de mensajes
+          _isMessageShown = false;
         });
         foundNextRoutine = true;
         break;
@@ -613,7 +612,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
     }
 
     if (!foundNextRoutine && !_isMessageShown) {
-      _isMessageShown = true; // Evitar mensajes repetidos
+      _isMessageShown = true;
 
       SnackbarHelper.showSafeSnackBar(
         context,
@@ -639,7 +638,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
       if (_hasRutina(previousDate)) {
         setState(() {
           selectedDate = previousDate;
-          _isMessageShown = false; // Reiniciar el control de mensajes
+          _isMessageShown = false;
         });
         foundPreviousRoutine = true;
         break;
@@ -648,7 +647,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
     }
 
     if (!foundPreviousRoutine && !_isMessageShown) {
-      _isMessageShown = true; // Evitar mensajes repetidos
+      _isMessageShown = true;
       SnackbarHelper.showSafeSnackBar(
         context,
         "No hay más rutinas registradas antes de esta fecha.",
@@ -657,7 +656,6 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
     }
   }
 
-  // Estados mejorados siguiendo el patrón de detalle_ejercicio_page
   Widget _buildLoadingState() {
     return Center(
       child: Column(
@@ -685,41 +683,44 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
     return FadeInUp(
       duration: const Duration(milliseconds: 600),
       child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              padding: Espaciado.rellenoXl,
-              decoration: BoxDecoration(
-                color: AppColors.primario.withValues(alpha: 0.1),
-                shape: BoxShape.circle,
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                padding: Espaciado.rellenoXl,
+                decoration: BoxDecoration(
+                  color: AppColors.primario.withValues(alpha: 0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  IconsaxPlusLinear.calendar_remove,
+                  size: 64,
+                  color: AppColors.primario,
+                ),
               ),
-              child: Icon(
-                IconsaxPlusLinear.calendar_remove,
-                size: 64,
-                color: AppColors.primario,
+              Espaciado.separacionVerticalMd,
+              Text(
+                'Sin rutinas esta fecha',
+                style: TextStyle(
+                  fontSize: TipografiaGyMaster.tamanoXl,
+                  fontWeight: TipografiaGyMaster.pesoSemiBold,
+                  color: AppColors.primario,
+                ),
               ),
-            ),
-            Espaciado.separacionVerticalMd,
-            Text(
-              'Sin rutinas esta fecha',
-              style: TextStyle(
-                fontSize: TipografiaGyMaster.tamanoXl,
-                fontWeight: TipografiaGyMaster.pesoSemiBold,
-                color: AppColors.primario,
+              Espaciado.separacionVerticalSm,
+              Text(
+                'No hay rutinas registradas para\n${DateFormat.yMMMMd('es').format(selectedDate)}',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: TipografiaGyMaster.tamanoSm,
+                  fontWeight: TipografiaGyMaster.pesoRegular,
+                  color: AppColors.textoTerciario,
+                ),
               ),
-            ),
-            Espaciado.separacionVerticalSm,
-            Text(
-              'No hay rutinas registradas para\n${DateFormat.yMMMMd('es').format(selectedDate)}',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: TipografiaGyMaster.tamanoSm,
-                fontWeight: TipografiaGyMaster.pesoRegular,
-                color: AppColors.textoTerciario,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
