@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/core/theme/emotional_text_styles.dart';
-import 'package:gymaster/core/theme/espaciado.dart';
 import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/shared/utils/haptic_feedback_helper.dart';
 import 'package:gymaster/shared/utils/audio_feedback_helper.dart';
@@ -29,6 +28,80 @@ class EjerciciosLlenosWidget extends StatelessWidget {
         );
   }
 
+  /// Construye el botón de iniciar entrenamiento cuando está pendiente
+  Widget _buildBotonIniciar(
+    BuildContext context,
+    EjerciciosByRutinaSuccess state,
+    EjerciciosDeRutina ejerciciosDeRutina,
+  ) {
+    return SizedBox(
+      width: double.infinity,
+      child: ChicletButton(
+        onPressed: () {
+          iniciarRutina(
+            context,
+            state.ejerciciosDeRutina.session,
+            state.ejerciciosDeRutina.rutinaId,
+          );
+          context.push('/detalle-ejercicio');
+        },
+        texto: '¡Iniciar entrenamiento!',
+        icono: IconsaxPlusLinear.play,
+        tamano: TamanoBotonChiclet.grande,
+        estilo: EstiloBotonChiclet.relleno,
+        colorFondo: AppColors.exito,
+        conSombreado: true,
+        grosorSombreado: 6.0,
+      ),
+    );
+  }
+
+  Widget _buildBotonesEnProgreso(
+    BuildContext context,
+    EjerciciosByRutinaSuccess state,
+  ) {
+    return Row(
+      children: [
+        // Botón de Continuar Entrenamiento
+        Expanded(
+          flex: 5,
+          child: ChicletButton(
+            onPressed: () {
+              HapticFeedbackHelper.vibracionSeleccion();
+              context.push('/detalle-ejercicio');
+            },
+            texto: 'Continuar',
+            icono: IconsaxPlusLinear.play,
+            tamano: TamanoBotonChiclet.grande,
+            estilo: EstiloBotonChiclet.relleno,
+            colorFondo: AppColors.exito,
+            conSombreado: true,
+            grosorSombreado: 6.0,
+          ),
+        ),
+        const SizedBox(width: 12),
+        // Botón de Pausar Entrenamiento
+        Expanded(
+          flex: 4,
+          child: ChicletButton(
+            onPressed: () {
+              mostrarDialogoPararEntrenamiento(
+                context,
+                state.ejerciciosDeRutina.session,
+              );
+            },
+            texto: 'Pausar',
+            icono: IconsaxPlusLinear.pause,
+            tamano: TamanoBotonChiclet.grande,
+            estilo: EstiloBotonChiclet.relleno,
+            colorFondo: AppColors.acento,
+            conSombreado: true,
+          ),
+        ),
+      ],
+    );
+  }
+
   void mostrarDialogoPararEntrenamiento(
       BuildContext context, String sessionId) {
     showDialog(
@@ -50,10 +123,11 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                 // Título emocional
                 Text(
                   '¿Pausar entrenamiento?',
-                  style: EstilosTextoEmocional.energetico.copyWith(
+                  style: TextStyle(
                     color: AppColors.primario,
                     fontSize: TipografiaGyMaster.titulo.fontSize,
                     fontWeight: TipografiaGyMaster.pesoSemiBold,
+                    height: 1.1,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -61,9 +135,11 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                 // Mensaje motivacional
                 Text(
                   '¡No te rindas ahora! Tu progreso se guardará.',
-                  style: EstilosTextoEmocional.amigable.copyWith(
+                  style: TextStyle(
                     color: AppColors.textoTerciario,
                     fontSize: TipografiaGyMaster.textoPrincipal.fontSize,
+                    fontWeight: TipografiaGyMaster.pesoLigero,
+                    height: 1.3,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -75,8 +151,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                       child: ChicletButton(
                         onPressed: () => context.pop(),
                         texto: 'Continuar',
-                        icono: Icons.fitness_center_rounded,
-                        tamano: TamanoBotonChiclet.mediano,
+                        tamano: TamanoBotonChiclet.pequeno,
                         estilo: EstiloBotonChiclet.contorno,
                         colorBorde: AppColors.exito,
                         colorTexto: AppColors.exito,
@@ -92,8 +167,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                           context.pop();
                         },
                         texto: 'Pausar',
-                        icono: Icons.pause_rounded,
-                        tamano: TamanoBotonChiclet.mediano,
+                        tamano: TamanoBotonChiclet.pequeno,
                         estilo: EstiloBotonChiclet.relleno,
                         colorFondo: AppColors.acento,
                       ),
@@ -130,59 +204,19 @@ class EjerciciosLlenosWidget extends StatelessWidget {
     EjerciciosDeRutina ejerciciosDeRutina,
     EjerciciosByRutinaSuccess state,
   ) {
-    String getButtonText = 'Estado desconocido';
-    IconData getIconPath = Icons.error;
-    Color getButtonColor = Colors.grey;
-
-    if (ejerciciosDeRutina.estado == EstadoSesionRutina.pendiente.name ||
-        ejerciciosDeRutina.estado == EstadoSesionRutina.completado.name ||
-        ejerciciosDeRutina.estado == EstadoSesionRutina.cancelado.name) {
-      getButtonText = '¡Iniciar entrenamiento!';
-      getIconPath = IconsaxPlusLinear.play;
-      getButtonColor = AppColors.exito;
-    }
-    if (ejerciciosDeRutina.estado == EstadoSesionRutina.en_progreso.name) {
-      getButtonText = 'Pausar entrenamiento';
-      getIconPath = IconsaxPlusLinear.stop;
-      getButtonColor = AppColors.acento;
-    }
+    final bool enProgreso =
+        ejerciciosDeRutina.estado == EstadoSesionRutina.en_progreso.name;
 
     return Column(
       children: [
-        // Botón principal de acción con ChicletButton
+        // Botones de acción (uno o dos según el estado)
         FadeInDown(
           duration: const Duration(milliseconds: 600),
-          child: Container(
-            width: double.infinity,
-            margin: const EdgeInsets.all(16),
-            child: ChicletButton(
-              onPressed: () {
-                if (ejerciciosDeRutina.estado ==
-                    EstadoSesionRutina.pendiente.name) {
-                  iniciarRutina(
-                    context,
-                    state.ejerciciosDeRutina.session,
-                    state.ejerciciosDeRutina.rutinaId,
-                  );
-                  context.push('/detalle-ejercicio');
-                }
-
-                if (ejerciciosDeRutina.estado ==
-                    EstadoSesionRutina.en_progreso.name) {
-                  mostrarDialogoPararEntrenamiento(
-                    context,
-                    state.ejerciciosDeRutina.session,
-                  );
-                }
-              },
-              texto: getButtonText,
-              icono: getIconPath,
-              tamano: TamanoBotonChiclet.grande,
-              estilo: EstiloBotonChiclet.relleno,
-              colorFondo: getButtonColor,
-              conSombreado: true,
-              grosorSombreado: 6.0,
-            ),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: enProgreso
+                ? _buildBotonesEnProgreso(context, state)
+                : _buildBotonIniciar(context, state, ejerciciosDeRutina),
           ),
         ),
         // Header de contador de ejercicios

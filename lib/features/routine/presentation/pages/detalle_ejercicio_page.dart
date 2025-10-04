@@ -169,7 +169,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(Espaciado.sm),
-            gradient: AppColors.gradientePrimario,
+            color: AppColors.fondoTarjeta, // Solo color de fondo, sin gradiente
             boxShadow: AppColors.sombraSuave,
           ),
           clipBehavior: Clip.antiAlias,
