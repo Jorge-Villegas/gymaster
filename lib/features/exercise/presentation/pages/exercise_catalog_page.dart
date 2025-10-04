@@ -589,14 +589,8 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
     if (imagePath.isEmpty) {
       return Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              AppColors.secundarioClaro.withValues(alpha: 0.1),
-              AppColors.primario.withValues(alpha: 0.1),
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
+          color: AppColors.secundarioClaro
+              .withValues(alpha: 0.1), // Solo color de fondo, sin gradiente
         ),
         child: Icon(
           IconsaxPlusLinear.weight,
@@ -609,20 +603,13 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
     if (VerificadorTipoArchivo.esSvg(imagePath)) {
       return Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              AppColors.primario.withValues(alpha: 0.05),
-              AppColors.acento.withValues(alpha: 0.05),
-            ],
-          ),
+          color: Color.fromRGBO(236, 238, 240, 1),
         ),
         child: SvgPicture.asset(
           imagePath,
           fit: BoxFit.cover,
           colorFilter: ColorFilter.mode(
-            AppColors.primario.withValues(alpha: 0.8),
+            AppColors.fondoPrincipalOscuro.withValues(alpha: 0.8),
             BlendMode.srcATop,
           ),
         ),
@@ -631,14 +618,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
 
     return Container(
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            AppColors.primario.withValues(alpha: 0.05),
-            AppColors.acento.withValues(alpha: 0.05),
-          ],
-        ),
+        color: const Color.fromRGBO(236, 238, 240, 1),
       ),
       child: Image.asset(
         imagePath,
@@ -646,14 +626,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
         errorBuilder: (context, error, stackTrace) {
           return Container(
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  AppColors.acento.withValues(alpha: 0.1),
-                  AppColors.acento.withValues(alpha: 0.1),
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
+              color: AppColors.acento.withValues(alpha: 0.1),
             ),
             child: Icon(
               IconsaxPlusLinear.danger,
@@ -729,21 +702,4 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
       },
     );
   }
-
-  /// Muestra diálogo de filtros avanzados (placeholder)
-  // Objetivo futuro: Filtros avanzados
-  // void _mostrarFiltrosAvanzados() {
-  //   // TODO: Implementar filtros avanzados
-  //   ScaffoldMessenger.of(context).showSnackBar(
-  //     SnackBar(
-  //       content: Text(
-  //         '¡Filtros avanzados próximamente! 🚀',
-  //         style: EstilosTextoEmocional.aliento.copyWith(color: Colors.white),
-  //       ),
-  //       backgroundColor: AppColors.acento,
-  //       behavior: SnackBarBehavior.floating,
-  //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-  //     ),
-  //   );
-  // }
 }

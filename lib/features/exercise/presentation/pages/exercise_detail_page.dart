@@ -595,7 +595,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
           imagePath,
           fit: BoxFit.cover,
           colorFilter: ColorFilter.mode(
-            AppColors.primario.withValues(alpha: 0.8),
+            AppColors.fondoPrincipalOscuro.withValues(alpha: 0.8),
             BlendMode.srcATop,
           ),
         ),
