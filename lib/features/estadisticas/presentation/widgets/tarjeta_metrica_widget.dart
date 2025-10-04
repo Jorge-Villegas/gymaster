@@ -33,7 +33,7 @@ class TarjetaMetricaWidget extends StatelessWidget {
       child: Container(
         padding: Espaciado.rellenoSm,
         decoration: BoxDecoration(
-          color: AppColors.fondoTarjetaClaro,
+          color: AppColors.fondoTarjeta,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
             color: AppColors.borde.withValues(alpha: 0.2),
@@ -56,7 +56,7 @@ class TarjetaMetricaWidget extends StatelessWidget {
               style: TextStyle(
                 fontSize: TipografiaGyMaster.tamanoXs,
                 fontWeight: TipografiaGyMaster.pesoRegular,
-                color: AppColors.textoSecundarioOscuro,
+                color: AppColors.textoSecundario,
                 height: 1.3,
               ),
               maxLines: 2,
@@ -78,7 +78,7 @@ class TarjetaMetricaWidget extends StatelessWidget {
                         style: TextStyle(
                           fontSize: TipografiaGyMaster.tamano3xl,
                           fontWeight: TipografiaGyMaster.pesoSemiBold,
-                          color: AppColors.textoPrincipalOscuro,
+                          color: AppColors.textoPrincipal,
                           height: 1.0,
                           letterSpacing: -0.5,
                         ),
@@ -91,7 +91,7 @@ class TarjetaMetricaWidget extends StatelessWidget {
                           style: TextStyle(
                             fontSize: TipografiaGyMaster.tamanoXs,
                             fontWeight: TipografiaGyMaster.pesoRegular,
-                            color: AppColors.textoTerciarioOscuro,
+                            color: AppColors.textoTerciario,
                             height: 1.2,
                           ),
                         ),

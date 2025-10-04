@@ -64,7 +64,7 @@ class _FavoritesPageState extends State<FavoritesPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      backgroundColor: AppColors.fondoPrincipal,
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
@@ -82,9 +82,9 @@ class _FavoritesPageState extends State<FavoritesPage>
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              AppColors.fondoPrincipalClaro,
+              AppColors.fondoPrincipal,
               Colors.white,
-              AppColors.fondoPrincipalClaro.withValues(alpha: 0.8),
+              AppColors.fondoPrincipal.withValues(alpha: 0.8),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -335,7 +335,7 @@ class _FavoritesPageState extends State<FavoritesPage>
                 'Remover Favorito',
                 style: EstilosTextoEmocional.energetico.copyWith(
                   fontSize: 18,
-                  color: AppColors.textoPrincipalOscuro,
+                  color: AppColors.textoPrincipal,
                 ),
               ),
             ),
@@ -415,7 +415,7 @@ class _FavoritesPageState extends State<FavoritesPage>
                   '¡Aún no tienes favoritos!',
                   style: EstilosTextoEmocional.motivacional.copyWith(
                     fontSize: 24,
-                    color: AppColors.textoPrincipalOscuro,
+                    color: AppColors.textoPrincipal,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -561,7 +561,7 @@ class _FavoritesPageState extends State<FavoritesPage>
                   'Oops! Algo salió mal',
                   style: EstilosTextoEmocional.motivacional.copyWith(
                     fontSize: 24,
-                    color: AppColors.textoPrincipalOscuro,
+                    color: AppColors.textoPrincipal,
                   ),
                   textAlign: TextAlign.center,
                 ),

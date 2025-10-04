@@ -21,7 +21,7 @@ class EstadisticasPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.fondoPrincipalClaro,
+      backgroundColor: AppColors.fondoPrincipal,
       body: BlocBuilder<EstadisticasCubit, EstadisticasState>(
         builder: (context, state) {
           return switch (state) {
@@ -139,7 +139,7 @@ class EstadisticasPage extends StatelessWidget {
           style: TextStyle(
             fontSize: TipografiaGyMaster.tamanoLg,
             fontWeight: TipografiaGyMaster.pesoSemiBold,
-            color: AppColors.textoPrincipalOscuro,
+            color: AppColors.textoPrincipal,
             height: 1.4,
           ),
         ),
@@ -198,7 +198,7 @@ class EstadisticasPage extends StatelessWidget {
           style: TextStyle(
             fontSize: TipografiaGyMaster.tamanoLg,
             fontWeight: TipografiaGyMaster.pesoSemiBold,
-            color: AppColors.textoPrincipalOscuro,
+            color: AppColors.textoPrincipal,
             height: 1.4,
           ),
         ),
@@ -209,7 +209,7 @@ class EstadisticasPage extends StatelessWidget {
           height: 300,
           padding: Espaciado.rellenoMd,
           decoration: BoxDecoration(
-            color: AppColors.superficie,
+            color: AppColors.superficieOscura,
             borderRadius: BorderRadius.circular(Espaciado.md),
             border: Border.all(color: AppColors.borde, width: 1),
           ),
@@ -246,7 +246,7 @@ class EstadisticasPage extends StatelessWidget {
               style: TipografiaGyMaster.textoPrincipal.copyWith(
                 fontSize: TipografiaGyMaster.tamano2xl,
                 fontWeight: TipografiaGyMaster.pesoSemiBold,
-                color: AppColors.textoSecundario,
+                color: AppColors.textoSecundarioClaro,
               ),
             ),
             SizedBox(height: Espaciado.md),
@@ -317,7 +317,7 @@ class EstadisticasPage extends StatelessWidget {
               mensaje,
               style: TextStyle(
                 fontSize: TipografiaGyMaster.tamanoMd,
-                color: AppColors.textoSecundarioOscuro,
+                color: AppColors.textoSecundario,
                 height: 1.3,
               ),
               textAlign: TextAlign.center,

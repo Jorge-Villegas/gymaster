@@ -69,9 +69,8 @@ class _ChipPeriodo extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
         decoration: BoxDecoration(
-          color: estaSeleccionado
-              ? AppColors.primario
-              : AppColors.fondoSecundarioClaro,
+          color:
+              estaSeleccionado ? AppColors.primario : AppColors.fondoSecundario,
           borderRadius: BorderRadius.circular(24),
           border: Border.all(
             color: estaSeleccionado
@@ -87,9 +86,7 @@ class _ChipPeriodo extends StatelessWidget {
             fontWeight: estaSeleccionado
                 ? TipografiaGyMaster.pesoSemiBold
                 : TipografiaGyMaster.pesoRegular,
-            color: estaSeleccionado
-                ? Colors.white
-                : AppColors.textoPrincipalOscuro,
+            color: estaSeleccionado ? Colors.white : AppColors.textoPrincipal,
           ),
         ),
       ),

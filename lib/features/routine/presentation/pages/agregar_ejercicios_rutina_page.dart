@@ -155,14 +155,14 @@ class _AgregarEjercicioRutinaPageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.fondoPrincipalClaro,
+      backgroundColor: AppColors.fondoPrincipal,
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              AppColors.fondoPrincipalClaro,
+              AppColors.fondoPrincipal,
               Colors.white,
-              AppColors.fondoPrincipalClaro.withOpacity(0.8),
+              AppColors.fondoPrincipal.withOpacity(0.8),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,

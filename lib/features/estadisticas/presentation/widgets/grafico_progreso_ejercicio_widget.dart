@@ -41,7 +41,7 @@ class _GraficoProgresoEjercicioWidgetState
     return Container(
       padding: Espaciado.rellenoMd,
       decoration: BoxDecoration(
-        color: AppColors.fondoTarjetaClaro,
+        color: AppColors.fondoTarjeta,
         borderRadius: BorderRadius.circular(Espaciado.md),
         border:
             Border.all(color: AppColors.borde.withValues(alpha: 0.2), width: 1),
@@ -75,7 +75,7 @@ class _GraficoProgresoEjercicioWidgetState
             style: TipografiaGyMaster.textoPrincipal.copyWith(
               fontSize: TipografiaGyMaster.tamanoLg,
               fontWeight: TipografiaGyMaster.pesoSemiBold,
-              color: AppColors.textoPrincipalOscuro,
+              color: AppColors.textoPrincipal,
             ),
           ),
         ),
@@ -103,8 +103,8 @@ class _GraficoProgresoEjercicioWidgetState
         colorTexto = AppColors.error;
         break;
       case TendenciaProgreso.insuficienteDatos:
-        colorFondo = AppColors.textoSecundario.withValues(alpha: 0.2);
-        colorTexto = AppColors.textoSecundario;
+        colorFondo = AppColors.textoSecundarioClaro.withValues(alpha: 0.2);
+        colorTexto = AppColors.textoSecundarioClaro;
         break;
     }
 
@@ -178,7 +178,7 @@ class _GraficoProgresoEjercicioWidgetState
           label,
           style: TipografiaGyMaster.textoSecundario.copyWith(
             fontSize: TipografiaGyMaster.tamanoSm,
-            color: AppColors.textoSecundarioOscuro,
+            color: AppColors.textoSecundario,
           ),
         ),
       ],
@@ -228,7 +228,7 @@ class _GraficoProgresoEjercicioWidgetState
                     DateFormat('dd/MM').format(fecha),
                     style: TipografiaGyMaster.textoSecundario.copyWith(
                       fontSize: TipografiaGyMaster.tamanoXs,
-                      color: AppColors.textoSecundarioOscuro,
+                      color: AppColors.textoSecundario,
                     ),
                   ),
                 );
@@ -246,7 +246,7 @@ class _GraficoProgresoEjercicioWidgetState
                 value.toInt().toString(),
                 style: TipografiaGyMaster.textoSecundario.copyWith(
                   fontSize: TipografiaGyMaster.tamanoXs,
-                  color: AppColors.textoSecundarioOscuro,
+                  color: AppColors.textoSecundario,
                 ),
               );
             },
@@ -272,7 +272,7 @@ class _GraficoProgresoEjercicioWidgetState
                   radius: _touchedIndex == index ? 6 : 4,
                   color: AppColors.primario,
                   strokeWidth: 2,
-                  strokeColor: AppColors.superficie,
+                  strokeColor: AppColors.superficieOscura,
                 );
               },
             ),
@@ -295,7 +295,7 @@ class _GraficoProgresoEjercicioWidgetState
                   radius: _touchedIndex == index ? 6 : 4,
                   color: AppColors.acento,
                   strokeWidth: 2,
-                  strokeColor: AppColors.superficie,
+                  strokeColor: AppColors.superficieOscura,
                 );
               },
             ),
@@ -317,7 +317,7 @@ class _GraficoProgresoEjercicioWidgetState
           });
         },
         touchTooltipData: LineTouchTooltipData(
-          getTooltipColor: (spot) => AppColors.fondoSecundario,
+          getTooltipColor: (spot) => AppColors.fondoSecundarioOscuro,
           tooltipBorder: BorderSide(color: AppColors.borde, width: 1),
           tooltipPadding: const EdgeInsets.all(8),
           getTooltipItems: (List<LineBarSpot> touchedSpots) {
@@ -361,7 +361,7 @@ class _GraficoProgresoEjercicioWidgetState
     return Container(
       padding: Espaciado.rellenoXl,
       decoration: BoxDecoration(
-        color: AppColors.fondoTarjetaClaro,
+        color: AppColors.fondoTarjeta,
         borderRadius: BorderRadius.circular(Espaciado.md),
         border:
             Border.all(color: AppColors.borde.withValues(alpha: 0.2), width: 1),
@@ -372,7 +372,7 @@ class _GraficoProgresoEjercicioWidgetState
           Icon(
             Icons.show_chart_outlined,
             size: 64,
-            color: AppColors.textoTerciarioOscuro,
+            color: AppColors.textoTerciario,
           ),
           SizedBox(height: Espaciado.md),
           Text(
@@ -380,7 +380,7 @@ class _GraficoProgresoEjercicioWidgetState
             style: TipografiaGyMaster.textoPrincipal.copyWith(
               fontSize: TipografiaGyMaster.tamanoLg,
               fontWeight: TipografiaGyMaster.pesoSemiBold,
-              color: AppColors.textoSecundarioOscuro,
+              color: AppColors.textoSecundario,
             ),
           ),
           SizedBox(height: Espaciado.xs),
@@ -388,7 +388,7 @@ class _GraficoProgresoEjercicioWidgetState
             'Completa entrenamientos para ver tu progreso',
             style: TipografiaGyMaster.textoSecundario.copyWith(
               fontSize: TipografiaGyMaster.tamanoSm,
-              color: AppColors.textoTerciarioOscuro,
+              color: AppColors.textoTerciario,
             ),
             textAlign: TextAlign.center,
           ),

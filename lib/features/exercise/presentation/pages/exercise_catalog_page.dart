@@ -59,44 +59,30 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.fondoPrincipalClaro,
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              AppColors.fondoPrincipalClaro,
-              Colors.white,
-              AppColors.fondoPrincipalClaro.withValues(alpha: 0.8),
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            stops: const [0.0, 0.3, 1.0],
-          ),
-        ),
-        child: SafeArea(
-          child: Column(
-            children: [
-              CabeceraReutilizable(
-                titulo: "Catálogo de Ejercicios",
-                subtitulo: "Explora y descubre nuevos ejercicios",
-                busqueda: ConfiguracionBusqueda.ejercicios(
-                  onBusqueda: (query) {
-                    setState(() {
-                      _searchQuery = query;
-                    });
-                    if (query.isNotEmpty) {
-                      context.read<ExerciseCubit>().buscarEjercicios(query);
-                    } else {
-                      context.read<ExerciseCubit>().loadAllExercises();
-                    }
-                  },
-                ),
-                botonIzquierdo: ConfiguracionBotonIzquierdo.menu(),
+      backgroundColor: AppColors.fondoPrincipal,
+      body: SafeArea(
+        child: Column(
+          children: [
+            CabeceraReutilizable(
+              titulo: "Catálogo de Ejercicios",
+              subtitulo: "Explora y descubre nuevos ejercicios",
+              busqueda: ConfiguracionBusqueda.ejercicios(
+                onBusqueda: (query) {
+                  setState(() {
+                    _searchQuery = query;
+                  });
+                  if (query.isNotEmpty) {
+                    context.read<ExerciseCubit>().buscarEjercicios(query);
+                  } else {
+                    context.read<ExerciseCubit>().loadAllExercises();
+                  }
+                },
               ),
-              _buildMuscleGroupFilter(context),
-              _buildExerciseList(),
-            ],
-          ),
+              botonIzquierdo: ConfiguracionBotonIzquierdo.menu(),
+            ),
+            _buildMuscleGroupFilter(context),
+            _buildExerciseList(),
+          ],
         ),
       ),
     );
@@ -537,7 +523,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                           fontWeight: TipografiaGyMaster.pesoRegular,
                           fontSize: TipografiaGyMaster.tamanoMd,
                           height: 1.1,
-                          color: AppColors.textoPrincipalOscuro,
+                          color: AppColors.textoPrincipal,
                         ),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,

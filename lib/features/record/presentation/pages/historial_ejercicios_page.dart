@@ -58,7 +58,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.fondoPrincipalClaro,
+      backgroundColor: AppColors.fondoPrincipal,
       body: SafeArea(
         child: Column(
           children: [
@@ -66,7 +66,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
             SizedBox(height: Espaciado.md),
             Expanded(
               child: Container(
-                color: AppColors.fondoPrincipalClaro,
+                color: AppColors.fondoPrincipal,
                 child: Column(
                   spacing: Espaciado.sm,
                   children: [
@@ -223,7 +223,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                       titleTextStyle: TextStyle(
                         fontSize: TipografiaGyMaster.tamanoMd,
                         fontWeight: TipografiaGyMaster.pesoSemiBold,
-                        color: AppColors.textoPrincipalOscuro,
+                        color: AppColors.textoPrincipal,
                       ),
                     ),
                     daysOfWeekStyle: DaysOfWeekStyle(
@@ -464,7 +464,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                                           .withValues(alpha: 0.1),
                                       width: 1,
                                     ),
-                                    color: AppColors.fondoPrincipalClaro,
+                                    color: AppColors.fondoPrincipal,
                                   ),
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(12),
@@ -493,7 +493,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                                     fontSize: TipografiaGyMaster.tamanoMd,
                                     fontWeight: TipografiaGyMaster.pesoRegular,
                                     height: 1.2,
-                                    color: AppColors.textoPrincipalOscuro,
+                                    color: AppColors.textoPrincipal,
                                   ),
                                 ),
                                 subtitle: Column(
@@ -751,7 +751,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
               style: TextStyle(
                 fontSize: TipografiaGyMaster.tamanoLg,
                 fontWeight: TipografiaGyMaster.pesoSemiBold,
-                color: AppColors.textoPrincipalOscuro,
+                color: AppColors.textoPrincipal,
               ),
             ),
             Espaciado.separacionVerticalSm,

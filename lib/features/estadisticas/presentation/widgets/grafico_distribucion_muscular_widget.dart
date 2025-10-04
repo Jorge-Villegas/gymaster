@@ -50,7 +50,7 @@ class _GraficoDistribucionMuscularWidgetState
       child: Container(
         padding: Espaciado.rellenoMd,
         decoration: BoxDecoration(
-          color: AppColors.fondoTarjetaClaro,
+          color: AppColors.fondoTarjeta,
           borderRadius: BorderRadius.circular(Espaciado.md),
           border: Border.all(
               color: AppColors.borde.withValues(alpha: 0.2), width: 1),
@@ -63,7 +63,7 @@ class _GraficoDistribucionMuscularWidgetState
               style: TipografiaGyMaster.textoPrincipal.copyWith(
                 fontSize: TipografiaGyMaster.tamanoLg,
                 fontWeight: TipografiaGyMaster.pesoSemiBold,
-                color: AppColors.textoPrincipalOscuro,
+                color: AppColors.textoPrincipal,
               ),
             ),
             SizedBox(height: Espaciado.md),
@@ -127,7 +127,7 @@ class _GraficoDistribucionMuscularWidgetState
         titleStyle: TipografiaGyMaster.textoPrincipal.copyWith(
           fontSize: fontSize,
           fontWeight: TipografiaGyMaster.pesoSemiBold,
-          color: AppColors.fondoTarjetaClaro,
+          color: AppColors.fondoTarjeta,
         ),
         badgeWidget:
             isTouched ? _buildBadge(musculo.nombreMusculo, widgetSize) : null,
@@ -140,7 +140,7 @@ class _GraficoDistribucionMuscularWidgetState
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: AppColors.fondoTarjetaClaro,
+        color: AppColors.fondoTarjeta,
         borderRadius: BorderRadius.circular(8),
         border:
             Border.all(color: AppColors.borde.withValues(alpha: 0.3), width: 1),
@@ -150,7 +150,7 @@ class _GraficoDistribucionMuscularWidgetState
         style: TipografiaGyMaster.textoPrincipal.copyWith(
           fontSize: TipografiaGyMaster.tamanoXs,
           fontWeight: TipografiaGyMaster.pesoSemiBold,
-          color: AppColors.textoPrincipalOscuro,
+          color: AppColors.textoPrincipal,
         ),
       ),
     );
@@ -212,7 +212,7 @@ class _GraficoDistribucionMuscularWidgetState
                 style: TipografiaGyMaster.textoPrincipal.copyWith(
                   fontSize: TipografiaGyMaster.tamanoSm,
                   fontWeight: TipografiaGyMaster.pesoSemiBold,
-                  color: AppColors.textoPrincipalOscuro,
+                  color: AppColors.textoPrincipal,
                 ),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
@@ -221,7 +221,7 @@ class _GraficoDistribucionMuscularWidgetState
                 '$volumenFormateado • $categoriaIntensidad',
                 style: TipografiaGyMaster.textoSecundario.copyWith(
                   fontSize: TipografiaGyMaster.tamanoXs,
-                  color: AppColors.textoSecundarioOscuro,
+                  color: AppColors.textoSecundario,
                 ),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
@@ -237,7 +237,7 @@ class _GraficoDistribucionMuscularWidgetState
     return Container(
       padding: Espaciado.rellenoXl,
       decoration: BoxDecoration(
-        color: AppColors.fondoTarjetaClaro,
+        color: AppColors.fondoTarjeta,
         borderRadius: BorderRadius.circular(Espaciado.md),
         border:
             Border.all(color: AppColors.borde.withValues(alpha: 0.2), width: 1),
@@ -248,7 +248,7 @@ class _GraficoDistribucionMuscularWidgetState
           Icon(
             Icons.pie_chart_outline_outlined,
             size: 64,
-            color: AppColors.textoTerciarioOscuro,
+            color: AppColors.textoTerciario,
           ),
           SizedBox(height: Espaciado.md),
           Text(
@@ -256,7 +256,7 @@ class _GraficoDistribucionMuscularWidgetState
             style: TipografiaGyMaster.textoPrincipal.copyWith(
               fontSize: TipografiaGyMaster.tamanoLg,
               fontWeight: TipografiaGyMaster.pesoSemiBold,
-              color: AppColors.textoSecundarioOscuro,
+              color: AppColors.textoSecundario,
             ),
           ),
           SizedBox(height: Espaciado.xs),
@@ -264,7 +264,7 @@ class _GraficoDistribucionMuscularWidgetState
             'Entrena diferentes grupos musculares para ver la distribución',
             style: TipografiaGyMaster.textoSecundario.copyWith(
               fontSize: TipografiaGyMaster.tamanoSm,
-              color: AppColors.textoTerciarioOscuro,
+              color: AppColors.textoTerciario,
             ),
             textAlign: TextAlign.center,
           ),

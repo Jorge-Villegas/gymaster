@@ -141,7 +141,7 @@ class _MenuLateralState extends State<MenuLateral> {
           ),
           decoration: BoxDecoration(
             // Fondo azul oscuro que ocupa toda la altura sin bordes redondeados
-            color: AppColors.fondoTerciario,
+            color: AppColors.fondoTerciarioOscuro,
             // Sin borderRadius para que ocupe toda la pantalla de arriba a abajo
           ),
           child: Column(

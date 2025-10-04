@@ -95,7 +95,7 @@ class _PaginaConMenuLateralState extends State<PaginaConMenuLateral>
             animation: _animacionMenuLateral,
             builder: (context, child) {
               return Container(
-                color: AppColors.fondoTerciario.withValues(
+                color: AppColors.fondoTerciarioOscuro.withValues(
                   alpha: (_animacionMenuLateral.value > 0.01) ? 1.0 : 0.0,
                 ),
               );

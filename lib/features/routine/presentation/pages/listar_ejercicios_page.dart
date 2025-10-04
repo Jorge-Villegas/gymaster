@@ -92,7 +92,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                 // Botón de volver
                 Container(
                   decoration: BoxDecoration(
-                    color: AppColors.fondoPrincipalClaro,
+                    color: AppColors.fondoPrincipal,
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
@@ -249,9 +249,8 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
         width: 48,
         height: 48,
         decoration: BoxDecoration(
-          color: _isSearchExpanded
-              ? AppColors.acento
-              : AppColors.fondoPrincipalClaro,
+          color:
+              _isSearchExpanded ? AppColors.acento : AppColors.fondoPrincipal,
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
@@ -330,14 +329,14 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
         );
 
     return Scaffold(
-      backgroundColor: AppColors.fondoPrincipalClaro,
+      backgroundColor: AppColors.fondoPrincipal,
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              AppColors.fondoPrincipalClaro,
-              AppColors.fondoPrincipalClaro,
-              AppColors.fondoPrincipalClaro.withValues(alpha: 0.8),
+              AppColors.fondoPrincipal,
+              AppColors.fondoPrincipal,
+              AppColors.fondoPrincipal.withValues(alpha: 0.8),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -436,8 +435,8 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
   /// Construye el efecto de carga shimmer con diseño emocional
   Widget _buildShimmerLoadingEffect() {
     return Shimmer.fromColors(
-      baseColor: AppColors.fondoPrincipalClaro,
-      highlightColor: AppColors.fondoPrincipalClaro,
+      baseColor: AppColors.fondoPrincipal,
+      highlightColor: AppColors.fondoPrincipal,
       child: ListView.builder(
         itemCount: 8,
         padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -445,7 +444,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
           return Container(
             margin: const EdgeInsets.symmetric(vertical: 6.0),
             decoration: BoxDecoration(
-              color: AppColors.fondoPrincipalClaro,
+              color: AppColors.fondoPrincipal,
               borderRadius: BorderRadius.circular(16),
               boxShadow: [
                 BoxShadow(
@@ -464,7 +463,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                     width: 64,
                     height: 64,
                     decoration: BoxDecoration(
-                      color: AppColors.fondoPrincipalClaro,
+                      color: AppColors.fondoPrincipal,
                       borderRadius: BorderRadius.circular(16),
                     ),
                   ),
@@ -478,7 +477,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                           height: 18.0,
                           width: double.infinity,
                           decoration: BoxDecoration(
-                            color: AppColors.fondoPrincipalClaro,
+                            color: AppColors.fondoPrincipal,
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
@@ -487,7 +486,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                           height: 14.0,
                           width: 150,
                           decoration: BoxDecoration(
-                            color: AppColors.fondoPrincipalClaro,
+                            color: AppColors.fondoPrincipal,
                             borderRadius: BorderRadius.circular(6),
                           ),
                         ),
@@ -499,7 +498,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                     width: 42,
                     height: 42,
                     decoration: BoxDecoration(
-                      color: AppColors.fondoPrincipalClaro,
+                      color: AppColors.fondoPrincipal,
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
@@ -573,7 +572,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
             child: Container(
               margin: const EdgeInsets.symmetric(vertical: 6.0),
               decoration: BoxDecoration(
-                color: AppColors.fondoPrincipalClaro,
+                color: AppColors.fondoPrincipal,
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(

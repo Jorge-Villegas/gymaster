@@ -210,7 +210,7 @@ class ContadorPesoTiempo extends StatelessWidget {
     return Container(
       padding: Espaciado.rellenoMd,
       decoration: BoxDecoration(
-        color: AppColors.fondoSecundarioClaro,
+        color: AppColors.fondoSecundario,
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(

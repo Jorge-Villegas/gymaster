@@ -315,9 +315,8 @@ class _CabeceraReutilizableState extends State<CabeceraReutilizable>
         width: 48,
         height: 48,
         decoration: BoxDecoration(
-          color: _isSearchExpanded
-              ? AppColors.primario
-              : AppColors.fondoPrincipalClaro,
+          color:
+              _isSearchExpanded ? AppColors.primario : AppColors.fondoPrincipal,
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(

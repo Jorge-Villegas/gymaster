@@ -148,7 +148,7 @@ class _ChicletButtonDemoPageState extends State<ChicletButtonDemoPage> {
     if (!_rutinaIniciada) return const SizedBox.shrink();
 
     return Card(
-      color: AppColors.fondoPrincipalClaro,
+      color: AppColors.fondoPrincipal,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -225,7 +225,7 @@ class _ChicletButtonDemoPageState extends State<ChicletButtonDemoPage> {
           style: TextStyle(
             color: _enDescanso && label == 'Descanso'
                 ? AppColors.advertencia
-                : AppColors.textoPrincipalOscuro,
+                : AppColors.textoPrincipal,
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),

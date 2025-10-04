@@ -17,6 +17,7 @@ class PaginaDemostracionDiseno extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.fondoPrincipal,
       appBar: AppBar(
         title: Text(
           'Guía de Diseño GyMaster',
@@ -79,7 +80,7 @@ class PaginaDemostracionDiseno extends StatelessWidget {
         Container(
           padding: Espaciado.rellenoMd,
           decoration: BoxDecoration(
-            color: AppColors.fondoSecundarioClaro,
+            color: AppColors.fondoSecundario,
             borderRadius: BorderRadius.circular(8),
           ),
           child: Column(
@@ -158,7 +159,7 @@ class PaginaDemostracionDiseno extends StatelessWidget {
         Container(
           padding: Espaciado.rellenoMd,
           decoration: BoxDecoration(
-            color: AppColors.fondoSecundarioClaro,
+            color: AppColors.fondoSecundario,
             borderRadius: BorderRadius.circular(8),
           ),
           child: Column(

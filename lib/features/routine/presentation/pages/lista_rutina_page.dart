@@ -22,9 +22,9 @@ class ListaRutinasPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.fondoPrincipalClaro,
+      backgroundColor: AppColors.fondoPrincipal,
       body: Container(
-        color: AppColors.fondoPrincipalClaro,
+        color: AppColors.fondoPrincipal,
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
@@ -250,7 +250,7 @@ class ListaRutinasPage extends StatelessWidget {
           gradient: LinearGradient(
             colors: [
               Colors.transparent,
-              AppColors.fondoPrincipalClaro.withOpacity(0.3),
+              AppColors.fondoPrincipal.withOpacity(0.3),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -333,7 +333,7 @@ class ListaRutinasPage extends StatelessWidget {
                                     gradient: LinearGradient(
                                       colors: [
                                         Colors.white,
-                                        AppColors.fondoPrincipalClaro,
+                                        AppColors.fondoPrincipal,
                                       ],
                                       begin: Alignment.topLeft,
                                       end: Alignment.bottomRight,
@@ -461,7 +461,7 @@ class ListaRutinasPage extends StatelessWidget {
                         textAlign: TextAlign.center,
                         style: EstilosTextoEmocional.amigable.copyWith(
                           fontSize: 16,
-                          color: AppColors.textoPrincipalOscuro,
+                          color: AppColors.textoPrincipal,
                           height: 1.4,
                         ),
                       ),
@@ -580,7 +580,7 @@ class ListaRutinasPage extends StatelessWidget {
                           textAlign: TextAlign.center,
                           style: EstilosTextoEmocional.aliento.copyWith(
                             fontSize: 16,
-                            color: AppColors.textoPrincipalOscuro,
+                            color: AppColors.textoPrincipal,
                             height: 1.4,
                           ),
                         ),

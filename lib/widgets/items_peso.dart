@@ -53,7 +53,7 @@ class _ItemsPesosWidgetState extends State<ItemsPesosWidget> {
               child: TextButton(
                 style: TextButton.styleFrom(
                   foregroundColor: AppColors.textoTerciario,
-                  backgroundColor: AppColors.fondoSecundarioClaro,
+                  backgroundColor: AppColors.fondoSecundario,
                 ),
                 onPressed: () {
                   setState(() {});
@@ -66,7 +66,7 @@ class _ItemsPesosWidgetState extends State<ItemsPesosWidget> {
               child: TextButton(
                 style: TextButton.styleFrom(
                   foregroundColor: AppColors.textoTerciario,
-                  backgroundColor: AppColors.fondoSecundarioClaro,
+                  backgroundColor: AppColors.fondoSecundario,
                 ),
                 child: const Icon(Icons.remove),
                 onPressed: () {
@@ -96,7 +96,7 @@ class _ItemsPesosWidgetState extends State<ItemsPesosWidget> {
               child: TextButton(
                 style: TextButton.styleFrom(
                   foregroundColor: AppColors.textoTerciario,
-                  backgroundColor: AppColors.fondoSecundarioClaro,
+                  backgroundColor: AppColors.fondoSecundario,
                 ),
                 onPressed: () {
                   setState(() {});
@@ -109,7 +109,7 @@ class _ItemsPesosWidgetState extends State<ItemsPesosWidget> {
               child: TextButton(
                 style: TextButton.styleFrom(
                   foregroundColor: AppColors.textoTerciario,
-                  backgroundColor: AppColors.fondoSecundarioClaro,
+                  backgroundColor: AppColors.fondoSecundario,
                 ),
                 child: const Icon(Icons.remove),
                 onPressed: () {
@@ -139,7 +139,7 @@ class _ItemsPesosWidgetState extends State<ItemsPesosWidget> {
               child: TextButton(
                 style: TextButton.styleFrom(
                   foregroundColor: AppColors.textoTerciario,
-                  backgroundColor: AppColors.fondoSecundarioClaro,
+                  backgroundColor: AppColors.fondoSecundario,
                 ),
                 onPressed: () {
                   setState(() {});
@@ -152,7 +152,7 @@ class _ItemsPesosWidgetState extends State<ItemsPesosWidget> {
               child: TextButton(
                 style: TextButton.styleFrom(
                   foregroundColor: AppColors.textoTerciario,
-                  backgroundColor: AppColors.fondoSecundarioClaro,
+                  backgroundColor: AppColors.fondoSecundario,
                 ),
                 child: const Icon(Icons.remove),
                 onPressed: () {

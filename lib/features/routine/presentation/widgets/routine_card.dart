@@ -154,7 +154,7 @@ class _RoutineCardState extends State<RoutineCard>
                               style: TextStyle(
                                 fontSize: TipografiaGyMaster.tamanoXl,
                                 fontWeight: TipografiaGyMaster.pesoSemiBold,
-                                color: AppColors.textoPrincipalOscuro,
+                                color: AppColors.textoPrincipal,
                                 height: 1.3,
                               ),
                             ),
@@ -163,7 +163,7 @@ class _RoutineCardState extends State<RoutineCard>
                               style: TextStyle(
                                 fontSize: TipografiaGyMaster.tamanoMd,
                                 fontWeight: TipografiaGyMaster.pesoRegular,
-                                color: AppColors.textoPrincipalOscuro,
+                                color: AppColors.textoPrincipal,
                                 height: 1.3,
                               ),
                             ),

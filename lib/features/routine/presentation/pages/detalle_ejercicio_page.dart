@@ -248,7 +248,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
           etiqueta,
           style: EstilosTextoEmocional.amigable.copyWith(
             fontSize: TipografiaGyMaster.tamanoSm,
-            color: AppColors.textoSecundarioOscuro,
+            color: AppColors.textoSecundario,
             fontWeight: TipografiaGyMaster.pesoRegular,
           ),
           textAlign: TextAlign.center,
@@ -264,7 +264,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
       margin: Espaciado.rellenoHorizontalMd,
       padding: Espaciado.rellenoMd,
       decoration: BoxDecoration(
-        color: AppColors.fondoTarjetaClaro,
+        color: AppColors.fondoTarjeta,
         borderRadius: BorderRadius.circular(Espaciado.sm),
         boxShadow: AppColors.sombraSuave,
       ),
@@ -325,7 +325,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
             style: TextStyle(
               fontWeight: TipografiaGyMaster.pesoRegular,
               fontSize: TipografiaGyMaster.tamanoLg,
-              color: AppColors.textoPrincipalOscuro,
+              color: AppColors.textoPrincipal,
             ),
           ),
         ),
@@ -352,7 +352,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
                 style: TextStyle(
                   fontWeight: TipografiaGyMaster.pesoRegular, // SemiBold
                   fontSize: TipografiaGyMaster.tamano2xl,
-                  color: AppColors.textoPrincipalOscuro,
+                  color: AppColors.textoPrincipal,
                 ),
               ),
             ),
@@ -380,7 +380,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
     return Container(
       padding: Espaciado.rellenoMd,
       decoration: BoxDecoration(
-        color: AppColors.fondoTarjetaClaro,
+        color: AppColors.fondoTarjeta,
         boxShadow: AppColors.sombraSuave,
       ),
       child: SafeArea(
@@ -657,14 +657,14 @@ class DetalleEjercicioScreen extends StatelessWidget {
 
   Widget _buildLoadingState() {
     return Scaffold(
-      backgroundColor: AppColors.fondoPrincipalClaro,
+      backgroundColor: AppColors.fondoPrincipal,
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              AppColors.fondoPrincipalClaro,
+              AppColors.fondoPrincipal,
               Colors.white,
-              AppColors.fondoPrincipalClaro.withValues(alpha: 0.8),
+              AppColors.fondoPrincipal.withValues(alpha: 0.8),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -697,14 +697,14 @@ class DetalleEjercicioScreen extends StatelessWidget {
 
   Widget _buildErrorState(String message) {
     return Scaffold(
-      backgroundColor: AppColors.fondoPrincipalClaro,
+      backgroundColor: AppColors.fondoPrincipal,
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              AppColors.fondoPrincipalClaro,
+              AppColors.fondoPrincipal,
               Colors.white,
-              AppColors.fondoPrincipalClaro.withValues(alpha: 0.8),
+              AppColors.fondoPrincipal.withValues(alpha: 0.8),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -801,14 +801,14 @@ class DetalleEjercicioScreen extends StatelessWidget {
     final totalSeries = ejercicio.cantidadSeries;
 
     return Scaffold(
-      backgroundColor: AppColors.fondoPrincipalClaro,
+      backgroundColor: AppColors.fondoPrincipal,
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              AppColors.fondoPrincipalClaro,
+              AppColors.fondoPrincipal,
               Colors.white,
-              AppColors.fondoPrincipalClaro.withValues(alpha: 0.8),
+              AppColors.fondoPrincipal.withValues(alpha: 0.8),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -823,7 +823,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
                 subtitulo:
                     'Serie $serieActualIndex de $totalSeries • ${state.ejerciciosDeRutina.nombre}',
                 botonIzquierdo: ConfiguracionBotonIzquierdo.volver(),
-                colorFondo: AppColors.fondoPrincipalClaro,
+                colorFondo: AppColors.fondoPrincipal,
                 relleno: Espaciado.rellenoMd,
               ),
 
@@ -859,7 +859,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
                           margin: Espaciado.rellenoHorizontalMd,
                           padding: Espaciado.rellenoMd,
                           decoration: BoxDecoration(
-                            color: AppColors.fondoTarjetaClaro,
+                            color: AppColors.fondoTarjeta,
                             borderRadius: BorderRadius.circular(Espaciado.sm),
                             boxShadow: AppColors.sombraSuave,
                           ),

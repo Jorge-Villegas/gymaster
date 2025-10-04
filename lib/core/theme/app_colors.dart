@@ -94,45 +94,62 @@ class AppColors {
   // === NEUTROS CON MATICES SUTILES ===
   // ===============================================================
 
+  /// (tema claro por defecto)
+
+  /// Fondo principal claro - Versión para temas claros
+  static const Color fondoPrincipal = Color(0xFFF8FAFC);
+
+  /// Fondo secundario claro - Versión para temas claros
+  static const Color fondoSecundario = Color(0xFFF1F5F9);
+
+  /// Fondo de tarjeta claro - Versión para temas claros
+  static const Color fondoTarjeta = Color(0xFFFFFFFF);
+
+  /// Superficie clara - Versión para temas claros
+  static const Color superficie = Color(0xFFFFFFFF);
+
+  /// === (tema oscuro) ===
+  ///
   /// Fondo principal - Gris azulado con matiz frío (HSB: 222°, 65%, 11%)
-  static const Color fondo = Color(0xFF0F172A);
+  static const Color fondoPrincipalOscuro = Color(0xFF0F172A);
 
   /// Fondo secundario - Matiz consistente (HSB: 222°, 58%, 18%)
-  static const Color fondoSecundario = Color(0xFF1E293B);
+  static const Color fondoSecundarioOscuro = Color(0xFF1E293B);
 
   /// Fondo terciario - Progresión armónica (HSB: 222°, 50%, 25%)
-  static const Color fondoTerciario = Color(0xFF334155);
+  static const Color fondoTerciarioOscuro = Color(0xFF334155);
 
   /// Superficie principal manteniendo armonía de matiz
-  static const Color superficie = Color(0xFF1E293B);
+  static const Color superficieOscura = Color(0xFF1E293B);
 
   /// Superficie elevada con mayor luminosidad
   static const Color superficieElevada = Color(0xFF334155);
-
-  /// Fondo principal claro - Versión para temas claros
-  static const Color fondoPrincipalClaro = Color(0xFFF8FAFC);
-
-  /// Fondo secundario claro - Versión para temas claros
-  static const Color fondoSecundarioClaro = Color(0xFFF1F5F9);
-
-  /// Fondo de tarjeta claro - Versión para temas claros
-  static const Color fondoTarjetaClaro = Color(0xFFFFFFFF);
 
   // ===============================================================
   // === TEXTO CON VARIACIONES CONTROLADAS ===
   // ===============================================================
 
-  /// Texto principal - Máximo contraste
+  /// Texto principal oscuro - Para fondos claros (HSB: 222°, 85%, 15%)
   static const Color textoPrincipal = Color(0xFF0F172A);
 
-  /// Texto principal claro - Versión para temas claros
-  static const Color textoPrincipalClaro = Color(0xFFF8FAFC);
-
-  /// Texto secundario - Saturación reducida para jerarquía (HSB: 222°, 15%, 82%)
-  static const Color textoSecundario = Color(0xFFCBD5E1);
+  /// Texto secundario oscuro - Jerarquía sobre fondos claros (HSB: 222°, 65%, 25%)
+  static const Color textoSecundario = Color(0xFF1E293B);
 
   /// Texto terciario - Mayor reducción de saturación (HSB: 222°, 20%, 65%)
   static const Color textoTerciario = Color(0xFF94A3B8);
+
+  /// (tema oscuro)
+
+  /// Texto principal claro - Para fondos oscuros (HSB: 222°, 15%, 95%)
+  static const Color textoPrincipalClaro = Color(0xFFF8FAFC);
+
+  /// Texto secundario - Saturación reducida para jerarquía (HSB: 222°, 15%, 82%)
+  static const Color textoSecundarioClaro = Color(0xFFCBD5E1);
+
+  /// Texto terciario claro - Para fondos oscuros (HSB: 222°, 15%, 82%)
+  static const Color textoTerciarioClaro = Color(0xFF94A3B8);
+
+  /// otros
 
   /// Texto deshabilitado - Mínima saturación (HSB: 222°, 25%, 45%)
   static const Color textoDeshabilitado = Color(0xFF64748B);
@@ -142,20 +159,6 @@ class AppColors {
 
   /// Texto sobre secundario
   static const Color textoSobreSecundario = Color(0xFFFFFFFF);
-
-  // 🆕 NUEVOS COLORES DE TEXTO PARA TEMA CLARO (TEXTOS OSCUROS)
-
-  /// Texto principal oscuro - Para fondos claros (HSB: 222°, 85%, 15%)
-  static const Color textoPrincipalOscuro = Color(0xFF0F172A);
-
-  /// Texto secundario oscuro - Jerarquía sobre fondos claros (HSB: 222°, 65%, 25%)
-  static const Color textoSecundarioOscuro = Color(0xFF1E293B);
-
-  /// Texto terciario oscuro - Menor contraste sobre fondos claros (HSB: 222°, 50%, 40%)
-  static const Color textoTerciarioOscuro = Color(0xFF475569);
-
-  /// Texto deshabilitado oscuro - Estado inactivo sobre fondos claros (HSB: 222°, 35%, 55%)
-  static const Color textoDeshabilitadoOscuro = Color(0xFF64748B);
 
   // ===============================================================
   // === BORDES Y DIVISORES CON MATICES ===
@@ -226,9 +229,9 @@ class AppColors {
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
     colors: [
-      fondo, // Más oscuro, más saturado
-      fondoSecundario, // Progresión media
-      fondoTerciario, // Más claro, menos saturado
+      fondoPrincipalOscuro, // Más oscuro, más saturado
+      fondoSecundarioOscuro, // Progresión media
+      fondoTerciarioOscuro, // Más claro, menos saturado
     ],
   );
 

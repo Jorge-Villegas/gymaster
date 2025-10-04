@@ -58,7 +58,7 @@ class TipografiaGyMaster {
   static TextStyle get textoPrincipal => TextStyle(
         fontSize: tamanoSm,
         fontWeight: pesoRegular,
-        color: AppColors.textoPrincipalOscuro,
+        color: AppColors.textoPrincipal,
         height: 1.4,
       );
 
@@ -74,7 +74,7 @@ class TipografiaGyMaster {
   static TextStyle get subtitulo => TextStyle(
         fontSize: tamanoMd,
         fontWeight: pesoSemiBold,
-        color: AppColors.textoPrincipalOscuro,
+        color: AppColors.textoPrincipal,
         height: 1.3,
       );
 
@@ -82,7 +82,7 @@ class TipografiaGyMaster {
   static TextStyle get titulo => TextStyle(
         fontSize: tamanoLg,
         fontWeight: pesoSemiBold,
-        color: AppColors.textoPrincipalOscuro,
+        color: AppColors.textoPrincipal,
         height: 1.2,
       );
 
@@ -102,7 +102,7 @@ class TipografiaGyMaster {
   static TextStyle get nombreEjercicio => TextStyle(
         fontSize: tamanoSm,
         fontWeight: pesoSemiBold,
-        color: AppColors.textoPrincipalOscuro,
+        color: AppColors.textoPrincipal,
         height: 1.3,
       );
 

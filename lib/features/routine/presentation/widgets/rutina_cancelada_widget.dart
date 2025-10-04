@@ -23,7 +23,7 @@ class RutinaCanceladaWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: AppColors.fondoPrincipal,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(24.0),

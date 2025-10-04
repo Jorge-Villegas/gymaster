@@ -432,7 +432,7 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.acento : AppColors.fondoSecundarioClaro,
+          color: isSelected ? AppColors.acento : AppColors.fondoSecundario,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
             color: isSelected ? AppColors.acento : AppColors.textoTerciario,

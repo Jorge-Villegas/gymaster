@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gymaster/core/theme/app_colors.dart';
 
 class LanguagePage extends StatefulWidget {
   const LanguagePage({super.key});
@@ -22,6 +23,7 @@ class _LanguagePageState extends State<LanguagePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.fondoPrincipal,
       appBar: AppBar(
         title: const Text('Cambiar idioma'),
       ),

@@ -139,7 +139,7 @@ class CustomCard extends StatelessWidget {
                           style: TextStyle(
                             fontSize: TipografiaGyMaster.tamanoSm,
                             fontWeight: TipografiaGyMaster.pesoRegular,
-                            color: AppColors.textoPrincipalOscuro,
+                            color: AppColors.textoPrincipal,
                           ),
                         ),
                         const SizedBox(height: 4.0),

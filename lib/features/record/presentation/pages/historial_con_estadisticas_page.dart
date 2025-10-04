@@ -46,13 +46,13 @@ class _HistorialConEstadisticasPageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.fondoPrincipalClaro,
+      backgroundColor: AppColors.fondoPrincipal,
       body: SafeArea(
         child: Column(
           children: [
             Container(
               decoration: BoxDecoration(
-                color: AppColors.fondoSecundarioClaro,
+                color: AppColors.fondoSecundario,
                 border: Border(
                   bottom: BorderSide(
                     color: AppColors.borde.withValues(alpha: 0.3),
@@ -66,11 +66,11 @@ class _HistorialConEstadisticasPageState
                 indicatorWeight: 3,
                 indicatorSize: TabBarIndicatorSize.tab,
                 labelColor: AppColors.primario,
-                unselectedLabelColor: AppColors.textoSecundarioOscuro,
+                unselectedLabelColor: AppColors.textoSecundario,
                 labelStyle: TextStyle(
                   fontSize: TipografiaGyMaster.tamanoMd,
                   fontWeight: TipografiaGyMaster.pesoSemiBold,
-                  color: AppColors.textoPrincipalOscuro,
+                  color: AppColors.textoPrincipal,
                   height: 1.4,
                 ),
                 unselectedLabelStyle: TextStyle(

@@ -27,7 +27,7 @@ class RankingEjerciciosWidget extends StatelessWidget {
     return Container(
       padding: Espaciado.rellenoMd,
       decoration: BoxDecoration(
-        color: AppColors.fondoTarjetaClaro,
+        color: AppColors.fondoTarjeta,
         borderRadius: BorderRadius.circular(Espaciado.md),
         border:
             Border.all(color: AppColors.borde.withValues(alpha: 0.2), width: 1),
@@ -43,7 +43,7 @@ class RankingEjerciciosWidget extends StatelessWidget {
                 style: TipografiaGyMaster.textoPrincipal.copyWith(
                   fontSize: TipografiaGyMaster.tamanoLg,
                   fontWeight: TipografiaGyMaster.pesoSemiBold,
-                  color: AppColors.textoPrincipalOscuro,
+                  color: AppColors.textoPrincipal,
                 ),
               ),
               if (onVerMas != null && ranking.length > 5)
@@ -80,7 +80,7 @@ class RankingEjerciciosWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: esTopTres
             ? colorPosicion.withValues(alpha: 0.1)
-            : AppColors.fondoSecundarioClaro,
+            : AppColors.fondoSecundario,
         borderRadius: BorderRadius.circular(Espaciado.sm),
         border: esTopTres
             ? Border.all(color: colorPosicion.withValues(alpha: 0.3), width: 1)
@@ -93,7 +93,7 @@ class RankingEjerciciosWidget extends StatelessWidget {
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-              color: esTopTres ? colorPosicion : AppColors.fondoSecundarioClaro,
+              color: esTopTres ? colorPosicion : AppColors.fondoSecundario,
               shape: BoxShape.circle,
               boxShadow: esTopTres
                   ? [
@@ -128,7 +128,7 @@ class RankingEjerciciosWidget extends StatelessWidget {
                   style: TipografiaGyMaster.textoPrincipal.copyWith(
                     fontSize: TipografiaGyMaster.tamanoMd,
                     fontWeight: TipografiaGyMaster.pesoSemiBold,
-                    color: AppColors.textoPrincipalOscuro,
+                    color: AppColors.textoPrincipal,
                   ),
                 ),
                 SizedBox(height: Espaciado.xxs),
@@ -136,7 +136,7 @@ class RankingEjerciciosWidget extends StatelessWidget {
                   ejercicio.resumenCompacto,
                   style: TipografiaGyMaster.textoSecundario.copyWith(
                     fontSize: TipografiaGyMaster.tamanoXs,
-                    color: AppColors.textoSecundarioOscuro,
+                    color: AppColors.textoSecundario,
                   ),
                 ),
               ],
@@ -164,7 +164,7 @@ class RankingEjerciciosWidget extends StatelessWidget {
                   'veces',
                   style: TipografiaGyMaster.textoSecundario.copyWith(
                     fontSize: TipografiaGyMaster.tamanoXs,
-                    color: AppColors.textoSecundarioOscuro,
+                    color: AppColors.textoSecundario,
                   ),
                 ),
               ],
@@ -192,7 +192,7 @@ class RankingEjerciciosWidget extends StatelessWidget {
     return Container(
       padding: Espaciado.rellenoXl,
       decoration: BoxDecoration(
-        color: AppColors.fondoTarjetaClaro,
+        color: AppColors.fondoTarjeta,
         borderRadius: BorderRadius.circular(Espaciado.md),
         border:
             Border.all(color: AppColors.borde.withValues(alpha: 0.2), width: 1),
@@ -203,7 +203,7 @@ class RankingEjerciciosWidget extends StatelessWidget {
           Icon(
             Icons.emoji_events_outlined,
             size: 64,
-            color: AppColors.textoTerciarioOscuro,
+            color: AppColors.textoTerciario,
           ),
           SizedBox(height: Espaciado.md),
           Text(
@@ -211,7 +211,7 @@ class RankingEjerciciosWidget extends StatelessWidget {
             style: TipografiaGyMaster.textoPrincipal.copyWith(
               fontSize: TipografiaGyMaster.tamanoLg,
               fontWeight: TipografiaGyMaster.pesoSemiBold,
-              color: AppColors.textoSecundarioOscuro,
+              color: AppColors.textoSecundario,
             ),
           ),
           SizedBox(height: Espaciado.xs),
@@ -219,7 +219,7 @@ class RankingEjerciciosWidget extends StatelessWidget {
             'Completa entrenamientos para ver tus ejercicios favoritos',
             style: TipografiaGyMaster.textoSecundario.copyWith(
               fontSize: TipografiaGyMaster.tamanoSm,
-              color: AppColors.textoTerciarioOscuro,
+              color: AppColors.textoTerciario,
             ),
             textAlign: TextAlign.center,
           ),

@@ -172,7 +172,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.fondoPrincipalClaro,
+      backgroundColor: AppColors.fondoPrincipal,
       body: SafeArea(
         child: Column(
           children: [
@@ -184,9 +184,9 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      AppColors.fondoPrincipalClaro,
+                      AppColors.fondoPrincipal,
                       Colors.white,
-                      AppColors.fondoPrincipalClaro.withValues(alpha: 0.8),
+                      AppColors.fondoPrincipal.withValues(alpha: 0.8),
                     ],
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
@@ -453,7 +453,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                               style: TextStyle(
                                 color: isSelected
                                     ? AppColors.secundario
-                                    : AppColors.textoPrincipalOscuro,
+                                    : AppColors.textoPrincipal,
                                 fontSize:
                                     TipografiaGyMaster.tamanoSm, // Celdas tabla
                                 fontWeight: isSelected
@@ -469,7 +469,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                               style: TextStyle(
                                 color: isSelected
                                     ? AppColors.secundario
-                                    : AppColors.textoPrincipalOscuro,
+                                    : AppColors.textoPrincipal,
                                 fontSize:
                                     TipografiaGyMaster.tamanoSm, // Celdas tabla
                                 fontWeight: isSelected
@@ -485,7 +485,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                               style: TextStyle(
                                 color: isSelected
                                     ? AppColors.secundario
-                                    : AppColors.textoPrincipalOscuro,
+                                    : AppColors.textoPrincipal,
                                 fontSize:
                                     TipografiaGyMaster.tamanoSm, // Celdas tabla
                                 fontWeight: isSelected
@@ -675,7 +675,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
             child: Text(
               label,
               style: TextStyle(
-                color: AppColors.textoPrincipalOscuro,
+                color: AppColors.textoPrincipal,
                 fontSize: TipografiaGyMaster.tamanoMd,
                 fontWeight: TipografiaGyMaster.pesoSemiBold,
               ),

@@ -24,7 +24,7 @@ class RecomendacionesWidget extends StatelessWidget {
     return Container(
       padding: Espaciado.rellenoMd,
       decoration: BoxDecoration(
-        color: AppColors.fondoTarjetaClaro,
+        color: AppColors.fondoTarjeta,
         borderRadius: BorderRadius.circular(Espaciado.md),
         border:
             Border.all(color: AppColors.borde.withValues(alpha: 0.2), width: 1),
@@ -45,7 +45,7 @@ class RecomendacionesWidget extends StatelessWidget {
                 style: TipografiaGyMaster.textoPrincipal.copyWith(
                   fontSize: TipografiaGyMaster.tamanoLg,
                   fontWeight: TipografiaGyMaster.pesoSemiBold,
-                  color: AppColors.textoPrincipalOscuro,
+                  color: AppColors.textoPrincipal,
                 ),
               ),
             ],
@@ -111,7 +111,7 @@ class RecomendacionesWidget extends StatelessWidget {
                       recomendacion.mensajeTiempo,
                       style: TipografiaGyMaster.textoSecundario.copyWith(
                         fontSize: TipografiaGyMaster.tamanoSm,
-                        color: AppColors.textoPrincipalOscuro,
+                        color: AppColors.textoPrincipal,
                       ),
                     ),
                   ],
@@ -124,7 +124,7 @@ class RecomendacionesWidget extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: AppColors.fondoSecundarioClaro.withValues(alpha: 0.6),
+              color: AppColors.fondoSecundario.withValues(alpha: 0.6),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Row(
@@ -140,7 +140,7 @@ class RecomendacionesWidget extends StatelessWidget {
                     recomendacion.mensajeRecomendacion,
                     style: TipografiaGyMaster.textoPrincipal.copyWith(
                       fontSize: TipografiaGyMaster.tamanoSm,
-                      color: AppColors.textoPrincipalOscuro,
+                      color: AppColors.textoPrincipal,
                       fontStyle: FontStyle.italic,
                     ),
                   ),
@@ -262,7 +262,7 @@ class RecomendacionesWidget extends StatelessWidget {
             'Estás trabajando todos los grupos musculares de manera equilibrada',
             style: TipografiaGyMaster.textoSecundario.copyWith(
               fontSize: TipografiaGyMaster.tamanoMd,
-              color: AppColors.textoPrincipalOscuro,
+              color: AppColors.textoPrincipal,
             ),
             textAlign: TextAlign.center,
           ),
@@ -270,7 +270,7 @@ class RecomendacionesWidget extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: AppColors.fondoSecundarioClaro.withValues(alpha: 0.5),
+              color: AppColors.fondoSecundario.withValues(alpha: 0.5),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Row(
@@ -282,7 +282,7 @@ class RecomendacionesWidget extends StatelessWidget {
                   'Mantén esta consistencia',
                   style: TipografiaGyMaster.textoPrincipal.copyWith(
                     fontSize: TipografiaGyMaster.tamanoSm,
-                    color: AppColors.textoPrincipalOscuro,
+                    color: AppColors.textoPrincipal,
                   ),
                 ),
               ],

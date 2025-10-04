@@ -47,7 +47,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      backgroundColor: AppColors.fondoPrincipal,
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
@@ -122,7 +122,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
             child: Text(
               capitalizarPrimeraLetra(widget.exercise.name),
               style: EstilosTextoEmocional.energetico.copyWith(
-                color: AppColors.textoPrincipalOscuro,
+                color: AppColors.textoPrincipal,
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 letterSpacing: 0.5,
@@ -444,7 +444,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                         capitalizarPrimeraLetra(variation),
                         style: EstilosTextoEmocional.amigable.copyWith(
                           fontSize: 15,
-                          color: AppColors.textoPrincipalOscuro,
+                          color: AppColors.textoPrincipal,
                           fontWeight: FontWeight.w500,
                         ),
                       ),

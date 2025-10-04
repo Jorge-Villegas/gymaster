@@ -44,9 +44,9 @@ class DetalleRutinaScreen extends StatelessWidget {
         }
 
         return Scaffold(
-          backgroundColor: AppColors.fondoPrincipalClaro,
+          backgroundColor: AppColors.fondoPrincipal,
           body: Container(
-            color: AppColors.fondoPrincipalClaro,
+            color: AppColors.fondoPrincipal,
             child: SafeArea(
               child: Column(
                 children: [
@@ -218,7 +218,7 @@ class DetalleRutinaScreen extends StatelessWidget {
                     state.message,
                     textAlign: TextAlign.center,
                     style: EstilosTextoEmocional.amigable.copyWith(
-                      color: AppColors.textoPrincipalOscuro,
+                      color: AppColors.textoPrincipal,
                       fontSize: 14,
                     ),
                   ),
