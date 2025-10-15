@@ -1,7 +1,7 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:gymaster/core/error/failures.dart';
 import 'package:gymaster/core/usecase/usecase.dart';
-import 'package:gymaster/features/setting/domain/entities/logro.dart';
+import 'package:gymaster/features/setting/data/models/logro.dart';
 import 'package:gymaster/features/setting/domain/repositories/achievement_repository.dart';
 
 class GetAchievementUseCase

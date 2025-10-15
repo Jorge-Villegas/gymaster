@@ -42,6 +42,10 @@ class $AssetsImagenesGen {
 
   /// Directory path: assets/imagenes/otros
   $AssetsImagenesOtrosGen get otros => const $AssetsImagenesOtrosGen();
+
+  /// Directory path: assets/imagenes/perfil_avatar
+  $AssetsImagenesPerfilAvatarGen get perfilAvatar =>
+      const $AssetsImagenesPerfilAvatarGen();
 }
 
 class $AssetsLottieGen {
@@ -52,17 +56,6 @@ class $AssetsLottieGen {
 
   /// List of all assets
   List<String> get values => [alzandoPesas];
-}
-
-class $AssetsSamplesGen {
-  const $AssetsSamplesGen();
-
-  /// Directory path: assets/samples/animations
-  $AssetsSamplesAnimationsGen get animations =>
-      const $AssetsSamplesAnimationsGen();
-
-  /// Directory path: assets/samples/ui
-  $AssetsSamplesUiGen get ui => const $AssetsSamplesUiGen();
 }
 
 class $AssetsIconsOtrosGen {
@@ -232,26 +225,72 @@ class $AssetsImagenesOtrosGen {
       [personaConPesaNegro, personaConPesaRojo, personaConPesasAzul];
 }
 
-class $AssetsSamplesAnimationsGen {
-  const $AssetsSamplesAnimationsGen();
+class $AssetsImagenesPerfilAvatarGen {
+  const $AssetsImagenesPerfilAvatarGen();
 
-  /// File path: assets/samples/animations/custom_caret.png
-  AssetGenImage get customCaret =>
-      const AssetGenImage('assets/samples/animations/custom_caret.png');
+  /// File path: assets/imagenes/perfil_avatar/perfil1.jpg
+  AssetGenImage get perfil1 =>
+      const AssetGenImage('assets/imagenes/perfil_avatar/perfil1.jpg');
 
-  /// File path: assets/samples/animations/grid_magnification.png
-  AssetGenImage get gridMagnification =>
-      const AssetGenImage('assets/samples/animations/grid_magnification.png');
+  /// File path: assets/imagenes/perfil_avatar/perfil10.jpg
+  AssetGenImage get perfil10 =>
+      const AssetGenImage('assets/imagenes/perfil_avatar/perfil10.jpg');
+
+  /// File path: assets/imagenes/perfil_avatar/perfil11.jpg
+  AssetGenImage get perfil11 =>
+      const AssetGenImage('assets/imagenes/perfil_avatar/perfil11.jpg');
+
+  /// File path: assets/imagenes/perfil_avatar/perfil12.jpg
+  AssetGenImage get perfil12 =>
+      const AssetGenImage('assets/imagenes/perfil_avatar/perfil12.jpg');
+
+  /// File path: assets/imagenes/perfil_avatar/perfil2.jpg
+  AssetGenImage get perfil2 =>
+      const AssetGenImage('assets/imagenes/perfil_avatar/perfil2.jpg');
+
+  /// File path: assets/imagenes/perfil_avatar/perfil3.jpg
+  AssetGenImage get perfil3 =>
+      const AssetGenImage('assets/imagenes/perfil_avatar/perfil3.jpg');
+
+  /// File path: assets/imagenes/perfil_avatar/perfil4.jpg
+  AssetGenImage get perfil4 =>
+      const AssetGenImage('assets/imagenes/perfil_avatar/perfil4.jpg');
+
+  /// File path: assets/imagenes/perfil_avatar/perfil5.jpg
+  AssetGenImage get perfil5 =>
+      const AssetGenImage('assets/imagenes/perfil_avatar/perfil5.jpg');
+
+  /// File path: assets/imagenes/perfil_avatar/perfil6.jpg
+  AssetGenImage get perfil6 =>
+      const AssetGenImage('assets/imagenes/perfil_avatar/perfil6.jpg');
+
+  /// File path: assets/imagenes/perfil_avatar/perfil7.jpg
+  AssetGenImage get perfil7 =>
+      const AssetGenImage('assets/imagenes/perfil_avatar/perfil7.jpg');
+
+  /// File path: assets/imagenes/perfil_avatar/perfil8.jpg
+  AssetGenImage get perfil8 =>
+      const AssetGenImage('assets/imagenes/perfil_avatar/perfil8.jpg');
+
+  /// File path: assets/imagenes/perfil_avatar/perfil9.jpg
+  AssetGenImage get perfil9 =>
+      const AssetGenImage('assets/imagenes/perfil_avatar/perfil9.jpg');
 
   /// List of all assets
-  List<AssetGenImage> get values => [customCaret, gridMagnification];
-}
-
-class $AssetsSamplesUiGen {
-  const $AssetsSamplesUiGen();
-
-  /// Directory path: assets/samples/ui/rive_app
-  $AssetsSamplesUiRiveAppGen get riveApp => const $AssetsSamplesUiRiveAppGen();
+  List<AssetGenImage> get values => [
+        perfil1,
+        perfil10,
+        perfil11,
+        perfil12,
+        perfil2,
+        perfil3,
+        perfil4,
+        perfil5,
+        perfil6,
+        perfil7,
+        perfil8,
+        perfil9
+      ];
 }
 
 class $AssetsImagenesMusculosAbdomenGen {
@@ -2254,160 +2293,12 @@ class $AssetsImagenesMusculosTricepsGen {
       ];
 }
 
-class $AssetsSamplesUiRiveAppGen {
-  const $AssetsSamplesUiRiveAppGen();
-
-  /// File path: assets/samples/ui/rive_app/course_rive.png
-  AssetGenImage get courseRive =>
-      const AssetGenImage('assets/samples/ui/rive_app/course_rive.png');
-
-  /// Directory path: assets/samples/ui/rive_app/images
-  $AssetsSamplesUiRiveAppImagesGen get images =>
-      const $AssetsSamplesUiRiveAppImagesGen();
-
-  /// Directory path: assets/samples/ui/rive_app/rive
-  $AssetsSamplesUiRiveAppRiveGen get rive =>
-      const $AssetsSamplesUiRiveAppRiveGen();
-
-  /// List of all assets
-  List<AssetGenImage> get values => [courseRive];
-}
-
-class $AssetsSamplesUiRiveAppImagesGen {
-  const $AssetsSamplesUiRiveAppImagesGen();
-
-  /// Directory path: assets/samples/ui/rive_app/images/avatars
-  $AssetsSamplesUiRiveAppImagesAvatarsGen get avatars =>
-      const $AssetsSamplesUiRiveAppImagesAvatarsGen();
-
-  /// Directory path: assets/samples/ui/rive_app/images/backgrounds
-  $AssetsSamplesUiRiveAppImagesBackgroundsGen get backgrounds =>
-      const $AssetsSamplesUiRiveAppImagesBackgroundsGen();
-
-  /// File path: assets/samples/ui/rive_app/images/icon_email.png
-  AssetGenImage get iconEmail =>
-      const AssetGenImage('assets/samples/ui/rive_app/images/icon_email.png');
-
-  /// File path: assets/samples/ui/rive_app/images/icon_lock.png
-  AssetGenImage get iconLock =>
-      const AssetGenImage('assets/samples/ui/rive_app/images/icon_lock.png');
-
-  /// File path: assets/samples/ui/rive_app/images/logo_apple.png
-  AssetGenImage get logoApple =>
-      const AssetGenImage('assets/samples/ui/rive_app/images/logo_apple.png');
-
-  /// File path: assets/samples/ui/rive_app/images/logo_email.png
-  AssetGenImage get logoEmail =>
-      const AssetGenImage('assets/samples/ui/rive_app/images/logo_email.png');
-
-  /// File path: assets/samples/ui/rive_app/images/logo_google.png
-  AssetGenImage get logoGoogle =>
-      const AssetGenImage('assets/samples/ui/rive_app/images/logo_google.png');
-
-  /// Directory path: assets/samples/ui/rive_app/images/topics
-  $AssetsSamplesUiRiveAppImagesTopicsGen get topics =>
-      const $AssetsSamplesUiRiveAppImagesTopicsGen();
-
-  /// List of all assets
-  List<AssetGenImage> get values =>
-      [iconEmail, iconLock, logoApple, logoEmail, logoGoogle];
-}
-
-class $AssetsSamplesUiRiveAppRiveGen {
-  const $AssetsSamplesUiRiveAppRiveGen();
-
-  /// File path: assets/samples/ui/rive_app/rive/button.riv
-  String get button => 'assets/samples/ui/rive_app/rive/button.riv';
-
-  /// File path: assets/samples/ui/rive_app/rive/check.riv
-  String get check => 'assets/samples/ui/rive_app/rive/check.riv';
-
-  /// File path: assets/samples/ui/rive_app/rive/confetti.riv
-  String get confetti => 'assets/samples/ui/rive_app/rive/confetti.riv';
-
-  /// File path: assets/samples/ui/rive_app/rive/icons.riv
-  String get icons => 'assets/samples/ui/rive_app/rive/icons.riv';
-
-  /// File path: assets/samples/ui/rive_app/rive/menu_button.riv
-  String get menuButton => 'assets/samples/ui/rive_app/rive/menu_button.riv';
-
-  /// File path: assets/samples/ui/rive_app/rive/shapes.riv
-  String get shapes => 'assets/samples/ui/rive_app/rive/shapes.riv';
-
-  /// List of all assets
-  List<String> get values =>
-      [button, check, confetti, icons, menuButton, shapes];
-}
-
-class $AssetsSamplesUiRiveAppImagesAvatarsGen {
-  const $AssetsSamplesUiRiveAppImagesAvatarsGen();
-
-  /// File path: assets/samples/ui/rive_app/images/avatars/avatar_1.jpg
-  AssetGenImage get avatar1 => const AssetGenImage(
-      'assets/samples/ui/rive_app/images/avatars/avatar_1.jpg');
-
-  /// File path: assets/samples/ui/rive_app/images/avatars/avatar_2.jpg
-  AssetGenImage get avatar2 => const AssetGenImage(
-      'assets/samples/ui/rive_app/images/avatars/avatar_2.jpg');
-
-  /// File path: assets/samples/ui/rive_app/images/avatars/avatar_3.jpg
-  AssetGenImage get avatar3 => const AssetGenImage(
-      'assets/samples/ui/rive_app/images/avatars/avatar_3.jpg');
-
-  /// File path: assets/samples/ui/rive_app/images/avatars/avatar_4.jpg
-  AssetGenImage get avatar4 => const AssetGenImage(
-      'assets/samples/ui/rive_app/images/avatars/avatar_4.jpg');
-
-  /// File path: assets/samples/ui/rive_app/images/avatars/avatar_5.jpg
-  AssetGenImage get avatar5 => const AssetGenImage(
-      'assets/samples/ui/rive_app/images/avatars/avatar_5.jpg');
-
-  /// File path: assets/samples/ui/rive_app/images/avatars/avatar_6.jpg
-  AssetGenImage get avatar6 => const AssetGenImage(
-      'assets/samples/ui/rive_app/images/avatars/avatar_6.jpg');
-
-  /// File path: assets/samples/ui/rive_app/images/avatars/avatar_default.jpg
-  AssetGenImage get avatarDefault => const AssetGenImage(
-      'assets/samples/ui/rive_app/images/avatars/avatar_default.jpg');
-
-  /// List of all assets
-  List<AssetGenImage> get values =>
-      [avatar1, avatar2, avatar3, avatar4, avatar5, avatar6, avatarDefault];
-}
-
-class $AssetsSamplesUiRiveAppImagesBackgroundsGen {
-  const $AssetsSamplesUiRiveAppImagesBackgroundsGen();
-
-  /// File path: assets/samples/ui/rive_app/images/backgrounds/spline.png
-  AssetGenImage get spline => const AssetGenImage(
-      'assets/samples/ui/rive_app/images/backgrounds/spline.png');
-
-  /// List of all assets
-  List<AssetGenImage> get values => [spline];
-}
-
-class $AssetsSamplesUiRiveAppImagesTopicsGen {
-  const $AssetsSamplesUiRiveAppImagesTopicsGen();
-
-  /// File path: assets/samples/ui/rive_app/images/topics/topic_1.png
-  AssetGenImage get topic1 => const AssetGenImage(
-      'assets/samples/ui/rive_app/images/topics/topic_1.png');
-
-  /// File path: assets/samples/ui/rive_app/images/topics/topic_2.png
-  AssetGenImage get topic2 => const AssetGenImage(
-      'assets/samples/ui/rive_app/images/topics/topic_2.png');
-
-  /// List of all assets
-  List<AssetGenImage> get values => [topic1, topic2];
-}
-
 class Assets {
   const Assets._();
 
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagenesGen imagenes = $AssetsImagenesGen();
   static const $AssetsLottieGen lottie = $AssetsLottieGen();
-  static const $AssetsSamplesGen samples = $AssetsSamplesGen();
 }
 
 class AssetGenImage {

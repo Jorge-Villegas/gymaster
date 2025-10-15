@@ -4,10 +4,6 @@ import 'package:gymaster/core/usecase/usecase.dart';
 import 'package:gymaster/features/estadisticas/domain/entities/ranking_ejercicio.dart';
 import 'package:gymaster/features/estadisticas/domain/repositories/estadisticas_repository.dart';
 
-/// UseCase para obtener el ranking de ejercicios más realizados.
-///
-/// Encapsula la lógica para recuperar los ejercicios ordenados por
-/// frecuencia, volumen o peso máximo en un periodo determinado.
 class ObtenerRankingEjerciciosUseCase
     implements UseCase<List<RankingEjercicio>, ObtenerRankingEjerciciosParams> {
   final EstadisticasRepository _repository;

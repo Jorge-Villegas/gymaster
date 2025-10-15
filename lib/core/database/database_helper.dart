@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:gymaster/core/database/models/favorito_ejercicio_db_model.dart';
 import 'package:gymaster/core/database/models/logro_db_model.dart';
 import 'package:gymaster/core/database/models/models.dart';
+import 'package:gymaster/features/setting/data/models/perfil_usuario_completo_db_model.dart';
 // ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -12,7 +13,7 @@ import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 class DatabaseHelper {
   static const _databaseName = 'database_gymaster.db';
   static const _databaseVersion =
-      5; // Incrementamos la versión para eliminación lógica de rutinas
+      8; // Incrementamos para forzar migración de perfil de usuario completo
 
   // Singleton
   DatabaseHelper._privateConstructor();
@@ -49,19 +50,27 @@ class DatabaseHelper {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, _databaseName);
 
-    debugPrint(path);
-    print(path);
+    debugPrint('📱 Ruta de base de datos: $path');
+    debugPrint('🔧 Versión esperada: $_databaseVersion');
 
     return await openDatabase(
       path,
       version: _databaseVersion,
-      onCreate: _onCreate,
-      onUpgrade: _onUpgrade,
+      onCreate: (db, version) async {
+        debugPrint('🆕 Creando nueva base de datos versión $version');
+        await _onCreate(db, version);
+      },
+      onUpgrade: (db, oldVersion, newVersion) async {
+        debugPrint(
+            '⬆️ Actualizando base de datos de v$oldVersion a v$newVersion');
+        await _onUpgrade(db, oldVersion, newVersion);
+      },
       readOnly: false,
     );
   }
 
   Future<void> _onCreate(Database db, int version) async {
+    debugPrint('🆕 Iniciando creación de base de datos versión $version');
     await db.execute('''
         CREATE TABLE ${UsuarioDb.tabla} (
           ${UsuarioDb.columnaId}                TEXT PRIMARY KEY,
@@ -227,6 +236,10 @@ class DatabaseHelper {
       await db.execute(indexSql);
     }
 
+    // Crear tabla perfil_usuario_completo para nuevas instalaciones
+    await db.execute(PerfilUsuarioCompletoDbModel.createTableSql);
+    debugPrint('✅ Tabla perfil_usuario_completo creada en nueva instalación');
+
     // Llama al seeder para llenar la base de datos con datos iniciales
     // await DatabaseSeeder(idGenerator: UuidGenerator()).seedGenerateDatabase();
   }
@@ -304,6 +317,155 @@ class DatabaseHelper {
 
       debugPrint(
           '🔄 Migración completada: Columna deleted_at agregada a rutinas');
+    }
+
+    if (oldVersion < 6) {
+      // Migración para configuración completa de settings - versión 6
+      debugPrint('🔄 Iniciando migración para settings completo...');
+
+      // Extender tabla usuario con perfil completo
+      await db.execute(
+          'ALTER TABLE ${UsuarioDb.tabla} ADD COLUMN foto_perfil TEXT');
+      await db.execute(
+          'ALTER TABLE ${UsuarioDb.tabla} ADD COLUMN nombre_completo TEXT');
+      await db.execute(
+          'ALTER TABLE ${UsuarioDb.tabla} ADD COLUMN fecha_nacimiento DATE');
+      await db.execute(
+          'ALTER TABLE ${UsuarioDb.tabla} ADD COLUMN genero TEXT CHECK(genero IN (\'masculino\', \'femenino\', \'otro\', \'prefiero_no_decir\'))');
+      await db.execute(
+          'ALTER TABLE ${UsuarioDb.tabla} ADD COLUMN objetivo_fitness TEXT CHECK(objetivo_fitness IN (\'perder_peso\', \'ganar_musculo\', \'mantenimiento\', \'fuerza\', \'resistencia\', \'tonificar\'))');
+      await db.execute(
+          'ALTER TABLE ${UsuarioDb.tabla} ADD COLUMN nivel_experiencia TEXT CHECK(nivel_experiencia IN (\'principiante\', \'intermedio\', \'avanzado\'))');
+      await db.execute(
+          'ALTER TABLE ${UsuarioDb.tabla} ADD COLUMN altura_cm INTEGER');
+      await db.execute(
+          'ALTER TABLE ${UsuarioDb.tabla} ADD COLUMN peso_actual_kg REAL');
+      await db.execute(
+          'ALTER TABLE ${UsuarioDb.tabla} ADD COLUMN peso_objetivo_kg REAL');
+      await db.execute(
+          'ALTER TABLE ${UsuarioDb.tabla} ADD COLUMN fecha_actualizacion_perfil DATETIME');
+
+      // Crear tabla configuracion_usuario
+      await db.execute('''
+        CREATE TABLE configuracion_usuario (
+          id TEXT PRIMARY KEY,
+          usuario_id TEXT NOT NULL,
+          -- Unidades de medida
+          unidad_peso TEXT DEFAULT 'kg' CHECK(unidad_peso IN ('kg', 'lb')),
+          unidad_longitud TEXT DEFAULT 'cm' CHECK(unidad_longitud IN ('cm', 'in')),
+          formato_hora TEXT DEFAULT '24h' CHECK(formato_hora IN ('24h', '12h')),
+          formato_fecha TEXT DEFAULT '31.01' CHECK(formato_fecha IN ('31.01', '01/31')),
+          dia_inicio_semana TEXT DEFAULT 'lunes' CHECK(dia_inicio_semana IN ('lunes', 'domingo')),
+          unidad_calorias TEXT DEFAULT 'kcal' CHECK(unidad_calorias IN ('kcal', 'kj')),
+          
+          -- Configuraciones de entrenamiento
+          tiempo_descanso_defecto INTEGER DEFAULT 60,
+          sonidos_habilitados INTEGER DEFAULT 1,
+          vibracion_habilitada INTEGER DEFAULT 1,
+          volumen_sonidos INTEGER DEFAULT 80,
+          intensidad_vibracion TEXT DEFAULT 'media' CHECK(intensidad_vibracion IN ('baja', 'media', 'alta')),
+          auto_siguiente_ejercicio INTEGER DEFAULT 0,
+          
+          -- Notificaciones
+          notificaciones_habilitadas INTEGER DEFAULT 1,
+          recordatorio_entrenar INTEGER DEFAULT 1,
+          recordatorio_racha INTEGER DEFAULT 1,
+          recordatorio_descanso INTEGER DEFAULT 1,
+          hora_recordatorio_manana TEXT DEFAULT '08:00',
+          hora_recordatorio_tarde TEXT DEFAULT '18:00',
+          
+          -- Tema y personalización
+          modo_oscuro INTEGER DEFAULT 0,
+          idioma TEXT DEFAULT 'es' CHECK(idioma IN ('es', 'en')),
+          
+          -- Auditoria
+          fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
+          fecha_actualizacion DATETIME,
+          
+          FOREIGN KEY (usuario_id) REFERENCES ${UsuarioDb.tabla} (id) ON DELETE CASCADE
+        )
+      ''');
+
+      // Crear tabla informacion_aplicacion
+      await db.execute('''
+        CREATE TABLE informacion_aplicacion (
+          id TEXT PRIMARY KEY,
+          version_app TEXT NOT NULL,
+          fecha_instalacion DATETIME DEFAULT CURRENT_TIMESTAMP,
+          fecha_ultima_actualizacion DATETIME,
+          numero_inicios_sesion INTEGER DEFAULT 0,
+          fecha_ultimo_inicio DATETIME,
+          racha_actual INTEGER DEFAULT 0,
+          racha_maxima INTEGER DEFAULT 0,
+          total_rutinas_completadas INTEGER DEFAULT 0,
+          total_ejercicios_realizados INTEGER DEFAULT 0,
+          tiempo_total_entrenamiento INTEGER DEFAULT 0,
+          fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP
+        )
+      ''');
+
+      debugPrint('🔄 Migración completada: Settings completo implementado');
+    }
+
+    if (oldVersion < 7) {
+      // Crear tabla perfil_usuario_completo en versión 7
+      debugPrint('🔄 Iniciando migración para perfil de usuario completo...');
+      debugPrint(
+          '📋 SQL de creación: ${PerfilUsuarioCompletoDbModel.createTableSql}');
+
+      try {
+        await db.execute(PerfilUsuarioCompletoDbModel.createTableSql);
+
+        // Verificar que la tabla se creó correctamente
+        final result = await db.rawQuery(
+            "SELECT name FROM sqlite_master WHERE type='table' AND name='perfil_usuario_completo'");
+
+        if (result.isNotEmpty) {
+          debugPrint('✅ Tabla perfil_usuario_completo creada exitosamente');
+        } else {
+          debugPrint('❌ Error: Tabla perfil_usuario_completo no se creó');
+        }
+      } catch (e) {
+        debugPrint('❌ Error creando tabla perfil_usuario_completo: $e');
+        rethrow;
+      }
+
+      debugPrint(
+          '🔄 Migración completada: Tabla perfil_usuario_completo agregada');
+    }
+
+    if (oldVersion < 8) {
+      // Migración v8: Asegurar que tabla perfil_usuario_completo existe
+      debugPrint('🔄 Verificando tabla perfil_usuario_completo en v8...');
+
+      try {
+        // Verificar si la tabla existe
+        final result = await db.rawQuery(
+            "SELECT name FROM sqlite_master WHERE type='table' AND name='perfil_usuario_completo'");
+
+        if (result.isEmpty) {
+          debugPrint(
+              '🔄 Tabla perfil_usuario_completo no existe, creándola...');
+          await db.execute(PerfilUsuarioCompletoDbModel.createTableSql);
+
+          // Verificar nuevamente
+          final checkResult = await db.rawQuery(
+              "SELECT name FROM sqlite_master WHERE type='table' AND name='perfil_usuario_completo'");
+
+          if (checkResult.isNotEmpty) {
+            debugPrint(
+                '✅ Tabla perfil_usuario_completo creada exitosamente en v8');
+          } else {
+            debugPrint(
+                '❌ Error: Tabla perfil_usuario_completo no se pudo crear en v8');
+          }
+        } else {
+          debugPrint('✅ Tabla perfil_usuario_completo ya existe en v8');
+        }
+      } catch (e) {
+        debugPrint('❌ Error en migración v8: $e');
+        rethrow;
+      }
     }
   }
 

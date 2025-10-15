@@ -1,6 +1,8 @@
 export 'package:gymaster/core/database/models/audit_log_db.dart';
+export 'package:gymaster/core/database/models/configuracion_usuario_db_model.dart';
 export 'package:gymaster/core/database/models/excercise_muscle_db_model.dart';
 export 'package:gymaster/core/database/models/ejercicio_db.dart';
+export 'package:gymaster/core/database/models/informacion_aplicacion_db_model.dart';
 export 'package:gymaster/core/database/models/serie_ejercicio_db.dart';
 export 'package:gymaster/core/database/models/musculo_db.dart';
 export 'package:gymaster/core/database/models/routine_db.dart';

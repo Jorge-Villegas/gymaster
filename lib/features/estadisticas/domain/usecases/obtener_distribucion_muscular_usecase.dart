@@ -4,10 +4,6 @@ import 'package:gymaster/core/usecase/usecase.dart';
 import 'package:gymaster/features/estadisticas/domain/entities/distribucion_muscular.dart';
 import 'package:gymaster/features/estadisticas/domain/repositories/estadisticas_repository.dart';
 
-/// UseCase para obtener la distribución de músculos trabajados.
-///
-/// Encapsula la lógica para recuperar qué músculos se han trabajado
-/// y en qué proporción durante un periodo de tiempo.
 class ObtenerDistribucionMuscularUseCase
     implements
         UseCase<List<DistribucionMuscular>, ObtenerDistribucionMuscularParams> {

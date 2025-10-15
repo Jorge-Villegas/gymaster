@@ -100,26 +100,164 @@ void _initRoutine() {
 
 void _initSettings() {
   serviceLocator
-    // Data Source
+    // Data Layer - DataSources
     ..registerFactory<SettingLocalDataSource>(
-      () => SettingLocalDataSource(serviceLocator()),
+      () => SettingLocalDataSource(
+        serviceLocator(),
+      ),
     )
-    // Repository
+    ..registerFactory<ConfiguracionUsuarioLocalDataSource>(
+      () => ConfiguracionUsuarioLocalDataSource(
+        databaseHelper: serviceLocator(),
+      ),
+    )
+    ..registerFactory<PerfilUsuarioLocalDataSource>(
+      () => PerfilUsuarioLocalDataSource(
+        databaseHelper: serviceLocator(),
+      ),
+    )
+    ..registerFactory<InformacionAplicacionLocalDataSource>(
+      () => InformacionAplicacionLocalDataSource(
+        databaseHelper: serviceLocator(),
+      ),
+    )
+
+    // Data Layer - Repositories
     ..registerFactory<SettingRepository>(
-      () => SettingRepositoryImp(localDataSource: serviceLocator()),
+      () => SettingRepositoryImp(
+        localDataSource: serviceLocator(),
+      ),
     )
-    // Use Case
-    ..registerFactory(() => SetThemeModeUseCase(serviceLocator()))
-    ..registerFactory(() => GetThemeModeUseCase(serviceLocator()))
-    ..registerFactory(() => SetLanguageUseCase(serviceLocator()))
-    ..registerFactory(() => GetLanguageUseCase(serviceLocator()))
-    // Cubit
+    ..registerFactory<ConfiguracionUsuarioRepository>(
+      () => ConfiguracionUsuarioRepositoryImpl(
+        localDataSource: serviceLocator(),
+      ),
+    )
+    ..registerFactory<PerfilUsuarioRepository>(
+      () => PerfilUsuarioRepositoryImpl(
+        localDataSource: serviceLocator(),
+      ),
+    )
+    ..registerFactory<InformacionAplicacionRepository>(
+      () => InformacionAplicacionRepositoryImpl(
+        localDataSource: serviceLocator(),
+      ),
+    )
+
+    // Domain Layer - Use Cases - Settings General
+    ..registerFactory(
+      () => GetLanguageUseCase(serviceLocator()),
+    )
+    ..registerFactory(
+      () => SetLanguageUseCase(serviceLocator()),
+    )
+    ..registerFactory(
+      () => GetThemeModeUseCase(serviceLocator()),
+    )
+    ..registerFactory(
+      () => SetThemeModeUseCase(serviceLocator()),
+    )
+
+    // Domain Layer - Use Cases - Configuración Usuario
+    ..registerFactory(
+      () => ObtenerConfiguracionPorUsuarioIdUseCase(serviceLocator()),
+    )
+    ..registerFactory(
+      () => CrearConfiguracionUsuarioUseCase(serviceLocator()),
+    )
+    ..registerFactory(
+      () => ActualizarConfiguracionUsuarioUseCase(serviceLocator()),
+    )
+
+    // Domain Layer - Use Cases - Perfil Usuario
+    ..registerFactory(
+      () => ObtenerPerfilPorIdUseCase(serviceLocator()),
+    )
+    ..registerFactory(
+      () => ActualizarPerfilUsuarioUseCase(serviceLocator()),
+    )
+
+    // Domain Layer - Use Cases - Información Aplicación
+    ..registerFactory(
+      () => ObtenerInformacionAplicacionUseCase(serviceLocator()),
+    )
+    ..registerFactory(
+      () => IncrementarContadorInicioAppUseCase(serviceLocator()),
+    )
+    ..registerFactory(
+      () => ActualizarRachaActualUseCase(serviceLocator()),
+    )
+
+    // Services Layer
+    ..registerLazySingleton<NotificationServiceInterface>(
+      () => NotificationService(),
+    )
+    ..registerLazySingleton<LocalizationServiceInterface>(
+      () => LocalizationService(),
+    )
+
+    // Presentation Layer - Cubits
     ..registerFactory(
       () => SettingCubit(
         getLanguageUseCase: serviceLocator(),
-        getThemeModeUseCase: serviceLocator(),
         setLanguageUseCase: serviceLocator(),
+        getThemeModeUseCase: serviceLocator(),
         setThemeModeUseCase: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => ConfiguracionUsuarioCubit(
+        obtenerConfiguracionUseCase: serviceLocator(),
+        crearConfiguracionUseCase: serviceLocator(),
+        actualizarConfiguracionUseCase: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => PerfilUsuarioCubit(
+        obtenerPerfilUseCase: serviceLocator(),
+        actualizarPerfilUseCase: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => InformacionAplicacionCubit(
+        obtenerInformacionUseCase: serviceLocator(),
+        incrementarContadorInicioUseCase: serviceLocator(),
+        actualizarRachaUseCase: serviceLocator(),
+      ),
+    )
+
+    // Data Layer - Perfil Usuario Completo
+    ..registerFactory<PerfilUsuarioCompletoLocalDataSource>(
+      () => PerfilUsuarioCompletoLocalDataSourceImpl(
+        databaseHelper: serviceLocator(),
+        idGenerator: serviceLocator(),
+      ),
+    )
+
+    // Repository - Perfil Usuario Completo
+    ..registerFactory<PerfilUsuarioCompletoRepository>(
+      () => PerfilUsuarioCompletoRepositoryImpl(
+        localDataSource: serviceLocator(),
+      ),
+    )
+
+    // Use Cases - Perfil Usuario Completo
+    ..registerFactory(
+      () => VerificarPerfilCompletoExisteUseCase(serviceLocator()),
+    )
+    ..registerFactory(
+      () => ObtenerPerfilCompletoUseCase(serviceLocator()),
+    )
+    ..registerFactory(
+      () => CrearPerfilCompletoUseCase(serviceLocator()),
+    )
+
+    // Cubit - Onboarding Usuario
+    ..registerFactory(
+      () => OnboardingUsuarioCubit(
+        verificarPerfilCompletoExisteUseCase: serviceLocator(),
+        obtenerPerfilCompletoUseCase: serviceLocator(),
+        crearPerfilCompletoUseCase: serviceLocator(),
       ),
     );
 }
@@ -247,7 +385,7 @@ void _initEmotionalSystem() {
     // Cubits
     ..registerFactory(
       () => AppStartCubit(
-        isOnboardingCompletedUseCase: serviceLocator(),
+        verificarPerfilCompletoExisteUseCase: serviceLocator(),
       ),
     )
     ..registerFactory(
@@ -264,17 +402,20 @@ void _initEmotionalSystem() {
     );
 }
 
-/// Inicializa las dependencias del feature de estadísticas
 void _initEstadisticas() {
   serviceLocator
-    // Data Layer
+    // Data Layer - DataSource
     ..registerFactory<EstadisticasLocalDataSource>(
-      () => EstadisticasLocalDataSource(serviceLocator()),
+      () => EstadisticasLocalDataSource(
+        serviceLocator(),
+      ),
     )
 
-    // Domain Layer - Repository
+    // Data Layer - Repository
     ..registerFactory<EstadisticasRepository>(
-      () => EstadisticasRepositoryImpl(serviceLocator()),
+      () => EstadisticasRepositoryImpl(
+        serviceLocator(),
+      ),
     )
 
     // Domain Layer - UseCases

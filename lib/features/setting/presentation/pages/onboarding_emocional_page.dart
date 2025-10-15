@@ -3,14 +3,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/core/theme/emotional_text_styles.dart';
-import 'package:gymaster/features/setting/domain/entities/user_motivation.dart';
-import 'package:gymaster/features/setting/presentation/cubits/onboarding/onboarding_cubit.dart';
 import 'package:gymaster/features/setting/presentation/cubits/onboarding/onboarding_state.dart';
+import 'package:gymaster/features/setting/presentation/cubits/onboarding/onboarding_cubit.dart';
+import 'package:gymaster/features/setting/presentation/cubits/onboarding_usuario_cubit.dart';
+import 'package:gymaster/features/setting/presentation/cubits/onboarding_usuario_state.dart';
+import 'package:gymaster/features/setting/data/models/user_motivation.dart';
+import 'package:gymaster/features/setting/domain/entities/perfil_usuario_completo.dart';
+
 import 'package:gymaster/shared/utils/haptic_feedback_helper.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
+import 'package:gymaster/shared/widgets/duolingo_components.dart';
+import 'package:gymaster/shared/widgets/onboarding_header_widget.dart';
 
 class OnboardingEmocionalPage extends StatefulWidget {
-  const OnboardingEmocionalPage({super.key});
+  final Map<String, dynamic>? datosCompletos;
+
+  const OnboardingEmocionalPage({super.key, this.datosCompletos});
 
   @override
   State<OnboardingEmocionalPage> createState() =>
@@ -24,6 +32,10 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: 0);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<OnboardingCubit>().navigateToPage('motivaciones');
+    });
   }
 
   @override
@@ -35,34 +47,60 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocListener<OnboardingCubit, OnboardingState>(
-        listener: (context, state) {
-          if (state is OnboardingCompleted) {
-            // Navegar a la página principal
-            context.go('/main');
-          } else if (state is OnboardingError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.message),
-                backgroundColor: AppColors.error,
-              ),
-            );
-          }
-        },
+      backgroundColor: AppColors.fondoPrincipal,
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<OnboardingCubit, OnboardingState>(
+            listener: (context, state) {
+              if (state is OnboardingCompleted) {
+                // Al completar el onboarding emocional, crear el perfil
+                _crearPerfilCompleto(context);
+              } else if (state is OnboardingError) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(state.message),
+                    backgroundColor: AppColors.error,
+                  ),
+                );
+              }
+            },
+          ),
+          BlocListener<OnboardingUsuarioCubit, OnboardingUsuarioState>(
+            listener: (context, state) {
+              if (state is OnboardingUsuarioPerfilCreado) {
+                context.pushReplacementNamed('listaRutinas');
+              } else if (state is OnboardingUsuarioError) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(state.mensaje),
+                    backgroundColor: AppColors.error,
+                  ),
+                );
+              }
+            },
+          ),
+        ],
         child: BlocBuilder<OnboardingCubit, OnboardingState>(
           builder: (context, state) {
             if (state is OnboardingLoading) {
               return const Center(child: CircularProgressIndicator());
             }
 
-            int currentPage = 0;
-            if (state is OnboardingPageChanged) {
-              currentPage = state.currentPage;
-              // Sincronizar el PageController con el estado del cubit
+            final cubit = context.read<OnboardingCubit>();
+            int currentPage = cubit.currentPage;
+
+            int currentSubPage = 0;
+            if (currentPage >= 4 && currentPage <= 7) {
+              currentSubPage = currentPage - 4;
+            }
+
+            if (state is OnboardingPageChanged &&
+                currentPage >= 4 &&
+                currentPage <= 7) {
               if (_pageController.hasClients &&
-                  _pageController.page?.round() != currentPage) {
+                  _pageController.page?.round() != currentSubPage) {
                 _pageController.animateToPage(
-                  currentPage,
+                  currentSubPage,
                   duration: const Duration(milliseconds: 300),
                   curve: Curves.easeInOut,
                 );
@@ -72,16 +110,12 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
             return SafeArea(
               child: Column(
                 children: [
-                  _buildProgressHeader(context, currentPage),
+                  const OnboardingHeaderWidget(),
                   Expanded(
                     child: PageView(
                       controller: _pageController,
-                      physics:
-                          const NeverScrollableScrollPhysics(), // Deshabilitar deslizamiento
-                      onPageChanged: (page) {
-                        debugPrint('📖 PageView cambió a página: $page');
-                        // No hacer nada aquí, el cambio de página se maneja solo con botones
-                      },
+                      physics: const NeverScrollableScrollPhysics(),
+                      onPageChanged: (page) {},
                       children: [
                         _buildMotivationPage(context),
                         _buildChallengesPage(context),
@@ -90,46 +124,12 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
                       ],
                     ),
                   ),
-                  _buildNavigationButtons(context, currentPage),
+                  _buildNavigationButtons(context, currentSubPage),
                 ],
               ),
             );
           },
         ),
-      ),
-    );
-  }
-
-  Widget _buildProgressHeader(BuildContext context, int currentPage) {
-    final progress = (currentPage + 1) / 4;
-
-    return Container(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                '${currentPage + 1} de 4',
-                style: EstilosTextoEmocional.amigable,
-              ),
-              if (currentPage > 0)
-                IconButton(
-                  onPressed: () =>
-                      context.read<OnboardingCubit>().previousPage(),
-                  icon: const Icon(IconsaxPlusLinear.arrow_left),
-                ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          LinearProgressIndicator(
-            value: progress,
-            backgroundColor: Colors.grey[300],
-            valueColor: AlwaysStoppedAnimation<Color>(AppColors.acento),
-            minHeight: 6,
-          ),
-        ],
       ),
     );
   }
@@ -141,14 +141,45 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 20),
-          Text(
-            '¿Qué te motiva a entrenar?',
-            style: EstilosTextoEmocional.motivacional,
-          ),
-          const SizedBox(height: 10),
-          Text(
-            'Selecciona todo lo que te inspire 💪',
-            style: EstilosTextoEmocional.amigable,
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  AppColors.acento.withValues(alpha: 0.1),
+                  AppColors.primario.withValues(alpha: 0.1),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(
+                color: AppColors.acento.withValues(alpha: 0.2),
+                width: 1,
+              ),
+            ),
+            child: Column(
+              children: [
+                const Text(
+                  '🎯',
+                  style: TextStyle(fontSize: 28),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  '¿Qué te motiva a entrenar?',
+                  style: EstilosTextoEmocional.motivacional,
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Selecciona todo lo que te inspire 💪',
+                  style: EstilosTextoEmocional.amigable.copyWith(
+                    color: AppColors.textoPrincipal,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
           ),
           const SizedBox(height: 30),
           Expanded(
@@ -353,8 +384,6 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
             style: EstilosTextoEmocional.amigable,
           ),
           const SizedBox(height: 30),
-          // Configuraciones de notificación aquí
-          // TODO: Implementar controles de notificación
           Expanded(
             child: Column(
               children: [
@@ -366,9 +395,7 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
                         'Te enviaremos motivación cuando la necesites'),
                     trailing: Switch(
                       value: true,
-                      onChanged: (value) {
-                        // TODO: Implementar toggle
-                      },
+                      onChanged: (value) {},
                     ),
                   ),
                 ),
@@ -390,9 +417,7 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
                             return ChoiceChip(
                               label: Text(_getToneLabel(tone)),
                               selected: tone == MotivationTone.energetico,
-                              onSelected: (selected) {
-                                // TODO: Implementar selección de tono
-                              },
+                              onSelected: (selected) {},
                             );
                           }).toList(),
                         ),
@@ -457,47 +482,71 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
   Widget _buildNavigationButtons(BuildContext context, int currentPage) {
     return Container(
       padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            AppColors.fondoPrincipal,
+            AppColors.acento.withValues(alpha: 0.05),
+          ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+      ),
       child: Row(
         children: [
           if (currentPage > 0)
             Expanded(
-              child: OutlinedButton(
-                onPressed: () => context.read<OnboardingCubit>().previousPage(),
-                child: const Text('Anterior'),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: AppColors.acento),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: InkWell(
+                  onTap: () => context.read<OnboardingCubit>().previousPage(),
+                  borderRadius: BorderRadius.circular(12),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    child: const Center(
+                      child: Text(
+                        '← Anterior',
+                        style: TextStyle(
+                          color: AppColors.acento,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ),
           if (currentPage > 0) const SizedBox(width: 16),
           Expanded(
             child: BlocBuilder<OnboardingCubit, OnboardingState>(
               builder: (context, state) {
-                final canContinue = context
-                    .read<OnboardingCubit>()
-                    .canContinueFromCurrentPage();
-                final isLastPage = currentPage == 3;
+                final cubit = context.read<OnboardingCubit>();
+                final canContinue = cubit.canContinueFromCurrentPage();
+                final isLastStep = cubit.isLastPage;
 
-                debugPrint(
-                    '🔘 Construyendo botón - Página: $currentPage, Puede continuar: $canContinue');
+                final buttonTexts = [
+                  '¡Sigamos! 🎯',
+                  '¡Continuar! 💪',
+                  '¡Siguiente! ⚡',
+                  '🚀 ¡Comenzar mi aventura!'
+                ];
 
-                return ElevatedButton(
+                return DuolingoActionButton(
+                  text: buttonTexts[currentPage],
                   onPressed: canContinue
                       ? () {
-                          debugPrint(
-                              '🚀 Botón presionado - Página: $currentPage');
-                          if (isLastPage) {
-                            context
-                                .read<OnboardingCubit>()
-                                .completeOnboarding();
+                          if (isLastStep) {
+                            cubit.completeOnboarding();
                           } else {
-                            context.read<OnboardingCubit>().nextPage();
+                            cubit.nextPage();
                           }
                         }
                       : null,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.acento,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                  ),
-                  child: Text(isLastPage ? '¡Comenzar!' : 'Siguiente'),
+                  isEnabled: canContinue,
+                  color: AppColors.acento,
                 );
               },
             ),
@@ -505,5 +554,45 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
         ],
       ),
     );
+  }
+
+  void _crearPerfilCompleto(BuildContext context) {
+    if (widget.datosCompletos == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Error: Datos incompletos'),
+          backgroundColor: AppColors.error,
+        ),
+      );
+      return;
+    }
+
+    final datos = widget.datosCompletos!;
+
+    // Crear el perfil con todos los datos recolectados
+    context.read<OnboardingUsuarioCubit>().crearPerfilCompleto(
+          nombreUsuario: datos['nombre'] ?? '',
+          correo: datos['correo']?.isEmpty == true ? null : datos['correo'],
+          fotoPerfil: datos['avatar'] ?? 'perfil_1',
+          nombreCompleto: datos['nombre'] ?? '',
+          fechaNacimiento: datos['fechaNacimiento'] != null
+              ? DateTime.parse(datos['fechaNacimiento'])
+              : null,
+          genero: Genero.values.firstWhere(
+            (g) => g.name == datos['genero'],
+            orElse: () => Genero.prefiero_no_decir,
+          ),
+          objetivoFitness: ObjetivoFitness.values.firstWhere(
+            (o) => o.name == datos['objetivoFitness'],
+            orElse: () => ObjetivoFitness.mantenimiento,
+          ),
+          nivelExperiencia: NivelExperiencia.values.firstWhere(
+            (n) => n.name == datos['nivelExperiencia'],
+            orElse: () => NivelExperiencia.principiante,
+          ),
+          alturaCm: datos['altura'],
+          pesoActualKg: datos['peso'],
+          pesoObjetivoKg: datos['pesoObjetivo'],
+        );
   }
 }

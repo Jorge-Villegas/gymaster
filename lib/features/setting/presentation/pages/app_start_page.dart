@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gymaster/features/setting/presentation/cubits/app_start/app_start_cubit.dart';
+import 'package:gymaster/features/setting/presentation/cubits/app_start_cubit.dart';
 import 'package:gymaster/shared/widgets/barra_navegacion.dart';
 import 'package:gymaster/core/theme/app_colors.dart';
 

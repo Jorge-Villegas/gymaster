@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:gymaster/features/setting/domain/entities/user_motivation.dart';
+import 'package:gymaster/features/setting/data/models/user_motivation.dart';
 
 @immutable
 sealed class OnboardingState {}

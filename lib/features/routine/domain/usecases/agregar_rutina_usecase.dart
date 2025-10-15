@@ -1,7 +1,7 @@
 import 'package:gymaster/core/error/failures.dart';
 import 'package:gymaster/core/usecase/usecase.dart';
 import 'package:gymaster/features/routine/domain/entities/routine.dart';
-import 'package:gymaster/features/routine/domain/repositories/rutine_repository.dart';
+import 'package:gymaster/features/routine/domain/repositories/routine_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
 class AgregarRutinaUseCase implements UseCase<Routine, AgregarRutinaParams> {

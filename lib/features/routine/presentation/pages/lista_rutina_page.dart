@@ -398,14 +398,15 @@ class ListaRutinasPage extends StatelessWidget {
               );
             }
             if (state is RoutineError) {
-              return Container(
+              return SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    const SizedBox(height: 40),
                     // Animación Lottie emocional
                     Container(
-                      padding: const EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
@@ -423,26 +424,26 @@ class ListaRutinasPage extends StatelessWidget {
                       ),
                       child: Lottie.asset(
                         'assets/lottie/alzando_pesas.json',
-                        width: 200,
-                        height: 200,
+                        width: 160,
+                        height: 160,
                         repeat: true,
                         animate: true,
                       ),
                     ),
-                    const SizedBox(height: 32),
+                    const SizedBox(height: 24),
                     // Título motivacional
                     Text(
                       '¡Tu historia fitness comienza aquí!',
                       textAlign: TextAlign.center,
                       style: EstilosTextoEmocional.motivacional.copyWith(
-                        fontSize: 26,
+                        fontSize: 22,
                         color: AppColors.primario,
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 12),
                     // Mensaje inspirador
                     Container(
-                      padding: const EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
@@ -460,13 +461,13 @@ class ListaRutinasPage extends StatelessWidget {
                         '¡Vamos a crear algo increíble juntos! 💪',
                         textAlign: TextAlign.center,
                         style: EstilosTextoEmocional.amigable.copyWith(
-                          fontSize: 16,
+                          fontSize: 14,
                           color: AppColors.textoPrincipal,
                           height: 1.4,
                         ),
                       ),
                     ),
-                    const SizedBox(height: 32),
+                    const SizedBox(height: 24),
                     // Botón principal mejorado
                     ChicletButton(
                       texto: '¡Crear Mi Primera Rutina!',
@@ -479,36 +480,7 @@ class ListaRutinasPage extends StatelessWidget {
                       grosorSombreado: 8.0,
                       onPressed: () => _navegarAAgregarRutina(context),
                     ),
-                    const SizedBox(height: 16),
-                    // Botón secundario de ayuda
-                    ChicletButton(
-                      texto: 'Necesito ayuda para empezar',
-                      icono: Icons.help_outline_rounded,
-                      tamano: TamanoBotonChiclet.grande,
-                      estilo: EstiloBotonChiclet.contorno,
-                      colorBorde: AppColors.secundarioClaro,
-                      colorTexto: AppColors.secundarioClaro,
-                      radioBorde: 16,
-                      onPressed: () {
-                        // TODO: Implementar guía de inicio
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              '¡Próximamente tendremos una guía completa para ti!',
-                              style: EstilosTextoEmocional.amigable.copyWith(
-                                color: Colors.white,
-                                fontSize: 14,
-                              ),
-                            ),
-                            backgroundColor: AppColors.secundarioClaro,
-                            behavior: SnackBarBehavior.floating,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
+                    const SizedBox(height: 12),
                   ],
                 ),
               );
@@ -519,14 +491,15 @@ class ListaRutinasPage extends StatelessWidget {
             if (state is RoutineGetAllSuccess) {
               if (state.routines.isEmpty) {
                 // Estado vacío con diseño emocional mejorado
-                return Container(
+                return SingleChildScrollView(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      const SizedBox(height: 60),
                       // Ilustración motivacional
                       Container(
-                        padding: const EdgeInsets.all(24),
+                        padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
@@ -544,23 +517,23 @@ class ListaRutinasPage extends StatelessWidget {
                         ),
                         child: Icon(
                           Icons.fitness_center_rounded,
-                          size: 120,
+                          size: 100,
                           color: AppColors.exito.withOpacity(0.7),
                         ),
                       ),
-                      const SizedBox(height: 32),
+                      const SizedBox(height: 24),
                       // Mensaje inspirador
                       Text(
                         '¡Es hora de comenzar tu transformación!',
                         textAlign: TextAlign.center,
                         style: EstilosTextoEmocional.motivacional.copyWith(
-                          fontSize: 24,
+                          fontSize: 20,
                           color: AppColors.primario,
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 12),
                       Container(
-                        padding: const EdgeInsets.all(20),
+                        padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
@@ -579,13 +552,13 @@ class ListaRutinasPage extends StatelessWidget {
                           '¡Hagámoslo realidad juntos! 🎯',
                           textAlign: TextAlign.center,
                           style: EstilosTextoEmocional.aliento.copyWith(
-                            fontSize: 16,
+                            fontSize: 14,
                             color: AppColors.textoPrincipal,
                             height: 1.4,
                           ),
                         ),
                       ),
-                      const SizedBox(height: 32),
+                      const SizedBox(height: 24),
                       // Botón principal
                       ChicletButton(
                         texto: '¡Empezar Mi Rutina!',
@@ -598,6 +571,7 @@ class ListaRutinasPage extends StatelessWidget {
                         grosorSombreado: 6.0,
                         onPressed: () => _navegarAAgregarRutina(context),
                       ),
+                      const SizedBox(height: 40),
                     ],
                   ),
                 );

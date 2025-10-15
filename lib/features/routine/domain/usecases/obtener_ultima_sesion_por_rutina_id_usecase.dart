@@ -2,7 +2,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:gymaster/core/database/models/rutina_sesion_db.dart';
 import 'package:gymaster/core/error/failures.dart';
 import 'package:gymaster/core/usecase/usecase.dart';
-import 'package:gymaster/features/routine/domain/repositories/rutine_repository.dart';
+import 'package:gymaster/features/routine/domain/repositories/routine_repository.dart';
 
 class ObtenerUltimaSesionPorRutinaIdUseCase
     implements UseCase<RutinaSesionDb, ObtenerUltimaSesionPorRutinaIdParams> {

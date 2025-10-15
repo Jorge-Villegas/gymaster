@@ -1,6 +1,6 @@
 import 'package:fpdart/fpdart.dart';
-import '../../../../core/error/failures.dart';
-import '../entities/logro.dart';
+import 'package:gymaster/core/error/failures.dart';
+import 'package:gymaster/features/setting/data/models/logro.dart';
 
 /// Repositorio abstracto para el manejo de logros (achievements) en GyMaster
 abstract class AchievementRepository {

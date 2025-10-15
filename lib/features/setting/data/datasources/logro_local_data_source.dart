@@ -1,5 +1,5 @@
-import '../../domain/entities/logro.dart';
-import '../../domain/repositories/achievement_repository.dart';
+import 'package:gymaster/features/setting/data/models/logro.dart';
+import 'package:gymaster/features/setting/domain/repositories/achievement_repository.dart';
 
 abstract class LogroLocalDataSource {
   Future<List<Logro>> obtenerTodosLosLogros();

@@ -1,4 +1,4 @@
-import 'package:gymaster/features/setting/domain/entities/logro.dart';
+import 'package:gymaster/features/setting/data/models/logro.dart';
 
 /// Modelo de base de datos para Achievement
 class AchievementDbModel {

@@ -13,7 +13,7 @@ import 'package:gymaster/features/routine/data/models/routine_model.dart';
 import 'package:gymaster/features/routine/data/models/rutina_data_model.dart';
 import 'package:gymaster/features/routine/data/models/serie_model.dart';
 import 'package:gymaster/features/routine/domain/entities/rutina_data.dart';
-import 'package:gymaster/features/routine/domain/repositories/rutine_repository.dart';
+import 'package:gymaster/features/routine/domain/repositories/routine_repository.dart';
 import 'package:gymaster/features/routine/domain/usecases/agregar_ejercicio_a_rutina_usecase.dart';
 import 'package:gymaster/shared/utils/enum.dart';
 import 'package:gymaster/shared/utils/uuid_generator.dart';

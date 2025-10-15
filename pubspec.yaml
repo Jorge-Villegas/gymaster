@@ -79,6 +79,7 @@ flutter:
     - assets/imagenes/musculos/trapecio/
     - assets/imagenes/musculos/triceps/
     - assets/imagenes/musculos/general/
+    - assets/imagenes/perfil_avatar/
   fonts:
     - family: ZonaPro
       fonts:

@@ -17,8 +17,7 @@ class RoutineLocalDataSource {
       final db = await databaseHelper.database;
       final rutinas = await db.query(
         RutinaDb.tabla,
-        where:
-            '${RutinaDb.columnaFechaEliminacion} IS NULL', // Solo rutinas no eliminadas
+        where: '${RutinaDb.columnaFechaEliminacion} IS NULL',
         orderBy: '${RutinaDb.columnaFechaCreacion} DESC',
       );
       if (rutinas.isEmpty) {

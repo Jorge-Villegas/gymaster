@@ -7,12 +7,12 @@ import 'package:gymaster/features/routine/presentation/pages/detalle_ejercicio_p
 import 'package:gymaster/features/routine/presentation/pages/detalle_rutina_page.dart';
 import 'package:gymaster/features/routine/presentation/pages/lista_rutina_page.dart';
 import 'package:gymaster/features/routine/presentation/pages/listar_ejercicios_page.dart';
-import 'package:gymaster/features/setting/presentation/pages/setting_page.dart';
-import 'package:gymaster/features/setting/presentation/pages/onboarding_emocional_page.dart';
 import 'package:gymaster/features/setting/presentation/pages/app_start_page.dart';
+import 'package:gymaster/features/setting/presentation/pages/onboarding_contenedor_unificado_page.dart';
+import 'package:gymaster/features/setting/presentation/pages/onboarding_bienvenida_page.dart';
+import 'package:gymaster/features/setting/presentation/pages/setting_page.dart';
 import 'package:gymaster/shared/widgets/barra_navegacion.dart';
 import 'package:gymaster/shared/widgets/loading_dialog_page.dart';
-import 'package:gymaster/theme_preview_page.dart';
 import 'package:gymaster/features/exercise/domain/entities/exercise.dart';
 
 import 'package:gymaster/features/exercise/presentation/pages/exercise_detail_page.dart';
@@ -26,20 +26,24 @@ final GoRouter router = GoRouter(
     //                Rutinas
     //-----------------------------------------
     GoRoute(
-      path: '/theme-preview',
-      name: 'themePreview',
-      builder: (context, state) => ThemePreviewPage(),
-    ),
-    GoRoute(
       path: '/',
       name: 'appStart',
       builder: (context, state) => const AppStartPage(),
     ),
     GoRoute(
+      path: '/onboarding',
+      name: 'onboarding',
+      builder: (context, state) => const OnboardingBienvenidaPage(),
+    ),
+    GoRoute(
+      path: '/onboarding_unificado',
+      name: 'onboarding_unificado',
+      builder: (context, state) => const OnboardingContenedorUnificadoPage(),
+    ),
+    GoRoute(
       path: '/main',
       name: 'listaRutinas',
       builder: (context, state) {
-        // Determinar el índice inicial basado en un parámetro opcional
         final initialIndex =
             int.tryParse(state.uri.queryParameters['tab'] ?? '0') ?? 0;
         return BottomNavigationBarExampleApp(initialIndex: initialIndex);
@@ -124,29 +128,12 @@ final GoRouter router = GoRouter(
     ),
 
     //-----------------------------------------
-    //                Pruebas
+    //                Settings
     //-----------------------------------------
     GoRoute(
       path: '/settings',
+      name: 'settings',
       builder: (context, state) => const SettingPage(),
-    ),
-    //-----------------------------------------
-    //                Setting
-    //-----------------------------------------
-    GoRoute(
-      path: '/onboarding',
-      name: 'onboarding',
-      builder: (context, state) => const OnboardingEmocionalPage(),
-    ),
-    GoRoute(path: '/home', builder: (context, state) => const HomePage()),
-    GoRoute(
-      path: '/business',
-      builder: (context, state) => const BusinessPage(),
-    ),
-    GoRoute(path: '/school', builder: (context, state) => const SchoolPage()),
-    GoRoute(
-      path: '/settings',
-      builder: (context, state) => const SettingsPage(),
     ),
     //-----------------------------------------
     //                Historial

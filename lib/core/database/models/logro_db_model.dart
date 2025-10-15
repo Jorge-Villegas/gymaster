@@ -1,4 +1,4 @@
-import 'package:gymaster/features/setting/domain/entities/logro.dart';
+import 'package:gymaster/features/setting/data/models/logro.dart';
 
 class LogroDbModel {
   static const String tabla = 'achievement';

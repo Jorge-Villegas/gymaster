@@ -15,10 +15,11 @@ import 'package:gymaster/features/routine/presentation/cubits/realizacion_ejerci
 import 'package:gymaster/features/routine/presentation/cubits/realizar_ejercicio_rutina/realizar_ejercicio_rutina_cubit.dart';
 import 'package:gymaster/features/routine/presentation/cubits/rutina/routine_cubit.dart';
 import 'package:gymaster/features/routine/presentation/cubits/serie/serie_cubit.dart';
-import 'package:gymaster/features/setting/presentation/cubit/setting_cubit.dart';
-import 'package:gymaster/features/setting/presentation/cubit/setting_state.dart';
-import 'package:gymaster/features/setting/presentation/cubits/app_start/app_start_cubit.dart';
+import 'package:gymaster/features/setting/presentation/cubits/setting_cubit.dart';
+import 'package:gymaster/features/setting/presentation/cubits/setting_state.dart';
+import 'package:gymaster/features/setting/presentation/cubits/app_start_cubit.dart';
 import 'package:gymaster/features/setting/presentation/cubits/onboarding/onboarding_cubit.dart';
+import 'package:gymaster/features/setting/presentation/cubits/onboarding_usuario_cubit.dart';
 import 'package:gymaster/init_dependencies.dart';
 import 'package:gymaster/features/exercise/presentation/cubits/exercise/exercise_cubit.dart';
 import 'package:gymaster/features/exercise/presentation/cubits/favorito_ejercicio_cubit.dart';
@@ -28,10 +29,8 @@ Future<void> main() async {
 
   await initDependencies();
 
-  // Inicializa la base de datos
   await DatabaseHelper.instance.database;
 
-  // Ejecuta la aplicación
   runApp(const Proveedores());
 }
 
@@ -42,7 +41,6 @@ class Proveedores extends StatelessWidget {
     DatabaseHelper.instance.database;
     return MultiBlocProvider(
       providers: [
-        // Proveedores de los diferentes Cubits utilizados en la aplicación
         BlocProvider(create: (_) => serviceLocator<RoutineCubit>()),
         BlocProvider(create: (_) => serviceLocator<SerieCubit>()),
         BlocProvider(create: (_) => serviceLocator<MusculoCubit>()),
@@ -50,14 +48,13 @@ class Proveedores extends StatelessWidget {
         BlocProvider(create: (_) => serviceLocator<AgregarSeriesCubit>()),
         BlocProvider(create: (_) => serviceLocator<EjerciciosByRutinaCubit>()),
         BlocProvider(
-          create: (_) => serviceLocator<RealizacionEjercicioCubit>(),
-        ),
+            create: (_) => serviceLocator<RealizacionEjercicioCubit>()),
         BlocProvider(
-          create: (_) => serviceLocator<RealizarEjercicioRutinaCubit>(),
-        ),
+            create: (_) => serviceLocator<RealizarEjercicioRutinaCubit>()),
         BlocProvider(create: (_) => serviceLocator<SettingCubit>()),
         BlocProvider(create: (_) => serviceLocator<AppStartCubit>()),
         BlocProvider(create: (_) => serviceLocator<OnboardingCubit>()),
+        BlocProvider(create: (_) => serviceLocator<OnboardingUsuarioCubit>()),
         BlocProvider(create: (_) => serviceLocator<RecordCubit>()),
         BlocProvider(create: (_) => serviceLocator<SelectedRoutineCubit>()),
         BlocProvider(create: (_) => serviceLocator<ExerciseCubit>()),
@@ -82,7 +79,6 @@ class MyApp extends StatelessWidget {
         }
 
         return MaterialApp.router(
-          // Configuración de localización de la aplicación
           locale: const Locale('es', 'US'),
           localizationsDelegates: const [
             GlobalCupertinoLocalizations.delegate,
@@ -93,37 +89,9 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'GyMaster',
           routerConfig: router,
-          // Configuración del tema de la aplicación
           theme: isDarkMode ? AppTheme.darkTheme : AppTheme.lightTheme,
         );
       },
     );
   }
-  // @override
-  // Widget build(BuildContext context) {
-  //   return BlocBuilder<SettingCubit, SettingState>(
-  //     builder: (context, state) {
-  //       bool isDarkMode = false;
-  //       if (state is SettingLoaded) {
-  //         isDarkMode = state.isDarkMode;
-  //       }
-  //       return MaterialApp(
-  //         theme: ThemeData(
-  //           fontFamily: 'Poppins', // Fuente predeterminada
-  //         ),
-  //         locale: const Locale('es', 'US'),
-  //         localizationsDelegates: const [
-  //           GlobalCupertinoLocalizations.delegate,
-  //           GlobalMaterialLocalizations.delegate,
-  //           GlobalWidgetsLocalizations.delegate,
-  //         ],
-  //         supportedLocales: const [Locale('es', 'US')],
-  //         debugShowCheckedModeBanner: false,
-  //         title: 'GyMaster',
-  //         // home: ChicletButtonDemoPage(),
-  //         home: const ThemePreviewPage(),
-  //       );
-  //     },
-  //   );
-  // }
 }

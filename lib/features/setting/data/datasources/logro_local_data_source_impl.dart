@@ -1,9 +1,9 @@
 import 'package:gymaster/core/database/models/logro_db_model.dart';
 import 'package:sqflite/sqflite.dart';
-import '../../../../core/database/database_helper.dart';
-import '../../../../core/error/exceptions.dart';
-import '../../../../shared/utils/uuid_generator.dart';
-import '../../domain/entities/logro.dart';
+import '../../../../../core/database/database_helper.dart';
+import '../../../../../core/error/exceptions.dart';
+import '../../../../../shared/utils/uuid_generator.dart';
+import '../models/logro.dart';
 import '../../domain/repositories/achievement_repository.dart';
 import 'logro_local_data_source.dart';
 

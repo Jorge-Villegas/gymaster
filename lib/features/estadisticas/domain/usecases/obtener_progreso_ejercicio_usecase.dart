@@ -4,10 +4,6 @@ import 'package:gymaster/core/usecase/usecase.dart';
 import 'package:gymaster/features/estadisticas/domain/entities/progreso_ejercicio.dart';
 import 'package:gymaster/features/estadisticas/domain/repositories/estadisticas_repository.dart';
 
-/// UseCase para obtener el progreso temporal de un ejercicio específico.
-///
-/// Encapsula la lógica de negocio para recuperar y validar el progreso
-/// de un ejercicio en un rango de fechas determinado.
 class ObtenerProgresoEjercicioUseCase
     implements UseCase<ProgresoEjercicio, ObtenerProgresoEjercicioParams> {
   final EstadisticasRepository _repository;

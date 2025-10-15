@@ -1,17 +1,22 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gymaster/features/setting/domain/entities/user_motivation.dart';
+import 'package:gymaster/features/setting/data/models/user_motivation.dart';
+import 'package:gymaster/features/setting/presentation/cubits/onboarding/onboarding_state.dart';
 import 'package:gymaster/features/setting/domain/usecases/mark_onboarding_completed_usecase.dart';
 import 'package:gymaster/features/setting/domain/usecases/save_user_motivation_usecase.dart';
-import 'package:gymaster/features/setting/presentation/cubits/onboarding/onboarding_state.dart';
+import 'package:gymaster/features/setting/domain/entities/onboarding_config.dart';
 
 class OnboardingCubit extends Cubit<OnboardingState> {
   final SaveUserMotivationUseCase saveUserMotivationUseCase;
   final MarkOnboardingCompletedUseCase markOnboardingCompletedUseCase;
 
-  // Estado temporal durante el onboarding
   late UserMotivation _partialMotivation;
+
   int _currentPage = 0;
+
+  String? _avatarSeleccionado;
+  Map<String, dynamic> _datosPersonales = {};
+  String? _objetivoSeleccionado;
+  String? _nivelExperiencia;
 
   OnboardingCubit({
     required this.saveUserMotivationUseCase,
@@ -44,20 +49,16 @@ class OnboardingCubit extends Cubit<OnboardingState> {
 
   /// Navega a la siguiente página del onboarding
   void nextPage() {
-    debugPrint('🚀 Intentando ir a la siguiente página desde $_currentPage');
-    if (_currentPage < 3) {
+    if (_currentPage < OnboardingConfig.totalPaginas - 1) {
       _currentPage++;
-      debugPrint('✅ Navegando a página $_currentPage');
       emit(OnboardingPageChanged(
         currentPage: _currentPage,
         partialMotivation: _partialMotivation,
       ));
-    } else {
-      debugPrint('⚠️ Ya estás en la última página');
     }
   }
 
-  /// Navega a la página anterior del onboarding
+  /// Navega a la página anterior
   void previousPage() {
     if (_currentPage > 0) {
       _currentPage--;
@@ -68,19 +69,59 @@ class OnboardingCubit extends Cubit<OnboardingState> {
     }
   }
 
-  /// Actualiza las motivaciones seleccionadas (Página 1)
-  void updateMotivations(List<String> motivations) {
-    debugPrint('🔄 Actualizando motivaciones: $motivations');
-    _partialMotivation = _partialMotivation.copyWith(motivations: motivations);
-    debugPrint(
-        '✅ Motivaciones actualizadas. Total: ${_partialMotivation.motivations.length}');
+  /// Navega directamente a una página específica
+  void navigateToPage(String pageId) {
+    final pageIndex = OnboardingConfig.pages.indexWhere((p) => p.id == pageId);
+    if (pageIndex != -1) {
+      _currentPage = pageIndex;
+      emit(OnboardingPageChanged(
+        currentPage: _currentPage,
+        partialMotivation: _partialMotivation,
+      ));
+    }
+  }
+
+  void updateAvatarSeleccionado(String avatar) {
+    _avatarSeleccionado = avatar;
     emit(OnboardingPageChanged(
       currentPage: _currentPage,
       partialMotivation: _partialMotivation,
     ));
   }
 
-  /// Actualiza los desafíos seleccionados (Página 2)
+  void updateDatosPersonales(Map<String, dynamic> datos) {
+    _datosPersonales = datos;
+    emit(OnboardingPageChanged(
+      currentPage: _currentPage,
+      partialMotivation: _partialMotivation,
+    ));
+  }
+
+  void updateObjetivo(String objetivo) {
+    _objetivoSeleccionado = objetivo;
+    emit(OnboardingPageChanged(
+      currentPage: _currentPage,
+      partialMotivation: _partialMotivation,
+    ));
+  }
+
+  void updateNivelExperiencia(String nivel) {
+    _nivelExperiencia = nivel;
+    emit(OnboardingPageChanged(
+      currentPage: _currentPage,
+      partialMotivation: _partialMotivation,
+    ));
+  }
+
+  void updateMotivations(List<String> motivations) {
+    _partialMotivation = _partialMotivation.copyWith(motivations: motivations);
+    emit(OnboardingPageChanged(
+      currentPage: _currentPage,
+      partialMotivation: _partialMotivation,
+    ));
+  }
+
+  /// Actualiza los desafíos seleccionados (Página 6)
   void updateChallenges(List<String> challenges) {
     _partialMotivation = _partialMotivation.copyWith(challenges: challenges);
     emit(OnboardingPageChanged(
@@ -89,7 +130,7 @@ class OnboardingCubit extends Cubit<OnboardingState> {
     ));
   }
 
-  /// Actualiza los sentimientos post-entrenamiento (Página 3)
+  /// Actualiza los sentimientos post-entrenamiento (Página 7)
   void updatePostWorkoutFeelings(List<String> feelings) {
     _partialMotivation =
         _partialMotivation.copyWith(postWorkoutFeelings: feelings);
@@ -99,7 +140,7 @@ class OnboardingCubit extends Cubit<OnboardingState> {
     ));
   }
 
-  /// Actualiza las preferencias de notificaciones (Página 4)
+  /// Actualiza las preferencias de notificaciones (Página 8)
   void updateNotificationPreferences(NotificationPreferences preferences) {
     _partialMotivation =
         _partialMotivation.copyWith(notificationPreferences: preferences);
@@ -124,71 +165,75 @@ class OnboardingCubit extends Cubit<OnboardingState> {
 
     if (motivationResult.isLeft()) {
       motivationResult.fold(
-        (failure) {
-          debugPrint('❌ Error guardando motivación: ${failure.errorMessage}');
-          emit(OnboardingError(_getUserFriendlyMessage(failure)));
-        },
+        (failure) => emit(OnboardingError(_getUserFriendlyMessage(failure))),
         (_) {},
       );
       return;
     }
 
-    // 2. Marcar onboarding como completado
     final onboardingResult = await markOnboardingCompletedUseCase(
       MarkOnboardingCompletedParams(userId: userId),
     );
 
     onboardingResult.fold(
-      (failure) {
-        debugPrint('❌ Error marcando onboarding: ${failure.errorMessage}');
-        emit(OnboardingError(_getUserFriendlyMessage(failure)));
-      },
-      (_) {
-        debugPrint('✅ OnboardingCubit: Onboarding completado exitosamente');
-        emit(OnboardingCompleted(finalMotivation));
-      },
+      (failure) => emit(OnboardingError(_getUserFriendlyMessage(failure))),
+      (_) => emit(OnboardingCompleted(finalMotivation)),
     );
   }
 
-  /// Convierte errores técnicos en mensajes amigables
-  String _getUserFriendlyMessage(failure) {
+  String _getUserFriendlyMessage(dynamic failure) {
     return 'No pudimos guardar tus preferencias. ¿Intentamos de nuevo?';
   }
 
-  /// Obtiene el progreso actual (0.0 a 1.0)
-  double get progress => (_currentPage + 1) / 4;
+  int get currentPage => _currentPage;
+
+  String? get avatarSeleccionado => _avatarSeleccionado;
+  Map<String, dynamic> get datosPersonales => _datosPersonales;
+  String? get objetivoSeleccionado => _objetivoSeleccionado;
+  String? get nivelExperiencia => _nivelExperiencia;
+
+  OnboardingPageConfig get currentPageConfig =>
+      OnboardingConfig.pages[_currentPage];
+
+  double get globalProgress =>
+      OnboardingConfig.calcularProgresoGlobal(_currentPage);
+
+  int get globalStepNumber =>
+      OnboardingConfig.obtenerNumeroPasoGlobal(_currentPage);
+
+  String get currentMotivationalText => currentPageConfig.textoMotivacional;
 
   /// Verifica si se puede continuar desde la página actual
   bool canContinueFromCurrentPage() {
-    debugPrint('🔍 Verificando si puede continuar desde página $_currentPage');
+    final pageConfig = currentPageConfig;
 
-    bool canContinue = false;
-    switch (_currentPage) {
-      case 0: // Motivaciones
-        canContinue = _partialMotivation.motivations.isNotEmpty;
-        debugPrint(
-            '📋 Página 0 (Motivaciones): ${_partialMotivation.motivations.length} seleccionadas - Puede continuar: $canContinue');
-        break;
-      case 1: // Desafíos
-        canContinue = _partialMotivation.challenges.isNotEmpty;
-        debugPrint(
-            '📋 Página 1 (Desafíos): ${_partialMotivation.challenges.length} seleccionados - Puede continuar: $canContinue');
-        break;
-      case 2: // Sentimientos post-entrenamiento
-        canContinue = _partialMotivation.postWorkoutFeelings.isNotEmpty;
-        debugPrint(
-            '📋 Página 2 (Sentimientos): ${_partialMotivation.postWorkoutFeelings.length} seleccionados - Puede continuar: $canContinue');
-        break;
-      case 3: // Notificaciones
-        canContinue = true; // Siempre se puede continuar
-        debugPrint('📋 Página 3 (Notificaciones): Siempre puede continuar');
-        break;
+    switch (pageConfig.id) {
+      case 'avatar':
+        return _avatarSeleccionado != null;
+      case 'datos_personales':
+        return _datosPersonales.isNotEmpty &&
+            _datosPersonales['nombre'] != null &&
+            _datosPersonales['genero'] != null &&
+            _datosPersonales['fechaNacimiento'] != null;
+      case 'objetivos':
+        return _objetivoSeleccionado != null;
+      case 'nivel_experiencia':
+        return _nivelExperiencia != null;
+      case 'motivaciones':
+        return _partialMotivation.motivations.isNotEmpty;
+      case 'desafios':
+        return _partialMotivation.challenges.isNotEmpty;
+      case 'sentimientos_post_entrenamiento':
+        return _partialMotivation.postWorkoutFeelings.isNotEmpty;
+      case 'notificaciones':
+        return true;
       default:
-        canContinue = false;
-        debugPrint('❌ Página desconocida: $_currentPage');
-        break;
+        return true;
     }
+  }
 
-    return canContinue;
+  /// Verifica si estamos en la última página del onboarding
+  bool get isLastPage {
+    return _currentPage == OnboardingConfig.totalPaginas - 1;
   }
 }

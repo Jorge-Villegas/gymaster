@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../domain/entities/user_mood.dart';
-import '../cubits/mood_detector/mood_detector_cubit.dart';
-import '../cubits/mood_detector/mood_detector_state.dart';
+import 'package:gymaster/features/setting/data/models/user_mood.dart';
+import '../cubits/mood_detector_cubit.dart';
+import '../cubits/mood_detector_state.dart';
 import '../../../../../shared/utils/haptic_feedback_helper.dart';
 import '../../../../../shared/widgets/custom_elevated_button.dart';
 import '../../../../../core/theme/app_colors.dart';

@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:gymaster/core/database/database_helper.dart';
 import 'package:gymaster/features/setting/data/datasources/user_emotional_local_data_source.dart';
-import 'package:gymaster/features/setting/domain/entities/user_motivation.dart';
-import 'package:gymaster/features/setting/domain/entities/user_mood.dart';
+import 'package:gymaster/features/setting/data/models/user_mood.dart';
+import 'package:gymaster/features/setting/data/models/user_motivation.dart';
 import 'package:sqflite/sqflite.dart';
 
 class UserEmotionalLocalDataSourceImpl implements UserEmotionalLocalDataSource {

@@ -28,7 +28,7 @@ import 'package:gymaster/features/record/presentation/cubit/record_cubit.dart';
 import 'package:gymaster/features/record/presentation/cubit/selected_routine/selected_routine_cubit.dart';
 import 'package:gymaster/features/routine/data/datasources/routine_local_data_source.dart';
 import 'package:gymaster/features/routine/data/repositories/routine_repository_impl.dart';
-import 'package:gymaster/features/routine/domain/repositories/rutine_repository.dart';
+import 'package:gymaster/features/routine/domain/repositories/routine_repository.dart';
 import 'package:gymaster/features/routine/domain/usecases/agregar_ejercicio_a_rutina_usecase.dart';
 import 'package:gymaster/features/routine/domain/usecases/agregar_rutina_usecase.dart';
 import 'package:gymaster/features/routine/domain/usecases/completar_sesion_rutina_usecase.dart';
@@ -55,22 +55,14 @@ import 'package:gymaster/features/routine/presentation/cubits/realizacion_ejerci
 import 'package:gymaster/features/routine/presentation/cubits/realizar_ejercicio_rutina/realizar_ejercicio_rutina_cubit.dart';
 import 'package:gymaster/features/routine/presentation/cubits/rutina/routine_cubit.dart';
 import 'package:gymaster/features/routine/presentation/cubits/serie/serie_cubit.dart';
-import 'package:gymaster/features/setting/data/implements/implements.dart';
-import 'package:gymaster/features/setting/data/sources/config_local_data_source.dart';
-import 'package:gymaster/features/setting/domain/repositories/repositories.dart';
-import 'package:gymaster/features/setting/domain/usecases/get_language_usecase.dart';
-import 'package:gymaster/features/setting/domain/usecases/get_theme_mode_usecase.dart';
-import 'package:gymaster/features/setting/domain/usecases/set_lenguage_usecase.dart';
-import 'package:gymaster/features/setting/domain/usecases/set_theme_mode_usecase.dart';
-import 'package:gymaster/features/setting/presentation/cubit/setting_cubit.dart';
 
 // Emotional system imports
 import 'package:gymaster/features/setting/data/datasources/logro_local_data_source.dart';
 import 'package:gymaster/features/setting/data/datasources/logro_local_data_source_impl.dart';
 import 'package:gymaster/features/setting/data/datasources/user_emotional_local_data_source.dart';
 import 'package:gymaster/features/setting/data/datasources/user_emotional_local_data_source_impl.dart';
-import 'package:gymaster/features/setting/data/repositories/achievement_repository_impl.dart';
-import 'package:gymaster/features/setting/data/repositories/user_emotional_repository_impl.dart';
+import 'package:gymaster/features/setting/domain/repositories/achievement_repository_impl.dart';
+import 'package:gymaster/features/setting/domain/repositories/user_emotional_repository_impl.dart';
 import 'package:gymaster/features/setting/domain/repositories/achievement_repository.dart';
 import 'package:gymaster/features/setting/domain/repositories/user_emotional_repository.dart';
 import 'package:gymaster/features/setting/domain/usecases/get_achievement_usecase.dart';
@@ -81,7 +73,7 @@ import 'package:gymaster/features/setting/domain/usecases/mark_onboarding_comple
 import 'package:gymaster/features/setting/domain/usecases/save_user_motivation_usecase.dart';
 import 'package:gymaster/features/setting/domain/usecases/save_user_mood_usecase.dart';
 import 'package:gymaster/features/setting/presentation/cubits/achievement_cubit.dart';
-import 'package:gymaster/features/setting/presentation/cubits/app_start/app_start_cubit.dart';
+import 'package:gymaster/features/setting/presentation/cubits/app_start_cubit.dart';
 import 'package:gymaster/features/setting/presentation/cubits/onboarding/onboarding_cubit.dart';
 
 // Estadísticas imports
@@ -95,6 +87,47 @@ import 'package:gymaster/features/estadisticas/domain/usecases/obtener_musculos_
 import 'package:gymaster/features/estadisticas/domain/usecases/obtener_resumen_general_usecase.dart';
 import 'package:gymaster/features/estadisticas/presentation/cubits/estadisticas_cubit.dart';
 
+// Settings imports
+import 'package:gymaster/features/setting/data/datasources/configuracion_usuario_local_data_source.dart';
+import 'package:gymaster/features/setting/data/datasources/perfil_usuario_local_data_source.dart';
+import 'package:gymaster/features/setting/data/datasources/informacion_aplicacion_local_data_source.dart';
+import 'package:gymaster/features/setting/domain/repositories/configuracion_usuario_repository_impl.dart';
+import 'package:gymaster/features/setting/domain/repositories/perfil_usuario_repository_impl.dart';
+import 'package:gymaster/features/setting/domain/repositories/informacion_aplicacion_repository_impl.dart';
+import 'package:gymaster/features/setting/domain/repositories/configuracion_usuario_repository.dart';
+import 'package:gymaster/features/setting/domain/repositories/perfil_usuario_repository.dart';
+import 'package:gymaster/features/setting/domain/repositories/informacion_aplicacion_repository.dart';
+import 'package:gymaster/features/setting/domain/usecases/obtener_configuracion_por_usuario_id_usecase.dart';
+import 'package:gymaster/features/setting/domain/usecases/crear_configuracion_usuario_usecase.dart';
+import 'package:gymaster/features/setting/domain/usecases/actualizar_configuracion_usuario_usecase.dart';
+import 'package:gymaster/features/setting/domain/usecases/obtener_perfil_por_id_usecase.dart';
+import 'package:gymaster/features/setting/domain/usecases/actualizar_perfil_usuario_usecase.dart';
+import 'package:gymaster/features/setting/domain/usecases/obtener_informacion_aplicacion_usecase.dart';
+import 'package:gymaster/features/setting/domain/usecases/incrementar_contador_inicio_app_usecase.dart';
+import 'package:gymaster/features/setting/domain/usecases/actualizar_racha_actual_usecase.dart';
+import 'package:gymaster/features/setting/presentation/cubits/configuracion_usuario_cubit.dart';
+import 'package:gymaster/features/setting/presentation/cubits/perfil_usuario_cubit.dart';
+import 'package:gymaster/features/setting/presentation/cubits/informacion_aplicacion_cubit.dart';
+import 'package:gymaster/features/setting/domain/repositories/notification_service.dart';
+import 'package:gymaster/features/setting/domain/repositories/localization_service.dart';
+import 'package:gymaster/features/setting/presentation/cubits/setting_cubit.dart';
+import 'package:gymaster/features/setting/domain/usecases/get_language_usecase.dart';
+import 'package:gymaster/features/setting/domain/usecases/get_theme_mode_usecase.dart';
+import 'package:gymaster/features/setting/domain/usecases/set_lenguage_usecase.dart';
+import 'package:gymaster/features/setting/domain/usecases/set_theme_mode_usecase.dart';
+import 'package:gymaster/features/setting/domain/repositories/repositories.dart';
+import 'package:gymaster/features/setting/domain/repositories/implements.dart';
+import 'package:gymaster/features/setting/data/datasources/config_local_data_source.dart';
+
 import 'package:gymaster/shared/utils/uuid_generator.dart';
+
+// Perfil Usuario Completo imports
+import 'package:gymaster/features/setting/data/datasources/perfil_usuario_completo_local_data_source.dart';
+import 'package:gymaster/features/setting/data/repositories/perfil_usuario_completo_repository_impl.dart';
+import 'package:gymaster/features/setting/domain/repositories/perfil_usuario_completo_repository.dart';
+import 'package:gymaster/features/setting/domain/usecases/verificar_perfil_completo_existe_usecase.dart';
+import 'package:gymaster/features/setting/domain/usecases/obtener_perfil_completo_usecase.dart';
+import 'package:gymaster/features/setting/domain/usecases/crear_perfil_completo_usecase.dart';
+import 'package:gymaster/features/setting/presentation/cubits/onboarding_usuario_cubit.dart';
 
 part 'init_dependencies.main.dart';
