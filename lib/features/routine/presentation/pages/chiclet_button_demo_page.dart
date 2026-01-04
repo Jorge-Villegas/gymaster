@@ -190,7 +190,8 @@ class _ChicletButtonDemoPageState extends State<ChicletButtonDemoPage> {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: AppColors.primario.withOpacity(0.2)),
+                border: Border.all(
+                    color: AppColors.primario.withValues(alpha: 0.2)),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,

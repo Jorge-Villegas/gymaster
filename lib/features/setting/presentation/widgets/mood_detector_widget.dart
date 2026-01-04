@@ -115,7 +115,7 @@ class _MoodDetectorWidgetState extends State<MoodDetectorWidget>
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 10,
             offset: const Offset(0, 5),
           ),
@@ -175,7 +175,7 @@ class _MoodDetectorWidgetState extends State<MoodDetectorWidget>
         curve: Curves.easeInOut,
         decoration: BoxDecoration(
           color: isSelected
-              ? mood.primaryColor.withOpacity(0.2)
+              ? mood.primaryColor.withValues(alpha: 0.2)
               : Colors.grey.shade50,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
@@ -185,7 +185,7 @@ class _MoodDetectorWidgetState extends State<MoodDetectorWidget>
           boxShadow: isSelected
               ? [
                   BoxShadow(
-                    color: mood.primaryColor.withOpacity(0.3),
+                    color: mood.primaryColor.withValues(alpha: 0.3),
                     blurRadius: 8,
                     offset: const Offset(0, 4),
                   ),
@@ -268,10 +268,10 @@ class _MoodDetectorWidgetState extends State<MoodDetectorWidget>
       duration: const Duration(milliseconds: 500),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _selectedMood!.primaryColor.withOpacity(0.1),
+        color: _selectedMood!.primaryColor.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: _selectedMood!.primaryColor.withOpacity(0.3),
+          color: _selectedMood!.primaryColor.withValues(alpha: 0.3),
         ),
       ),
       child: Column(
@@ -421,7 +421,7 @@ class QuickMoodSelector extends StatelessWidget {
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 color: isSelected
-                    ? mood.primaryColor.withOpacity(0.2)
+                    ? mood.primaryColor.withValues(alpha: 0.2)
                     : Colors.transparent,
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(

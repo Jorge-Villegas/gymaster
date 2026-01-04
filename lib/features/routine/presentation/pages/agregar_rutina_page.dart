@@ -281,7 +281,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
             colors: [
               AppColors.fondoPrincipal,
               Colors.white,
-              AppColors.fondoPrincipal.withOpacity(0.8),
+              AppColors.fondoPrincipal.withValues(alpha: 0.8),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -405,7 +405,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
           gradient: LinearGradient(
             colors: [
               colorSeleccionado,
-              colorSeleccionado.withOpacity(0.8),
+              colorSeleccionado.withValues(alpha: 0.8),
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -413,13 +413,13 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
           borderRadius: BorderRadius.circular(24),
           boxShadow: [
             BoxShadow(
-              color: colorSeleccionado.withOpacity(0.4),
+              color: colorSeleccionado.withValues(alpha: 0.4),
               offset: const Offset(0, 8),
               blurRadius: 24,
               spreadRadius: 0,
             ),
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black.withValues(alpha: 0.1),
               offset: const Offset(0, 2),
               blurRadius: 8,
               spreadRadius: 0,
@@ -437,7 +437,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                 height: 120,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.white.withOpacity(0.1),
+                  color: Colors.white.withValues(alpha: 0.1),
                 ),
               ),
             ),
@@ -449,7 +449,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                 height: 80,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.white.withOpacity(0.05),
+                  color: Colors.white.withValues(alpha: 0.05),
                 ),
               ),
             ),
@@ -464,7 +464,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                     width: 60,
                     height: 60,
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.2),
+                      color: Colors.white.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: Center(
@@ -494,7 +494,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                       decoration: InputDecoration(
                         hintText: 'Nombre de tu rutina...',
                         hintStyle: TextStyle(
-                          color: Colors.white.withOpacity(0.7),
+                          color: Colors.white.withValues(alpha: 0.7),
                           fontSize: 24,
                           fontWeight: FontWeight.w500,
                         ),
@@ -511,7 +511,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                         return Text(
                           '$currentLength/$maxLength',
                           style: TextStyle(
-                            color: Colors.white.withOpacity(0.6),
+                            color: Colors.white.withValues(alpha: 0.6),
                             fontSize: 12,
                           ),
                         );
@@ -524,14 +524,14 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                     children: [
                       Icon(
                         Icons.fitness_center_rounded,
-                        color: Colors.white.withOpacity(0.8),
+                        color: Colors.white.withValues(alpha: 0.8),
                         size: 16,
                       ),
                       const SizedBox(width: 8),
                       Text(
                         '0 ejercicios • Recién creada',
                         style: TextStyle(
-                          color: Colors.white.withOpacity(0.8),
+                          color: Colors.white.withValues(alpha: 0.8),
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
                         ),
@@ -551,7 +551,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   decoration: BoxDecoration(
-                    color: Colors.red.withOpacity(0.9),
+                    color: Colors.red.withValues(alpha: 0.9),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Row(
@@ -657,7 +657,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                                 : null,
                             boxShadow: [
                               BoxShadow(
-                                color: color.withOpacity(0.4),
+                                color: color.withValues(alpha: 0.4),
                                 offset: const Offset(0, 4),
                                 blurRadius: estaSeleccionado ? 16 : 8,
                                 spreadRadius: estaSeleccionado ? 2 : 0,
@@ -840,8 +840,8 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                                   boxShadow: estaSeleccionado
                                       ? [
                                           BoxShadow(
-                                            color: colorSeleccionado
-                                                .withOpacity(0.4),
+                                            color: colorSeleccionado.withValues(
+                                                alpha: 0.4),
                                             offset: const Offset(0, 4),
                                             blurRadius: 12,
                                             spreadRadius: 1,

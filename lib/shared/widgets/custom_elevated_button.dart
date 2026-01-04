@@ -249,8 +249,8 @@ class _CustomElevatedButtonState extends State<CustomElevatedButton>
                   width: buttonWidth * (1 + (_rippleAnimation.value * 0.3)),
                   height: buttonHeight * (1 + (_rippleAnimation.value * 0.3)),
                   decoration: BoxDecoration(
-                    color: backgroundColor
-                        .withOpacity(0.3 * (1 - _rippleAnimation.value)),
+                    color: backgroundColor.withValues(
+                        alpha: 0.3 * (1 - _rippleAnimation.value)),
                     borderRadius: BorderRadius.circular(
                         (widget.borderRadius ?? 15) *
                             (1 + (_rippleAnimation.value * 0.3))),
@@ -272,7 +272,7 @@ class _CustomElevatedButtonState extends State<CustomElevatedButton>
                   ),
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   elevation: _isPressed ? 2 : 4,
-                  shadowColor: backgroundColor.withOpacity(0.3),
+                  shadowColor: backgroundColor.withValues(alpha: 0.3),
                 ),
                 onPressed: () async {
                   await _handleHapticFeedback();

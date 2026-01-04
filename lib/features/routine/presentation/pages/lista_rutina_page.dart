@@ -250,7 +250,7 @@ class ListaRutinasPage extends StatelessWidget {
           gradient: LinearGradient(
             colors: [
               Colors.transparent,
-              AppColors.fondoPrincipal.withOpacity(0.3),
+              AppColors.fondoPrincipal.withValues(alpha: 0.3),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -270,15 +270,16 @@ class ListaRutinasPage extends StatelessWidget {
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            AppColors.secundarioClaro.withOpacity(0.1),
-                            AppColors.secundarioClaro.withOpacity(0.05),
+                            AppColors.secundarioClaro.withValues(alpha: 0.1),
+                            AppColors.secundarioClaro.withValues(alpha: 0.05),
                           ],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
-                          color: AppColors.secundarioClaro.withOpacity(0.2),
+                          color:
+                              AppColors.secundarioClaro.withValues(alpha: 0.2),
                           width: 1,
                         ),
                       ),
@@ -287,7 +288,8 @@ class ListaRutinasPage extends StatelessWidget {
                           Container(
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              color: AppColors.secundarioClaro.withOpacity(0.2),
+                              color: AppColors.secundarioClaro
+                                  .withValues(alpha: 0.2),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Icon(
@@ -312,9 +314,10 @@ class ListaRutinasPage extends StatelessWidget {
                     // Shimmer mejorado
                     Expanded(
                       child: Shimmer.fromColors(
-                        baseColor: AppColors.secundarioClaro.withOpacity(0.1),
+                        baseColor:
+                            AppColors.secundarioClaro.withValues(alpha: 0.1),
                         highlightColor:
-                            AppColors.secundarioClaro.withOpacity(0.3),
+                            AppColors.secundarioClaro.withValues(alpha: 0.3),
                         period: const Duration(milliseconds: 1200),
                         child: ListView.builder(
                           itemCount: 4, // Menos elementos para mejor UX
@@ -347,7 +350,7 @@ class ListaRutinasPage extends StatelessWidget {
                                         height: 80,
                                         decoration: BoxDecoration(
                                           color: AppColors.secundarioClaro
-                                              .withOpacity(0.2),
+                                              .withValues(alpha: 0.2),
                                           borderRadius:
                                               BorderRadius.circular(12),
                                         ),
@@ -365,7 +368,7 @@ class ListaRutinasPage extends StatelessWidget {
                                               width: double.infinity,
                                               decoration: BoxDecoration(
                                                 color: AppColors.secundarioClaro
-                                                    .withOpacity(0.2),
+                                                    .withValues(alpha: 0.2),
                                                 borderRadius:
                                                     BorderRadius.circular(8),
                                               ),
@@ -376,7 +379,7 @@ class ListaRutinasPage extends StatelessWidget {
                                               width: 120,
                                               decoration: BoxDecoration(
                                                 color: AppColors.secundarioClaro
-                                                    .withOpacity(0.2),
+                                                    .withValues(alpha: 0.2),
                                                 borderRadius:
                                                     BorderRadius.circular(6),
                                               ),
@@ -410,15 +413,15 @@ class ListaRutinasPage extends StatelessWidget {
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            AppColors.acento.withOpacity(0.1),
-                            AppColors.acento.withOpacity(0.05),
+                            AppColors.acento.withValues(alpha: 0.1),
+                            AppColors.acento.withValues(alpha: 0.05),
                           ],
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
                         ),
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
-                          color: AppColors.acento.withOpacity(0.2),
+                          color: AppColors.acento.withValues(alpha: 0.2),
                           width: 2,
                         ),
                       ),
@@ -447,8 +450,8 @@ class ListaRutinasPage extends StatelessWidget {
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            AppColors.primario.withOpacity(0.1),
-                            AppColors.exito.withOpacity(0.05),
+                            AppColors.primario.withValues(alpha: 0.1),
+                            AppColors.exito.withValues(alpha: 0.05),
                           ],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
@@ -503,22 +506,22 @@ class ListaRutinasPage extends StatelessWidget {
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
-                              AppColors.exito.withOpacity(0.1),
-                              AppColors.exito.withOpacity(0.05),
+                              AppColors.exito.withValues(alpha: 0.1),
+                              AppColors.exito.withValues(alpha: 0.05),
                             ],
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                           ),
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(
-                            color: AppColors.exito.withOpacity(0.2),
+                            color: AppColors.exito.withValues(alpha: 0.2),
                             width: 2,
                           ),
                         ),
                         child: Icon(
                           Icons.fitness_center_rounded,
                           size: 100,
-                          color: AppColors.exito.withOpacity(0.7),
+                          color: AppColors.exito.withValues(alpha: 0.7),
                         ),
                       ),
                       const SizedBox(height: 24),
@@ -537,8 +540,8 @@ class ListaRutinasPage extends StatelessWidget {
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
-                              AppColors.acento.withOpacity(0.1),
-                              AppColors.acento.withOpacity(0.05),
+                              AppColors.acento.withValues(alpha: 0.1),
+                              AppColors.acento.withValues(alpha: 0.05),
                             ],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
@@ -600,7 +603,7 @@ class ListaRutinasPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(16),
                           boxShadow: [
                             BoxShadow(
-                              color: AppColors.primario.withOpacity(0.1),
+                              color: AppColors.primario.withValues(alpha: 0.1),
                               offset: const Offset(0, 4),
                               blurRadius: 12,
                               spreadRadius: 0,
@@ -645,7 +648,7 @@ class ListaRutinasPage extends StatelessWidget {
                     Icon(
                       Icons.refresh_rounded,
                       size: 64,
-                      color: AppColors.secundarioClaro.withOpacity(0.6),
+                      color: AppColors.secundarioClaro.withValues(alpha: 0.6),
                     ),
                     const SizedBox(height: 16),
                     Text(

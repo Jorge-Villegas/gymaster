@@ -162,8 +162,8 @@ class _Phase3EmotionalIntegrationWidgetState
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            AppColors.acento.withOpacity(0.1),
-            AppColors.secundarioClaro.withOpacity(0.1),
+            AppColors.acento.withValues(alpha: 0.1),
+            AppColors.secundarioClaro.withValues(alpha: 0.1),
           ],
         ),
       ),
@@ -175,7 +175,7 @@ class _Phase3EmotionalIntegrationWidgetState
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: AppColors.acento.withOpacity(0.2),
+                  color: AppColors.acento.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
@@ -246,9 +246,9 @@ class _Phase3EmotionalIntegrationWidgetState
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Column(
         children: [
@@ -279,7 +279,7 @@ class _Phase3EmotionalIntegrationWidgetState
         color: Theme.of(context)
             .colorScheme
             .surfaceContainerHighest
-            .withOpacity(0.5),
+            .withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(25),
       ),
       child: TabBar(
@@ -361,8 +361,8 @@ class _Phase3EmotionalIntegrationWidgetState
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            AppColors.acento.withOpacity(0.1),
-            AppColors.acento.withOpacity(0.1),
+            AppColors.acento.withValues(alpha: 0.1),
+            AppColors.acento.withValues(alpha: 0.1),
           ],
         ),
         borderRadius: BorderRadius.circular(16),
@@ -414,9 +414,10 @@ class _Phase3EmotionalIntegrationWidgetState
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppColors.secundarioClaro.withOpacity(0.1),
+        color: AppColors.secundarioClaro.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.secundarioClaro.withOpacity(0.3)),
+        border:
+            Border.all(color: AppColors.secundarioClaro.withValues(alpha: 0.3)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -507,9 +508,9 @@ class _Phase3EmotionalIntegrationWidgetState
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppColors.exito.withOpacity(0.1),
+        color: AppColors.exito.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.exito.withOpacity(0.3)),
+        border: Border.all(color: AppColors.exito.withValues(alpha: 0.3)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -543,9 +544,9 @@ class _Phase3EmotionalIntegrationWidgetState
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.7),
+          color: Colors.white.withValues(alpha: 0.7),
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: AppColors.exito.withOpacity(0.2)),
+          border: Border.all(color: AppColors.exito.withValues(alpha: 0.2)),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

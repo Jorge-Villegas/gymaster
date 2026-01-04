@@ -162,7 +162,7 @@ class _AgregarEjercicioRutinaPageState
             colors: [
               AppColors.fondoPrincipal,
               Colors.white,
-              AppColors.fondoPrincipal.withOpacity(0.8),
+              AppColors.fondoPrincipal.withValues(alpha: 0.8),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -333,7 +333,7 @@ class _AgregarEjercicioRutinaPageState
               width: 80,
               height: 80,
               decoration: BoxDecoration(
-                color: AppColors.acento.withOpacity(0.1),
+                color: AppColors.acento.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Center(

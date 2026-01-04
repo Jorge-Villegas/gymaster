@@ -114,13 +114,13 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              AppColors.secundarioClaro.withOpacity(0.1),
-              AppColors.acento.withOpacity(0.1),
+              AppColors.secundarioClaro.withValues(alpha: 0.1),
+              AppColors.acento.withValues(alpha: 0.1),
             ],
           ),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: AppColors.secundarioClaro.withOpacity(0.3),
+            color: AppColors.secundarioClaro.withValues(alpha: 0.3),
             width: 2,
           ),
         ),
@@ -154,7 +154,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
         Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: AppColors.secundarioClaro.withOpacity(0.2),
+            color: AppColors.secundarioClaro.withValues(alpha: 0.2),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Icon(
@@ -196,10 +196,10 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.acento.withOpacity(0.1),
+        color: AppColors.acento.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: AppColors.acento.withOpacity(0.3),
+          color: AppColors.acento.withValues(alpha: 0.3),
         ),
       ),
       child: Column(
@@ -348,11 +348,12 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 decoration: BoxDecoration(
-                  color:
-                      isSelected ? color.withOpacity(0.2) : Colors.transparent,
+                  color: isSelected
+                      ? color.withValues(alpha: 0.2)
+                      : Colors.transparent,
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color: isSelected ? color : color.withOpacity(0.3),
+                    color: isSelected ? color : color.withValues(alpha: 0.3),
                     width: isSelected ? 2 : 1,
                   ),
                 ),

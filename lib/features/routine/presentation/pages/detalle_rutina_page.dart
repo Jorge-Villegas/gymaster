@@ -158,8 +158,8 @@ class DetalleRutinaScreen extends StatelessWidget {
             // Shimmer loading mejorado
             Expanded(
               child: Shimmer.fromColors(
-                baseColor: AppColors.secundarioClaro.withOpacity(0.1),
-                highlightColor: AppColors.primarioClaro.withOpacity(0.3),
+                baseColor: AppColors.secundarioClaro.withValues(alpha: 0.1),
+                highlightColor: AppColors.primarioClaro.withValues(alpha: 0.3),
                 period: const Duration(milliseconds: 1200),
                 child: ListView.builder(
                   itemCount: 3,
@@ -171,7 +171,8 @@ class DetalleRutinaScreen extends StatelessWidget {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
-                          color: AppColors.secundarioClaro.withOpacity(0.2),
+                          color:
+                              AppColors.secundarioClaro.withValues(alpha: 0.2),
                           width: 1,
                         ),
                       ),
@@ -260,7 +261,7 @@ class DetalleRutinaScreen extends StatelessWidget {
           Icon(
             Icons.fitness_center_outlined,
             size: 64,
-            color: AppColors.secundarioClaro.withOpacity(0.6),
+            color: AppColors.secundarioClaro.withValues(alpha: 0.6),
           ),
           const SizedBox(height: 16),
           Text(

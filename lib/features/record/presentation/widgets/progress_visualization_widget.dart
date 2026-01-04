@@ -73,13 +73,13 @@ class _ProgressVisualizationWidgetState
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    AppColors.acento.withOpacity(0.1),
-                    AppColors.exito.withOpacity(0.1),
+                    AppColors.acento.withValues(alpha: 0.1),
+                    AppColors.exito.withValues(alpha: 0.1),
                   ],
                 ),
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
-                  color: AppColors.acento.withOpacity(0.3),
+                  color: AppColors.acento.withValues(alpha: 0.3),
                   width: 2,
                 ),
               ),
@@ -108,7 +108,7 @@ class _ProgressVisualizationWidgetState
         Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: AppColors.acento.withOpacity(0.2),
+            color: AppColors.acento.withValues(alpha: 0.2),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Icon(
@@ -188,9 +188,9 @@ class _ProgressVisualizationWidgetState
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -270,13 +270,13 @@ class _ProgressVisualizationWidgetState
             height: 40,
             decoration: BoxDecoration(
               color: achieved
-                  ? AppColors.exito.withOpacity(0.2)
-                  : AppColors.secundarioClaro.withOpacity(0.1),
+                  ? AppColors.exito.withValues(alpha: 0.2)
+                  : AppColors.secundarioClaro.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
                 color: achieved
                     ? AppColors.exito
-                    : AppColors.secundarioClaro.withOpacity(0.3),
+                    : AppColors.secundarioClaro.withValues(alpha: 0.3),
                 width: 2,
               ),
             ),
@@ -327,8 +327,8 @@ class _ProgressVisualizationWidgetState
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            AppColors.acento.withOpacity(0.1),
-            AppColors.acento.withOpacity(0.1),
+            AppColors.acento.withValues(alpha: 0.1),
+            AppColors.acento.withValues(alpha: 0.1),
           ],
         ),
         borderRadius: BorderRadius.circular(16),

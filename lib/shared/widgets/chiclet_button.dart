@@ -267,7 +267,7 @@ class _ChicletButtonState extends State<ChicletButton>
     Color? colorBorde;
 
     if (!estaHabilitado) {
-      colorFondo = tema.disabledColor.withOpacity(0.3);
+      colorFondo = tema.disabledColor.withValues(alpha: 0.3);
       colorTexto = tema.disabledColor;
       colorBorde = tema.disabledColor;
     } else {

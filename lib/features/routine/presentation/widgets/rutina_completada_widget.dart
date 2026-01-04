@@ -211,7 +211,7 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
               borderRadius: BorderRadius.circular(heroSize / 2),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.acento.withOpacity(0.4),
+                  color: AppColors.acento.withValues(alpha: 0.4),
                   blurRadius: 30,
                   spreadRadius: 10,
                 ),
@@ -271,14 +271,14 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                AppColors.acento.withOpacity(0.9),
-                AppColors.acento.withOpacity(0.8),
+                AppColors.acento.withValues(alpha: 0.9),
+                AppColors.acento.withValues(alpha: 0.8),
               ],
             ),
             borderRadius: BorderRadius.circular(24),
             boxShadow: [
               BoxShadow(
-                color: AppColors.acento.withOpacity(0.3),
+                color: AppColors.acento.withValues(alpha: 0.3),
                 blurRadius: 12,
                 offset: const Offset(0, 4),
               ),
@@ -480,11 +480,11 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
         scale: _scaleAnimation,
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.9),
+            color: Colors.white.withValues(alpha: 0.9),
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withValues(alpha: 0.1),
                 blurRadius: 8,
                 offset: const Offset(0, 2),
               ),
