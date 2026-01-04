@@ -1,7 +1,7 @@
 {
     "editor.wordWrap": "on",
-    "editor.lineHeight": 1.3,
-    "editor.fontFamily": "Dank Mono, google sans code",
+    "editor.lineHeight": 1.6,
+    "editor.fontFamily": "google sans code",
     // "editor.lineHeight": 1.4,
     // "editor.fontFamily": "JetBrains Mono",
     "editor.fontSize": 14,

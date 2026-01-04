@@ -141,8 +141,12 @@ class $AssetsImagenesFondosGen {
   AssetGenImage get login3 =>
       const AssetGenImage('assets/imagenes/fondos/login3.jpg');
 
+  /// File path: assets/imagenes/fondos/logo.png
+  AssetGenImage get logo =>
+      const AssetGenImage('assets/imagenes/fondos/logo.png');
+
   /// List of all assets
-  List<AssetGenImage> get values => [imagenPredeterminada, login3];
+  List<AssetGenImage> get values => [imagenPredeterminada, login3, logo];
 }
 
 class $AssetsImagenesMusculosGen {
