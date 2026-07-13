@@ -376,7 +376,6 @@ class _CelebracionRutinaPageState extends State<CelebracionRutinaPage>
             fontSize: esMovil ? 16 : 18,
             fontWeight: FontWeight.bold,
             letterSpacing: 1.2,
-            fontFamily: 'ZonaPro',
           ),
         ),
       ),

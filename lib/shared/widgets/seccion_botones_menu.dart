@@ -30,7 +30,6 @@ class SeccionBotonesMenu extends StatelessWidget {
             style: TextStyle(
               color: Colors.white.withValues(alpha: 0.7),
               fontSize: 15,
-              fontFamily: "Inter",
               fontWeight: FontWeight.w600,
             ),
           ),

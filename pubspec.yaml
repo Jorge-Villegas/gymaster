@@ -82,35 +82,12 @@ flutter:
     - assets/imagenes/musculos/general/
     - assets/imagenes/perfil_avatar/
   fonts:
-    - family: ZonaPro
+    # Fuente principal de la app (estilo "Duolingo del gym"). Es una fuente
+    # VARIABLE: un solo archivo cubre todos los pesos (400/600/700/800), así los
+    # títulos y números w800 se renderizan de verdad (no faux bold).
+    - family: Nunito
       fonts:
-        - asset: fonts/zona-pro/ZonaPro-Regular.ttf
-        - asset: fonts/zona-pro/ZonaPro-RegularItalic.ttf
-        - asset: fonts/zona-pro/ZonaPro-Thin.ttf
-        - asset: fonts/zona-pro/ZonaPro-ThinItalic.ttf
-        - asset: fonts/zona-pro/ZonaPro-Bold.ttf
-        - asset: fonts/zona-pro/ZonaPro-BoldItalic.ttf
-    - family: Montserrat
-      fonts:
-        - asset: fonts/Montserrat/Montserrat-Regular.ttf
-        - asset: fonts/Montserrat/Montserrat-Bold.ttf
-          weight: 700
-        - asset: fonts/Montserrat/Montserrat-SemiBold.ttf
-          weight: 600
-    - family: Poppins
-      fonts:
-        - asset: fonts/Poppins/Poppins-Light.ttf
-          weight: 300
-        - asset: fonts/Poppins/Poppins-LightItalic.ttf
-          weight: 300
-          style: italic
-        - asset: fonts/Poppins/Poppins-Regular.ttf
-          weight: 400
-        - asset: fonts/Poppins/Poppins-SemiBold.ttf
-          weight: 600
-        - asset: fonts/Poppins/Poppins-SemiBoldItalic.ttf
-          weight: 600
-          style: italic
+        - asset: fonts/Nunito/Nunito-Variable.ttf
 
 flutter_gen:
   output: lib/core/generated/

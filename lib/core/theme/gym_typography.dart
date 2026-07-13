@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 class GymType {
   const GymType._();
 
-  static const String familia = 'Poppins';
+  static const String familia = 'Nunito';
 
   /// Hero / números grandes (24, w800)
   static const TextStyle display = TextStyle(
