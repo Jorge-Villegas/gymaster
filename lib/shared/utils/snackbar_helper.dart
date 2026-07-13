@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 
 /// Enumeración de los tipos de mensajes que puede mostrar el SnackBar.
 enum SnackBarType { success, error, info, warning }
@@ -31,19 +31,19 @@ class SnackbarHelper {
 
       switch (type) {
         case SnackBarType.success:
-          backgroundColor = AppColors.exito;
+          backgroundColor = context.gym.brand;
           icon = Icons.check;
           break;
         case SnackBarType.error:
-          backgroundColor = AppColors.error;
+          backgroundColor = context.gym.danger;
           icon = Icons.error;
           break;
         case SnackBarType.info:
-          backgroundColor = AppColors.informacion;
+          backgroundColor = context.gym.info;
           icon = Icons.info;
           break;
         case SnackBarType.warning:
-          backgroundColor = AppColors.advertencia;
+          backgroundColor = context.gym.coral;
           icon = Icons.warning;
           break;
       }
@@ -116,19 +116,19 @@ class SnackbarHelper {
 
     switch (type) {
       case SnackBarType.success:
-        backgroundColor = AppColors.exito;
+        backgroundColor = context.gym.brand;
         icon = Icons.check;
         break;
       case SnackBarType.error:
-        backgroundColor = AppColors.error;
+        backgroundColor = context.gym.danger;
         icon = Icons.error;
         break;
       case SnackBarType.info:
-        backgroundColor = AppColors.informacion;
+        backgroundColor = context.gym.info;
         icon = Icons.info;
         break;
       case SnackBarType.warning:
-        backgroundColor = AppColors.advertencia;
+        backgroundColor = context.gym.coral;
         icon = Icons.warning;
         break;
     }

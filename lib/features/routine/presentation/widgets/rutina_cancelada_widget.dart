@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/theme/emotional_text_styles.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/shared/widgets/chiclet_button.dart';
 
 class RutinaCanceladaWidget extends StatelessWidget {
@@ -23,7 +23,7 @@ class RutinaCanceladaWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.fondoPrincipal,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(24.0),
@@ -109,7 +109,7 @@ class RutinaCanceladaWidget extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size.fromHeight(56),
                     elevation: 4,
-                    backgroundColor: AppColors.acento, // Color emocional
+                    backgroundColor: context.gym.xpInk, // Color emocional
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
@@ -121,7 +121,7 @@ class RutinaCanceladaWidget extends StatelessWidget {
                 Text(
                   '¡No te rindas! Puedes intentarlo de nuevo 💪',
                   style: EstilosTextoEmocional.aliento.copyWith(
-                    color: AppColors.acentoCalido,
+                    color: context.gym.xpInk,
                     fontSize: 16,
                   ),
                   textAlign: TextAlign.center,

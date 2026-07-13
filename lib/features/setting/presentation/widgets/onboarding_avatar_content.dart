@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymaster/core/generated/assets.gen.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/features/setting/presentation/cubits/onboarding/onboarding_cubit.dart';
 
 class OnboardingAvatarContent extends StatefulWidget {
@@ -121,20 +121,20 @@ class _OnboardingAvatarContentState extends State<OnboardingAvatarContent> {
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: isSelected
-                                  ? AppColors.primario
+                                  ? context.gym.brand
                                   : Colors.transparent,
                               width: isSelected ? 5 : 0,
                             ),
                             boxShadow: isSelected
                                 ? [
                                     BoxShadow(
-                                      color: AppColors.primario
+                                      color: context.gym.brand
                                           .withValues(alpha: 0.4),
                                       blurRadius: 16,
                                       offset: const Offset(0, 6),
                                     ),
                                     BoxShadow(
-                                      color: AppColors.acento
+                                      color: context.gym.xpInk
                                           .withValues(alpha: 0.2),
                                       blurRadius: 20,
                                       offset: const Offset(3, 3),
@@ -171,8 +171,8 @@ class _OnboardingAvatarContentState extends State<OnboardingAvatarContent> {
                                     .bodySmall
                                     ?.copyWith(
                                       color: isSelected
-                                          ? AppColors.primario
-                                          : AppColors.textoSecundario,
+                                          ? context.gym.brand
+                                          : context.gym.muted,
                                       fontWeight: isSelected
                                           ? FontWeight.bold
                                           : FontWeight.normal,

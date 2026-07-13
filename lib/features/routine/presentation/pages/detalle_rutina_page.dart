@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/emotional_text_styles.dart';
 
 import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
@@ -44,9 +45,9 @@ class DetalleRutinaScreen extends StatelessWidget {
         }
 
         return Scaffold(
-          backgroundColor: AppColors.fondoPrincipal,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           body: Container(
-            color: AppColors.fondoPrincipal,
+            color: Theme.of(context).scaffoldBackgroundColor,
             child: SafeArea(
               child: Column(
                 children: [
@@ -133,7 +134,7 @@ class DetalleRutinaScreen extends StatelessWidget {
               padding: const EdgeInsets.all(20),
               margin: const EdgeInsets.only(bottom: 20),
               decoration: BoxDecoration(
-                color: AppColors.secundarioClaro.withValues(alpha: 0.08),
+                color: context.gym.info.withValues(alpha: 0.08),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Row(
@@ -141,14 +142,14 @@ class DetalleRutinaScreen extends StatelessWidget {
                 children: [
                   Icon(
                     Icons.fitness_center,
-                    color: AppColors.secundarioClaro,
+                    color: context.gym.info,
                     size: 24,
                   ),
                   const SizedBox(width: 12),
                   Text(
                     'Preparando tu rutina perfecta...',
                     style: EstilosTextoEmocional.amigable.copyWith(
-                      color: AppColors.secundarioClaro,
+                      color: context.gym.info,
                       fontSize: 16,
                     ),
                   ),
@@ -158,8 +159,8 @@ class DetalleRutinaScreen extends StatelessWidget {
             // Shimmer loading mejorado
             Expanded(
               child: Shimmer.fromColors(
-                baseColor: AppColors.secundarioClaro.withValues(alpha: 0.1),
-                highlightColor: AppColors.primarioClaro.withValues(alpha: 0.3),
+                baseColor: context.gym.info.withValues(alpha: 0.1),
+                highlightColor: context.gym.brand.withValues(alpha: 0.3),
                 period: const Duration(milliseconds: 1200),
                 child: ListView.builder(
                   itemCount: 3,
@@ -168,11 +169,11 @@ class DetalleRutinaScreen extends StatelessWidget {
                       margin: const EdgeInsets.only(bottom: 16),
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: context.gym.surface,
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
                           color:
-                              AppColors.secundarioClaro.withValues(alpha: 0.2),
+                              context.gym.info.withValues(alpha: 0.2),
                           width: 1,
                         ),
                       ),
@@ -196,14 +197,14 @@ class DetalleRutinaScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: AppColors.acento.withValues(alpha: 0.08),
+                color: context.gym.xpInk.withValues(alpha: 0.08),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Column(
                 children: [
                   Icon(
                     Icons.error_outline_rounded,
-                    color: AppColors.acento,
+                    color: context.gym.xpInk,
                     size: 48,
                   ),
                   const SizedBox(height: 16),
@@ -211,7 +212,7 @@ class DetalleRutinaScreen extends StatelessWidget {
                     'Ops, algo salió mal',
                     style: EstilosTextoEmocional.motivacional.copyWith(
                       fontSize: 20,
-                      color: AppColors.acento,
+                      color: context.gym.xpInk,
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -219,7 +220,7 @@ class DetalleRutinaScreen extends StatelessWidget {
                     state.message,
                     textAlign: TextAlign.center,
                     style: EstilosTextoEmocional.amigable.copyWith(
-                      color: AppColors.textoPrincipal,
+                      color: context.gym.ink,
                       fontSize: 14,
                     ),
                   ),
@@ -261,13 +262,13 @@ class DetalleRutinaScreen extends StatelessWidget {
           Icon(
             Icons.fitness_center_outlined,
             size: 64,
-            color: AppColors.secundarioClaro.withValues(alpha: 0.6),
+            color: context.gym.info.withValues(alpha: 0.6),
           ),
           const SizedBox(height: 16),
           Text(
             'Cargando tu rutina...',
             style: EstilosTextoEmocional.amigable.copyWith(
-              color: AppColors.secundarioClaro,
+              color: context.gym.info,
               fontSize: 18,
             ),
           ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/emotional_text_styles.dart';
 import 'package:gymaster/features/setting/presentation/cubits/onboarding/onboarding_cubit.dart';
 import 'package:gymaster/features/setting/presentation/cubits/onboarding/onboarding_state.dart';
@@ -24,15 +24,15 @@ class OnboardingDesafiosPage extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  AppColors.acento.withValues(alpha: 0.1),
-                  AppColors.primario.withValues(alpha: 0.1),
+                  context.gym.xpInk.withValues(alpha: 0.1),
+                  context.gym.brand.withValues(alpha: 0.1),
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
-                color: AppColors.acento.withValues(alpha: 0.2),
+                color: context.gym.xpInk.withValues(alpha: 0.2),
                 width: 1,
               ),
             ),
@@ -52,7 +52,7 @@ class OnboardingDesafiosPage extends StatelessWidget {
                 Text(
                   'Conocerlos nos ayuda a ayudarte mejor 🤝',
                   style: EstilosTextoEmocional.amigable.copyWith(
-                    color: AppColors.textoPrincipal,
+                    color: context.gym.ink,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -124,10 +124,10 @@ class OnboardingDesafiosPage extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.acento : AppColors.fondoSecundario,
+          color: isSelected ? context.gym.xpInk : context.gym.surface2,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isSelected ? AppColors.acento : AppColors.textoTerciario,
+            color: isSelected ? context.gym.xpInk : context.gym.faint,
             width: isSelected ? 2 : 1,
           ),
         ),
@@ -136,7 +136,7 @@ class OnboardingDesafiosPage extends StatelessWidget {
             text,
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: isSelected ? Colors.white : Colors.black87,
+              color: isSelected ? Colors.white : context.gym.ink,
               fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
               fontSize: 12,
             ),

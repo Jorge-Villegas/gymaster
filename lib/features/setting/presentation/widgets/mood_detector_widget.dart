@@ -5,7 +5,7 @@ import '../cubits/mood_detector_cubit.dart';
 import '../cubits/mood_detector_state.dart';
 import '../../../../../shared/utils/haptic_feedback_helper.dart';
 import '../../../../../shared/widgets/custom_elevated_button.dart';
-import '../../../../../core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 
 /// Widget para detectar y registrar el estado anímico del usuario
 /// Proporciona 4 opciones emocionales específicas para GyMaster
@@ -111,7 +111,7 @@ class _MoodDetectorWidgetState extends State<MoodDetectorWidget>
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.gym.surface,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
@@ -176,10 +176,10 @@ class _MoodDetectorWidgetState extends State<MoodDetectorWidget>
         decoration: BoxDecoration(
           color: isSelected
               ? mood.primaryColor.withValues(alpha: 0.2)
-              : Colors.grey.shade50,
+              : context.gym.surface2,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: isSelected ? mood.primaryColor : Colors.grey.shade300,
+            color: isSelected ? mood.primaryColor : context.gym.line,
             width: isSelected ? 2 : 1,
           ),
           boxShadow: isSelected
@@ -209,7 +209,7 @@ class _MoodDetectorWidgetState extends State<MoodDetectorWidget>
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-                color: isSelected ? mood.primaryColor : Colors.grey.shade700,
+                color: isSelected ? mood.primaryColor : context.gym.muted,
               ),
               textAlign: TextAlign.center,
             ),
@@ -218,7 +218,7 @@ class _MoodDetectorWidgetState extends State<MoodDetectorWidget>
               mood.description,
               style: TextStyle(
                 fontSize: 10,
-                color: Colors.grey.shade600,
+                color: context.gym.muted,
               ),
               textAlign: TextAlign.center,
               maxLines: 2,
@@ -379,7 +379,7 @@ class _MoodDetectorWidgetState extends State<MoodDetectorWidget>
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
-        backgroundColor: AppColors.error,
+        backgroundColor: context.gym.danger,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
@@ -425,7 +425,7 @@ class QuickMoodSelector extends StatelessWidget {
                     : Colors.transparent,
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                  color: isSelected ? mood.primaryColor : Colors.grey.shade300,
+                  color: isSelected ? mood.primaryColor : context.gym.line,
                   width: isSelected ? 2 : 1,
                 ),
               ),
@@ -446,7 +446,7 @@ class QuickMoodSelector extends StatelessWidget {
                       fontWeight:
                           isSelected ? FontWeight.bold : FontWeight.normal,
                       color:
-                          isSelected ? mood.primaryColor : Colors.grey.shade600,
+                          isSelected ? mood.primaryColor : context.gym.muted,
                     ),
                   ),
                 ],
@@ -504,7 +504,7 @@ class MoodDetectorModal {
               width: 40,
               height: 4,
               decoration: BoxDecoration(
-                color: Colors.grey.shade300,
+                color: context.gym.line,
                 borderRadius: BorderRadius.circular(2),
               ),
             ),

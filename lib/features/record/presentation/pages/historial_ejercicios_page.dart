@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:animate_do/animate_do.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
 import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/features/record/presentation/cubit/record_cubit.dart';
@@ -58,7 +58,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.fondoPrincipal,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Column(
           children: [
@@ -66,7 +66,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
             SizedBox(height: Espaciado.md),
             Expanded(
               child: Container(
-                color: AppColors.fondoPrincipal,
+                color: Theme.of(context).scaffoldBackgroundColor,
                 child: Column(
                   spacing: Espaciado.sm,
                   children: [
@@ -89,11 +89,11 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
         margin: Espaciado.rellenoHorizontalMd,
         padding: Espaciado.rellenoSm,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: context.gym.surface,
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: AppColors.primario.withValues(alpha: 0.08),
+              color: context.gym.brand.withValues(alpha: 0.08),
               blurRadius: 12,
               offset: const Offset(0, 4),
             ),
@@ -108,7 +108,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                 // Botón anterior
                 Container(
                   decoration: BoxDecoration(
-                    color: AppColors.primario,
+                    color: context.gym.brand,
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(12),
                       bottomLeft: Radius.circular(12),
@@ -129,10 +129,10 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                   child: Container(
                     height: 48,
                     decoration: BoxDecoration(
-                      color: AppColors.primario,
+                      color: context.gym.brand,
                       border: Border.symmetric(
                         vertical: BorderSide(
-                          color: AppColors.primarioOscuro,
+                          color: context.gym.brandInk,
                           width: 1,
                         ),
                       ),
@@ -144,7 +144,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                         });
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primario,
+                        backgroundColor: context.gym.brand,
                         elevation: 0,
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.zero,
@@ -164,7 +164,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                 // Botón siguiente
                 Container(
                   decoration: BoxDecoration(
-                    color: AppColors.primario,
+                    color: context.gym.brand,
                     borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(12),
                       bottomRight: Radius.circular(12),
@@ -214,44 +214,44 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                       titleCentered: true,
                       leftChevronIcon: Icon(
                         Icons.chevron_left,
-                        color: AppColors.primario,
+                        color: context.gym.brand,
                       ),
                       rightChevronIcon: Icon(
                         Icons.chevron_right,
-                        color: AppColors.primario,
+                        color: context.gym.brand,
                       ),
                       titleTextStyle: TextStyle(
                         fontSize: TipografiaGyMaster.tamanoMd,
                         fontWeight: TipografiaGyMaster.pesoSemiBold,
-                        color: AppColors.textoPrincipal,
+                        color: context.gym.ink,
                       ),
                     ),
                     daysOfWeekStyle: DaysOfWeekStyle(
                       weekdayStyle: TextStyle(
                         fontSize: TipografiaGyMaster.tamanoSm,
                         fontWeight: TipografiaGyMaster.pesoSemiBold,
-                        color: AppColors.textoTerciario,
+                        color: context.gym.faint,
                       ),
                       weekendStyle: TextStyle(
                         fontSize: TipografiaGyMaster.tamanoSm,
                         fontWeight: TipografiaGyMaster.pesoSemiBold,
-                        color: AppColors.textoTerciario,
+                        color: context.gym.faint,
                       ),
                     ),
                     calendarStyle: CalendarStyle(
                       outsideDaysVisible: false,
                       weekendTextStyle: TextStyle(
-                        color: AppColors.textoTerciario,
+                        color: context.gym.faint,
                       ),
                       defaultTextStyle: TextStyle(
-                        color: AppColors.textoTerciario,
+                        color: context.gym.faint,
                       ),
                       selectedDecoration: BoxDecoration(
-                        color: AppColors.secundario,
+                        color: context.gym.info,
                         shape: BoxShape.circle,
                       ),
                       todayDecoration: BoxDecoration(
-                        color: AppColors.primario.withValues(alpha: 0.3),
+                        color: context.gym.brand.withValues(alpha: 0.3),
                         shape: BoxShape.circle,
                       ),
                     ),
@@ -267,11 +267,11 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                               margin: EdgeInsets.all(Espaciado.xxs),
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
-                                color: AppColors.primario,
+                                color: context.gym.brand,
                                 shape: BoxShape.circle,
                                 boxShadow: [
                                   BoxShadow(
-                                    color: AppColors.primario
+                                    color: context.gym.brand
                                         .withValues(alpha: 0.3),
                                     blurRadius: 4,
                                     offset: const Offset(0, 2),
@@ -326,11 +326,11 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                 return Container(
                   margin: EdgeInsets.only(bottom: Espaciado.md),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: context.gym.surface,
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.primario.withValues(alpha: 0.08),
+                        color: context.gym.brand.withValues(alpha: 0.08),
                         blurRadius: 12,
                         offset: const Offset(0, 4),
                       ),
@@ -421,13 +421,13 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                             Container(
                               decoration: BoxDecoration(
                                 color:
-                                    AppColors.primario.withValues(alpha: 0.1),
+                                    context.gym.brand.withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: IconButton(
                                 icon: Icon(
                                   IconsaxPlusLinear.edit,
-                                  color: AppColors.primario,
+                                  color: context.gym.brand,
                                   size: 20,
                                 ),
                                 onPressed: () {},
@@ -460,11 +460,11 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(12),
                                     border: Border.all(
-                                      color: AppColors.primario
+                                      color: context.gym.brand
                                           .withValues(alpha: 0.1),
                                       width: 1,
                                     ),
-                                    color: AppColors.fondoPrincipal,
+                                    color: context.gym.surface2,
                                   ),
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(12),
@@ -475,7 +475,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                                             height: 64,
                                             fit: BoxFit.cover,
                                             colorFilter: ColorFilter.mode(
-                                              AppColors.primario,
+                                              context.gym.brand,
                                               BlendMode.srcIn,
                                             ),
                                           )
@@ -493,7 +493,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                                     fontSize: TipografiaGyMaster.tamanoMd,
                                     fontWeight: TipografiaGyMaster.pesoRegular,
                                     height: 1.2,
-                                    color: AppColors.textoPrincipal,
+                                    color: context.gym.ink,
                                   ),
                                 ),
                                 subtitle: Column(
@@ -505,7 +505,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                                         Icon(
                                           Icons.fitness_center,
                                           size: 14,
-                                          color: AppColors.textoTerciario,
+                                          color: context.gym.faint,
                                         ),
                                         const SizedBox(width: 4),
                                         Expanded(
@@ -519,7 +519,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                                                   TipografiaGyMaster.tamanoSm,
                                               fontWeight: TipografiaGyMaster
                                                   .pesoRegular,
-                                              color: AppColors.textoTerciario,
+                                              color: context.gym.faint,
                                             ),
                                             overflow: TextOverflow.ellipsis,
                                           ),
@@ -530,14 +530,14 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                                 ),
                                 trailing: Container(
                                   decoration: BoxDecoration(
-                                    color: AppColors.secundario
+                                    color: context.gym.info
                                         .withValues(alpha: 0.1),
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: IconButton(
                                     icon: Icon(
                                       Icons.arrow_forward_ios_rounded,
-                                      color: AppColors.secundario,
+                                      color: context.gym.info,
                                       size: 16,
                                     ),
                                     onPressed: () {
@@ -662,14 +662,14 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CircularProgressIndicator(
-            color: AppColors.primario,
+            color: context.gym.brand,
             strokeWidth: 3,
           ),
           Espaciado.separacionVerticalSm,
           Text(
             'Cargando historial...',
             style: TextStyle(
-              color: AppColors.textoTerciario,
+              color: context.gym.faint,
               fontSize: TipografiaGyMaster.tamanoMd,
               fontWeight: TipografiaGyMaster.pesoRegular,
             ),
@@ -691,13 +691,13 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
               Container(
                 padding: Espaciado.rellenoXl,
                 decoration: BoxDecoration(
-                  color: AppColors.primario.withValues(alpha: 0.1),
+                  color: context.gym.brand.withValues(alpha: 0.1),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
                   IconsaxPlusLinear.calendar_remove,
                   size: 64,
-                  color: AppColors.primario,
+                  color: context.gym.brand,
                 ),
               ),
               Espaciado.separacionVerticalMd,
@@ -706,7 +706,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                 style: TextStyle(
                   fontSize: TipografiaGyMaster.tamanoXl,
                   fontWeight: TipografiaGyMaster.pesoSemiBold,
-                  color: AppColors.primario,
+                  color: context.gym.brand,
                 ),
               ),
               Espaciado.separacionVerticalSm,
@@ -716,7 +716,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                 style: TextStyle(
                   fontSize: TipografiaGyMaster.tamanoSm,
                   fontWeight: TipografiaGyMaster.pesoRegular,
-                  color: AppColors.textoTerciario,
+                  color: context.gym.faint,
                 ),
               ),
             ],
@@ -736,13 +736,13 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
             Container(
               padding: Espaciado.rellenoXl,
               decoration: BoxDecoration(
-                color: AppColors.error.withValues(alpha: 0.1),
+                color: context.gym.danger.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 Icons.error_outline,
                 size: 64,
-                color: AppColors.error,
+                color: context.gym.danger,
               ),
             ),
             Espaciado.separacionVerticalMd,
@@ -751,7 +751,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
               style: TextStyle(
                 fontSize: TipografiaGyMaster.tamanoLg,
                 fontWeight: TipografiaGyMaster.pesoSemiBold,
-                color: AppColors.textoPrincipal,
+                color: context.gym.ink,
               ),
             ),
             Espaciado.separacionVerticalSm,
@@ -761,7 +761,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
               style: TextStyle(
                 fontSize: TipografiaGyMaster.tamanoSm,
                 fontWeight: TipografiaGyMaster.pesoRegular,
-                color: AppColors.textoTerciario,
+                color: context.gym.faint,
               ),
             ),
             Espaciado.separacionVerticalMd,
@@ -783,7 +783,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                 ),
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primario,
+                backgroundColor: context.gym.brand,
                 padding: EdgeInsets.symmetric(
                   horizontal: Espaciado.lg,
                   vertical: Espaciado.sm,

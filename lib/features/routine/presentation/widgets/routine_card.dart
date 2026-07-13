@@ -4,6 +4,7 @@ import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
 import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/shared/utils/text_formatter.dart';
 import 'package:gymaster/shared/utils/haptic_feedback_helper.dart';
 import 'package:gymaster/features/routine/presentation/widgets/delete_routine_dialog.dart';
@@ -183,7 +184,7 @@ class _RoutineCardState extends State<RoutineCard>
                             color: Colors.white.withValues(alpha: 0.8),
                             size: 20,
                           ),
-                          color: Colors.white,
+                          color: context.gym.surface,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -194,14 +195,14 @@ class _RoutineCardState extends State<RoutineCard>
                                 children: [
                                   Icon(
                                     IconsaxPlusLinear.trash,
-                                    color: AppColors.error,
+                                    color: context.gym.danger,
                                     size: 18,
                                   ),
                                   const SizedBox(width: 12),
                                   Text(
                                     'Eliminar rutina',
                                     style: TextStyle(
-                                      color: AppColors.error,
+                                      color: context.gym.danger,
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),

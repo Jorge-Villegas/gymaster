@@ -1,7 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
 import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/shared/widgets/pagina_con_menu_lateral.dart';
@@ -162,12 +162,12 @@ class _CabeceraReutilizableState extends State<CabeceraReutilizable>
 
     return Container(
       decoration: BoxDecoration(
-        color: config.colorFondo ?? Colors.white,
+        color: config.colorFondo ?? context.gym.surface,
         borderRadius: BorderRadius.circular(12),
         boxShadow: config.conSombra
             ? [
                 BoxShadow(
-                  color: (config.colorSombra ?? AppColors.primario)
+                  color: (config.colorSombra ?? context.gym.brand)
                       .withValues(alpha: 0.1),
                   offset: const Offset(0, 2),
                   blurRadius: 8,
@@ -179,7 +179,7 @@ class _CabeceraReutilizableState extends State<CabeceraReutilizable>
         onPressed: () => _manejarAccionBotonIzquierdo(context, config),
         icon: Icon(
           config.icono,
-          color: config.colorIcono ?? AppColors.primario,
+          color: config.colorIcono ?? context.gym.brand,
           size: config.tamanoIcono,
         ),
         padding: EdgeInsets.all(config.relleno),
@@ -199,7 +199,7 @@ class _CabeceraReutilizableState extends State<CabeceraReutilizable>
           style: TextStyle(
             fontWeight: TipografiaGyMaster.pesoSemiBold,
             fontSize: TipografiaGyMaster.tamanoXl,
-            color: AppColors.primarioCalido,
+            color: context.gym.brand,
             height: 1.1,
           ),
           maxLines: 2,
@@ -214,7 +214,7 @@ class _CabeceraReutilizableState extends State<CabeceraReutilizable>
               fontSize: TipografiaGyMaster.tamanoSm,
               letterSpacing: 0.4,
               height: 1.3,
-              color: AppColors.primarioCalido,
+              color: context.gym.brand,
             ),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
@@ -236,17 +236,17 @@ class _CabeceraReutilizableState extends State<CabeceraReutilizable>
       )),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: context.gym.surface,
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: AppColors.primario.withValues(alpha: 0.1),
+              color: context.gym.brand.withValues(alpha: 0.1),
               offset: const Offset(0, 2),
               blurRadius: 8,
             ),
           ],
           border: Border.all(
-            color: AppColors.primario.withValues(alpha: 0.2),
+            color: context.gym.brand.withValues(alpha: 0.2),
             width: 2,
           ),
         ),
@@ -254,14 +254,14 @@ class _CabeceraReutilizableState extends State<CabeceraReutilizable>
           controller: _searchController,
           autofocus: true,
           style: TextStyle(
-            color: AppColors.primario,
+            color: context.gym.brand,
             fontSize: TipografiaGyMaster.tamanoMd,
             fontWeight: TipografiaGyMaster.pesoRegular,
           ),
           decoration: InputDecoration(
             hintText: widget.busqueda!.placeholderText,
             hintStyle: TextStyle(
-              color: AppColors.textoTerciario,
+              color: context.gym.faint,
               fontSize: TipografiaGyMaster.tamanoMd,
               fontWeight: TipografiaGyMaster.pesoRegular,
             ),
@@ -273,12 +273,12 @@ class _CabeceraReutilizableState extends State<CabeceraReutilizable>
             prefixIcon: Container(
               margin: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: AppColors.primario.withValues(alpha: 0.1),
+                color: context.gym.brand.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(
                 IconsaxPlusLinear.search_normal,
-                color: AppColors.primario,
+                color: context.gym.brand,
                 size: 20,
               ),
             ),
@@ -286,12 +286,12 @@ class _CabeceraReutilizableState extends State<CabeceraReutilizable>
                 ? IconButton(
                     icon: Container(
                       decoration: BoxDecoration(
-                        color: AppColors.textoTerciario.withValues(alpha: 0.1),
+                        color: context.gym.faint.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Icon(
                         Icons.close_rounded,
-                        color: AppColors.textoTerciario,
+                        color: context.gym.faint,
                         size: 16,
                       ),
                     ),
@@ -316,11 +316,11 @@ class _CabeceraReutilizableState extends State<CabeceraReutilizable>
         height: 48,
         decoration: BoxDecoration(
           color:
-              _isSearchExpanded ? AppColors.primario : AppColors.fondoPrincipal,
+              _isSearchExpanded ? context.gym.brand : context.gym.surface2,
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: AppColors.primario.withValues(alpha: 0.2),
+              color: context.gym.brand.withValues(alpha: 0.2),
               offset: const Offset(0, 2),
               blurRadius: 8,
             ),
@@ -333,7 +333,7 @@ class _CabeceraReutilizableState extends State<CabeceraReutilizable>
                 ? Icons.close_rounded
                 : IconsaxPlusLinear.search_normal,
             key: ValueKey(_isSearchExpanded),
-            color: _isSearchExpanded ? Colors.white : AppColors.primario,
+            color: _isSearchExpanded ? Colors.white : context.gym.brand,
             size: 20,
           ),
         ),
@@ -548,12 +548,12 @@ class BotonAccionDerecha extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: colorFondo ?? Colors.white,
+        color: colorFondo ?? context.gym.surface,
         borderRadius: BorderRadius.circular(12),
         boxShadow: conSombra
             ? [
                 BoxShadow(
-                  color: AppColors.primario.withValues(alpha: 0.1),
+                  color: context.gym.brand.withValues(alpha: 0.1),
                   offset: const Offset(0, 2),
                   blurRadius: 8,
                 ),
@@ -564,7 +564,7 @@ class BotonAccionDerecha extends StatelessWidget {
         onPressed: onPressed,
         icon: Icon(
           icono,
-          color: colorIcono ?? AppColors.primario,
+          color: colorIcono ?? context.gym.brand,
           size: tamanoIcono ?? 20,
         ),
         padding: const EdgeInsets.all(12),

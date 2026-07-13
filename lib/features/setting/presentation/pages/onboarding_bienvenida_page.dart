@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
 import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/shared/widgets/chiclet_button.dart';
@@ -16,7 +17,7 @@ class OnboardingBienvenidaPage extends StatelessWidget {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-          color: AppColors.primario.withValues(alpha: 0.1),
+          color: context.gym.brand.withValues(alpha: 0.1),
         ),
         child: SafeArea(
           child: SingleChildScrollView(
@@ -42,10 +43,10 @@ class OnboardingBienvenidaPage extends StatelessWidget {
                     vertical: Espaciado.xs,
                   ),
                   decoration: BoxDecoration(
-                    color: AppColors.secundario.withValues(alpha: 0.1),
+                    color: context.gym.info.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(Espaciado.lg),
                     border: Border.all(
-                      color: AppColors.secundario.withValues(alpha: 0.3),
+                      color: context.gym.info.withValues(alpha: 0.3),
                       width: 1,
                     ),
                   ),
@@ -55,7 +56,7 @@ class OnboardingBienvenidaPage extends StatelessWidget {
                       Icon(
                         Icons.timer_outlined,
                         size: 16,
-                        color: AppColors.secundario,
+                        color: context.gym.info,
                       ),
                       const SizedBox(width: Espaciado.xs),
                       Flexible(
@@ -63,7 +64,7 @@ class OnboardingBienvenidaPage extends StatelessWidget {
                           'Solo 2 minutos para personalizar',
                           style:
                               Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    color: AppColors.secundario,
+                                    color: context.gym.info,
                                     fontWeight: TipografiaGyMaster.pesoSemiBold,
                                   ),
                           overflow: TextOverflow.ellipsis,
@@ -94,8 +95,8 @@ class OnboardingBienvenidaPage extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  AppColors.primario,
-                  AppColors.secundario,
+                  context.gym.brand,
+                  context.gym.info,
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -103,12 +104,12 @@ class OnboardingBienvenidaPage extends StatelessWidget {
               borderRadius: BorderRadius.circular(size.width * 0.1),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.primario.withValues(alpha: 0.3),
+                  color: context.gym.brand.withValues(alpha: 0.3),
                   blurRadius: 20,
                   offset: const Offset(0, 10),
                 ),
                 BoxShadow(
-                  color: AppColors.secundario.withValues(alpha: 0.2),
+                  color: context.gym.info.withValues(alpha: 0.2),
                   blurRadius: 15,
                   offset: const Offset(5, 5),
                 ),
@@ -149,18 +150,18 @@ class OnboardingBienvenidaPage extends StatelessWidget {
                     children: [
                       TextSpan(
                         text: '¡Bienvenido a ',
-                        style: TextStyle(color: AppColors.textoPrincipal),
+                        style: TextStyle(color: context.gym.ink),
                       ),
                       TextSpan(
                         text: 'GyMaster',
                         style: TextStyle(
-                          color: AppColors.primario,
+                          color: context.gym.brand,
                           fontWeight: TipografiaGyMaster.pesoSemiBold,
                         ),
                       ),
                       TextSpan(
                         text: '!',
-                        style: TextStyle(color: AppColors.secundario),
+                        style: TextStyle(color: context.gym.info),
                       ),
                     ],
                   ),
@@ -177,13 +178,13 @@ class OnboardingBienvenidaPage extends StatelessWidget {
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        AppColors.acento.withValues(alpha: 0.2),
-                        AppColors.acento.withValues(alpha: 0.1),
+                        context.gym.xpInk.withValues(alpha: 0.2),
+                        context.gym.xpInk.withValues(alpha: 0.1),
                       ],
                     ),
                     borderRadius: BorderRadius.circular(Espaciado.lg),
                     border: Border.all(
-                      color: AppColors.acento,
+                      color: context.gym.xpInk,
                       width: 1.5,
                     ),
                   ),
@@ -192,7 +193,7 @@ class OnboardingBienvenidaPage extends StatelessWidget {
                     children: [
                       Icon(
                         Icons.stars,
-                        color: AppColors.acento,
+                        color: context.gym.xpInk,
                         size: 20,
                       ),
                       const SizedBox(width: Espaciado.xs),
@@ -201,7 +202,7 @@ class OnboardingBienvenidaPage extends StatelessWidget {
                           'Tu aventura fitness comienza aquí',
                           style:
                               Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    color: AppColors.acento,
+                                    color: context.gym.xpInk,
                                     fontWeight: TipografiaGyMaster.pesoSemiBold,
                                   ),
                           overflow: TextOverflow.ellipsis,
@@ -225,21 +226,21 @@ class OnboardingBienvenidaPage extends StatelessWidget {
         'titulo': 'Seguimiento Inteligente',
         'descripcion': 'Rutinas que se adaptan a tu progreso',
         'emoji': '🎯',
-        'color': AppColors.primario,
+        'color': context.gym.brand,
       },
       {
         'icono': IconsaxPlusLinear.medal,
         'titulo': 'Logros y Recompensas',
         'descripcion': 'Celebra cada victoria, por pequeña que sea',
         'emoji': '🏆',
-        'color': AppColors.acento,
+        'color': context.gym.xpInk,
       },
       {
         'icono': IconsaxPlusLinear.trend_up,
         'titulo': 'Progreso Visual',
         'descripcion': 'Ve tu transformación en tiempo real',
         'emoji': '📈',
-        'color': AppColors.secundario,
+        'color': context.gym.info,
       },
     ];
 
@@ -306,7 +307,7 @@ class OnboardingBienvenidaPage extends StatelessWidget {
                             Text(
                               beneficio['titulo'] as String,
                               style: TipografiaGyMaster.subtitulo.copyWith(
-                                color: AppColors.textoPrincipal,
+                                color: context.gym.ink,
                               ),
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -315,7 +316,7 @@ class OnboardingBienvenidaPage extends StatelessWidget {
                               beneficio['descripcion'] as String,
                               style:
                                   TipografiaGyMaster.textoSecundario.copyWith(
-                                color: AppColors.textoSecundario,
+                                color: context.gym.muted,
                                 height: 1.3,
                               ),
                               maxLines: 2,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/generated/assets.gen.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/shared/widgets/chiclet_button.dart';
 
@@ -59,7 +59,7 @@ class EjerciciosVaciosWidget extends StatelessWidget {
                       ? TipografiaGyMaster.tamanoLg
                       : TipografiaGyMaster.tamanoXl,
                   fontWeight: TipografiaGyMaster.pesoSemiBold,
-                  color: AppColors.textoPrincipal,
+                  color: context.gym.ink,
                 ),
               ),
               const SizedBox(height: 12),
@@ -70,7 +70,7 @@ class EjerciciosVaciosWidget extends StatelessWidget {
                       ? TipografiaGyMaster.tamanoMd
                       : TipografiaGyMaster.tamanoLg,
                   fontWeight: TipografiaGyMaster.pesoRegular,
-                  color: AppColors.textoTerciario,
+                  color: context.gym.faint,
                 ),
                 textAlign: TextAlign.center,
               ),

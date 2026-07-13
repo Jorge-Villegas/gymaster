@@ -6,39 +6,39 @@ import 'package:flutter/material.dart';
 class AppColors {
   // === COLORES PRIMARIOS (BASE HSB: H=258°, S=65%, B=76%) ===
 
-  /// Color principal - Púrpura base (HSB: 258°, 65%, 76%)
-  static const Color primario = Color(0xFF6B46C1);
+  /// Color principal - Verde candy marca (transición a paleta "Duolingo del gym")
+  static const Color primario = Color(0xFF3FC55F);
 
-  /// Variación cálida del primario - Movido -15° hacia magenta (HSB: 243°, 65%, 76%)
-  static const Color primarioCalido = Color(0xFF8B46C1);
+  /// Variación cálida del primario - Verde claro
+  static const Color primarioCalido = Color(0xFF57D970);
 
-  /// Variación fría del primario - Movido +15° hacia azul (HSB: 273°, 65%, 76%)
-  static const Color primarioFrio = Color(0xFF464BC1);
+  /// Variación fría del primario - Verde profundo
+  static const Color primarioFrio = Color(0xFF2A9D48);
 
-  /// Primario claro - Menor saturación para visibilidad controlada (HSB: 258°, 35%, 85%)
-  static const Color primarioClaro = Color(0xFF9B7FDB);
+  /// Primario claro
+  static const Color primarioClaro = Color(0xFF8FE0A5);
 
-  /// Primario oscuro RICO - "Removiendo blanco" (HSB: 258°, 80%, 55%)
-  static const Color primarioOscuro = Color(0xFF4A2B8C);
+  /// Primario oscuro
+  static const Color primarioOscuro = Color(0xFF2A9D48);
 
-  /// Primario muy oscuro RICO - Máxima riqueza (HSB: 258°, 85%, 40%)
-  static const Color primarioProfundo = Color(0xFF2F1B5C);
+  /// Primario muy oscuro
+  static const Color primarioProfundo = Color(0xFF1E6B34);
 
   // ===============================================================
   // === COLORES SECUNDARIOS (BASE HSB: H=191°, S=92%, B=70%) ===
   // ===============================================================
 
-  /// Color secundario - Teal base (HSB: 191°, 92%, 70%)
-  static const Color secundario = Color(0xFF0891B2);
+  /// Color secundario - Azul candy info (transición a paleta "Duolingo del gym")
+  static const Color secundario = Color(0xFF38B6FF);
 
-  /// Variación cálida del secundario - Hacia cyan (HSB: 176°, 92%, 70%)
-  static const Color secundarioCalido = Color(0xFF08B29F);
+  /// Variación cálida del secundario
+  static const Color secundarioCalido = Color(0xFF54BEFF);
 
-  /// Variación fría del secundario - Hacia azul (HSB: 206°, 92%, 70%)
-  static const Color secundarioFrio = Color(0xFF0865B2);
+  /// Variación fría del secundario
+  static const Color secundarioFrio = Color(0xFF1E86C9);
 
-  /// Secundario claro - Reducida saturación (HSB: 191°, 50%, 80%)
-  static const Color secundarioClaro = Color(0xFF66B8CC);
+  /// Secundario claro
+  static const Color secundarioClaro = Color(0xFF7CC9F2);
 
   /// Secundario oscuro RICO - "Removiendo blanco" (HSB: 191°, 95%, 50%)
   static const Color secundarioOscuro = Color(0xFF046680);
@@ -170,8 +170,8 @@ class AppColors {
   /// Divisor con menor saturación para sutileza (HSB: 222°, 40%, 28%)
   static const Color divisor = Color(0xFF374151);
 
-  /// Borde activo/foco - Usando primario con menor saturación
-  static const Color bordeActivo = Color(0xFF9B7FDB);
+  /// Borde activo/foco - Verde candy claro
+  static const Color bordeActivo = Color(0xFF8FE0A5);
 
   // === COLORES ESPECÍFICOS PARA GYM CON VARIACIONES HSB ===
 

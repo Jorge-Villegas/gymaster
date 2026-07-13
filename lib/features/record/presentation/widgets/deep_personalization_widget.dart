@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/emotional_text_styles.dart';
 
 /// Sistema de personalización profunda con preferencias emocionales
@@ -114,13 +114,13 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              AppColors.secundarioClaro.withValues(alpha: 0.1),
-              AppColors.acento.withValues(alpha: 0.1),
+              context.gym.info.withValues(alpha: 0.1),
+              context.gym.xpInk.withValues(alpha: 0.1),
             ],
           ),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: AppColors.secundarioClaro.withValues(alpha: 0.3),
+            color: context.gym.info.withValues(alpha: 0.3),
             width: 2,
           ),
         ),
@@ -154,12 +154,12 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
         Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: AppColors.secundarioClaro.withValues(alpha: 0.2),
+            color: context.gym.info.withValues(alpha: 0.2),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Icon(
             Icons.psychology,
-            color: AppColors.secundarioClaro,
+            color: context.gym.info,
             size: 24,
           ),
         ),
@@ -196,10 +196,10 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.acento.withValues(alpha: 0.1),
+        color: context.gym.xpInk.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: AppColors.acento.withValues(alpha: 0.3),
+          color: context.gym.xpInk.withValues(alpha: 0.3),
         ),
       ),
       child: Column(
@@ -209,7 +209,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
             children: [
               Icon(
                 Icons.insights,
-                color: AppColors.acento,
+                color: context.gym.xpInk,
                 size: 20,
               ),
               const SizedBox(width: 8),
@@ -226,7 +226,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
             _getPersonalizedInsight(),
             style: EstilosTextoEmocional.logro.copyWith(
               fontSize: 16,
-              color: AppColors.acento,
+              color: context.gym.xpInk,
             ),
           ),
         ],
@@ -250,7 +250,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
     return _buildPreferenceSection(
       'Estilo de Motivación',
       Icons.flash_on,
-      AppColors.acento,
+      context.gym.xpInk,
       [
         ('gentle', 'Suave', 'Motivación amable y comprensiva'),
         ('balanced', 'Equilibrado', 'Combinación de amabilidad y firmeza'),
@@ -266,7 +266,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
     return _buildPreferenceSection(
       'Intensidad de Celebraciones',
       Icons.celebration,
-      AppColors.exito,
+      context.gym.brand,
       [
         ('minimal', 'Mínima', 'Reconocimiento sutil'),
         ('medium', 'Moderada', 'Balance perfecto'),
@@ -282,7 +282,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
     return _buildPreferenceSection(
       'Enfoque de Progreso',
       Icons.trending_up,
-      AppColors.acento,
+      context.gym.xpInk,
       [
         ('consistency', 'Consistencia', 'Enfoque en hábitos diarios'),
         ('milestones', 'Hitos', 'Celebrar grandes logros'),
@@ -298,7 +298,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
     return _buildPreferenceSection(
       'Tono Emocional',
       Icons.sentiment_satisfied,
-      AppColors.secundarioClaro,
+      context.gym.info,
       [
         ('encouraging', 'Alentador', 'Siempre positivo y comprensivo'),
         ('realistic', 'Realista', 'Honesto pero motivador'),
@@ -394,7 +394,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
       children: [
         Row(
           children: [
-            Icon(Icons.settings, color: AppColors.secundarioClaro, size: 18),
+            Icon(Icons.settings, color: context.gym.info, size: 18),
             const SizedBox(width: 8),
             Text(
               'Configuraciones Avanzadas',
@@ -430,7 +430,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
           min: 0.0,
           max: 1.0,
           divisions: 10,
-          activeColor: AppColors.acento,
+          activeColor: context.gym.xpInk,
           onChanged: (value) => setState(() => _motivationFrequency = value),
         ),
       ],
@@ -465,7 +465,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
           Switch(
             value: value,
             onChanged: onChanged,
-            activeThumbColor: AppColors.exito,
+            activeThumbColor: context.gym.brand,
           ),
         ],
       ),
@@ -478,7 +478,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
       child: ElevatedButton(
         onPressed: _savePreferences,
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.acento,
+          backgroundColor: context.gym.xpInk,
           foregroundColor: Colors.white,
           padding: const EdgeInsets.symmetric(vertical: 16),
           shape: RoundedRectangleBorder(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/emotional_text_styles.dart';
 import 'package:gymaster/features/setting/presentation/cubits/onboarding/onboarding_cubit.dart';
 import 'package:gymaster/features/setting/data/models/user_motivation.dart';
@@ -23,15 +23,15 @@ class OnboardingNotificacionesPage extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  AppColors.acento.withValues(alpha: 0.1),
-                  AppColors.primario.withValues(alpha: 0.1),
+                  context.gym.xpInk.withValues(alpha: 0.1),
+                  context.gym.brand.withValues(alpha: 0.1),
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
-                color: AppColors.acento.withValues(alpha: 0.2),
+                color: context.gym.xpInk.withValues(alpha: 0.2),
                 width: 1,
               ),
             ),
@@ -51,7 +51,7 @@ class OnboardingNotificacionesPage extends StatelessWidget {
                 Text(
                   'Personaliza tus recordatorios para mantenerte motivado 🔔',
                   style: EstilosTextoEmocional.amigable.copyWith(
-                    color: AppColors.textoPrincipal,
+                    color: context.gym.ink,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -63,23 +63,23 @@ class OnboardingNotificacionesPage extends StatelessWidget {
             child: Column(
               children: [
                 Card(
-                  color: AppColors.fondoSecundario,
+                  color: context.gym.surface2,
                   child: ListTile(
-                    leading: const Icon(
+                    leading: Icon(
                       IconsaxPlusLinear.notification,
-                      color: AppColors.acento,
+                      color: context.gym.xpInk,
                     ),
-                    title: const Text(
+                    title: Text(
                       'Recordatorios activados',
                       style: TextStyle(
-                        color: AppColors.textoPrincipal,
+                        color: context.gym.ink,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     subtitle: Text(
                       'Te enviaremos motivación cuando la necesites',
                       style: TextStyle(
-                        color: AppColors.textoSecundario,
+                        color: context.gym.muted,
                       ),
                     ),
                     trailing: Switch(
@@ -87,24 +87,24 @@ class OnboardingNotificacionesPage extends StatelessWidget {
                       onChanged: (value) {
                         // TODO: Implementar toggle de notificaciones
                       },
-                      activeThumbColor: AppColors.acento,
+                      activeThumbColor: context.gym.xpInk,
                     ),
                   ),
                 ),
                 const SizedBox(height: 20),
                 Card(
-                  color: AppColors.fondoSecundario,
+                  color: context.gym.surface2,
                   child: Padding(
                     padding: const EdgeInsets.all(16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           'Tono de motivación',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
-                            color: AppColors.textoPrincipal,
+                            color: context.gym.ink,
                           ),
                         ),
                         const SizedBox(height: 10),
@@ -130,12 +130,13 @@ class OnboardingNotificacionesPage extends StatelessWidget {
                                   );
                                 }
                               },
-                              selectedColor: AppColors.acento,
-                              backgroundColor: AppColors.fondoPrincipal,
+                              selectedColor: context.gym.xpInk,
+                              backgroundColor:
+                                  Theme.of(context).scaffoldBackgroundColor,
                               labelStyle: TextStyle(
                                 color: tone == MotivationTone.energetico
                                     ? Colors.white
-                                    : AppColors.textoPrincipal,
+                                    : context.gym.ink,
                               ),
                             );
                           }).toList(),
@@ -148,17 +149,17 @@ class OnboardingNotificacionesPage extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: AppColors.acento.withValues(alpha: 0.1),
+                    color: context.gym.xpInk.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
-                      color: AppColors.acento.withValues(alpha: 0.3),
+                      color: context.gym.xpInk.withValues(alpha: 0.3),
                     ),
                   ),
                   child: Row(
                     children: [
-                      const Icon(
+                      Icon(
                         IconsaxPlusBold.timer_1,
-                        color: AppColors.acento,
+                        color: context.gym.xpInk,
                         size: 24,
                       ),
                       const SizedBox(width: 12),
@@ -167,7 +168,7 @@ class OnboardingNotificacionesPage extends StatelessWidget {
                           'Te enviaremos recordatorios en tus horarios preferidos para mantenerte motivado',
                           style: EstilosTextoEmocional.amigable.copyWith(
                             fontSize: 13,
-                            color: AppColors.textoPrincipal,
+                            color: context.gym.ink,
                           ),
                         ),
                       ),

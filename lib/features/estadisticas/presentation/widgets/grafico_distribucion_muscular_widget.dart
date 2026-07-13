@@ -1,6 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
 import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/features/estadisticas/domain/entities/distribucion_muscular.dart';
@@ -29,19 +29,21 @@ class _GraficoDistribucionMuscularWidgetState
     extends State<GraficoDistribucionMuscularWidget> {
   int? _touchedIndex;
 
+  // Paleta candy categórica para las porciones del gráfico.
   static const List<Color> _coloresMusculares = [
-    AppColors.primario,
-    AppColors.acento,
-    AppColors.secundario,
-    AppColors.exito,
-    AppColors.error,
-    AppColors.advertencia,
-    AppColors.informacion,
-    AppColors.primarioCalido,
+    Color(0xFF3FC55F), // verde marca
+    Color(0xFFFFC531), // dorado XP
+    Color(0xFF38B6FF), // azul info
+    Color(0xFFFF6B4A), // coral
+    Color(0xFF7B61FF), // plum
+    Color(0xFF2A9D48), // verde oscuro
+    Color(0xFFE0A800), // dorado oscuro
+    Color(0xFF54BEFF), // azul claro
   ];
 
   @override
   Widget build(BuildContext context) {
+    final c = context.gym;
     if (widget.distribucion.isEmpty) {
       return _buildEmptyState();
     }
@@ -50,10 +52,9 @@ class _GraficoDistribucionMuscularWidgetState
       child: Container(
         padding: Espaciado.rellenoMd,
         decoration: BoxDecoration(
-          color: AppColors.fondoTarjeta,
+          color: c.surface,
           borderRadius: BorderRadius.circular(Espaciado.md),
-          border: Border.all(
-              color: AppColors.borde.withValues(alpha: 0.2), width: 1),
+          border: Border.all(color: c.line, width: 1),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,7 +64,7 @@ class _GraficoDistribucionMuscularWidgetState
               style: TipografiaGyMaster.textoPrincipal.copyWith(
                 fontSize: TipografiaGyMaster.tamanoLg,
                 fontWeight: TipografiaGyMaster.pesoSemiBold,
-                color: AppColors.textoPrincipal,
+                color: c.ink,
               ),
             ),
             SizedBox(height: Espaciado.md),
@@ -127,7 +128,7 @@ class _GraficoDistribucionMuscularWidgetState
         titleStyle: TipografiaGyMaster.textoPrincipal.copyWith(
           fontSize: fontSize,
           fontWeight: TipografiaGyMaster.pesoSemiBold,
-          color: AppColors.fondoTarjeta,
+          color: Colors.white,
         ),
         badgeWidget:
             isTouched ? _buildBadge(musculo.nombreMusculo, widgetSize) : null,
@@ -137,20 +138,20 @@ class _GraficoDistribucionMuscularWidgetState
   }
 
   Widget _buildBadge(String nombreMusculo, double size) {
+    final c = context.gym;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: AppColors.fondoTarjeta,
+        color: c.surface,
         borderRadius: BorderRadius.circular(8),
-        border:
-            Border.all(color: AppColors.borde.withValues(alpha: 0.3), width: 1),
+        border: Border.all(color: c.line, width: 1),
       ),
       child: Text(
         nombreMusculo,
         style: TipografiaGyMaster.textoPrincipal.copyWith(
           fontSize: TipografiaGyMaster.tamanoXs,
           fontWeight: TipografiaGyMaster.pesoSemiBold,
-          color: AppColors.textoPrincipal,
+          color: c.ink,
         ),
       ),
     );
@@ -191,6 +192,7 @@ class _GraficoDistribucionMuscularWidgetState
     String categoriaIntensidad,
     Color color,
   ) {
+    final c = context.gym;
     return Row(
       children: [
         Container(
@@ -212,7 +214,7 @@ class _GraficoDistribucionMuscularWidgetState
                 style: TipografiaGyMaster.textoPrincipal.copyWith(
                   fontSize: TipografiaGyMaster.tamanoSm,
                   fontWeight: TipografiaGyMaster.pesoSemiBold,
-                  color: AppColors.textoPrincipal,
+                  color: c.ink,
                 ),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
@@ -221,7 +223,7 @@ class _GraficoDistribucionMuscularWidgetState
                 '$volumenFormateado • $categoriaIntensidad',
                 style: TipografiaGyMaster.textoSecundario.copyWith(
                   fontSize: TipografiaGyMaster.tamanoXs,
-                  color: AppColors.textoSecundario,
+                  color: c.muted,
                 ),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
@@ -234,13 +236,13 @@ class _GraficoDistribucionMuscularWidgetState
   }
 
   Widget _buildEmptyState() {
+    final c = context.gym;
     return Container(
       padding: Espaciado.rellenoXl,
       decoration: BoxDecoration(
-        color: AppColors.fondoTarjeta,
+        color: c.surface,
         borderRadius: BorderRadius.circular(Espaciado.md),
-        border:
-            Border.all(color: AppColors.borde.withValues(alpha: 0.2), width: 1),
+        border: Border.all(color: c.line, width: 1),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -248,7 +250,7 @@ class _GraficoDistribucionMuscularWidgetState
           Icon(
             Icons.pie_chart_outline_outlined,
             size: 64,
-            color: AppColors.textoTerciario,
+            color: c.faint,
           ),
           SizedBox(height: Espaciado.md),
           Text(
@@ -256,7 +258,7 @@ class _GraficoDistribucionMuscularWidgetState
             style: TipografiaGyMaster.textoPrincipal.copyWith(
               fontSize: TipografiaGyMaster.tamanoLg,
               fontWeight: TipografiaGyMaster.pesoSemiBold,
-              color: AppColors.textoSecundario,
+              color: c.muted,
             ),
           ),
           SizedBox(height: Espaciado.xs),
@@ -264,7 +266,7 @@ class _GraficoDistribucionMuscularWidgetState
             'Entrena diferentes grupos musculares para ver la distribución',
             style: TipografiaGyMaster.textoSecundario.copyWith(
               fontSize: TipografiaGyMaster.tamanoSm,
-              color: AppColors.textoTerciario,
+              color: c.faint,
             ),
             textAlign: TextAlign.center,
           ),

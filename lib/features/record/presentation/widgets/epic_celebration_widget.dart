@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/emotional_text_styles.dart';
 
 /// Sistema de celebraciones épicas para hitos importantes
@@ -122,9 +122,9 @@ class _EpicCelebrationWidgetState extends State<EpicCelebrationWidget>
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              AppColors.acento.withValues(alpha: 0.95),
-              AppColors.acento.withValues(alpha: 0.95),
-              AppColors.acento.withValues(alpha: 0.95),
+              context.gym.xpInk.withValues(alpha: 0.95),
+              context.gym.xpInk.withValues(alpha: 0.95),
+              context.gym.xpInk.withValues(alpha: 0.95),
             ],
           ),
         ),
@@ -182,11 +182,11 @@ class _EpicCelebrationWidgetState extends State<EpicCelebrationWidget>
 
   Color _getConfettiColor(int index) {
     final colors = [
-      AppColors.acento,
-      AppColors.exito,
-      AppColors.acento,
-      AppColors.secundarioClaro,
-      AppColors.acento,
+      context.gym.xpInk,
+      context.gym.brand,
+      context.gym.xpInk,
+      context.gym.info,
+      context.gym.xpInk,
     ];
     return colors[index % colors.length];
   }
@@ -241,7 +241,7 @@ class _EpicCelebrationWidgetState extends State<EpicCelebrationWidget>
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.acento.withValues(alpha: 0.5),
+                  color: context.gym.xpInk.withValues(alpha: 0.5),
                   blurRadius: 20,
                   spreadRadius: 5,
                 ),
@@ -386,7 +386,7 @@ class _EpicCelebrationWidgetState extends State<EpicCelebrationWidget>
             onPressed: widget.onDismiss,
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.white,
-              foregroundColor: AppColors.acento,
+              foregroundColor: context.gym.xpInk,
               padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30),
@@ -403,7 +403,7 @@ class _EpicCelebrationWidgetState extends State<EpicCelebrationWidget>
                   style: EstilosTextoEmocional.motivacional.copyWith(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.acento,
+                    color: context.gym.xpInk,
                   ),
                 ),
               ],

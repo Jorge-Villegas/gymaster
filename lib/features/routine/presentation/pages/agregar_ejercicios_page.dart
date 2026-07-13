@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/core/theme/emotional_text_styles.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/features/routine/presentation/cubits/musculo/musculo_cubit.dart';
 import 'package:gymaster/shared/utils/string_utils.dart';
@@ -73,14 +73,14 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
     context.read<MusculoCubit>().getAllMusculo();
 
     return Scaffold(
-      backgroundColor: AppColors.fondoPrincipal,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              AppColors.fondoPrincipal,
-              AppColors.fondoPrincipal,
-              AppColors.fondoPrincipal.withValues(alpha: 0.8),
+              Theme.of(context).scaffoldBackgroundColor,
+              Theme.of(context).scaffoldBackgroundColor,
+              Theme.of(context).scaffoldBackgroundColor.withValues(alpha: 0.8),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -142,20 +142,20 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: AppColors.acento.withValues(alpha: 0.1),
+                color: context.gym.xpInk.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Icon(
                 Icons.fitness_center_rounded,
                 size: 80,
-                color: AppColors.acento,
+                color: context.gym.xpInk,
               ),
             ),
             const SizedBox(height: 24),
             Text(
               '¡No te preocupes!',
               style: EstilosTextoEmocional.aliento.copyWith(
-                color: AppColors.primario,
+                color: context.gym.brand,
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
@@ -167,7 +167,7 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
                 mensaje,
                 textAlign: TextAlign.center,
                 style: EstilosTextoEmocional.amigable.copyWith(
-                  color: AppColors.textoTerciario,
+                  color: context.gym.faint,
                   fontSize: 16,
                 ),
               ),
@@ -178,7 +178,7 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
               icono: Icons.refresh_rounded,
               tamano: TamanoBotonChiclet.grande,
               estilo: EstiloBotonChiclet.relleno,
-              colorFondo: AppColors.acento,
+              colorFondo: context.gym.xpInk,
               onPressed: () => context.read<MusculoCubit>().getAllMusculo(),
             ),
           ],
@@ -190,8 +190,8 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
   /// Construye el efecto de carga shimmer con diseño emocional
   Widget _buildShimmerLoadingEffect() {
     return Shimmer.fromColors(
-      baseColor: AppColors.fondoPrincipal,
-      highlightColor: AppColors.fondoPrincipal,
+      baseColor: context.gym.surface2,
+      highlightColor: context.gym.surface2,
       child: ListView.builder(
         itemCount: 8,
         padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -199,11 +199,11 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
           return Container(
             margin: const EdgeInsets.symmetric(vertical: 6.0),
             decoration: BoxDecoration(
-              color: AppColors.fondoPrincipal,
+              color: context.gym.surface2,
               borderRadius: BorderRadius.circular(16),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.primario.withValues(alpha: 0.05),
+                  color: context.gym.brand.withValues(alpha: 0.05),
                   blurRadius: 8,
                   offset: const Offset(0, 2),
                 ),
@@ -218,7 +218,7 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
                     width: 64,
                     height: 64,
                     decoration: BoxDecoration(
-                      color: AppColors.fondoPrincipal,
+                      color: context.gym.surface2,
                       borderRadius: BorderRadius.circular(16),
                     ),
                   ),
@@ -232,7 +232,7 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
                           height: 18.0,
                           width: double.infinity,
                           decoration: BoxDecoration(
-                            color: AppColors.fondoPrincipal,
+                            color: context.gym.surface2,
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
@@ -241,7 +241,7 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
                           height: 14.0,
                           width: 150,
                           decoration: BoxDecoration(
-                            color: AppColors.fondoPrincipal,
+                            color: context.gym.surface2,
                             borderRadius: BorderRadius.circular(6),
                           ),
                         ),
@@ -253,7 +253,7 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
                     width: 42,
                     height: 42,
                     decoration: BoxDecoration(
-                      color: AppColors.fondoPrincipal,
+                      color: context.gym.surface2,
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
@@ -282,11 +282,11 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
             child: Container(
               margin: const EdgeInsets.symmetric(vertical: 6.0),
               decoration: BoxDecoration(
-                color: AppColors.fondoPrincipal,
+                color: context.gym.surface,
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.primario.withValues(alpha: 0.08),
+                    color: context.gym.brand.withValues(alpha: 0.08),
                     blurRadius: 12,
                     offset: const Offset(0, 4),
                   ),
@@ -313,7 +313,7 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
                             boxShadow: [
                               BoxShadow(
                                 color:
-                                    AppColors.primario.withValues(alpha: 0.1),
+                                    context.gym.brand.withValues(alpha: 0.1),
                                 blurRadius: 8,
                                 offset: const Offset(0, 2),
                               ),
@@ -328,7 +328,7 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
                                       musculo.imagenDirecion,
                                       fit: BoxFit.contain,
                                       colorFilter: ColorFilter.mode(
-                                        AppColors.primario,
+                                        context.gym.brand,
                                         BlendMode.srcIn,
                                       ),
                                     ),
@@ -352,7 +352,7 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
                                 style: TextStyle(
                                   fontWeight: TipografiaGyMaster.pesoSemiBold,
                                   fontSize: TipografiaGyMaster.tamanoLg,
-                                  color: AppColors.primarioCalido,
+                                  color: context.gym.brand,
                                   letterSpacing: 1.2,
                                   height: 1.1,
                                 ),
@@ -361,7 +361,7 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
                               Text(
                                 '¡Vamos a entrenar este grupo!',
                                 style: EstilosTextoEmocional.amigable.copyWith(
-                                  color: AppColors.textoTerciario,
+                                  color: context.gym.faint,
                                   fontSize: 14,
                                 ),
                               ),
@@ -372,13 +372,13 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
                         Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: AppColors.acento.withValues(alpha: 0.15),
+                            color: context.gym.xpInk.withValues(alpha: 0.15),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Icon(
                             Icons.arrow_forward_ios_rounded,
                             size: 18,
-                            color: AppColors.acento,
+                            color: context.gym.xpInk,
                           ),
                         ),
                       ],

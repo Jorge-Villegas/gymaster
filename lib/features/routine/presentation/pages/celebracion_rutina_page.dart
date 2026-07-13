@@ -8,7 +8,7 @@ import 'package:lottie/lottie.dart';
 import '../../../../core/generated/assets.gen.dart';
 import '../../../../core/services/emotional_message_service.dart';
 import '../../../../core/theme/emotional_text_styles.dart';
-import '../../../../core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import '../../../record/presentation/cubit/record_cubit.dart';
 import '../../../record/presentation/cubit/record_state.dart';
 import '../cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
@@ -159,7 +159,7 @@ class _CelebracionRutinaPageState extends State<CelebracionRutinaPage>
     return PopScope(
       canPop: false, // Prevenir navegación hacia atrás
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: BlocListener<RecordCubit, RecordState>(
           listener: (context, state) {
             if (state is RecordLoaded) {
@@ -295,7 +295,7 @@ class _CelebracionRutinaPageState extends State<CelebracionRutinaPage>
           subtituloContextual,
           style: EstilosTextoEmocional.aliento.copyWith(
             fontSize: esMovil ? 16 : 18,
-            color: Colors.grey[800],
+            color: context.gym.muted,
           ),
           textAlign: TextAlign.center,
         ),
@@ -310,10 +310,10 @@ class _CelebracionRutinaPageState extends State<CelebracionRutinaPage>
         vertical: esMovil ? 12 : 20,
       ),
       decoration: BoxDecoration(
-        color: Colors.grey[100],
+        color: context.gym.surface2,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: Colors.grey[300]!,
+          color: context.gym.line,
           width: 1,
         ),
       ),
@@ -325,7 +325,7 @@ class _CelebracionRutinaPageState extends State<CelebracionRutinaPage>
               titulo: 'Ejercicios',
               textoCuerpo: widget.estadoCompletado.totalEjercicios.toString(),
               icono: Icons.fitness_center,
-              colorFondo: AppColors.acento,
+              colorFondo: context.gym.xpInk,
             ),
           ),
           SizedBox(width: esMovil ? 8 : 16),
@@ -334,7 +334,7 @@ class _CelebracionRutinaPageState extends State<CelebracionRutinaPage>
               titulo: 'Series',
               textoCuerpo: widget.estadoCompletado.totalSeries.toString(),
               icono: Icons.repeat,
-              colorFondo: AppColors.exito,
+              colorFondo: context.gym.brand,
             ),
           ),
           SizedBox(width: esMovil ? 8 : 16),
@@ -344,7 +344,7 @@ class _CelebracionRutinaPageState extends State<CelebracionRutinaPage>
               textoCuerpo:
                   _obtenerTiempoFormateado(widget.estadoCompletado.tiempoTotal),
               icono: Icons.timer,
-              colorFondo: AppColors.acento,
+              colorFondo: context.gym.xpInk,
             ),
           ),
         ],
@@ -362,10 +362,10 @@ class _CelebracionRutinaPageState extends State<CelebracionRutinaPage>
           context.go('/'); // Volver al inicio
         },
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.acento,
+          backgroundColor: context.gym.xpInk,
           foregroundColor: Colors.white,
           elevation: 8,
-          shadowColor: AppColors.acento.withValues(alpha: 0.4),
+          shadowColor: context.gym.xpInk.withValues(alpha: 0.4),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/emotional_text_styles.dart';
 import 'package:gymaster/core/services/emotional_message_service.dart';
 
@@ -73,13 +73,13 @@ class _ProgressVisualizationWidgetState
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    AppColors.acento.withValues(alpha: 0.1),
-                    AppColors.exito.withValues(alpha: 0.1),
+                    context.gym.xpInk.withValues(alpha: 0.1),
+                    context.gym.brand.withValues(alpha: 0.1),
                   ],
                 ),
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
-                  color: AppColors.acento.withValues(alpha: 0.3),
+                  color: context.gym.xpInk.withValues(alpha: 0.3),
                   width: 2,
                 ),
               ),
@@ -108,12 +108,12 @@ class _ProgressVisualizationWidgetState
         Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: AppColors.acento.withValues(alpha: 0.2),
+            color: context.gym.xpInk.withValues(alpha: 0.2),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Icon(
             Icons.analytics,
-            color: AppColors.acento,
+            color: context.gym.xpInk,
             size: 24,
           ),
         ),
@@ -158,25 +158,25 @@ class _ProgressVisualizationWidgetState
         _buildStatCard(
           'Total Rutinas',
           '${widget.totalRutinasCompletadas}',
-          AppColors.acento,
+          context.gym.xpInk,
           Icons.fitness_center,
         ),
         _buildStatCard(
           'Esta Semana',
           '${widget.rutinasEstaSemana}',
-          AppColors.exito,
+          context.gym.brand,
           Icons.date_range,
         ),
         _buildStatCard(
           'Este Mes',
           '${widget.rutinasEsteMes}',
-          AppColors.acento,
+          context.gym.xpInk,
           Icons.calendar_month,
         ),
         _buildStatCard(
           'Racha Actual',
           '${widget.rachaActual} días',
-          AppColors.acento,
+          context.gym.xpInk,
           Icons.local_fire_department,
         ),
       ],
@@ -225,7 +225,7 @@ class _ProgressVisualizationWidgetState
           children: [
             Icon(
               Icons.timeline,
-              color: AppColors.exito,
+              color: context.gym.brand,
               size: 20,
             ),
             const SizedBox(width: 8),
@@ -270,13 +270,13 @@ class _ProgressVisualizationWidgetState
             height: 40,
             decoration: BoxDecoration(
               color: achieved
-                  ? AppColors.exito.withValues(alpha: 0.2)
-                  : AppColors.secundarioClaro.withValues(alpha: 0.1),
+                  ? context.gym.brand.withValues(alpha: 0.2)
+                  : context.gym.info.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
                 color: achieved
-                    ? AppColors.exito
-                    : AppColors.secundarioClaro.withValues(alpha: 0.3),
+                    ? context.gym.brand
+                    : context.gym.info.withValues(alpha: 0.3),
                 width: 2,
               ),
             ),
@@ -297,7 +297,7 @@ class _ProgressVisualizationWidgetState
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: achieved
-                            ? AppColors.exito
+                            ? context.gym.brand
                             : Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
                 ),
@@ -313,7 +313,7 @@ class _ProgressVisualizationWidgetState
           if (achieved)
             Icon(
               Icons.check_circle,
-              color: AppColors.exito,
+              color: context.gym.brand,
               size: 20,
             ),
         ],
@@ -327,8 +327,8 @@ class _ProgressVisualizationWidgetState
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            AppColors.acento.withValues(alpha: 0.1),
-            AppColors.acento.withValues(alpha: 0.1),
+            context.gym.xpInk.withValues(alpha: 0.1),
+            context.gym.xpInk.withValues(alpha: 0.1),
           ],
         ),
         borderRadius: BorderRadius.circular(16),
@@ -339,7 +339,7 @@ class _ProgressVisualizationWidgetState
             children: [
               Icon(
                 Icons.favorite,
-                color: AppColors.acento,
+                color: context.gym.xpInk,
                 size: 20,
               ),
               const SizedBox(width: 8),
@@ -358,7 +358,7 @@ class _ProgressVisualizationWidgetState
                 widget.totalRutinasCompletadas),
             style: EstilosTextoEmocional.logro.copyWith(
               fontSize: 18,
-              color: AppColors.acento,
+              color: context.gym.xpInk,
             ),
             textAlign: TextAlign.center,
           ),

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/emotional_text_styles.dart';
 import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/features/exercise/domain/entities/exercise.dart';
@@ -59,7 +60,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.fondoPrincipal,
+      backgroundColor: context.gym.bg,
       body: SafeArea(
         child: Column(
           children: [
@@ -300,7 +301,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                 itemBuilder: (context, index) => FadeInUp(
                   duration: const Duration(milliseconds: 400),
                   delay: Duration(milliseconds: index * 100),
-                  child: _buildShimmerCard(),
+                  child: _buildShimmerCard(context),
                 ),
               ),
             ),
@@ -388,23 +389,18 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
     );
   }
 
-  Widget _buildShimmerCard() {
+  Widget _buildShimmerCard(BuildContext context) {
+    final c = context.gym;
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: Shimmer.fromColors(
-        baseColor: Colors.grey[300]!,
-        highlightColor: Colors.grey[100]!,
+        baseColor: c.surface2,
+        highlightColor: c.surface,
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: c.surface,
             borderRadius: BorderRadius.circular(16),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withValues(alpha: 0.1),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-              ),
-            ],
+            border: Border.all(color: c.line),
           ),
           child: Padding(
             padding: const EdgeInsets.all(16),
@@ -461,14 +457,16 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
 
   /// Tarjeta de ejercicio mejorada siguiendo Ley de Fitts y Proximidad
   Widget _buildExerciseCard(BuildContext context, Exercise exercise) {
+    final c = context.gym;
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: c.surface,
         borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: c.line),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primario.withValues(alpha: 0.08),
+            color: c.brand.withValues(alpha: 0.08),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -523,7 +521,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                           fontWeight: TipografiaGyMaster.pesoRegular,
                           fontSize: TipografiaGyMaster.tamanoMd,
                           height: 1.1,
-                          color: AppColors.textoPrincipal,
+                          color: c.ink,
                         ),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,

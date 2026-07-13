@@ -132,7 +132,7 @@ class _Phase3EmotionalIntegrationWidgetState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.fondoPrincipal,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Column(
         children: [
           _buildHeader(),

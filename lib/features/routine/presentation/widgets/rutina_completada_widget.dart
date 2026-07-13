@@ -8,6 +8,7 @@ import 'package:lottie/lottie.dart';
 import 'package:gymaster/core/generated/assets.gen.dart';
 import 'package:gymaster/core/theme/emotional_text_styles.dart';
 import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/services/emotional_message_service.dart';
 import 'package:gymaster/shared/utils/haptic_feedback_helper.dart';
 import 'package:gymaster/shared/utils/audio_feedback_helper.dart';
@@ -211,7 +212,7 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
               borderRadius: BorderRadius.circular(heroSize / 2),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.acento.withValues(alpha: 0.4),
+                  color: context.gym.xpInk.withValues(alpha: 0.4),
                   blurRadius: 30,
                   spreadRadius: 10,
                 ),
@@ -271,14 +272,14 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                AppColors.acento.withValues(alpha: 0.9),
-                AppColors.acento.withValues(alpha: 0.8),
+                context.gym.xpInk.withValues(alpha: 0.9),
+                context.gym.xpInk.withValues(alpha: 0.8),
               ],
             ),
             borderRadius: BorderRadius.circular(24),
             boxShadow: [
               BoxShadow(
-                color: AppColors.acento.withValues(alpha: 0.3),
+                color: context.gym.xpInk.withValues(alpha: 0.3),
                 blurRadius: 12,
                 offset: const Offset(0, 4),
               ),
@@ -326,7 +327,7 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
             subtituloContextual,
             style: EstilosTextoEmocional.aliento.copyWith(
               fontSize: 16,
-              color: AppColors.exito,
+              color: context.gym.brand,
               fontWeight: FontWeight.w600,
             ),
             textAlign: TextAlign.center,
@@ -336,7 +337,7 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
             MensajesEmocionalesService.obtenerEstadisticasContext(
                 _totalRutinasCompletadas),
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: AppColors.acento,
+                  color: context.gym.xpInk,
                   fontWeight: FontWeight.w500,
                 ),
             textAlign: TextAlign.center,
@@ -382,7 +383,7 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
                     titulo: 'Ejercicios',
                     textoCuerpo: widget.state.totalEjercicios.toString(),
                     icono: Icons.fitness_center,
-                    colorFondo: AppColors.acento,
+                    colorFondo: context.gym.xpInk,
                   ),
                 ),
                 // Card de Completado
@@ -393,7 +394,7 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
                     titulo: 'Tiempo',
                     textoCuerpo: _formatearTiempo(widget.state.tiempoTotal),
                     icono: Icons.timer,
-                    colorFondo: AppColors.exito,
+                    colorFondo: context.gym.brand,
                   ),
                 ),
               ],
@@ -480,7 +481,7 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
         scale: _scaleAnimation,
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.9),
+            color: context.gym.surface.withValues(alpha: 0.9),
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(

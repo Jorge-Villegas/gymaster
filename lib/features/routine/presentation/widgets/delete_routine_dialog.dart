@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/shared/utils/haptic_feedback_helper.dart';
 import 'package:gymaster/features/routine/presentation/cubits/rutina/routine_cubit.dart';
 
@@ -49,7 +49,7 @@ class _DeleteRoutineDialogState extends State<DeleteRoutineDialog> {
           children: [
             Icon(
               IconsaxPlusLinear.trash,
-              color: AppColors.acento,
+              color: context.gym.xpInk,
               size: 24,
             ),
             const SizedBox(width: 12),
@@ -70,7 +70,7 @@ class _DeleteRoutineDialogState extends State<DeleteRoutineDialog> {
               text: TextSpan(
                 style: TextStyle(
                   fontSize: 16,
-                  color: AppColors.textoTerciario,
+                  color: context.gym.faint,
                 ),
                 children: [
                   const TextSpan(
@@ -80,7 +80,7 @@ class _DeleteRoutineDialogState extends State<DeleteRoutineDialog> {
                     text: '"${widget.routineName}"',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: AppColors.acento,
+                      color: context.gym.xpInk,
                     ),
                   ),
                   const TextSpan(
@@ -94,10 +94,10 @@ class _DeleteRoutineDialogState extends State<DeleteRoutineDialog> {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: AppColors.secundarioClaro.withValues(alpha: 0.1),
+                color: context.gym.info.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(
-                  color: AppColors.secundarioClaro.withValues(alpha: 0.3),
+                  color: context.gym.info.withValues(alpha: 0.3),
                 ),
               ),
               child: Row(
@@ -105,7 +105,7 @@ class _DeleteRoutineDialogState extends State<DeleteRoutineDialog> {
                   Icon(
                     IconsaxPlusLinear.info_circle,
                     size: 16,
-                    color: AppColors.secundarioClaro,
+                    color: context.gym.info,
                   ),
                   const SizedBox(width: 8),
                   Expanded(
@@ -113,7 +113,7 @@ class _DeleteRoutineDialogState extends State<DeleteRoutineDialog> {
                       'Tu progreso se mantendrá seguro',
                       style: TextStyle(
                         fontSize: 12,
-                        color: AppColors.secundarioClaro,
+                        color: context.gym.info,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -129,14 +129,14 @@ class _DeleteRoutineDialogState extends State<DeleteRoutineDialog> {
             child: Text(
               'Cancelar',
               style: TextStyle(
-                color: AppColors.textoTerciario,
+                color: context.gym.faint,
               ),
             ),
           ),
           ElevatedButton(
             onPressed: _isDeleting ? null : _handleDeleteConfirmed,
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.acento,
+              backgroundColor: context.gym.xpInk,
               foregroundColor: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -184,7 +184,7 @@ class _DeleteRoutineDialogState extends State<DeleteRoutineDialog> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('Rutina "${widget.routineName}" eliminada correctamente'),
-        backgroundColor: AppColors.exito,
+        backgroundColor: context.gym.brand,
         action: SnackBarAction(
           label: 'Deshacer',
           textColor: Colors.white,
@@ -210,7 +210,7 @@ class _DeleteRoutineDialogState extends State<DeleteRoutineDialog> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(error),
-        backgroundColor: AppColors.acento,
+        backgroundColor: context.gym.xpInk,
       ),
     );
   }

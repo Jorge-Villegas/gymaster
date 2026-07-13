@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/theme/emotional_text_styles.dart';
 import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
 import 'package:gymaster/features/routine/presentation/cubits/rutina/routine_cubit.dart';
@@ -22,9 +23,9 @@ class ListaRutinasPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.fondoPrincipal,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
-        color: AppColors.fondoPrincipal,
+        color: context.gym.bg,
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
@@ -335,8 +336,8 @@ class ListaRutinasPage extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     gradient: LinearGradient(
                                       colors: [
-                                        Colors.white,
-                                        AppColors.fondoPrincipal,
+                                        context.gym.surface,
+                                        context.gym.surface2,
                                       ],
                                       begin: Alignment.topLeft,
                                       end: Alignment.bottomRight,
@@ -465,7 +466,7 @@ class ListaRutinasPage extends StatelessWidget {
                         textAlign: TextAlign.center,
                         style: EstilosTextoEmocional.amigable.copyWith(
                           fontSize: 14,
-                          color: AppColors.textoPrincipal,
+                          color: context.gym.ink,
                           height: 1.4,
                         ),
                       ),

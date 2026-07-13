@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/emotional_text_styles.dart';
 import 'package:gymaster/features/setting/presentation/cubits/onboarding/onboarding_state.dart';
 import 'package:gymaster/features/setting/presentation/cubits/onboarding/onboarding_cubit.dart';
@@ -47,7 +47,7 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.fondoPrincipal,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: MultiBlocListener(
         listeners: [
           BlocListener<OnboardingCubit, OnboardingState>(
@@ -59,7 +59,7 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(state.message),
-                    backgroundColor: AppColors.error,
+                    backgroundColor: context.gym.danger,
                   ),
                 );
               }
@@ -73,7 +73,7 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(state.mensaje),
-                    backgroundColor: AppColors.error,
+                    backgroundColor: context.gym.danger,
                   ),
                 );
               }
@@ -146,15 +146,15 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  AppColors.acento.withValues(alpha: 0.1),
-                  AppColors.primario.withValues(alpha: 0.1),
+                  context.gym.xpInk.withValues(alpha: 0.1),
+                  context.gym.brand.withValues(alpha: 0.1),
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
-                color: AppColors.acento.withValues(alpha: 0.2),
+                color: context.gym.xpInk.withValues(alpha: 0.2),
                 width: 1,
               ),
             ),
@@ -174,7 +174,7 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
                 Text(
                   'Selecciona todo lo que te inspire 💪',
                   style: EstilosTextoEmocional.amigable.copyWith(
-                    color: AppColors.textoPrincipal,
+                    color: context.gym.ink,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -202,6 +202,7 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
                     }
 
                     return _buildSelectableCard(
+                      context: context,
                       text: motivation,
                       isSelected: isSelected,
                       onTap: () {
@@ -270,6 +271,7 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
                     }
 
                     return _buildSelectableCard(
+                      context: context,
                       text: challenge,
                       isSelected: isSelected,
                       onTap: () {
@@ -338,6 +340,7 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
                     }
 
                     return _buildSelectableCard(
+                      context: context,
                       text: feeling,
                       isSelected: isSelected,
                       onTap: () {
@@ -447,6 +450,7 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
   }
 
   Widget _buildSelectableCard({
+    required BuildContext context,
     required String text,
     required bool isSelected,
     required VoidCallback onTap,
@@ -457,10 +461,10 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.acento : AppColors.fondoSecundario,
+          color: isSelected ? context.gym.xpInk : context.gym.surface2,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isSelected ? AppColors.acento : AppColors.textoTerciario,
+            color: isSelected ? context.gym.xpInk : context.gym.faint,
             width: isSelected ? 2 : 1,
           ),
         ),
@@ -469,7 +473,7 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
             text,
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: isSelected ? Colors.white : Colors.black87,
+              color: isSelected ? Colors.white : context.gym.ink,
               fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
               fontSize: 12,
             ),
@@ -485,8 +489,8 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            AppColors.fondoPrincipal,
-            AppColors.acento.withValues(alpha: 0.05),
+            Theme.of(context).scaffoldBackgroundColor,
+            context.gym.xpInk.withValues(alpha: 0.05),
           ],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -498,7 +502,7 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.acento),
+                  border: Border.all(color: context.gym.xpInk),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: InkWell(
@@ -506,11 +510,11 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
                   borderRadius: BorderRadius.circular(12),
                   child: Container(
                     padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: const Center(
+                    child: Center(
                       child: Text(
                         '← Anterior',
                         style: TextStyle(
-                          color: AppColors.acento,
+                          color: context.gym.xpInk,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -546,7 +550,7 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
                         }
                       : null,
                   isEnabled: canContinue,
-                  color: AppColors.acento,
+                  color: context.gym.xpInk,
                 );
               },
             ),
@@ -559,9 +563,9 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
   void _crearPerfilCompleto(BuildContext context) {
     if (widget.datosCompletos == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Error: Datos incompletos'),
-          backgroundColor: AppColors.error,
+        SnackBar(
+          content: const Text('Error: Datos incompletos'),
+          backgroundColor: context.gym.danger,
         ),
       );
       return;

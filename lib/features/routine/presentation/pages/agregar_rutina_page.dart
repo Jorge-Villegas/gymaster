@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/generated/assets.gen.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/core/theme/emotional_text_styles.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/features/routine/domain/entities/routine.dart';
 import 'package:gymaster/features/routine/presentation/cubits/rutina/routine_cubit.dart';
 import 'package:gymaster/shared/utils/snackbar_helper.dart';
@@ -274,14 +274,14 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.fondoPrincipal,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              AppColors.fondoPrincipal,
-              Colors.white,
-              AppColors.fondoPrincipal.withValues(alpha: 0.8),
+              Theme.of(context).scaffoldBackgroundColor,
+              context.gym.surface,
+              Theme.of(context).scaffoldBackgroundColor.withValues(alpha: 0.8),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -336,11 +336,11 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
             // Botón de volver minimalista
             Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: context.gym.surface,
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.exito.withValues(alpha: 0.1),
+                    color: context.gym.brand.withValues(alpha: 0.1),
                     offset: const Offset(0, 2),
                     blurRadius: 8,
                   ),
@@ -353,7 +353,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                 },
                 icon: Icon(
                   Icons.arrow_back_ios_rounded,
-                  color: AppColors.exito,
+                  color: context.gym.brand,
                   size: 20,
                 ),
                 padding: const EdgeInsets.all(12),
@@ -369,7 +369,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                   Text(
                     '¡Crea tu rutina perfecta!',
                     style: EstilosTextoEmocional.energetico.copyWith(
-                      color: AppColors.primario,
+                      color: context.gym.brand,
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
@@ -380,7 +380,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                   Text(
                     'Personaliza cada detalle para tu éxito',
                     style: EstilosTextoEmocional.amigable.copyWith(
-                      color: AppColors.exito,
+                      color: context.gym.brand,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ),
@@ -604,7 +604,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
               Text(
                 'Elige tu color de poder',
                 style: EstilosTextoEmocional.energetico.copyWith(
-                  color: AppColors.primario,
+                  color: context.gym.brand,
                   fontSize: 18,
                 ),
               ),
@@ -614,7 +614,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
           Text(
             'Cada color transmite una energía única para tu entrenamiento',
             style: EstilosTextoEmocional.amigable.copyWith(
-              color: AppColors.textoTerciario,
+              color: context.gym.faint,
             ),
           ),
           const SizedBox(height: 20),
@@ -677,8 +677,8 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                           nombre,
                           style: TextStyle(
                             color: estaSeleccionado
-                                ? AppColors.primario
-                                : AppColors.textoTerciario,
+                                ? context.gym.brand
+                                : context.gym.faint,
                             fontSize: 11,
                             fontWeight: estaSeleccionado
                                 ? FontWeight.bold
@@ -721,7 +721,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
               Text(
                 'Selecciona el ícono perfecto',
                 style: EstilosTextoEmocional.energetico.copyWith(
-                  color: AppColors.primario,
+                  color: context.gym.brand,
                   fontSize: 18,
                 ),
               ),
@@ -731,7 +731,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
           Text(
             'Representa visualmente el tipo de entrenamiento que vas a hacer',
             style: EstilosTextoEmocional.amigable.copyWith(
-              color: AppColors.textoTerciario,
+              color: context.gym.faint,
             ),
           ),
           const SizedBox(height: 20),
@@ -749,22 +749,22 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
             switch (categoria) {
               case 'fuerza':
                 nombreCategoria = 'Fuerza & Músculo';
-                colorCategoria = AppColors.primarioCalido; // Usando colores HSB
+                colorCategoria = context.gym.brand; // Usando colores HSB
                 iconoCategoria = Icons.fitness_center_rounded;
                 break;
               case 'cardio':
                 nombreCategoria = 'Cardio & Resistencia';
-                colorCategoria = AppColors.secundarioClaro; // Azul suave HSB
+                colorCategoria = context.gym.info; // Azul suave HSB
                 iconoCategoria = Icons.directions_run_rounded;
                 break;
               case 'recovery':
                 nombreCategoria = 'Flexibilidad & Descanso';
-                colorCategoria = AppColors.exito; // Verde natural HSB
+                colorCategoria = context.gym.brand; // Verde natural HSB
                 iconoCategoria = Icons.self_improvement_rounded;
                 break;
               case 'general':
                 nombreCategoria = 'Ejercicio General';
-                colorCategoria = AppColors.acentoCalido; // Naranja dorado HSB
+                colorCategoria = context.gym.xpInk; // Naranja dorado HSB
                 iconoCategoria = Icons.sports_gymnastics_rounded;
                 break;
               default:
@@ -829,13 +829,13 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                                 decoration: BoxDecoration(
                                   color: estaSeleccionado
                                       ? colorSeleccionado
-                                      : Colors.grey.shade100,
+                                      : context.gym.surface2,
                                   borderRadius: BorderRadius.circular(14),
                                   border: estaSeleccionado
                                       ? Border.all(
                                           color: Colors.white, width: 2)
                                       : Border.all(
-                                          color: Colors.grey.shade300,
+                                          color: context.gym.line,
                                           width: 1),
                                   boxShadow: estaSeleccionado
                                       ? [
@@ -862,8 +862,8 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                                 nombreIcono,
                                 style: TextStyle(
                                   color: estaSeleccionado
-                                      ? AppColors.primario
-                                      : AppColors.textoTerciario,
+                                      ? context.gym.brand
+                                      : context.gym.faint,
                                   fontSize: 10,
                                   fontWeight: estaSeleccionado
                                       ? FontWeight.bold
@@ -926,7 +926,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
           return Icon(
             Icons.fitness_center_rounded,
             size: tamano,
-            color: estaSeleccionado ? Colors.white : Colors.grey.shade600,
+            color: estaSeleccionado ? Colors.white : context.gym.muted,
           );
         },
       );
@@ -937,7 +937,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
         width: tamano,
         height: tamano,
         colorFilter: ColorFilter.mode(
-          estaSeleccionado ? Colors.white : Colors.grey.shade600,
+          estaSeleccionado ? Colors.white : context.gym.muted,
           BlendMode.srcIn,
         ),
       );

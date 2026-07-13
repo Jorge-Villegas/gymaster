@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 
 /// Widget de confeti para celebraciones de logros en GyMaster
 /// Implementa efectos de partículas coloridas para feedback emocional positivo
@@ -313,7 +313,7 @@ class CelebracionConfeti extends StatelessWidget {
       cantidadParticulasConfeti:
           _obtenerCantidadParticulasConfetiPorTipo(tipoCelebracion),
       coloresParticulasConfeti:
-          _obtenerColoresParticulasConfetiPorTipo(tipoCelebracion),
+          _obtenerColoresParticulasConfetiPorTipo(context, tipoCelebracion),
       tamanoParticulaConfeti:
           _obtenerTamanoParticulaConfetiPorTipo(tipoCelebracion),
       velocidadParticulaConfeti:
@@ -352,21 +352,22 @@ class CelebracionConfeti extends StatelessWidget {
     }
   }
 
-  List<Color> _obtenerColoresParticulasConfetiPorTipo(TipoCelebracion tipo) {
+  List<Color> _obtenerColoresParticulasConfetiPorTipo(
+      BuildContext context, TipoCelebracion tipo) {
     switch (tipo) {
       case TipoCelebracion.rutinaCompletada:
         return [Colors.green, Colors.lightGreen, Colors.teal];
       case TipoCelebracion.recordPersonal:
-        return [AppColors.acento, AppColors.acentoCalido, AppColors.acento];
+        return [context.gym.xpInk, context.gym.xpInk, context.gym.xpInk];
       case TipoCelebracion.metaSemanal:
         return [Colors.blue, Colors.lightBlue, Colors.cyan];
       case TipoCelebracion.logroMensual:
         return [Colors.purple, Colors.deepPurple, Colors.indigo];
       case TipoCelebracion.subidaDeNivel:
         return [
-          AppColors.primarioCalido,
-          AppColors.acento,
-          AppColors.acentoCalido
+          context.gym.brand,
+          context.gym.xpInk,
+          context.gym.xpInk,
         ];
     }
   }

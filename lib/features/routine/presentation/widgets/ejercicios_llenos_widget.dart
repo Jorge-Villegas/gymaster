@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/emotional_text_styles.dart';
 import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/shared/utils/haptic_feedback_helper.dart';
@@ -113,7 +114,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(24),
           ),
-          backgroundColor: Colors.white,
+          backgroundColor: context.gym.surface,
           elevation: 0,
           content: Padding(
             padding: const EdgeInsets.all(16),
@@ -362,7 +363,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                       margin: const EdgeInsets.symmetric(vertical: 6),
                       child: CustomCard(
                         index: i,
-                        colorFondo: Colors.white,
+                        colorFondo: context.gym.surface,
                         ejercicioId: ejercicio.id,
                         estadoEjercicio: ejercicio.estado,
                         nombreEjercicio: ejercicio.nombre,

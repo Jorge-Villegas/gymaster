@@ -1,4 +1,3 @@
-import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/features/routine/presentation/cubits/rutina/routine_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,7 +20,7 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
   Widget build(BuildContext context) {
     BlocProvider.of<RoutineCubit>(context);
     return Scaffold(
-      backgroundColor: AppColors.fondoPrincipal,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         title: const Text('Perfil de usuario'),
       ),

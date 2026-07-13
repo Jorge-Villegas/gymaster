@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
 import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/features/estadisticas/domain/entities/recomendacion_muscular.dart';
@@ -17,17 +17,17 @@ class RecomendacionesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.gym;
     if (recomendaciones.isEmpty) {
-      return _buildBalanceadoState();
+      return _buildBalanceadoState(context);
     }
 
     return Container(
       padding: Espaciado.rellenoMd,
       decoration: BoxDecoration(
-        color: AppColors.fondoTarjeta,
+        color: c.surface,
         borderRadius: BorderRadius.circular(Espaciado.md),
-        border:
-            Border.all(color: AppColors.borde.withValues(alpha: 0.2), width: 1),
+        border: Border.all(color: c.line, width: 1),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,7 +36,7 @@ class RecomendacionesWidget extends StatelessWidget {
             children: [
               Icon(
                 Icons.lightbulb_outline,
-                color: AppColors.acento,
+                color: c.xpInk,
                 size: 24,
               ),
               SizedBox(width: Espaciado.xs),
@@ -45,7 +45,7 @@ class RecomendacionesWidget extends StatelessWidget {
                 style: TipografiaGyMaster.textoPrincipal.copyWith(
                   fontSize: TipografiaGyMaster.tamanoLg,
                   fontWeight: TipografiaGyMaster.pesoSemiBold,
-                  color: AppColors.textoPrincipal,
+                  color: c.ink,
                 ),
               ),
             ],
@@ -54,7 +54,7 @@ class RecomendacionesWidget extends StatelessWidget {
           ...recomendaciones.map((recomendacion) {
             return Padding(
               padding: EdgeInsets.only(bottom: Espaciado.sm),
-              child: _buildRecomendacionCard(recomendacion),
+              child: _buildRecomendacionCard(context, recomendacion),
             );
           }),
         ],
@@ -62,9 +62,11 @@ class RecomendacionesWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildRecomendacionCard(RecomendacionMuscular recomendacion) {
+  Widget _buildRecomendacionCard(
+      BuildContext context, RecomendacionMuscular recomendacion) {
+    final c = context.gym;
     final prioridad = recomendacion.nivelPrioridad;
-    final colorAlerta = _getColorPorPrioridad(prioridad);
+    final colorAlerta = _getColorPorPrioridad(context, prioridad);
     final intensidadAlerta = _getIntensidadPorPrioridad(prioridad);
 
     return Container(
@@ -111,7 +113,7 @@ class RecomendacionesWidget extends StatelessWidget {
                       recomendacion.mensajeTiempo,
                       style: TipografiaGyMaster.textoSecundario.copyWith(
                         fontSize: TipografiaGyMaster.tamanoSm,
-                        color: AppColors.textoPrincipal,
+                        color: c.ink,
                       ),
                     ),
                   ],
@@ -124,7 +126,7 @@ class RecomendacionesWidget extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: AppColors.fondoSecundario.withValues(alpha: 0.6),
+              color: c.surface2.withValues(alpha: 0.6),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Row(
@@ -132,7 +134,7 @@ class RecomendacionesWidget extends StatelessWidget {
                 Icon(
                   Icons.tips_and_updates,
                   size: 18,
-                  color: AppColors.acento,
+                  color: c.xpInk,
                 ),
                 SizedBox(width: Espaciado.xs),
                 Expanded(
@@ -140,7 +142,7 @@ class RecomendacionesWidget extends StatelessWidget {
                     recomendacion.mensajeRecomendacion,
                     style: TipografiaGyMaster.textoPrincipal.copyWith(
                       fontSize: TipografiaGyMaster.tamanoSm,
-                      color: AppColors.textoPrincipal,
+                      color: c.ink,
                       fontStyle: FontStyle.italic,
                     ),
                   ),
@@ -193,18 +195,19 @@ class RecomendacionesWidget extends StatelessWidget {
     );
   }
 
-  Color _getColorPorPrioridad(int prioridad) {
+  Color _getColorPorPrioridad(BuildContext context, int prioridad) {
+    final c = context.gym;
     switch (prioridad) {
       case 5:
-        return AppColors.error; // Máxima prioridad
+        return c.danger; // Máxima prioridad
       case 4:
-        return AppColors.advertencia; // Alta prioridad
+        return c.coral; // Alta prioridad
       case 3:
-        return AppColors.acento; // Media prioridad
+        return c.xpInk; // Media prioridad
       case 2:
-        return AppColors.informacion; // Baja prioridad
+        return c.info; // Baja prioridad
       default:
-        return AppColors.exito; // Mínima prioridad
+        return c.brand; // Mínima prioridad
     }
   }
 
@@ -223,7 +226,8 @@ class RecomendacionesWidget extends StatelessWidget {
     }
   }
 
-  Widget _buildBalanceadoState() {
+  Widget _buildBalanceadoState(BuildContext context) {
+    final c = context.gym;
     return Container(
       padding: Espaciado.rellenoXl,
       decoration: BoxDecoration(
@@ -231,13 +235,13 @@ class RecomendacionesWidget extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            AppColors.exito.withValues(alpha: 0.2),
-            AppColors.exito.withValues(alpha: 0.05),
+            c.brand.withValues(alpha: 0.2),
+            c.brand.withValues(alpha: 0.05),
           ],
         ),
         borderRadius: BorderRadius.circular(Espaciado.md),
         border: Border.all(
-          color: AppColors.exito.withValues(alpha: 0.3),
+          color: c.brand.withValues(alpha: 0.3),
           width: 1,
         ),
       ),
@@ -254,7 +258,7 @@ class RecomendacionesWidget extends StatelessWidget {
             style: TipografiaGyMaster.textoPrincipal.copyWith(
               fontSize: TipografiaGyMaster.tamanoXl,
               fontWeight: TipografiaGyMaster.pesoSemiBold,
-              color: AppColors.exito,
+              color: c.brand,
             ),
           ),
           SizedBox(height: Espaciado.xs),
@@ -262,7 +266,7 @@ class RecomendacionesWidget extends StatelessWidget {
             'Estás trabajando todos los grupos musculares de manera equilibrada',
             style: TipografiaGyMaster.textoSecundario.copyWith(
               fontSize: TipografiaGyMaster.tamanoMd,
-              color: AppColors.textoPrincipal,
+              color: c.ink,
             ),
             textAlign: TextAlign.center,
           ),
@@ -270,19 +274,19 @@ class RecomendacionesWidget extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: AppColors.fondoSecundario.withValues(alpha: 0.5),
+              color: c.surface2.withValues(alpha: 0.5),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.check_circle, color: AppColors.exito, size: 20),
+                Icon(Icons.check_circle, color: c.brand, size: 20),
                 SizedBox(width: Espaciado.xs),
                 Text(
                   'Mantén esta consistencia',
                   style: TipografiaGyMaster.textoPrincipal.copyWith(
                     fontSize: TipografiaGyMaster.tamanoSm,
-                    color: AppColors.textoPrincipal,
+                    color: c.ink,
                   ),
                 ),
               ],

@@ -1,6 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/emotional_text_styles.dart';
 import 'package:gymaster/shared/utils/haptic_feedback_helper.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
@@ -218,13 +218,13 @@ class _RoutineActionFeedbackState extends State<RoutineActionFeedback>
   Color _getBackgroundColor() {
     switch (widget.type) {
       case RoutineActionType.delete:
-        return AppColors.error;
+        return context.gym.danger;
       case RoutineActionType.restore:
-        return AppColors.exito;
+        return context.gym.brand;
       case RoutineActionType.success:
-        return AppColors.exito;
+        return context.gym.brand;
       case RoutineActionType.error:
-        return AppColors.error;
+        return context.gym.danger;
     }
   }
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
 import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/features/estadisticas/presentation/cubits/estadisticas_cubit.dart';
@@ -21,12 +21,12 @@ class EstadisticasPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.fondoPrincipal,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: BlocBuilder<EstadisticasCubit, EstadisticasState>(
         builder: (context, state) {
           return switch (state) {
-            EstadisticasInitial() => _buildLoadingWidget(),
-            EstadisticasLoading() => _buildLoadingWidget(),
+            EstadisticasInitial() => _buildLoadingWidget(context),
+            EstadisticasLoading() => _buildLoadingWidget(context),
             EstadisticasLoaded() => _buildLoadedContent(context, state),
             EstadisticasEmpty() => _buildEmptyState(context, state.message),
             EstadisticasError() => _buildErrorState(context, state.message),
@@ -36,17 +36,18 @@ class EstadisticasPage extends StatelessWidget {
     );
   }
 
-  Widget _buildLoadingWidget() {
+  Widget _buildLoadingWidget(BuildContext context) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const CircularProgressIndicator(color: AppColors.primario),
+          CircularProgressIndicator(color: context.gym.brand),
           SizedBox(height: Espaciado.md),
           Text(
             'Analizando tus entrenamientos...',
             style: TipografiaGyMaster.textoSecundario.copyWith(
               fontSize: TipografiaGyMaster.tamanoMd,
+              color: context.gym.muted,
             ),
           ),
         ],
@@ -55,6 +56,7 @@ class EstadisticasPage extends StatelessWidget {
   }
 
   Widget _buildLoadedContent(BuildContext context, EstadisticasLoaded state) {
+    final c = context.gym;
     final cubit = context.read<EstadisticasCubit>();
     final resumen = state.resumenGeneral;
 
@@ -62,7 +64,7 @@ class EstadisticasPage extends StatelessWidget {
       onRefresh: () async {
         await cubit.recargarEstadisticas();
       },
-      color: AppColors.primario,
+      color: c.brand,
       child: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
         padding: Espaciado.rellenoMd,
@@ -79,7 +81,7 @@ class EstadisticasPage extends StatelessWidget {
             SizedBox(height: Espaciado.lg),
 
             // Tarjetas de métricas generales
-            _buildSeccionMetricas(resumen),
+            _buildSeccionMetricas(context, resumen),
             SizedBox(height: Espaciado.lg),
 
             // Distribución muscular
@@ -112,7 +114,7 @@ class EstadisticasPage extends StatelessWidget {
                           color: Colors.white,
                         ),
                       ),
-                      backgroundColor: AppColors.informacion,
+                      backgroundColor: c.info,
                     ),
                   );
                 },
@@ -122,7 +124,7 @@ class EstadisticasPage extends StatelessWidget {
 
             // Gráfico de progreso del ejercicio más realizado
             if (state.rankingEjercicios.isNotEmpty) ...[
-              _buildSeccionProgresoEjercicio(state),
+              _buildSeccionProgresoEjercicio(context, state),
             ],
           ],
         ),
@@ -130,7 +132,8 @@ class EstadisticasPage extends StatelessWidget {
     );
   }
 
-  Widget _buildSeccionMetricas(dynamic resumen) {
+  Widget _buildSeccionMetricas(BuildContext context, dynamic resumen) {
+    final c = context.gym;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -139,7 +142,7 @@ class EstadisticasPage extends StatelessWidget {
           style: TextStyle(
             fontSize: TipografiaGyMaster.tamanoLg,
             fontWeight: TipografiaGyMaster.pesoSemiBold,
-            color: AppColors.textoPrincipal,
+            color: c.ink,
             height: 1.4,
           ),
         ),
@@ -156,20 +159,20 @@ class EstadisticasPage extends StatelessWidget {
               icono: Icons.fitness_center,
               valor: '${resumen['total_sesiones'] ?? 0}',
               etiqueta: 'Entrenamientos',
-              colorIcono: AppColors.primario,
+              colorIcono: c.brand,
             ),
             TarjetaMetricaWidget(
               icono: Icons.local_fire_department,
               valor: '${resumen['racha_dias'] ?? 0}',
               etiqueta: 'Racha de días',
-              colorIcono: AppColors.acento,
+              colorIcono: c.coral,
               porcentajeCambio: (resumen['racha_dias'] ?? 0) > 7 ? 15.0 : -5.0,
             ),
             TarjetaMetricaWidget(
               icono: Icons.timer,
               valor: '${((resumen['total_series'] ?? 0) * 3).round()}',
               etiqueta: 'Minutos totales',
-              colorIcono: AppColors.secundario,
+              colorIcono: c.info,
               subvalor: 'min',
             ),
             TarjetaMetricaWidget(
@@ -177,7 +180,7 @@ class EstadisticasPage extends StatelessWidget {
               valor:
                   '${(resumen['volumen_total'] ?? 0.0).toStringAsFixed(0)} kg',
               etiqueta: 'Volumen total',
-              colorIcono: AppColors.exito,
+              colorIcono: c.xpInk,
               porcentajeCambio: 10.0,
             ),
           ],
@@ -186,7 +189,9 @@ class EstadisticasPage extends StatelessWidget {
     );
   }
 
-  Widget _buildSeccionProgresoEjercicio(EstadisticasLoaded state) {
+  Widget _buildSeccionProgresoEjercicio(
+      BuildContext context, EstadisticasLoaded state) {
+    final c = context.gym;
     // Mostrar progreso del ejercicio más realizado
     final ejercicioTop = state.rankingEjercicios.first;
 
@@ -198,7 +203,7 @@ class EstadisticasPage extends StatelessWidget {
           style: TextStyle(
             fontSize: TipografiaGyMaster.tamanoLg,
             fontWeight: TipografiaGyMaster.pesoSemiBold,
-            color: AppColors.textoPrincipal,
+            color: c.ink,
             height: 1.4,
           ),
         ),
@@ -209,16 +214,16 @@ class EstadisticasPage extends StatelessWidget {
           height: 300,
           padding: Espaciado.rellenoMd,
           decoration: BoxDecoration(
-            color: AppColors.superficieOscura,
+            color: c.surface2,
             borderRadius: BorderRadius.circular(Espaciado.md),
-            border: Border.all(color: AppColors.borde, width: 1),
+            border: Border.all(color: c.line, width: 1),
           ),
           child: Center(
             child: Text(
               'Gráfico de progreso disponible próximamente',
               style: TextStyle(
                 fontWeight: TipografiaGyMaster.pesoRegular,
-                color: AppColors.textoTerciario,
+                color: c.faint,
                 height: 1.3,
               ),
             ),
@@ -229,6 +234,7 @@ class EstadisticasPage extends StatelessWidget {
   }
 
   Widget _buildEmptyState(BuildContext context, String mensaje) {
+    final c = context.gym;
     return Center(
       child: Padding(
         padding: Espaciado.rellenoXl,
@@ -238,7 +244,7 @@ class EstadisticasPage extends StatelessWidget {
             Icon(
               Icons.insert_chart_outlined,
               size: 100,
-              color: AppColors.textoTerciario,
+              color: c.faint,
             ),
             SizedBox(height: Espaciado.lg),
             Text(
@@ -246,7 +252,7 @@ class EstadisticasPage extends StatelessWidget {
               style: TipografiaGyMaster.textoPrincipal.copyWith(
                 fontSize: TipografiaGyMaster.tamano2xl,
                 fontWeight: TipografiaGyMaster.pesoSemiBold,
-                color: AppColors.textoSecundarioClaro,
+                color: c.muted,
               ),
             ),
             SizedBox(height: Espaciado.md),
@@ -254,7 +260,7 @@ class EstadisticasPage extends StatelessWidget {
               mensaje,
               style: TipografiaGyMaster.textoSecundario.copyWith(
                 fontSize: TipografiaGyMaster.tamanoMd,
-                color: AppColors.textoTerciario,
+                color: c.faint,
               ),
               textAlign: TextAlign.center,
             ),
@@ -265,7 +271,7 @@ class EstadisticasPage extends StatelessWidget {
                 Navigator.pop(context);
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primario,
+                backgroundColor: c.brand,
                 padding: EdgeInsets.symmetric(
                   horizontal: Espaciado.xl,
                   vertical: Espaciado.md,
@@ -291,6 +297,7 @@ class EstadisticasPage extends StatelessWidget {
   }
 
   Widget _buildErrorState(BuildContext context, String mensaje) {
+    final c = context.gym;
     return Center(
       child: Padding(
         padding: Espaciado.rellenoXl,
@@ -300,7 +307,7 @@ class EstadisticasPage extends StatelessWidget {
             Icon(
               Icons.error_outline,
               size: 100,
-              color: AppColors.error,
+              color: c.danger,
             ),
             SizedBox(height: Espaciado.lg),
             Text(
@@ -308,7 +315,7 @@ class EstadisticasPage extends StatelessWidget {
               style: TextStyle(
                 fontSize: TipografiaGyMaster.tamano2xl,
                 fontWeight: TipografiaGyMaster.pesoSemiBold,
-                color: AppColors.error,
+                color: c.danger,
                 height: 1.4,
               ),
             ),
@@ -317,7 +324,7 @@ class EstadisticasPage extends StatelessWidget {
               mensaje,
               style: TextStyle(
                 fontSize: TipografiaGyMaster.tamanoMd,
-                color: AppColors.textoSecundario,
+                color: c.muted,
                 height: 1.3,
               ),
               textAlign: TextAlign.center,

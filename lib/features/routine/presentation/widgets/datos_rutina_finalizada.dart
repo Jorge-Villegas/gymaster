@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/shared/widgets/tarjeta_estado.dart';
 
 class DatosRutinaFinalizada extends StatelessWidget {
@@ -36,7 +36,7 @@ class DatosRutinaFinalizada extends StatelessWidget {
                   titulo: 'Total XP',
                   textoCuerpo: '$totalXp',
                   icono: Icons.flash_on,
-                  colorFondo: AppColors.acento,
+                  colorFondo: context.gym.xpInk,
                 ),
               ),
               SizedBox(width: isSmallScreen ? 12 : 24),
@@ -45,7 +45,7 @@ class DatosRutinaFinalizada extends StatelessWidget {
                   titulo: 'Completado',
                   textoCuerpo: porcentajeCompletado,
                   icono: Icons.check_circle,
-                  colorFondo: AppColors.exito,
+                  colorFondo: context.gym.brand,
                 ),
               ),
               Expanded(
@@ -53,7 +53,7 @@ class DatosRutinaFinalizada extends StatelessWidget {
                   titulo: 'Ejercicios',
                   textoCuerpo: totalEjercicios.toString(),
                   icono: Icons.fitness_center,
-                  colorFondo: AppColors.acento,
+                  colorFondo: context.gym.xpInk,
                 ),
               ),
             ],
@@ -64,7 +64,7 @@ class DatosRutinaFinalizada extends StatelessWidget {
             width: double.infinity,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
+                backgroundColor: context.gym.brand,
                 foregroundColor: Colors.white,
                 padding:
                     EdgeInsets.symmetric(vertical: isSmallScreen ? 12 : 18),

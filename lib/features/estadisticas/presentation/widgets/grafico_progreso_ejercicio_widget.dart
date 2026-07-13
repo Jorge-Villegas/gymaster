@@ -1,6 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
 import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/features/estadisticas/domain/entities/progreso_ejercicio.dart';
@@ -34,6 +34,7 @@ class _GraficoProgresoEjercicioWidgetState
 
   @override
   Widget build(BuildContext context) {
+    final c = context.gym;
     if (widget.progreso.puntosProgreso.isEmpty) {
       return _buildEmptyState();
     }
@@ -41,10 +42,9 @@ class _GraficoProgresoEjercicioWidgetState
     return Container(
       padding: Espaciado.rellenoMd,
       decoration: BoxDecoration(
-        color: AppColors.fondoTarjeta,
+        color: c.surface,
         borderRadius: BorderRadius.circular(Espaciado.md),
-        border:
-            Border.all(color: AppColors.borde.withValues(alpha: 0.2), width: 1),
+        border: Border.all(color: c.line, width: 1),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,6 +66,7 @@ class _GraficoProgresoEjercicioWidgetState
   }
 
   Widget _buildHeader() {
+    final c = context.gym;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -75,7 +76,7 @@ class _GraficoProgresoEjercicioWidgetState
             style: TipografiaGyMaster.textoPrincipal.copyWith(
               fontSize: TipografiaGyMaster.tamanoLg,
               fontWeight: TipografiaGyMaster.pesoSemiBold,
-              color: AppColors.textoPrincipal,
+              color: c.ink,
             ),
           ),
         ),
@@ -85,33 +86,29 @@ class _GraficoProgresoEjercicioWidgetState
   }
 
   Widget _buildTendenciaChip() {
+    final c = context.gym;
     final tendencia = widget.progreso.tendencia;
-    Color colorFondo;
     Color colorTexto;
 
     switch (tendencia) {
       case TendenciaProgreso.mejorando:
-        colorFondo = AppColors.exito.withValues(alpha: 0.2);
-        colorTexto = AppColors.exito;
+        colorTexto = c.brand;
         break;
       case TendenciaProgreso.estable:
-        colorFondo = AppColors.informacion.withValues(alpha: 0.2);
-        colorTexto = AppColors.informacion;
+        colorTexto = c.info;
         break;
       case TendenciaProgreso.decayendo:
-        colorFondo = AppColors.error.withValues(alpha: 0.2);
-        colorTexto = AppColors.error;
+        colorTexto = c.danger;
         break;
       case TendenciaProgreso.insuficienteDatos:
-        colorFondo = AppColors.textoSecundarioClaro.withValues(alpha: 0.2);
-        colorTexto = AppColors.textoSecundarioClaro;
+        colorTexto = c.faint;
         break;
     }
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: colorFondo,
+        color: colorTexto.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Row(
@@ -149,20 +146,22 @@ class _GraficoProgresoEjercicioWidgetState
   }
 
   Widget _buildLegend() {
+    final c = context.gym;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         if (widget.mostrarPeso) ...[
-          _buildLegendItem('Peso máximo', AppColors.primario),
+          _buildLegendItem('Peso máximo', c.brand),
           SizedBox(width: Espaciado.md),
         ],
         if (widget.mostrarVolumen)
-          _buildLegendItem('Volumen total', AppColors.acento),
+          _buildLegendItem('Volumen total', c.info),
       ],
     );
   }
 
   Widget _buildLegendItem(String label, Color color) {
+    final c = context.gym;
     return Row(
       children: [
         Container(
@@ -178,7 +177,7 @@ class _GraficoProgresoEjercicioWidgetState
           label,
           style: TipografiaGyMaster.textoSecundario.copyWith(
             fontSize: TipografiaGyMaster.tamanoSm,
-            color: AppColors.textoSecundario,
+            color: c.muted,
           ),
         ),
       ],
@@ -186,6 +185,7 @@ class _GraficoProgresoEjercicioWidgetState
   }
 
   LineChartData _buildLineChartData() {
+    final c = context.gym;
     final puntos = widget.progreso.puntosProgreso;
     final pesoSpots = <FlSpot>[];
     final volumenSpots = <FlSpot>[];
@@ -208,7 +208,7 @@ class _GraficoProgresoEjercicioWidgetState
         horizontalInterval: 1,
         getDrawingHorizontalLine: (value) {
           return FlLine(
-            color: AppColors.borde.withValues(alpha: 0.3),
+            color: c.line,
             strokeWidth: 1,
           );
         },
@@ -228,7 +228,7 @@ class _GraficoProgresoEjercicioWidgetState
                     DateFormat('dd/MM').format(fecha),
                     style: TipografiaGyMaster.textoSecundario.copyWith(
                       fontSize: TipografiaGyMaster.tamanoXs,
-                      color: AppColors.textoSecundario,
+                      color: c.muted,
                     ),
                   ),
                 );
@@ -246,7 +246,7 @@ class _GraficoProgresoEjercicioWidgetState
                 value.toInt().toString(),
                 style: TipografiaGyMaster.textoSecundario.copyWith(
                   fontSize: TipografiaGyMaster.tamanoXs,
-                  color: AppColors.textoSecundario,
+                  color: c.muted,
                 ),
               );
             },
@@ -262,7 +262,7 @@ class _GraficoProgresoEjercicioWidgetState
           LineChartBarData(
             spots: pesoSpots,
             isCurved: true,
-            color: AppColors.primario,
+            color: c.brand,
             barWidth: 3,
             isStrokeCapRound: true,
             dotData: FlDotData(
@@ -270,22 +270,22 @@ class _GraficoProgresoEjercicioWidgetState
               getDotPainter: (spot, percent, barData, index) {
                 return FlDotCirclePainter(
                   radius: _touchedIndex == index ? 6 : 4,
-                  color: AppColors.primario,
+                  color: c.brand,
                   strokeWidth: 2,
-                  strokeColor: AppColors.superficieOscura,
+                  strokeColor: c.surface,
                 );
               },
             ),
             belowBarData: BarAreaData(
               show: true,
-              color: AppColors.primario.withValues(alpha: 0.1),
+              color: c.brand.withValues(alpha: 0.1),
             ),
           ),
         if (widget.mostrarVolumen)
           LineChartBarData(
             spots: volumenSpots,
             isCurved: true,
-            color: AppColors.acento,
+            color: c.info,
             barWidth: 3,
             isStrokeCapRound: true,
             dotData: FlDotData(
@@ -293,15 +293,15 @@ class _GraficoProgresoEjercicioWidgetState
               getDotPainter: (spot, percent, barData, index) {
                 return FlDotCirclePainter(
                   radius: _touchedIndex == index ? 6 : 4,
-                  color: AppColors.acento,
+                  color: c.info,
                   strokeWidth: 2,
-                  strokeColor: AppColors.superficieOscura,
+                  strokeColor: c.surface,
                 );
               },
             ),
             belowBarData: BarAreaData(
               show: true,
-              color: AppColors.acento.withValues(alpha: 0.1),
+              color: c.info.withValues(alpha: 0.1),
             ),
           ),
       ],
@@ -317,8 +317,8 @@ class _GraficoProgresoEjercicioWidgetState
           });
         },
         touchTooltipData: LineTouchTooltipData(
-          getTooltipColor: (spot) => AppColors.fondoSecundarioOscuro,
-          tooltipBorder: BorderSide(color: AppColors.borde, width: 1),
+          getTooltipColor: (spot) => c.surface2,
+          tooltipBorder: BorderSide(color: c.line, width: 1),
           tooltipPadding: const EdgeInsets.all(8),
           getTooltipItems: (List<LineBarSpot> touchedSpots) {
             return touchedSpots.map((spot) {
@@ -332,13 +332,14 @@ class _GraficoProgresoEjercicioWidgetState
                 TipografiaGyMaster.textoPrincipal.copyWith(
                   fontSize: TipografiaGyMaster.tamanoSm,
                   fontWeight: TipografiaGyMaster.pesoSemiBold,
-                  color: esPeso ? AppColors.primario : AppColors.acento,
+                  color: esPeso ? c.brand : c.info,
                 ),
                 children: [
                   TextSpan(
                     text: '\n${DateFormat('dd/MM/yyyy').format(punto.fecha)}',
                     style: TipografiaGyMaster.textoSecundario.copyWith(
                       fontSize: TipografiaGyMaster.tamanoXs,
+                      color: c.muted,
                     ),
                   ),
                   TextSpan(
@@ -346,6 +347,7 @@ class _GraficoProgresoEjercicioWidgetState
                         '\n${punto.totalSeries} series • ${punto.totalRepeticiones} reps',
                     style: TipografiaGyMaster.textoSecundario.copyWith(
                       fontSize: TipografiaGyMaster.tamanoXs,
+                      color: c.muted,
                     ),
                   ),
                 ],
@@ -358,13 +360,13 @@ class _GraficoProgresoEjercicioWidgetState
   }
 
   Widget _buildEmptyState() {
+    final c = context.gym;
     return Container(
       padding: Espaciado.rellenoXl,
       decoration: BoxDecoration(
-        color: AppColors.fondoTarjeta,
+        color: c.surface,
         borderRadius: BorderRadius.circular(Espaciado.md),
-        border:
-            Border.all(color: AppColors.borde.withValues(alpha: 0.2), width: 1),
+        border: Border.all(color: c.line, width: 1),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -372,7 +374,7 @@ class _GraficoProgresoEjercicioWidgetState
           Icon(
             Icons.show_chart_outlined,
             size: 64,
-            color: AppColors.textoTerciario,
+            color: c.faint,
           ),
           SizedBox(height: Espaciado.md),
           Text(
@@ -380,7 +382,7 @@ class _GraficoProgresoEjercicioWidgetState
             style: TipografiaGyMaster.textoPrincipal.copyWith(
               fontSize: TipografiaGyMaster.tamanoLg,
               fontWeight: TipografiaGyMaster.pesoSemiBold,
-              color: AppColors.textoSecundario,
+              color: c.muted,
             ),
           ),
           SizedBox(height: Espaciado.xs),
@@ -388,7 +390,7 @@ class _GraficoProgresoEjercicioWidgetState
             'Completa entrenamientos para ver tu progreso',
             style: TipografiaGyMaster.textoSecundario.copyWith(
               fontSize: TipografiaGyMaster.tamanoSm,
-              color: AppColors.textoTerciario,
+              color: c.faint,
             ),
             textAlign: TextAlign.center,
           ),

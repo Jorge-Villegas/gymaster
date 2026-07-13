@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/core/theme/emotional_text_styles.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/features/exercise/domain/entities/exercise.dart';
 import 'package:gymaster/features/exercise/presentation/cubits/favorito_ejercicio_cubit.dart';
 import 'package:gymaster/features/exercise/presentation/cubits/favorito_ejercicio_state.dart';
@@ -47,7 +48,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.fondoPrincipal,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
@@ -77,7 +78,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
         child: Container(
           margin: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: context.gym.surface,
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
@@ -91,7 +92,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
             onPressed: () => context.go('/exercise-catalog'),
             icon: Icon(
               Icons.arrow_back_ios_rounded,
-              color: AppColors.primario,
+              color: context.gym.brand,
               size: 20,
             ),
             padding: const EdgeInsets.all(8),
@@ -109,7 +110,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.95),
+              color: context.gym.surface.withValues(alpha: 0.95),
               borderRadius: BorderRadius.circular(16),
               boxShadow: [
                 BoxShadow(
@@ -122,7 +123,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
             child: Text(
               capitalizarPrimeraLetra(widget.exercise.name),
               style: EstilosTextoEmocional.energetico.copyWith(
-                color: AppColors.textoPrincipal,
+                color: context.gym.ink,
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 letterSpacing: 0.5,
@@ -195,7 +196,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
         margin: const EdgeInsets.symmetric(horizontal: 20),
         padding: const EdgeInsets.all(24),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: context.gym.surface,
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
@@ -214,12 +215,12 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: AppColors.primario.withValues(alpha: 0.1),
+                    color: context.gym.brand.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
                     IconsaxPlusLinear.activity,
-                    color: AppColors.primario,
+                    color: context.gym.brand,
                     size: 24,
                   ),
                 ),
@@ -231,7 +232,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                       letterSpacing: 1.2,
                       height: 1.1,
                       fontSize: 20,
-                      color: AppColors.primario,
+                      color: context.gym.brand,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -248,16 +249,16 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                   padding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                   decoration: BoxDecoration(
-                    color: AppColors.secundarioClaro.withValues(alpha: 0.1),
+                    color: context.gym.info.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
-                      color: AppColors.secundarioClaro.withValues(alpha: 0.25),
+                      color: context.gym.info.withValues(alpha: 0.25),
                       width: 1.5,
                     ),
                     boxShadow: [
                       BoxShadow(
                         color:
-                            AppColors.secundarioClaro.withValues(alpha: 0.06),
+                            context.gym.info.withValues(alpha: 0.06),
                         blurRadius: 6,
                         offset: const Offset(0, 2),
                       ),
@@ -269,7 +270,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                       Text(
                         capitalizarPrimeraLetra(muscle),
                         style: TextStyle(
-                          color: AppColors.secundarioClaro,
+                          color: context.gym.info,
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
                         ),
@@ -294,7 +295,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
         margin: const EdgeInsets.symmetric(horizontal: 20),
         padding: const EdgeInsets.all(24),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: context.gym.surface,
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
@@ -313,12 +314,12 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: AppColors.acento.withValues(alpha: 0.1),
+                    color: context.gym.xpInk.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
                     IconsaxPlusLinear.document_text,
-                    color: AppColors.acento,
+                    color: context.gym.xpInk,
                     size: 24,
                   ),
                 ),
@@ -330,7 +331,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                       letterSpacing: 1.2,
                       height: 1.1,
                       fontSize: 20,
-                      color: AppColors.primario,
+                      color: context.gym.brand,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -362,7 +363,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
         margin: const EdgeInsets.symmetric(horizontal: 20),
         padding: const EdgeInsets.all(24),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: context.gym.surface,
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
@@ -381,12 +382,12 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: AppColors.exito.withValues(alpha: 0.1),
+                    color: context.gym.brand.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
                     IconsaxPlusLinear.refresh,
-                    color: AppColors.exito,
+                    color: context.gym.brand,
                     size: 24,
                   ),
                 ),
@@ -396,7 +397,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                     'Variaciones Disponibles 🔄',
                     style: EstilosTextoEmocional.energetico.copyWith(
                       fontSize: 20,
-                      color: AppColors.primario,
+                      color: context.gym.brand,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -411,10 +412,10 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                 margin: const EdgeInsets.only(bottom: 12),
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Colors.grey[50],
+                  color: context.gym.surface2,
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color: Colors.grey[200]!,
+                    color: context.gym.line,
                     width: 1,
                   ),
                 ),
@@ -424,7 +425,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                       width: 32,
                       height: 32,
                       decoration: BoxDecoration(
-                        color: AppColors.primario,
+                        color: context.gym.brand,
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Center(
@@ -444,7 +445,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                         capitalizarPrimeraLetra(variation),
                         style: EstilosTextoEmocional.amigable.copyWith(
                           fontSize: 15,
-                          color: AppColors.textoPrincipal,
+                          color: context.gym.ink,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -484,8 +485,12 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
             return FloatingActionButton.extended(
               elevation: 0,
               backgroundColor:
-                  esFavorito ? AppColors.acento : AppColors.primario,
+                  esFavorito ? context.gym.xpInk : context.gym.brand,
               onPressed: () async {
+                // Capturar colores del tema antes del gap asíncrono
+                final colorFavorito = context.gym.xpInk;
+                final colorNoFavorito = context.gym.faint;
+
                 // Usar el cubit para toggle de favoritos
                 await favoritosCubit.toggleFavorito(widget.exercise.id);
 
@@ -515,9 +520,8 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                           ),
                         ],
                       ),
-                      backgroundColor: nuevoEstado
-                          ? AppColors.acento
-                          : AppColors.textoTerciario,
+                      backgroundColor:
+                          nuevoEstado ? colorFavorito : colorNoFavorito,
                       behavior: SnackBarBehavior.floating,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12)),
@@ -589,7 +593,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
     if (VerificadorTipoArchivo.esSvg(imagePath)) {
       return Container(
         decoration: BoxDecoration(
-          color: Colors.grey[200],
+          color: context.gym.surface2,
         ),
         child: SvgPicture.asset(
           imagePath,

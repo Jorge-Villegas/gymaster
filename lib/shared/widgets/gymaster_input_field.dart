@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
 import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 
@@ -66,7 +67,7 @@ class GyMasterInputField extends StatelessWidget {
           child: RichText(
             text: TextSpan(
               style: TipografiaGyMaster.subtitulo.copyWith(
-                color: AppColors.primario,
+                color: context.gym.brand,
                 fontWeight: TipografiaGyMaster.pesoSemiBold,
               ),
               children: [
@@ -75,7 +76,7 @@ class GyMasterInputField extends StatelessWidget {
                   TextSpan(
                     text: ' *',
                     style: TextStyle(
-                      color: AppColors.error,
+                      color: context.gym.danger,
                       fontWeight: TipografiaGyMaster.pesoSemiBold,
                       fontSize: TipografiaGyMaster.tamanoLg,
                     ),
@@ -106,13 +107,13 @@ class GyMasterInputField extends StatelessWidget {
             focusNode: focusNode,
             style: TipografiaGyMaster.textoPrincipal.copyWith(
               color: enabled
-                  ? AppColors.textoPrincipal
+                  ? context.gym.ink
                   : AppColors.textoDeshabilitado,
             ),
             decoration: InputDecoration(
               hintText: hintText,
               hintStyle: TipografiaGyMaster.textoPrincipal.copyWith(
-                color: AppColors.textoSecundario,
+                color: context.gym.muted,
                 fontWeight: TipografiaGyMaster.pesoLigero,
               ),
               prefixIcon: prefixIcon != null
@@ -120,7 +121,7 @@ class GyMasterInputField extends StatelessWidget {
                       margin: const EdgeInsets.all(Espaciado.xs),
                       padding: const EdgeInsets.all(Espaciado.xs),
                       decoration: BoxDecoration(
-                        color: AppColors.primario.withValues(alpha: 0.1),
+                        color: context.gym.brand.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(Espaciado.sm),
                       ),
                       child: prefixIcon,
@@ -133,35 +134,35 @@ class GyMasterInputField extends StatelessWidget {
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(Espaciado.md),
                 borderSide: BorderSide(
-                  color: AppColors.primario.withValues(alpha: 0.3),
+                  color: context.gym.brand.withValues(alpha: 0.3),
                   width: 2,
                 ),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(Espaciado.md),
                 borderSide: BorderSide(
-                  color: AppColors.primario.withValues(alpha: 0.3),
+                  color: context.gym.brand.withValues(alpha: 0.3),
                   width: 2,
                 ),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(Espaciado.md),
-                borderSide: const BorderSide(
-                  color: AppColors.primario,
+                borderSide: BorderSide(
+                  color: context.gym.brand,
                   width: 3,
                 ),
               ),
               errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(Espaciado.md),
-                borderSide: const BorderSide(
-                  color: AppColors.error,
+                borderSide: BorderSide(
+                  color: context.gym.danger,
                   width: 2,
                 ),
               ),
               focusedErrorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(Espaciado.md),
-                borderSide: const BorderSide(
-                  color: AppColors.error,
+                borderSide: BorderSide(
+                  color: context.gym.danger,
                   width: 3,
                 ),
               ),
@@ -181,7 +182,7 @@ class GyMasterInputField extends StatelessWidget {
 
               // Contador de caracteres estilizado
               counterStyle: TipografiaGyMaster.textoSecundario.copyWith(
-                color: AppColors.textoTerciario,
+                color: context.gym.faint,
               ),
             ),
           ),
@@ -197,10 +198,10 @@ class GyMasterInputField extends StatelessWidget {
                 vertical: Espaciado.xs,
               ),
               decoration: BoxDecoration(
-                color: AppColors.acento.withValues(alpha: 0.1),
+                color: context.gym.xpInk.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(Espaciado.sm),
                 border: Border.all(
-                  color: AppColors.acento.withValues(alpha: 0.2),
+                  color: context.gym.xpInk.withValues(alpha: 0.2),
                   width: 0.5,
                 ),
               ),
@@ -209,14 +210,14 @@ class GyMasterInputField extends StatelessWidget {
                   Icon(
                     Icons.lightbulb_outline,
                     size: 16,
-                    color: AppColors.acento,
+                    color: context.gym.xpInk,
                   ),
                   const SizedBox(width: Espaciado.xs),
                   Expanded(
                     child: Text(
                       helpText!,
                       style: TipografiaGyMaster.textoSecundario.copyWith(
-                        color: AppColors.acento,
+                        color: context.gym.xpInk,
                       ),
                     ),
                   ),
@@ -286,7 +287,7 @@ class GyMasterNumberInputField extends StatelessWidget {
                     child: Text(
                       suffixText!,
                       style: TipografiaGyMaster.textoPrincipal.copyWith(
-                        color: AppColors.textoSecundario,
+                        color: context.gym.muted,
                       ),
                     ),
                   ),
@@ -346,9 +347,9 @@ class GyMasterEmailInputField extends StatelessWidget {
       controller: controller,
       validator: _emailValidator,
       keyboardType: TextInputType.emailAddress,
-      prefixIcon: const Icon(
+      prefixIcon: Icon(
         Icons.email_outlined,
-        color: AppColors.textoTerciario,
+        color: context.gym.faint,
       ),
       isRequired: isRequired,
       helpText: helpText,

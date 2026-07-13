@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/shared/widgets/chiclet_button.dart';
 
 /// Widget que muestra una lista de series de ejercicios.
@@ -215,17 +216,17 @@ class _ListaSeriesWidgetState extends State<ListaSeriesWidget> {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      const Color(0xFF6366F1).withAlpha((0.1 * 255).toInt()),
-                      const Color(0xFF8B5CF6).withAlpha((0.05 * 255).toInt()),
+                      const Color(0xFF38B6FF).withAlpha((0.1 * 255).toInt()),
+                      const Color(0xFF54BEFF).withAlpha((0.05 * 255).toInt()),
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
-                  border: Border.all(color: const Color(0xFF6366F1), width: 2),
+                  border: Border.all(color: const Color(0xFF38B6FF), width: 2),
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFF6366F1)
+                      color: const Color(0xFF38B6FF)
                           .withAlpha((0.2 * 255).toInt()),
                       blurRadius: 8,
                       offset: const Offset(0, 2),
@@ -293,23 +294,9 @@ class _ListaSeriesWidgetState extends State<ListaSeriesWidget> {
         child: Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Colors.grey.shade100,
-                Colors.grey.shade50,
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            border: Border.all(color: Colors.grey.shade300, width: 1),
+            color: context.gym.surface2,
+            border: Border.all(color: context.gym.line, width: 1),
             borderRadius: BorderRadius.circular(12),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withAlpha((0.1 * 255).toInt()),
-                blurRadius: 4,
-                offset: const Offset(0, 2),
-              ),
-            ],
           ),
           child: Text(
             '${widget.pesoControllers[index].text} kg',
@@ -317,7 +304,7 @@ class _ListaSeriesWidgetState extends State<ListaSeriesWidget> {
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
-              color: Colors.grey.shade700,
+              color: context.gym.ink,
             ),
           ),
         ),
@@ -356,17 +343,17 @@ class _ListaSeriesWidgetState extends State<ListaSeriesWidget> {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      const Color(0xFF10B981).withAlpha((0.1 * 255).toInt()),
-                      const Color(0xFF059669).withAlpha((0.05 * 255).toInt()),
+                      const Color(0xFF3FC55F).withAlpha((0.1 * 255).toInt()),
+                      const Color(0xFF2A9D48).withAlpha((0.05 * 255).toInt()),
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
-                  border: Border.all(color: const Color(0xFF10B981), width: 2),
+                  border: Border.all(color: const Color(0xFF3FC55F), width: 2),
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFF10B981)
+                      color: const Color(0xFF3FC55F)
                           .withAlpha((0.2 * 255).toInt()),
                       blurRadius: 8,
                       offset: const Offset(0, 2),
@@ -426,23 +413,9 @@ class _ListaSeriesWidgetState extends State<ListaSeriesWidget> {
         child: Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Colors.grey.shade100,
-                Colors.grey.shade50,
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            border: Border.all(color: Colors.grey.shade300, width: 1),
+            color: context.gym.surface2,
+            border: Border.all(color: context.gym.line, width: 1),
             borderRadius: BorderRadius.circular(12),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withAlpha((0.1 * 255).toInt()),
-                blurRadius: 4,
-                offset: const Offset(0, 2),
-              ),
-            ],
           ),
           child: Text(
             '${widget.repeticionesControllers[index].text} reps',
@@ -450,7 +423,7 @@ class _ListaSeriesWidgetState extends State<ListaSeriesWidget> {
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
-              color: Colors.grey.shade700,
+              color: context.gym.ink,
             ),
           ),
         ),

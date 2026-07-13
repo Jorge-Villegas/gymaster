@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/features/setting/domain/entities/perfil_usuario_completo.dart';
 import 'package:gymaster/features/setting/presentation/cubits/onboarding/onboarding_cubit.dart';
@@ -71,13 +71,13 @@ class _OnboardingObjetivosContentState
           Text(
             '¿Cuál es tu objetivo principal?',
             style: TipografiaGyMaster.titulo.copyWith(
-              color: AppColors.primario,
+              color: context.gym.brand,
             ),
           ),
           Text(
             'Selecciona el objetivo que mejor describa lo que quieres lograr',
             style: TipografiaGyMaster.textoPrincipal.copyWith(
-              color: AppColors.textoSecundario,
+              color: context.gym.muted,
             ),
           ),
           GridView.builder(

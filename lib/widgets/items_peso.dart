@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
 
@@ -52,8 +52,8 @@ class _ItemsPesosWidgetState extends State<ItemsPesosWidget> {
               padding: Espaciado.rellenoXs,
               child: TextButton(
                 style: TextButton.styleFrom(
-                  foregroundColor: AppColors.textoTerciario,
-                  backgroundColor: AppColors.fondoSecundario,
+                  foregroundColor: context.gym.faint,
+                  backgroundColor: context.gym.surface2,
                 ),
                 onPressed: () {
                   setState(() {});
@@ -65,8 +65,8 @@ class _ItemsPesosWidgetState extends State<ItemsPesosWidget> {
               padding: const EdgeInsets.all(2.5),
               child: TextButton(
                 style: TextButton.styleFrom(
-                  foregroundColor: AppColors.textoTerciario,
-                  backgroundColor: AppColors.fondoSecundario,
+                  foregroundColor: context.gym.faint,
+                  backgroundColor: context.gym.surface2,
                 ),
                 child: const Icon(Icons.remove),
                 onPressed: () {
@@ -95,8 +95,8 @@ class _ItemsPesosWidgetState extends State<ItemsPesosWidget> {
               padding: Espaciado.rellenoXs,
               child: TextButton(
                 style: TextButton.styleFrom(
-                  foregroundColor: AppColors.textoTerciario,
-                  backgroundColor: AppColors.fondoSecundario,
+                  foregroundColor: context.gym.faint,
+                  backgroundColor: context.gym.surface2,
                 ),
                 onPressed: () {
                   setState(() {});
@@ -108,8 +108,8 @@ class _ItemsPesosWidgetState extends State<ItemsPesosWidget> {
               padding: const EdgeInsets.all(2.5),
               child: TextButton(
                 style: TextButton.styleFrom(
-                  foregroundColor: AppColors.textoTerciario,
-                  backgroundColor: AppColors.fondoSecundario,
+                  foregroundColor: context.gym.faint,
+                  backgroundColor: context.gym.surface2,
                 ),
                 child: const Icon(Icons.remove),
                 onPressed: () {
@@ -138,8 +138,8 @@ class _ItemsPesosWidgetState extends State<ItemsPesosWidget> {
               padding: Espaciado.rellenoXs,
               child: TextButton(
                 style: TextButton.styleFrom(
-                  foregroundColor: AppColors.textoTerciario,
-                  backgroundColor: AppColors.fondoSecundario,
+                  foregroundColor: context.gym.faint,
+                  backgroundColor: context.gym.surface2,
                 ),
                 onPressed: () {
                   setState(() {});
@@ -151,8 +151,8 @@ class _ItemsPesosWidgetState extends State<ItemsPesosWidget> {
               padding: const EdgeInsets.all(2.5),
               child: TextButton(
                 style: TextButton.styleFrom(
-                  foregroundColor: AppColors.textoTerciario,
-                  backgroundColor: AppColors.fondoSecundario,
+                  foregroundColor: context.gym.faint,
+                  backgroundColor: context.gym.surface2,
                 ),
                 child: const Icon(Icons.remove),
                 onPressed: () {

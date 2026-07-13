@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/features/estadisticas/presentation/cubits/estadisticas_cubit.dart';
 import 'package:gymaster/features/estadisticas/presentation/pages/estadisticas_page.dart';
@@ -46,37 +46,37 @@ class _HistorialConEstadisticasPageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.fondoPrincipal,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Column(
           children: [
             Container(
               decoration: BoxDecoration(
-                color: AppColors.fondoSecundario,
+                color: context.gym.surface,
                 border: Border(
                   bottom: BorderSide(
-                    color: AppColors.borde.withValues(alpha: 0.3),
+                    color: context.gym.line,
                     width: 1,
                   ),
                 ),
               ),
               child: TabBar(
                 controller: _tabController,
-                indicatorColor: AppColors.primario,
+                indicatorColor: context.gym.brand,
                 indicatorWeight: 3,
                 indicatorSize: TabBarIndicatorSize.tab,
-                labelColor: AppColors.primario,
-                unselectedLabelColor: AppColors.textoSecundario,
+                labelColor: context.gym.brand,
+                unselectedLabelColor: context.gym.muted,
                 labelStyle: TextStyle(
                   fontSize: TipografiaGyMaster.tamanoMd,
                   fontWeight: TipografiaGyMaster.pesoSemiBold,
-                  color: AppColors.textoPrincipal,
+                  color: context.gym.ink,
                   height: 1.4,
                 ),
                 unselectedLabelStyle: TextStyle(
                   fontSize: TipografiaGyMaster.tamanoMd,
                   fontWeight: TipografiaGyMaster.pesoRegular,
-                  color: AppColors.textoTerciario,
+                  color: context.gym.faint,
                   height: 1.3,
                 ),
                 tabs: const [

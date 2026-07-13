@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/core/theme/emotional_text_styles.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicio/ejercicio_cubit.dart';
 
@@ -92,11 +92,11 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                 // Botón de volver
                 Container(
                   decoration: BoxDecoration(
-                    color: AppColors.fondoPrincipal,
+                    color: context.gym.surface,
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.textoTerciario.withValues(alpha: 0.1),
+                        color: context.gym.faint.withValues(alpha: 0.1),
                         offset: const Offset(0, 2),
                         blurRadius: 8,
                       ),
@@ -106,7 +106,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                     onPressed: () => context.pop(),
                     icon: Icon(
                       Icons.arrow_back_ios_rounded,
-                      color: AppColors.acento,
+                      color: context.gym.xpInk,
                       size: 20,
                     ),
                     padding: const EdgeInsets.all(12),
@@ -140,7 +140,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
           style: TextStyle(
             fontWeight: TipografiaGyMaster.pesoSemiBold,
             fontSize: TipografiaGyMaster.tamanoLg,
-            color: AppColors.primario,
+            color: context.gym.brand,
             height: 1.1,
           ),
           maxLines: 1,
@@ -152,7 +152,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
           style: TextStyle(
             fontWeight: TipografiaGyMaster.pesoRegular,
             fontSize: TipografiaGyMaster.tamanoSm,
-            color: AppColors.acento,
+            color: context.gym.xpInk,
           ),
         ),
       ],
@@ -171,17 +171,17 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
       )),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: context.gym.surface,
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: AppColors.primario.withValues(alpha: 0.1),
+              color: context.gym.brand.withValues(alpha: 0.1),
               offset: const Offset(0, 2),
               blurRadius: 8,
             ),
           ],
           border: Border.all(
-            color: AppColors.primario.withValues(alpha: 0.2),
+            color: context.gym.brand.withValues(alpha: 0.2),
             width: 2,
           ),
         ),
@@ -189,13 +189,13 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
           controller: _searchController,
           autofocus: true,
           style: EstilosTextoEmocional.amigable.copyWith(
-            color: AppColors.primario,
+            color: context.gym.brand,
             fontSize: 16,
           ),
           decoration: InputDecoration(
             hintText: 'Buscar ejercicios...',
             hintStyle: EstilosTextoEmocional.amigable.copyWith(
-              color: AppColors.textoTerciario,
+              color: context.gym.faint,
               fontSize: 16,
             ),
             border: InputBorder.none,
@@ -206,12 +206,12 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
             prefixIcon: Container(
               margin: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: AppColors.primario.withValues(alpha: 0.1),
+                color: context.gym.brand.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(
                 Icons.search_rounded,
-                color: AppColors.primario,
+                color: context.gym.brand,
                 size: 20,
               ),
             ),
@@ -220,12 +220,12 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                     icon: Container(
                       padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(
-                        color: AppColors.textoTerciario.withValues(alpha: 0.1),
+                        color: context.gym.faint.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Icon(
                         Icons.clear_rounded,
-                        color: AppColors.textoTerciario,
+                        color: context.gym.faint,
                         size: 16,
                       ),
                     ),
@@ -250,11 +250,11 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
         height: 48,
         decoration: BoxDecoration(
           color:
-              _isSearchExpanded ? AppColors.acento : AppColors.fondoPrincipal,
+              _isSearchExpanded ? context.gym.xpInk : context.gym.surface,
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: AppColors.acento.withValues(alpha: 0.2),
+              color: context.gym.xpInk.withValues(alpha: 0.2),
               offset: const Offset(0, 2),
               blurRadius: 8,
             ),
@@ -265,7 +265,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
           child: Icon(
             _isSearchExpanded ? Icons.close_rounded : Icons.search_rounded,
             key: ValueKey(_isSearchExpanded),
-            color: _isSearchExpanded ? Colors.white : AppColors.acento,
+            color: _isSearchExpanded ? Colors.white : context.gym.xpInk,
             size: 20,
           ),
         ),
@@ -329,14 +329,14 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
         );
 
     return Scaffold(
-      backgroundColor: AppColors.fondoPrincipal,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              AppColors.fondoPrincipal,
-              AppColors.fondoPrincipal,
-              AppColors.fondoPrincipal.withValues(alpha: 0.8),
+              Theme.of(context).scaffoldBackgroundColor,
+              Theme.of(context).scaffoldBackgroundColor,
+              Theme.of(context).scaffoldBackgroundColor.withValues(alpha: 0.8),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -384,20 +384,20 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: AppColors.acento.withValues(alpha: 0.1),
+                color: context.gym.xpInk.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Icon(
                 Icons.fitness_center_rounded,
                 size: 80,
-                color: AppColors.acento,
+                color: context.gym.xpInk,
               ),
             ),
             const SizedBox(height: 24),
             Text(
               '¡No te preocupes!',
               style: EstilosTextoEmocional.aliento.copyWith(
-                color: AppColors.primario,
+                color: context.gym.brand,
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
@@ -409,7 +409,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                 mensaje,
                 textAlign: TextAlign.center,
                 style: EstilosTextoEmocional.amigable.copyWith(
-                  color: AppColors.textoTerciario,
+                  color: context.gym.faint,
                   fontSize: 16,
                 ),
               ),
@@ -420,7 +420,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
               icono: Icons.refresh_rounded,
               tamano: TamanoBotonChiclet.grande,
               estilo: EstiloBotonChiclet.relleno,
-              colorFondo: AppColors.acento,
+              colorFondo: context.gym.xpInk,
               onPressed: () => context.read<EjercicioCubit>().setEjercicio(
                     musculoId: widget.idMusculo,
                     rutinaId: widget.idRutina,
@@ -435,8 +435,8 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
   /// Construye el efecto de carga shimmer con diseño emocional
   Widget _buildShimmerLoadingEffect() {
     return Shimmer.fromColors(
-      baseColor: AppColors.fondoPrincipal,
-      highlightColor: AppColors.fondoPrincipal,
+      baseColor: context.gym.surface2,
+      highlightColor: context.gym.surface2,
       child: ListView.builder(
         itemCount: 8,
         padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -444,11 +444,11 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
           return Container(
             margin: const EdgeInsets.symmetric(vertical: 6.0),
             decoration: BoxDecoration(
-              color: AppColors.fondoPrincipal,
+              color: context.gym.surface2,
               borderRadius: BorderRadius.circular(16),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.primario.withValues(alpha: 0.05),
+                  color: context.gym.brand.withValues(alpha: 0.05),
                   blurRadius: 8,
                   offset: const Offset(0, 2),
                 ),
@@ -463,7 +463,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                     width: 64,
                     height: 64,
                     decoration: BoxDecoration(
-                      color: AppColors.fondoPrincipal,
+                      color: context.gym.surface2,
                       borderRadius: BorderRadius.circular(16),
                     ),
                   ),
@@ -477,7 +477,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                           height: 18.0,
                           width: double.infinity,
                           decoration: BoxDecoration(
-                            color: AppColors.fondoPrincipal,
+                            color: context.gym.surface2,
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
@@ -486,7 +486,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                           height: 14.0,
                           width: 150,
                           decoration: BoxDecoration(
-                            color: AppColors.fondoPrincipal,
+                            color: context.gym.surface2,
                             borderRadius: BorderRadius.circular(6),
                           ),
                         ),
@@ -498,7 +498,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                     width: 42,
                     height: 42,
                     decoration: BoxDecoration(
-                      color: AppColors.fondoPrincipal,
+                      color: context.gym.surface2,
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
@@ -524,13 +524,13 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                 width: 80,
                 height: 80,
                 decoration: BoxDecoration(
-                  color: AppColors.primario.withValues(alpha: 0.1),
+                  color: context.gym.brand.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Icon(
                   IconsaxPlusLinear.weight,
                   size: 40,
-                  color: AppColors.primario,
+                  color: context.gym.brand,
                 ),
               ),
               const SizedBox(height: 16),
@@ -539,7 +539,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                 style: EstilosTextoEmocional.energetico.copyWith(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.primario,
+                  color: context.gym.brand,
                 ),
               ),
               const SizedBox(height: 8),
@@ -548,7 +548,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                 textAlign: TextAlign.center,
                 style: EstilosTextoEmocional.amigable.copyWith(
                   fontSize: 16,
-                  color: AppColors.textoTerciario,
+                  color: context.gym.faint,
                 ),
               ),
             ],
@@ -572,11 +572,11 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
             child: Container(
               margin: const EdgeInsets.symmetric(vertical: 6.0),
               decoration: BoxDecoration(
-                color: AppColors.fondoPrincipal,
+                color: context.gym.surface,
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.primario.withValues(alpha: 0.08),
+                    color: context.gym.brand.withValues(alpha: 0.08),
                     blurRadius: 12,
                     offset: const Offset(0, 4),
                   ),
@@ -606,7 +606,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                               boxShadow: [
                                 BoxShadow(
                                   color:
-                                      AppColors.primario.withValues(alpha: 0.1),
+                                      context.gym.brand.withValues(alpha: 0.1),
                                   blurRadius: 8,
                                   offset: const Offset(0, 2),
                                 ),
@@ -623,7 +623,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                                             ejercicio.imagenDireccion!,
                                             fit: BoxFit.contain,
                                             colorFilter: ColorFilter.mode(
-                                              AppColors.primario,
+                                              context.gym.brand,
                                               BlendMode.srcIn,
                                             ),
                                           ),
@@ -639,14 +639,14 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                                               width: 64,
                                               height: 64,
                                               decoration: BoxDecoration(
-                                                color: AppColors.primario
+                                                color: context.gym.brand
                                                     .withValues(alpha: 0.1),
                                                 borderRadius:
                                                     BorderRadius.circular(15),
                                               ),
                                               child: Icon(
                                                 IconsaxPlusLinear.weight,
-                                                color: AppColors.primario,
+                                                color: context.gym.brand,
                                                 size: 24,
                                               ),
                                             );
@@ -656,13 +656,13 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                                       width: 64,
                                       height: 64,
                                       decoration: BoxDecoration(
-                                        color: AppColors.primario
+                                        color: context.gym.brand
                                             .withValues(alpha: 0.1),
                                         borderRadius: BorderRadius.circular(15),
                                       ),
                                       child: Icon(
                                         IconsaxPlusLinear.weight,
-                                        color: AppColors.primario,
+                                        color: context.gym.brand,
                                         size: 24,
                                       ),
                                     ),
@@ -678,7 +678,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                                   style: TextStyle(
                                     fontSize: TipografiaGyMaster.tamanoMd,
                                     fontWeight: TipografiaGyMaster.pesoSemiBold,
-                                    color: AppColors.primario,
+                                    color: context.gym.brand,
                                     height: 1.1,
                                   ),
                                 ),
@@ -688,7 +688,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                                       widget.nombreMusculo),
                                   style:
                                       EstilosTextoEmocional.amigable.copyWith(
-                                    color: AppColors.textoTerciario,
+                                    color: context.gym.faint,
                                     fontSize: 14,
                                   ),
                                 ),
@@ -701,8 +701,8 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
                               color: ejercicio.seleccionado
-                                  ? AppColors.exito.withValues(alpha: 0.15)
-                                  : AppColors.acento.withValues(alpha: 0.15),
+                                  ? context.gym.brand.withValues(alpha: 0.15)
+                                  : context.gym.xpInk.withValues(alpha: 0.15),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Icon(
@@ -711,8 +711,8 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                                   : Icons.fitness_center_rounded,
                               size: 18,
                               color: ejercicio.seleccionado
-                                  ? AppColors.exito
-                                  : AppColors.acento,
+                                  ? context.gym.brand
+                                  : context.gym.xpInk,
                             ),
                           ),
                         ],

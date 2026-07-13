@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 
 class CustomDataTable extends StatelessWidget {
   final List<String> headers;
@@ -164,7 +165,7 @@ class CustomDataTable extends StatelessWidget {
                             child: Center(
                               child: IconButton(
                                 icon: const Icon(IconsaxPlusLinear.trash),
-                                color: AppColors.error.withValues(alpha: 0.7),
+                                color: context.gym.danger.withValues(alpha: 0.7),
                                 onPressed: () {
                                   if (onRemoveRow != null) {
                                     onRemoveRow!(rowIndex);

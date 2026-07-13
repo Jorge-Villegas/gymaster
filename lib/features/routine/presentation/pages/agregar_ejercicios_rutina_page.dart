@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/config/app_config.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/core/theme/emotional_text_styles.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/features/routine/presentation/cubits/agregar_series/agregar_series_cubit.dart';
 import 'package:gymaster/features/routine/presentation/cubits/agregar_series/agregar_series_state.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicio/ejercicio_cubit.dart';
@@ -155,14 +155,14 @@ class _AgregarEjercicioRutinaPageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.fondoPrincipal,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              AppColors.fondoPrincipal,
-              Colors.white,
-              AppColors.fondoPrincipal.withValues(alpha: 0.8),
+              Theme.of(context).scaffoldBackgroundColor,
+              context.gym.surface,
+              Theme.of(context).scaffoldBackgroundColor.withValues(alpha: 0.8),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -264,11 +264,11 @@ class _AgregarEjercicioRutinaPageState
             // Botón de volver minimalista
             Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: context.gym.surface,
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.acento.withValues(alpha: 0.15),
+                    color: context.gym.xpInk.withValues(alpha: 0.15),
                     offset: const Offset(0, 2),
                     blurRadius: 8,
                   ),
@@ -278,7 +278,7 @@ class _AgregarEjercicioRutinaPageState
                 onPressed: () => context.pop(),
                 icon: Icon(
                   Icons.arrow_back_ios_rounded,
-                  color: AppColors.acento,
+                  color: context.gym.xpInk,
                   size: 20,
                 ),
                 padding: const EdgeInsets.all(12),
@@ -293,7 +293,7 @@ class _AgregarEjercicioRutinaPageState
                   Text(
                     '¡Configura tu poder!',
                     style: EstilosTextoEmocional.energetico.copyWith(
-                      color: AppColors.primario,
+                      color: context.gym.brand,
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
@@ -316,7 +316,7 @@ class _AgregarEjercicioRutinaPageState
         texto: '¡Guardar ejercicio!',
         tamano: TamanoBotonChiclet.grande,
         estilo: EstiloBotonChiclet.relleno,
-        colorFondo: AppColors.exito,
+        colorFondo: context.gym.brand,
       ),
     );
   }
@@ -333,12 +333,12 @@ class _AgregarEjercicioRutinaPageState
               width: 80,
               height: 80,
               decoration: BoxDecoration(
-                color: AppColors.acento.withValues(alpha: 0.1),
+                color: context.gym.xpInk.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Center(
                 child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(AppColors.acento),
+                  valueColor: AlwaysStoppedAnimation<Color>(context.gym.xpInk),
                   strokeWidth: 3,
                 ),
               ),
@@ -347,7 +347,7 @@ class _AgregarEjercicioRutinaPageState
             Text(
               'Preparando tu entrenamiento...',
               style: EstilosTextoEmocional.amigable.copyWith(
-                color: AppColors.primario,
+                color: context.gym.brand,
                 fontSize: 18,
               ),
             ),
@@ -355,7 +355,7 @@ class _AgregarEjercicioRutinaPageState
             Text(
               '¡Casi listo para entrenar! 💪',
               style: EstilosTextoEmocional.aliento.copyWith(
-                color: AppColors.textoTerciario,
+                color: context.gym.faint,
                 fontSize: 14,
               ),
             ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
 import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 
@@ -26,6 +26,7 @@ class TarjetaMetricaWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.gym;
     return ConstrainedBox(
       constraints: const BoxConstraints(
         maxWidth: 220,
@@ -33,15 +34,15 @@ class TarjetaMetricaWidget extends StatelessWidget {
       child: Container(
         padding: Espaciado.rellenoSm,
         decoration: BoxDecoration(
-          color: AppColors.fondoTarjeta,
+          color: c.surface,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: AppColors.borde.withValues(alpha: 0.2),
+            color: c.line,
             width: 1,
           ),
           boxShadow: [
             BoxShadow(
-              color: (colorIcono ?? AppColors.primario).withValues(alpha: 0.08),
+              color: (colorIcono ?? c.brand).withValues(alpha: 0.08),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -56,7 +57,7 @@ class TarjetaMetricaWidget extends StatelessWidget {
               style: TextStyle(
                 fontSize: TipografiaGyMaster.tamanoXs,
                 fontWeight: TipografiaGyMaster.pesoRegular,
-                color: AppColors.textoSecundario,
+                color: c.muted,
                 height: 1.3,
               ),
               maxLines: 2,
@@ -78,7 +79,7 @@ class TarjetaMetricaWidget extends StatelessWidget {
                         style: TextStyle(
                           fontSize: TipografiaGyMaster.tamano3xl,
                           fontWeight: TipografiaGyMaster.pesoSemiBold,
-                          color: AppColors.textoPrincipal,
+                          color: c.ink,
                           height: 1.0,
                           letterSpacing: -0.5,
                         ),
@@ -91,14 +92,14 @@ class TarjetaMetricaWidget extends StatelessWidget {
                           style: TextStyle(
                             fontSize: TipografiaGyMaster.tamanoXs,
                             fontWeight: TipografiaGyMaster.pesoRegular,
-                            color: AppColors.textoTerciario,
+                            color: c.faint,
                             height: 1.2,
                           ),
                         ),
                       ],
                       if (porcentajeCambio != null) ...[
                         SizedBox(height: Espaciado.xs),
-                        _buildTendencia(),
+                        _buildTendencia(context),
                       ],
                     ],
                   ),
@@ -108,13 +109,12 @@ class TarjetaMetricaWidget extends StatelessWidget {
                   width: 50,
                   height: 50,
                   decoration: BoxDecoration(
-                    color: (colorIcono ?? AppColors.primario)
-                        .withValues(alpha: 0.15),
+                    color: (colorIcono ?? c.brand).withValues(alpha: 0.15),
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
                     icono,
-                    color: colorIcono ?? AppColors.primario,
+                    color: colorIcono ?? c.brand,
                     size: 28,
                   ),
                 ),
@@ -126,14 +126,14 @@ class TarjetaMetricaWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildTendencia() {
+  Widget _buildTendencia(BuildContext context) {
+    final c = context.gym;
     final esPositivo = porcentajeCambio! >= 0;
+    final color = esPositivo ? c.brand : c.danger;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
       decoration: BoxDecoration(
-        color: esPositivo
-            ? AppColors.exito.withValues(alpha: 0.15)
-            : AppColors.error.withValues(alpha: 0.15),
+        color: color.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
@@ -142,7 +142,7 @@ class TarjetaMetricaWidget extends StatelessWidget {
           Icon(
             esPositivo ? Icons.arrow_upward : Icons.arrow_downward,
             size: 12,
-            color: esPositivo ? AppColors.exito : AppColors.error,
+            color: color,
           ),
           SizedBox(width: 2),
           Text(
@@ -150,7 +150,7 @@ class TarjetaMetricaWidget extends StatelessWidget {
             style: TextStyle(
               fontSize: TipografiaGyMaster.tamanoXs,
               fontWeight: TipografiaGyMaster.pesoSemiBold,
-              color: esPositivo ? AppColors.exito : AppColors.error,
+              color: color,
               height: 1.0,
             ),
           ),

@@ -1,34 +1,31 @@
 {
-    "editor.wordWrap": "on",
-    "editor.lineHeight": 1.6,
-    "editor.fontFamily": "google sans code",
-    // "editor.lineHeight": 1.4,
-    // "editor.fontFamily": "JetBrains Mono",
-    "editor.fontSize": 14,
-    "editor.fontWeight": "300",
-    "editor.tokenColorCustomizations": {
-        "textMateRules": [
-            // {
-            //     "scope": [
-            //         "keyword",
-            //         "storage.type",
-            //         "variable.language",
-            //         "storage.modifier"
-            //     ],
-            //     "settings": {
-            //         "fontWStyle": "italic"
-            //     }
-            // },
-            {
-                "scope": [
-                    "comment",
-                    "comment.block.documentation"
-                ],
-                "settings": {
-                    "fontStyle": "italic"
-                }
-            }
-        ]
-    },
-    "window.border": "#FF0000"
+  "editor.wordWrap": "on",
+  "editor.lineHeight": 1.6,
+  "editor.fontFamily": "SF Mono",
+  // "editor.lineHeight": 1.4,
+  // "editor.fontFamily": "JetBrains Mono",
+  "editor.fontSize": 14,
+  "editor.fontWeight": "300",
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      // {
+      //     "scope": [
+      //         "keyword",
+      //         "storage.type",
+      //         "variable.language",
+      //         "storage.modifier"
+      //     ],
+      //     "settings": {
+      //         "fontWStyle": "italic"
+      //     }
+      // },
+      {
+        "scope": ["comment", "comment.block.documentation"],
+        "settings": {
+          "fontStyle": "italic"
+        }
+      }
+    ]
+  },
+  "window.border": "#FF0000"
 }

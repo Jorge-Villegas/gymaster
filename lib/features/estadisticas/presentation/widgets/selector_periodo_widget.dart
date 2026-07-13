@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
 import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/features/estadisticas/domain/entities/periodo_tiempo.dart';
@@ -63,19 +63,17 @@ class _ChipPeriodo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.gym;
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
         decoration: BoxDecoration(
-          color:
-              estaSeleccionado ? AppColors.primario : AppColors.fondoSecundario,
+          color: estaSeleccionado ? c.brand : c.surface,
           borderRadius: BorderRadius.circular(24),
           border: Border.all(
-            color: estaSeleccionado
-                ? AppColors.primario
-                : AppColors.borde.withValues(alpha: 0.2),
+            color: estaSeleccionado ? c.brand : c.line,
             width: 2,
           ),
         ),
@@ -86,7 +84,7 @@ class _ChipPeriodo extends StatelessWidget {
             fontWeight: estaSeleccionado
                 ? TipografiaGyMaster.pesoSemiBold
                 : TipografiaGyMaster.pesoRegular,
-            color: estaSeleccionado ? Colors.white : AppColors.textoPrincipal,
+            color: estaSeleccionado ? Colors.white : c.ink,
           ),
         ),
       ),

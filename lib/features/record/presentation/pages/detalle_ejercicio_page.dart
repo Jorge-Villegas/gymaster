@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/emotional_text_styles.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
 import 'package:gymaster/core/theme/tipografia_gymaster.dart';
@@ -61,11 +62,11 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
             // Botón de volver minimalista
             Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: context.gym.surface,
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.secundario.withValues(alpha: 0.1),
+                    color: context.gym.info.withValues(alpha: 0.1),
                     offset: const Offset(0, 2),
                     blurRadius: 8,
                   ),
@@ -75,7 +76,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                 onPressed: () => Navigator.of(context).pop(),
                 icon: Icon(
                   Icons.arrow_back_ios_rounded,
-                  color: AppColors.secundario,
+                  color: context.gym.info,
                   size: 20,
                 ),
                 padding: const EdgeInsets.all(12),
@@ -95,7 +96,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                           TipografiaGyMaster.tamano2xl, // Título principal
                       letterSpacing: 1.2,
                       height: 1.1,
-                      color: AppColors.secundario,
+                      color: context.gym.info,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -118,11 +119,11 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
             // Botón de actualizar simple
             Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: context.gym.surface,
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.secundario.withValues(alpha: 0.1),
+                    color: context.gym.info.withValues(alpha: 0.1),
                     offset: const Offset(0, 2),
                     blurRadius: 8,
                   ),
@@ -131,7 +132,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
               child: IconButton(
                 icon: Icon(
                   Icons.refresh_rounded,
-                  color: AppColors.secundario,
+                  color: context.gym.info,
                   size: 20,
                 ),
                 onPressed: () {
@@ -153,14 +154,14 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CircularProgressIndicator(
-            color: AppColors.primario,
+            color: context.gym.brand,
             strokeWidth: 3,
           ),
           Espaciado.separacionVerticalSm,
           Text(
             'Cargando datos...',
             style: EstilosTextoEmocional.amigable.copyWith(
-              color: AppColors.textoTerciario,
+              color: context.gym.faint,
               fontSize: 16,
             ),
           ),
@@ -172,7 +173,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.fondoPrincipal,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Column(
           children: [
@@ -184,9 +185,9 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      AppColors.fondoPrincipal,
-                      Colors.white,
-                      AppColors.fondoPrincipal.withValues(alpha: 0.8),
+                      context.gym.surface2,
+                      context.gym.surface,
+                      context.gym.surface2.withValues(alpha: 0.8),
                     ],
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
@@ -243,11 +244,11 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                 bottom: Espaciado.sm), // Menor separación entre bloques
             padding: Espaciado.rellenoSm, // Más compacto para card principal
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: context.gym.surface,
               borderRadius: BorderRadius.circular(16),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.primario.withValues(alpha: 0.08),
+                  color: context.gym.brand.withValues(alpha: 0.08),
                   blurRadius: 12,
                   offset: const Offset(0, 4),
                 ),
@@ -258,12 +259,12 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: AppColors.primario.withValues(alpha: 0.1),
+                    color: context.gym.brand.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
                     Icons.fitness_center,
-                    color: AppColors.primario,
+                    color: context.gym.brand,
                     size: 24,
                   ),
                 ),
@@ -275,7 +276,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                       Text(
                         capitalizarPrimeraLetra(ejercicio.nombre),
                         style: TextStyle(
-                          color: AppColors.primario,
+                          color: context.gym.brand,
                           fontSize: TipografiaGyMaster.tamanoLg, // Subtítulo
                           fontWeight: TipografiaGyMaster.pesoSemiBold,
                         ),
@@ -287,13 +288,13 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                           vertical: 6,
                         ),
                         decoration: BoxDecoration(
-                          color: AppColors.secundario.withValues(alpha: 0.1),
+                          color: context.gym.info.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
                           '${tableData.length} series registradas',
                           style: TextStyle(
-                            color: AppColors.secundario,
+                            color: context.gym.info,
                             fontSize:
                                 TipografiaGyMaster.tamanoSm, // Info secundaria
                             fontWeight: TipografiaGyMaster.pesoRegular,
@@ -312,11 +313,11 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
             width: double.infinity,
             padding: Espaciado.rellenoSm,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: context.gym.surface,
               borderRadius: BorderRadius.circular(16),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.primario.withValues(alpha: 0.05),
+                  color: context.gym.brand.withValues(alpha: 0.05),
                   blurRadius: 8,
                   offset: const Offset(0, 2),
                 ),
@@ -329,7 +330,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                 Text(
                   'Series del Ejercicio',
                   style: TextStyle(
-                    color: AppColors.primario,
+                    color: context.gym.brand,
                     fontSize:
                         TipografiaGyMaster.tamanoLg, // Encabezado de sección
                     fontWeight: TipografiaGyMaster.pesoSemiBold,
@@ -359,7 +360,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
-          color: AppColors.primario.withValues(alpha: 0.2),
+          color: context.gym.brand.withValues(alpha: 0.2),
           width: 1,
         ),
         borderRadius: BorderRadius.circular(12),
@@ -371,7 +372,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
           Container(
             padding: Espaciado.relleno16y8,
             decoration: BoxDecoration(
-              color: AppColors.primario.withValues(alpha: 0.1),
+              color: context.gym.brand.withValues(alpha: 0.1),
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(12),
                 topRight: Radius.circular(12),
@@ -383,7 +384,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                   child: Text(
                     'Serie',
                     style: TextStyle(
-                      color: AppColors.primario,
+                      color: context.gym.brand,
                       fontSize: TipografiaGyMaster.tamanoMd, // Subtítulo tabla
                       fontWeight: TipografiaGyMaster.pesoSemiBold,
                     ),
@@ -394,7 +395,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                   child: Text(
                     'Peso',
                     style: TextStyle(
-                      color: AppColors.primario,
+                      color: context.gym.brand,
                       fontSize: TipografiaGyMaster.tamanoMd, // Subtítulo tabla
                       fontWeight: TipografiaGyMaster.pesoSemiBold,
                     ),
@@ -405,7 +406,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                   child: Text(
                     'Reps',
                     style: TextStyle(
-                      color: AppColors.primario,
+                      color: context.gym.brand,
                       fontSize: TipografiaGyMaster.tamanoMd, // Subtítulo tabla
                       fontWeight: TipografiaGyMaster.pesoSemiBold,
                     ),
@@ -436,11 +437,11 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                       padding: Espaciado.relleno16y8,
                       decoration: BoxDecoration(
                         color: isSelected
-                            ? AppColors.secundario.withValues(alpha: 0.1)
+                            ? context.gym.info.withValues(alpha: 0.1)
                             : Colors.transparent,
                         border: Border(
                           bottom: BorderSide(
-                            color: AppColors.primario.withValues(alpha: 0.1),
+                            color: context.gym.brand.withValues(alpha: 0.1),
                             width: 0.5,
                           ),
                         ),
@@ -452,8 +453,8 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                               data[0],
                               style: TextStyle(
                                 color: isSelected
-                                    ? AppColors.secundario
-                                    : AppColors.textoPrincipal,
+                                    ? context.gym.info
+                                    : context.gym.ink,
                                 fontSize:
                                     TipografiaGyMaster.tamanoSm, // Celdas tabla
                                 fontWeight: isSelected
@@ -468,8 +469,8 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                               data[1],
                               style: TextStyle(
                                 color: isSelected
-                                    ? AppColors.secundario
-                                    : AppColors.textoPrincipal,
+                                    ? context.gym.info
+                                    : context.gym.ink,
                                 fontSize:
                                     TipografiaGyMaster.tamanoSm, // Celdas tabla
                                 fontWeight: isSelected
@@ -484,8 +485,8 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                               data[2],
                               style: TextStyle(
                                 color: isSelected
-                                    ? AppColors.secundario
-                                    : AppColors.textoPrincipal,
+                                    ? context.gym.info
+                                    : context.gym.ink,
                                 fontSize:
                                     TipografiaGyMaster.tamanoSm, // Celdas tabla
                                 fontWeight: isSelected
@@ -517,11 +518,11 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
       width: double.infinity,
       padding: Espaciado.rellenoSm, // Más compacto para controles
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.gym.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primario.withValues(alpha: 0.08),
+            color: context.gym.brand.withValues(alpha: 0.08),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -536,12 +537,12 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: AppColors.primario.withValues(alpha: 0.1),
+                  color: context.gym.brand.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
                   Icons.tune,
-                  color: AppColors.primario,
+                  color: context.gym.brand,
                   size: 20,
                 ),
               ),
@@ -549,7 +550,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
               Text(
                 'Ajustar Serie ${selectedRowIndex! + 1}',
                 style: TextStyle(
-                  color: AppColors.primario,
+                  color: context.gym.brand,
                   fontSize: TipografiaGyMaster.tamanoLg, // Subtítulo sección
                   fontWeight: TipografiaGyMaster.pesoSemiBold,
                 ),
@@ -675,7 +676,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
             child: Text(
               label,
               style: TextStyle(
-                color: AppColors.textoPrincipal,
+                color: context.gym.ink,
                 fontSize: TipografiaGyMaster.tamanoMd,
                 fontWeight: TipografiaGyMaster.pesoSemiBold,
               ),
@@ -687,7 +688,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
             child: Container(
               padding: Espaciado.relleno16y8,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: context.gym.surface,
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(
                   color: color.withValues(alpha: 0.3),
@@ -712,7 +713,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
               ChicletButton(
                 texto: '',
                 icono: Icons.add,
-                colorFondo: AppColors.secundario,
+                colorFondo: context.gym.info,
                 colorTexto: Colors.white,
                 radioBorde: 8,
                 tamano: TamanoBotonChiclet.pequeno,
@@ -728,7 +729,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
               ChicletButton(
                 texto: '',
                 icono: Icons.remove,
-                colorFondo: AppColors.textoTerciario,
+                colorFondo: context.gym.faint,
                 colorTexto: Colors.white,
                 radioBorde: 8,
                 tamano: TamanoBotonChiclet.pequeno,

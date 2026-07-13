@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/emotional_text_styles.dart';
 import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/shared/utils/haptic_feedback_helper.dart';
@@ -143,17 +143,17 @@ class _CustomElevatedButtonState extends State<CustomElevatedButton>
 
     switch (widget.emotionalType) {
       case EmotionalButtonType.energetic:
-        return AppColors.acento;
+        return context.gym.xpInk;
       case EmotionalButtonType.success:
-        return AppColors.exito;
+        return context.gym.brand;
       case EmotionalButtonType.achievement:
-        return AppColors.acento;
+        return context.gym.xpInk;
       case EmotionalButtonType.motivation:
-        return AppColors.error;
+        return context.gym.danger;
       case EmotionalButtonType.calm:
-        return AppColors.secundarioClaro;
+        return context.gym.info;
       case EmotionalButtonType.warning:
-        return AppColors.advertencia;
+        return context.gym.coral;
       case EmotionalButtonType.neutral:
         return Theme.of(context).colorScheme.primary;
     }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/features/setting/presentation/cubits/onboarding/onboarding_state.dart';
 import 'package:gymaster/features/setting/presentation/cubits/onboarding/onboarding_cubit.dart';
 import 'package:gymaster/features/setting/presentation/cubits/onboarding_usuario_cubit.dart';
@@ -46,7 +47,7 @@ class _OnboardingContenedorUnificadoPageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.fondoPrincipal,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: MultiBlocListener(
         listeners: [
           BlocListener<OnboardingCubit, OnboardingState>(
@@ -59,7 +60,7 @@ class _OnboardingContenedorUnificadoPageState
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(state.message),
-                    backgroundColor: AppColors.error,
+                    backgroundColor: context.gym.danger,
                   ),
                 );
               }
@@ -73,7 +74,7 @@ class _OnboardingContenedorUnificadoPageState
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(state.mensaje),
-                    backgroundColor: AppColors.error,
+                    backgroundColor: context.gym.danger,
                   ),
                 );
               }
@@ -138,8 +139,8 @@ class _OnboardingContenedorUnificadoPageState
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                AppColors.fondoPrincipal,
-                AppColors.acento.withValues(alpha: 0.05),
+                Theme.of(context).scaffoldBackgroundColor,
+                context.gym.xpInk.withValues(alpha: 0.05),
               ],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,

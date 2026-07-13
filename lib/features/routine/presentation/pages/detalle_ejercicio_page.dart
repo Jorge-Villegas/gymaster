@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/emotional_text_styles.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
 import 'package:gymaster/core/theme/tipografia_gymaster.dart';
@@ -54,7 +55,7 @@ class CustomDataTable extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Table(
-      border: TableBorder.all(color: Colors.grey.shade300, width: 1),
+      border: TableBorder.all(color: context.gym.line, width: 1),
       columnWidths: const <int, TableColumnWidth>{
         0: IntrinsicColumnWidth(), // Serie
         1: IntrinsicColumnWidth(), // Peso
@@ -92,7 +93,7 @@ class CustomDataTable extends StatelessWidget {
               completedRows![idx];
           Color rowColor = rowColors != null && idx < rowColors!.length
               ? rowColors![idx]
-              : (isCompleted ? Colors.green.shade100 : Colors.grey.shade100);
+              : (isCompleted ? context.gym.brandSoft : context.gym.surface2);
 
           return TableRow(
             decoration: BoxDecoration(color: rowColor),
@@ -117,7 +118,7 @@ class CustomDataTable extends StatelessWidget {
                 verticalAlignment: TableCellVerticalAlignment.middle,
                 child: isCompleted
                     ? Icon(Icons.check_circle,
-                        color: Colors.green.shade700, size: 14)
+                        color: context.gym.brand, size: 14)
                     : const SizedBox(width: 14),
               ),
             ],
@@ -145,10 +146,10 @@ class DetalleEjercicioScreen extends StatelessWidget {
           );
         }
         if (state is EjerciciosByRutinaLoading) {
-          return _buildLoadingState();
+          return _buildLoadingState(context);
         }
         if (state is EjerciciosByRutinaError) {
-          return _buildErrorState(state.message);
+          return _buildErrorState(context, state.message);
         }
         if (state is EjerciciosByRutinaCompleted) {
           return RutinaCompletadaWidget(state: state);
@@ -156,12 +157,12 @@ class DetalleEjercicioScreen extends StatelessWidget {
         if (state is EjerciciosByRutinaSuccess) {
           return _buildSuccessState(context, state);
         }
-        return _buildErrorState('Estado inesperado');
+        return _buildErrorState(context, 'Estado inesperado');
       },
     );
   }
 
-  Widget _buildExerciseImage(String imagenDireccion) {
+  Widget _buildExerciseImage(BuildContext context, String imagenDireccion) {
     return Container(
       margin: Espaciado.rellenoHorizontalMd,
       child: AspectRatio(
@@ -169,24 +170,24 @@ class DetalleEjercicioScreen extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(Espaciado.sm),
-            color: AppColors.fondoTarjeta, // Solo color de fondo, sin gradiente
+            color: context.gym.surface, // Solo color de fondo, sin gradiente
             boxShadow: AppColors.sombraSuave,
           ),
           clipBehavior: Clip.antiAlias,
-          child: _buildImageWidget(imagenDireccion),
+          child: _buildImageWidget(context, imagenDireccion),
         ),
       ),
     );
   }
 
 // Admite SVG, PNG/JPG y fallback
-  Widget _buildImageWidget(String imagenDireccion) {
+  Widget _buildImageWidget(BuildContext context, String imagenDireccion) {
     if (VerificadorTipoArchivo.esSvg(imagenDireccion)) {
       return SvgPicture.asset(
         imagenDireccion,
         fit: BoxFit.contain,
         semanticsLabel: 'Ilustración del ejercicio',
-        placeholderBuilder: (context) => _buildImagePlaceholder(),
+        placeholderBuilder: (context) => _buildImagePlaceholder(context),
       );
     }
     if (VerificadorTipoArchivo.esImagen(imagenDireccion)) {
@@ -194,15 +195,16 @@ class DetalleEjercicioScreen extends StatelessWidget {
         imagenDireccion,
         fit: BoxFit.cover,
         alignment: Alignment.center,
-        errorBuilder: (context, error, stackTrace) => _buildImagePlaceholder(),
+        errorBuilder: (context, error, stackTrace) =>
+            _buildImagePlaceholder(context),
       );
     }
-    return _buildImagePlaceholder();
+    return _buildImagePlaceholder(context);
   }
 
-  Widget _buildImagePlaceholder() {
+  Widget _buildImagePlaceholder(BuildContext context) {
     return Container(
-      color: Colors.grey[100],
+      color: context.gym.surface2,
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -210,13 +212,13 @@ class DetalleEjercicioScreen extends StatelessWidget {
             Icon(
               Icons.fitness_center_rounded,
               size: 56,
-              color: AppColors.acento,
+              color: context.gym.xpInk,
             ),
             const SizedBox(height: 10),
             Text(
               'Imagen no disponible',
               style: EstilosTextoEmocional.amigable.copyWith(
-                color: AppColors.textoTerciario,
+                color: context.gym.faint,
                 fontSize: 15,
               ),
             ),
@@ -227,7 +229,8 @@ class DetalleEjercicioScreen extends StatelessWidget {
   }
 
   /// Widget reutilizable para mostrar un dato centralizado (valor grande, etiqueta y unidad)
-  Widget _buildDatoEjercicioCentral({
+  Widget _buildDatoEjercicioCentral(
+    BuildContext context, {
     required String valor,
     required String etiqueta,
   }) {
@@ -238,7 +241,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
           valor,
           style: EstilosTextoEmocional.contador.copyWith(
             fontSize: TipografiaGyMaster.tamano5xl,
-            color: AppColors.acento,
+            color: context.gym.xpInk,
             fontWeight: TipografiaGyMaster.pesoSemiBold,
           ),
           textAlign: TextAlign.center,
@@ -248,7 +251,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
           etiqueta,
           style: EstilosTextoEmocional.amigable.copyWith(
             fontSize: TipografiaGyMaster.tamanoSm,
-            color: AppColors.textoSecundario,
+            color: context.gym.muted,
             fontWeight: TipografiaGyMaster.pesoRegular,
           ),
           textAlign: TextAlign.center,
@@ -264,7 +267,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
       margin: Espaciado.rellenoHorizontalMd,
       padding: Espaciado.rellenoMd,
       decoration: BoxDecoration(
-        color: AppColors.fondoTarjeta,
+        color: context.gym.surface,
         borderRadius: BorderRadius.circular(Espaciado.sm),
         boxShadow: AppColors.sombraSuave,
       ),
@@ -275,7 +278,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
             style: TextStyle(
               fontWeight: TipografiaGyMaster.pesoSemiBold,
               fontSize: TipografiaGyMaster.tamanoLg,
-              color: AppColors.primarioCalido,
+              color: context.gym.brand,
               height: 1.1,
             ),
           ),
@@ -284,9 +287,10 @@ class DetalleEjercicioScreen extends StatelessWidget {
 
           // Control de repeticiones
           _buildControlSection(
+            context,
             title: 'Repeticiones',
             value: serie.repeticiones,
-            color: AppColors.acento,
+            color: context.gym.xpInk,
             onIncrement: () =>
                 context.read<EjerciciosByRutinaCubit>().aumentarRepeticiones(),
             onDecrement: () =>
@@ -297,9 +301,10 @@ class DetalleEjercicioScreen extends StatelessWidget {
 
           // Control de peso
           _buildControlSection(
+            context,
             title: 'Peso (kg)',
             value: serie.peso.round(),
-            color: AppColors.acento,
+            color: context.gym.xpInk,
             onIncrement: () =>
                 context.read<EjerciciosByRutinaCubit>().aumentarPeso(),
             onDecrement: () =>
@@ -310,7 +315,8 @@ class DetalleEjercicioScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildControlSection({
+  Widget _buildControlSection(
+    BuildContext context, {
     required String title,
     required int value,
     required Color color,
@@ -325,7 +331,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
             style: TextStyle(
               fontWeight: TipografiaGyMaster.pesoRegular,
               fontSize: TipografiaGyMaster.tamanoLg,
-              color: AppColors.textoPrincipal,
+              color: context.gym.ink,
             ),
           ),
         ),
@@ -335,7 +341,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
               onPressed: onDecrement,
               icono: Icons.remove_rounded,
               texto: '',
-              colorFondo: AppColors.textoTerciario,
+              colorFondo: context.gym.faint,
               colorTexto: Colors.white,
               tamano: TamanoBotonChiclet.pequeno,
               estilo: EstiloBotonChiclet.relleno,
@@ -352,7 +358,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
                 style: TextStyle(
                   fontWeight: TipografiaGyMaster.pesoRegular, // SemiBold
                   fontSize: TipografiaGyMaster.tamano2xl,
-                  color: AppColors.textoPrincipal,
+                  color: context.gym.ink,
                 ),
               ),
             ),
@@ -360,7 +366,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
               onPressed: onIncrement,
               texto: '',
               icono: Icons.add,
-              colorFondo: AppColors.secundario,
+              colorFondo: context.gym.info,
               colorTexto: Colors.white,
               tamano: TamanoBotonChiclet.pequeno,
               estilo: EstiloBotonChiclet.relleno,
@@ -380,7 +386,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
     return Container(
       padding: Espaciado.rellenoMd,
       decoration: BoxDecoration(
-        color: AppColors.fondoTarjeta,
+        color: context.gym.surface,
         boxShadow: AppColors.sombraSuave,
       ),
       child: SafeArea(
@@ -402,8 +408,8 @@ class DetalleEjercicioScreen extends StatelessWidget {
                     icono: Icons.pause_circle_outline_rounded,
                     tamano: TamanoBotonChiclet.mediano,
                     estilo: EstiloBotonChiclet.contorno,
-                    colorBorde: AppColors.textoTerciario,
-                    colorTexto: AppColors.textoTerciario,
+                    colorBorde: context.gym.faint,
+                    colorTexto: context.gym.faint,
                   ),
                 ),
                 SizedBox(width: Espaciado.sm),
@@ -414,8 +420,8 @@ class DetalleEjercicioScreen extends StatelessWidget {
                     icono: Icons.timer_rounded,
                     tamano: TamanoBotonChiclet.mediano,
                     estilo: EstiloBotonChiclet.contorno,
-                    colorBorde: AppColors.acento,
-                    colorTexto: AppColors.acento,
+                    colorBorde: context.gym.xpInk,
+                    colorTexto: context.gym.xpInk,
                   ),
                 ),
               ],
@@ -445,7 +451,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
           icono: Icons.check_circle_rounded,
           tamano: TamanoBotonChiclet.grande,
           estilo: EstiloBotonChiclet.relleno,
-          colorFondo: AppColors.exito,
+          colorFondo: context.gym.brand,
         ),
       );
     }
@@ -472,19 +478,19 @@ class DetalleEjercicioScreen extends StatelessWidget {
       // Aún hay series por completar
       textoBoton = '¡Completar Serie ${seriesCompletadas + 1}!';
       iconoBoton = Icons.check_circle_rounded;
-      colorBoton = AppColors.exito;
+      colorBoton = context.gym.brand;
       accionBoton = () => _handleCompleteSerie(context, state);
     } else if (!esUltimoEjercicio) {
       // Series completadas, hay más ejercicios
       textoBoton = '¡Siguiente Ejercicio!';
       iconoBoton = Icons.arrow_forward_rounded;
-      colorBoton = AppColors.acento;
+      colorBoton = context.gym.xpInk;
       accionBoton = () => _handleNextExercise(context, state);
     } else {
       // Último ejercicio, todas las series completadas
       textoBoton = '¡Rutina Completada!';
       iconoBoton = Icons.celebration_rounded;
-      colorBoton = AppColors.acento;
+      colorBoton = context.gym.xpInk;
       accionBoton = () => _handleFinishRoutine(context, state);
     }
 
@@ -520,13 +526,13 @@ class DetalleEjercicioScreen extends StatelessWidget {
         title: Text(
           '¿Pausar entrenamiento?',
           style: EstilosTextoEmocional.energetico.copyWith(
-            color: AppColors.primario,
+            color: context.gym.brand,
           ),
         ),
         content: Text(
           '¡No te rindas ahora! Estás haciendo un gran trabajo.',
           style: EstilosTextoEmocional.amigable.copyWith(
-            color: AppColors.textoTerciario,
+            color: context.gym.faint,
           ),
         ),
         actions: [
@@ -535,7 +541,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
             texto: 'Continuar',
             tamano: TamanoBotonChiclet.pequeno,
             estilo: EstiloBotonChiclet.relleno,
-            colorFondo: AppColors.exito,
+            colorFondo: context.gym.brand,
           ),
           ChicletButton(
             onPressed: () {
@@ -546,8 +552,8 @@ class DetalleEjercicioScreen extends StatelessWidget {
             texto: 'Pausar',
             tamano: TamanoBotonChiclet.pequeno,
             estilo: EstiloBotonChiclet.contorno,
-            colorBorde: AppColors.textoTerciario,
-            colorTexto: AppColors.textoTerciario,
+            colorBorde: context.gym.faint,
+            colorTexto: context.gym.faint,
           ),
         ],
       ),
@@ -562,7 +568,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
         title: Text(
           '¡Tiempo de descanso!',
           style: EstilosTextoEmocional.energetico.copyWith(
-            color: AppColors.acento,
+            color: context.gym.xpInk,
           ),
         ),
         content: Column(
@@ -571,13 +577,13 @@ class DetalleEjercicioScreen extends StatelessWidget {
             Icon(
               Icons.timer_rounded,
               size: 48,
-              color: AppColors.acento,
+              color: context.gym.xpInk,
             ),
             const SizedBox(height: 16),
             Text(
               'Descansa 60 segundos y vuelve más fuerte.',
               style: EstilosTextoEmocional.amigable.copyWith(
-                color: AppColors.textoTerciario,
+                color: context.gym.faint,
               ),
               textAlign: TextAlign.center,
             ),
@@ -589,7 +595,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
             texto: 'Entendido',
             tamano: TamanoBotonChiclet.mediano,
             estilo: EstiloBotonChiclet.relleno,
-            colorFondo: AppColors.acento,
+            colorFondo: context.gym.xpInk,
           ),
         ],
       ),
@@ -616,7 +622,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
         title: Text(
           '🎉 ¡Felicitaciones!',
           style: EstilosTextoEmocional.energetico.copyWith(
-            color: AppColors.acento,
+            color: context.gym.xpInk,
           ),
           textAlign: TextAlign.center,
         ),
@@ -626,13 +632,13 @@ class DetalleEjercicioScreen extends StatelessWidget {
             Icon(
               Icons.celebration_rounded,
               size: 64,
-              color: AppColors.acento,
+              color: context.gym.xpInk,
             ),
             const SizedBox(height: 16),
             Text(
               'Has completado toda la rutina.\n¡Excelente trabajo!',
               style: EstilosTextoEmocional.amigable.copyWith(
-                color: AppColors.textoTerciario,
+                color: context.gym.faint,
               ),
               textAlign: TextAlign.center,
             ),
@@ -648,23 +654,23 @@ class DetalleEjercicioScreen extends StatelessWidget {
             texto: '¡Finalizar!',
             tamano: TamanoBotonChiclet.mediano,
             estilo: EstiloBotonChiclet.relleno,
-            colorFondo: AppColors.acento,
+            colorFondo: context.gym.xpInk,
           ),
         ],
       ),
     );
   }
 
-  Widget _buildLoadingState() {
+  Widget _buildLoadingState(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.fondoPrincipal,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              AppColors.fondoPrincipal,
-              Colors.white,
-              AppColors.fondoPrincipal.withValues(alpha: 0.8),
+              context.gym.surface2,
+              context.gym.surface,
+              context.gym.surface2.withValues(alpha: 0.8),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -676,13 +682,13 @@ class DetalleEjercicioScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(AppColors.acento),
+                  valueColor: AlwaysStoppedAnimation<Color>(context.gym.xpInk),
                 ),
                 SizedBox(height: 16),
                 Text(
                   'Preparando tu ejercicio...',
                   style: TextStyle(
-                    color: AppColors.primario,
+                    color: context.gym.brand,
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
                   ),
@@ -695,16 +701,16 @@ class DetalleEjercicioScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildErrorState(String message) {
+  Widget _buildErrorState(BuildContext context, String message) {
     return Scaffold(
-      backgroundColor: AppColors.fondoPrincipal,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              AppColors.fondoPrincipal,
-              Colors.white,
-              AppColors.fondoPrincipal.withValues(alpha: 0.8),
+              context.gym.surface2,
+              context.gym.surface,
+              context.gym.surface2.withValues(alpha: 0.8),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -722,20 +728,20 @@ class DetalleEjercicioScreen extends StatelessWidget {
                       width: 100,
                       height: 100,
                       decoration: BoxDecoration(
-                        color: AppColors.acento.withValues(alpha: 0.1),
+                        color: context.gym.xpInk.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Icon(
                         Icons.warning_rounded,
                         size: 48,
-                        color: AppColors.acento,
+                        color: context.gym.xpInk,
                       ),
                     ),
                     const SizedBox(height: 24),
                     Text(
                       '¡Ups! Algo salió mal',
                       style: EstilosTextoEmocional.energetico.copyWith(
-                        color: AppColors.primario,
+                        color: context.gym.brand,
                         fontSize: 22,
                       ),
                       textAlign: TextAlign.center,
@@ -744,7 +750,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
                     Text(
                       message,
                       style: EstilosTextoEmocional.amigable.copyWith(
-                        color: AppColors.textoTerciario,
+                        color: context.gym.faint,
                         fontSize: 16,
                       ),
                       textAlign: TextAlign.center,
@@ -757,7 +763,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
                         icono: Icons.home_rounded,
                         tamano: TamanoBotonChiclet.grande,
                         estilo: EstiloBotonChiclet.relleno,
-                        colorFondo: AppColors.acento,
+                        colorFondo: context.gym.xpInk,
                       ),
                     ),
                   ],
@@ -778,7 +784,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
           context.go('/');
         }
       });
-      return _buildErrorState('No hay ejercicios disponibles');
+      return _buildErrorState(context, 'No hay ejercicios disponibles');
     }
 
     final ejercicio = state.ejerciciosDeRutina.ejercicios.firstWhereOrNull(
@@ -786,7 +792,8 @@ class DetalleEjercicioScreen extends StatelessWidget {
     );
 
     if (ejercicio == null) {
-      return _buildErrorState('No se pudo encontrar el ejercicio actual.');
+      return _buildErrorState(
+          context, 'No se pudo encontrar el ejercicio actual.');
     }
 
     final serie = ejercicio.series.firstWhereOrNull(
@@ -794,21 +801,21 @@ class DetalleEjercicioScreen extends StatelessWidget {
     );
 
     if (serie == null) {
-      return _buildErrorState('No se pudo encontrar la serie actual.');
+      return _buildErrorState(context, 'No se pudo encontrar la serie actual.');
     }
 
     final serieActualIndex = ejercicio.series.indexOf(serie) + 1;
     final totalSeries = ejercicio.cantidadSeries;
 
     return Scaffold(
-      backgroundColor: AppColors.fondoPrincipal,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              AppColors.fondoPrincipal,
-              Colors.white,
-              AppColors.fondoPrincipal.withValues(alpha: 0.8),
+              context.gym.surface2,
+              context.gym.surface,
+              context.gym.surface2.withValues(alpha: 0.8),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -823,14 +830,15 @@ class DetalleEjercicioScreen extends StatelessWidget {
                 subtitulo:
                     'Serie $serieActualIndex de $totalSeries • ${state.ejerciciosDeRutina.nombre}',
                 botonIzquierdo: ConfiguracionBotonIzquierdo.volver(),
-                colorFondo: AppColors.fondoPrincipal,
+                colorFondo: context.gym.surface2,
                 relleno: Espaciado.rellenoMd,
               ),
 
               // Barra Motivacional
               SlideInDown(
                 duration: const Duration(milliseconds: 500),
-                child: _buildMotivationalBar(serieActualIndex, totalSeries),
+                child:
+                    _buildMotivationalBar(context, serieActualIndex, totalSeries),
               ),
 
               SizedBox(height: Espaciado.md),
@@ -846,7 +854,8 @@ class DetalleEjercicioScreen extends StatelessWidget {
                         duration: const Duration(milliseconds: 600),
                         child: Stack(
                           children: [
-                            _buildExerciseImage(ejercicio.imagenDireccion),
+                            _buildExerciseImage(
+                                context, ejercicio.imagenDireccion),
                             _buildExerciseFavoriteIndicator(ejercicio.id),
                           ],
                         ),
@@ -859,7 +868,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
                           margin: Espaciado.rellenoHorizontalMd,
                           padding: Espaciado.rellenoMd,
                           decoration: BoxDecoration(
-                            color: AppColors.fondoTarjeta,
+                            color: context.gym.surface,
                             borderRadius: BorderRadius.circular(Espaciado.sm),
                             boxShadow: AppColors.sombraSuave,
                           ),
@@ -868,12 +877,14 @@ class DetalleEjercicioScreen extends StatelessWidget {
                             children: [
                               Expanded(
                                 child: _buildDatoEjercicioCentral(
+                                  context,
                                   valor: '${serie.repeticiones}',
                                   etiqueta: 'Repeticiones',
                                 ),
                               ),
                               Expanded(
                                 child: _buildDatoEjercicioCentral(
+                                  context,
                                   valor: '${serie.peso}',
                                   etiqueta: 'Peso (Kg)',
                                 ),
@@ -904,7 +915,8 @@ class DetalleEjercicioScreen extends StatelessWidget {
   // _buildEmotionalHeader eliminado - ahora usamos CabeceraReutilizable
 
   /// Construye la barra motivacional con frase de ánimo
-  Widget _buildMotivationalBar(int serieActual, int totalSeries) {
+  Widget _buildMotivationalBar(
+      BuildContext context, int serieActual, int totalSeries) {
     return Container(
       width: double.infinity,
       margin: Espaciado.rellenoHorizontalMd,
@@ -912,15 +924,15 @@ class DetalleEjercicioScreen extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            AppColors.acento.withValues(alpha: 0.1),
-            AppColors.acentoCalido.withValues(alpha: 0.1),
+            context.gym.xpInk.withValues(alpha: 0.1),
+            context.gym.xpInk.withValues(alpha: 0.1),
           ],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
         ),
         borderRadius: BorderRadius.circular(Espaciado.xs),
         border: Border.all(
-          color: AppColors.acento.withValues(alpha: 0.2),
+          color: context.gym.xpInk.withValues(alpha: 0.2),
           width: 1,
         ),
       ),
@@ -931,7 +943,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(Espaciado.xxs + 2),
             decoration: BoxDecoration(
-              color: AppColors.acento,
+              color: context.gym.xpInk,
               borderRadius: BorderRadius.circular(Espaciado.xs),
             ),
             child: const Icon(
@@ -948,7 +960,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
               style: TextStyle(
                 fontWeight: TipografiaGyMaster.pesoRegular,
                 fontSize: TipografiaGyMaster.tamanoMd,
-                color: AppColors.acento,
+                color: context.gym.xpInk,
               ),
             ),
           ),
@@ -960,14 +972,14 @@ class DetalleEjercicioScreen extends StatelessWidget {
               vertical: Espaciado.xxs,
             ),
             decoration: BoxDecoration(
-              color: AppColors.acento.withValues(alpha: 0.2),
+              color: context.gym.xpInk.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(Espaciado.xs),
             ),
             child: Text(
               '$serieActual/$totalSeries',
               style: EstilosTextoEmocional.contador.copyWith(
                 fontSize: 12,
-                color: AppColors.acento,
+                color: context.gym.xpInk,
               ),
             ),
           ),
@@ -1008,7 +1020,7 @@ Widget _buildExerciseFavoriteIndicator(String? ejercicioId) {
           width: 32,
           height: 32,
           decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.9),
+            color: context.gym.surface.withValues(alpha: 0.9),
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
@@ -1020,7 +1032,7 @@ Widget _buildExerciseFavoriteIndicator(String? ejercicioId) {
           ),
           child: Icon(
             Icons.favorite,
-            color: AppColors.acento,
+            color: context.gym.xpInk,
             size: 20,
           ),
         ),

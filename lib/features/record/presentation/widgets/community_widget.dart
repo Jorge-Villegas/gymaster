@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/emotional_text_styles.dart';
 
 /// Widget de comunidad fitness virtual para motivación social
@@ -73,13 +73,13 @@ class _CommunityWidgetState extends State<CommunityWidget>
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              AppColors.secundarioClaro.withValues(alpha: 0.1),
-              AppColors.exito.withValues(alpha: 0.1),
+              context.gym.info.withValues(alpha: 0.1),
+              context.gym.brand.withValues(alpha: 0.1),
             ],
           ),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: AppColors.secundarioClaro.withValues(alpha: 0.3),
+            color: context.gym.info.withValues(alpha: 0.3),
             width: 2,
           ),
         ),
@@ -110,12 +110,12 @@ class _CommunityWidgetState extends State<CommunityWidget>
               child: Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: AppColors.secundarioClaro.withValues(alpha: 0.2),
+                  color: context.gym.info.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
                   Icons.groups,
-                  color: AppColors.secundarioClaro,
+                  color: context.gym.info,
                   size: 24,
                 ),
               ),
@@ -157,10 +157,10 @@ class _CommunityWidgetState extends State<CommunityWidget>
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.acento.withValues(alpha: 0.1),
+        color: context.gym.xpInk.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: AppColors.acento.withValues(alpha: 0.3),
+          color: context.gym.xpInk.withValues(alpha: 0.3),
         ),
       ),
       child: Column(
@@ -178,7 +178,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
                 padding:
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
-                  color: AppColors.acento,
+                  color: context.gym.xpInk,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
@@ -223,7 +223,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
       String title, String userValue, String avgValue, IconData icon) {
     return Column(
       children: [
-        Icon(icon, color: AppColors.exito, size: 20),
+        Icon(icon, color: context.gym.brand, size: 20),
         const SizedBox(height: 8),
         Text(
           title,
@@ -237,7 +237,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
           userValue,
           style: EstilosTextoEmocional.celebracion.copyWith(
             fontSize: 18,
-            color: AppColors.exito,
+            color: context.gym.brand,
           ),
         ),
         Text(
@@ -259,7 +259,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
           children: [
             Icon(
               Icons.trending_up,
-              color: AppColors.acento,
+              color: context.gym.xpInk,
               size: 20,
             ),
             const SizedBox(width: 8),
@@ -285,10 +285,10 @@ class _CommunityWidgetState extends State<CommunityWidget>
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.acento.withValues(alpha: 0.1),
+        color: context.gym.xpInk.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: AppColors.acento.withValues(alpha: 0.3),
+          color: context.gym.xpInk.withValues(alpha: 0.3),
         ),
       ),
       child: Row(
@@ -303,7 +303,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
               message.text,
               style: EstilosTextoEmocional.logro.copyWith(
                 fontSize: 16,
-                color: AppColors.acento,
+                color: context.gym.xpInk,
               ),
             ),
           ),
@@ -339,8 +339,8 @@ class _CommunityWidgetState extends State<CommunityWidget>
           borderRadius: BorderRadius.circular(10),
           child: LinearProgressIndicator(
             value: progress > 1 ? 1 : progress,
-            backgroundColor: AppColors.secundarioClaro.withValues(alpha: 0.2),
-            valueColor: AlwaysStoppedAnimation<Color>(AppColors.exito),
+            backgroundColor: context.gym.info.withValues(alpha: 0.2),
+            valueColor: AlwaysStoppedAnimation<Color>(context.gym.brand),
             minHeight: 8,
           ),
         ),
@@ -354,8 +354,8 @@ class _CommunityWidgetState extends State<CommunityWidget>
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            AppColors.acento.withValues(alpha: 0.1),
-            AppColors.acento.withValues(alpha: 0.1),
+            context.gym.xpInk.withValues(alpha: 0.1),
+            context.gym.xpInk.withValues(alpha: 0.1),
           ],
         ),
         borderRadius: BorderRadius.circular(12),
@@ -366,7 +366,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
             children: [
               Icon(
                 Icons.favorite,
-                color: AppColors.acento,
+                color: context.gym.xpInk,
                 size: 20,
               ),
               const SizedBox(width: 8),
@@ -383,7 +383,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
             _getCommunityMessage(),
             style: EstilosTextoEmocional.celebracion.copyWith(
               fontSize: 16,
-              color: AppColors.acento,
+              color: context.gym.xpInk,
             ),
             textAlign: TextAlign.center,
           ),
@@ -414,7 +414,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
           count,
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
                 fontWeight: FontWeight.bold,
-                color: AppColors.acento,
+                color: context.gym.xpInk,
               ),
         ),
       ],
