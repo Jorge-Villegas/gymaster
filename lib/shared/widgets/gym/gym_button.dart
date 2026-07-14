@@ -4,14 +4,21 @@ import 'package:gymaster/core/theme/gym_typography.dart';
 
 enum GymButtonVariant { primary, secondary, ghost }
 
+/// Tamaño del botón. Mapea a las alturas del antiguo `ChicletButton`
+/// (pequeño ≈ 40, mediano ≈ 48, grande ≈ 56) para que la migración
+/// preserve el layout de los botones chicos (p.ej. los +/− del entreno).
+enum GymButtonSize { small, medium, large }
+
 /// Botón 3D presionable (estilo "chiclet" Duolingo), theme-aware.
 ///
-/// Reemplaza a `ChicletButton` y `DuolingoActionButton` (dos botones
-/// duplicados que hardcodeaban colores). Usa los tokens del tema.
+/// Sistema ÚNICO de botones: reemplaza a `ChicletButton`,
+/// `DuolingoActionButton` y `CustomElevatedButton` (que hardcodeaban colores
+/// y duplicaban la sombra/animación). Usa los tokens del tema.
 class GymButton extends StatefulWidget {
   final String label;
   final VoidCallback? onPressed;
   final GymButtonVariant variant;
+  final GymButtonSize size;
   final IconData? icon;
   final bool expand;
 
@@ -20,6 +27,7 @@ class GymButton extends StatefulWidget {
     required this.label,
     this.onPressed,
     this.variant = GymButtonVariant.primary,
+    this.size = GymButtonSize.medium,
     this.icon,
     this.expand = true,
   });
@@ -30,6 +38,30 @@ class GymButton extends StatefulWidget {
 
 class _GymButtonState extends State<GymButton> {
   bool _down = false;
+
+  double get _vPad => switch (widget.size) {
+        GymButtonSize.small => 9,
+        GymButtonSize.medium => 15,
+        GymButtonSize.large => 18,
+      };
+
+  double get _hPad => switch (widget.size) {
+        GymButtonSize.small => 14,
+        GymButtonSize.medium => 18,
+        GymButtonSize.large => 22,
+      };
+
+  double get _fontSize => switch (widget.size) {
+        GymButtonSize.small => 14,
+        GymButtonSize.medium => 15,
+        GymButtonSize.large => 17,
+      };
+
+  double get _iconSize => switch (widget.size) {
+        GymButtonSize.small => 16,
+        GymButtonSize.medium => 20,
+        GymButtonSize.large => 22,
+      };
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +110,7 @@ class _GymButtonState extends State<GymButton> {
           duration: const Duration(milliseconds: 60),
           transform: Matrix4.translationValues(0, _down ? 4 : 0, 0),
           width: widget.expand ? double.infinity : null,
-          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 18),
+          padding: EdgeInsets.symmetric(vertical: _vPad, horizontal: _hPad),
           decoration: BoxDecoration(
             color: bg,
             borderRadius: BorderRadius.circular(16),
@@ -92,7 +124,7 @@ class _GymButtonState extends State<GymButton> {
             mainAxisSize: MainAxisSize.min,
             children: [
               if (widget.icon != null) ...[
-                Icon(widget.icon, color: fg, size: 20),
+                Icon(widget.icon, color: fg, size: _iconSize),
                 const SizedBox(width: 8),
               ],
               Flexible(
@@ -101,7 +133,9 @@ class _GymButtonState extends State<GymButton> {
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   style: GymType.bodyStrong.copyWith(
-                      color: fg, fontWeight: FontWeight.w800),
+                      color: fg,
+                      fontSize: _fontSize,
+                      fontWeight: FontWeight.w800),
                 ),
               ),
             ],

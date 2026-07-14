@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:animate_do/animate_do.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
-import 'package:gymaster/core/theme/emotional_text_styles.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
-import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/features/record/domain/entities/record_rutina.dart';
 import 'package:gymaster/features/record/presentation/cubit/selected_routine/selected_routine_cubit.dart';
 import 'package:gymaster/features/record/presentation/cubit/selected_routine/selected_routine_state.dart';
 import 'package:gymaster/shared/utils/string_utils.dart';
-import 'package:gymaster/shared/widgets/chiclet_button.dart';
+import 'package:gymaster/shared/widgets/gym/gym.dart';
 
 class DetalleEjercicioPage extends StatefulWidget {
   final RecordEjercicios recordEjercicios;
@@ -91,9 +89,8 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                   Text(
                     'Detalles del Ejercicio',
                     style: TextStyle(
-                      fontWeight: TipografiaGyMaster.pesoSemiBold,
-                      fontSize:
-                          TipografiaGyMaster.tamano2xl, // Título principal
+                      fontWeight: FontWeight.w600,
+                      fontSize: 24, // Título principal
                       letterSpacing: 1.2,
                       height: 1.1,
                       color: context.gym.info,

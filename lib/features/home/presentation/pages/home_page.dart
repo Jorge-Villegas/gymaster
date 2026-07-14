@@ -6,6 +6,8 @@ import 'package:gymaster/features/home/domain/gamificacion.dart';
 import 'package:gymaster/features/record/domain/entities/record_rutina.dart';
 import 'package:gymaster/features/record/presentation/cubit/record_cubit.dart';
 import 'package:gymaster/features/record/presentation/cubit/record_state.dart';
+import 'package:gymaster/features/setting/presentation/cubits/onboarding_usuario_cubit.dart';
+import 'package:gymaster/features/setting/presentation/cubits/onboarding_usuario_state.dart';
 import 'package:gymaster/shared/widgets/gym/gym.dart';
 
 /// Pantalla de inicio gamificada (mascota + racha + XP + accesos rápidos).
@@ -27,6 +29,8 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     // Carga el historial para calcular la gamificación.
     context.read<RecordCubit>().getAllRutinas();
+    // Carga el perfil para el saludo personalizado.
+    context.read<OnboardingUsuarioCubit>().obtenerPerfilCompleto();
   }
 
   @override
@@ -50,10 +54,16 @@ class _HomePageState extends State<HomePage> {
 
   Widget _contenido(BuildContext context, Gamificacion g) {
     final c = context.gym;
+    // Nombre real del perfil (si ya cargó); si no, saludo genérico.
+    final perfilState = context.watch<OnboardingUsuarioCubit>().state;
+    final nombre = perfilState is OnboardingUsuarioPerfilCargado
+        ? perfilState.perfil.nombreUsuario.trim()
+        : '';
+    final saludo = nombre.isNotEmpty ? '¡Hola, $nombre! 👋' : '¡Hola! 👋';
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
       children: [
-        Text('¡Hola, Jorge! 👋', style: GymType.display.copyWith(color: c.ink)),
+        Text(saludo, style: GymType.display.copyWith(color: c.ink)),
         Text('Tu rata está lista para entrenar',
             style: GymType.body.copyWith(color: c.muted)),
         const SizedBox(height: 16),

@@ -7,8 +7,8 @@ import 'package:lottie/lottie.dart';
 
 import '../../../../core/generated/assets.gen.dart';
 import '../../../../core/services/emotional_message_service.dart';
-import '../../../../core/theme/emotional_text_styles.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 import '../../../record/presentation/cubit/record_cubit.dart';
 import '../../../record/presentation/cubit/record_state.dart';
 import '../cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
@@ -281,7 +281,9 @@ class _CelebracionRutinaPageState extends State<CelebracionRutinaPage>
               scale: 1.0 + (_escalaEstadisticas.value * 0.3),
               child: Text(
                 '${_totalRutinasCompletadas.iconoProgreso} ¡Felicidades! ${_totalRutinasCompletadas.iconoProgreso}',
-                style: EstilosTextoEmocional.celebracion.copyWith(
+                style: GymType.display.copyWith(
+                  letterSpacing: 1.5,
+                  color: context.gym.xpInk,
                   fontSize: esMovil ? 32 : 40,
                   fontWeight: FontWeight.bold,
                 ),
@@ -293,9 +295,9 @@ class _CelebracionRutinaPageState extends State<CelebracionRutinaPage>
         SizedBox(height: esMovil ? 8 : 12),
         Text(
           subtituloContextual,
-          style: EstilosTextoEmocional.aliento.copyWith(
-            fontSize: esMovil ? 16 : 18,
+          style: GymType.section.copyWith(
             color: context.gym.muted,
+            fontSize: esMovil ? 16 : 18,
           ),
           textAlign: TextAlign.center,
         ),
