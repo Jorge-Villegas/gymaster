@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/features/home/domain/gamificacion.dart';
+import 'package:gymaster/features/home/domain/liga.dart';
 import 'package:gymaster/features/record/domain/entities/record_rutina.dart';
 import 'package:gymaster/features/record/presentation/cubit/record_cubit.dart';
 import 'package:gymaster/features/record/presentation/cubit/record_state.dart';
@@ -60,6 +63,11 @@ class _HomePageState extends State<HomePage> {
         ? perfilState.perfil.nombreUsuario.trim()
         : '';
     final saludo = nombre.isNotEmpty ? '¡Hola, $nombre! 👋' : '¡Hola! 👋';
+    final liga = Liga.generar(
+      xpSemana: g.xpSemana,
+      xpTotal: g.xp,
+      nombreUsuario: nombre,
+    );
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
       children: [
@@ -73,6 +81,9 @@ class _HomePageState extends State<HomePage> {
           label: '💪 Entrenar hoy',
           onPressed: widget.onEntrenar,
         ),
+        GymSectionHeader('Tu liga',
+            action: 'Ver', onAction: () => context.push('/liga')),
+        _ligaCard(context, liga),
         const GymSectionHeader('Tu progreso'),
         GymCard(
           child: Column(
@@ -121,6 +132,60 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  /// Tarjeta-resumen de la liga en el Home (preview → abre la LigaPage).
+  Widget _ligaCard(BuildContext context, Liga liga) {
+    final c = context.gym;
+    final pos = liga.posicionUsuario;
+    final (Color acento, String estado) = liga.enZonaAscenso
+        ? (c.brand, '¡Zona de ascenso! 🎉')
+        : liga.enZonaDescenso
+            ? (c.coral, 'Zona de descenso ⚠️')
+            : (c.plum, '${liga.xpParaSubir} XP para subir');
+    return GymCard(
+      onTap: () => context.push('/liga'),
+      child: Row(
+        children: [
+          Container(
+            width: 46,
+            height: 46,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: acento.withValues(alpha: .14),
+              shape: BoxShape.circle,
+            ),
+            child: Text(liga.tier.emoji, style: const TextStyle(fontSize: 24)),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(liga.tier.nombre,
+                    style: GymType.bodyStrong.copyWith(
+                        color: c.ink, fontWeight: FontWeight.w800)),
+                const SizedBox(height: 2),
+                Text(estado,
+                    style: GymType.label
+                        .copyWith(color: acento, fontWeight: FontWeight.w800)),
+              ],
+            ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text('#$pos',
+                  style: GymType.number.copyWith(color: acento, fontSize: 24)),
+              Text('de ${liga.totalParticipantes}',
+                  style: GymType.micro.copyWith(color: c.muted)),
+            ],
+          ),
+          const SizedBox(width: 4),
+          Icon(IconsaxPlusLinear.arrow_right_3, size: 18, color: c.faint),
+        ],
+      ),
+    );
+  }
+
   Widget _hero(BuildContext context, Gamificacion g) {
     final c = context.gym;
     final tieneRacha = g.racha > 0;
@@ -142,7 +207,7 @@ class _HomePageState extends State<HomePage> {
       padding: const EdgeInsets.all(18),
       child: Row(
         children: [
-          const SizedBox(width: 96, height: 96, child: RatMascot()),
+          SizedBox(width: 96, height: 96, child: RatMascot(mood: g.mood)),
           const SizedBox(width: 14),
           Expanded(
             child: Column(

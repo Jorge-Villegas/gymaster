@@ -12,7 +12,6 @@ import 'package:gymaster/features/exercise/presentation/cubits/favorito_ejercici
 import 'package:gymaster/features/routine/presentation/cubits/musculo/musculo_cubit.dart';
 import 'package:gymaster/shared/utils/string_utils.dart';
 import 'package:gymaster/shared/utils/verificador_tipo_archivo.dart';
-import 'package:gymaster/shared/widgets/cabecera_reutilizable.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -62,26 +61,49 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
       body: SafeArea(
         child: Column(
           children: [
-            CabeceraReutilizable(
-              titulo: "Catálogo de Ejercicios",
-              subtitulo: "Explora y descubre nuevos ejercicios",
-              busqueda: ConfiguracionBusqueda.ejercicios(
-                onBusqueda: (query) {
-                  setState(() {
-                    _searchQuery = query;
-                  });
-                  if (query.isNotEmpty) {
-                    context.read<ExerciseCubit>().buscarEjercicios(query);
-                  } else {
-                    context.read<ExerciseCubit>().loadAllExercises();
-                  }
-                },
-              ),
-              botonIzquierdo: ConfiguracionBotonIzquierdo.menu(),
-            ),
+            _buildSearchField(context),
             _buildMuscleGroupFilter(context),
             _buildExerciseList(),
           ],
+        ),
+      ),
+    );
+  }
+
+  /// Campo de búsqueda temático (única cabecera de esta pantalla: sin título
+  /// ni botón de menú, para ganar espacio y foco en los ejercicios).
+  Widget _buildSearchField(BuildContext context) {
+    final c = context.gym;
+    OutlineInputBorder borde(Color color, [double ancho = 1]) =>
+        OutlineInputBorder(
+          borderRadius: GymRadius.rMd,
+          borderSide: BorderSide(color: color, width: ancho),
+        );
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+      child: TextField(
+        onChanged: (query) {
+          setState(() => _searchQuery = query);
+          if (query.isNotEmpty) {
+            context.read<ExerciseCubit>().buscarEjercicios(query);
+          } else {
+            context.read<ExerciseCubit>().loadAllExercises();
+          }
+        },
+        style: GymType.body.copyWith(color: c.ink),
+        decoration: InputDecoration(
+          hintText: 'Buscar ejercicios...',
+          hintStyle: GymType.body.copyWith(color: c.faint),
+          prefixIcon:
+              Icon(IconsaxPlusLinear.search_normal, color: c.muted, size: 20),
+          filled: true,
+          fillColor: c.surface,
+          isDense: true,
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
+          enabledBorder: borde(c.line),
+          border: borde(c.line),
+          focusedBorder: borde(c.brand, 1.5),
         ),
       ),
     );

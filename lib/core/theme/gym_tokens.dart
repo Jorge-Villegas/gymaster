@@ -68,16 +68,15 @@ class GymColors extends ThemeExtension<GymColors> {
   });
 
   static const GymColors light = GymColors(
-    bg: Color(0xFFEFF4EC),
-    panel: Color(0xFFE4EBE0),
+    bg: Color(0xFFF4F5F2),
+    panel: Color(0xFFEAECE6),
     surface: Color(0xFFFFFFFF),
-    surface2: Color(0xFFF5F8F3),
+    surface2: Color(0xFFF7F8F5),
     ink: Color(0xFF14201A),
     muted: Color(0xFF5F6F65),
-    faint: Color(0xFF6C7B71), // AA (~4.5:1) sobre blanco; antes 0xFF8A998F ≈ 3:1
-
-    line: Color(0xFFE1E9DD),
-    lineStrong: Color(0xFFCBD6C6),
+    faint: Color(0xFF6C7B71),
+    line: Color(0xFFE7E9E3),
+    lineStrong: Color(0xFFD2D6CD),
     brand: Color(0xFF3FC55F),
     brandInk: Color(0xFF2A9D48),
     brandSoft: Color(0xFFE4F7E9),
@@ -95,16 +94,15 @@ class GymColors extends ThemeExtension<GymColors> {
   );
 
   static const GymColors dark = GymColors(
-    bg: Color(0xFF0D1210),
-    panel: Color(0xFF141C17),
-    surface: Color(0xFF18211C),
-    surface2: Color(0xFF1F2A23),
+    bg: Color(0xFF101210),
+    panel: Color(0xFF171A18),
+    surface: Color(0xFF1B1E1C),
+    surface2: Color(0xFF242725),
     ink: Color(0xFFEAF2EA),
     muted: Color(0xFF9AA79F),
-    faint: Color(0xFF869488), // AA (~5:1) sobre surface oscuro; antes 0xFF6E7D73 ≈ 3.8:1
-
-    line: Color(0xFF263029),
-    lineStrong: Color(0xFF334037),
+    faint: Color(0xFF869488),
+    line: Color(0xFF2C2F2D),
+    lineStrong: Color(0xFF3B3F3C),
     brand: Color(0xFF4BD46B),
     brandInk: Color(0xFF2F8F46),
     brandSoft: Color(0xFF17301E),
@@ -221,6 +219,5 @@ class GymRadius {
 
 /// Acceso corto a los tokens desde cualquier widget: `context.gym.brand`.
 extension GymThemeContext on BuildContext {
-  GymColors get gym =>
-      Theme.of(this).extension<GymColors>() ?? GymColors.dark;
+  GymColors get gym => Theme.of(this).extension<GymColors>() ?? GymColors.dark;
 }

@@ -9,7 +9,6 @@ import 'package:gymaster/features/routine/presentation/cubits/rutina/routine_cub
 import 'package:gymaster/features/routine/presentation/pages/routine_search_delegate.dart';
 import 'package:gymaster/features/routine/presentation/widgets/routine_card.dart';
 import 'package:gymaster/shared/widgets/gym/gym.dart';
-import 'package:gymaster/shared/widgets/cabecera_reutilizable.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shimmer/shimmer.dart';
@@ -28,9 +27,7 @@ class ListaRutinasPage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
             child: Column(
               children: [
-                const SizedBox(height: 10),
-                _construirCabeceraReutilizable(context),
-                const SizedBox(height: 20),
+                const SizedBox(height: 12),
                 _buildSearchBar(context),
                 const SizedBox(height: 10),
                 _buildRoutineList(context),
@@ -67,78 +64,6 @@ class ListaRutinasPage extends StatelessWidget {
   /// Navega a la página de agregar rutina
   void _navegarAAgregarRutina(BuildContext context) {
     context.go('/rutina/create');
-  }
-
-  /// Construye la cabecera usando el componente reutilizable
-  Widget _construirCabeceraReutilizable(BuildContext context) {
-    // Generar saludo dinámico
-    final hour = DateTime.now().hour;
-    String timeGreeting;
-    String emoji;
-
-    if (hour < 12) {
-      timeGreeting = 'Buenos días';
-      emoji = '☀️';
-    } else if (hour < 18) {
-      timeGreeting = 'Buenas tardes';
-      emoji = '🌤️';
-    } else {
-      timeGreeting = 'Buenas noches';
-      emoji = '🌙';
-    }
-
-    return CabeceraReutilizable(
-      titulo: '$timeGreeting, Jorge $emoji',
-      subtitulo: _getMotivationalMessage(),
-      botonIzquierdo: ConfiguracionBotonIzquierdo.menu(),
-      accionesDerecha: [
-        BotonAccionDerecha.actualizar(
-          onPressed: () {
-            BlocProvider.of<RoutineCubit>(context).getAllRoutine();
-          },
-          tooltip: 'Actualizar rutinas',
-        ),
-      ],
-    );
-  }
-
-  /// Genera mensajes motivacionales dinámicos basados en la hora
-  String _getMotivationalMessage() {
-    final hour = DateTime.now().hour;
-    final motivationalMessages = {
-      'morning': [
-        '¡Perfecto momento para activar el cuerpo! 💪',
-        '¿Listo para conquistar el día con energía?',
-        'Tu cuerpo te va a agradecer este momento',
-        'Cada día es una nueva oportunidad de mejorar',
-      ],
-      'afternoon': [
-        '¡Hora de recargar energías! ⚡',
-        'Una rutina ahora te dará fuerza para el resto del día',
-        '¿Qué tal si liberamos un poco de estrés?',
-        'Tu yo del futuro te va a agradecer este entrenamiento',
-      ],
-      'evening': [
-        'Perfecto para relajar tensiones del día 🌅',
-        'Un entrenamiento nocturno para desconectar',
-        '¿Terminamos el día con una nota alta?',
-        'Nada mejor que dormir después de un buen entreno',
-      ],
-    };
-
-    List<String> messages;
-    if (hour < 12) {
-      messages = motivationalMessages['morning']!;
-    } else if (hour < 18) {
-      messages = motivationalMessages['afternoon']!;
-    } else {
-      messages = motivationalMessages['evening']!;
-    }
-
-    // Rotar mensajes basado en el día del año para variedad
-    final dayOfYear =
-        DateTime.now().difference(DateTime(DateTime.now().year)).inDays;
-    return messages[dayOfYear % messages.length];
   }
 
   Widget _buildSearchBar(BuildContext context) {

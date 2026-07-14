@@ -1,4 +1,5 @@
 import 'package:gymaster/features/record/domain/entities/record_rutina.dart';
+import 'package:gymaster/shared/widgets/gym/rat_mascot.dart';
 
 /// Un día de la semana en curso, con su estado de entrenamiento.
 class DiaSemana {
@@ -43,6 +44,27 @@ class Gamificacion {
 
   double get progresoNivel => xpPorNivel == 0 ? 0 : xpEnNivel / xpPorNivel;
   int get xpParaSiguiente => xpPorNivel - xpEnNivel;
+
+  /// ¿Ya entrenó hoy? (usado para el ánimo de la mascota y los disparadores).
+  bool get entrenoHoy => semana.any((d) => d.esHoy && d.hecho);
+
+  /// Entrenos de la semana en curso (lunes a hoy/domingo).
+  int get entrenosSemana => semana.where((d) => d.hecho).length;
+
+  /// XP ganado esta semana (usado para la liga semanal).
+  int get xpSemana => entrenosSemana * _xpPorEntreno;
+
+  /// Estado de ánimo de la rata derivado de la actividad real:
+  /// - celebrando: entrenó hoy y ya lleva racha (refuerzo positivo).
+  /// - feliz: entrenó hoy (o usuario nuevo sin historial aún).
+  /// - preocupada: tiene racha viva pero aún no entrena hoy → en riesgo.
+  /// - triste: sin racha teniendo historial → la rompió.
+  RatMood get mood {
+    if (entrenoHoy) return racha > 1 ? RatMood.celebrando : RatMood.feliz;
+    if (racha > 0) return RatMood.preocupada; // racha de ayer, hoy en riesgo
+    if (entrenos > 0) return RatMood.triste; // había entrenado, rompió la racha
+    return RatMood.feliz; // usuario nuevo: bienvenida amistosa
+  }
 
   static const int _xpPorEntreno = 100;
   static const int _xpPorNivel = 1000;

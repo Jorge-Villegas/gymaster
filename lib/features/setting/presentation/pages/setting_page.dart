@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/features/setting/presentation/cubits/setting_cubit.dart';
 import 'package:gymaster/features/setting/presentation/cubits/setting_state.dart';
 import 'package:gymaster/features/setting/presentation/cubits/onboarding/onboarding_cubit.dart';
@@ -35,16 +37,8 @@ class _SettingPageState extends State<SettingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      appBar: AppBar(
-        title: const Text(
-          'Configuración GyMaster',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        centerTitle: true,
-      ),
-      body: BlocBuilder<SettingCubit, SettingState>(
+      body: SafeArea(
+        child: BlocBuilder<SettingCubit, SettingState>(
         builder: (context, state) {
           if (state is SettingLoading) {
             return const Center(
@@ -131,6 +125,7 @@ class _SettingPageState extends State<SettingPage> {
             ],
           );
         },
+        ),
       ),
     );
   }
@@ -270,19 +265,25 @@ class _SettingPageState extends State<SettingPage> {
   }
 
   Widget _buildSectionTitle(String title, IconData icon) {
+    final c = context.gym;
     return Padding(
-      padding: const EdgeInsets.only(left: 4, bottom: 8),
+      padding: const EdgeInsets.only(left: 4, top: 4, bottom: 10),
       child: Row(
         children: [
-          Icon(icon, size: 20, color: Theme.of(context).primaryColor),
-          const SizedBox(width: 8),
+          Container(
+            width: 30,
+            height: 30,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: c.brandSoft,
+              borderRadius: GymRadius.rSm,
+            ),
+            child: Icon(icon, size: 18, color: c.brandInk),
+          ),
+          const SizedBox(width: 10),
           Text(
             title,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).primaryColor,
-            ),
+            style: GymType.section.copyWith(color: c.ink),
           ),
         ],
       ),
@@ -979,34 +980,20 @@ class _SettingPageState extends State<SettingPage> {
       return const SizedBox.shrink(); // No mostrar nada si no hay perfil
     }
 
-    return Card(
-      elevation: 2,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Título de la sección
-            Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Título fuera de la tarjeta, igual que las demás secciones.
+        _buildSectionTitle('Información del Perfil', IconsaxPlusLinear.profile),
+        Card(
+          elevation: 2,
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(
-                  IconsaxPlusLinear.profile,
-                  color: Theme.of(context).primaryColor,
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  'Información del Perfil',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-
-            // Datos del perfil en formato de filas
-            if (perfil.correo != null && perfil.correo!.isNotEmpty)
+                // Datos del perfil en formato de filas
+                if (perfil.correo != null && perfil.correo!.isNotEmpty)
               _buildProfileRow('Correo', perfil.correo!, IconsaxPlusLinear.sms),
 
             _buildProfileRow('Género', perfil.genero.nombre, IconsaxPlusLinear.profile),
@@ -1049,9 +1036,11 @@ class _SettingPageState extends State<SettingPage> {
                 label: const Text('Editar Perfil'),
               ),
             ),
-          ],
+              ],
+            ),
+          ),
         ),
-      ),
+      ],
     );
   }
 
