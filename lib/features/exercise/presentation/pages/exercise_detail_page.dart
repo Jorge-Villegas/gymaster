@@ -90,7 +90,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
           child: IconButton(
             onPressed: () => context.go('/exercise-catalog'),
             icon: Icon(
-              Icons.arrow_back_ios_rounded,
+              IconsaxPlusLinear.arrow_left_1,
               color: context.gym.brand,
               size: 20,
             ),
@@ -253,8 +253,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color:
-                            context.gym.info.withValues(alpha: 0.06),
+                        color: context.gym.info.withValues(alpha: 0.06),
                         blurRadius: 6,
                         offset: const Offset(0, 2),
                       ),
@@ -504,8 +503,8 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                               nuevoEstado
                                   ? '¡${widget.exercise.name} agregado a favoritos!'
                                   : '${widget.exercise.name} removido de favoritos',
-                              style: GymType.section
-                                  .copyWith(color: Colors.white),
+                              style:
+                                  GymType.section.copyWith(color: Colors.white),
                             ),
                           ),
                         ],

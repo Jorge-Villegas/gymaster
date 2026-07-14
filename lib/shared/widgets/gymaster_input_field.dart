@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
 import 'package:gymaster/core/theme/gym_typography.dart';
@@ -205,7 +206,7 @@ class GyMasterInputField extends StatelessWidget {
               child: Row(
                 children: [
                   Icon(
-                    Icons.lightbulb_outline,
+                    IconsaxPlusLinear.lamp_charge,
                     size: 16,
                     color: context.gym.xpInk,
                   ),
@@ -346,7 +347,7 @@ class GyMasterEmailInputField extends StatelessWidget {
       validator: _emailValidator,
       keyboardType: TextInputType.emailAddress,
       prefixIcon: Icon(
-        Icons.email_outlined,
+        IconsaxPlusLinear.sms,
         color: context.gym.faint,
       ),
       isRequired: isRequired,

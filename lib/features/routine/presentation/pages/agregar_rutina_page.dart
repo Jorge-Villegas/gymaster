@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:gymaster/core/generated/assets.gen.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/gym_typography.dart';
@@ -352,7 +353,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                   context.go('/');
                 },
                 icon: Icon(
-                  Icons.arrow_back_ios_rounded,
+                  IconsaxPlusLinear.arrow_left_1,
                   color: context.gym.brand,
                   size: 20,
                 ),
@@ -519,7 +520,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                   Row(
                     children: [
                       Icon(
-                        Icons.fitness_center_rounded,
+                        IconsaxPlusLinear.weight,
                         color: Colors.white.withValues(alpha: 0.8),
                         size: 16,
                       ),
@@ -554,7 +555,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       const Icon(
-                        Icons.warning_rounded,
+                        IconsaxPlusLinear.danger,
                         color: Colors.white,
                         size: 16,
                       ),
@@ -660,7 +661,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                           ),
                           child: estaSeleccionado
                               ? const Icon(
-                                  Icons.check_rounded,
+                                  IconsaxPlusLinear.tick_square,
                                   color: Colors.white,
                                   size: 24,
                                 )
@@ -742,22 +743,22 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
               case 'fuerza':
                 nombreCategoria = 'Fuerza & Músculo';
                 colorCategoria = context.gym.brand; // Usando colores HSB
-                iconoCategoria = Icons.fitness_center_rounded;
+                iconoCategoria = IconsaxPlusLinear.weight;
                 break;
               case 'cardio':
                 nombreCategoria = 'Cardio & Resistencia';
                 colorCategoria = context.gym.info; // Azul suave HSB
-                iconoCategoria = Icons.directions_run_rounded;
+                iconoCategoria = IconsaxPlusLinear.weight;
                 break;
               case 'recovery':
                 nombreCategoria = 'Flexibilidad & Descanso';
                 colorCategoria = context.gym.brand; // Verde natural HSB
-                iconoCategoria = Icons.self_improvement_rounded;
+                iconoCategoria = IconsaxPlusLinear.health;
                 break;
               case 'general':
                 nombreCategoria = 'Ejercicio General';
                 colorCategoria = context.gym.xpInk; // Naranja dorado HSB
-                iconoCategoria = Icons.sports_gymnastics_rounded;
+                iconoCategoria = IconsaxPlusLinear.weight;
                 break;
               default:
                 return const SizedBox.shrink();
@@ -827,8 +828,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                                       ? Border.all(
                                           color: Colors.white, width: 2)
                                       : Border.all(
-                                          color: context.gym.line,
-                                          width: 1),
+                                          color: context.gym.line, width: 1),
                                   boxShadow: estaSeleccionado
                                       ? [
                                           BoxShadow(
@@ -888,7 +888,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
       child: GymButton(
         onPressed: estaGuardando ? null : _guardarRutina,
         label: estaGuardando ? 'Creando tu rutina...' : '¡Crear mi rutina!',
-        icon: estaGuardando ? null : Icons.rocket_launch_rounded,
+        icon: estaGuardando ? null : IconsaxPlusLinear.send_2,
         size: GymButtonSize.large,
         variant: GymButtonVariant.primary,
         expand: true,
@@ -915,7 +915,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
         errorBuilder: (context, error, stackTrace) {
           // Fallback a un icono por defecto si no se encuentra la imagen
           return Icon(
-            Icons.fitness_center_rounded,
+            IconsaxPlusLinear.weight,
             size: tamano,
             color: estaSeleccionado ? Colors.white : context.gym.muted,
           );

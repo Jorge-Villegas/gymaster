@@ -282,7 +282,7 @@ class _CabeceraReutilizableState extends State<CabeceraReutilizable>
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Icon(
-                        Icons.close_rounded,
+                        IconsaxPlusLinear.close_circle,
                         color: context.gym.faint,
                         size: 16,
                       ),
@@ -307,8 +307,7 @@ class _CabeceraReutilizableState extends State<CabeceraReutilizable>
         width: 48,
         height: 48,
         decoration: BoxDecoration(
-          color:
-              _isSearchExpanded ? context.gym.brand : context.gym.surface2,
+          color: _isSearchExpanded ? context.gym.brand : context.gym.surface2,
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
@@ -322,7 +321,7 @@ class _CabeceraReutilizableState extends State<CabeceraReutilizable>
           duration: const Duration(milliseconds: 200),
           child: Icon(
             _isSearchExpanded
-                ? Icons.close_rounded
+                ? IconsaxPlusLinear.close_circle
                 : IconsaxPlusLinear.search_normal,
             key: ValueKey(_isSearchExpanded),
             color: _isSearchExpanded ? Colors.white : context.gym.brand,
@@ -441,7 +440,7 @@ class ConfiguracionBotonIzquierdo {
   }) {
     return ConfiguracionBotonIzquierdo(
       tipo: TipoBotonIzquierdo.volver,
-      icono: Icons.arrow_back_ios_rounded,
+      icono: IconsaxPlusLinear.arrow_left_1,
       colorIcono: colorIcono,
       tooltip: tooltip ?? 'Volver',
       accionPersonalizada: accionPersonalizada,
@@ -456,7 +455,7 @@ class ConfiguracionBotonIzquierdo {
   }) {
     return ConfiguracionBotonIzquierdo(
       tipo: TipoBotonIzquierdo.menu,
-      icono: Icons.menu_rounded,
+      icono: IconsaxPlusLinear.menu,
       colorIcono: colorIcono,
       tooltip: tooltip ?? 'Menú',
       accionPersonalizada: accionPersonalizada,
@@ -571,7 +570,7 @@ class BotonAccionDerecha extends StatelessWidget {
     String? tooltip,
   }) {
     return BotonAccionDerecha(
-      icono: Icons.search_rounded,
+      icono: IconsaxPlusLinear.search_normal_1,
       onPressed: onPressed,
       tooltip: tooltip ?? 'Buscar',
     );
@@ -583,7 +582,7 @@ class BotonAccionDerecha extends StatelessWidget {
     String? tooltip,
   }) {
     return BotonAccionDerecha(
-      icono: Icons.add_rounded,
+      icono: IconsaxPlusLinear.add,
       onPressed: onPressed,
       tooltip: tooltip ?? 'Agregar',
     );
@@ -595,7 +594,7 @@ class BotonAccionDerecha extends StatelessWidget {
     String? tooltip,
   }) {
     return BotonAccionDerecha(
-      icono: Icons.refresh_rounded,
+      icono: IconsaxPlusLinear.refresh,
       onPressed: onPressed,
       tooltip: tooltip ?? 'Actualizar',
     );
@@ -607,7 +606,7 @@ class BotonAccionDerecha extends StatelessWidget {
     String? tooltip,
   }) {
     return BotonAccionDerecha(
-      icono: Icons.favorite_rounded,
+      icono: IconsaxPlusLinear.heart,
       onPressed: onPressed,
       colorIcono: Colors.red.shade600,
       tooltip: tooltip ?? 'Favoritos',

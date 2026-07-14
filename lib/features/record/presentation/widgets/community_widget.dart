@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/gym_typography.dart';
 
@@ -114,7 +115,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
-                  Icons.groups,
+                  IconsaxPlusLinear.profile_2user,
                   color: context.gym.info,
                   size: 24,
                 ),
@@ -199,7 +200,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
                   'Rutinas Completadas',
                   '${widget.userCompletedRoutines}',
                   '${_getAverageRoutines()}',
-                  Icons.fitness_center,
+                  IconsaxPlusLinear.weight,
                 ),
               ),
               const SizedBox(width: 16),
@@ -208,7 +209,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
                   'Racha Actual',
                   '${widget.userCurrentStreak} días',
                   '${_getAverageStreak()} días',
-                  Icons.local_fire_department,
+                  IconsaxPlusLinear.flash_1,
                 ),
               ),
             ],
@@ -254,7 +255,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
         Row(
           children: [
             Icon(
-              Icons.trending_up,
+              IconsaxPlusLinear.trend_up,
               color: context.gym.xpInk,
               size: 20,
             ),
@@ -358,7 +359,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
           Row(
             children: [
               Icon(
-                Icons.favorite,
+                IconsaxPlusLinear.heart,
                 color: context.gym.xpInk,
                 size: 20,
               ),

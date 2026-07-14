@@ -3,6 +3,7 @@ import 'package:gymaster/features/record/presentation/widgets/progress_visualiza
 import 'package:gymaster/features/record/presentation/widgets/community_widget.dart';
 import 'package:gymaster/features/record/presentation/widgets/epic_celebration_widget.dart';
 import 'package:gymaster/features/record/presentation/widgets/deep_personalization_widget.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/gym_typography.dart';
 
@@ -179,7 +180,7 @@ class _Phase3EmotionalIntegrationWidgetState
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
-                  Icons.psychology,
+                  IconsaxPlusLinear.lovely,
                   color: context.gym.xpInk,
                   size: 28,
                 ),
@@ -287,10 +288,10 @@ class _Phase3EmotionalIntegrationWidgetState
         unselectedLabelColor: Theme.of(context).colorScheme.onSurfaceVariant,
         dividerColor: Colors.transparent,
         tabs: const [
-          Tab(icon: Icon(Icons.analytics), text: 'Progreso'),
-          Tab(icon: Icon(Icons.groups), text: 'Comunidad'),
-          Tab(icon: Icon(Icons.tune), text: 'Personal'),
-          Tab(icon: Icon(Icons.insights), text: 'Insights'),
+          Tab(icon: Icon(IconsaxPlusLinear.chart_2), text: 'Progreso'),
+          Tab(icon: Icon(IconsaxPlusLinear.profile_2user), text: 'Comunidad'),
+          Tab(icon: Icon(IconsaxPlusLinear.setting_4), text: 'Personal'),
+          Tab(icon: Icon(IconsaxPlusLinear.chart_2), text: 'Insights'),
         ],
       ),
     );
@@ -367,7 +368,7 @@ class _Phase3EmotionalIntegrationWidgetState
         children: [
           Row(
             children: [
-              Icon(Icons.timeline, color: context.gym.xpInk),
+              Icon(IconsaxPlusLinear.chart, color: context.gym.xpInk),
               const SizedBox(width: 8),
               Text(
                 'Tu Journey Emocional',
@@ -413,7 +414,7 @@ class _Phase3EmotionalIntegrationWidgetState
         children: [
           Row(
             children: [
-              Icon(Icons.psychology, color: context.gym.info),
+              Icon(IconsaxPlusLinear.lovely, color: context.gym.info),
               const SizedBox(width: 8),
               Text(
                 'Insights Comportamentales',
@@ -503,7 +504,7 @@ class _Phase3EmotionalIntegrationWidgetState
         children: [
           Row(
             children: [
-              Icon(Icons.lightbulb, color: context.gym.brand),
+              Icon(IconsaxPlusLinear.lamp_charge, color: context.gym.brand),
               const SizedBox(width: 8),
               Text(
                 'Recomendaciones Personalizadas',
@@ -583,7 +584,7 @@ class _Phase3EmotionalIntegrationWidgetState
       child: FloatingActionButton.extended(
         onPressed: _showEpicCelebrationDialog,
         backgroundColor: context.gym.xpInk,
-        icon: const Icon(Icons.celebration, color: Colors.white),
+        icon: const Icon(IconsaxPlusLinear.cup, color: Colors.white),
         label: Text(
           'Celebrar',
           style: GymType.display.copyWith(

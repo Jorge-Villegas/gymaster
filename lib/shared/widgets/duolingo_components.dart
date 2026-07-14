@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
 
@@ -246,7 +247,7 @@ class DuolingoSuccessAnimation extends StatefulWidget {
   const DuolingoSuccessAnimation({
     super.key,
     required this.message,
-    this.icon = Icons.check_circle,
+    this.icon = IconsaxPlusLinear.tick_circle,
     this.color,
     this.onComplete,
   });

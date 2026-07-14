@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/features/exercise/presentation/pages/exercise_catalog_page.dart';
 import 'package:gymaster/features/home/presentation/pages/home_page.dart';
@@ -24,11 +25,11 @@ class _BottomNavigationBarExampleAppState
   late int _selectedIndex = widget.initialIndex;
 
   static const _items = [
-    GymNavItem(Icons.home_rounded, 'Inicio'),
-    GymNavItem(Icons.fitness_center, 'Rutinas'),
-    GymNavItem(Icons.grid_view_rounded, 'Ejercicios'),
-    GymNavItem(Icons.bar_chart_rounded, 'Progreso'),
-    GymNavItem(Icons.person_rounded, 'Perfil'),
+    GymNavItem(IconsaxPlusLinear.home_2, 'Inicio'),
+    GymNavItem(IconsaxPlusLinear.weight, 'Rutinas'),
+    GymNavItem(IconsaxPlusLinear.grid_2, 'Ejercicios'),
+    GymNavItem(IconsaxPlusLinear.chart_2, 'Progreso'),
+    GymNavItem(IconsaxPlusLinear.profile, 'Perfil'),
   ];
 
   void _goTo(int index) => setState(() => _selectedIndex = index);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/gym_typography.dart';
 
@@ -393,7 +394,7 @@ class _EpicCelebrationWidgetState extends State<EpicCelebrationWidget>
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(Icons.celebration, size: 24),
+                const Icon(IconsaxPlusLinear.cup, size: 24),
                 const SizedBox(width: 12),
                 Text(
                   '¡CONTINUAR!',
@@ -422,7 +423,7 @@ class _EpicCelebrationWidgetState extends State<EpicCelebrationWidget>
             shape: BoxShape.circle,
           ),
           child: const Icon(
-            Icons.close,
+            IconsaxPlusLinear.close_circle,
             color: Colors.white,
             size: 20,
           ),

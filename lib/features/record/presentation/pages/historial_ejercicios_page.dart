@@ -211,11 +211,11 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                       formatButtonVisible: false,
                       titleCentered: true,
                       leftChevronIcon: Icon(
-                        Icons.chevron_left,
+                        IconsaxPlusLinear.arrow_left_1,
                         color: context.gym.brand,
                       ),
                       rightChevronIcon: Icon(
-                        Icons.chevron_right,
+                        IconsaxPlusLinear.arrow_right_3,
                         color: context.gym.brand,
                       ),
                       titleTextStyle: TextStyle(
@@ -372,7 +372,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                                 ],
                               ),
                               child: const Icon(
-                                Icons.fitness_center,
+                                IconsaxPlusLinear.weight,
                                 color: Colors.white,
                                 size: 28,
                               ),
@@ -387,8 +387,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                                     capitalizarPrimeraLetra(rutina.nombre),
                                     style: TextStyle(
                                       fontSize: 18,
-                                      fontWeight:
-                                          FontWeight.w600,
+                                      fontWeight: FontWeight.w600,
                                       color: Color(rutina.color),
                                     ),
                                   ),
@@ -396,7 +395,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                                   Row(
                                     children: [
                                       Icon(
-                                        Icons.timer_outlined,
+                                        IconsaxPlusLinear.timer_1,
                                         size: 16,
                                         color: Color(rutina.color),
                                       ),
@@ -405,8 +404,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                                         'Tiempo: ${rutina.tiempoRealizado}',
                                         style: TextStyle(
                                           fontSize: 14,
-                                          fontWeight:
-                                              FontWeight.w400,
+                                          fontWeight: FontWeight.w400,
                                           color: Color(rutina.color),
                                         ),
                                       ),
@@ -418,8 +416,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                             // Botón de edición
                             Container(
                               decoration: BoxDecoration(
-                                color:
-                                    context.gym.brand.withValues(alpha: 0.1),
+                                color: context.gym.brand.withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: IconButton(
@@ -501,7 +498,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                                     Row(
                                       children: [
                                         Icon(
-                                          Icons.fitness_center,
+                                          IconsaxPlusLinear.weight,
                                           size: 14,
                                           color: context.gym.faint,
                                         ),
@@ -513,8 +510,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                                               return '${serie.peso.toInt()}kg × ${serie.repeticiones}';
                                             }).join(' • '),
                                             style: TextStyle(
-                                              fontSize:
-                                                  14,
+                                              fontSize: 14,
                                               fontWeight: FontWeight.w400,
                                               color: context.gym.faint,
                                             ),
@@ -527,13 +523,13 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                                 ),
                                 trailing: Container(
                                   decoration: BoxDecoration(
-                                    color: context.gym.info
-                                        .withValues(alpha: 0.1),
+                                    color:
+                                        context.gym.info.withValues(alpha: 0.1),
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: IconButton(
                                     icon: Icon(
-                                      Icons.arrow_forward_ios_rounded,
+                                      IconsaxPlusLinear.arrow_right_3,
                                       color: context.gym.info,
                                       size: 16,
                                     ),
@@ -737,7 +733,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                 shape: BoxShape.circle,
               ),
               child: Icon(
-                Icons.error_outline,
+                IconsaxPlusLinear.close_circle,
                 size: 64,
                 color: context.gym.danger,
               ),
@@ -767,7 +763,7 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                 BlocProvider.of<RecordCubit>(context).getAllRutinas();
               },
               icon: Icon(
-                Icons.refresh,
+                IconsaxPlusLinear.refresh,
                 size: 20,
                 color: Colors.white,
               ),

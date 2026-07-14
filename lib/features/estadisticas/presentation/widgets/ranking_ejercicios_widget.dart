@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
@@ -194,7 +195,7 @@ class RankingEjerciciosWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(
-            Icons.emoji_events_outlined,
+            IconsaxPlusLinear.cup,
             size: 64,
             color: c.faint,
           ),

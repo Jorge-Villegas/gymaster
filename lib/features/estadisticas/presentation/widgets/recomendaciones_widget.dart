@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
@@ -35,7 +36,7 @@ class RecomendacionesWidget extends StatelessWidget {
           Row(
             children: [
               Icon(
-                Icons.lightbulb_outline,
+                IconsaxPlusLinear.lamp_charge,
                 color: c.xpInk,
                 size: 24,
               ),
@@ -128,7 +129,7 @@ class RecomendacionesWidget extends StatelessWidget {
             child: Row(
               children: [
                 Icon(
-                  Icons.tips_and_updates,
+                  IconsaxPlusLinear.lamp_charge,
                   size: 18,
                   color: c.xpInk,
                 ),
@@ -158,7 +159,7 @@ class RecomendacionesWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                icon: const Icon(Icons.fitness_center, size: 20),
+                icon: const Icon(IconsaxPlusLinear.weight, size: 20),
                 label: Text(
                   'Entrenar ${recomendacion.nombreMusculo}',
                   style: GymType.body.copyWith(
@@ -272,7 +273,7 @@ class RecomendacionesWidget extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.check_circle, color: c.brand, size: 20),
+                Icon(IconsaxPlusLinear.tick_circle, color: c.brand, size: 20),
                 SizedBox(width: Espaciado.xs),
                 Text(
                   'Mantén esta consistencia',

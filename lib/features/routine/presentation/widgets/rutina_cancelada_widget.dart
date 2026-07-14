@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/shared/widgets/gym/gym.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 
 class RutinaCanceladaWidget extends StatelessWidget {
   final String rutinaName;
@@ -32,7 +33,7 @@ class RutinaCanceladaWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.cancel_rounded,
+                Icon(IconsaxPlusLinear.close_circle,
                     color: Theme.of(context).colorScheme.error, size: 100),
                 const SizedBox(height: 24),
                 Text(
@@ -72,7 +73,7 @@ class RutinaCanceladaWidget extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.fitness_center,
+                            Icon(IconsaxPlusLinear.weight,
                                 color: Theme.of(context)
                                     .colorScheme
                                     .onSurfaceVariant),
@@ -98,7 +99,7 @@ class RutinaCanceladaWidget extends StatelessWidget {
                 // Botón principal: Reintentar Rutina
                 ElevatedButton.icon(
                   onPressed: () => _reintentarRutina(context),
-                  icon: const Icon(Icons.refresh_rounded),
+                  icon: const Icon(IconsaxPlusLinear.refresh),
                   label: Text(
                     'Reintentar Rutina',
                     style: GymType.section.copyWith(
@@ -125,7 +126,7 @@ class RutinaCanceladaWidget extends StatelessWidget {
                 const SizedBox(height: 24),
                 GymButton(
                   label: 'Volver al Inicio',
-                  icon: Icons.home_rounded,
+                  icon: IconsaxPlusLinear.home_2,
                   variant: GymButtonVariant.primary,
                   size: GymButtonSize.medium,
                   expand: false,
@@ -134,7 +135,7 @@ class RutinaCanceladaWidget extends StatelessWidget {
                 // Botones secundarios
                 OutlinedButton.icon(
                   onPressed: () => context.go('/'),
-                  icon: const Icon(Icons.home_rounded),
+                  icon: const Icon(IconsaxPlusLinear.home_2),
                   label: const Text('Volver al Inicio'),
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
@@ -149,7 +150,7 @@ class RutinaCanceladaWidget extends StatelessWidget {
                 const SizedBox(height: 12),
                 OutlinedButton.icon(
                   onPressed: () => context.go('/'), // TODO: historial
-                  icon: const Icon(Icons.history),
+                  icon: const Icon(IconsaxPlusLinear.clock_1),
                   label: const Text('Ver Historial'),
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(

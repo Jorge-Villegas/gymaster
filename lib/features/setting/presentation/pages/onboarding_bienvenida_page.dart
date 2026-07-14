@@ -29,7 +29,7 @@ class OnboardingBienvenidaPage extends StatelessWidget {
                 _construirListaBeneficiosGamificada(context),
                 GymButton(
                   label: '¡Empezar mi Aventura!',
-                  icon: Icons.rocket_launch,
+                  icon: IconsaxPlusLinear.send_2,
                   variant: GymButtonVariant.primary,
                   size: GymButtonSize.large,
                   expand: true,
@@ -52,7 +52,7 @@ class OnboardingBienvenidaPage extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(
-                        Icons.timer_outlined,
+                        IconsaxPlusLinear.timer_1,
                         size: 16,
                         color: context.gym.info,
                       ),
@@ -114,7 +114,7 @@ class OnboardingBienvenidaPage extends StatelessWidget {
               ],
             ),
             child: const Icon(
-              Icons.fitness_center,
+              IconsaxPlusLinear.weight,
               size: 90,
               color: Colors.white,
             ),
@@ -190,7 +190,7 @@ class OnboardingBienvenidaPage extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(
-                        Icons.stars,
+                        IconsaxPlusLinear.star,
                         color: context.gym.xpInk,
                         size: 20,
                       ),

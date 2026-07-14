@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:gymaster/shared/widgets/tarjeta_estado.dart';
 import 'package:lottie/lottie.dart';
 
@@ -318,7 +319,7 @@ class _CelebracionRutinaPageState extends State<CelebracionRutinaPage>
             child: TarjetaEstado(
               titulo: 'Ejercicios',
               textoCuerpo: widget.estadoCompletado.totalEjercicios.toString(),
-              icono: Icons.fitness_center,
+              icono: IconsaxPlusLinear.weight,
               colorFondo: context.gym.xpInk,
             ),
           ),
@@ -327,7 +328,7 @@ class _CelebracionRutinaPageState extends State<CelebracionRutinaPage>
             child: TarjetaEstado(
               titulo: 'Series',
               textoCuerpo: widget.estadoCompletado.totalSeries.toString(),
-              icono: Icons.repeat,
+              icono: IconsaxPlusLinear.repeat,
               colorFondo: context.gym.brand,
             ),
           ),
@@ -337,7 +338,7 @@ class _CelebracionRutinaPageState extends State<CelebracionRutinaPage>
               titulo: 'Tiempo',
               textoCuerpo:
                   _obtenerTiempoFormateado(widget.estadoCompletado.tiempoTotal),
-              icono: Icons.timer,
+              icono: IconsaxPlusLinear.timer_1,
               colorFondo: context.gym.xpInk,
             ),
           ),

@@ -65,7 +65,7 @@ class _SettingPageState extends State<SettingPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
-                    Icons.error_outline,
+                    IconsaxPlusLinear.close_circle,
                     size: 64,
                     color: Colors.red[400],
                   ),
@@ -157,7 +157,7 @@ class _SettingPageState extends State<SettingPage> {
                   rutaAvatar != null ? AssetImage(rutaAvatar) : null,
               child: rutaAvatar == null
                   ? const Icon(
-                      Icons.person,
+                      IconsaxPlusLinear.profile,
                       size: 30,
                       color: Colors.white,
                     )
@@ -188,7 +188,7 @@ class _SettingPageState extends State<SettingPage> {
                     Row(
                       children: [
                         Icon(
-                          Icons.fitness_center,
+                          IconsaxPlusLinear.weight,
                           size: 16,
                           color: Colors.grey[600],
                         ),
@@ -202,7 +202,7 @@ class _SettingPageState extends State<SettingPage> {
                         ),
                         const SizedBox(width: 12),
                         Icon(
-                          Icons.trending_up,
+                          IconsaxPlusLinear.trend_up,
                           size: 16,
                           color: Colors.grey[600],
                         ),
@@ -314,7 +314,7 @@ class _SettingPageState extends State<SettingPage> {
                   leading: const Icon(IconsaxPlusLinear.language_square),
                   title: const Text('Idioma'),
                   subtitle: Text(state.language),
-                  trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                  trailing: const Icon(IconsaxPlusLinear.arrow_right_3, size: 16),
                   onTap: () => _showLanguageBottomSheet(context, state),
                 ),
               ],
@@ -339,7 +339,7 @@ class _SettingPageState extends State<SettingPage> {
                   leading: const Icon(IconsaxPlusLinear.weight),
                   title: const Text('Unidad de Peso'),
                   subtitle: Text(state.weightUnit),
-                  trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                  trailing: const Icon(IconsaxPlusLinear.arrow_right_3, size: 16),
                   onTap: () => _showWeightUnitBottomSheet(context, state),
                 ),
                 const Divider(height: 1),
@@ -347,7 +347,7 @@ class _SettingPageState extends State<SettingPage> {
                   leading: const Icon(IconsaxPlusLinear.ruler),
                   title: const Text('Unidad de Longitud'),
                   subtitle: Text(state.lengthUnit),
-                  trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                  trailing: const Icon(IconsaxPlusLinear.arrow_right_3, size: 16),
                   onTap: () => _showLengthUnitBottomSheet(context, state),
                 ),
                 const Divider(height: 1),
@@ -355,7 +355,7 @@ class _SettingPageState extends State<SettingPage> {
                   leading: const Icon(IconsaxPlusLinear.clock),
                   title: const Text('Formato de Hora'),
                   subtitle: Text(state.timeFormat),
-                  trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                  trailing: const Icon(IconsaxPlusLinear.arrow_right_3, size: 16),
                   onTap: () => _showTimeFormatBottomSheet(context, state),
                 ),
               ],
@@ -379,7 +379,7 @@ class _SettingPageState extends State<SettingPage> {
                     color: Colors.orange),
                 title: const Text('Onboarding Emocional'),
                 subtitle: const Text('Configurar motivación y objetivos'),
-                trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                trailing: const Icon(IconsaxPlusLinear.arrow_right_3, size: 16),
                 onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -395,7 +395,7 @@ class _SettingPageState extends State<SettingPage> {
                 leading: const Icon(IconsaxPlusLinear.cup, color: Colors.amber),
                 title: const Text('Mis Logros'),
                 subtitle: const Text('Ver progreso y achievements'),
-                trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                trailing: const Icon(IconsaxPlusLinear.arrow_right_3, size: 16),
                 onTap: () => _showAchievementsDialog(context),
               ),
               const Divider(height: 1),
@@ -404,7 +404,7 @@ class _SettingPageState extends State<SettingPage> {
                     const Icon(IconsaxPlusLinear.chart, color: Colors.green),
                 title: const Text('Detector de Ánimo'),
                 subtitle: const Text('Análisis emocional personalizado'),
-                trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                trailing: const Icon(IconsaxPlusLinear.arrow_right_3, size: 16),
                 onTap: () => _showMoodDetectorDialog(context),
               ),
             ],
@@ -441,7 +441,7 @@ class _SettingPageState extends State<SettingPage> {
                   leading: const Icon(IconsaxPlusLinear.calendar),
                   title: const Text('Formato de Fecha'),
                   subtitle: Text(state.dateFormat),
-                  trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                  trailing: const Icon(IconsaxPlusLinear.arrow_right_3, size: 16),
                   onTap: () => _showDateFormatBottomSheet(context, state),
                 ),
                 const Divider(height: 1),
@@ -449,7 +449,7 @@ class _SettingPageState extends State<SettingPage> {
                   leading: const Icon(IconsaxPlusLinear.calendar_tick),
                   title: const Text('Inicio de Semana'),
                   subtitle: Text(state.weekStart),
-                  trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                  trailing: const Icon(IconsaxPlusLinear.arrow_right_3, size: 16),
                   onTap: () => _showWeekStartBottomSheet(context, state),
                 ),
               ],
@@ -490,7 +490,7 @@ class _SettingPageState extends State<SettingPage> {
                     color: Colors.purple),
                 title: const Text('Información de la App'),
                 subtitle: const Text('Versión y detalles técnicos'),
-                trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                trailing: const Icon(IconsaxPlusLinear.arrow_right_3, size: 16),
                 onTap: () => _showAppInfoDialog(context),
               ),
             ],
@@ -534,7 +534,7 @@ class _SettingPageState extends State<SettingPage> {
                   ),
                   title: Text(language),
                   trailing: state.language == language
-                      ? const Icon(Icons.check, color: Colors.blue)
+                      ? const Icon(IconsaxPlusLinear.tick_square, color: Colors.blue)
                       : null,
                   onTap: () {
                     context.read<SettingCubit>().updateLanguage(language);
@@ -583,7 +583,7 @@ class _SettingPageState extends State<SettingPage> {
                   ),
                   title: Text(unit),
                   trailing: state.weightUnit == unit
-                      ? const Icon(Icons.check, color: Colors.blue)
+                      ? const Icon(IconsaxPlusLinear.tick_square, color: Colors.blue)
                       : null,
                   onTap: () {
                     context.read<SettingCubit>().setWeightUnit(unit);
@@ -633,7 +633,7 @@ class _SettingPageState extends State<SettingPage> {
                   ),
                   title: Text(unit),
                   trailing: state.lengthUnit == unit
-                      ? const Icon(Icons.check, color: Colors.blue)
+                      ? const Icon(IconsaxPlusLinear.tick_square, color: Colors.blue)
                       : null,
                   onTap: () {
                     context.read<SettingCubit>().setLengthUnit(unit);
@@ -684,7 +684,7 @@ class _SettingPageState extends State<SettingPage> {
                   ),
                   title: Text(format),
                   trailing: state.timeFormat == format
-                      ? const Icon(Icons.check, color: Colors.blue)
+                      ? const Icon(IconsaxPlusLinear.tick_square, color: Colors.blue)
                       : null,
                   onTap: () {
                     context.read<SettingCubit>().setTimeFormat(format);
@@ -735,7 +735,7 @@ class _SettingPageState extends State<SettingPage> {
                   ),
                   title: Text(format),
                   trailing: state.dateFormat == format
-                      ? const Icon(Icons.check, color: Colors.blue)
+                      ? const Icon(IconsaxPlusLinear.tick_square, color: Colors.blue)
                       : null,
                   onTap: () {
                     context.read<SettingCubit>().setDateFormat(format);
@@ -785,7 +785,7 @@ class _SettingPageState extends State<SettingPage> {
                   ),
                   title: Text(day),
                   trailing: state.weekStart == day
-                      ? const Icon(Icons.check, color: Colors.blue)
+                      ? const Icon(IconsaxPlusLinear.tick_square, color: Colors.blue)
                       : null,
                   onTap: () {
                     context.read<SettingCubit>().setWeekStart(day);
@@ -808,7 +808,7 @@ class _SettingPageState extends State<SettingPage> {
       builder: (context) => AlertDialog(
         title: const Row(
           children: [
-            Icon(Icons.emoji_events, color: Colors.amber),
+            Icon(IconsaxPlusLinear.cup, color: Colors.amber),
             SizedBox(width: 8),
             Text('🏆 Mis Logros'),
           ],
@@ -829,23 +829,23 @@ class _SettingPageState extends State<SettingPage> {
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 SizedBox(height: 8),
                 ListTile(
-                  leading: Icon(Icons.check_circle, color: Colors.green),
+                  leading: Icon(IconsaxPlusLinear.tick_circle, color: Colors.green),
                   title: Text('Primera rutina completada'),
                   dense: true,
                 ),
                 ListTile(
                   leading:
-                      Icon(Icons.local_fire_department, color: Colors.orange),
+                      Icon(IconsaxPlusLinear.flash_1, color: Colors.orange),
                   title: Text('7 días consecutivos'),
                   dense: true,
                 ),
                 ListTile(
-                  leading: Icon(Icons.star, color: Colors.yellow),
+                  leading: Icon(IconsaxPlusLinear.star, color: Colors.yellow),
                   title: Text('30 días de racha'),
                   dense: true,
                 ),
                 ListTile(
-                  leading: Icon(Icons.fitness_center, color: Colors.blue),
+                  leading: Icon(IconsaxPlusLinear.weight, color: Colors.blue),
                   title: Text('100 ejercicios realizados'),
                   dense: true,
                 ),
@@ -874,7 +874,7 @@ class _SettingPageState extends State<SettingPage> {
       builder: (context) => AlertDialog(
         title: const Row(
           children: [
-            Icon(Icons.mood, color: Colors.green),
+            Icon(IconsaxPlusLinear.emoji_happy, color: Colors.green),
             SizedBox(width: 8),
             Text('😊 Detector de Ánimo'),
           ],
@@ -922,7 +922,7 @@ class _SettingPageState extends State<SettingPage> {
       builder: (context) => AlertDialog(
         title: const Row(
           children: [
-            Icon(Icons.info, color: Colors.blue),
+            Icon(IconsaxPlusLinear.info_circle, color: Colors.blue),
             SizedBox(width: 8),
             Text('ℹ️ GyMaster Info'),
           ],
@@ -990,7 +990,7 @@ class _SettingPageState extends State<SettingPage> {
             Row(
               children: [
                 Icon(
-                  Icons.person_outline,
+                  IconsaxPlusLinear.profile,
                   color: Theme.of(context).primaryColor,
                 ),
                 const SizedBox(width: 8),
@@ -1007,29 +1007,29 @@ class _SettingPageState extends State<SettingPage> {
 
             // Datos del perfil en formato de filas
             if (perfil.correo != null && perfil.correo!.isNotEmpty)
-              _buildProfileRow('Correo', perfil.correo!, Icons.email),
+              _buildProfileRow('Correo', perfil.correo!, IconsaxPlusLinear.sms),
 
-            _buildProfileRow('Género', perfil.genero.nombre, Icons.person),
+            _buildProfileRow('Género', perfil.genero.nombre, IconsaxPlusLinear.profile),
 
             if (perfil.edad != null)
-              _buildProfileRow('Edad', '${perfil.edad} años', Icons.cake),
+              _buildProfileRow('Edad', '${perfil.edad} años', IconsaxPlusLinear.cake),
 
             if (perfil.alturaCm != null)
-              _buildProfileRow('Altura', '${perfil.alturaCm} cm', Icons.height),
+              _buildProfileRow('Altura', '${perfil.alturaCm} cm', IconsaxPlusLinear.ruler),
 
             if (perfil.pesoActualKg != null)
               _buildProfileRow(
-                  'Peso Actual', '${perfil.pesoActualKg} kg', Icons.scale),
+                  'Peso Actual', '${perfil.pesoActualKg} kg', IconsaxPlusLinear.weight_1),
 
             if (perfil.pesoObjetivoKg != null)
               _buildProfileRow(
-                  'Peso Objetivo', '${perfil.pesoObjetivoKg} kg', Icons.flag),
+                  'Peso Objetivo', '${perfil.pesoObjetivoKg} kg', IconsaxPlusLinear.flag),
 
             _buildProfileRow('Objetivo Fitness', perfil.objetivoFitness.nombre,
-                Icons.fitness_center),
+                IconsaxPlusLinear.weight),
 
             _buildProfileRow(
-                'Nivel', perfil.nivelExperiencia.nombre, Icons.trending_up),
+                'Nivel', perfil.nivelExperiencia.nombre, IconsaxPlusLinear.trend_up),
 
             const SizedBox(height: 12),
 
@@ -1045,7 +1045,7 @@ class _SettingPageState extends State<SettingPage> {
                     ),
                   );
                 },
-                icon: const Icon(Icons.edit),
+                icon: const Icon(IconsaxPlusLinear.edit_2),
                 label: const Text('Editar Perfil'),
               ),
             ),

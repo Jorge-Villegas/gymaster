@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:animate_do/animate_do.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
@@ -73,7 +74,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
               child: IconButton(
                 onPressed: () => Navigator.of(context).pop(),
                 icon: Icon(
-                  Icons.arrow_back_ios_rounded,
+                  IconsaxPlusLinear.arrow_left_1,
                   color: context.gym.info,
                   size: 20,
                 ),
@@ -126,7 +127,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
               ),
               child: IconButton(
                 icon: Icon(
-                  Icons.refresh_rounded,
+                  IconsaxPlusLinear.refresh,
                   color: context.gym.info,
                   size: 20,
                 ),
@@ -258,7 +259,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
-                    Icons.fitness_center,
+                    IconsaxPlusLinear.weight,
                     color: context.gym.brand,
                     size: 24,
                   ),
@@ -288,8 +289,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                           '${tableData.length} series registradas',
                           style: TextStyle(
                             color: context.gym.info,
-                            fontSize:
-                                14, // Info secundaria
+                            fontSize: 14, // Info secundaria
                             fontWeight: FontWeight.w400,
                           ),
                         ),
@@ -445,8 +445,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                                 color: isSelected
                                     ? context.gym.info
                                     : context.gym.ink,
-                                fontSize:
-                                    14, // Celdas tabla
+                                fontSize: 14, // Celdas tabla
                                 fontWeight: isSelected
                                     ? FontWeight.w600
                                     : FontWeight.w400,
@@ -461,8 +460,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                                 color: isSelected
                                     ? context.gym.info
                                     : context.gym.ink,
-                                fontSize:
-                                    14, // Celdas tabla
+                                fontSize: 14, // Celdas tabla
                                 fontWeight: isSelected
                                     ? FontWeight.w600
                                     : FontWeight.w400,
@@ -477,8 +475,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                                 color: isSelected
                                     ? context.gym.info
                                     : context.gym.ink,
-                                fontSize:
-                                    14, // Celdas tabla
+                                fontSize: 14, // Celdas tabla
                                 fontWeight: isSelected
                                     ? FontWeight.w600
                                     : FontWeight.w400,
@@ -531,7 +528,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
-                  Icons.tune,
+                  IconsaxPlusLinear.setting_4,
                   color: context.gym.brand,
                   size: 20,
                 ),
@@ -553,7 +550,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
             context: context,
             label: 'Peso:',
             value: tableData[selectedRowIndex!][1],
-            icon: Icons.monitor_weight,
+            icon: IconsaxPlusLinear.weight_1,
             color: context.gym.info,
             onIncrement: () {
               final currentState = context.read<SelectedRoutineCubit>().state;
@@ -589,7 +586,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
             context: context,
             label: 'Reps:',
             value: tableData[selectedRowIndex!][2],
-            icon: Icons.repeat,
+            icon: IconsaxPlusLinear.repeat,
             color: context.gym.plum,
             onIncrement: () {
               final currentState = context.read<SelectedRoutineCubit>().state;
@@ -700,7 +697,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
             children: [
               GymButton(
                 label: '',
-                icon: Icons.add,
+                icon: IconsaxPlusLinear.add,
                 variant: GymButtonVariant.primary,
                 size: GymButtonSize.small,
                 onPressed: onIncrement,
@@ -709,7 +706,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
               const SizedBox(width: Espaciado.xs),
               GymButton(
                 label: '',
-                icon: Icons.remove,
+                icon: IconsaxPlusLinear.minus,
                 variant: GymButtonVariant.primary,
                 size: GymButtonSize.small,
                 onPressed: onDecrement,

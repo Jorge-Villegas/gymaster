@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
 import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
@@ -25,19 +26,19 @@ void showCustomSnackBar({
   switch (type) {
     case SnackBarType.success:
       backgroundColor = context.gym.brand;
-      icon = Icons.check;
+      icon = IconsaxPlusLinear.tick_square;
       break;
     case SnackBarType.error:
       backgroundColor = context.gym.danger;
-      icon = Icons.error;
+      icon = IconsaxPlusLinear.close_circle;
       break;
     case SnackBarType.info:
       backgroundColor = context.gym.info;
-      icon = Icons.info;
+      icon = IconsaxPlusLinear.info_circle;
       break;
     case SnackBarType.warning:
       backgroundColor = context.gym.coral;
-      icon = Icons.warning;
+      icon = IconsaxPlusLinear.danger;
       break;
   }
 

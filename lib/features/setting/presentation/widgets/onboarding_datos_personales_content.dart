@@ -7,6 +7,7 @@ import 'package:gymaster/features/setting/domain/entities/perfil_usuario_complet
 import 'package:gymaster/features/setting/presentation/cubits/onboarding/onboarding_cubit.dart';
 import 'package:gymaster/shared/widgets/gymaster_input_field.dart';
 import 'package:gymaster/shared/widgets/gymaster_choice_chip.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 
 class OnboardingDatosPersonalesContent extends StatefulWidget {
   const OnboardingDatosPersonalesContent({super.key});
@@ -85,7 +86,7 @@ class _OnboardingDatosPersonalesContentState
         return null;
       },
       prefixIcon: Icon(
-        Icons.person_outline,
+        IconsaxPlusLinear.profile,
         color: context.gym.muted,
       ),
     );
@@ -169,7 +170,7 @@ class _OnboardingDatosPersonalesContentState
             child: Row(
               children: [
                 Icon(
-                  Icons.calendar_today,
+                  IconsaxPlusLinear.calendar_1,
                   color: _fechaNacimiento == null
                       ? context.gym.muted
                       : context.gym.brand,

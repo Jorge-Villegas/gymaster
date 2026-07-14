@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gymaster/shared/utils/text_formatter.dart';
 import 'package:gymaster/shared/utils/verificador_tipo_archivo.dart';
 import 'package:gymaster/shared/widgets/gym/gym.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 
 class EncabezadoEjercicioWidget extends StatelessWidget {
   final String nombreEjercicio;
@@ -62,7 +63,7 @@ class EncabezadoEjercicioWidget extends StatelessWidget {
               height: 45,
               child: GymButton(
                 label: '',
-                icon: Icons.remove,
+                icon: IconsaxPlusLinear.minus,
                 variant: GymButtonVariant.ghost,
                 size: GymButtonSize.small,
                 expand: false,
@@ -97,7 +98,7 @@ class EncabezadoEjercicioWidget extends StatelessWidget {
               height: 45,
               child: GymButton(
                 label: '',
-                icon: Icons.add,
+                icon: IconsaxPlusLinear.add,
                 variant: GymButtonVariant.ghost,
                 size: GymButtonSize.medium,
                 expand: false,
@@ -153,7 +154,7 @@ class EncabezadoEjercicioWidget extends StatelessWidget {
         border: Border.all(color: Colors.grey[300]!, width: 2),
       ),
       child: Icon(
-        Icons.fitness_center,
+        IconsaxPlusLinear.weight,
         size: imageSize * 0.4,
         color: Colors.grey[500],
       ),

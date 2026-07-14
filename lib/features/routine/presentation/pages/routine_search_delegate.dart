@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:gymaster/features/routine/presentation/cubits/rutina/routine_cubit.dart';
 import 'package:gymaster/features/routine/domain/entities/routine.dart';
 import 'package:gymaster/features/routine/presentation/widgets/routine_card.dart';
@@ -23,7 +24,7 @@ class RoutineSearchDelegate extends SearchDelegate<Routine> {
               infinite: true,
               child: IconButton(
                 onPressed: () => query = '',
-                icon: const Icon(Icons.refresh_rounded),
+                icon: const Icon(IconsaxPlusLinear.refresh),
               ),
             );
           } else {
@@ -31,7 +32,7 @@ class RoutineSearchDelegate extends SearchDelegate<Routine> {
               animate: query.isNotEmpty,
               duration: const Duration(milliseconds: 200),
               child: IconButton(
-                icon: const Icon(Icons.clear),
+                icon: const Icon(IconsaxPlusLinear.close_circle),
                 onPressed: () {
                   query = '';
                 },
@@ -46,7 +47,7 @@ class RoutineSearchDelegate extends SearchDelegate<Routine> {
   @override
   Widget? buildLeading(BuildContext context) {
     return IconButton(
-      icon: const Icon(Icons.arrow_back_ios_new_outlined),
+      icon: const Icon(IconsaxPlusLinear.arrow_left_2),
       onPressed: () {
         close(
             context,

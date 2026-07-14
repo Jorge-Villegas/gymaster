@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
@@ -137,7 +138,7 @@ class TarjetaMetricaWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(
-            esPositivo ? Icons.arrow_upward : Icons.arrow_downward,
+            esPositivo ? IconsaxPlusLinear.arrow_up : IconsaxPlusLinear.arrow_down,
             size: 12,
             color: color,
           ),

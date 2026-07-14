@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/shared/widgets/tarjeta_estado.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 
 class DatosRutinaFinalizada extends StatelessWidget {
   final int totalXp;
@@ -35,7 +36,7 @@ class DatosRutinaFinalizada extends StatelessWidget {
                 child: TarjetaEstado(
                   titulo: 'Total XP',
                   textoCuerpo: '$totalXp',
-                  icono: Icons.flash_on,
+                  icono: IconsaxPlusLinear.flash,
                   colorFondo: context.gym.xpInk,
                 ),
               ),
@@ -44,7 +45,7 @@ class DatosRutinaFinalizada extends StatelessWidget {
                 child: TarjetaEstado(
                   titulo: 'Completado',
                   textoCuerpo: porcentajeCompletado,
-                  icono: Icons.check_circle,
+                  icono: IconsaxPlusLinear.tick_circle,
                   colorFondo: context.gym.brand,
                 ),
               ),
@@ -52,7 +53,7 @@ class DatosRutinaFinalizada extends StatelessWidget {
                 child: TarjetaEstado(
                   titulo: 'Ejercicios',
                   textoCuerpo: totalEjercicios.toString(),
-                  icono: Icons.fitness_center,
+                  icono: IconsaxPlusLinear.weight,
                   colorFondo: context.gym.xpInk,
                 ),
               ),

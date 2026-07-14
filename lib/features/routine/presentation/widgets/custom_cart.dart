@@ -55,7 +55,7 @@ class CustomCard extends StatelessWidget {
           color: Colors.red,
           alignment: Alignment.centerRight,
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: const Icon(Icons.delete, color: Colors.white),
+          child: const Icon(IconsaxPlusLinear.trash, color: Colors.white),
         ),
         child: SizedBox(
           height: height,
@@ -70,7 +70,7 @@ class CustomCard extends StatelessWidget {
                   height: double.infinity,
                   child: ReorderableDragStartListener(
                     index: index,
-                    child: const Icon(Icons.drag_indicator, color: Colors.grey),
+                    child: const Icon(IconsaxPlusLinear.menu, color: Colors.grey),
                   ),
                 ),
 
@@ -93,7 +93,7 @@ class CustomCard extends StatelessWidget {
                               ), // Reemplaza withOpacity con withAlpha
                               child: const Center(
                                 child: Icon(
-                                  Icons.check_circle,
+                                  IconsaxPlusLinear.tick_circle,
                                   color: Colors.green,
                                   size: 50.0,
                                 ),
@@ -109,7 +109,7 @@ class CustomCard extends StatelessWidget {
                               ), // Reemplaza withOpacity con withAlpha
                               child: const Center(
                                 child: Icon(
-                                  Icons.play_arrow,
+                                  IconsaxPlusLinear.play,
                                   color: Colors.white,
                                   size: 50.0,
                                 ),
@@ -187,7 +187,7 @@ class CustomCard extends StatelessWidget {
     if (VerificadorTipoArchivo.esImagen(imagenDireccion)) {
       return Image.asset(imagenDireccion);
     }
-    return const Icon(Icons.error);
+    return const Icon(IconsaxPlusLinear.close_circle);
   }
 
   /// Indicador sutil de favorito superpuesto en la esquina inferior derecha

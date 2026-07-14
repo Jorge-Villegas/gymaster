@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/gym_typography.dart';
 
@@ -140,7 +141,7 @@ class DetalleRutinaScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
-                    Icons.fitness_center,
+                    IconsaxPlusLinear.weight,
                     color: context.gym.info,
                     size: 24,
                   ),
@@ -201,7 +202,7 @@ class DetalleRutinaScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Icon(
-                    Icons.error_outline_rounded,
+                    IconsaxPlusLinear.close_circle,
                     color: context.gym.xpInk,
                     size: 48,
                   ),
@@ -225,7 +226,7 @@ class DetalleRutinaScreen extends StatelessWidget {
             const SizedBox(height: 24),
             GymButton(
               label: 'Reintentar',
-              icon: Icons.refresh_rounded,
+              icon: IconsaxPlusLinear.refresh,
               size: GymButtonSize.large,
               variant: GymButtonVariant.primary,
               expand: false,
@@ -252,7 +253,7 @@ class DetalleRutinaScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(
-            Icons.fitness_center_outlined,
+            IconsaxPlusLinear.weight,
             size: 64,
             color: context.gym.info.withValues(alpha: 0.6),
           ),

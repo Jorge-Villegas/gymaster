@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:gymaster/core/config/app_config.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/gym_typography.dart';
@@ -277,7 +278,7 @@ class _AgregarEjercicioRutinaPageState
               child: IconButton(
                 onPressed: () => context.pop(),
                 icon: Icon(
-                  Icons.arrow_back_ios_rounded,
+                  IconsaxPlusLinear.arrow_left_1,
                   color: context.gym.xpInk,
                   size: 20,
                 ),

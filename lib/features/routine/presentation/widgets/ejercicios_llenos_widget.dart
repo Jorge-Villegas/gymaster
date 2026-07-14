@@ -225,7 +225,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                 Row(
                   children: [
                     Icon(
-                      Icons.fitness_center_rounded,
+                      IconsaxPlusLinear.weight,
                       color: context.gym.brand,
                       size: 20,
                     ),
@@ -325,7 +325,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
-                            Icons.delete_rounded,
+                            IconsaxPlusLinear.trash,
                             color: Colors.white,
                             size: 28,
                           ),

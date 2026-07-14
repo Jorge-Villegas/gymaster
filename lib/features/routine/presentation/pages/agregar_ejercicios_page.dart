@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/shared/widgets/gym/gym.dart';
@@ -145,7 +146,7 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Icon(
-                Icons.fitness_center_rounded,
+                IconsaxPlusLinear.weight,
                 size: 80,
                 color: context.gym.xpInk,
               ),
@@ -171,7 +172,7 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
             const SizedBox(height: 32),
             GymButton(
               label: 'Reintentar',
-              icon: Icons.refresh_rounded,
+              icon: IconsaxPlusLinear.refresh,
               size: GymButtonSize.large,
               expand: false,
               onPressed: () => context.read<MusculoCubit>().getAllMusculo(),
@@ -368,7 +369,7 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Icon(
-                            Icons.arrow_forward_ios_rounded,
+                            IconsaxPlusLinear.arrow_right_3,
                             size: 18,
                             color: context.gym.xpInk,
                           ),

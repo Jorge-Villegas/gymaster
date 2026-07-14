@@ -14,6 +14,7 @@ import 'package:gymaster/shared/utils/audio_feedback_helper.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
 import 'package:gymaster/features/record/presentation/cubit/record_cubit.dart';
 import 'package:gymaster/features/record/presentation/cubit/record_state.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 
 class RutinaCompletadaWidget extends StatefulWidget {
   final EjerciciosByRutinaCompleted state;
@@ -378,7 +379,7 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
                   child: TarjetaEstado(
                     titulo: 'Ejercicios',
                     textoCuerpo: widget.state.totalEjercicios.toString(),
-                    icono: Icons.fitness_center,
+                    icono: IconsaxPlusLinear.weight,
                     colorFondo: context.gym.xpInk,
                   ),
                 ),
@@ -389,7 +390,7 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
                   child: TarjetaEstado(
                     titulo: 'Tiempo',
                     textoCuerpo: _formatearTiempo(widget.state.tiempoTotal),
-                    icono: Icons.timer,
+                    icono: IconsaxPlusLinear.timer_1,
                     colorFondo: context.gym.brand,
                   ),
                 ),
@@ -434,7 +435,7 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
                 // Botón principal
                 GymButton(
                   label: 'Continuar Entrenando',
-                  icon: Icons.fitness_center,
+                  icon: IconsaxPlusLinear.weight,
                   variant: GymButtonVariant.primary,
                   size: GymButtonSize.large,
                   expand: false,
@@ -446,7 +447,7 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
                 // Botón secundario
                 GymButton(
                   label: 'Ver Mi Progreso',
-                  icon: Icons.trending_up,
+                  icon: IconsaxPlusLinear.trend_up,
                   variant: GymButtonVariant.ghost,
                   size: GymButtonSize.large,
                   expand: false,
@@ -484,7 +485,7 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
               _navegarAlInicio(context);
             },
             icon: Icon(
-              Icons.close,
+              IconsaxPlusLinear.close_circle,
               size: 24,
               color: Theme.of(context).colorScheme.onSurface,
             ),

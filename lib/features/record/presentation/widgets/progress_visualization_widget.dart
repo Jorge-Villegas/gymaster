@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/core/services/emotional_message_service.dart';
@@ -112,7 +113,7 @@ class _ProgressVisualizationWidgetState
             borderRadius: BorderRadius.circular(12),
           ),
           child: Icon(
-            Icons.analytics,
+            IconsaxPlusLinear.chart_2,
             color: context.gym.xpInk,
             size: 24,
           ),
@@ -158,25 +159,25 @@ class _ProgressVisualizationWidgetState
           'Total Rutinas',
           '${widget.totalRutinasCompletadas}',
           context.gym.xpInk,
-          Icons.fitness_center,
+          IconsaxPlusLinear.weight,
         ),
         _buildStatCard(
           'Esta Semana',
           '${widget.rutinasEstaSemana}',
           context.gym.brand,
-          Icons.date_range,
+          IconsaxPlusLinear.calendar_1,
         ),
         _buildStatCard(
           'Este Mes',
           '${widget.rutinasEsteMes}',
           context.gym.xpInk,
-          Icons.calendar_month,
+          IconsaxPlusLinear.calendar_1,
         ),
         _buildStatCard(
           'Racha Actual',
           '${widget.rachaActual} días',
           context.gym.xpInk,
-          Icons.local_fire_department,
+          IconsaxPlusLinear.flash_1,
         ),
       ],
     );
@@ -220,7 +221,7 @@ class _ProgressVisualizationWidgetState
         Row(
           children: [
             Icon(
-              Icons.timeline,
+              IconsaxPlusLinear.chart,
               color: context.gym.brand,
               size: 20,
             ),
@@ -307,7 +308,7 @@ class _ProgressVisualizationWidgetState
           ),
           if (achieved)
             Icon(
-              Icons.check_circle,
+              IconsaxPlusLinear.tick_circle,
               color: context.gym.brand,
               size: 20,
             ),
@@ -333,7 +334,7 @@ class _ProgressVisualizationWidgetState
           Row(
             children: [
               Icon(
-                Icons.favorite,
+                IconsaxPlusLinear.heart,
                 color: context.gym.xpInk,
                 size: 20,
               ),

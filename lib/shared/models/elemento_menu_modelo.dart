@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 
 class ElementoMenuModelo {
   ElementoMenuModelo({
@@ -22,19 +23,19 @@ class ElementoMenuModelo {
     ElementoMenuModelo(
       id: 'rutinas',
       titulo: 'Mis Rutinas',
-      icono: Icons.fitness_center,
+      icono: IconsaxPlusLinear.weight,
       ruta: '/rutinas',
     ),
     ElementoMenuModelo(
       id: 'ejercicios',
       titulo: 'Catálogo de Ejercicios',
-      icono: Icons.sports_gymnastics,
+      icono: IconsaxPlusLinear.weight,
       ruta: '/ejercicios',
     ),
     ElementoMenuModelo(
       id: 'progreso',
       titulo: 'Mi Progreso',
-      icono: Icons.trending_up,
+      icono: IconsaxPlusLinear.trend_up,
       ruta: '/progreso',
     ),
   ];
@@ -44,19 +45,19 @@ class ElementoMenuModelo {
     ElementoMenuModelo(
       id: 'historial',
       titulo: 'Historial de Entrenamientos',
-      icono: Icons.history,
+      icono: IconsaxPlusLinear.clock_1,
       ruta: '/historial',
     ),
     ElementoMenuModelo(
       id: 'estadisticas',
       titulo: 'Estadísticas',
-      icono: Icons.analytics,
+      icono: IconsaxPlusLinear.chart_2,
       ruta: '/estadisticas',
     ),
     ElementoMenuModelo(
       id: 'objetivos',
       titulo: 'Mis Objetivos',
-      icono: Icons.flag,
+      icono: IconsaxPlusLinear.flag,
       ruta: '/objetivos',
     ),
   ];
@@ -66,7 +67,7 @@ class ElementoMenuModelo {
     ElementoMenuModelo(
       id: 'configuracion',
       titulo: 'Configuración',
-      icono: Icons.settings,
+      icono: IconsaxPlusLinear.setting_2,
       ruta: '/configuracion',
     ),
   ];

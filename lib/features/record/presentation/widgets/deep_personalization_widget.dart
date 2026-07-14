@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/gym_typography.dart';
 
@@ -158,7 +159,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
             borderRadius: BorderRadius.circular(12),
           ),
           child: Icon(
-            Icons.psychology,
+            IconsaxPlusLinear.lovely,
             color: context.gym.info,
             size: 24,
           ),
@@ -207,7 +208,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
           Row(
             children: [
               Icon(
-                Icons.insights,
+                IconsaxPlusLinear.chart_2,
                 color: context.gym.xpInk,
                 size: 20,
               ),
@@ -245,7 +246,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
   Widget _buildMotivationStyleSection() {
     return _buildPreferenceSection(
       'Estilo de Motivación',
-      Icons.flash_on,
+      IconsaxPlusLinear.flash,
       context.gym.xpInk,
       [
         ('gentle', 'Suave', 'Motivación amable y comprensiva'),
@@ -261,7 +262,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
   Widget _buildCelebrationIntensitySection() {
     return _buildPreferenceSection(
       'Intensidad de Celebraciones',
-      Icons.celebration,
+      IconsaxPlusLinear.cup,
       context.gym.brand,
       [
         ('minimal', 'Mínima', 'Reconocimiento sutil'),
@@ -277,7 +278,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
   Widget _buildProgressFocusSection() {
     return _buildPreferenceSection(
       'Enfoque de Progreso',
-      Icons.trending_up,
+      IconsaxPlusLinear.trend_up,
       context.gym.xpInk,
       [
         ('consistency', 'Consistencia', 'Enfoque en hábitos diarios'),
@@ -293,7 +294,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
   Widget _buildEmotionalToneSection() {
     return _buildPreferenceSection(
       'Tono Emocional',
-      Icons.sentiment_satisfied,
+      IconsaxPlusLinear.emoji_happy,
       context.gym.info,
       [
         ('encouraging', 'Alentador', 'Siempre positivo y comprensivo'),
@@ -389,7 +390,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
       children: [
         Row(
           children: [
-            Icon(Icons.settings, color: context.gym.info, size: 18),
+            Icon(IconsaxPlusLinear.setting_2, color: context.gym.info, size: 18),
             const SizedBox(width: 8),
             Text(
               'Configuraciones Avanzadas',
@@ -482,7 +483,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.save, size: 20),
+            const Icon(IconsaxPlusLinear.save_2, size: 20),
             const SizedBox(width: 8),
             Text(
               'Guardar Preferencias',

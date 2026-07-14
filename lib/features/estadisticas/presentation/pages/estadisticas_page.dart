@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
@@ -155,27 +156,27 @@ class EstadisticasPage extends StatelessWidget {
           childAspectRatio: 1.40,
           children: [
             TarjetaMetricaWidget(
-              icono: Icons.fitness_center,
+              icono: IconsaxPlusLinear.weight,
               valor: '${resumen['total_sesiones'] ?? 0}',
               etiqueta: 'Entrenamientos',
               colorIcono: c.brand,
             ),
             TarjetaMetricaWidget(
-              icono: Icons.local_fire_department,
+              icono: IconsaxPlusLinear.flash_1,
               valor: '${resumen['racha_dias'] ?? 0}',
               etiqueta: 'Racha de días',
               colorIcono: c.coral,
               porcentajeCambio: (resumen['racha_dias'] ?? 0) > 7 ? 15.0 : -5.0,
             ),
             TarjetaMetricaWidget(
-              icono: Icons.timer,
+              icono: IconsaxPlusLinear.timer_1,
               valor: '${((resumen['total_series'] ?? 0) * 3).round()}',
               etiqueta: 'Minutos totales',
               colorIcono: c.info,
               subvalor: 'min',
             ),
             TarjetaMetricaWidget(
-              icono: Icons.trending_up,
+              icono: IconsaxPlusLinear.trend_up,
               valor:
                   '${(resumen['volumen_total'] ?? 0.0).toStringAsFixed(0)} kg',
               etiqueta: 'Volumen total',
@@ -240,7 +241,7 @@ class EstadisticasPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              Icons.insert_chart_outlined,
+              IconsaxPlusLinear.chart_2,
               size: 100,
               color: c.faint,
             ),
@@ -263,7 +264,7 @@ class EstadisticasPage extends StatelessWidget {
             SizedBox(height: Espaciado.xl),
             GymButton(
               label: 'Crear Primera Rutina',
-              icon: Icons.add_circle_outline,
+              icon: IconsaxPlusLinear.add_circle,
               variant: GymButtonVariant.primary,
               size: GymButtonSize.large,
               expand: false,
@@ -287,7 +288,7 @@ class EstadisticasPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              Icons.error_outline,
+              IconsaxPlusLinear.close_circle,
               size: 100,
               color: c.danger,
             ),
@@ -311,7 +312,7 @@ class EstadisticasPage extends StatelessWidget {
             SizedBox(height: Espaciado.xl),
             GymButton(
               label: 'Intentar de Nuevo',
-              icon: Icons.refresh,
+              icon: IconsaxPlusLinear.refresh,
               variant: GymButtonVariant.primary,
               size: GymButtonSize.large,
               expand: false,

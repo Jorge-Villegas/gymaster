@@ -104,7 +104,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                   child: IconButton(
                     onPressed: () => context.pop(),
                     icon: Icon(
-                      Icons.arrow_back_ios_rounded,
+                      IconsaxPlusLinear.arrow_left_1,
                       color: context.gym.xpInk,
                       size: 20,
                     ),
@@ -203,7 +203,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(
-                Icons.search_rounded,
+                IconsaxPlusLinear.search_normal_1,
                 color: context.gym.brand,
                 size: 20,
               ),
@@ -217,7 +217,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Icon(
-                        Icons.clear_rounded,
+                        IconsaxPlusLinear.close_circle,
                         color: context.gym.faint,
                         size: 16,
                       ),
@@ -242,8 +242,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
         width: 48,
         height: 48,
         decoration: BoxDecoration(
-          color:
-              _isSearchExpanded ? context.gym.xpInk : context.gym.surface,
+          color: _isSearchExpanded ? context.gym.xpInk : context.gym.surface,
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
@@ -256,7 +255,9 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
         child: AnimatedSwitcher(
           duration: const Duration(milliseconds: 200),
           child: Icon(
-            _isSearchExpanded ? Icons.close_rounded : Icons.search_rounded,
+            _isSearchExpanded
+                ? IconsaxPlusLinear.close_circle
+                : IconsaxPlusLinear.search_normal_1,
             key: ValueKey(_isSearchExpanded),
             color: _isSearchExpanded ? Colors.white : context.gym.xpInk,
             size: 20,
@@ -381,7 +382,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Icon(
-                Icons.fitness_center_rounded,
+                IconsaxPlusLinear.weight,
                 size: 80,
                 color: context.gym.xpInk,
               ),
@@ -407,7 +408,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
             const SizedBox(height: 32),
             GymButton(
               label: 'Reintentar',
-              icon: Icons.refresh_rounded,
+              icon: IconsaxPlusLinear.refresh,
               size: GymButtonSize.large,
               expand: false,
               onPressed: () => context.read<EjercicioCubit>().setEjercicio(
@@ -670,8 +671,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                                 Text(
                                   TextFormatter.capitalize(
                                       widget.nombreMusculo),
-                                  style:
-                                      GymType.body.copyWith(
+                                  style: GymType.body.copyWith(
                                     color: context.gym.faint,
                                   ),
                                 ),
@@ -690,8 +690,8 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                             ),
                             child: Icon(
                               ejercicio.seleccionado
-                                  ? Icons.check_circle_rounded
-                                  : Icons.fitness_center_rounded,
+                                  ? IconsaxPlusLinear.tick_circle
+                                  : IconsaxPlusLinear.weight,
                               size: 18,
                               color: ejercicio.seleccionado
                                   ? context.gym.brand

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
@@ -115,7 +116,7 @@ class CustomDataTable extends StatelessWidget {
               TableCell(
                 verticalAlignment: TableCellVerticalAlignment.middle,
                 child: isCompleted
-                    ? Icon(Icons.check_circle,
+                    ? Icon(IconsaxPlusLinear.tick_circle,
                         color: context.gym.brand, size: 14)
                     : const SizedBox(width: 14),
               ),
@@ -214,7 +215,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              Icons.fitness_center_rounded,
+              IconsaxPlusLinear.weight,
               size: 56,
               color: context.gym.xpInk,
             ),
@@ -348,7 +349,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
           children: [
             GymButton(
               onPressed: onDecrement,
-              icon: Icons.remove_rounded,
+              icon: IconsaxPlusLinear.minus,
               label: '',
               variant: GymButtonVariant.primary,
               size: GymButtonSize.small,
@@ -369,7 +370,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
             GymButton(
               onPressed: onIncrement,
               label: '',
-              icon: Icons.add,
+              icon: IconsaxPlusLinear.add,
               variant: GymButtonVariant.primary,
               size: GymButtonSize.small,
               expand: false,
@@ -410,7 +411,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
                   child: GymButton(
                     onPressed: () => _handleCancelRoutine(context, state),
                     label: 'Pausar',
-                    icon: Icons.pause_circle_outline_rounded,
+                    icon: IconsaxPlusLinear.pause_circle,
                     variant: GymButtonVariant.ghost,
                     size: GymButtonSize.medium,
                     expand: true,
@@ -421,7 +422,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
                   child: GymButton(
                     onPressed: () => _handleRestTimer(context),
                     label: 'Descanso',
-                    icon: Icons.timer_rounded,
+                    icon: IconsaxPlusLinear.timer_1,
                     variant: GymButtonVariant.ghost,
                     size: GymButtonSize.medium,
                     expand: true,
@@ -451,7 +452,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
         child: GymButton(
           onPressed: () => _handleCompleteSerie(context, state),
           label: '¡Completar Serie!',
-          icon: Icons.check_circle_rounded,
+          icon: IconsaxPlusLinear.tick_circle,
           variant: GymButtonVariant.primary,
           size: GymButtonSize.large,
           expand: true,
@@ -479,17 +480,17 @@ class DetalleEjercicioScreen extends StatelessWidget {
     if (!todasSeriesCompletadas) {
       // Aún hay series por completar
       textoBoton = '¡Completar Serie ${seriesCompletadas + 1}!';
-      iconoBoton = Icons.check_circle_rounded;
+      iconoBoton = IconsaxPlusLinear.tick_circle;
       accionBoton = () => _handleCompleteSerie(context, state);
     } else if (!esUltimoEjercicio) {
       // Series completadas, hay más ejercicios
       textoBoton = '¡Siguiente Ejercicio!';
-      iconoBoton = Icons.arrow_forward_rounded;
+      iconoBoton = IconsaxPlusLinear.arrow_right_3;
       accionBoton = () => _handleNextExercise(context, state);
     } else {
       // Último ejercicio, todas las series completadas
       textoBoton = '¡Rutina Completada!';
-      iconoBoton = Icons.celebration_rounded;
+      iconoBoton = IconsaxPlusLinear.cup;
       accionBoton = () => _handleFinishRoutine(context, state);
     }
 
@@ -574,7 +575,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
-              Icons.timer_rounded,
+              IconsaxPlusLinear.timer_1,
               size: 48,
               color: context.gym.xpInk,
             ),
@@ -630,7 +631,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
-              Icons.celebration_rounded,
+              IconsaxPlusLinear.cup,
               size: 64,
               color: context.gym.xpInk,
             ),
@@ -733,7 +734,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Icon(
-                        Icons.warning_rounded,
+                        IconsaxPlusLinear.danger,
                         size: 48,
                         color: context.gym.xpInk,
                       ),
@@ -760,7 +761,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
                       builder: (context) => GymButton(
                         onPressed: () => context.go('/'),
                         label: 'Volver al inicio',
-                        icon: Icons.home_rounded,
+                        icon: IconsaxPlusLinear.home_2,
                         variant: GymButtonVariant.primary,
                         size: GymButtonSize.large,
                         expand: false,
@@ -953,7 +954,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(Espaciado.xs),
             ),
             child: const Icon(
-              Icons.local_fire_department,
+              IconsaxPlusLinear.flash_1,
               color: Colors.white,
               size: 16,
             ),
@@ -1037,7 +1038,7 @@ Widget _buildExerciseFavoriteIndicator(String? ejercicioId) {
             ],
           ),
           child: Icon(
-            Icons.favorite,
+            IconsaxPlusLinear.heart,
             color: context.gym.xpInk,
             size: 20,
           ),

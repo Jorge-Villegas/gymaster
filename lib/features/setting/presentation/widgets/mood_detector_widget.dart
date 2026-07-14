@@ -6,6 +6,7 @@ import '../cubits/mood_detector_state.dart';
 import '../../../../../shared/utils/haptic_feedback_helper.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/shared/widgets/gym/gym.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 
 /// Widget para detectar y registrar el estado anímico del usuario
 /// Proporciona 4 opciones emocionales específicas para GyMaster
@@ -280,7 +281,7 @@ class _MoodDetectorWidgetState extends State<MoodDetectorWidget>
           Row(
             children: [
               Icon(
-                Icons.lightbulb_outline,
+                IconsaxPlusLinear.lamp_charge,
                 color: _selectedMood!.primaryColor,
                 size: 20,
               ),

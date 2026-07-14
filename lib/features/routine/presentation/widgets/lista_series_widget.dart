@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/shared/widgets/gym/gym.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 
 /// Widget que muestra una lista de series de ejercicios.
 ///
@@ -196,7 +197,7 @@ class _ListaSeriesWidgetState extends State<ListaSeriesWidget> {
             height: 32,
             child: GymButton(
               label: '',
-              icon: Icons.remove,
+              icon: IconsaxPlusLinear.minus,
               variant: GymButtonVariant.ghost,
               size: GymButtonSize.small,
               expand: false,
@@ -270,7 +271,7 @@ class _ListaSeriesWidgetState extends State<ListaSeriesWidget> {
             height: 32,
             child: GymButton(
               label: '',
-              icon: Icons.add,
+              icon: IconsaxPlusLinear.add,
               variant: GymButtonVariant.ghost,
               size: GymButtonSize.small,
               expand: false,
@@ -315,7 +316,7 @@ class _ListaSeriesWidgetState extends State<ListaSeriesWidget> {
             height: 32,
             child: GymButton(
               label: '',
-              icon: Icons.remove,
+              icon: IconsaxPlusLinear.minus,
               variant: GymButtonVariant.ghost,
               size: GymButtonSize.small,
               expand: false,
@@ -381,7 +382,7 @@ class _ListaSeriesWidgetState extends State<ListaSeriesWidget> {
             height: 32,
             child: GymButton(
               label: '',
-              icon: Icons.add,
+              icon: IconsaxPlusLinear.add,
               variant: GymButtonVariant.ghost,
               size: GymButtonSize.small,
               expand: false,

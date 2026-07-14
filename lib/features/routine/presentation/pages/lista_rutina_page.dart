@@ -53,7 +53,7 @@ class ListaRutinasPage extends StatelessWidget {
         ),
         child: GymButton(
           label: '',
-          icon: Icons.add,
+          icon: IconsaxPlusLinear.add,
           size: GymButtonSize.large,
           variant: GymButtonVariant.primary,
           expand: false,
@@ -158,7 +158,7 @@ class ListaRutinasPage extends StatelessWidget {
                 ),
                 GymButton(
                   label: '',
-                  icon: Icons.add_rounded,
+                  icon: IconsaxPlusLinear.add,
                   size: GymButtonSize.medium,
                   variant: GymButtonVariant.ghost,
                   expand: false,
@@ -272,7 +272,7 @@ class ListaRutinasPage extends StatelessWidget {
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Icon(
-                              Icons.fitness_center,
+                              IconsaxPlusLinear.weight,
                               color: context.gym.info,
                               size: 20,
                             ),
@@ -447,7 +447,7 @@ class ListaRutinasPage extends StatelessWidget {
                     // Botón principal mejorado
                     GymButton(
                       label: '¡Crear Mi Primera Rutina!',
-                      icon: Icons.rocket_launch_rounded,
+                      icon: IconsaxPlusLinear.send_2,
                       size: GymButtonSize.large,
                       variant: GymButtonVariant.primary,
                       expand: false,
@@ -489,7 +489,7 @@ class ListaRutinasPage extends StatelessWidget {
                           ),
                         ),
                         child: Icon(
-                          Icons.fitness_center_rounded,
+                          IconsaxPlusLinear.weight,
                           size: 100,
                           color: context.gym.brand.withValues(alpha: 0.7),
                         ),
@@ -531,7 +531,7 @@ class ListaRutinasPage extends StatelessWidget {
                       // Botón principal
                       GymButton(
                         label: '¡Empezar Mi Rutina!',
-                        icon: Icons.play_arrow_rounded,
+                        icon: IconsaxPlusLinear.play,
                         size: GymButtonSize.large,
                         variant: GymButtonVariant.primary,
                         expand: false,
@@ -609,7 +609,7 @@ class ListaRutinasPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
-                      Icons.refresh_rounded,
+                      IconsaxPlusLinear.refresh,
                       size: 64,
                       color: context.gym.info.withValues(alpha: 0.6),
                     ),
@@ -623,7 +623,7 @@ class ListaRutinasPage extends StatelessWidget {
                     const SizedBox(height: 24),
                     GymButton(
                       label: 'Actualizar',
-                      icon: Icons.refresh,
+                      icon: IconsaxPlusLinear.refresh,
                       size: GymButtonSize.medium,
                       variant: GymButtonVariant.ghost,
                       expand: false,

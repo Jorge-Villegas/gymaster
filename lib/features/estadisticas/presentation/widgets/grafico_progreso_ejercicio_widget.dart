@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
@@ -376,7 +377,7 @@ class _GraficoProgresoEjercicioWidgetState
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(
-            Icons.show_chart_outlined,
+            IconsaxPlusLinear.chart_2,
             size: 64,
             color: c.faint,
           ),
