@@ -301,7 +301,6 @@ class _EpicCelebrationWidgetState extends State<EpicCelebrationWidget>
       child: Text(
         widget.achievementDescription,
         style: GymType.section.copyWith(
-          fontSize: 18,
           color: Colors.white,
           height: 1.4,
         ),
@@ -341,10 +340,8 @@ class _EpicCelebrationWidgetState extends State<EpicCelebrationWidget>
         const SizedBox(height: 8),
         Text(
           value,
-          style: GymType.display.copyWith(
-            fontSize: 20,
+          style: GymType.number.copyWith(
             color: Colors.white,
-            fontWeight: FontWeight.bold,
           ),
         ),
         Text(
@@ -400,9 +397,7 @@ class _EpicCelebrationWidgetState extends State<EpicCelebrationWidget>
                 const SizedBox(width: 12),
                 Text(
                   '¡CONTINUAR!',
-                  style: GymType.display.copyWith(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                  style: GymType.section.copyWith(
                     color: context.gym.xpInk,
                   ),
                 ),

@@ -80,7 +80,6 @@ class _ChipPeriodo extends StatelessWidget {
         child: Text(
           label,
           style: GymType.label.copyWith(
-            fontSize: 14,
             fontWeight:
                 estaSeleccionado ? FontWeight.w600 : FontWeight.w400,
             color: estaSeleccionado ? Colors.white : c.ink,

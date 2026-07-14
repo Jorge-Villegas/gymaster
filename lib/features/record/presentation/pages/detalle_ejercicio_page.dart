@@ -88,9 +88,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                 children: [
                   Text(
                     'Detalles del Ejercicio',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 24, // Título principal
+                    style: GymType.title.copyWith(
                       letterSpacing: 1.2,
                       height: 1.1,
                       color: context.gym.info,
@@ -160,7 +158,6 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
             style: GymType.section.copyWith(
               fontWeight: FontWeight.w300,
               color: context.gym.faint,
-              fontSize: 16,
             ),
           ),
         ],
@@ -273,10 +270,8 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                     children: [
                       Text(
                         capitalizarPrimeraLetra(ejercicio.nombre),
-                        style: TextStyle(
+                        style: GymType.bodyStrong.copyWith(
                           color: context.gym.brand,
-                          fontSize: 18, // Subtítulo
-                          fontWeight: FontWeight.w600,
                         ),
                       ),
                       Espaciado.separacionVerticalXs,
@@ -327,11 +322,8 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
               children: [
                 Text(
                   'Series del Ejercicio',
-                  style: TextStyle(
+                  style: GymType.section.copyWith(
                     color: context.gym.brand,
-                    fontSize:
-                        18, // Encabezado de sección
-                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 Espaciado.separacionVerticalSm,
@@ -547,10 +539,8 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
               const SizedBox(width: Espaciado.sm),
               Text(
                 'Ajustar Serie ${selectedRowIndex! + 1}',
-                style: TextStyle(
+                style: GymType.section.copyWith(
                   color: context.gym.brand,
-                  fontSize: 18, // Subtítulo sección
-                  fontWeight: FontWeight.w600,
                 ),
               ),
             ],

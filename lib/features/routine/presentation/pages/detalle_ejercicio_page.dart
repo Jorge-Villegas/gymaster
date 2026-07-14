@@ -224,7 +224,6 @@ class DetalleEjercicioScreen extends StatelessWidget {
               style: GymType.section.copyWith(
                 fontWeight: FontWeight.w300,
                 color: context.gym.faint,
-                fontSize: 15,
               ),
             ),
           ],
@@ -254,8 +253,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
         SizedBox(height: Espaciado.xxs),
         Text(
           etiqueta,
-          style: GymType.section.copyWith(
-            fontSize: 14,
+          style: GymType.label.copyWith(
             color: context.gym.muted,
             fontWeight: FontWeight.w400,
           ),
@@ -743,19 +741,17 @@ class DetalleEjercicioScreen extends StatelessWidget {
                     const SizedBox(height: 24),
                     Text(
                       '¡Ups! Algo salió mal',
-                      style: GymType.section.copyWith(
+                      style: GymType.title.copyWith(
                         color: context.gym.brand,
-                        fontSize: 22,
                       ),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 12),
                     Text(
                       message,
-                      style: GymType.section.copyWith(
+                      style: GymType.body.copyWith(
                         fontWeight: FontWeight.w300,
                         color: context.gym.faint,
-                        fontSize: 16,
                       ),
                       textAlign: TextAlign.center,
                     ),

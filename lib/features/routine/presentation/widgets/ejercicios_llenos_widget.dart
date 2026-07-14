@@ -88,7 +88,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
             label: 'Pausar',
             icon: IconsaxPlusLinear.pause,
             size: GymButtonSize.large,
-            variant: GymButtonVariant.primary,
+            variant: GymButtonVariant.secondary,
             expand: true,
           ),
         ),
@@ -155,7 +155,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                         },
                         label: 'Pausar',
                         size: GymButtonSize.small,
-                        variant: GymButtonVariant.primary,
+                        variant: GymButtonVariant.secondary,
                         expand: true,
                       ),
                     ),
@@ -250,7 +250,6 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                     ejerciciosDeRutina.ejercicios.length.toString(),
                     style: GymType.section.copyWith(
                       color: Colors.white,
-                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -333,9 +332,8 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                           const SizedBox(height: 4),
                           Text(
                             'Eliminar',
-                            style: GymType.section.copyWith(
+                            style: GymType.label.copyWith(
                               color: Colors.white,
-                              fontSize: 12,
                               fontWeight: FontWeight.w600,
                             ),
                           ),

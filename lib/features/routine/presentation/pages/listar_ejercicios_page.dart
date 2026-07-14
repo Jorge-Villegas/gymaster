@@ -185,13 +185,11 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
           autofocus: true,
           style: GymType.body.copyWith(
             color: context.gym.ink,
-            fontSize: 16,
           ),
           decoration: InputDecoration(
             hintText: 'Buscar ejercicios...',
             hintStyle: GymType.body.copyWith(
               color: context.gym.faint,
-              fontSize: 16,
             ),
             border: InputBorder.none,
             contentPadding: const EdgeInsets.symmetric(

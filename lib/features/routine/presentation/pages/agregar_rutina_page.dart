@@ -369,7 +369,6 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                   Text(
                     '¡Crea tu rutina perfecta!',
                     style: GymType.section.copyWith(
-                      fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
                     maxLines: 1,
@@ -378,8 +377,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                   const SizedBox(height: 4),
                   Text(
                     'Personaliza cada detalle para tu éxito',
-                    style: GymType.section.copyWith(
-                      fontSize: 16,
+                    style: GymType.body.copyWith(
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -601,9 +599,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
               const SizedBox(width: 12),
               Text(
                 'Elige tu color de poder',
-                style: GymType.section.copyWith(
-                  fontSize: 18,
-                ),
+                style: GymType.section,
               ),
             ],
           ),
@@ -718,9 +714,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
               const SizedBox(width: 12),
               Text(
                 'Selecciona el ícono perfecto',
-                style: GymType.section.copyWith(
-                  fontSize: 18,
-                ),
+                style: GymType.section,
               ),
             ],
           ),

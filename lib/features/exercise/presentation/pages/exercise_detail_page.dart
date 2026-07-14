@@ -123,7 +123,6 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
               capitalizarPrimeraLetra(widget.exercise.name),
               style: GymType.section.copyWith(
                 color: context.gym.ink,
-                fontSize: 18,
                 fontWeight: FontWeight.bold,
                 letterSpacing: 0.5,
               ),
@@ -230,7 +229,6 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                     style: GymType.section.copyWith(
                       letterSpacing: 1.2,
                       height: 1.1,
-                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -328,7 +326,6 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                     style: GymType.section.copyWith(
                       letterSpacing: 1.2,
                       height: 1.1,
-                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -341,7 +338,6 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                   ? capitalizarPrimeraLetra(widget.exercise.description)
                   : '¡Este ejercicio te ayudará a fortalecer y desarrollar los músculos trabajados de manera efectiva! 💪✨',
               style: GymType.body.copyWith(
-                fontSize: 16,
                 color: context.gym.faint,
               ),
             ),
@@ -393,7 +389,6 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                   child: Text(
                     'Variaciones Disponibles 🔄',
                     style: GymType.section.copyWith(
-                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -439,9 +434,8 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                     Expanded(
                       child: Text(
                         capitalizarPrimeraLetra(variation),
-                        style: GymType.section.copyWith(
+                        style: GymType.bodyStrong.copyWith(
                           fontWeight: FontWeight.w500,
-                          fontSize: 15,
                           color: context.gym.ink,
                         ),
                       ),
@@ -545,7 +539,6 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                 esFavorito ? 'En Favoritos' : 'Agregar a Favoritos',
                 style: GymType.section.copyWith(
                   color: Colors.white,
-                  fontSize: 16,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -577,7 +570,6 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                 '¡Imagen próximamente! 💪',
                 style: GymType.section.copyWith(
                   color: Colors.white,
-                  fontSize: 18,
                 ),
               ),
             ],
@@ -622,10 +614,9 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                 const SizedBox(height: 12),
                 Text(
                   'Error al cargar imagen 😔',
-                  style: GymType.bodyStrong.copyWith(
+                  style: GymType.body.copyWith(
                     fontWeight: FontWeight.w300,
                     color: Colors.white,
-                    fontSize: 16,
                   ),
                 ),
               ],

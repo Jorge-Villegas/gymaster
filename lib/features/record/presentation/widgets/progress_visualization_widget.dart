@@ -124,8 +124,7 @@ class _ProgressVisualizationWidgetState
             children: [
               Text(
                 'Tu Journey Fitness',
-                style: GymType.display.copyWith(
-                  fontSize: 20,
+                style: GymType.title.copyWith(
                   color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
@@ -199,9 +198,7 @@ class _ProgressVisualizationWidgetState
           const SizedBox(height: 8),
           Text(
             value,
-            style: GymType.display.copyWith(
-              fontSize: 20,
-            ),
+            style: GymType.number,
           ),
           Text(
             title,
@@ -231,7 +228,6 @@ class _ProgressVisualizationWidgetState
             Text(
               'Línea de Tiempo de Logros',
               style: GymType.section.copyWith(
-                fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -345,7 +341,6 @@ class _ProgressVisualizationWidgetState
               Text(
                 'Impacto Emocional',
                 style: GymType.section.copyWith(
-                  fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -355,9 +350,7 @@ class _ProgressVisualizationWidgetState
           Text(
             MensajesEmocionalesService.obtenerEstadisticasContext(
                 widget.totalRutinasCompletadas),
-            style: GymType.display.copyWith(
-              fontSize: 18,
-            ),
+            style: GymType.section,
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 12),

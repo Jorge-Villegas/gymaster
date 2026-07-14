@@ -120,7 +120,6 @@ class OnboardingHeaderWidget extends StatelessWidget {
         style: GymType.label.copyWith(
           color: context.gym.ink,
           fontWeight: FontWeight.w700,
-          fontSize: 14,
         ),
       ),
     );

@@ -149,7 +149,6 @@ class DetalleRutinaScreen extends StatelessWidget {
                     'Preparando tu rutina perfecta...',
                     style: GymType.section.copyWith(
                       fontWeight: FontWeight.w300,
-                      fontSize: 16,
                     ),
                   ),
                 ],
@@ -209,18 +208,15 @@ class DetalleRutinaScreen extends StatelessWidget {
                   const SizedBox(height: 16),
                   Text(
                     'Ops, algo salió mal',
-                    style: GymType.display.copyWith(
-                      fontSize: 20,
-                    ),
+                    style: GymType.title,
                   ),
                   const SizedBox(height: 8),
                   Text(
                     state.message,
                     textAlign: TextAlign.center,
-                    style: GymType.section.copyWith(
+                    style: GymType.body.copyWith(
                       fontWeight: FontWeight.w300,
                       color: context.gym.ink,
-                      fontSize: 14,
                     ),
                   ),
                 ],
@@ -265,7 +261,6 @@ class DetalleRutinaScreen extends StatelessWidget {
             'Cargando tu rutina...',
             style: GymType.section.copyWith(
               fontWeight: FontWeight.w300,
-              fontSize: 18,
             ),
           ),
         ],

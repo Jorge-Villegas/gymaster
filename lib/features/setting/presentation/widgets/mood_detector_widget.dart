@@ -143,10 +143,10 @@ class _MoodDetectorWidgetState extends State<MoodDetectorWidget>
   Widget _buildTitle() {
     return Text(
       widget.title,
-      style: const TextStyle(
+      style: TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.bold,
-        color: Color(0xFF2C3E50),
+        color: context.gym.ink,
       ),
       textAlign: TextAlign.center,
     );
@@ -315,9 +315,9 @@ class _MoodDetectorWidgetState extends State<MoodDetectorWidget>
                   Expanded(
                     child: Text(
                       recommendation,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 14,
-                        color: Color(0xFF2C3E50),
+                        color: context.gym.ink,
                       ),
                     ),
                   ),
@@ -366,7 +366,7 @@ class _MoodDetectorWidgetState extends State<MoodDetectorWidget>
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: const Text('Estado de ánimo guardado correctamente'),
-        backgroundColor: Colors.green,
+        backgroundColor: context.gym.brand,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),

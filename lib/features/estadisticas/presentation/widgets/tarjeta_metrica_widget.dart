@@ -55,7 +55,6 @@ class TarjetaMetricaWidget extends StatelessWidget {
             Text(
               etiqueta,
               style: GymType.label.copyWith(
-                fontSize: 12,
                 fontWeight: FontWeight.w400,
                 color: c.muted,
                 height: 1.3,
@@ -77,7 +76,6 @@ class TarjetaMetricaWidget extends StatelessWidget {
                       Text(
                         valor,
                         style: GymType.number.copyWith(
-                          fontSize: 30,
                           fontWeight: FontWeight.w600,
                           color: c.ink,
                           height: 1.0,
@@ -90,7 +88,6 @@ class TarjetaMetricaWidget extends StatelessWidget {
                         Text(
                           subvalor!,
                           style: GymType.label.copyWith(
-                            fontSize: 12,
                             fontWeight: FontWeight.w400,
                             color: c.faint,
                             height: 1.2,
@@ -148,7 +145,6 @@ class TarjetaMetricaWidget extends StatelessWidget {
           Text(
             '${porcentajeCambio!.abs().toStringAsFixed(0)}%',
             style: GymType.label.copyWith(
-              fontSize: 12,
               fontWeight: FontWeight.w600,
               color: color,
               height: 1.0,

@@ -131,7 +131,6 @@ class _RoutineActionFeedbackState extends State<RoutineActionFeedback>
                     widget.message,
                     style: GymType.section.copyWith(
                       color: Colors.white,
-                      fontSize: 16,
                     ),
                   ),
                 ),
@@ -186,10 +185,8 @@ class _RoutineActionFeedbackState extends State<RoutineActionFeedback>
         ),
         child: Text(
           'Deshacer',
-          style: GymType.section.copyWith(
+          style: GymType.label.copyWith(
             color: Colors.white,
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
           ),
         ),
       ),

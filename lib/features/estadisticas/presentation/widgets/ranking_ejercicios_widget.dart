@@ -40,9 +40,7 @@ class RankingEjerciciosWidget extends StatelessWidget {
             children: [
               Text(
                 'Ejercicios Favoritos',
-                style: GymType.body.copyWith(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
+                style: GymType.section.copyWith(
                   color: c.ink,
                 ),
               ),
@@ -52,7 +50,6 @@ class RankingEjerciciosWidget extends StatelessWidget {
                   child: Text(
                     'Ver más',
                     style: GymType.body.copyWith(
-                      fontSize: 14,
                       color: c.brand,
                     ),
                   ),
@@ -124,9 +121,7 @@ class RankingEjerciciosWidget extends StatelessWidget {
               children: [
                 Text(
                   capitalizarPrimeraLetra(ejercicio.nombreEjercicio),
-                  style: GymType.body.copyWith(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
+                  style: GymType.bodyStrong.copyWith(
                     color: c.ink,
                   ),
                 ),
@@ -135,7 +130,6 @@ class RankingEjerciciosWidget extends StatelessWidget {
                   ejercicio.resumenCompacto,
                   style: GymType.label.copyWith(
                     fontWeight: FontWeight.w400,
-                    fontSize: 12,
                     color: c.muted,
                   ),
                 ),
@@ -154,8 +148,7 @@ class RankingEjerciciosWidget extends StatelessWidget {
               children: [
                 Text(
                   '${ejercicio.vecesRealizado}x',
-                  style: GymType.body.copyWith(
-                    fontSize: 18,
+                  style: GymType.number.copyWith(
                     fontWeight: FontWeight.w600,
                     color: c.brand,
                   ),
@@ -164,7 +157,6 @@ class RankingEjerciciosWidget extends StatelessWidget {
                   'veces',
                   style: GymType.label.copyWith(
                     fontWeight: FontWeight.w400,
-                    fontSize: 12,
                     color: c.muted,
                   ),
                 ),
@@ -209,18 +201,15 @@ class RankingEjerciciosWidget extends StatelessWidget {
           SizedBox(height: Espaciado.md),
           Text(
             'Sin ranking aún',
-            style: GymType.body.copyWith(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
+            style: GymType.section.copyWith(
               color: c.muted,
             ),
           ),
           SizedBox(height: Espaciado.xs),
           Text(
             'Completa entrenamientos para ver tus ejercicios favoritos',
-            style: GymType.label.copyWith(
+            style: GymType.body.copyWith(
               fontWeight: FontWeight.w400,
-              fontSize: 14,
               color: c.faint,
             ),
             textAlign: TextAlign.center,

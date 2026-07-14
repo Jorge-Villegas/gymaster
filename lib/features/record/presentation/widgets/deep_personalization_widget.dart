@@ -170,8 +170,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
             children: [
               Text(
                 'Personalización Profunda',
-                style: GymType.display.copyWith(
-                  fontSize: 20,
+                style: GymType.title.copyWith(
                   color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
@@ -224,9 +223,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
           const SizedBox(height: 12),
           Text(
             _getPersonalizedInsight(),
-            style: GymType.display.copyWith(
-              fontSize: 16,
-            ),
+            style: GymType.body,
           ),
         ],
       ),
@@ -328,7 +325,6 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
               title,
               style: GymType.section.copyWith(
                 fontWeight: FontWeight.bold,
-                fontSize: 16,
               ),
             ),
           ],
@@ -399,7 +395,6 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
               'Configuraciones Avanzadas',
               style: GymType.section.copyWith(
                 fontWeight: FontWeight.bold,
-                fontSize: 16,
               ),
             ),
           ],
@@ -491,9 +486,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
             const SizedBox(width: 8),
             Text(
               'Guardar Preferencias',
-              style: GymType.display.copyWith(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
+              style: GymType.section.copyWith(
                 color: Colors.white,
               ),
             ),

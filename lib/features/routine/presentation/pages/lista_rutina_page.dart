@@ -154,7 +154,6 @@ class ListaRutinasPage extends StatelessWidget {
                   'Mis Rutinas',
                   style: GymType.section.copyWith(
                     fontWeight: FontWeight.w600,
-                    fontSize: 18,
                   ),
                 ),
                 GymButton(
@@ -189,7 +188,6 @@ class ListaRutinasPage extends StatelessWidget {
                           '${state.routines.length} rutina${state.routines.length == 1 ? '' : 's'} para conquistar',
                           style: GymType.body.copyWith(
                             fontWeight: FontWeight.w400,
-                            fontSize: 16,
                             height: 1.3,
                             color: context.gym.muted,
                           ),
@@ -285,7 +283,6 @@ class ListaRutinasPage extends StatelessWidget {
                               'Preparando tus rutinas increíbles...',
                               style: GymType.section.copyWith(
                                 fontWeight: FontWeight.w300,
-                                fontSize: 16,
                               ),
                             ),
                           ),
@@ -417,9 +414,7 @@ class ListaRutinasPage extends StatelessWidget {
                     Text(
                       '¡Tu historia fitness comienza aquí!',
                       textAlign: TextAlign.center,
-                      style: GymType.display.copyWith(
-                        fontSize: 22,
-                      ),
+                      style: GymType.display,
                     ),
                     const SizedBox(height: 12),
                     // Mensaje inspirador
@@ -441,9 +436,8 @@ class ListaRutinasPage extends StatelessWidget {
                         'Tu primera rutina será el primer paso hacia la mejor versión de ti mismo. '
                         '¡Vamos a crear algo increíble juntos! 💪',
                         textAlign: TextAlign.center,
-                        style: GymType.section.copyWith(
+                        style: GymType.body.copyWith(
                           fontWeight: FontWeight.w300,
-                          fontSize: 14,
                           color: context.gym.ink,
                           height: 1.4,
                         ),
@@ -505,9 +499,7 @@ class ListaRutinasPage extends StatelessWidget {
                       Text(
                         '¡Es hora de comenzar tu transformación!',
                         textAlign: TextAlign.center,
-                        style: GymType.display.copyWith(
-                          fontSize: 20,
-                        ),
+                        style: GymType.display,
                       ),
                       const SizedBox(height: 12),
                       Container(
@@ -529,8 +521,7 @@ class ListaRutinasPage extends StatelessWidget {
                           'lograr todos tus objetivos fitness. '
                           '¡Hagámoslo realidad juntos! 🎯',
                           textAlign: TextAlign.center,
-                          style: GymType.section.copyWith(
-                            fontSize: 14,
+                          style: GymType.body.copyWith(
                             color: context.gym.ink,
                             height: 1.4,
                           ),
@@ -627,7 +618,6 @@ class ListaRutinasPage extends StatelessWidget {
                       'Preparando tu experiencia fitness...',
                       style: GymType.section.copyWith(
                         fontWeight: FontWeight.w300,
-                        fontSize: 18,
                       ),
                     ),
                     const SizedBox(height: 24),

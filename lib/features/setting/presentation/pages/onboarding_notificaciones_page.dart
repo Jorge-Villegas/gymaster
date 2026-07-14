@@ -50,7 +50,7 @@ class OnboardingNotificacionesPage extends StatelessWidget {
                 const SizedBox(height: 8),
                 Text(
                   'Personaliza tus recordatorios para mantenerte motivado 🔔',
-                  style: GymType.section.copyWith(
+                  style: GymType.body.copyWith(
                     fontWeight: FontWeight.w300,
                     color: context.gym.ink,
                   ),
@@ -102,9 +102,7 @@ class OnboardingNotificacionesPage extends StatelessWidget {
                       children: [
                         Text(
                           'Tono de motivación',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
+                          style: GymType.section.copyWith(
                             color: context.gym.ink,
                           ),
                         ),
@@ -167,9 +165,8 @@ class OnboardingNotificacionesPage extends StatelessWidget {
                       Expanded(
                         child: Text(
                           'Te enviaremos recordatorios en tus horarios preferidos para mantenerte motivado',
-                          style: GymType.section.copyWith(
+                          style: GymType.body.copyWith(
                             fontWeight: FontWeight.w300,
-                            fontSize: 13,
                             color: context.gym.ink,
                           ),
                         ),

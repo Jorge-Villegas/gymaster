@@ -129,8 +129,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
             children: [
               Text(
                 'Comunidad GyMaster',
-                style: GymType.display.copyWith(
-                  fontSize: 20,
+                style: GymType.title.copyWith(
                   color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
@@ -235,9 +234,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
         const SizedBox(height: 4),
         Text(
           userValue,
-          style: GymType.display.copyWith(
-            fontSize: 18,
-          ),
+          style: GymType.number,
         ),
         Text(
           'Promedio: $avgValue',
@@ -300,9 +297,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
           Expanded(
             child: Text(
               message.text,
-              style: GymType.display.copyWith(
-                fontSize: 16,
-              ),
+              style: GymType.body,
             ),
           ),
         ],
@@ -379,9 +374,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
           const SizedBox(height: 12),
           Text(
             _getCommunityMessage(),
-            style: GymType.display.copyWith(
-              fontSize: 16,
-            ),
+            style: GymType.body,
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 12),

@@ -192,7 +192,6 @@ class _Phase3EmotionalIntegrationWidgetState
                     Text(
                       'Conexión Emocional',
                       style: GymType.display.copyWith(
-                        fontSize: 24,
                         color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
@@ -254,10 +253,7 @@ class _Phase3EmotionalIntegrationWidgetState
         children: [
           Text(
             value,
-            style: GymType.display.copyWith(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
+            style: GymType.number,
           ),
           Text(
             label,
@@ -375,19 +371,14 @@ class _Phase3EmotionalIntegrationWidgetState
               const SizedBox(width: 8),
               Text(
                 'Tu Journey Emocional',
-                style: GymType.display.copyWith(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: GymType.section,
               ),
             ],
           ),
           const SizedBox(height: 16),
           Text(
             _getEmotionalJourneyInsight(),
-            style: GymType.display.copyWith(
-              fontSize: 16,
-            ),
+            style: GymType.body,
           ),
         ],
       ),
@@ -426,10 +417,7 @@ class _Phase3EmotionalIntegrationWidgetState
               const SizedBox(width: 8),
               Text(
                 'Insights Comportamentales',
-                style: GymType.display.copyWith(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: GymType.section,
               ),
             ],
           ),
@@ -519,10 +507,7 @@ class _Phase3EmotionalIntegrationWidgetState
               const SizedBox(width: 8),
               Text(
                 'Recomendaciones Personalizadas',
-                style: GymType.display.copyWith(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: GymType.section,
               ),
             ],
           ),
@@ -551,10 +536,7 @@ class _Phase3EmotionalIntegrationWidgetState
           children: [
             Text(
               title,
-              style: GymType.display.copyWith(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
+              style: GymType.bodyStrong,
             ),
             const SizedBox(height: 4),
             Text(

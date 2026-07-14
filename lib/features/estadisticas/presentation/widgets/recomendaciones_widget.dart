@@ -42,9 +42,7 @@ class RecomendacionesWidget extends StatelessWidget {
               SizedBox(width: Espaciado.xs),
               Text(
                 'Recomendaciones',
-                style: GymType.body.copyWith(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
+                style: GymType.section.copyWith(
                   color: c.ink,
                 ),
               ),
@@ -102,18 +100,15 @@ class RecomendacionesWidget extends StatelessWidget {
                   children: [
                     Text(
                       capitalizarPrimeraLetra(recomendacion.nombreMusculo),
-                      style: GymType.body.copyWith(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
+                      style: GymType.bodyStrong.copyWith(
                         color: c.ink,
                       ),
                     ),
                     SizedBox(height: Espaciado.xxs),
                     Text(
                       recomendacion.mensajeTiempo,
-                      style: GymType.label.copyWith(
+                      style: GymType.body.copyWith(
                         fontWeight: FontWeight.w400,
-                        fontSize: 14,
                         color: c.ink,
                       ),
                     ),
@@ -142,7 +137,6 @@ class RecomendacionesWidget extends StatelessWidget {
                   child: Text(
                     recomendacion.mensajeRecomendacion,
                     style: GymType.body.copyWith(
-                      fontSize: 14,
                       color: c.ink,
                       fontStyle: FontStyle.italic,
                     ),
@@ -168,7 +162,6 @@ class RecomendacionesWidget extends StatelessWidget {
                 label: Text(
                   'Entrenar ${recomendacion.nombreMusculo}',
                   style: GymType.body.copyWith(
-                    fontSize: 14,
                     fontWeight: FontWeight.w600,
                     color: Colors.white,
                   ),
@@ -256,18 +249,15 @@ class RecomendacionesWidget extends StatelessWidget {
           SizedBox(height: Espaciado.md),
           Text(
             '¡Entrenamiento Balanceado!',
-            style: GymType.body.copyWith(
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
+            style: GymType.title.copyWith(
               color: c.brandInk,
             ),
           ),
           SizedBox(height: Espaciado.xs),
           Text(
             'Estás trabajando todos los grupos musculares de manera equilibrada',
-            style: GymType.label.copyWith(
+            style: GymType.body.copyWith(
               fontWeight: FontWeight.w400,
-              fontSize: 16,
               color: c.ink,
             ),
             textAlign: TextAlign.center,
@@ -287,7 +277,6 @@ class RecomendacionesWidget extends StatelessWidget {
                 Text(
                   'Mantén esta consistencia',
                   style: GymType.body.copyWith(
-                    fontSize: 14,
                     color: c.ink,
                   ),
                 ),

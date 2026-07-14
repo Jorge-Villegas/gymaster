@@ -45,9 +45,8 @@ class EstadisticasPage extends StatelessWidget {
           SizedBox(height: Espaciado.md),
           Text(
             'Analizando tus entrenamientos...',
-            style: GymType.label.copyWith(
+            style: GymType.body.copyWith(
               fontWeight: FontWeight.w400,
-              fontSize: 16,
               color: context.gym.muted,
             ),
           ),
@@ -141,7 +140,6 @@ class EstadisticasPage extends StatelessWidget {
         Text(
           'Resumen del Periodo',
           style: GymType.section.copyWith(
-            fontSize: 18,
             fontWeight: FontWeight.w600,
             color: c.ink,
             height: 1.4,
@@ -202,7 +200,6 @@ class EstadisticasPage extends StatelessWidget {
         Text(
           'Progreso de ${ejercicioTop.nombreEjercicio}',
           style: GymType.section.copyWith(
-            fontSize: 18,
             fontWeight: FontWeight.w600,
             color: c.ink,
             height: 1.4,
@@ -250,18 +247,15 @@ class EstadisticasPage extends StatelessWidget {
             SizedBox(height: Espaciado.lg),
             Text(
               'Sin Datos Disponibles',
-              style: GymType.body.copyWith(
-                fontSize: 24,
-                fontWeight: FontWeight.w600,
+              style: GymType.title.copyWith(
                 color: c.muted,
               ),
             ),
             SizedBox(height: Espaciado.md),
             Text(
               mensaje,
-              style: GymType.label.copyWith(
+              style: GymType.body.copyWith(
                 fontWeight: FontWeight.w400,
-                fontSize: 16,
                 color: c.faint,
               ),
               textAlign: TextAlign.center,
@@ -300,9 +294,7 @@ class EstadisticasPage extends StatelessWidget {
             SizedBox(height: Espaciado.lg),
             Text(
               'Error al Cargar Estadísticas',
-              style: GymType.section.copyWith(
-                fontSize: 24,
-                fontWeight: FontWeight.w600,
+              style: GymType.title.copyWith(
                 color: c.danger,
                 height: 1.4,
               ),
@@ -311,7 +303,6 @@ class EstadisticasPage extends StatelessWidget {
             Text(
               mensaje,
               style: GymType.body.copyWith(
-                fontSize: 16,
                 color: c.muted,
                 height: 1.3,
               ),

@@ -227,8 +227,7 @@ class _FavoritesPageState extends State<FavoritesPage>
                     children: [
                       Text(
                         capitalizarPrimeraLetra(exercise.name),
-                        style: GymType.section.copyWith(
-                          fontSize: 18,
+                        style: GymType.bodyStrong.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
                         maxLines: 2,
@@ -270,9 +269,8 @@ class _FavoritesPageState extends State<FavoritesPage>
                       // Descripción breve
                       Text(
                         exercise.description,
-                        style: GymType.bodyStrong.copyWith(
+                        style: GymType.body.copyWith(
                           fontWeight: FontWeight.w300,
-                          fontSize: 14,
                           color: context.gym.faint,
                         ),
                         maxLines: 2,
@@ -335,7 +333,6 @@ class _FavoritesPageState extends State<FavoritesPage>
               child: Text(
                 'Remover Favorito',
                 style: GymType.section.copyWith(
-                  fontSize: 18,
                   color: context.gym.ink,
                 ),
               ),
@@ -344,9 +341,8 @@ class _FavoritesPageState extends State<FavoritesPage>
         ),
         content: Text(
           '¿Estás seguro de que deseas remover "${exercise.name}" de tus favoritos?',
-          style: GymType.bodyStrong.copyWith(
+          style: GymType.body.copyWith(
             fontWeight: FontWeight.w300,
-            fontSize: 16,
             color: context.gym.faint,
           ),
         ),
@@ -425,7 +421,6 @@ class _FavoritesPageState extends State<FavoritesPage>
                   'Explora el catálogo de ejercicios y agrega tus favoritos tocando el ❤️ en cada ejercicio.',
                   style: GymType.body.copyWith(
                     fontWeight: FontWeight.w400,
-                    fontSize: 16,
                     color: context.gym.faint,
                   ),
                   textAlign: TextAlign.center,
@@ -553,7 +548,6 @@ class _FavoritesPageState extends State<FavoritesPage>
                 Text(
                   'Oops! Algo salió mal',
                   style: GymType.display.copyWith(
-                    fontSize: 24,
                     color: context.gym.ink,
                   ),
                   textAlign: TextAlign.center,
@@ -561,9 +555,8 @@ class _FavoritesPageState extends State<FavoritesPage>
                 const SizedBox(height: 12),
                 Text(
                   mensaje,
-                  style: GymType.bodyStrong.copyWith(
+                  style: GymType.body.copyWith(
                     fontWeight: FontWeight.w300,
-                    fontSize: 16,
                     color: context.gym.faint,
                   ),
                   textAlign: TextAlign.center,

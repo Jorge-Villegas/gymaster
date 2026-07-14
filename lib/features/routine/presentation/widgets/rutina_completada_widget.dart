@@ -301,7 +301,6 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
         Text(
           mensajePersonalizado,
           style: GymType.section.copyWith(
-            fontSize: 18,
             color: Theme.of(context).colorScheme.onSurface,
           ),
           textAlign: TextAlign.center,
@@ -325,7 +324,6 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
           Text(
             subtituloContextual,
             style: GymType.section.copyWith(
-              fontSize: 16,
               fontWeight: FontWeight.w600,
             ),
             textAlign: TextAlign.center,

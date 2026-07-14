@@ -293,7 +293,6 @@ class _AgregarEjercicioRutinaPageState
                   Text(
                     '¡Configura tu poder!',
                     style: GymType.section.copyWith(
-                      fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -347,15 +346,13 @@ class _AgregarEjercicioRutinaPageState
               'Preparando tu entrenamiento...',
               style: GymType.section.copyWith(
                 fontWeight: FontWeight.w300,
-                fontSize: 18,
               ),
             ),
             const SizedBox(height: 8),
             Text(
               '¡Casi listo para entrenar! 💪',
-              style: GymType.section.copyWith(
+              style: GymType.body.copyWith(
                 color: context.gym.faint,
-                fontSize: 14,
               ),
             ),
           ],

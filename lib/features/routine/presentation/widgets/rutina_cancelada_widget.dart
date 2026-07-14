@@ -103,7 +103,6 @@ class RutinaCanceladaWidget extends StatelessWidget {
                     'Reintentar Rutina',
                     style: GymType.section.copyWith(
                       color: Colors.white,
-                      fontSize: 18,
                     ),
                   ),
                   style: ElevatedButton.styleFrom(
@@ -120,9 +119,7 @@ class RutinaCanceladaWidget extends StatelessWidget {
                 // Mensaje motivacional
                 Text(
                   '¡No te rindas! Puedes intentarlo de nuevo 💪',
-                  style: GymType.section.copyWith(
-                    fontSize: 16,
-                  ),
+                  style: GymType.section,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 24),

@@ -105,9 +105,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                     padding: const EdgeInsets.only(left: 4, bottom: 12),
                     child: Text(
                       'Grupos Musculares',
-                      style: GymType.section.copyWith(
-                        fontSize: 18,
-                      ),
+                      style: GymType.section,
                     ),
                   ),
                   // Botón "Todos" destacado (Von Restorff + Posición Serial)
@@ -254,8 +252,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
             ],
             Text(
               capitalizarPrimeraLetra(label),
-              style: GymType.section.copyWith(
-                fontSize: 14,
+              style: GymType.body.copyWith(
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
                 color: isSelected
                     ? Colors.white
@@ -502,9 +499,8 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                     children: [
                       Text(
                         capitalizarPrimeraLetra(exercise.name),
-                        style: TextStyle(
+                        style: GymType.bodyStrong.copyWith(
                           fontWeight: FontWeight.w400,
-                          fontSize: 16,
                           height: 1.1,
                           color: c.ink,
                         ),
@@ -644,9 +640,8 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                   SnackBar(
                     content: Text(
                       '💔 ${exercise.name} removido de favoritos',
-                      style: GymType.section.copyWith(
+                      style: GymType.body.copyWith(
                         color: Colors.white,
-                        fontSize: 14,
                       ),
                     ),
                     backgroundColor: context.gym.xpInk,
