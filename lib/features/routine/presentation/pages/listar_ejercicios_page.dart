@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gymaster/core/theme/emotional_text_styles.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
-import 'package:gymaster/core/theme/tipografia_gymaster.dart';
+import 'package:gymaster/shared/widgets/gym/gym.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicio/ejercicio_cubit.dart';
 
 import 'package:gymaster/shared/utils/text_formatter.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:gymaster/shared/utils/verificador_tipo_archivo.dart';
-import 'package:gymaster/shared/widgets/chiclet_button.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -137,10 +136,8 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
       children: [
         Text(
           '¡Elige tu ejercicio!',
-          style: TextStyle(
-            fontWeight: TipografiaGyMaster.pesoSemiBold,
-            fontSize: TipografiaGyMaster.tamanoLg,
-            color: context.gym.brand,
+          style: GymType.section.copyWith(
+            color: context.gym.ink,
             height: 1.1,
           ),
           maxLines: 1,
@@ -149,10 +146,8 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
         const SizedBox(height: 4),
         Text(
           TextFormatter.capitalize(widget.nombreMusculo),
-          style: TextStyle(
-            fontWeight: TipografiaGyMaster.pesoRegular,
-            fontSize: TipografiaGyMaster.tamanoSm,
-            color: context.gym.xpInk,
+          style: GymType.body.copyWith(
+            color: context.gym.muted,
           ),
         ),
       ],
@@ -188,13 +183,13 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
         child: TextField(
           controller: _searchController,
           autofocus: true,
-          style: EstilosTextoEmocional.amigable.copyWith(
-            color: context.gym.brand,
+          style: GymType.body.copyWith(
+            color: context.gym.ink,
             fontSize: 16,
           ),
           decoration: InputDecoration(
             hintText: 'Buscar ejercicios...',
-            hintStyle: EstilosTextoEmocional.amigable.copyWith(
+            hintStyle: GymType.body.copyWith(
               color: context.gym.faint,
               fontSize: 16,
             ),
@@ -396,10 +391,8 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
             const SizedBox(height: 24),
             Text(
               '¡No te preocupes!',
-              style: EstilosTextoEmocional.aliento.copyWith(
-                color: context.gym.brand,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+              style: GymType.display.copyWith(
+                color: context.gym.ink,
               ),
             ),
             const SizedBox(height: 12),
@@ -408,19 +401,17 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
               child: Text(
                 mensaje,
                 textAlign: TextAlign.center,
-                style: EstilosTextoEmocional.amigable.copyWith(
+                style: GymType.body.copyWith(
                   color: context.gym.faint,
-                  fontSize: 16,
                 ),
               ),
             ),
             const SizedBox(height: 32),
-            ChicletButton(
-              texto: 'Reintentar',
-              icono: Icons.refresh_rounded,
-              tamano: TamanoBotonChiclet.grande,
-              estilo: EstiloBotonChiclet.relleno,
-              colorFondo: context.gym.xpInk,
+            GymButton(
+              label: 'Reintentar',
+              icon: Icons.refresh_rounded,
+              size: GymButtonSize.large,
+              expand: false,
               onPressed: () => context.read<EjercicioCubit>().setEjercicio(
                     musculoId: widget.idMusculo,
                     rutinaId: widget.idRutina,
@@ -536,18 +527,15 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
               const SizedBox(height: 16),
               Text(
                 'No hay ejercicios disponibles',
-                style: EstilosTextoEmocional.energetico.copyWith(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: context.gym.brand,
+                style: GymType.section.copyWith(
+                  color: context.gym.ink,
                 ),
               ),
               const SizedBox(height: 8),
               Text(
                 'Parece que no hay ejercicios para este grupo muscular.',
                 textAlign: TextAlign.center,
-                style: EstilosTextoEmocional.amigable.copyWith(
-                  fontSize: 16,
+                style: GymType.body.copyWith(
                   color: context.gym.faint,
                 ),
               ),
@@ -675,10 +663,8 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                               children: [
                                 Text(
                                   TextFormatter.capitalize(ejercicio.nombre),
-                                  style: TextStyle(
-                                    fontSize: TipografiaGyMaster.tamanoMd,
-                                    fontWeight: TipografiaGyMaster.pesoSemiBold,
-                                    color: context.gym.brand,
+                                  style: GymType.section.copyWith(
+                                    color: context.gym.ink,
                                     height: 1.1,
                                   ),
                                 ),
@@ -687,9 +673,8 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                                   TextFormatter.capitalize(
                                       widget.nombreMusculo),
                                   style:
-                                      EstilosTextoEmocional.amigable.copyWith(
+                                      GymType.body.copyWith(
                                     color: context.gym.faint,
-                                    fontSize: 14,
                                   ),
                                 ),
                               ],

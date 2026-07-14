@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
-import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/features/estadisticas/presentation/cubits/estadisticas_cubit.dart';
 import 'package:gymaster/features/estadisticas/presentation/cubits/estadisticas_state.dart';
 import 'package:gymaster/features/estadisticas/presentation/widgets/grafico_distribucion_muscular_widget.dart';
@@ -10,7 +10,7 @@ import 'package:gymaster/features/estadisticas/presentation/widgets/ranking_ejer
 import 'package:gymaster/features/estadisticas/presentation/widgets/recomendaciones_widget.dart';
 import 'package:gymaster/features/estadisticas/presentation/widgets/selector_periodo_widget.dart';
 import 'package:gymaster/features/estadisticas/presentation/widgets/tarjeta_metrica_widget.dart';
-import 'package:gymaster/shared/widgets/chiclet_button.dart';
+import 'package:gymaster/shared/widgets/gym/gym.dart';
 
 /// Página principal de estadísticas con visualizaciones interactivas.
 ///
@@ -45,8 +45,9 @@ class EstadisticasPage extends StatelessWidget {
           SizedBox(height: Espaciado.md),
           Text(
             'Analizando tus entrenamientos...',
-            style: TipografiaGyMaster.textoSecundario.copyWith(
-              fontSize: TipografiaGyMaster.tamanoMd,
+            style: GymType.label.copyWith(
+              fontWeight: FontWeight.w400,
+              fontSize: 16,
               color: context.gym.muted,
             ),
           ),
@@ -110,7 +111,7 @@ class EstadisticasPage extends StatelessWidget {
                     SnackBar(
                       content: Text(
                         'Funcionalidad próximamente',
-                        style: TipografiaGyMaster.textoPrincipal.copyWith(
+                        style: GymType.body.copyWith(
                           color: Colors.white,
                         ),
                       ),
@@ -139,9 +140,9 @@ class EstadisticasPage extends StatelessWidget {
       children: [
         Text(
           'Resumen del Periodo',
-          style: TextStyle(
-            fontSize: TipografiaGyMaster.tamanoLg,
-            fontWeight: TipografiaGyMaster.pesoSemiBold,
+          style: GymType.section.copyWith(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
             color: c.ink,
             height: 1.4,
           ),
@@ -200,9 +201,9 @@ class EstadisticasPage extends StatelessWidget {
       children: [
         Text(
           'Progreso de ${ejercicioTop.nombreEjercicio}',
-          style: TextStyle(
-            fontSize: TipografiaGyMaster.tamanoLg,
-            fontWeight: TipografiaGyMaster.pesoSemiBold,
+          style: GymType.section.copyWith(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
             color: c.ink,
             height: 1.4,
           ),
@@ -221,8 +222,8 @@ class EstadisticasPage extends StatelessWidget {
           child: Center(
             child: Text(
               'Gráfico de progreso disponible próximamente',
-              style: TextStyle(
-                fontWeight: TipografiaGyMaster.pesoRegular,
+              style: GymType.body.copyWith(
+                fontWeight: FontWeight.w400,
                 color: c.faint,
                 height: 1.3,
               ),
@@ -249,46 +250,33 @@ class EstadisticasPage extends StatelessWidget {
             SizedBox(height: Espaciado.lg),
             Text(
               'Sin Datos Disponibles',
-              style: TipografiaGyMaster.textoPrincipal.copyWith(
-                fontSize: TipografiaGyMaster.tamano2xl,
-                fontWeight: TipografiaGyMaster.pesoSemiBold,
+              style: GymType.body.copyWith(
+                fontSize: 24,
+                fontWeight: FontWeight.w600,
                 color: c.muted,
               ),
             ),
             SizedBox(height: Espaciado.md),
             Text(
               mensaje,
-              style: TipografiaGyMaster.textoSecundario.copyWith(
-                fontSize: TipografiaGyMaster.tamanoMd,
+              style: GymType.label.copyWith(
+                fontWeight: FontWeight.w400,
+                fontSize: 16,
                 color: c.faint,
               ),
               textAlign: TextAlign.center,
             ),
             SizedBox(height: Espaciado.xl),
-            ElevatedButton.icon(
+            GymButton(
+              label: 'Crear Primera Rutina',
+              icon: Icons.add_circle_outline,
+              variant: GymButtonVariant.primary,
+              size: GymButtonSize.large,
+              expand: false,
               onPressed: () {
                 // TODO: Navegar a crear primera rutina
                 Navigator.pop(context);
               },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: c.brand,
-                padding: EdgeInsets.symmetric(
-                  horizontal: Espaciado.xl,
-                  vertical: Espaciado.md,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-              icon: const Icon(Icons.add_circle_outline, color: Colors.white),
-              label: Text(
-                'Crear Primera Rutina',
-                style: TipografiaGyMaster.textoPrincipal.copyWith(
-                  fontSize: TipografiaGyMaster.tamanoMd,
-                  fontWeight: TipografiaGyMaster.pesoSemiBold,
-                  color: Colors.white,
-                ),
-              ),
             ),
           ],
         ),
@@ -312,9 +300,9 @@ class EstadisticasPage extends StatelessWidget {
             SizedBox(height: Espaciado.lg),
             Text(
               'Error al Cargar Estadísticas',
-              style: TextStyle(
-                fontSize: TipografiaGyMaster.tamano2xl,
-                fontWeight: TipografiaGyMaster.pesoSemiBold,
+              style: GymType.section.copyWith(
+                fontSize: 24,
+                fontWeight: FontWeight.w600,
                 color: c.danger,
                 height: 1.4,
               ),
@@ -322,19 +310,20 @@ class EstadisticasPage extends StatelessWidget {
             SizedBox(height: Espaciado.md),
             Text(
               mensaje,
-              style: TextStyle(
-                fontSize: TipografiaGyMaster.tamanoMd,
+              style: GymType.body.copyWith(
+                fontSize: 16,
                 color: c.muted,
                 height: 1.3,
               ),
               textAlign: TextAlign.center,
             ),
             SizedBox(height: Espaciado.xl),
-            ChicletButton(
-              texto: 'Intentar de Nuevo',
-              icono: Icons.refresh,
-              tamano: TamanoBotonChiclet.grande,
-              estilo: EstiloBotonChiclet.relleno,
+            GymButton(
+              label: 'Intentar de Nuevo',
+              icon: Icons.refresh,
+              variant: GymButtonVariant.primary,
+              size: GymButtonSize.large,
+              expand: false,
               onPressed: () {
                 context.read<EstadisticasCubit>().recargarEstadisticas();
               },

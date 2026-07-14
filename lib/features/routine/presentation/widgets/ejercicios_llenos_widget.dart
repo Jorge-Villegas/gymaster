@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
-import 'package:gymaster/core/theme/emotional_text_styles.dart';
-import 'package:gymaster/core/theme/tipografia_gymaster.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/shared/utils/haptic_feedback_helper.dart';
 import 'package:gymaster/shared/utils/audio_feedback_helper.dart';
 import 'package:gymaster/features/routine/domain/entities/ejercicios_de_rutina.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
 import 'package:gymaster/features/routine/presentation/widgets/custom_cart.dart';
 import 'package:gymaster/shared/utils/enum.dart';
-import 'package:gymaster/shared/widgets/chiclet_button.dart';
+import 'package:gymaster/shared/widgets/gym/gym.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 
@@ -37,7 +35,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
   ) {
     return SizedBox(
       width: double.infinity,
-      child: ChicletButton(
+      child: GymButton(
         onPressed: () {
           iniciarRutina(
             context,
@@ -46,13 +44,11 @@ class EjerciciosLlenosWidget extends StatelessWidget {
           );
           context.push('/detalle-ejercicio');
         },
-        texto: '¡Iniciar entrenamiento!',
-        icono: IconsaxPlusLinear.play,
-        tamano: TamanoBotonChiclet.grande,
-        estilo: EstiloBotonChiclet.relleno,
-        colorFondo: AppColors.exito,
-        conSombreado: true,
-        grosorSombreado: 6.0,
+        label: '¡Iniciar entrenamiento!',
+        icon: IconsaxPlusLinear.play,
+        size: GymButtonSize.large,
+        variant: GymButtonVariant.primary,
+        expand: true,
       ),
     );
   }
@@ -66,37 +62,34 @@ class EjerciciosLlenosWidget extends StatelessWidget {
         // Botón de Continuar Entrenamiento
         Expanded(
           flex: 5,
-          child: ChicletButton(
+          child: GymButton(
             onPressed: () {
               HapticFeedbackHelper.vibracionSeleccion();
               context.push('/detalle-ejercicio');
             },
-            texto: 'Continuar',
-            icono: IconsaxPlusLinear.play,
-            tamano: TamanoBotonChiclet.grande,
-            estilo: EstiloBotonChiclet.relleno,
-            colorFondo: AppColors.exito,
-            conSombreado: true,
-            grosorSombreado: 6.0,
+            label: 'Continuar',
+            icon: IconsaxPlusLinear.play,
+            size: GymButtonSize.large,
+            variant: GymButtonVariant.primary,
+            expand: true,
           ),
         ),
         const SizedBox(width: 12),
         // Botón de Pausar Entrenamiento
         Expanded(
           flex: 4,
-          child: ChicletButton(
+          child: GymButton(
             onPressed: () {
               mostrarDialogoPararEntrenamiento(
                 context,
                 state.ejerciciosDeRutina.session,
               );
             },
-            texto: 'Pausar',
-            icono: IconsaxPlusLinear.pause,
-            tamano: TamanoBotonChiclet.grande,
-            estilo: EstiloBotonChiclet.relleno,
-            colorFondo: AppColors.acento,
-            conSombreado: true,
+            label: 'Pausar',
+            icon: IconsaxPlusLinear.pause,
+            size: GymButtonSize.large,
+            variant: GymButtonVariant.primary,
+            expand: true,
           ),
         ),
       ],
@@ -124,53 +117,46 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                 // Título emocional
                 Text(
                   '¿Pausar entrenamiento?',
-                  style: TextStyle(
-                    color: AppColors.primario,
-                    fontSize: TipografiaGyMaster.titulo.fontSize,
-                    fontWeight: TipografiaGyMaster.pesoSemiBold,
-                    height: 1.1,
-                  ),
+                  style: GymType.title.copyWith(height: 1.1),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 12),
                 // Mensaje motivacional
                 Text(
                   '¡No te rindas ahora! Tu progreso se guardará.',
-                  style: TextStyle(
-                    color: AppColors.textoTerciario,
-                    fontSize: TipografiaGyMaster.textoPrincipal.fontSize,
-                    fontWeight: TipografiaGyMaster.pesoLigero,
+                  style: GymType.body.copyWith(
+                    color: context.gym.faint,
+                    fontWeight: FontWeight.w300,
                     height: 1.3,
                   ),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 32),
-                // Botones con ChicletButton
+                // Botones de acción
                 Row(
                   children: [
                     Expanded(
-                      child: ChicletButton(
+                      child: GymButton(
                         onPressed: () => context.pop(),
-                        texto: 'Continuar',
-                        tamano: TamanoBotonChiclet.pequeno,
-                        estilo: EstiloBotonChiclet.contorno,
-                        colorBorde: AppColors.exito,
-                        colorTexto: AppColors.exito,
+                        label: 'Continuar',
+                        size: GymButtonSize.small,
+                        variant: GymButtonVariant.ghost,
+                        expand: true,
                       ),
                     ),
                     const SizedBox(width: 12),
                     Expanded(
-                      child: ChicletButton(
+                      child: GymButton(
                         onPressed: () {
                           context.read<EjerciciosByRutinaCubit>().stopRoutine(
                                 routineSessionId: sessionId,
                               );
                           context.pop();
                         },
-                        texto: 'Pausar',
-                        tamano: TamanoBotonChiclet.pequeno,
-                        estilo: EstiloBotonChiclet.relleno,
-                        colorFondo: AppColors.acento,
+                        label: 'Pausar',
+                        size: GymButtonSize.small,
+                        variant: GymButtonVariant.primary,
+                        expand: true,
                       ),
                     ),
                   ],
@@ -227,10 +213,10 @@ class EjerciciosLlenosWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             margin: const EdgeInsets.symmetric(horizontal: 16),
             decoration: BoxDecoration(
-              color: AppColors.exito.withValues(alpha: 0.1),
+              color: context.gym.brand.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
-                color: AppColors.exito.withValues(alpha: 0.2),
+                color: context.gym.brand.withValues(alpha: 0.2),
               ),
             ),
             child: Row(
@@ -240,18 +226,15 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.fitness_center_rounded,
-                      color: AppColors.exito,
+                      color: context.gym.brand,
                       size: 20,
                     ),
                     const SizedBox(width: 8),
                     Text(
                       'Ejercicios listos',
-                      style: TextStyle(
-                        fontWeight: TipografiaGyMaster.pesoSemiBold,
-                        fontSize: TipografiaGyMaster.subtitulo.fontSize,
+                      style: GymType.section.copyWith(
                         letterSpacing: 0.4,
                         height: 1.3,
-                        color: AppColors.exito,
                       ),
                     ),
                   ],
@@ -260,12 +243,12 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
-                    color: AppColors.exito,
+                    color: context.gym.brand,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
                     ejerciciosDeRutina.ejercicios.length.toString(),
-                    style: EstilosTextoEmocional.energetico.copyWith(
+                    style: GymType.section.copyWith(
                       color: Colors.white,
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -333,7 +316,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                     },
                     background: Container(
                       decoration: BoxDecoration(
-                        color: AppColors.acento,
+                        color: context.gym.xpInk,
                         borderRadius: BorderRadius.circular(16),
                       ),
                       alignment: Alignment.centerRight,
@@ -350,7 +333,7 @@ class EjerciciosLlenosWidget extends StatelessWidget {
                           const SizedBox(height: 4),
                           Text(
                             'Eliminar',
-                            style: EstilosTextoEmocional.amigable.copyWith(
+                            style: GymType.section.copyWith(
                               color: Colors.white,
                               fontSize: 12,
                               fontWeight: FontWeight.w600,

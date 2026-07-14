@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
-import 'package:gymaster/shared/widgets/chiclet_button.dart';
+import 'package:gymaster/shared/widgets/gym/gym.dart';
 
 /// Widget que muestra una lista de series de ejercicios.
 ///
@@ -194,16 +194,12 @@ class _ListaSeriesWidgetState extends State<ListaSeriesWidget> {
           SizedBox(
             width: 32,
             height: 32,
-            child: ChicletButton(
-              texto: '',
-              icono: Icons.remove,
-              colorFondo: Colors.white,
-              colorTexto: Colors.black,
-              estilo: EstiloBotonChiclet.contorno,
-              tamano: TamanoBotonChiclet.pequeno,
-              radioBorde: 20,
-              paddingHorizontal: 4,
-              paddingVertical: 4,
+            child: GymButton(
+              label: '',
+              icon: Icons.remove,
+              variant: GymButtonVariant.ghost,
+              size: GymButtonSize.small,
+              expand: false,
               onPressed: () => _decrementPeso(index),
             ),
           ),
@@ -272,16 +268,12 @@ class _ListaSeriesWidgetState extends State<ListaSeriesWidget> {
           SizedBox(
             width: 32,
             height: 32,
-            child: ChicletButton(
-              texto: '',
-              icono: Icons.add,
-              colorFondo: Colors.white,
-              colorTexto: Colors.black,
-              estilo: EstiloBotonChiclet.contorno,
-              tamano: TamanoBotonChiclet.pequeno,
-              radioBorde: 20,
-              paddingHorizontal: 4,
-              paddingVertical: 4,
+            child: GymButton(
+              label: '',
+              icon: Icons.add,
+              variant: GymButtonVariant.ghost,
+              size: GymButtonSize.small,
+              expand: false,
               onPressed: () => _incrementPeso(index),
             ),
           ),
@@ -321,16 +313,12 @@ class _ListaSeriesWidgetState extends State<ListaSeriesWidget> {
           SizedBox(
             width: 32,
             height: 32,
-            child: ChicletButton(
-              texto: '',
-              icono: Icons.remove,
-              colorFondo: Colors.white,
-              colorTexto: Colors.black,
-              estilo: EstiloBotonChiclet.contorno,
-              tamano: TamanoBotonChiclet.pequeno,
-              radioBorde: 20,
-              paddingHorizontal: 4,
-              paddingVertical: 4,
+            child: GymButton(
+              label: '',
+              icon: Icons.remove,
+              variant: GymButtonVariant.ghost,
+              size: GymButtonSize.small,
+              expand: false,
               onPressed: () => _decrementRepeticiones(index),
             ),
           ),
@@ -391,16 +379,12 @@ class _ListaSeriesWidgetState extends State<ListaSeriesWidget> {
           SizedBox(
             width: 32,
             height: 32,
-            child: ChicletButton(
-              texto: '',
-              icono: Icons.add,
-              colorFondo: Colors.white,
-              colorTexto: Colors.black,
-              estilo: EstiloBotonChiclet.contorno,
-              tamano: TamanoBotonChiclet.pequeno,
-              radioBorde: 20,
-              paddingHorizontal: 4,
-              paddingVertical: 4,
+            child: GymButton(
+              label: '',
+              icon: Icons.add,
+              variant: GymButtonVariant.ghost,
+              size: GymButtonSize.small,
+              expand: false,
               onPressed: () => _incrementRepeticiones(index),
             ),
           ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
-import 'package:gymaster/core/theme/tipografia_gymaster.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/features/setting/domain/entities/perfil_usuario_completo.dart';
 import 'package:gymaster/features/setting/presentation/cubits/onboarding/onboarding_cubit.dart';
 import 'package:gymaster/shared/widgets/gymaster_choice_chip.dart';
@@ -53,13 +53,11 @@ class _OnboardingNivelExperienciaContentState
         children: [
           Text(
             '¿Cuál es tu nivel de experiencia?',
-            style: TipografiaGyMaster.titulo.copyWith(
-              color: context.gym.brand,
-            ),
+            style: GymType.title,
           ),
           Text(
             'Esto nos ayudará a personalizar tus entrenamientos y establecer el ritmo adecuado para ti',
-            style: TipografiaGyMaster.textoPrincipal.copyWith(
+            style: GymType.body.copyWith(
               color: context.gym.muted,
             ),
           ),

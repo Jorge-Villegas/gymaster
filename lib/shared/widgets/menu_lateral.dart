@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
-import 'package:gymaster/core/theme/tipografia_gymaster.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/features/setting/presentation/cubits/setting_cubit.dart';
 import 'package:gymaster/features/setting/presentation/cubits/setting_state.dart';
 import 'package:gymaster/shared/models/elemento_menu_modelo.dart';
 import 'package:gymaster/shared/widgets/seccion_botones_menu.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'dart:math' as math;
-import 'package:gymaster/core/theme/app_colors.dart';
 
 class MenuLateral extends StatefulWidget {
   const MenuLateral({
@@ -139,9 +138,9 @@ class _MenuLateralState extends State<MenuLateral> {
             top: mediaPadding.top,
             bottom: math.max(0, mediaPadding.bottom - 60),
           ),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             // Fondo azul oscuro que ocupa toda la altura sin bordes redondeados
-            color: AppColors.fondoTerciarioOscuro,
+            color: Color(0xFF334155),
             // Sin borderRadius para que ocupe toda la pantalla de arriba a abajo
           ),
           child: Column(
@@ -208,14 +207,14 @@ class _MenuLateralState extends State<MenuLateral> {
             children: [
               Text(
                 "Usuario GyMaster",
-                style: TipografiaGyMaster.subtitulo.copyWith(
+                style: GymType.section.copyWith(
                   color: Colors.white,
                 ),
               ),
               const SizedBox(height: 2),
               Text(
                 "Entrenador Personal",
-                style: TipografiaGyMaster.textoPrincipal.copyWith(
+                style: GymType.body.copyWith(
                   color: Colors.white.withValues(alpha: 0.7),
                 ),
               )
@@ -247,7 +246,7 @@ class _MenuLateralState extends State<MenuLateral> {
           Expanded(
             child: Text(
               "Tema Oscuro",
-              style: TipografiaGyMaster.subtitulo.copyWith(
+              style: GymType.section.copyWith(
                 color: Colors.white,
               ),
             ),

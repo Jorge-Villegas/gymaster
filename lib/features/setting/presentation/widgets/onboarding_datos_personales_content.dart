@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
-import 'package:gymaster/core/theme/tipografia_gymaster.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/features/setting/domain/entities/perfil_usuario_completo.dart';
 import 'package:gymaster/features/setting/presentation/cubits/onboarding/onboarding_cubit.dart';
 import 'package:gymaster/shared/widgets/gymaster_input_field.dart';
@@ -49,13 +49,11 @@ class _OnboardingDatosPersonalesContentState
           children: [
             Text(
               'Cuéntanos sobre ti',
-              style: TipografiaGyMaster.titulo.copyWith(
-                color: context.gym.brand,
-              ),
+              style: GymType.title,
             ),
             Text(
               'Necesitamos algunos datos para personalizar tu experiencia',
-              style: TipografiaGyMaster.textoPrincipal.copyWith(
+              style: GymType.body.copyWith(
                 color: context.gym.muted,
               ),
             ),
@@ -108,9 +106,7 @@ class _OnboardingDatosPersonalesContentState
       children: [
         Text(
           'Género',
-          style: TipografiaGyMaster.subtitulo.copyWith(
-            color: context.gym.brand,
-          ),
+          style: GymType.section,
         ),
         const SizedBox(height: Espaciado.sm),
         Wrap(
@@ -142,7 +138,7 @@ class _OnboardingDatosPersonalesContentState
       children: [
         RichText(
           text: TextSpan(
-            style: TipografiaGyMaster.subtitulo.copyWith(
+            style: GymType.section.copyWith(
               color: context.gym.ink,
             ),
             children: [
@@ -184,7 +180,7 @@ class _OnboardingDatosPersonalesContentState
                     _fechaNacimiento == null
                         ? 'Selecciona tu fecha de nacimiento'
                         : '${_fechaNacimiento!.day}/${_fechaNacimiento!.month}/${_fechaNacimiento!.year}${_obtenerEdadTexto()}',
-                    style: TipografiaGyMaster.textoPrincipal.copyWith(
+                    style: GymType.body.copyWith(
                       color: _fechaNacimiento == null
                           ? context.gym.muted
                           : context.gym.ink,
@@ -200,7 +196,8 @@ class _OnboardingDatosPersonalesContentState
             padding: const EdgeInsets.only(top: Espaciado.xs),
             child: Text(
               'Necesario para personalizar tu entrenamiento',
-              style: TipografiaGyMaster.textoSecundario.copyWith(
+              style: GymType.label.copyWith(
+                fontWeight: FontWeight.w400,
                 color: context.gym.muted,
               ),
             ),
@@ -210,7 +207,8 @@ class _OnboardingDatosPersonalesContentState
             padding: const EdgeInsets.only(top: Espaciado.xs),
             child: Text(
               'Debes tener al menos 13 años para usar la aplicación',
-              style: TipografiaGyMaster.textoSecundario.copyWith(
+              style: GymType.label.copyWith(
+                fontWeight: FontWeight.w400,
                 color: context.gym.danger,
               ),
             ),

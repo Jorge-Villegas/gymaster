@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
-import 'package:gymaster/core/theme/emotional_text_styles.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/core/services/emotional_message_service.dart';
 
 /// Widget para visualización emocional del progreso del usuario
@@ -124,7 +124,7 @@ class _ProgressVisualizationWidgetState
             children: [
               Text(
                 'Tu Journey Fitness',
-                style: EstilosTextoEmocional.motivacional.copyWith(
+                style: GymType.display.copyWith(
                   fontSize: 20,
                   color: Theme.of(context).colorScheme.onSurface,
                 ),
@@ -199,9 +199,8 @@ class _ProgressVisualizationWidgetState
           const SizedBox(height: 8),
           Text(
             value,
-            style: EstilosTextoEmocional.celebracion.copyWith(
+            style: GymType.display.copyWith(
               fontSize: 20,
-              color: color,
             ),
           ),
           Text(
@@ -231,7 +230,7 @@ class _ProgressVisualizationWidgetState
             const SizedBox(width: 8),
             Text(
               'Línea de Tiempo de Logros',
-              style: EstilosTextoEmocional.aliento.copyWith(
+              style: GymType.section.copyWith(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
@@ -345,7 +344,7 @@ class _ProgressVisualizationWidgetState
               const SizedBox(width: 8),
               Text(
                 'Impacto Emocional',
-                style: EstilosTextoEmocional.aliento.copyWith(
+                style: GymType.section.copyWith(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
@@ -356,9 +355,8 @@ class _ProgressVisualizationWidgetState
           Text(
             MensajesEmocionalesService.obtenerEstadisticasContext(
                 widget.totalRutinasCompletadas),
-            style: EstilosTextoEmocional.logro.copyWith(
+            style: GymType.display.copyWith(
               fontSize: 18,
-              color: context.gym.xpInk,
             ),
             textAlign: TextAlign.center,
           ),

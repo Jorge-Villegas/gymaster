@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
-import 'package:gymaster/core/theme/tipografia_gymaster.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/shared/utils/text_formatter.dart';
 import 'package:gymaster/shared/utils/haptic_feedback_helper.dart';
@@ -153,18 +151,18 @@ class _RoutineCardState extends State<RoutineCard>
                             Text(
                               TextFormatter.capitalize(widget.title),
                               style: TextStyle(
-                                fontSize: TipografiaGyMaster.tamanoXl,
-                                fontWeight: TipografiaGyMaster.pesoSemiBold,
-                                color: AppColors.textoPrincipal,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                color: context.gym.ink,
                                 height: 1.3,
                               ),
                             ),
                             Text(
                               widget.cantidadEjerciciosPorSeries,
                               style: TextStyle(
-                                fontSize: TipografiaGyMaster.tamanoMd,
-                                fontWeight: TipografiaGyMaster.pesoRegular,
-                                color: AppColors.textoPrincipal,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                color: context.gym.ink,
                                 height: 1.3,
                               ),
                             ),

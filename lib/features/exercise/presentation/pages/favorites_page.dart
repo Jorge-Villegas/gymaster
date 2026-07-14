@@ -3,17 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
-import 'package:gymaster/core/theme/emotional_text_styles.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
-import 'package:gymaster/core/theme/tipografia_gymaster.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/features/exercise/domain/entities/exercise.dart';
 import 'package:gymaster/features/exercise/presentation/cubits/favorito_ejercicio_cubit.dart';
 import 'package:gymaster/features/exercise/presentation/cubits/favorito_ejercicio_state.dart';
 import 'package:gymaster/shared/utils/string_utils.dart';
 import 'package:gymaster/shared/utils/verificador_tipo_archivo.dart';
 import 'package:gymaster/shared/widgets/cabecera_reutilizable.dart';
-import 'package:gymaster/shared/widgets/chiclet_button.dart';
+import 'package:gymaster/shared/widgets/gym/gym.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -229,9 +227,8 @@ class _FavoritesPageState extends State<FavoritesPage>
                     children: [
                       Text(
                         capitalizarPrimeraLetra(exercise.name),
-                        style: EstilosTextoEmocional.energetico.copyWith(
+                        style: GymType.section.copyWith(
                           fontSize: 18,
-                          color: context.gym.brand,
                           fontWeight: FontWeight.bold,
                         ),
                         maxLines: 2,
@@ -260,8 +257,8 @@ class _FavoritesPageState extends State<FavoritesPage>
                             ),
                             child: Text(
                               capitalizarPrimeraLetra(muscle),
-                              style:
-                                  EstilosTextoEmocional.recuperacion.copyWith(
+                              style: GymType.bodyStrong.copyWith(
+                                fontWeight: FontWeight.w300,
                                 fontSize: 12,
                                 color: context.gym.info,
                               ),
@@ -273,7 +270,8 @@ class _FavoritesPageState extends State<FavoritesPage>
                       // Descripción breve
                       Text(
                         exercise.description,
-                        style: EstilosTextoEmocional.recuperacion.copyWith(
+                        style: GymType.bodyStrong.copyWith(
+                          fontWeight: FontWeight.w300,
                           fontSize: 14,
                           color: context.gym.faint,
                         ),
@@ -336,7 +334,7 @@ class _FavoritesPageState extends State<FavoritesPage>
             Expanded(
               child: Text(
                 'Remover Favorito',
-                style: EstilosTextoEmocional.energetico.copyWith(
+                style: GymType.section.copyWith(
                   fontSize: 18,
                   color: context.gym.ink,
                 ),
@@ -346,7 +344,8 @@ class _FavoritesPageState extends State<FavoritesPage>
         ),
         content: Text(
           '¿Estás seguro de que deseas remover "${exercise.name}" de tus favoritos?',
-          style: EstilosTextoEmocional.recuperacion.copyWith(
+          style: GymType.bodyStrong.copyWith(
+            fontWeight: FontWeight.w300,
             fontSize: 16,
             color: context.gym.faint,
           ),
@@ -356,7 +355,7 @@ class _FavoritesPageState extends State<FavoritesPage>
             onPressed: () => Navigator.of(dialogContext).pop(),
             child: Text(
               'Cancelar',
-              style: EstilosTextoEmocional.aliento.copyWith(
+              style: GymType.section.copyWith(
                 color: context.gym.faint,
               ),
             ),
@@ -379,7 +378,7 @@ class _FavoritesPageState extends State<FavoritesPage>
             ),
             child: Text(
               'Remover',
-              style: EstilosTextoEmocional.aliento.copyWith(
+              style: GymType.section.copyWith(
                 color: Colors.white,
               ),
             ),
@@ -416,28 +415,27 @@ class _FavoritesPageState extends State<FavoritesPage>
                 const SizedBox(height: 24),
                 Text(
                   '¡Aún no tienes favoritos!',
-                  style: TextStyle(
-                    fontWeight: TipografiaGyMaster.pesoSemiBold,
-                    fontSize: TipografiaGyMaster.tamano2xl,
-                    color: context.gym.brand,
+                  style: GymType.display.copyWith(
+                    fontWeight: FontWeight.w600,
                   ),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 12),
                 Text(
                   'Explora el catálogo de ejercicios y agrega tus favoritos tocando el ❤️ en cada ejercicio.',
-                  style: TextStyle(
-                    fontWeight: TipografiaGyMaster.pesoRegular,
-                    fontSize: TipografiaGyMaster.tamanoMd,
+                  style: GymType.body.copyWith(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 16,
                     color: context.gym.faint,
                   ),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 32),
-                ChicletButton(
-                  texto: 'Explorar Ejercicios',
-                  icono: IconsaxPlusLinear.search_normal_1,
-                  colorFondo: AppColors.primario,
+                GymButton(
+                  label: 'Explorar Ejercicios',
+                  icon: IconsaxPlusLinear.search_normal_1,
+                  variant: GymButtonVariant.primary,
+                  expand: false,
                   onPressed: () {
                     context.push('/exercise-catalog');
                   },
@@ -554,7 +552,7 @@ class _FavoritesPageState extends State<FavoritesPage>
                 const SizedBox(height: 24),
                 Text(
                   'Oops! Algo salió mal',
-                  style: EstilosTextoEmocional.motivacional.copyWith(
+                  style: GymType.display.copyWith(
                     fontSize: 24,
                     color: context.gym.ink,
                   ),
@@ -563,7 +561,8 @@ class _FavoritesPageState extends State<FavoritesPage>
                 const SizedBox(height: 12),
                 Text(
                   mensaje,
-                  style: EstilosTextoEmocional.recuperacion.copyWith(
+                  style: GymType.bodyStrong.copyWith(
+                    fontWeight: FontWeight.w300,
                     fontSize: 16,
                     color: context.gym.faint,
                   ),

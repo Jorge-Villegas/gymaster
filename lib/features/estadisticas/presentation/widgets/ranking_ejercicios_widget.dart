@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
-import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/features/estadisticas/domain/entities/ranking_ejercicio.dart';
 import 'package:gymaster/shared/utils/string_utils.dart';
 
@@ -40,9 +40,9 @@ class RankingEjerciciosWidget extends StatelessWidget {
             children: [
               Text(
                 'Ejercicios Favoritos',
-                style: TipografiaGyMaster.textoPrincipal.copyWith(
-                  fontSize: TipografiaGyMaster.tamanoLg,
-                  fontWeight: TipografiaGyMaster.pesoSemiBold,
+                style: GymType.body.copyWith(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
                   color: c.ink,
                 ),
               ),
@@ -51,8 +51,8 @@ class RankingEjerciciosWidget extends StatelessWidget {
                   onPressed: onVerMas,
                   child: Text(
                     'Ver más',
-                    style: TipografiaGyMaster.textoPrincipal.copyWith(
-                      fontSize: TipografiaGyMaster.tamanoSm,
+                    style: GymType.body.copyWith(
+                      fontSize: 14,
                       color: c.brand,
                     ),
                   ),
@@ -110,9 +110,7 @@ class RankingEjerciciosWidget extends StatelessWidget {
               child: Text(
                 ejercicio.emojiPosicion,
                 style: TextStyle(
-                  fontSize: esTopTres
-                      ? TipografiaGyMaster.tamanoLg
-                      : TipografiaGyMaster.tamanoMd,
+                  fontSize: esTopTres ? 18 : 16,
                 ),
               ),
             ),
@@ -126,17 +124,18 @@ class RankingEjerciciosWidget extends StatelessWidget {
               children: [
                 Text(
                   capitalizarPrimeraLetra(ejercicio.nombreEjercicio),
-                  style: TipografiaGyMaster.textoPrincipal.copyWith(
-                    fontSize: TipografiaGyMaster.tamanoMd,
-                    fontWeight: TipografiaGyMaster.pesoSemiBold,
+                  style: GymType.body.copyWith(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
                     color: c.ink,
                   ),
                 ),
                 SizedBox(height: Espaciado.xxs),
                 Text(
                   ejercicio.resumenCompacto,
-                  style: TipografiaGyMaster.textoSecundario.copyWith(
-                    fontSize: TipografiaGyMaster.tamanoXs,
+                  style: GymType.label.copyWith(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12,
                     color: c.muted,
                   ),
                 ),
@@ -155,16 +154,17 @@ class RankingEjerciciosWidget extends StatelessWidget {
               children: [
                 Text(
                   '${ejercicio.vecesRealizado}x',
-                  style: TipografiaGyMaster.textoPrincipal.copyWith(
-                    fontSize: TipografiaGyMaster.tamanoLg,
-                    fontWeight: TipografiaGyMaster.pesoSemiBold,
+                  style: GymType.body.copyWith(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
                     color: c.brand,
                   ),
                 ),
                 Text(
                   'veces',
-                  style: TipografiaGyMaster.textoSecundario.copyWith(
-                    fontSize: TipografiaGyMaster.tamanoXs,
+                  style: GymType.label.copyWith(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12,
                     color: c.muted,
                   ),
                 ),
@@ -209,17 +209,18 @@ class RankingEjerciciosWidget extends StatelessWidget {
           SizedBox(height: Espaciado.md),
           Text(
             'Sin ranking aún',
-            style: TipografiaGyMaster.textoPrincipal.copyWith(
-              fontSize: TipografiaGyMaster.tamanoLg,
-              fontWeight: TipografiaGyMaster.pesoSemiBold,
+            style: GymType.body.copyWith(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
               color: c.muted,
             ),
           ),
           SizedBox(height: Espaciado.xs),
           Text(
             'Completa entrenamientos para ver tus ejercicios favoritos',
-            style: TipografiaGyMaster.textoSecundario.copyWith(
-              fontSize: TipografiaGyMaster.tamanoSm,
+            style: GymType.label.copyWith(
+              fontWeight: FontWeight.w400,
+              fontSize: 14,
               color: c.faint,
             ),
             textAlign: TextAlign.center,

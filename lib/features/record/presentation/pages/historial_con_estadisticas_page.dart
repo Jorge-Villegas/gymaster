@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
-import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/features/estadisticas/presentation/cubits/estadisticas_cubit.dart';
 import 'package:gymaster/features/estadisticas/presentation/pages/estadisticas_page.dart';
 import 'package:gymaster/features/record/presentation/pages/historial_ejercicios_page.dart';
@@ -68,14 +67,14 @@ class _HistorialConEstadisticasPageState
                 labelColor: context.gym.brand,
                 unselectedLabelColor: context.gym.muted,
                 labelStyle: TextStyle(
-                  fontSize: TipografiaGyMaster.tamanoMd,
-                  fontWeight: TipografiaGyMaster.pesoSemiBold,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
                   color: context.gym.ink,
                   height: 1.4,
                 ),
                 unselectedLabelStyle: TextStyle(
-                  fontSize: TipografiaGyMaster.tamanoMd,
-                  fontWeight: TipografiaGyMaster.pesoRegular,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
                   color: context.gym.faint,
                   height: 1.3,
                 ),

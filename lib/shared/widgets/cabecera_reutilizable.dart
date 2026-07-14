@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
-import 'package:gymaster/core/theme/tipografia_gymaster.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/shared/widgets/pagina_con_menu_lateral.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 
@@ -196,10 +196,8 @@ class _CabeceraReutilizableState extends State<CabeceraReutilizable>
       children: [
         Text(
           widget.titulo,
-          style: TextStyle(
-            fontWeight: TipografiaGyMaster.pesoSemiBold,
-            fontSize: TipografiaGyMaster.tamanoXl,
-            color: context.gym.brand,
+          style: GymType.title.copyWith(
+            color: context.gym.ink,
             height: 1.1,
           ),
           maxLines: 2,
@@ -209,12 +207,10 @@ class _CabeceraReutilizableState extends State<CabeceraReutilizable>
           const SizedBox(height: Espaciado.xxs),
           Text(
             widget.subtitulo!,
-            style: TextStyle(
-              fontWeight: TipografiaGyMaster.pesoRegular,
-              fontSize: TipografiaGyMaster.tamanoSm,
+            style: GymType.body.copyWith(
               letterSpacing: 0.4,
               height: 1.3,
-              color: context.gym.brand,
+              color: context.gym.muted,
             ),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
@@ -253,17 +249,15 @@ class _CabeceraReutilizableState extends State<CabeceraReutilizable>
         child: TextField(
           controller: _searchController,
           autofocus: true,
-          style: TextStyle(
-            color: context.gym.brand,
-            fontSize: TipografiaGyMaster.tamanoMd,
-            fontWeight: TipografiaGyMaster.pesoRegular,
+          style: GymType.body.copyWith(
+            color: context.gym.ink,
+            fontSize: 16,
           ),
           decoration: InputDecoration(
             hintText: widget.busqueda!.placeholderText,
-            hintStyle: TextStyle(
+            hintStyle: GymType.body.copyWith(
               color: context.gym.faint,
-              fontSize: TipografiaGyMaster.tamanoMd,
-              fontWeight: TipografiaGyMaster.pesoRegular,
+              fontSize: 16,
             ),
             border: InputBorder.none,
             contentPadding: const EdgeInsets.symmetric(

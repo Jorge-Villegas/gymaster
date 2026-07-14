@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/config/app_config.dart';
-import 'package:gymaster/core/theme/emotional_text_styles.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/features/routine/presentation/cubits/agregar_series/agregar_series_cubit.dart';
 import 'package:gymaster/features/routine/presentation/cubits/agregar_series/agregar_series_state.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicio/ejercicio_cubit.dart';
@@ -12,7 +12,7 @@ import 'package:gymaster/features/routine/presentation/widgets/encabezado_ejerci
 import 'package:gymaster/features/routine/presentation/widgets/lista_series_widget.dart';
 import 'package:gymaster/shared/utils/snackbar_helper.dart';
 import 'package:gymaster/shared/utils/text_formatter.dart';
-import 'package:gymaster/shared/widgets/chiclet_button.dart';
+import 'package:gymaster/shared/widgets/gym/gym.dart';
 import 'package:animate_do/animate_do.dart';
 
 class AgregarEjercicioRutinaPage extends StatefulWidget {
@@ -292,8 +292,7 @@ class _AgregarEjercicioRutinaPageState
                 children: [
                   Text(
                     '¡Configura tu poder!',
-                    style: EstilosTextoEmocional.energetico.copyWith(
-                      color: context.gym.brand,
+                    style: GymType.section.copyWith(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
@@ -311,12 +310,12 @@ class _AgregarEjercicioRutinaPageState
   Widget _construirBotonGuardar() {
     return FadeInUp(
       duration: const Duration(milliseconds: 600),
-      child: ChicletButton(
+      child: GymButton(
         onPressed: _guardarDatos,
-        texto: '¡Guardar ejercicio!',
-        tamano: TamanoBotonChiclet.grande,
-        estilo: EstiloBotonChiclet.relleno,
-        colorFondo: context.gym.brand,
+        label: '¡Guardar ejercicio!',
+        size: GymButtonSize.large,
+        variant: GymButtonVariant.primary,
+        expand: false,
       ),
     );
   }
@@ -346,15 +345,15 @@ class _AgregarEjercicioRutinaPageState
             const SizedBox(height: 24),
             Text(
               'Preparando tu entrenamiento...',
-              style: EstilosTextoEmocional.amigable.copyWith(
-                color: context.gym.brand,
+              style: GymType.section.copyWith(
+                fontWeight: FontWeight.w300,
                 fontSize: 18,
               ),
             ),
             const SizedBox(height: 8),
             Text(
               '¡Casi listo para entrenar! 💪',
-              style: EstilosTextoEmocional.aliento.copyWith(
+              style: GymType.section.copyWith(
                 color: context.gym.faint,
                 fontSize: 14,
               ),

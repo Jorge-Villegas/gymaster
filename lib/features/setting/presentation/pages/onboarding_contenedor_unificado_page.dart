@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/features/setting/presentation/cubits/onboarding/onboarding_state.dart';
 import 'package:gymaster/features/setting/presentation/cubits/onboarding/onboarding_cubit.dart';
@@ -17,7 +16,7 @@ import 'package:gymaster/features/setting/presentation/widgets/onboarding_avatar
 import 'package:gymaster/features/setting/presentation/widgets/onboarding_datos_personales_content.dart';
 import 'package:gymaster/features/setting/presentation/widgets/onboarding_objetivos_content.dart';
 import 'package:gymaster/features/setting/presentation/widgets/onboarding_nivel_experiencia_content.dart';
-import 'package:gymaster/shared/widgets/chiclet_button.dart';
+import 'package:gymaster/shared/widgets/gym/gym.dart';
 
 class OnboardingContenedorUnificadoPage extends StatefulWidget {
   const OnboardingContenedorUnificadoPage({super.key});
@@ -150,22 +149,18 @@ class _OnboardingContenedorUnificadoPageState
             children: [
               if (currentPage > 0)
                 Expanded(
-                  child: ChicletButton(
-                    texto: 'Anterior',
+                  child: GymButton(
+                    label: 'Anterior',
                     onPressed: () => cubit.previousPage(),
-                    colorFondo: Colors.white,
-                    colorTexto: AppColors.acento,
-                    colorBorde: AppColors.acento,
-                    estilo: EstiloBotonChiclet.contorno,
-                    tamano: TamanoBotonChiclet.grande,
-                    conSombreado: true,
-                    grosorSombreado: 4.0,
+                    variant: GymButtonVariant.ghost,
+                    size: GymButtonSize.large,
+                    expand: true,
                   ),
                 ),
               if (currentPage > 0) const SizedBox(width: 16),
               Expanded(
-                child: ChicletButton(
-                  texto: buttonTexts[
+                child: GymButton(
+                  label: buttonTexts[
                       currentPage < buttonTexts.length ? currentPage : 0],
                   onPressed: canContinue
                       ? () {
@@ -176,14 +171,9 @@ class _OnboardingContenedorUnificadoPageState
                           }
                         }
                       : null,
-                  colorFondo: canContinue
-                      ? AppColors.acento
-                      : AppColors.textoDeshabilitado,
-                  colorTexto: Colors.white,
-                  estaHabilitado: canContinue,
-                  tamano: TamanoBotonChiclet.grande,
-                  conSombreado: true,
-                  grosorSombreado: 6.0,
+                  variant: GymButtonVariant.primary,
+                  size: GymButtonSize.large,
+                  expand: true,
                 ),
               ),
             ],

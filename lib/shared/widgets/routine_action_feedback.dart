@@ -1,7 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
-import 'package:gymaster/core/theme/emotional_text_styles.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/shared/utils/haptic_feedback_helper.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 
@@ -129,7 +129,7 @@ class _RoutineActionFeedbackState extends State<RoutineActionFeedback>
                 Expanded(
                   child: Text(
                     widget.message,
-                    style: EstilosTextoEmocional.aliento.copyWith(
+                    style: GymType.section.copyWith(
                       color: Colors.white,
                       fontSize: 16,
                     ),
@@ -186,7 +186,7 @@ class _RoutineActionFeedbackState extends State<RoutineActionFeedback>
         ),
         child: Text(
           'Deshacer',
-          style: EstilosTextoEmocional.aliento.copyWith(
+          style: GymType.section.copyWith(
             color: Colors.white,
             fontSize: 14,
             fontWeight: FontWeight.bold,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
-import 'package:gymaster/core/theme/emotional_text_styles.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 
 /// Widget de comunidad fitness virtual para motivación social
 /// Simula comparaciones con otros usuarios y proporciona motivación comunitaria
@@ -129,7 +129,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
             children: [
               Text(
                 'Comunidad GyMaster',
-                style: EstilosTextoEmocional.motivacional.copyWith(
+                style: GymType.display.copyWith(
                   fontSize: 20,
                   color: Theme.of(context).colorScheme.onSurface,
                 ),
@@ -170,7 +170,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
             children: [
               Text(
                 'Tu Posición en la Comunidad',
-                style: EstilosTextoEmocional.aliento.copyWith(
+                style: GymType.section.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -235,9 +235,8 @@ class _CommunityWidgetState extends State<CommunityWidget>
         const SizedBox(height: 4),
         Text(
           userValue,
-          style: EstilosTextoEmocional.celebracion.copyWith(
+          style: GymType.display.copyWith(
             fontSize: 18,
-            color: context.gym.brand,
           ),
         ),
         Text(
@@ -265,7 +264,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
             const SizedBox(width: 8),
             Text(
               'Comparación Motivacional',
-              style: EstilosTextoEmocional.aliento.copyWith(
+              style: GymType.section.copyWith(
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -301,9 +300,8 @@ class _CommunityWidgetState extends State<CommunityWidget>
           Expanded(
             child: Text(
               message.text,
-              style: EstilosTextoEmocional.logro.copyWith(
+              style: GymType.display.copyWith(
                 fontSize: 16,
-                color: context.gym.xpInk,
               ),
             ),
           ),
@@ -372,7 +370,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
               const SizedBox(width: 8),
               Text(
                 'Apoyo de la Comunidad',
-                style: EstilosTextoEmocional.aliento.copyWith(
+                style: GymType.section.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -381,9 +379,8 @@ class _CommunityWidgetState extends State<CommunityWidget>
           const SizedBox(height: 12),
           Text(
             _getCommunityMessage(),
-            style: EstilosTextoEmocional.celebracion.copyWith(
+            style: GymType.display.copyWith(
               fontSize: 16,
-              color: context.gym.xpInk,
             ),
             textAlign: TextAlign.center,
           ),

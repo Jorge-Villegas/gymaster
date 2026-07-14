@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 
 /// Widget reutilizable que emula el estilo de progreso de Duolingo
 /// con animaciones y colores vibrantes para aumentar la motivación
@@ -93,6 +93,9 @@ class _DuolingoProgressBarState extends State<DuolingoProgressBar>
 
   @override
   Widget build(BuildContext context) {
+    final primaryColor = widget.primaryColor ?? context.gym.brand;
+    final backgroundColor = widget.backgroundColor ?? context.gym.surface2;
+
     return AnimatedBuilder(
       animation: Listenable.merge([_progressAnimation, _bounceAnimation]),
       builder: (context, child) {
@@ -107,7 +110,7 @@ class _DuolingoProgressBarState extends State<DuolingoProgressBar>
                   child: Text(
                     widget.motivationalText!,
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          color: widget.primaryColor ?? AppColors.primario,
+                          color: primaryColor,
                           fontWeight: FontWeight.w600,
                         ),
                     textAlign: TextAlign.center,
@@ -119,7 +122,7 @@ class _DuolingoProgressBarState extends State<DuolingoProgressBar>
                 width: double.infinity,
                 height: 12,
                 decoration: BoxDecoration(
-                  color: widget.backgroundColor ?? AppColors.fondoSecundario,
+                  color: backgroundColor,
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
@@ -137,10 +140,8 @@ class _DuolingoProgressBarState extends State<DuolingoProgressBar>
                         borderRadius: BorderRadius.circular(20),
                         gradient: LinearGradient(
                           colors: [
-                            widget.backgroundColor?.withValues(alpha: 0.3) ??
-                                AppColors.fondoSecundario
-                                    .withValues(alpha: 0.3),
-                            widget.backgroundColor ?? AppColors.fondoSecundario,
+                            backgroundColor.withValues(alpha: 0.3),
+                            backgroundColor,
                           ],
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
@@ -157,18 +158,16 @@ class _DuolingoProgressBarState extends State<DuolingoProgressBar>
                           borderRadius: BorderRadius.circular(20),
                           gradient: LinearGradient(
                             colors: [
-                              widget.primaryColor?.withValues(alpha: 0.8) ??
-                                  AppColors.primario.withValues(alpha: 0.8),
-                              widget.primaryColor ?? AppColors.primario,
-                              widget.primaryColor ?? AppColors.primario,
+                              primaryColor.withValues(alpha: 0.8),
+                              primaryColor,
+                              primaryColor,
                             ],
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: (widget.primaryColor ?? AppColors.primario)
-                                  .withValues(alpha: 0.4),
+                              color: primaryColor.withValues(alpha: 0.4),
                               blurRadius: 8,
                               offset: const Offset(0, 2),
                             ),
@@ -204,7 +203,7 @@ class _DuolingoProgressBarState extends State<DuolingoProgressBar>
                   Text(
                     'Paso ${widget.currentStep} de ${widget.totalSteps}',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: AppColors.textoSecundario,
+                          color: context.gym.muted,
                           fontWeight: FontWeight.w500,
                         ),
                   ),
@@ -216,14 +215,13 @@ class _DuolingoProgressBarState extends State<DuolingoProgressBar>
                       vertical: 2,
                     ),
                     decoration: BoxDecoration(
-                      color: (widget.primaryColor ?? AppColors.primario)
-                          .withValues(alpha: 0.1),
+                      color: primaryColor.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
                       '${(_progressAnimation.value * 100).round()}%',
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: widget.primaryColor ?? AppColors.primario,
+                            color: primaryColor,
                             fontWeight: FontWeight.w700,
                           ),
                     ),
@@ -304,6 +302,8 @@ class _DuolingoSuccessAnimationState extends State<DuolingoSuccessAnimation>
 
   @override
   Widget build(BuildContext context) {
+    final color = widget.color ?? context.gym.brand;
+
     return AnimatedBuilder(
       animation: _controller,
       builder: (context, child) {
@@ -314,11 +314,10 @@ class _DuolingoSuccessAnimationState extends State<DuolingoSuccessAnimation>
             child: Container(
               padding: const EdgeInsets.all(Espaciado.lg),
               decoration: BoxDecoration(
-                color:
-                    (widget.color ?? AppColors.primario).withValues(alpha: 0.1),
+                color: color.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(Espaciado.lg),
                 border: Border.all(
-                  color: widget.color ?? AppColors.primario,
+                  color: color,
                   width: 2,
                 ),
               ),
@@ -328,167 +327,17 @@ class _DuolingoSuccessAnimationState extends State<DuolingoSuccessAnimation>
                   Icon(
                     widget.icon,
                     size: 48,
-                    color: widget.color ?? AppColors.primario,
+                    color: color,
                   ),
                   const SizedBox(height: Espaciado.sm),
                   Text(
                     widget.message,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          color: widget.color ?? AppColors.primario,
+                          color: color,
                           fontWeight: FontWeight.w600,
                         ),
                     textAlign: TextAlign.center,
                   ),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
-
-/// Widget de botón estilo Duolingo con estados vibrantes
-class DuolingoActionButton extends StatefulWidget {
-  final String text;
-  final VoidCallback? onPressed;
-  final Color? color;
-  final Color? textColor;
-  final bool isEnabled;
-  final bool isLoading;
-  final IconData? icon;
-
-  const DuolingoActionButton({
-    super.key,
-    required this.text,
-    this.onPressed,
-    this.color,
-    this.textColor,
-    this.isEnabled = true,
-    this.isLoading = false,
-    this.icon,
-  });
-
-  @override
-  State<DuolingoActionButton> createState() => _DuolingoActionButtonState();
-}
-
-class _DuolingoActionButtonState extends State<DuolingoActionButton>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _scaleAnimation;
-  bool _isPressed = false;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 150),
-      vsync: this,
-    );
-
-    _scaleAnimation = Tween<double>(
-      begin: 1.0,
-      end: 0.95,
-    ).animate(CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeInOut,
-    ));
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final effectiveColor = widget.color ?? AppColors.primario;
-    final isEnabled = widget.isEnabled && !widget.isLoading;
-
-    return AnimatedBuilder(
-      animation: _scaleAnimation,
-      builder: (context, child) {
-        return Transform.scale(
-          scale: _scaleAnimation.value,
-          child: GestureDetector(
-            onTapDown: isEnabled
-                ? (_) {
-                    setState(() => _isPressed = true);
-                    _controller.forward();
-                  }
-                : null,
-            onTapUp: isEnabled
-                ? (_) {
-                    setState(() => _isPressed = false);
-                    _controller.reverse();
-                    widget.onPressed?.call();
-                  }
-                : null,
-            onTapCancel: () {
-              setState(() => _isPressed = false);
-              _controller.reverse();
-            },
-            child: Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: Espaciado.md),
-              decoration: BoxDecoration(
-                gradient: isEnabled
-                    ? LinearGradient(
-                        colors: [
-                          effectiveColor,
-                          effectiveColor.withValues(alpha: 0.8),
-                        ],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                      )
-                    : null,
-                color: isEnabled ? null : AppColors.textoDeshabilitado,
-                borderRadius: BorderRadius.circular(Espaciado.md),
-                boxShadow: isEnabled && !_isPressed
-                    ? [
-                        BoxShadow(
-                          color: effectiveColor.withValues(alpha: 0.3),
-                          blurRadius: 8,
-                          offset: const Offset(0, 4),
-                        ),
-                      ]
-                    : null,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if (widget.isLoading)
-                    SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          widget.textColor ?? Colors.white,
-                        ),
-                      ),
-                    )
-                  else if (widget.icon != null)
-                    Icon(
-                      widget.icon,
-                      color: widget.textColor ?? Colors.white,
-                      size: 20,
-                    ),
-                  if ((widget.icon != null || widget.isLoading) &&
-                      widget.text.isNotEmpty)
-                    const SizedBox(width: Espaciado.xs),
-                  if (widget.text.isNotEmpty)
-                    Text(
-                      widget.text,
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            color: widget.textColor ?? Colors.white,
-                            fontWeight: FontWeight.w600,
-                          ),
-                    ),
                 ],
               ),
             ),

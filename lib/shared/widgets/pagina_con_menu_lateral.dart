@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:math' as math;
 import 'package:gymaster/shared/widgets/menu_lateral.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
 
 class PaginaConMenuLateral extends StatefulWidget {
   const PaginaConMenuLateral({
@@ -95,7 +94,7 @@ class _PaginaConMenuLateralState extends State<PaginaConMenuLateral>
             animation: _animacionMenuLateral,
             builder: (context, child) {
               return Container(
-                color: AppColors.fondoTerciarioOscuro.withValues(
+                color: const Color(0xFF334155).withValues(
                   alpha: (_animacionMenuLateral.value > 0.01) ? 1.0 : 0.0,
                 ),
               );

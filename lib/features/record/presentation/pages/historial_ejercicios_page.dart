@@ -4,11 +4,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
-import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/features/record/presentation/cubit/record_cubit.dart';
 import 'package:gymaster/features/record/presentation/cubit/record_state.dart';
 import 'package:gymaster/features/record/presentation/pages/detalle_ejercicio_page.dart';
-import 'package:gymaster/generated/l10n.dart';
 import 'package:gymaster/shared/utils/snackbar_helper.dart';
 import 'package:gymaster/shared/utils/string_utils.dart';
 import 'package:gymaster/shared/widgets/cabecera_reutilizable.dart';
@@ -154,8 +152,8 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                         DateFormat.yMMMMd('es').format(selectedDate),
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: TipografiaGyMaster.tamanoSm,
-                          fontWeight: TipografiaGyMaster.pesoSemiBold,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
@@ -221,20 +219,20 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                         color: context.gym.brand,
                       ),
                       titleTextStyle: TextStyle(
-                        fontSize: TipografiaGyMaster.tamanoMd,
-                        fontWeight: TipografiaGyMaster.pesoSemiBold,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
                         color: context.gym.ink,
                       ),
                     ),
                     daysOfWeekStyle: DaysOfWeekStyle(
                       weekdayStyle: TextStyle(
-                        fontSize: TipografiaGyMaster.tamanoSm,
-                        fontWeight: TipografiaGyMaster.pesoSemiBold,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
                         color: context.gym.faint,
                       ),
                       weekendStyle: TextStyle(
-                        fontSize: TipografiaGyMaster.tamanoSm,
-                        fontWeight: TipografiaGyMaster.pesoSemiBold,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
                         color: context.gym.faint,
                       ),
                     ),
@@ -282,8 +280,8 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                                 '${date.day}',
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontWeight: TipografiaGyMaster.pesoSemiBold,
-                                  fontSize: TipografiaGyMaster.tamanoSm,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 14,
                                 ),
                               ),
                             );
@@ -388,9 +386,9 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                                   Text(
                                     capitalizarPrimeraLetra(rutina.nombre),
                                     style: TextStyle(
-                                      fontSize: TipografiaGyMaster.tamanoLg,
+                                      fontSize: 18,
                                       fontWeight:
-                                          TipografiaGyMaster.pesoSemiBold,
+                                          FontWeight.w600,
                                       color: Color(rutina.color),
                                     ),
                                   ),
@@ -406,9 +404,9 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                                       Text(
                                         'Tiempo: ${rutina.tiempoRealizado}',
                                         style: TextStyle(
-                                          fontSize: TipografiaGyMaster.tamanoSm,
+                                          fontSize: 14,
                                           fontWeight:
-                                              TipografiaGyMaster.pesoRegular,
+                                              FontWeight.w400,
                                           color: Color(rutina.color),
                                         ),
                                       ),
@@ -490,8 +488,8 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                                 title: Text(
                                   capitalizarPrimeraLetra(ejercicio.nombre),
                                   style: TextStyle(
-                                    fontSize: TipografiaGyMaster.tamanoMd,
-                                    fontWeight: TipografiaGyMaster.pesoRegular,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
                                     height: 1.2,
                                     color: context.gym.ink,
                                   ),
@@ -516,9 +514,8 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                                             }).join(' • '),
                                             style: TextStyle(
                                               fontSize:
-                                                  TipografiaGyMaster.tamanoSm,
-                                              fontWeight: TipografiaGyMaster
-                                                  .pesoRegular,
+                                                  14,
+                                              fontWeight: FontWeight.w400,
                                               color: context.gym.faint,
                                             ),
                                             overflow: TextOverflow.ellipsis,
@@ -670,8 +667,8 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
             'Cargando historial...',
             style: TextStyle(
               color: context.gym.faint,
-              fontSize: TipografiaGyMaster.tamanoMd,
-              fontWeight: TipografiaGyMaster.pesoRegular,
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
             ),
           ),
         ],
@@ -704,8 +701,8 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
               Text(
                 'Sin rutinas esta fecha',
                 style: TextStyle(
-                  fontSize: TipografiaGyMaster.tamanoXl,
-                  fontWeight: TipografiaGyMaster.pesoSemiBold,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
                   color: context.gym.brand,
                 ),
               ),
@@ -714,8 +711,8 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
                 'No hay rutinas registradas para\n${DateFormat.yMMMMd('es').format(selectedDate)}',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: TipografiaGyMaster.tamanoSm,
-                  fontWeight: TipografiaGyMaster.pesoRegular,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
                   color: context.gym.faint,
                 ),
               ),
@@ -749,8 +746,8 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
             Text(
               'Error al cargar datos',
               style: TextStyle(
-                fontSize: TipografiaGyMaster.tamanoLg,
-                fontWeight: TipografiaGyMaster.pesoSemiBold,
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
                 color: context.gym.ink,
               ),
             ),
@@ -759,8 +756,8 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
               message,
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: TipografiaGyMaster.tamanoSm,
-                fontWeight: TipografiaGyMaster.pesoRegular,
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
                 color: context.gym.faint,
               ),
             ),
@@ -777,8 +774,8 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
               label: Text(
                 'Reintentar',
                 style: TextStyle(
-                  fontSize: TipografiaGyMaster.tamanoSm,
-                  fontWeight: TipografiaGyMaster.pesoSemiBold,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
                   color: Colors.white,
                 ),
               ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
-import 'package:gymaster/core/theme/tipografia_gymaster.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 
 /// ChoiceChip reutilizable para GyMaster
 ///
@@ -79,12 +79,9 @@ class GyMasterChoiceChip extends StatelessWidget {
             ],
             Text(
               texto,
-              style: TipografiaGyMaster.textoSecundario.copyWith(
-                color:
-                    isSelected ? context.gym.brand : context.gym.ink,
-                fontWeight: isSelected
-                    ? TipografiaGyMaster.pesoSemiBold
-                    : TipografiaGyMaster.pesoRegular,
+              style: GymType.label.copyWith(
+                color: context.gym.ink,
+                fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
               ),
             ),
           ],
@@ -100,12 +97,9 @@ class GyMasterChoiceChip extends StatelessWidget {
             ],
             Text(
               texto,
-              style: TipografiaGyMaster.textoPrincipal.copyWith(
-                color:
-                    isSelected ? context.gym.brand : context.gym.ink,
-                fontWeight: isSelected
-                    ? TipografiaGyMaster.pesoSemiBold
-                    : TipografiaGyMaster.pesoRegular,
+              style: GymType.body.copyWith(
+                color: context.gym.ink,
+                fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
               ),
               textAlign: TextAlign.center,
             ),
@@ -113,10 +107,9 @@ class GyMasterChoiceChip extends StatelessWidget {
               SizedBox(height: Espaciado.xs),
               Text(
                 descripcion!,
-                style: TipografiaGyMaster.textoSecundario.copyWith(
-                  color: isSelected
-                      ? context.gym.brand.withValues(alpha: 0.8)
-                      : context.gym.muted,
+                style: GymType.label.copyWith(
+                  fontWeight: FontWeight.w400,
+                  color: context.gym.muted,
                 ),
                 textAlign: TextAlign.center,
                 maxLines: 2,
@@ -149,11 +142,9 @@ class GyMasterChoiceChip extends StatelessWidget {
             Flexible(
               child: Text(
                 texto,
-                style: TipografiaGyMaster.textoPrincipal.copyWith(
-                  color: isSelected
-                      ? context.gym.brand
-                      : context.gym.ink,
-                  fontWeight: TipografiaGyMaster.pesoSemiBold,
+                style: GymType.body.copyWith(
+                  color: context.gym.ink,
+                  fontWeight: FontWeight.w700,
                 ),
                 textAlign: TextAlign.center,
                 maxLines: 2,
@@ -165,10 +156,9 @@ class GyMasterChoiceChip extends StatelessWidget {
               Flexible(
                 child: Text(
                   descripcion!,
-                  style: TipografiaGyMaster.textoSecundario.copyWith(
-                    color: isSelected
-                        ? context.gym.brand.withValues(alpha: 0.8)
-                        : context.gym.muted,
+                  style: GymType.label.copyWith(
+                    fontWeight: FontWeight.w400,
+                    color: context.gym.muted,
                   ),
                   textAlign: TextAlign.center,
                   maxLines: 2,

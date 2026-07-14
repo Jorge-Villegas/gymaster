@@ -74,7 +74,8 @@ class GymColors extends ThemeExtension<GymColors> {
     surface2: Color(0xFFF5F8F3),
     ink: Color(0xFF14201A),
     muted: Color(0xFF5F6F65),
-    faint: Color(0xFF8A998F),
+    faint: Color(0xFF6C7B71), // AA (~4.5:1) sobre blanco; antes 0xFF8A998F ≈ 3:1
+
     line: Color(0xFFE1E9DD),
     lineStrong: Color(0xFFCBD6C6),
     brand: Color(0xFF3FC55F),
@@ -100,7 +101,8 @@ class GymColors extends ThemeExtension<GymColors> {
     surface2: Color(0xFF1F2A23),
     ink: Color(0xFFEAF2EA),
     muted: Color(0xFF9AA79F),
-    faint: Color(0xFF6E7D73),
+    faint: Color(0xFF869488), // AA (~5:1) sobre surface oscuro; antes 0xFF6E7D73 ≈ 3.8:1
+
     line: Color(0xFF263029),
     lineStrong: Color(0xFF334037),
     brand: Color(0xFF4BD46B),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gymaster/shared/utils/text_formatter.dart';
 import 'package:gymaster/shared/utils/verificador_tipo_archivo.dart';
-import 'package:gymaster/shared/widgets/chiclet_button.dart';
+import 'package:gymaster/shared/widgets/gym/gym.dart';
 
 class EncabezadoEjercicioWidget extends StatelessWidget {
   final String nombreEjercicio;
@@ -60,16 +60,12 @@ class EncabezadoEjercicioWidget extends StatelessWidget {
             SizedBox(
               width: 45,
               height: 45,
-              child: ChicletButton(
-                texto: '',
-                icono: Icons.remove,
-                colorFondo: Colors.white,
-                colorTexto: Colors.black,
-                estilo: EstiloBotonChiclet.contorno,
-                tamano: TamanoBotonChiclet.pequeno,
-                radioBorde: 20,
-                paddingHorizontal: 4,
-                paddingVertical: 4,
+              child: GymButton(
+                label: '',
+                icon: Icons.remove,
+                variant: GymButtonVariant.ghost,
+                size: GymButtonSize.small,
+                expand: false,
                 onPressed: onDecrement,
               ),
             ),
@@ -99,16 +95,12 @@ class EncabezadoEjercicioWidget extends StatelessWidget {
             SizedBox(
               width: 45,
               height: 45,
-              child: ChicletButton(
-                texto: '',
-                icono: Icons.add,
-                colorFondo: Colors.white,
-                colorTexto: Colors.black,
-                estilo: EstiloBotonChiclet.contorno,
-                tamano: TamanoBotonChiclet.mediano,
-                radioBorde: 20,
-                paddingHorizontal: 4,
-                paddingVertical: 4,
+              child: GymButton(
+                label: '',
+                icon: Icons.add,
+                variant: GymButtonVariant.ghost,
+                size: GymButtonSize.medium,
+                expand: false,
                 onPressed: onIncrement,
               ),
             ),

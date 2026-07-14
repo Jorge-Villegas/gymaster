@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
-import 'package:gymaster/core/theme/tipografia_gymaster.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/shared/models/elemento_menu_modelo.dart';
 
 class FilaMenuLateral extends StatelessWidget {
@@ -58,7 +58,7 @@ class FilaMenuLateral extends StatelessWidget {
               const SizedBox(width: 14),
               Text(
                 elementoMenu.titulo,
-                style: TipografiaGyMaster.subtitulo.copyWith(
+                style: GymType.section.copyWith(
                   color: Colors.white,
                 ),
               )

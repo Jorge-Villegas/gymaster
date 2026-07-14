@@ -24,20 +24,20 @@ class GymType {
     letterSpacing: -0.3,
   );
 
-  /// Título de pantalla (20, w800)
+  /// Título de pantalla (20, w700)
   static const TextStyle title = TextStyle(
     fontFamily: familia,
     fontSize: 20,
-    fontWeight: FontWeight.w800,
+    fontWeight: FontWeight.w700,
     height: 1.2,
     letterSpacing: -0.2,
   );
 
-  /// Encabezado de tarjeta / sección fuerte (16, w800)
+  /// Encabezado de tarjeta / sección fuerte (16, w700)
   static const TextStyle section = TextStyle(
     fontFamily: familia,
     fontSize: 16,
-    fontWeight: FontWeight.w800,
+    fontWeight: FontWeight.w700,
     height: 1.25,
   );
 

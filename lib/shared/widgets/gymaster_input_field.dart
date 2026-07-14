@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
-import 'package:gymaster/core/theme/tipografia_gymaster.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 
 /// Widget de input reutilizable con diseño consistente para GyMaster
 ///
@@ -66,9 +65,8 @@ class GyMasterInputField extends StatelessWidget {
           ),
           child: RichText(
             text: TextSpan(
-              style: TipografiaGyMaster.subtitulo.copyWith(
-                color: context.gym.brand,
-                fontWeight: TipografiaGyMaster.pesoSemiBold,
+              style: GymType.section.copyWith(
+                color: context.gym.ink,
               ),
               children: [
                 TextSpan(text: label),
@@ -77,8 +75,8 @@ class GyMasterInputField extends StatelessWidget {
                     text: ' *',
                     style: TextStyle(
                       color: context.gym.danger,
-                      fontWeight: TipografiaGyMaster.pesoSemiBold,
-                      fontSize: TipografiaGyMaster.tamanoLg,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18,
                     ),
                   ),
               ],
@@ -105,16 +103,14 @@ class GyMasterInputField extends StatelessWidget {
             onTap: onTap,
             onChanged: onChanged,
             focusNode: focusNode,
-            style: TipografiaGyMaster.textoPrincipal.copyWith(
-              color: enabled
-                  ? context.gym.ink
-                  : AppColors.textoDeshabilitado,
+            style: GymType.body.copyWith(
+              color: enabled ? context.gym.ink : context.gym.faint,
             ),
             decoration: InputDecoration(
               hintText: hintText,
-              hintStyle: TipografiaGyMaster.textoPrincipal.copyWith(
+              hintStyle: GymType.body.copyWith(
                 color: context.gym.muted,
-                fontWeight: TipografiaGyMaster.pesoLigero,
+                fontWeight: FontWeight.w300,
               ),
               prefixIcon: prefixIcon != null
                   ? Container(
@@ -168,8 +164,8 @@ class GyMasterInputField extends StatelessWidget {
               ),
               disabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(Espaciado.md),
-                borderSide: const BorderSide(
-                  color: AppColors.textoDeshabilitado,
+                borderSide: BorderSide(
+                  color: context.gym.line,
                   width: 1,
                 ),
               ),
@@ -181,7 +177,8 @@ class GyMasterInputField extends StatelessWidget {
               ),
 
               // Contador de caracteres estilizado
-              counterStyle: TipografiaGyMaster.textoSecundario.copyWith(
+              counterStyle: GymType.label.copyWith(
+                fontWeight: FontWeight.w400,
                 color: context.gym.faint,
               ),
             ),
@@ -216,8 +213,9 @@ class GyMasterInputField extends StatelessWidget {
                   Expanded(
                     child: Text(
                       helpText!,
-                      style: TipografiaGyMaster.textoSecundario.copyWith(
-                        color: context.gym.xpInk,
+                      style: GymType.label.copyWith(
+                        fontWeight: FontWeight.w400,
+                        color: context.gym.ink,
                       ),
                     ),
                   ),
@@ -286,7 +284,7 @@ class GyMasterNumberInputField extends StatelessWidget {
                     widthFactor: 1.0,
                     child: Text(
                       suffixText!,
-                      style: TipografiaGyMaster.textoPrincipal.copyWith(
+                      style: GymType.body.copyWith(
                         color: context.gym.muted,
                       ),
                     ),

@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gymaster/core/theme/emotional_text_styles.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
-import 'package:gymaster/core/theme/tipografia_gymaster.dart';
+import 'package:gymaster/shared/widgets/gym/gym.dart';
 import 'package:gymaster/features/routine/presentation/cubits/musculo/musculo_cubit.dart';
 import 'package:gymaster/shared/utils/string_utils.dart';
 import 'package:gymaster/shared/utils/verificador_tipo_archivo.dart';
-import 'package:gymaster/shared/widgets/chiclet_button.dart';
 import 'package:gymaster/shared/widgets/cabecera_reutilizable.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:shimmer/shimmer.dart';
@@ -154,10 +153,8 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
             const SizedBox(height: 24),
             Text(
               '¡No te preocupes!',
-              style: EstilosTextoEmocional.aliento.copyWith(
-                color: context.gym.brand,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+              style: GymType.display.copyWith(
+                color: context.gym.ink,
               ),
             ),
             const SizedBox(height: 12),
@@ -166,19 +163,17 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
               child: Text(
                 mensaje,
                 textAlign: TextAlign.center,
-                style: EstilosTextoEmocional.amigable.copyWith(
+                style: GymType.body.copyWith(
                   color: context.gym.faint,
-                  fontSize: 16,
                 ),
               ),
             ),
             const SizedBox(height: 32),
-            ChicletButton(
-              texto: 'Reintentar',
-              icono: Icons.refresh_rounded,
-              tamano: TamanoBotonChiclet.grande,
-              estilo: EstiloBotonChiclet.relleno,
-              colorFondo: context.gym.xpInk,
+            GymButton(
+              label: 'Reintentar',
+              icon: Icons.refresh_rounded,
+              size: GymButtonSize.large,
+              expand: false,
               onPressed: () => context.read<MusculoCubit>().getAllMusculo(),
             ),
           ],
@@ -349,10 +344,8 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
                             children: [
                               Text(
                                 capitalizarPrimeraLetra(musculo.nombre),
-                                style: TextStyle(
-                                  fontWeight: TipografiaGyMaster.pesoSemiBold,
-                                  fontSize: TipografiaGyMaster.tamanoLg,
-                                  color: context.gym.brand,
+                                style: GymType.section.copyWith(
+                                  color: context.gym.ink,
                                   letterSpacing: 1.2,
                                   height: 1.1,
                                 ),
@@ -360,9 +353,8 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
                               const SizedBox(height: 6),
                               Text(
                                 '¡Vamos a entrenar este grupo!',
-                                style: EstilosTextoEmocional.amigable.copyWith(
+                                style: GymType.body.copyWith(
                                   color: context.gym.faint,
-                                  fontSize: 14,
                                 ),
                               ),
                             ],

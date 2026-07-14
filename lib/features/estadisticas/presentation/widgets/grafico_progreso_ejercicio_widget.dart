@@ -1,8 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
-import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/features/estadisticas/domain/entities/progreso_ejercicio.dart';
 import 'package:gymaster/features/estadisticas/domain/entities/tendencia_progreso.dart';
 import 'package:intl/intl.dart';
@@ -73,9 +73,9 @@ class _GraficoProgresoEjercicioWidgetState
         Expanded(
           child: Text(
             widget.progreso.nombreEjercicio,
-            style: TipografiaGyMaster.textoPrincipal.copyWith(
-              fontSize: TipografiaGyMaster.tamanoLg,
-              fontWeight: TipografiaGyMaster.pesoSemiBold,
+            style: GymType.body.copyWith(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
               color: c.ink,
             ),
           ),
@@ -116,14 +116,13 @@ class _GraficoProgresoEjercicioWidgetState
         children: [
           Text(
             tendencia.simbolo,
-            style: TextStyle(fontSize: TipografiaGyMaster.tamanoSm),
+            style: const TextStyle(fontSize: 14),
           ),
           SizedBox(width: Espaciado.xxs),
           Text(
             _getTendenciaLabel(tendencia),
-            style: TipografiaGyMaster.textoPrincipal.copyWith(
-              fontSize: TipografiaGyMaster.tamanoSm,
-              fontWeight: TipografiaGyMaster.pesoSemiBold,
+            style: GymType.label.copyWith(
+              fontSize: 14,
               color: colorTexto,
             ),
           ),
@@ -175,8 +174,9 @@ class _GraficoProgresoEjercicioWidgetState
         SizedBox(width: Espaciado.xs),
         Text(
           label,
-          style: TipografiaGyMaster.textoSecundario.copyWith(
-            fontSize: TipografiaGyMaster.tamanoSm,
+          style: GymType.label.copyWith(
+            fontWeight: FontWeight.w400,
+            fontSize: 14,
             color: c.muted,
           ),
         ),
@@ -226,8 +226,9 @@ class _GraficoProgresoEjercicioWidgetState
                   padding: const EdgeInsets.only(top: 8),
                   child: Text(
                     DateFormat('dd/MM').format(fecha),
-                    style: TipografiaGyMaster.textoSecundario.copyWith(
-                      fontSize: TipografiaGyMaster.tamanoXs,
+                    style: GymType.label.copyWith(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 12,
                       color: c.muted,
                     ),
                   ),
@@ -244,8 +245,9 @@ class _GraficoProgresoEjercicioWidgetState
             getTitlesWidget: (value, meta) {
               return Text(
                 value.toInt().toString(),
-                style: TipografiaGyMaster.textoSecundario.copyWith(
-                  fontSize: TipografiaGyMaster.tamanoXs,
+                style: GymType.label.copyWith(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 12,
                   color: c.muted,
                 ),
               );
@@ -329,24 +331,26 @@ class _GraficoProgresoEjercicioWidgetState
                 esPeso
                     ? '${punto.pesoMaximo.toStringAsFixed(1)} kg'
                     : '${punto.volumenTotal.toStringAsFixed(0)} kg',
-                TipografiaGyMaster.textoPrincipal.copyWith(
-                  fontSize: TipografiaGyMaster.tamanoSm,
-                  fontWeight: TipografiaGyMaster.pesoSemiBold,
+                GymType.body.copyWith(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
                   color: esPeso ? c.brand : c.info,
                 ),
                 children: [
                   TextSpan(
                     text: '\n${DateFormat('dd/MM/yyyy').format(punto.fecha)}',
-                    style: TipografiaGyMaster.textoSecundario.copyWith(
-                      fontSize: TipografiaGyMaster.tamanoXs,
+                    style: GymType.label.copyWith(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 12,
                       color: c.muted,
                     ),
                   ),
                   TextSpan(
                     text:
                         '\n${punto.totalSeries} series • ${punto.totalRepeticiones} reps',
-                    style: TipografiaGyMaster.textoSecundario.copyWith(
-                      fontSize: TipografiaGyMaster.tamanoXs,
+                    style: GymType.label.copyWith(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 12,
                       color: c.muted,
                     ),
                   ),
@@ -379,17 +383,18 @@ class _GraficoProgresoEjercicioWidgetState
           SizedBox(height: Espaciado.md),
           Text(
             'Sin datos de progreso',
-            style: TipografiaGyMaster.textoPrincipal.copyWith(
-              fontSize: TipografiaGyMaster.tamanoLg,
-              fontWeight: TipografiaGyMaster.pesoSemiBold,
+            style: GymType.body.copyWith(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
               color: c.muted,
             ),
           ),
           SizedBox(height: Espaciado.xs),
           Text(
             'Completa entrenamientos para ver tu progreso',
-            style: TipografiaGyMaster.textoSecundario.copyWith(
-              fontSize: TipografiaGyMaster.tamanoSm,
+            style: GymType.label.copyWith(
+              fontWeight: FontWeight.w400,
+              fontSize: 14,
               color: c.faint,
             ),
             textAlign: TextAlign.center,

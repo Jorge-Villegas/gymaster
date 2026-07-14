@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
-import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 
 /// Tarjeta de métrica con icono, valor principal y cambio porcentual.
 ///
@@ -54,9 +54,9 @@ class TarjetaMetricaWidget extends StatelessWidget {
           children: [
             Text(
               etiqueta,
-              style: TextStyle(
-                fontSize: TipografiaGyMaster.tamanoXs,
-                fontWeight: TipografiaGyMaster.pesoRegular,
+              style: GymType.label.copyWith(
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
                 color: c.muted,
                 height: 1.3,
               ),
@@ -76,9 +76,9 @@ class TarjetaMetricaWidget extends StatelessWidget {
                       SizedBox(height: Espaciado.xxs),
                       Text(
                         valor,
-                        style: TextStyle(
-                          fontSize: TipografiaGyMaster.tamano3xl,
-                          fontWeight: TipografiaGyMaster.pesoSemiBold,
+                        style: GymType.number.copyWith(
+                          fontSize: 30,
+                          fontWeight: FontWeight.w600,
                           color: c.ink,
                           height: 1.0,
                           letterSpacing: -0.5,
@@ -89,9 +89,9 @@ class TarjetaMetricaWidget extends StatelessWidget {
                       if (subvalor != null) ...[
                         Text(
                           subvalor!,
-                          style: TextStyle(
-                            fontSize: TipografiaGyMaster.tamanoXs,
-                            fontWeight: TipografiaGyMaster.pesoRegular,
+                          style: GymType.label.copyWith(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
                             color: c.faint,
                             height: 1.2,
                           ),
@@ -147,9 +147,9 @@ class TarjetaMetricaWidget extends StatelessWidget {
           SizedBox(width: 2),
           Text(
             '${porcentajeCambio!.abs().toStringAsFixed(0)}%',
-            style: TextStyle(
-              fontSize: TipografiaGyMaster.tamanoXs,
-              fontWeight: TipografiaGyMaster.pesoSemiBold,
+            style: GymType.label.copyWith(
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
               color: color,
               height: 1.0,
             ),

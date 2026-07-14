@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
-import 'package:gymaster/core/theme/tipografia_gymaster.dart';
-import 'package:gymaster/shared/widgets/chiclet_button.dart';
+import 'package:gymaster/shared/widgets/gym/gym.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 
 class OnboardingBienvenidaPage extends StatelessWidget {
@@ -28,14 +27,13 @@ class OnboardingBienvenidaPage extends StatelessWidget {
                 _construirLogoAnimado(size),
                 _construirMensajeCelebracion(context),
                 _construirListaBeneficiosGamificada(context),
-                ChicletButton(
-                  texto: '¡Empezar mi Aventura!',
-                  icono: Icons.rocket_launch,
-                  colorFondo: AppColors.primario,
-                  colorTexto: Colors.white,
-                  tamano: TamanoBotonChiclet.grande,
+                GymButton(
+                  label: '¡Empezar mi Aventura!',
+                  icon: Icons.rocket_launch,
+                  variant: GymButtonVariant.primary,
+                  size: GymButtonSize.large,
+                  expand: true,
                   onPressed: () => _iniciarOnboarding(context),
-                  conSombreado: true,
                 ),
                 Container(
                   padding: const EdgeInsets.symmetric(
@@ -65,7 +63,7 @@ class OnboardingBienvenidaPage extends StatelessWidget {
                           style:
                               Theme.of(context).textTheme.bodySmall?.copyWith(
                                     color: context.gym.info,
-                                    fontWeight: TipografiaGyMaster.pesoSemiBold,
+                                    fontWeight: FontWeight.w600,
                                   ),
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -143,8 +141,8 @@ class OnboardingBienvenidaPage extends StatelessWidget {
                   textAlign: TextAlign.center,
                   text: TextSpan(
                     style: TextStyle(
-                      fontSize: TipografiaGyMaster.tamano3xl,
-                      fontWeight: TipografiaGyMaster.pesoSemiBold,
+                      fontSize: 30,
+                      fontWeight: FontWeight.w600,
                       height: 1.2,
                     ),
                     children: [
@@ -156,7 +154,7 @@ class OnboardingBienvenidaPage extends StatelessWidget {
                         text: 'GyMaster',
                         style: TextStyle(
                           color: context.gym.brand,
-                          fontWeight: TipografiaGyMaster.pesoSemiBold,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                       TextSpan(
@@ -203,7 +201,7 @@ class OnboardingBienvenidaPage extends StatelessWidget {
                           style:
                               Theme.of(context).textTheme.bodyMedium?.copyWith(
                                     color: context.gym.xpInk,
-                                    fontWeight: TipografiaGyMaster.pesoSemiBold,
+                                    fontWeight: FontWeight.w600,
                                   ),
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -306,7 +304,7 @@ class OnboardingBienvenidaPage extends StatelessWidget {
                           children: [
                             Text(
                               beneficio['titulo'] as String,
-                              style: TipografiaGyMaster.subtitulo.copyWith(
+                              style: GymType.section.copyWith(
                                 color: context.gym.ink,
                               ),
                               overflow: TextOverflow.ellipsis,
@@ -314,8 +312,8 @@ class OnboardingBienvenidaPage extends StatelessWidget {
                             const SizedBox(height: Espaciado.xxs),
                             Text(
                               beneficio['descripcion'] as String,
-                              style:
-                                  TipografiaGyMaster.textoSecundario.copyWith(
+                              style: GymType.label.copyWith(
+                                fontWeight: FontWeight.w400,
                                 color: context.gym.muted,
                                 height: 1.3,
                               ),

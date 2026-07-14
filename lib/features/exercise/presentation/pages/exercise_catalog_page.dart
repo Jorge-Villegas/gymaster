@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
-import 'package:gymaster/core/theme/emotional_text_styles.dart';
-import 'package:gymaster/core/theme/tipografia_gymaster.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/features/exercise/domain/entities/exercise.dart';
 import 'package:gymaster/features/exercise/presentation/cubits/exercise/exercise_cubit.dart';
 import 'package:gymaster/features/exercise/presentation/cubits/favorito_ejercicio_cubit.dart';
@@ -107,10 +105,8 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                     padding: const EdgeInsets.only(left: 4, bottom: 12),
                     child: Text(
                       'Grupos Musculares',
-                      style: TextStyle(
-                        fontWeight: TipografiaGyMaster.pesoSemiBold,
-                        fontSize: TipografiaGyMaster.tamanoLg,
-                        color: AppColors.primarioCalido,
+                      style: GymType.section.copyWith(
+                        fontSize: 18,
                       ),
                     ),
                   ),
@@ -216,30 +212,17 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
-          gradient: isSelected
-              ? LinearGradient(
-                  colors: isSpecial
-                      ? [
-                          AppColors.acentoCalido,
-                          AppColors.acento
-                        ] // Dorado cálido para "Todos"
-                      : [
-                          AppColors.secundario,
-                          AppColors.secundarioClaro
-                        ], // Azules suaves para músculos
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                )
-              : null,
-          color: isSelected ? null : Colors.white,
+          color: isSelected
+              ? (isSpecial ? context.gym.xpInk : context.gym.info)
+              : context.gym.surface,
           borderRadius: BorderRadius.circular(25),
           border: Border.all(
             color: isSelected
                 ? Colors.transparent
                 : isSpecial
-                    ? AppColors.acentoCalido
+                    ? context.gym.xpInk
                         .withValues(alpha: 0.4) // Dorado más sutil
-                    : AppColors.secundario
+                    : context.gym.info
                         .withValues(alpha: 0.3), // Azul más sutil
             width: 1.5,
           ),
@@ -247,8 +230,8 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
               ? [
                   BoxShadow(
                     color: (isSpecial
-                            ? AppColors.acentoCalido
-                            : AppColors.secundario)
+                            ? context.gym.xpInk
+                            : context.gym.info)
                         .withValues(alpha: 0.25), // Sombra más sutil
                     blurRadius: 8,
                     offset: const Offset(0, 2),
@@ -271,15 +254,14 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
             ],
             Text(
               capitalizarPrimeraLetra(label),
-              style: EstilosTextoEmocional.amigable.copyWith(
+              style: GymType.section.copyWith(
                 fontSize: 14,
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
                 color: isSelected
                     ? Colors.white
                     : isSpecial
-                        ? AppColors.acentoCalido // Dorado cálido para "Todos"
-                        : AppColors
-                            .secundario, // Azul profesional para músculos
+                        ? context.gym.xpInk // Dorado cálido para "Todos"
+                        : context.gym.info, // Azul profesional para músculos
               ),
             ),
           ],
@@ -318,13 +300,14 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                     Icon(
                       IconsaxPlusLinear.warning_2,
                       size: 64,
-                      color: AppColors.acento.withValues(alpha: 0.5),
+                      color: context.gym.xpInk.withValues(alpha: 0.5),
                     ),
                     const SizedBox(height: 16),
                     Text(
                       state.message,
-                      style: EstilosTextoEmocional.amigable.copyWith(
-                        color: AppColors.textoTerciario,
+                      style: GymType.section.copyWith(
+                        fontWeight: FontWeight.w300,
+                        color: context.gym.faint,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -346,20 +329,22 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                       Icon(
                         IconsaxPlusLinear.search_normal,
                         size: 64,
-                        color: AppColors.secundarioClaro.withValues(alpha: 0.5),
+                        color: context.gym.info.withValues(alpha: 0.5),
                       ),
                       const SizedBox(height: 16),
                       Text(
                         'No se encontraron ejercicios',
-                        style: EstilosTextoEmocional.amigable.copyWith(
-                          color: AppColors.textoTerciario,
+                        style: GymType.section.copyWith(
+                          fontWeight: FontWeight.w300,
+                          color: context.gym.faint,
                         ),
                       ),
                       const SizedBox(height: 8),
                       Text(
                         'Intenta con otro grupo muscular',
-                        style: EstilosTextoEmocional.recuperacion.copyWith(
-                          color: AppColors.textoTerciario,
+                        style: GymType.bodyStrong.copyWith(
+                          fontWeight: FontWeight.w300,
+                          color: context.gym.faint,
                         ),
                       ),
                     ],
@@ -495,7 +480,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
-                            color: AppColors.primario.withValues(alpha: 0.1),
+                            color: context.gym.brand.withValues(alpha: 0.1),
                             width: 1,
                           ),
                         ),
@@ -518,8 +503,8 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                       Text(
                         capitalizarPrimeraLetra(exercise.name),
                         style: TextStyle(
-                          fontWeight: TipografiaGyMaster.pesoRegular,
-                          fontSize: TipografiaGyMaster.tamanoMd,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 16,
                           height: 1.1,
                           color: c.ink,
                         ),
@@ -538,21 +523,19 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                               vertical: 3,
                             ),
                             decoration: BoxDecoration(
-                              color: AppColors.secundarioClaro
-                                  .withValues(alpha: 0.1),
+                              color: context.gym.info.withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(
-                                color: AppColors.secundarioClaro
-                                    .withValues(alpha: 0.3),
+                                color: context.gym.info.withValues(alpha: 0.3),
                                 width: 0.5,
                               ),
                             ),
                             child: Text(
                               capitalizarPrimeraLetra(muscle),
-                              style:
-                                  EstilosTextoEmocional.recuperacion.copyWith(
+                              style: GymType.bodyStrong.copyWith(
+                                fontWeight: FontWeight.w300,
                                 fontSize: 11,
-                                color: AppColors.secundarioClaro,
+                                color: context.gym.info,
                               ),
                             ),
                           );
@@ -566,12 +549,12 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: AppColors.acento.withValues(alpha: 0.1),
+                    color: context.gym.xpInk.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
                     IconsaxPlusLinear.arrow_right_3,
-                    color: AppColors.acento,
+                    color: context.gym.xpInk,
                     size: 20,
                   ),
                 ),
@@ -587,12 +570,12 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
     if (imagePath.isEmpty) {
       return Container(
         decoration: BoxDecoration(
-          color: AppColors.secundarioClaro
+          color: context.gym.info
               .withValues(alpha: 0.1), // Solo color de fondo, sin gradiente
         ),
         child: Icon(
           IconsaxPlusLinear.weight,
-          color: AppColors.primario.withValues(alpha: 0.6),
+          color: context.gym.brand.withValues(alpha: 0.6),
           size: 28,
         ),
       );
@@ -607,7 +590,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
           imagePath,
           fit: BoxFit.cover,
           colorFilter: ColorFilter.mode(
-            AppColors.fondoPrincipalOscuro.withValues(alpha: 0.8),
+            context.gym.ink.withValues(alpha: 0.8),
             BlendMode.srcATop,
           ),
         ),
@@ -624,11 +607,11 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
         errorBuilder: (context, error, stackTrace) {
           return Container(
             decoration: BoxDecoration(
-              color: AppColors.acento.withValues(alpha: 0.1),
+              color: context.gym.xpInk.withValues(alpha: 0.1),
             ),
             child: Icon(
               IconsaxPlusLinear.danger,
-              color: AppColors.acento.withValues(alpha: 0.6),
+              color: context.gym.xpInk.withValues(alpha: 0.6),
               size: 24,
             ),
           );
@@ -661,12 +644,12 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
                   SnackBar(
                     content: Text(
                       '💔 ${exercise.name} removido de favoritos',
-                      style: EstilosTextoEmocional.aliento.copyWith(
+                      style: GymType.section.copyWith(
                         color: Colors.white,
                         fontSize: 14,
                       ),
                     ),
-                    backgroundColor: AppColors.acento,
+                    backgroundColor: context.gym.xpInk,
                     behavior: SnackBarBehavior.floating,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),

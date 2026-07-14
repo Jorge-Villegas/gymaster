@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/generated/assets.gen.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
-import 'package:gymaster/core/theme/tipografia_gymaster.dart';
-import 'package:gymaster/shared/widgets/chiclet_button.dart';
+import 'package:gymaster/shared/widgets/gym/gym.dart';
 
 class EjerciciosVaciosWidget extends StatelessWidget {
   final String rutinaId;
@@ -27,8 +26,6 @@ class EjerciciosVaciosWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-
     return LayoutBuilder(
       builder: (context, constraints) {
         final isSmallScreen = constraints.maxWidth < 600;
@@ -55,10 +52,8 @@ class EjerciciosVaciosWidget extends StatelessWidget {
               Text(
                 '¡Tu rutina está lista para comenzar!',
                 style: TextStyle(
-                  fontSize: isSmallScreen
-                      ? TipografiaGyMaster.tamanoLg
-                      : TipografiaGyMaster.tamanoXl,
-                  fontWeight: TipografiaGyMaster.pesoSemiBold,
+                  fontSize: isSmallScreen ? 18 : 20,
+                  fontWeight: FontWeight.w600,
                   color: context.gym.ink,
                 ),
               ),
@@ -66,10 +61,8 @@ class EjerciciosVaciosWidget extends StatelessWidget {
               Text(
                 'Agrega tus ejercicios favoritos y comienza a entrenar hoy',
                 style: TextStyle(
-                  fontSize: isSmallScreen
-                      ? TipografiaGyMaster.tamanoMd
-                      : TipografiaGyMaster.tamanoLg,
-                  fontWeight: TipografiaGyMaster.pesoRegular,
+                  fontSize: isSmallScreen ? 16 : 18,
+                  fontWeight: FontWeight.w400,
                   color: context.gym.faint,
                 ),
                 textAlign: TextAlign.center,
@@ -79,13 +72,11 @@ class EjerciciosVaciosWidget extends StatelessWidget {
                 width: double.infinity,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: ChicletButton(
-                    texto: 'Agregar Ejercicio',
-                    tamano: TamanoBotonChiclet.grande,
-                    estilo: EstiloBotonChiclet.relleno,
-                    radioBorde: 16,
-                    conSombreado: true,
-                    grosorSombreado: 6.0,
+                  child: GymButton(
+                    label: 'Agregar Ejercicio',
+                    variant: GymButtonVariant.primary,
+                    size: GymButtonSize.large,
+                    expand: true,
                     onPressed: () => _navegarAAgregarEjercicios(context),
                   ),
                 ),

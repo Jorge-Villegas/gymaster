@@ -105,8 +105,8 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                   //   ),
                   //   style: TextStyle(
                   //     color: AppColors.primario,
-                  //     fontSize: TipografiaGyMaster.tamanoMd,
-                  //     fontWeight: TipografiaGyMaster.pesoSemiBold,
+                  //     fontSize: 16,
+                  //     fontWeight: FontWeight.w600,
                   //   ),
                   // ),
                 ],
@@ -157,7 +157,8 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
           Espaciado.separacionVerticalSm,
           Text(
             'Cargando datos...',
-            style: EstilosTextoEmocional.amigable.copyWith(
+            style: GymType.section.copyWith(
+              fontWeight: FontWeight.w300,
               color: context.gym.faint,
               fontSize: 16,
             ),
@@ -274,8 +275,8 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                         capitalizarPrimeraLetra(ejercicio.nombre),
                         style: TextStyle(
                           color: context.gym.brand,
-                          fontSize: TipografiaGyMaster.tamanoLg, // Subtítulo
-                          fontWeight: TipografiaGyMaster.pesoSemiBold,
+                          fontSize: 18, // Subtítulo
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                       Espaciado.separacionVerticalXs,
@@ -293,8 +294,8 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                           style: TextStyle(
                             color: context.gym.info,
                             fontSize:
-                                TipografiaGyMaster.tamanoSm, // Info secundaria
-                            fontWeight: TipografiaGyMaster.pesoRegular,
+                                14, // Info secundaria
+                            fontWeight: FontWeight.w400,
                           ),
                         ),
                       ),
@@ -329,8 +330,8 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                   style: TextStyle(
                     color: context.gym.brand,
                     fontSize:
-                        TipografiaGyMaster.tamanoLg, // Encabezado de sección
-                    fontWeight: TipografiaGyMaster.pesoSemiBold,
+                        18, // Encabezado de sección
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 Espaciado.separacionVerticalSm,
@@ -382,8 +383,8 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                     'Serie',
                     style: TextStyle(
                       color: context.gym.brand,
-                      fontSize: TipografiaGyMaster.tamanoMd, // Subtítulo tabla
-                      fontWeight: TipografiaGyMaster.pesoSemiBold,
+                      fontSize: 16, // Subtítulo tabla
+                      fontWeight: FontWeight.w600,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -393,8 +394,8 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                     'Peso',
                     style: TextStyle(
                       color: context.gym.brand,
-                      fontSize: TipografiaGyMaster.tamanoMd, // Subtítulo tabla
-                      fontWeight: TipografiaGyMaster.pesoSemiBold,
+                      fontSize: 16, // Subtítulo tabla
+                      fontWeight: FontWeight.w600,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -404,8 +405,8 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                     'Reps',
                     style: TextStyle(
                       color: context.gym.brand,
-                      fontSize: TipografiaGyMaster.tamanoMd, // Subtítulo tabla
-                      fontWeight: TipografiaGyMaster.pesoSemiBold,
+                      fontSize: 16, // Subtítulo tabla
+                      fontWeight: FontWeight.w600,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -453,10 +454,10 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                                     ? context.gym.info
                                     : context.gym.ink,
                                 fontSize:
-                                    TipografiaGyMaster.tamanoSm, // Celdas tabla
+                                    14, // Celdas tabla
                                 fontWeight: isSelected
-                                    ? TipografiaGyMaster.pesoSemiBold
-                                    : TipografiaGyMaster.pesoRegular,
+                                    ? FontWeight.w600
+                                    : FontWeight.w400,
                               ),
                               textAlign: TextAlign.center,
                             ),
@@ -469,10 +470,10 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                                     ? context.gym.info
                                     : context.gym.ink,
                                 fontSize:
-                                    TipografiaGyMaster.tamanoSm, // Celdas tabla
+                                    14, // Celdas tabla
                                 fontWeight: isSelected
-                                    ? TipografiaGyMaster.pesoSemiBold
-                                    : TipografiaGyMaster.pesoRegular,
+                                    ? FontWeight.w600
+                                    : FontWeight.w400,
                               ),
                               textAlign: TextAlign.center,
                             ),
@@ -485,10 +486,10 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                                     ? context.gym.info
                                     : context.gym.ink,
                                 fontSize:
-                                    TipografiaGyMaster.tamanoSm, // Celdas tabla
+                                    14, // Celdas tabla
                                 fontWeight: isSelected
-                                    ? TipografiaGyMaster.pesoSemiBold
-                                    : TipografiaGyMaster.pesoRegular,
+                                    ? FontWeight.w600
+                                    : FontWeight.w400,
                               ),
                               textAlign: TextAlign.center,
                             ),
@@ -548,8 +549,8 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                 'Ajustar Serie ${selectedRowIndex! + 1}',
                 style: TextStyle(
                   color: context.gym.brand,
-                  fontSize: TipografiaGyMaster.tamanoLg, // Subtítulo sección
-                  fontWeight: TipografiaGyMaster.pesoSemiBold,
+                  fontSize: 18, // Subtítulo sección
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ],
@@ -563,7 +564,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
             label: 'Peso:',
             value: tableData[selectedRowIndex!][1],
             icon: Icons.monitor_weight,
-            color: AppColors.peso,
+            color: context.gym.info,
             onIncrement: () {
               final currentState = context.read<SelectedRoutineCubit>().state;
               if (currentState is SelectedRoutineLoaded) {
@@ -599,7 +600,7 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
             label: 'Reps:',
             value: tableData[selectedRowIndex!][2],
             icon: Icons.repeat,
-            color: AppColors.repeticiones,
+            color: context.gym.plum,
             onIncrement: () {
               final currentState = context.read<SelectedRoutineCubit>().state;
               if (currentState is SelectedRoutineLoaded) {
@@ -674,8 +675,8 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
               label,
               style: TextStyle(
                 color: context.gym.ink,
-                fontSize: TipografiaGyMaster.tamanoMd,
-                fontWeight: TipografiaGyMaster.pesoSemiBold,
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ),
@@ -697,46 +698,32 @@ class _DetalleEjercicioPageState extends State<DetalleEjercicioPage> {
                   value,
                   style: TextStyle(
                     color: color,
-                    fontSize: TipografiaGyMaster.tamanoXl,
-                    fontWeight: TipografiaGyMaster.pesoSemiBold,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
             ),
           ),
-          // Botones de control tipo ChicletButton
+          // Botones de control
           Row(
             children: [
-              ChicletButton(
-                texto: '',
-                icono: Icons.add,
-                colorFondo: context.gym.info,
-                colorTexto: Colors.white,
-                radioBorde: 8,
-                tamano: TamanoBotonChiclet.pequeno,
-                estilo: EstiloBotonChiclet.relleno,
+              GymButton(
+                label: '',
+                icon: Icons.add,
+                variant: GymButtonVariant.primary,
+                size: GymButtonSize.small,
                 onPressed: onIncrement,
-                conSombreado: false,
-                paddingHorizontal: 8,
-                paddingVertical: 4,
-                ancho: 36,
-                alto: 36,
+                expand: false,
               ),
               const SizedBox(width: Espaciado.xs),
-              ChicletButton(
-                texto: '',
-                icono: Icons.remove,
-                colorFondo: context.gym.faint,
-                colorTexto: Colors.white,
-                radioBorde: 8,
-                tamano: TamanoBotonChiclet.pequeno,
-                estilo: EstiloBotonChiclet.relleno,
+              GymButton(
+                label: '',
+                icon: Icons.remove,
+                variant: GymButtonVariant.primary,
+                size: GymButtonSize.small,
                 onPressed: onDecrement,
-                conSombreado: false,
-                paddingHorizontal: 8,
-                paddingVertical: 4,
-                ancho: 36,
-                alto: 36,
+                expand: false,
               ),
             ],
           ),

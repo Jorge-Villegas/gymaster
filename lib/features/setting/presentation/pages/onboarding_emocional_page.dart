@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
-import 'package:gymaster/core/theme/emotional_text_styles.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/features/setting/presentation/cubits/onboarding/onboarding_state.dart';
 import 'package:gymaster/features/setting/presentation/cubits/onboarding/onboarding_cubit.dart';
 import 'package:gymaster/features/setting/presentation/cubits/onboarding_usuario_cubit.dart';
@@ -12,7 +12,7 @@ import 'package:gymaster/features/setting/domain/entities/perfil_usuario_complet
 
 import 'package:gymaster/shared/utils/haptic_feedback_helper.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
-import 'package:gymaster/shared/widgets/duolingo_components.dart';
+import 'package:gymaster/shared/widgets/gym/gym.dart';
 import 'package:gymaster/shared/widgets/onboarding_header_widget.dart';
 
 class OnboardingEmocionalPage extends StatefulWidget {
@@ -167,13 +167,14 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
                 const SizedBox(height: 8),
                 Text(
                   '¿Qué te motiva a entrenar?',
-                  style: EstilosTextoEmocional.motivacional,
+                  style: GymType.display,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 8),
                 Text(
                   'Selecciona todo lo que te inspire 💪',
-                  style: EstilosTextoEmocional.amigable.copyWith(
+                  style: GymType.section.copyWith(
+                    fontWeight: FontWeight.w300,
                     color: context.gym.ink,
                   ),
                   textAlign: TextAlign.center,
@@ -243,12 +244,12 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
           const SizedBox(height: 20),
           Text(
             '¿Cuáles son tus mayores desafíos?',
-            style: EstilosTextoEmocional.motivacional,
+            style: GymType.display,
           ),
           const SizedBox(height: 10),
           Text(
             'Conocerlos nos ayuda a ayudarte mejor 🤝',
-            style: EstilosTextoEmocional.amigable,
+            style: GymType.section.copyWith(fontWeight: FontWeight.w300),
           ),
           const SizedBox(height: 30),
           Expanded(
@@ -312,12 +313,12 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
           const SizedBox(height: 20),
           Text(
             '¿Cómo esperas sentirte después de entrenar?',
-            style: EstilosTextoEmocional.motivacional,
+            style: GymType.display,
           ),
           const SizedBox(height: 10),
           Text(
             'Esto nos ayuda a diseñar la experiencia perfecta ✨',
-            style: EstilosTextoEmocional.amigable,
+            style: GymType.section.copyWith(fontWeight: FontWeight.w300),
           ),
           const SizedBox(height: 30),
           Expanded(
@@ -379,12 +380,12 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
           const SizedBox(height: 20),
           Text(
             '¿Cómo te gusta que te motivemos?',
-            style: EstilosTextoEmocional.motivacional,
+            style: GymType.display,
           ),
           const SizedBox(height: 10),
           Text(
             'Personaliza tus recordatorios para mantenerte motivado 🔔',
-            style: EstilosTextoEmocional.amigable,
+            style: GymType.section.copyWith(fontWeight: FontWeight.w300),
           ),
           const SizedBox(height: 30),
           Expanded(
@@ -538,8 +539,8 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
                   '🚀 ¡Comenzar mi aventura!'
                 ];
 
-                return DuolingoActionButton(
-                  text: buttonTexts[currentPage],
+                return GymButton(
+                  label: buttonTexts[currentPage],
                   onPressed: canContinue
                       ? () {
                           if (isLastStep) {
@@ -549,8 +550,9 @@ class _OnboardingEmocionalPageState extends State<OnboardingEmocionalPage> {
                           }
                         }
                       : null,
-                  isEnabled: canContinue,
-                  color: context.gym.xpInk,
+                  variant: GymButtonVariant.primary,
+                  size: GymButtonSize.large,
+                  expand: true,
                 );
               },
             ),

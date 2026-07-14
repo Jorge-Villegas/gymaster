@@ -4,8 +4,8 @@ import 'package:gymaster/features/setting/data/models/user_mood.dart';
 import '../cubits/mood_detector_cubit.dart';
 import '../cubits/mood_detector_state.dart';
 import '../../../../../shared/utils/haptic_feedback_helper.dart';
-import '../../../../../shared/widgets/custom_elevated_button.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
+import 'package:gymaster/shared/widgets/gym/gym.dart';
 
 /// Widget para detectar y registrar el estado anímico del usuario
 /// Proporciona 4 opciones emocionales específicas para GyMaster
@@ -234,26 +234,26 @@ class _MoodDetectorWidgetState extends State<MoodDetectorWidget>
     return Row(
       children: [
         Expanded(
-          child: CustomElevatedButton(
-            text: widget.showRecommendations
+          child: GymButton(
+            label: widget.showRecommendations
                 ? 'Ver Recomendaciones'
                 : 'Confirmar',
             onPressed: _handleActionButtonPressed,
-            emotionalType: EmotionalButtonType.energetic,
-            enablePressAnimation: true,
-            enableHapticFeedback: true,
+            variant: GymButtonVariant.primary,
+            size: GymButtonSize.medium,
+            expand: true,
           ),
         ),
         if (widget.autoSave) ...[
           const SizedBox(width: 12),
           Expanded(
-            child: CustomElevatedButton(
-              text: state is MoodDetectorLoading ? 'Guardando...' : 'Guardar',
+            child: GymButton(
+              label: state is MoodDetectorLoading ? 'Guardando...' : 'Guardar',
               onPressed: () =>
                   state is MoodDetectorLoading ? null : _saveMood(),
-              emotionalType: EmotionalButtonType.success,
-              enablePressAnimation: true,
-              enableHapticFeedback: true,
+              variant: GymButtonVariant.primary,
+              size: GymButtonSize.medium,
+              expand: true,
             ),
           ),
         ],

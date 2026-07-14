@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gymaster/shared/widgets/chiclet_button.dart';
+import 'package:gymaster/shared/widgets/gym/gym.dart';
 import 'package:gymaster/shared/widgets/tarjeta_estado.dart';
 import 'package:lottie/lottie.dart';
 import 'package:gymaster/core/generated/assets.gen.dart';
-import 'package:gymaster/core/theme/emotional_text_styles.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/services/emotional_message_service.dart';
 import 'package:gymaster/shared/utils/haptic_feedback_helper.dart';
@@ -255,7 +254,7 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
               scale: 1.0 + (_scaleAnimation.value * 0.3),
               child: Text(
                 '${_totalRutinasCompletadas.iconoProgreso} ¡Felicidades! ${_totalRutinasCompletadas.iconoProgreso}',
-                style: EstilosTextoEmocional.celebracion.copyWith(
+                style: GymType.display.copyWith(
                   fontSize: 32,
                 ),
                 textAlign: TextAlign.center,
@@ -301,7 +300,7 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
         // Mensaje personalizado
         Text(
           mensajePersonalizado,
-          style: EstilosTextoEmocional.aliento.copyWith(
+          style: GymType.section.copyWith(
             fontSize: 18,
             color: Theme.of(context).colorScheme.onSurface,
           ),
@@ -325,9 +324,8 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
         children: [
           Text(
             subtituloContextual,
-            style: EstilosTextoEmocional.aliento.copyWith(
+            style: GymType.section.copyWith(
               fontSize: 16,
-              color: context.gym.brand,
               fontWeight: FontWeight.w600,
             ),
             textAlign: TextAlign.center,
@@ -435,35 +433,26 @@ class _RutinaCompletadaWidgetState extends State<RutinaCompletadaWidget>
             opacity: _statsAnimation.value,
             child: Column(
               children: [
-                // Botón principal con ChicletButton existente
-                ChicletButton(
-                  texto: 'Continuar Entrenando',
-                  icono: Icons.fitness_center,
-                  colorFondo: AppColors.exito,
-                  colorTexto: Colors.white,
+                // Botón principal
+                GymButton(
+                  label: 'Continuar Entrenando',
+                  icon: Icons.fitness_center,
+                  variant: GymButtonVariant.primary,
+                  size: GymButtonSize.large,
+                  expand: false,
                   onPressed: () => _navegarAlInicio(context),
-                  radioBorde: 16,
-                  paddingHorizontal: 30,
-                  tamano: TamanoBotonChiclet.grande,
-                  estilo: EstiloBotonChiclet.relleno,
-                  conSombreado: true,
                 ),
 
                 const SizedBox(height: 12),
 
                 // Botón secundario
-                ChicletButton(
-                  texto: 'Ver Mi Progreso',
-                  icono: Icons.trending_up,
-                  colorFondo: Colors.white,
-                  colorTexto: AppColors.exito,
-                  colorBorde: AppColors.exito,
+                GymButton(
+                  label: 'Ver Mi Progreso',
+                  icon: Icons.trending_up,
+                  variant: GymButtonVariant.ghost,
+                  size: GymButtonSize.large,
+                  expand: false,
                   onPressed: () => _navegarAlHistorial(context),
-                  radioBorde: 16,
-                  paddingHorizontal: 30,
-                  tamano: TamanoBotonChiclet.grande,
-                  estilo: EstiloBotonChiclet.contorno,
-                  conSombreado: true,
                 ),
               ],
             ),

@@ -3,12 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gymaster/core/generated/assets.gen.dart';
-import 'package:gymaster/core/theme/emotional_text_styles.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/features/routine/domain/entities/routine.dart';
 import 'package:gymaster/features/routine/presentation/cubits/rutina/routine_cubit.dart';
 import 'package:gymaster/shared/utils/snackbar_helper.dart';
-import 'package:gymaster/shared/widgets/chiclet_button.dart';
+import 'package:gymaster/shared/widgets/gym/gym.dart';
 import 'package:animate_do/animate_do.dart';
 
 class AgregarRutinaPage extends StatefulWidget {
@@ -368,8 +368,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                 children: [
                   Text(
                     '¡Crea tu rutina perfecta!',
-                    style: EstilosTextoEmocional.energetico.copyWith(
-                      color: context.gym.brand,
+                    style: GymType.section.copyWith(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
@@ -379,8 +378,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                   const SizedBox(height: 4),
                   Text(
                     'Personaliza cada detalle para tu éxito',
-                    style: EstilosTextoEmocional.amigable.copyWith(
-                      color: context.gym.brand,
+                    style: GymType.section.copyWith(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ),
@@ -603,8 +601,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
               const SizedBox(width: 12),
               Text(
                 'Elige tu color de poder',
-                style: EstilosTextoEmocional.energetico.copyWith(
-                  color: context.gym.brand,
+                style: GymType.section.copyWith(
                   fontSize: 18,
                 ),
               ),
@@ -613,7 +610,8 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
           const SizedBox(height: 8),
           Text(
             'Cada color transmite una energía única para tu entrenamiento',
-            style: EstilosTextoEmocional.amigable.copyWith(
+            style: GymType.section.copyWith(
+              fontWeight: FontWeight.w300,
               color: context.gym.faint,
             ),
           ),
@@ -720,8 +718,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
               const SizedBox(width: 12),
               Text(
                 'Selecciona el ícono perfecto',
-                style: EstilosTextoEmocional.energetico.copyWith(
-                  color: context.gym.brand,
+                style: GymType.section.copyWith(
                   fontSize: 18,
                 ),
               ),
@@ -730,7 +727,8 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
           const SizedBox(height: 8),
           Text(
             'Representa visualmente el tipo de entrenamiento que vas a hacer',
-            style: EstilosTextoEmocional.amigable.copyWith(
+            style: GymType.section.copyWith(
+              fontWeight: FontWeight.w300,
               color: context.gym.faint,
             ),
           ),
@@ -786,7 +784,7 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
                       const SizedBox(width: 8),
                       Text(
                         nombreCategoria,
-                        style: EstilosTextoEmocional.aliento.copyWith(
+                        style: GymType.section.copyWith(
                           color: colorCategoria,
                           fontWeight: FontWeight.bold,
                           fontSize: 14,
@@ -893,14 +891,13 @@ class _AgregarRutinaPageState extends State<AgregarRutinaPage> {
   Widget _construirBotonGuardar() {
     return FadeInUp(
       duration: const Duration(milliseconds: 600),
-      child: ChicletButton(
+      child: GymButton(
         onPressed: estaGuardando ? null : _guardarRutina,
-        texto: estaGuardando ? 'Creando tu rutina...' : '¡Crear mi rutina!',
-        icono: estaGuardando ? null : Icons.rocket_launch_rounded,
-        tamano: TamanoBotonChiclet.grande,
-        estilo: EstiloBotonChiclet.relleno,
-        colorFondo: colorSeleccionado,
-        estaCargando: estaGuardando,
+        label: estaGuardando ? 'Creando tu rutina...' : '¡Crear mi rutina!',
+        icon: estaGuardando ? null : Icons.rocket_launch_rounded,
+        size: GymButtonSize.large,
+        variant: GymButtonVariant.primary,
+        expand: true,
       ),
     );
   }

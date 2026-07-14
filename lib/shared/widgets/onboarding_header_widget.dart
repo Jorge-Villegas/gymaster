@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gymaster/core/theme/emotional_text_styles.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/features/setting/presentation/cubits/onboarding/onboarding_cubit.dart';
 import 'package:gymaster/features/setting/domain/entities/onboarding_config.dart';
@@ -117,9 +117,9 @@ class OnboardingHeaderWidget extends StatelessWidget {
       ),
       child: Text(
         'Paso ${cubit.globalStepNumber} de ${OnboardingConfig.totalPasos}',
-        style: EstilosTextoEmocional.amigable.copyWith(
-          color: context.gym.xpInk,
-          fontWeight: FontWeight.w600,
+        style: GymType.label.copyWith(
+          color: context.gym.ink,
+          fontWeight: FontWeight.w700,
           fontSize: 14,
         ),
       ),
@@ -166,9 +166,7 @@ class OnboardingPageInfoWidget extends StatelessWidget {
       children: [
         Text(
           title,
-          style: EstilosTextoEmocional.celebracion.copyWith(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
+          style: GymType.display.copyWith(
             color: context.gym.ink,
           ),
           textAlign: TextAlign.center,
@@ -176,8 +174,7 @@ class OnboardingPageInfoWidget extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           subtitle,
-          style: EstilosTextoEmocional.amigable.copyWith(
-            fontSize: 16,
+          style: GymType.body.copyWith(
             color: context.gym.muted,
           ),
           textAlign: TextAlign.center,

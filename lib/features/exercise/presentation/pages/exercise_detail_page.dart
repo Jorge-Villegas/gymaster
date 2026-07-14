@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
-import 'package:gymaster/core/theme/emotional_text_styles.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/features/exercise/domain/entities/exercise.dart';
 import 'package:gymaster/features/exercise/presentation/cubits/favorito_ejercicio_cubit.dart';
 import 'package:gymaster/features/exercise/presentation/cubits/favorito_ejercicio_state.dart';
@@ -122,7 +121,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
             ),
             child: Text(
               capitalizarPrimeraLetra(widget.exercise.name),
-              style: EstilosTextoEmocional.energetico.copyWith(
+              style: GymType.section.copyWith(
                 color: context.gym.ink,
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -228,11 +227,10 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                 Expanded(
                   child: Text(
                     'Músculos Trabajados 💪',
-                    style: TextStyle(
+                    style: GymType.section.copyWith(
                       letterSpacing: 1.2,
                       height: 1.1,
                       fontSize: 20,
-                      color: context.gym.brand,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -327,11 +325,10 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                 Expanded(
                   child: Text(
                     'Descripción del Ejercicio 📖',
-                    style: TextStyle(
+                    style: GymType.section.copyWith(
                       letterSpacing: 1.2,
                       height: 1.1,
                       fontSize: 20,
-                      color: context.gym.brand,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -343,9 +340,9 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
               widget.exercise.description.isNotEmpty
                   ? capitalizarPrimeraLetra(widget.exercise.description)
                   : '¡Este ejercicio te ayudará a fortalecer y desarrollar los músculos trabajados de manera efectiva! 💪✨',
-              style: TextStyle(
+              style: GymType.body.copyWith(
                 fontSize: 16,
-                color: AppColors.textoDeshabilitado,
+                color: context.gym.faint,
               ),
             ),
           ],
@@ -395,9 +392,8 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                 Expanded(
                   child: Text(
                     'Variaciones Disponibles 🔄',
-                    style: EstilosTextoEmocional.energetico.copyWith(
+                    style: GymType.section.copyWith(
                       fontSize: 20,
-                      color: context.gym.brand,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -431,7 +427,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                       child: Center(
                         child: Text(
                           '${index + 1}',
-                          style: EstilosTextoEmocional.energetico.copyWith(
+                          style: GymType.section.copyWith(
                             color: Colors.white,
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
@@ -443,10 +439,10 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                     Expanded(
                       child: Text(
                         capitalizarPrimeraLetra(variation),
-                        style: EstilosTextoEmocional.amigable.copyWith(
+                        style: GymType.section.copyWith(
+                          fontWeight: FontWeight.w500,
                           fontSize: 15,
                           color: context.gym.ink,
-                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),
@@ -514,7 +510,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                               nuevoEstado
                                   ? '¡${widget.exercise.name} agregado a favoritos!'
                                   : '${widget.exercise.name} removido de favoritos',
-                              style: EstilosTextoEmocional.aliento
+                              style: GymType.section
                                   .copyWith(color: Colors.white),
                             ),
                           ),
@@ -547,7 +543,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
               ),
               label: Text(
                 esFavorito ? 'En Favoritos' : 'Agregar a Favoritos',
-                style: EstilosTextoEmocional.aliento.copyWith(
+                style: GymType.section.copyWith(
                   color: Colors.white,
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
@@ -565,7 +561,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
     if (imagePath.isEmpty) {
       return Container(
         decoration: BoxDecoration(
-          color: Colors.grey[300],
+          color: context.gym.surface2,
         ),
         child: Center(
           child: Column(
@@ -579,7 +575,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
               const SizedBox(height: 16),
               Text(
                 '¡Imagen próximamente! 💪',
-                style: EstilosTextoEmocional.aliento.copyWith(
+                style: GymType.section.copyWith(
                   color: Colors.white,
                   fontSize: 18,
                 ),
@@ -599,7 +595,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
           imagePath,
           fit: BoxFit.cover,
           colorFilter: ColorFilter.mode(
-            AppColors.fondoPrincipalOscuro.withValues(alpha: 0.8),
+            context.gym.ink.withValues(alpha: 0.8),
             BlendMode.srcATop,
           ),
         ),
@@ -612,7 +608,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
       errorBuilder: (context, error, stackTrace) {
         return Container(
           decoration: BoxDecoration(
-            color: Colors.grey[400],
+            color: context.gym.surface2,
           ),
           child: Center(
             child: Column(
@@ -626,7 +622,8 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                 const SizedBox(height: 12),
                 Text(
                   'Error al cargar imagen 😔',
-                  style: EstilosTextoEmocional.recuperacion.copyWith(
+                  style: GymType.bodyStrong.copyWith(
+                    fontWeight: FontWeight.w300,
                     color: Colors.white,
                     fontSize: 16,
                   ),

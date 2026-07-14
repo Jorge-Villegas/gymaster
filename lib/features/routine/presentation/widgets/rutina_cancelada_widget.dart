@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gymaster/core/theme/emotional_text_styles.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
-import 'package:gymaster/shared/widgets/chiclet_button.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
+import 'package:gymaster/shared/widgets/gym/gym.dart';
 
 class RutinaCanceladaWidget extends StatelessWidget {
   final String rutinaName;
@@ -101,7 +101,7 @@ class RutinaCanceladaWidget extends StatelessWidget {
                   icon: const Icon(Icons.refresh_rounded),
                   label: Text(
                     'Reintentar Rutina',
-                    style: EstilosTextoEmocional.aliento.copyWith(
+                    style: GymType.section.copyWith(
                       color: Colors.white,
                       fontSize: 18,
                     ),
@@ -120,24 +120,19 @@ class RutinaCanceladaWidget extends StatelessWidget {
                 // Mensaje motivacional
                 Text(
                   '¡No te rindas! Puedes intentarlo de nuevo 💪',
-                  style: EstilosTextoEmocional.aliento.copyWith(
-                    color: context.gym.xpInk,
+                  style: GymType.section.copyWith(
                     fontSize: 16,
                   ),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 24),
-                ChicletButton(
-                  texto: 'Volver al Inicio',
-                  icono: Icons.home_rounded,
-                  colorFondo: Theme.of(context).colorScheme.primary,
-                  colorTexto: Colors.white,
+                GymButton(
+                  label: 'Volver al Inicio',
+                  icon: Icons.home_rounded,
+                  variant: GymButtonVariant.primary,
+                  size: GymButtonSize.medium,
+                  expand: false,
                   onPressed: () => context.go('/'),
-                  radioBorde: 16,
-                  paddingHorizontal: 30,
-                  tamano: TamanoBotonChiclet.mediano,
-                  estilo: EstiloBotonChiclet.relleno,
-                  conSombreado: true,
                 ),
                 // Botones secundarios
                 OutlinedButton.icon(

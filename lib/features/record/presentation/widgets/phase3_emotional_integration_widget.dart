@@ -3,8 +3,8 @@ import 'package:gymaster/features/record/presentation/widgets/progress_visualiza
 import 'package:gymaster/features/record/presentation/widgets/community_widget.dart';
 import 'package:gymaster/features/record/presentation/widgets/epic_celebration_widget.dart';
 import 'package:gymaster/features/record/presentation/widgets/deep_personalization_widget.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
-import 'package:gymaster/core/theme/emotional_text_styles.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 
 /// Widget integrador de la Fase 3: Nivel Reflexivo - Conexión Emocional
 /// Combina todos los elementos emocionales avanzados en una experiencia cohesiva
@@ -162,8 +162,8 @@ class _Phase3EmotionalIntegrationWidgetState
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            AppColors.acento.withValues(alpha: 0.1),
-            AppColors.secundarioClaro.withValues(alpha: 0.1),
+            context.gym.xpInk.withValues(alpha: 0.1),
+            context.gym.info.withValues(alpha: 0.1),
           ],
         ),
       ),
@@ -175,12 +175,12 @@ class _Phase3EmotionalIntegrationWidgetState
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: AppColors.acento.withValues(alpha: 0.2),
+                  color: context.gym.xpInk.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
                   Icons.psychology,
-                  color: AppColors.acento,
+                  color: context.gym.xpInk,
                   size: 28,
                 ),
               ),
@@ -191,7 +191,7 @@ class _Phase3EmotionalIntegrationWidgetState
                   children: [
                     Text(
                       'Conexión Emocional',
-                      style: EstilosTextoEmocional.celebracion.copyWith(
+                      style: GymType.display.copyWith(
                         fontSize: 24,
                         color: Theme.of(context).colorScheme.onSurface,
                       ),
@@ -231,13 +231,13 @@ class _Phase3EmotionalIntegrationWidgetState
     return Row(
       children: [
         _buildQuickStat(
-            '${widget.userCompletedRoutines}', 'Rutinas', AppColors.acento),
+            '${widget.userCompletedRoutines}', 'Rutinas', context.gym.xpInk),
         const SizedBox(width: 20),
         _buildQuickStat(
-            '${widget.userCurrentStreak}', 'Racha', AppColors.exito),
+            '${widget.userCurrentStreak}', 'Racha', context.gym.brand),
         const SizedBox(width: 20),
         _buildQuickStat(
-            '${widget.userWeeklyRoutines}', 'Semana', AppColors.acento),
+            '${widget.userWeeklyRoutines}', 'Semana', context.gym.xpInk),
       ],
     );
   }
@@ -254,9 +254,8 @@ class _Phase3EmotionalIntegrationWidgetState
         children: [
           Text(
             value,
-            style: EstilosTextoEmocional.logro.copyWith(
+            style: GymType.display.copyWith(
               fontSize: 18,
-              color: color,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -285,7 +284,7 @@ class _Phase3EmotionalIntegrationWidgetState
       child: TabBar(
         controller: _tabController,
         indicator: BoxDecoration(
-          color: AppColors.acento,
+          color: context.gym.xpInk,
           borderRadius: BorderRadius.circular(25),
         ),
         labelColor: Colors.white,
@@ -361,8 +360,8 @@ class _Phase3EmotionalIntegrationWidgetState
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            AppColors.acento.withValues(alpha: 0.1),
-            AppColors.acento.withValues(alpha: 0.1),
+            context.gym.xpInk.withValues(alpha: 0.1),
+            context.gym.xpInk.withValues(alpha: 0.1),
           ],
         ),
         borderRadius: BorderRadius.circular(16),
@@ -372,11 +371,11 @@ class _Phase3EmotionalIntegrationWidgetState
         children: [
           Row(
             children: [
-              Icon(Icons.timeline, color: AppColors.acento),
+              Icon(Icons.timeline, color: context.gym.xpInk),
               const SizedBox(width: 8),
               Text(
                 'Tu Journey Emocional',
-                style: EstilosTextoEmocional.motivacional.copyWith(
+                style: GymType.display.copyWith(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
@@ -386,9 +385,8 @@ class _Phase3EmotionalIntegrationWidgetState
           const SizedBox(height: 16),
           Text(
             _getEmotionalJourneyInsight(),
-            style: EstilosTextoEmocional.logro.copyWith(
+            style: GymType.display.copyWith(
               fontSize: 16,
-              color: AppColors.acento,
             ),
           ),
         ],
@@ -414,21 +412,21 @@ class _Phase3EmotionalIntegrationWidgetState
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppColors.secundarioClaro.withValues(alpha: 0.1),
+        color: context.gym.info.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(16),
         border:
-            Border.all(color: AppColors.secundarioClaro.withValues(alpha: 0.3)),
+            Border.all(color: context.gym.info.withValues(alpha: 0.3)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(Icons.psychology, color: AppColors.secundarioClaro),
+              Icon(Icons.psychology, color: context.gym.info),
               const SizedBox(width: 8),
               Text(
                 'Insights Comportamentales',
-                style: EstilosTextoEmocional.motivacional.copyWith(
+                style: GymType.display.copyWith(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
@@ -455,7 +453,7 @@ class _Phase3EmotionalIntegrationWidgetState
             height: 6,
             margin: const EdgeInsets.only(top: 8),
             decoration: BoxDecoration(
-              color: AppColors.secundarioClaro,
+              color: context.gym.info,
               shape: BoxShape.circle,
             ),
           ),
@@ -508,20 +506,20 @@ class _Phase3EmotionalIntegrationWidgetState
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppColors.exito.withValues(alpha: 0.1),
+        color: context.gym.brand.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.exito.withValues(alpha: 0.3)),
+        border: Border.all(color: context.gym.brand.withValues(alpha: 0.3)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(Icons.lightbulb, color: AppColors.exito),
+              Icon(Icons.lightbulb, color: context.gym.brand),
               const SizedBox(width: 8),
               Text(
                 'Recomendaciones Personalizadas',
-                style: EstilosTextoEmocional.motivacional.copyWith(
+                style: GymType.display.copyWith(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
@@ -546,16 +544,15 @@ class _Phase3EmotionalIntegrationWidgetState
         decoration: BoxDecoration(
           color: Colors.white.withValues(alpha: 0.7),
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: AppColors.exito.withValues(alpha: 0.2)),
+          border: Border.all(color: context.gym.brand.withValues(alpha: 0.2)),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               title,
-              style: EstilosTextoEmocional.logro.copyWith(
+              style: GymType.display.copyWith(
                 fontSize: 16,
-                color: AppColors.exito,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -603,11 +600,11 @@ class _Phase3EmotionalIntegrationWidgetState
       scale: _fabScaleAnimation,
       child: FloatingActionButton.extended(
         onPressed: _showEpicCelebrationDialog,
-        backgroundColor: AppColors.acento,
+        backgroundColor: context.gym.xpInk,
         icon: const Icon(Icons.celebration, color: Colors.white),
         label: Text(
           'Celebrar',
-          style: EstilosTextoEmocional.motivacional.copyWith(
+          style: GymType.display.copyWith(
             color: Colors.white,
             fontWeight: FontWeight.bold,
           ),

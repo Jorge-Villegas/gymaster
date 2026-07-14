@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
-import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/features/estadisticas/domain/entities/recomendacion_muscular.dart';
 import 'package:gymaster/shared/utils/string_utils.dart';
 
@@ -42,9 +42,9 @@ class RecomendacionesWidget extends StatelessWidget {
               SizedBox(width: Espaciado.xs),
               Text(
                 'Recomendaciones',
-                style: TipografiaGyMaster.textoPrincipal.copyWith(
-                  fontSize: TipografiaGyMaster.tamanoLg,
-                  fontWeight: TipografiaGyMaster.pesoSemiBold,
+                style: GymType.body.copyWith(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
                   color: c.ink,
                 ),
               ),
@@ -93,7 +93,7 @@ class RecomendacionesWidget extends StatelessWidget {
             children: [
               Text(
                 recomendacion.emojiAlerta,
-                style: TextStyle(fontSize: TipografiaGyMaster.tamano2xl),
+                style: const TextStyle(fontSize: 24),
               ),
               SizedBox(width: Espaciado.sm),
               Expanded(
@@ -102,17 +102,18 @@ class RecomendacionesWidget extends StatelessWidget {
                   children: [
                     Text(
                       capitalizarPrimeraLetra(recomendacion.nombreMusculo),
-                      style: TipografiaGyMaster.textoPrincipal.copyWith(
-                        fontSize: TipografiaGyMaster.tamanoLg,
-                        fontWeight: TipografiaGyMaster.pesoSemiBold,
-                        color: colorAlerta,
+                      style: GymType.body.copyWith(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: c.ink,
                       ),
                     ),
                     SizedBox(height: Espaciado.xxs),
                     Text(
                       recomendacion.mensajeTiempo,
-                      style: TipografiaGyMaster.textoSecundario.copyWith(
-                        fontSize: TipografiaGyMaster.tamanoSm,
+                      style: GymType.label.copyWith(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
                         color: c.ink,
                       ),
                     ),
@@ -140,8 +141,8 @@ class RecomendacionesWidget extends StatelessWidget {
                 Expanded(
                   child: Text(
                     recomendacion.mensajeRecomendacion,
-                    style: TipografiaGyMaster.textoPrincipal.copyWith(
-                      fontSize: TipografiaGyMaster.tamanoSm,
+                    style: GymType.body.copyWith(
+                      fontSize: 14,
                       color: c.ink,
                       fontStyle: FontStyle.italic,
                     ),
@@ -166,9 +167,9 @@ class RecomendacionesWidget extends StatelessWidget {
                 icon: const Icon(Icons.fitness_center, size: 20),
                 label: Text(
                   'Entrenar ${recomendacion.nombreMusculo}',
-                  style: TipografiaGyMaster.textoPrincipal.copyWith(
-                    fontSize: TipografiaGyMaster.tamanoSm,
-                    fontWeight: TipografiaGyMaster.pesoSemiBold,
+                  style: GymType.body.copyWith(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
                     color: Colors.white,
                   ),
                 ),
@@ -190,7 +191,7 @@ class RecomendacionesWidget extends StatelessWidget {
       ),
       child: Text(
         estrellas,
-        style: TextStyle(fontSize: TipografiaGyMaster.tamanoSm),
+        style: const TextStyle(fontSize: 14),
       ),
     );
   }
@@ -255,17 +256,18 @@ class RecomendacionesWidget extends StatelessWidget {
           SizedBox(height: Espaciado.md),
           Text(
             '¡Entrenamiento Balanceado!',
-            style: TipografiaGyMaster.textoPrincipal.copyWith(
-              fontSize: TipografiaGyMaster.tamanoXl,
-              fontWeight: TipografiaGyMaster.pesoSemiBold,
-              color: c.brand,
+            style: GymType.body.copyWith(
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+              color: c.brandInk,
             ),
           ),
           SizedBox(height: Espaciado.xs),
           Text(
             'Estás trabajando todos los grupos musculares de manera equilibrada',
-            style: TipografiaGyMaster.textoSecundario.copyWith(
-              fontSize: TipografiaGyMaster.tamanoMd,
+            style: GymType.label.copyWith(
+              fontWeight: FontWeight.w400,
+              fontSize: 16,
               color: c.ink,
             ),
             textAlign: TextAlign.center,
@@ -284,8 +286,8 @@ class RecomendacionesWidget extends StatelessWidget {
                 SizedBox(width: Espaciado.xs),
                 Text(
                   'Mantén esta consistencia',
-                  style: TipografiaGyMaster.textoPrincipal.copyWith(
-                    fontSize: TipografiaGyMaster.tamanoSm,
+                  style: GymType.body.copyWith(
+                    fontSize: 14,
                     color: c.ink,
                   ),
                 ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
 
 class CustomDataTable extends StatelessWidget {
@@ -11,9 +10,9 @@ class CustomDataTable extends StatelessWidget {
   final Function(int)? onRowSelected;
   final Function(int)? onRemoveRow;
   final bool showActions;
-  final Color backgroundColor;
-  final Color selectionColor;
-  final Color headerColor;
+  final Color? backgroundColor;
+  final Color? selectionColor;
+  final Color? headerColor;
   final Color headerTextColor;
   final double headerTextSize;
   final Color bodyTextColor;
@@ -35,9 +34,9 @@ class CustomDataTable extends StatelessWidget {
     this.onRowSelected,
     this.onRemoveRow,
     this.showActions = true,
-    Color? backgroundColor,
-    Color? selectionColor,
-    Color? headerColor,
+    this.backgroundColor,
+    this.selectionColor,
+    this.headerColor,
     this.headerTextColor = Colors.white,
     this.headerTextSize = 16.0,
     this.bodyTextColor = Colors.black,
@@ -49,13 +48,15 @@ class CustomDataTable extends StatelessWidget {
     this.cellTextAlign = TextAlign.left,
     this.maxHeight,
     this.minHeight,
-  })  : backgroundColor = backgroundColor ?? Color(0xFFF8FAFC),
-        selectionColor =
-            selectionColor ?? AppColors.primarioClaro.withValues(alpha: 0.1),
-        headerColor = headerColor ?? AppColors.primarioClaro;
+  });
 
   @override
   Widget build(BuildContext context) {
+    final effectiveBackgroundColor = backgroundColor ?? const Color(0xFFF8FAFC);
+    final effectiveSelectionColor =
+        selectionColor ?? context.gym.brandSoft.withValues(alpha: 0.1);
+    final effectiveHeaderColor = headerColor ?? context.gym.brandSoft;
+
     final defaultTextStyle = Theme.of(context).textTheme.bodyMedium?.copyWith(
           color: bodyTextColor,
           fontSize: bodyTextSize,
@@ -66,7 +67,7 @@ class CustomDataTable extends StatelessWidget {
         );
 
     return Container(
-      color: backgroundColor,
+      color: effectiveBackgroundColor,
       constraints: BoxConstraints(
         maxHeight: maxHeight ?? double.infinity,
         minHeight: minHeight ?? (maxHeight ?? 0),
@@ -88,7 +89,7 @@ class CustomDataTable extends StatelessWidget {
               children: [
                 TableRow(
                   decoration: BoxDecoration(
-                    color: headerColor,
+                    color: effectiveHeaderColor,
                     borderRadius: const BorderRadius.all(Radius.circular(8)),
                   ),
                   children: headers.map((header) {
@@ -129,7 +130,9 @@ class CustomDataTable extends StatelessWidget {
 
                     return TableRow(
                       decoration: BoxDecoration(
-                        color: isSelected ? selectionColor : Colors.transparent,
+                        color: isSelected
+                            ? effectiveSelectionColor
+                            : Colors.transparent,
                         borderRadius: rowIndex == data.length - 1
                             ? const BorderRadius.all(Radius.circular(8))
                             : BorderRadius.circular(8),

@@ -2,16 +2,13 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gymaster/core/theme/emotional_text_styles.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
-import 'package:gymaster/core/theme/tipografia_gymaster.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
 import 'package:gymaster/features/routine/presentation/cubits/rutina/routine_cubit.dart';
-import 'package:gymaster/features/routine/presentation/pages/agregar_rutina_page.dart';
 import 'package:gymaster/features/routine/presentation/pages/routine_search_delegate.dart';
 import 'package:gymaster/features/routine/presentation/widgets/routine_card.dart';
-import 'package:gymaster/shared/widgets/chiclet_button.dart';
+import 'package:gymaster/shared/widgets/gym/gym.dart';
 import 'package:gymaster/shared/widgets/cabecera_reutilizable.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:lottie/lottie.dart';
@@ -36,34 +33,30 @@ class ListaRutinasPage extends StatelessWidget {
                 const SizedBox(height: 20),
                 _buildSearchBar(context),
                 const SizedBox(height: 10),
-                _buildRoutineList(),
+                _buildRoutineList(context),
               ],
             ),
           ),
         ),
       ),
-      // Botón flotante mejorado con ChicletButton estilo
+      // Botón flotante mejorado
       floatingActionButton: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: AppColors.primario.withAlpha((0.3 * 255).toInt()),
+              color: context.gym.brand.withAlpha((0.3 * 255).toInt()),
               blurRadius: 12,
               offset: const Offset(0, 4),
             ),
           ],
         ),
-        child: ChicletButton(
-          texto: '',
-          icono: Icons.add,
-          tamano: TamanoBotonChiclet.grande,
-          estilo: EstiloBotonChiclet.relleno,
-          radioBorde: 16,
-          ancho: 64,
-          alto: 64,
-          colorFondo: AppColors.primario,
-          conSombreado: false, // Ya tiene sombra personalizada
+        child: GymButton(
+          label: '',
+          icon: Icons.add,
+          size: GymButtonSize.large,
+          variant: GymButtonVariant.primary,
+          expand: false,
           onPressed: () => _navegarAAgregarRutina(context),
         ),
       ),
@@ -159,21 +152,17 @@ class ListaRutinasPage extends StatelessWidget {
               children: [
                 Text(
                   'Mis Rutinas',
-                  style: TextStyle(
-                    fontWeight: TipografiaGyMaster.pesoSemiBold,
-                    fontSize: TipografiaGyMaster.tamanoLg,
-                    color: AppColors.acento,
+                  style: GymType.section.copyWith(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18,
                   ),
                 ),
-                ChicletButton(
-                  texto: '',
-                  icono: Icons.add_rounded,
-                  tamano: TamanoBotonChiclet.mediano,
-                  estilo: EstiloBotonChiclet.contorno,
-                  colorFondo: AppColors.acento.withValues(alpha: 0.1),
-                  colorBorde: AppColors.acento,
-                  colorTexto: AppColors.acento,
-                  radioBorde: 12,
+                GymButton(
+                  label: '',
+                  icon: Icons.add_rounded,
+                  size: GymButtonSize.medium,
+                  variant: GymButtonVariant.ghost,
+                  expand: false,
                   onPressed: () => _navegarAAgregarRutina(context),
                 ),
               ],
@@ -190,21 +179,19 @@ class ListaRutinasPage extends StatelessWidget {
                     children: [
                       Text(
                         'Mis Rutinas',
-                        style: TextStyle(
-                          fontWeight: TipografiaGyMaster.pesoSemiBold,
-                          fontSize: TipografiaGyMaster.tamano2xl,
-                          color: AppColors.primario,
+                        style: GymType.display.copyWith(
+                          fontWeight: FontWeight.w600,
                           height: 1.2,
                         ),
                       ),
                       if (state.routines.isNotEmpty)
                         Text(
                           '${state.routines.length} rutina${state.routines.length == 1 ? '' : 's'} para conquistar',
-                          style: TextStyle(
-                            fontWeight: TipografiaGyMaster.pesoRegular,
-                            fontSize: TipografiaGyMaster.tamanoMd,
+                          style: GymType.body.copyWith(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16,
                             height: 1.3,
-                            color: AppColors.acento,
+                            color: context.gym.muted,
                           ),
                         ),
                     ],
@@ -212,17 +199,12 @@ class ListaRutinasPage extends StatelessWidget {
                 ),
                 const SizedBox(width: 12),
                 // Botón de búsqueda mejorado
-                ChicletButton(
-                  texto: '',
-                  icono: IconsaxPlusLinear.search_normal_1,
-                  tamano: TamanoBotonChiclet.mediano,
-                  estilo: EstiloBotonChiclet.contorno,
-                  colorFondo: AppColors.secundarioClaro.withValues(alpha: 0.1),
-                  colorBorde: AppColors.secundarioClaro,
-                  colorTexto: AppColors.secundarioClaro,
-                  radioBorde: 12,
-                  conSombreado: true,
-                  grosorSombreado: 2.0,
+                GymButton(
+                  label: '',
+                  icon: IconsaxPlusLinear.search_normal_1,
+                  size: GymButtonSize.medium,
+                  variant: GymButtonVariant.ghost,
+                  expand: false,
                   onPressed: () async {
                     final routineCubit = BlocProvider.of<RoutineCubit>(context);
                     final result = await showSearch(
@@ -244,14 +226,14 @@ class ListaRutinasPage extends StatelessWidget {
     );
   }
 
-  Widget _buildRoutineList() {
+  Widget _buildRoutineList(BuildContext context) {
     return Expanded(
       child: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
               Colors.transparent,
-              AppColors.fondoPrincipal.withValues(alpha: 0.3),
+              Theme.of(context).scaffoldBackgroundColor.withValues(alpha: 0.3),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -271,16 +253,15 @@ class ListaRutinasPage extends StatelessWidget {
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            AppColors.secundarioClaro.withValues(alpha: 0.1),
-                            AppColors.secundarioClaro.withValues(alpha: 0.05),
+                            context.gym.info.withValues(alpha: 0.1),
+                            context.gym.info.withValues(alpha: 0.05),
                           ],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
-                          color:
-                              AppColors.secundarioClaro.withValues(alpha: 0.2),
+                          color: context.gym.info.withValues(alpha: 0.2),
                           width: 1,
                         ),
                       ),
@@ -289,13 +270,12 @@ class ListaRutinasPage extends StatelessWidget {
                           Container(
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              color: AppColors.secundarioClaro
-                                  .withValues(alpha: 0.2),
+                              color: context.gym.info.withValues(alpha: 0.2),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Icon(
                               Icons.fitness_center,
-                              color: AppColors.secundarioClaro,
+                              color: context.gym.info,
                               size: 20,
                             ),
                           ),
@@ -303,9 +283,9 @@ class ListaRutinasPage extends StatelessWidget {
                           Expanded(
                             child: Text(
                               'Preparando tus rutinas increíbles...',
-                              style: EstilosTextoEmocional.amigable.copyWith(
+                              style: GymType.section.copyWith(
+                                fontWeight: FontWeight.w300,
                                 fontSize: 16,
-                                color: AppColors.secundarioClaro,
                               ),
                             ),
                           ),
@@ -315,10 +295,8 @@ class ListaRutinasPage extends StatelessWidget {
                     // Shimmer mejorado
                     Expanded(
                       child: Shimmer.fromColors(
-                        baseColor:
-                            AppColors.secundarioClaro.withValues(alpha: 0.1),
-                        highlightColor:
-                            AppColors.secundarioClaro.withValues(alpha: 0.3),
+                        baseColor: context.gym.info.withValues(alpha: 0.1),
+                        highlightColor: context.gym.info.withValues(alpha: 0.3),
                         period: const Duration(milliseconds: 1200),
                         child: ListView.builder(
                           itemCount: 4, // Menos elementos para mejor UX
@@ -350,7 +328,7 @@ class ListaRutinasPage extends StatelessWidget {
                                         width: 80,
                                         height: 80,
                                         decoration: BoxDecoration(
-                                          color: AppColors.secundarioClaro
+                                          color: context.gym.info
                                               .withValues(alpha: 0.2),
                                           borderRadius:
                                               BorderRadius.circular(12),
@@ -368,7 +346,7 @@ class ListaRutinasPage extends StatelessWidget {
                                               height: 20,
                                               width: double.infinity,
                                               decoration: BoxDecoration(
-                                                color: AppColors.secundarioClaro
+                                                color: context.gym.info
                                                     .withValues(alpha: 0.2),
                                                 borderRadius:
                                                     BorderRadius.circular(8),
@@ -379,7 +357,7 @@ class ListaRutinasPage extends StatelessWidget {
                                               height: 16,
                                               width: 120,
                                               decoration: BoxDecoration(
-                                                color: AppColors.secundarioClaro
+                                                color: context.gym.info
                                                     .withValues(alpha: 0.2),
                                                 borderRadius:
                                                     BorderRadius.circular(6),
@@ -414,15 +392,15 @@ class ListaRutinasPage extends StatelessWidget {
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            AppColors.acento.withValues(alpha: 0.1),
-                            AppColors.acento.withValues(alpha: 0.05),
+                            context.gym.xpInk.withValues(alpha: 0.1),
+                            context.gym.xpInk.withValues(alpha: 0.05),
                           ],
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
                         ),
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
-                          color: AppColors.acento.withValues(alpha: 0.2),
+                          color: context.gym.xpInk.withValues(alpha: 0.2),
                           width: 2,
                         ),
                       ),
@@ -439,9 +417,8 @@ class ListaRutinasPage extends StatelessWidget {
                     Text(
                       '¡Tu historia fitness comienza aquí!',
                       textAlign: TextAlign.center,
-                      style: EstilosTextoEmocional.motivacional.copyWith(
+                      style: GymType.display.copyWith(
                         fontSize: 22,
-                        color: AppColors.primario,
                       ),
                     ),
                     const SizedBox(height: 12),
@@ -451,8 +428,8 @@ class ListaRutinasPage extends StatelessWidget {
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            AppColors.primario.withValues(alpha: 0.1),
-                            AppColors.exito.withValues(alpha: 0.05),
+                            context.gym.brand.withValues(alpha: 0.1),
+                            context.gym.brand.withValues(alpha: 0.05),
                           ],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
@@ -464,7 +441,8 @@ class ListaRutinasPage extends StatelessWidget {
                         'Tu primera rutina será el primer paso hacia la mejor versión de ti mismo. '
                         '¡Vamos a crear algo increíble juntos! 💪',
                         textAlign: TextAlign.center,
-                        style: EstilosTextoEmocional.amigable.copyWith(
+                        style: GymType.section.copyWith(
+                          fontWeight: FontWeight.w300,
                           fontSize: 14,
                           color: context.gym.ink,
                           height: 1.4,
@@ -473,15 +451,12 @@ class ListaRutinasPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 24),
                     // Botón principal mejorado
-                    ChicletButton(
-                      texto: '¡Crear Mi Primera Rutina!',
-                      icono: Icons.rocket_launch_rounded,
-                      tamano: TamanoBotonChiclet.grande,
-                      estilo: EstiloBotonChiclet.relleno,
-                      colorFondo: AppColors.primario,
-                      radioBorde: 20,
-                      conSombreado: true,
-                      grosorSombreado: 8.0,
+                    GymButton(
+                      label: '¡Crear Mi Primera Rutina!',
+                      icon: Icons.rocket_launch_rounded,
+                      size: GymButtonSize.large,
+                      variant: GymButtonVariant.primary,
+                      expand: false,
                       onPressed: () => _navegarAAgregarRutina(context),
                     ),
                     const SizedBox(height: 12),
@@ -507,22 +482,22 @@ class ListaRutinasPage extends StatelessWidget {
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
-                              AppColors.exito.withValues(alpha: 0.1),
-                              AppColors.exito.withValues(alpha: 0.05),
+                              context.gym.brand.withValues(alpha: 0.1),
+                              context.gym.brand.withValues(alpha: 0.05),
                             ],
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                           ),
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(
-                            color: AppColors.exito.withValues(alpha: 0.2),
+                            color: context.gym.brand.withValues(alpha: 0.2),
                             width: 2,
                           ),
                         ),
                         child: Icon(
                           Icons.fitness_center_rounded,
                           size: 100,
-                          color: AppColors.exito.withValues(alpha: 0.7),
+                          color: context.gym.brand.withValues(alpha: 0.7),
                         ),
                       ),
                       const SizedBox(height: 24),
@@ -530,9 +505,8 @@ class ListaRutinasPage extends StatelessWidget {
                       Text(
                         '¡Es hora de comenzar tu transformación!',
                         textAlign: TextAlign.center,
-                        style: EstilosTextoEmocional.motivacional.copyWith(
+                        style: GymType.display.copyWith(
                           fontSize: 20,
-                          color: AppColors.primario,
                         ),
                       ),
                       const SizedBox(height: 12),
@@ -541,8 +515,8 @@ class ListaRutinasPage extends StatelessWidget {
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
-                              AppColors.acento.withValues(alpha: 0.1),
-                              AppColors.acento.withValues(alpha: 0.05),
+                              context.gym.xpInk.withValues(alpha: 0.1),
+                              context.gym.xpInk.withValues(alpha: 0.05),
                             ],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
@@ -555,24 +529,21 @@ class ListaRutinasPage extends StatelessWidget {
                           'lograr todos tus objetivos fitness. '
                           '¡Hagámoslo realidad juntos! 🎯',
                           textAlign: TextAlign.center,
-                          style: EstilosTextoEmocional.aliento.copyWith(
+                          style: GymType.section.copyWith(
                             fontSize: 14,
-                            color: AppColors.textoPrincipal,
+                            color: context.gym.ink,
                             height: 1.4,
                           ),
                         ),
                       ),
                       const SizedBox(height: 24),
                       // Botón principal
-                      ChicletButton(
-                        texto: '¡Empezar Mi Rutina!',
-                        icono: Icons.play_arrow_rounded,
-                        tamano: TamanoBotonChiclet.grande,
-                        estilo: EstiloBotonChiclet.relleno,
-                        colorFondo: AppColors.primario,
-                        radioBorde: 18,
-                        conSombreado: true,
-                        grosorSombreado: 6.0,
+                      GymButton(
+                        label: '¡Empezar Mi Rutina!',
+                        icon: Icons.play_arrow_rounded,
+                        size: GymButtonSize.large,
+                        variant: GymButtonVariant.primary,
+                        expand: false,
                         onPressed: () => _navegarAAgregarRutina(context),
                       ),
                       const SizedBox(height: 40),
@@ -604,7 +575,7 @@ class ListaRutinasPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(16),
                           boxShadow: [
                             BoxShadow(
-                              color: AppColors.primario.withValues(alpha: 0.1),
+                              color: context.gym.brand.withValues(alpha: 0.1),
                               offset: const Offset(0, 4),
                               blurRadius: 12,
                               spreadRadius: 0,
@@ -649,25 +620,23 @@ class ListaRutinasPage extends StatelessWidget {
                     Icon(
                       Icons.refresh_rounded,
                       size: 64,
-                      color: AppColors.secundarioClaro.withValues(alpha: 0.6),
+                      color: context.gym.info.withValues(alpha: 0.6),
                     ),
                     const SizedBox(height: 16),
                     Text(
                       'Preparando tu experiencia fitness...',
-                      style: EstilosTextoEmocional.amigable.copyWith(
-                        color: AppColors.secundarioClaro,
+                      style: GymType.section.copyWith(
+                        fontWeight: FontWeight.w300,
                         fontSize: 18,
                       ),
                     ),
                     const SizedBox(height: 24),
-                    ChicletButton(
-                      texto: 'Actualizar',
-                      icono: Icons.refresh,
-                      tamano: TamanoBotonChiclet.mediano,
-                      estilo: EstiloBotonChiclet.contorno,
-                      colorBorde: AppColors.secundarioClaro,
-                      colorTexto: AppColors.secundarioClaro,
-                      radioBorde: 12,
+                    GymButton(
+                      label: 'Actualizar',
+                      icon: Icons.refresh,
+                      size: GymButtonSize.medium,
+                      variant: GymButtonVariant.ghost,
+                      expand: false,
                       onPressed: () {
                         BlocProvider.of<RoutineCubit>(context).getAllRoutine();
                       },

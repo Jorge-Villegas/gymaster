@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
-import 'package:gymaster/core/theme/tipografia_gymaster.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
 
 /// Enumeración de los tipos de mensajes que puede mostrar el SnackBar.
@@ -62,7 +62,7 @@ void showCustomSnackBar({
               Expanded(
                 child: Text(
                   message,
-                  style: TipografiaGyMaster.textoPrincipal.copyWith(
+                  style: GymType.body.copyWith(
                     color: Colors.white,
                   ),
                 ),

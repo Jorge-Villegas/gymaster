@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
-import 'package:gymaster/core/theme/emotional_text_styles.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/features/setting/presentation/cubits/onboarding/onboarding_cubit.dart';
 import 'package:gymaster/features/setting/data/models/user_motivation.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
@@ -44,13 +44,14 @@ class OnboardingNotificacionesPage extends StatelessWidget {
                 const SizedBox(height: 8),
                 Text(
                   '¿Cómo te gusta que te motivemos?',
-                  style: EstilosTextoEmocional.motivacional,
+                  style: GymType.display,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 8),
                 Text(
                   'Personaliza tus recordatorios para mantenerte motivado 🔔',
-                  style: EstilosTextoEmocional.amigable.copyWith(
+                  style: GymType.section.copyWith(
+                    fontWeight: FontWeight.w300,
                     color: context.gym.ink,
                   ),
                   textAlign: TextAlign.center,
@@ -166,7 +167,8 @@ class OnboardingNotificacionesPage extends StatelessWidget {
                       Expanded(
                         child: Text(
                           'Te enviaremos recordatorios en tus horarios preferidos para mantenerte motivado',
-                          style: EstilosTextoEmocional.amigable.copyWith(
+                          style: GymType.section.copyWith(
+                            fontWeight: FontWeight.w300,
                             fontSize: 13,
                             color: context.gym.ink,
                           ),

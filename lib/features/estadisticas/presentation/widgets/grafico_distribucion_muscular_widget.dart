@@ -1,8 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
-import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/features/estadisticas/domain/entities/distribucion_muscular.dart';
 import 'package:gymaster/shared/utils/string_utils.dart';
 
@@ -61,9 +61,9 @@ class _GraficoDistribucionMuscularWidgetState
           children: [
             Text(
               'Distribución por Grupo Muscular',
-              style: TipografiaGyMaster.textoPrincipal.copyWith(
-                fontSize: TipografiaGyMaster.tamanoLg,
-                fontWeight: TipografiaGyMaster.pesoSemiBold,
+              style: GymType.body.copyWith(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
                 color: c.ink,
               ),
             ),
@@ -115,8 +115,7 @@ class _GraficoDistribucionMuscularWidgetState
       final musculo = widget.distribucion[index];
       final color = _coloresMusculares[index % _coloresMusculares.length];
 
-      final fontSize =
-          isTouched ? TipografiaGyMaster.tamanoMd : TipografiaGyMaster.tamanoSm;
+      final fontSize = isTouched ? 16.0 : 14.0;
       final radius = isTouched ? 65.0 : 55.0;
       final widgetSize = isTouched ? 55.0 : 45.0;
 
@@ -125,9 +124,9 @@ class _GraficoDistribucionMuscularWidgetState
         value: musculo.porcentajeDistribucion,
         title: '${musculo.porcentajeDistribucion.toStringAsFixed(1)}%',
         radius: radius,
-        titleStyle: TipografiaGyMaster.textoPrincipal.copyWith(
+        titleStyle: GymType.body.copyWith(
           fontSize: fontSize,
-          fontWeight: TipografiaGyMaster.pesoSemiBold,
+          fontWeight: FontWeight.w600,
           color: Colors.white,
         ),
         badgeWidget:
@@ -148,9 +147,9 @@ class _GraficoDistribucionMuscularWidgetState
       ),
       child: Text(
         nombreMusculo,
-        style: TipografiaGyMaster.textoPrincipal.copyWith(
-          fontSize: TipografiaGyMaster.tamanoXs,
-          fontWeight: TipografiaGyMaster.pesoSemiBold,
+        style: GymType.body.copyWith(
+          fontSize: 12,
+          fontWeight: FontWeight.w600,
           color: c.ink,
         ),
       ),
@@ -211,9 +210,9 @@ class _GraficoDistribucionMuscularWidgetState
             children: [
               Text(
                 capitalizarPrimeraLetra(nombreMusculo),
-                style: TipografiaGyMaster.textoPrincipal.copyWith(
-                  fontSize: TipografiaGyMaster.tamanoSm,
-                  fontWeight: TipografiaGyMaster.pesoSemiBold,
+                style: GymType.body.copyWith(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
                   color: c.ink,
                 ),
                 overflow: TextOverflow.ellipsis,
@@ -221,8 +220,9 @@ class _GraficoDistribucionMuscularWidgetState
               ),
               Text(
                 '$volumenFormateado • $categoriaIntensidad',
-                style: TipografiaGyMaster.textoSecundario.copyWith(
-                  fontSize: TipografiaGyMaster.tamanoXs,
+                style: GymType.label.copyWith(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 12,
                   color: c.muted,
                 ),
                 overflow: TextOverflow.ellipsis,
@@ -255,17 +255,18 @@ class _GraficoDistribucionMuscularWidgetState
           SizedBox(height: Espaciado.md),
           Text(
             'Sin datos de distribución',
-            style: TipografiaGyMaster.textoPrincipal.copyWith(
-              fontSize: TipografiaGyMaster.tamanoLg,
-              fontWeight: TipografiaGyMaster.pesoSemiBold,
+            style: GymType.body.copyWith(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
               color: c.muted,
             ),
           ),
           SizedBox(height: Espaciado.xs),
           Text(
             'Entrena diferentes grupos musculares para ver la distribución',
-            style: TipografiaGyMaster.textoSecundario.copyWith(
-              fontSize: TipografiaGyMaster.tamanoSm,
+            style: GymType.label.copyWith(
+              fontWeight: FontWeight.w400,
+              fontSize: 14,
               color: c.faint,
             ),
             textAlign: TextAlign.center,

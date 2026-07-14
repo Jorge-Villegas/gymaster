@@ -1,5 +1,4 @@
 import 'package:gymaster/core/usecase/usecase.dart';
-import 'package:gymaster/core/error/failures.dart';
 import 'package:gymaster/features/routine/domain/entities/routine.dart';
 import 'package:gymaster/features/routine/domain/usecases/agregar_rutina_usecase.dart';
 import 'package:gymaster/features/routine/domain/usecases/eliminar_rutina_plantilla_usecase.dart';

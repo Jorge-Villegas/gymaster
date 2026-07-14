@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
-import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/features/estadisticas/domain/entities/periodo_tiempo.dart';
 
 /// Widget selector de periodo de tiempo con chips interactivos.
@@ -79,11 +79,10 @@ class _ChipPeriodo extends StatelessWidget {
         ),
         child: Text(
           label,
-          style: TextStyle(
-            fontSize: TipografiaGyMaster.tamanoSm,
-            fontWeight: estaSeleccionado
-                ? TipografiaGyMaster.pesoSemiBold
-                : TipografiaGyMaster.pesoRegular,
+          style: GymType.label.copyWith(
+            fontSize: 14,
+            fontWeight:
+                estaSeleccionado ? FontWeight.w600 : FontWeight.w400,
             color: estaSeleccionado ? Colors.white : c.ink,
           ),
         ),

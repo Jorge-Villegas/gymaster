@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
-import 'package:gymaster/core/theme/emotional_text_styles.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 
 import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
 import 'package:gymaster/features/routine/presentation/widgets/ejercicios_llenos_widget.dart';
@@ -11,7 +10,7 @@ import 'package:gymaster/features/routine/presentation/widgets/ejercicios_vacios
 import 'package:gymaster/features/routine/presentation/widgets/rutina_completada_widget.dart';
 import 'package:gymaster/shared/utils/text_formatter.dart';
 import 'package:gymaster/features/routine/presentation/widgets/rutina_cancelada_widget.dart';
-import 'package:gymaster/shared/widgets/chiclet_button.dart';
+import 'package:gymaster/shared/widgets/gym/gym.dart';
 import 'package:gymaster/shared/widgets/cabecera_reutilizable.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:shimmer/shimmer.dart';
@@ -148,8 +147,8 @@ class DetalleRutinaScreen extends StatelessWidget {
                   const SizedBox(width: 12),
                   Text(
                     'Preparando tu rutina perfecta...',
-                    style: EstilosTextoEmocional.amigable.copyWith(
-                      color: context.gym.info,
+                    style: GymType.section.copyWith(
+                      fontWeight: FontWeight.w300,
                       fontSize: 16,
                     ),
                   ),
@@ -210,16 +209,16 @@ class DetalleRutinaScreen extends StatelessWidget {
                   const SizedBox(height: 16),
                   Text(
                     'Ops, algo salió mal',
-                    style: EstilosTextoEmocional.motivacional.copyWith(
+                    style: GymType.display.copyWith(
                       fontSize: 20,
-                      color: context.gym.xpInk,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     state.message,
                     textAlign: TextAlign.center,
-                    style: EstilosTextoEmocional.amigable.copyWith(
+                    style: GymType.section.copyWith(
+                      fontWeight: FontWeight.w300,
                       color: context.gym.ink,
                       fontSize: 14,
                     ),
@@ -228,15 +227,12 @@ class DetalleRutinaScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-            ChicletButton(
-              texto: 'Reintentar',
-              icono: Icons.refresh_rounded,
-              tamano: TamanoBotonChiclet.grande,
-              estilo: EstiloBotonChiclet.relleno,
-              colorFondo: AppColors.primario,
-              radioBorde: 16,
-              conSombreado: true,
-              grosorSombreado: 4.0,
+            GymButton(
+              label: 'Reintentar',
+              icon: Icons.refresh_rounded,
+              size: GymButtonSize.large,
+              variant: GymButtonVariant.primary,
+              expand: false,
               onPressed: () {
                 BlocProvider.of<EjerciciosByRutinaCubit>(context)
                     .getAllEjercicios(idRutina: rutinaId);
@@ -267,8 +263,8 @@ class DetalleRutinaScreen extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             'Cargando tu rutina...',
-            style: EstilosTextoEmocional.amigable.copyWith(
-              color: context.gym.info,
+            style: GymType.section.copyWith(
+              fontWeight: FontWeight.w300,
               fontSize: 18,
             ),
           ),

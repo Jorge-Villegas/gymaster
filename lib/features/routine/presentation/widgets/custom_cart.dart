@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
-import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 import 'package:gymaster/features/exercise/presentation/cubits/favorito_ejercicio_cubit.dart';
 import 'package:gymaster/features/exercise/presentation/cubits/favorito_ejercicio_state.dart';
 import 'package:gymaster/shared/utils/enum.dart';
@@ -137,8 +136,8 @@ class CustomCard extends StatelessWidget {
                         Text(
                           TextFormatter.capitalize(nombreEjercicio),
                           style: TextStyle(
-                            fontSize: TipografiaGyMaster.tamanoSm,
-                            fontWeight: TipografiaGyMaster.pesoRegular,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
                             color: context.gym.ink,
                           ),
                         ),

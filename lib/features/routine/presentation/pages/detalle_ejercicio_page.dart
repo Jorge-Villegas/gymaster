@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gymaster/core/theme/app_colors.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
-import 'package:gymaster/core/theme/emotional_text_styles.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
-import 'package:gymaster/core/theme/tipografia_gymaster.dart';
 
 import 'package:gymaster/features/exercise/presentation/cubits/favorito_ejercicio_cubit.dart';
 import 'package:gymaster/features/exercise/presentation/cubits/favorito_ejercicio_state.dart';
@@ -17,7 +15,7 @@ import 'package:gymaster/features/routine/presentation/widgets/rutina_completada
 import 'package:gymaster/shared/utils/text_formatter.dart';
 import 'package:gymaster/shared/utils/verificador_tipo_archivo.dart';
 import 'package:gymaster/shared/widgets/cabecera_reutilizable.dart';
-import 'package:gymaster/shared/widgets/chiclet_button.dart';
+import 'package:gymaster/shared/widgets/gym/gym.dart';
 import 'package:animate_do/animate_do.dart';
 // ignore: depend_on_referenced_packages
 import 'package:collection/collection.dart';
@@ -171,7 +169,13 @@ class DetalleEjercicioScreen extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(Espaciado.sm),
             color: context.gym.surface, // Solo color de fondo, sin gradiente
-            boxShadow: AppColors.sombraSuave,
+            boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.06),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
           ),
           clipBehavior: Clip.antiAlias,
           child: _buildImageWidget(context, imagenDireccion),
@@ -217,7 +221,8 @@ class DetalleEjercicioScreen extends StatelessWidget {
             const SizedBox(height: 10),
             Text(
               'Imagen no disponible',
-              style: EstilosTextoEmocional.amigable.copyWith(
+              style: GymType.section.copyWith(
+                fontWeight: FontWeight.w300,
                 color: context.gym.faint,
                 fontSize: 15,
               ),
@@ -239,20 +244,20 @@ class DetalleEjercicioScreen extends StatelessWidget {
       children: [
         Text(
           valor,
-          style: EstilosTextoEmocional.contador.copyWith(
-            fontSize: TipografiaGyMaster.tamano5xl,
+          style: GymType.number.copyWith(
+            fontSize: 48,
             color: context.gym.xpInk,
-            fontWeight: TipografiaGyMaster.pesoSemiBold,
+            fontWeight: FontWeight.w600,
           ),
           textAlign: TextAlign.center,
         ),
         SizedBox(height: Espaciado.xxs),
         Text(
           etiqueta,
-          style: EstilosTextoEmocional.amigable.copyWith(
-            fontSize: TipografiaGyMaster.tamanoSm,
+          style: GymType.section.copyWith(
+            fontSize: 14,
             color: context.gym.muted,
-            fontWeight: TipografiaGyMaster.pesoRegular,
+            fontWeight: FontWeight.w400,
           ),
           textAlign: TextAlign.center,
         ),
@@ -269,15 +274,21 @@ class DetalleEjercicioScreen extends StatelessWidget {
       decoration: BoxDecoration(
         color: context.gym.surface,
         borderRadius: BorderRadius.circular(Espaciado.sm),
-        boxShadow: AppColors.sombraSuave,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.06),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Column(
         children: [
           Text(
             '¡Ajusta tu entrenamiento!',
             style: TextStyle(
-              fontWeight: TipografiaGyMaster.pesoSemiBold,
-              fontSize: TipografiaGyMaster.tamanoLg,
+              fontWeight: FontWeight.w600,
+              fontSize: 18,
               color: context.gym.brand,
               height: 1.1,
             ),
@@ -329,26 +340,21 @@ class DetalleEjercicioScreen extends StatelessWidget {
           child: Text(
             title,
             style: TextStyle(
-              fontWeight: TipografiaGyMaster.pesoRegular,
-              fontSize: TipografiaGyMaster.tamanoLg,
+              fontWeight: FontWeight.w400,
+              fontSize: 18,
               color: context.gym.ink,
             ),
           ),
         ),
         Row(
           children: [
-            ChicletButton(
+            GymButton(
               onPressed: onDecrement,
-              icono: Icons.remove_rounded,
-              texto: '',
-              colorFondo: context.gym.faint,
-              colorTexto: Colors.white,
-              tamano: TamanoBotonChiclet.pequeno,
-              estilo: EstiloBotonChiclet.relleno,
-              paddingHorizontal: 8,
-              paddingVertical: 4,
-              ancho: 36,
-              alto: 36,
+              icon: Icons.remove_rounded,
+              label: '',
+              variant: GymButtonVariant.primary,
+              size: GymButtonSize.small,
+              expand: false,
             ),
             Container(
               width: Espaciado.xxxl,
@@ -356,24 +362,19 @@ class DetalleEjercicioScreen extends StatelessWidget {
               child: Text(
                 '$value',
                 style: TextStyle(
-                  fontWeight: TipografiaGyMaster.pesoRegular, // SemiBold
-                  fontSize: TipografiaGyMaster.tamano2xl,
+                  fontWeight: FontWeight.w400, // SemiBold
+                  fontSize: 24,
                   color: context.gym.ink,
                 ),
               ),
             ),
-            ChicletButton(
+            GymButton(
               onPressed: onIncrement,
-              texto: '',
-              icono: Icons.add,
-              colorFondo: context.gym.info,
-              colorTexto: Colors.white,
-              tamano: TamanoBotonChiclet.pequeno,
-              estilo: EstiloBotonChiclet.relleno,
-              paddingHorizontal: 8,
-              paddingVertical: 4,
-              ancho: 36,
-              alto: 36,
+              label: '',
+              icon: Icons.add,
+              variant: GymButtonVariant.primary,
+              size: GymButtonSize.small,
+              expand: false,
             ),
           ],
         ),
@@ -387,7 +388,13 @@ class DetalleEjercicioScreen extends StatelessWidget {
       padding: Espaciado.rellenoMd,
       decoration: BoxDecoration(
         color: context.gym.surface,
-        boxShadow: AppColors.sombraSuave,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.06),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: SafeArea(
         top: false,
@@ -402,26 +409,24 @@ class DetalleEjercicioScreen extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: ChicletButton(
+                  child: GymButton(
                     onPressed: () => _handleCancelRoutine(context, state),
-                    texto: 'Pausar',
-                    icono: Icons.pause_circle_outline_rounded,
-                    tamano: TamanoBotonChiclet.mediano,
-                    estilo: EstiloBotonChiclet.contorno,
-                    colorBorde: context.gym.faint,
-                    colorTexto: context.gym.faint,
+                    label: 'Pausar',
+                    icon: Icons.pause_circle_outline_rounded,
+                    variant: GymButtonVariant.ghost,
+                    size: GymButtonSize.medium,
+                    expand: true,
                   ),
                 ),
                 SizedBox(width: Espaciado.sm),
                 Expanded(
-                  child: ChicletButton(
+                  child: GymButton(
                     onPressed: () => _handleRestTimer(context),
-                    texto: 'Descanso',
-                    icono: Icons.timer_rounded,
-                    tamano: TamanoBotonChiclet.mediano,
-                    estilo: EstiloBotonChiclet.contorno,
-                    colorBorde: context.gym.xpInk,
-                    colorTexto: context.gym.xpInk,
+                    label: 'Descanso',
+                    icon: Icons.timer_rounded,
+                    variant: GymButtonVariant.ghost,
+                    size: GymButtonSize.medium,
+                    expand: true,
                   ),
                 ),
               ],
@@ -445,13 +450,13 @@ class DetalleEjercicioScreen extends StatelessWidget {
       return Pulse(
         infinite: true,
         duration: const Duration(seconds: 2),
-        child: ChicletButton(
+        child: GymButton(
           onPressed: () => _handleCompleteSerie(context, state),
-          texto: '¡Completar Serie!',
-          icono: Icons.check_circle_rounded,
-          tamano: TamanoBotonChiclet.grande,
-          estilo: EstiloBotonChiclet.relleno,
-          colorFondo: context.gym.brand,
+          label: '¡Completar Serie!',
+          icon: Icons.check_circle_rounded,
+          variant: GymButtonVariant.primary,
+          size: GymButtonSize.large,
+          expand: true,
         ),
       );
     }
@@ -471,39 +476,35 @@ class DetalleEjercicioScreen extends StatelessWidget {
 
     String textoBoton;
     IconData iconoBoton;
-    Color colorBoton;
     VoidCallback accionBoton;
 
     if (!todasSeriesCompletadas) {
       // Aún hay series por completar
       textoBoton = '¡Completar Serie ${seriesCompletadas + 1}!';
       iconoBoton = Icons.check_circle_rounded;
-      colorBoton = context.gym.brand;
       accionBoton = () => _handleCompleteSerie(context, state);
     } else if (!esUltimoEjercicio) {
       // Series completadas, hay más ejercicios
       textoBoton = '¡Siguiente Ejercicio!';
       iconoBoton = Icons.arrow_forward_rounded;
-      colorBoton = context.gym.xpInk;
       accionBoton = () => _handleNextExercise(context, state);
     } else {
       // Último ejercicio, todas las series completadas
       textoBoton = '¡Rutina Completada!';
       iconoBoton = Icons.celebration_rounded;
-      colorBoton = context.gym.xpInk;
       accionBoton = () => _handleFinishRoutine(context, state);
     }
 
     return Pulse(
       infinite: true,
       duration: const Duration(seconds: 2),
-      child: ChicletButton(
+      child: GymButton(
         onPressed: accionBoton,
-        texto: textoBoton,
-        icono: iconoBoton,
-        tamano: TamanoBotonChiclet.grande,
-        estilo: EstiloBotonChiclet.relleno,
-        colorFondo: colorBoton,
+        label: textoBoton,
+        icon: iconoBoton,
+        variant: GymButtonVariant.primary,
+        size: GymButtonSize.large,
+        expand: true,
       ),
     );
   }
@@ -525,35 +526,35 @@ class DetalleEjercicioScreen extends StatelessWidget {
       builder: (context) => AlertDialog(
         title: Text(
           '¿Pausar entrenamiento?',
-          style: EstilosTextoEmocional.energetico.copyWith(
+          style: GymType.section.copyWith(
             color: context.gym.brand,
           ),
         ),
         content: Text(
           '¡No te rindas ahora! Estás haciendo un gran trabajo.',
-          style: EstilosTextoEmocional.amigable.copyWith(
+          style: GymType.section.copyWith(
+            fontWeight: FontWeight.w300,
             color: context.gym.faint,
           ),
         ),
         actions: [
-          ChicletButton(
+          GymButton(
             onPressed: () => Navigator.pop(context),
-            texto: 'Continuar',
-            tamano: TamanoBotonChiclet.pequeno,
-            estilo: EstiloBotonChiclet.relleno,
-            colorFondo: context.gym.brand,
+            label: 'Continuar',
+            variant: GymButtonVariant.primary,
+            size: GymButtonSize.small,
+            expand: false,
           ),
-          ChicletButton(
+          GymButton(
             onPressed: () {
               Navigator.pop(context);
               // Navegación de vuelta sin cancelar formalmente
               context.go('/');
             },
-            texto: 'Pausar',
-            tamano: TamanoBotonChiclet.pequeno,
-            estilo: EstiloBotonChiclet.contorno,
-            colorBorde: context.gym.faint,
-            colorTexto: context.gym.faint,
+            label: 'Pausar',
+            variant: GymButtonVariant.ghost,
+            size: GymButtonSize.small,
+            expand: false,
           ),
         ],
       ),
@@ -567,7 +568,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
       builder: (context) => AlertDialog(
         title: Text(
           '¡Tiempo de descanso!',
-          style: EstilosTextoEmocional.energetico.copyWith(
+          style: GymType.section.copyWith(
             color: context.gym.xpInk,
           ),
         ),
@@ -582,7 +583,8 @@ class DetalleEjercicioScreen extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               'Descansa 60 segundos y vuelve más fuerte.',
-              style: EstilosTextoEmocional.amigable.copyWith(
+              style: GymType.section.copyWith(
+                fontWeight: FontWeight.w300,
                 color: context.gym.faint,
               ),
               textAlign: TextAlign.center,
@@ -590,12 +592,12 @@ class DetalleEjercicioScreen extends StatelessWidget {
           ],
         ),
         actions: [
-          ChicletButton(
+          GymButton(
             onPressed: () => Navigator.pop(context),
-            texto: 'Entendido',
-            tamano: TamanoBotonChiclet.mediano,
-            estilo: EstiloBotonChiclet.relleno,
-            colorFondo: context.gym.xpInk,
+            label: 'Entendido',
+            variant: GymButtonVariant.primary,
+            size: GymButtonSize.medium,
+            expand: false,
           ),
         ],
       ),
@@ -621,7 +623,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
       builder: (context) => AlertDialog(
         title: Text(
           '🎉 ¡Felicitaciones!',
-          style: EstilosTextoEmocional.energetico.copyWith(
+          style: GymType.section.copyWith(
             color: context.gym.xpInk,
           ),
           textAlign: TextAlign.center,
@@ -637,7 +639,8 @@ class DetalleEjercicioScreen extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               'Has completado toda la rutina.\n¡Excelente trabajo!',
-              style: EstilosTextoEmocional.amigable.copyWith(
+              style: GymType.section.copyWith(
+                fontWeight: FontWeight.w300,
                 color: context.gym.faint,
               ),
               textAlign: TextAlign.center,
@@ -645,16 +648,16 @@ class DetalleEjercicioScreen extends StatelessWidget {
           ],
         ),
         actions: [
-          ChicletButton(
+          GymButton(
             onPressed: () {
               Navigator.pop(context);
               // Finalizar la rutina usando el nuevo método específico
               context.read<EjerciciosByRutinaCubit>().finalizarRutina();
             },
-            texto: '¡Finalizar!',
-            tamano: TamanoBotonChiclet.mediano,
-            estilo: EstiloBotonChiclet.relleno,
-            colorFondo: context.gym.xpInk,
+            label: '¡Finalizar!',
+            variant: GymButtonVariant.primary,
+            size: GymButtonSize.medium,
+            expand: false,
           ),
         ],
       ),
@@ -740,7 +743,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
                     const SizedBox(height: 24),
                     Text(
                       '¡Ups! Algo salió mal',
-                      style: EstilosTextoEmocional.energetico.copyWith(
+                      style: GymType.section.copyWith(
                         color: context.gym.brand,
                         fontSize: 22,
                       ),
@@ -749,7 +752,8 @@ class DetalleEjercicioScreen extends StatelessWidget {
                     const SizedBox(height: 12),
                     Text(
                       message,
-                      style: EstilosTextoEmocional.amigable.copyWith(
+                      style: GymType.section.copyWith(
+                        fontWeight: FontWeight.w300,
                         color: context.gym.faint,
                         fontSize: 16,
                       ),
@@ -757,13 +761,13 @@ class DetalleEjercicioScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 32),
                     Builder(
-                      builder: (context) => ChicletButton(
+                      builder: (context) => GymButton(
                         onPressed: () => context.go('/'),
-                        texto: 'Volver al inicio',
-                        icono: Icons.home_rounded,
-                        tamano: TamanoBotonChiclet.grande,
-                        estilo: EstiloBotonChiclet.relleno,
-                        colorFondo: context.gym.xpInk,
+                        label: 'Volver al inicio',
+                        icon: Icons.home_rounded,
+                        variant: GymButtonVariant.primary,
+                        size: GymButtonSize.large,
+                        expand: false,
                       ),
                     ),
                   ],
@@ -870,7 +874,13 @@ class DetalleEjercicioScreen extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: context.gym.surface,
                             borderRadius: BorderRadius.circular(Espaciado.sm),
-                            boxShadow: AppColors.sombraSuave,
+                            boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.06),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
                           ),
                           child: Row(
                             spacing: Espaciado.md,
@@ -958,8 +968,8 @@ class DetalleEjercicioScreen extends StatelessWidget {
             child: Text(
               _getMotivationalMessage(serieActual, totalSeries),
               style: TextStyle(
-                fontWeight: TipografiaGyMaster.pesoRegular,
-                fontSize: TipografiaGyMaster.tamanoMd,
+                fontWeight: FontWeight.w400,
+                fontSize: 16,
                 color: context.gym.xpInk,
               ),
             ),
@@ -977,7 +987,7 @@ class DetalleEjercicioScreen extends StatelessWidget {
             ),
             child: Text(
               '$serieActual/$totalSeries',
-              style: EstilosTextoEmocional.contador.copyWith(
+              style: GymType.number.copyWith(
                 fontSize: 12,
                 color: context.gym.xpInk,
               ),

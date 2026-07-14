@@ -256,14 +256,6 @@ class _CelebracionRutinaPageState extends State<CelebracionRutinaPage>
   }
 
   Widget _construirSeccionTitulos(bool esMovil) {
-    final tituloCompletacion =
-        MensajesEmocionalesService.obtenerMensajeDeCompletacion(
-      widget.estadoCompletado.rutinaName,
-      _totalRutinasCompletadas,
-      widget.estadoCompletado.totalEjercicios,
-      widget.estadoCompletado.totalSeries,
-    );
-
     final subtituloContextual =
         MensajesEmocionalesService.obtenerSubtituloContextual(
       widget.estadoCompletado.rutinaName,

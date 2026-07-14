@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
-import 'package:gymaster/core/theme/emotional_text_styles.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/features/setting/presentation/cubits/onboarding/onboarding_cubit.dart';
 import 'package:gymaster/features/setting/presentation/cubits/onboarding/onboarding_state.dart';
 import 'package:gymaster/features/setting/data/models/user_motivation.dart';
@@ -45,13 +45,14 @@ class OnboardingSentimientosPage extends StatelessWidget {
                 const SizedBox(height: 8),
                 Text(
                   '¿Cómo esperas sentirte después de entrenar?',
-                  style: EstilosTextoEmocional.motivacional,
+                  style: GymType.display,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 8),
                 Text(
                   'Esto nos ayuda a diseñar la experiencia perfecta ✨',
-                  style: EstilosTextoEmocional.amigable.copyWith(
+                  style: GymType.section.copyWith(
+                    fontWeight: FontWeight.w300,
                     color: context.gym.ink,
                   ),
                   textAlign: TextAlign.center,

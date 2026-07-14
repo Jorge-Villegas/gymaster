@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gymaster/core/theme/tipografia_gymaster.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/core/theme/espaciado.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
 
@@ -71,7 +71,7 @@ class SnackbarHelper {
                   Expanded(
                     child: Text(
                       message,
-                      style: TipografiaGyMaster.textoPrincipal.copyWith(
+                      style: GymType.body.copyWith(
                         color: Colors.white,
                       ),
                     ),
@@ -156,7 +156,7 @@ class SnackbarHelper {
                   Expanded(
                     child: Text(
                       message,
-                      style: TipografiaGyMaster.textoPrincipal.copyWith(
+                      style: GymType.body.copyWith(
                         color: Colors.white,
                       ),
                     ),

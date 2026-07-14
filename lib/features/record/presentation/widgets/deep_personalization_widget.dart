@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
-import 'package:gymaster/core/theme/emotional_text_styles.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 
 /// Sistema de personalización profunda con preferencias emocionales
 /// Adaptación inteligente basada en comportamiento y estado emocional del usuario
@@ -170,7 +170,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
             children: [
               Text(
                 'Personalización Profunda',
-                style: EstilosTextoEmocional.motivacional.copyWith(
+                style: GymType.display.copyWith(
                   fontSize: 20,
                   color: Theme.of(context).colorScheme.onSurface,
                 ),
@@ -215,7 +215,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
               const SizedBox(width: 8),
               Text(
                 'Insights Personalizados',
-                style: EstilosTextoEmocional.aliento.copyWith(
+                style: GymType.section.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -224,9 +224,8 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
           const SizedBox(height: 12),
           Text(
             _getPersonalizedInsight(),
-            style: EstilosTextoEmocional.logro.copyWith(
+            style: GymType.display.copyWith(
               fontSize: 16,
-              color: context.gym.xpInk,
             ),
           ),
         ],
@@ -327,7 +326,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
             const SizedBox(width: 8),
             Text(
               title,
-              style: EstilosTextoEmocional.aliento.copyWith(
+              style: GymType.section.copyWith(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
               ),
@@ -398,7 +397,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
             const SizedBox(width: 8),
             Text(
               'Configuraciones Avanzadas',
-              style: EstilosTextoEmocional.aliento.copyWith(
+              style: GymType.section.copyWith(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
               ),
@@ -492,7 +491,7 @@ class _DeepPersonalizationWidgetState extends State<DeepPersonalizationWidget>
             const SizedBox(width: 8),
             Text(
               'Guardar Preferencias',
-              style: EstilosTextoEmocional.motivacional.copyWith(
+              style: GymType.display.copyWith(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
-import 'package:gymaster/core/theme/emotional_text_styles.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 
 /// Sistema de celebraciones épicas para hitos importantes
 /// Animaciones fullscreen, confetti, y reconocimiento de logros especiales
@@ -271,7 +271,7 @@ class _EpicCelebrationWidgetState extends State<EpicCelebrationWidget>
   Widget _buildMainTitle() {
     return Text(
       widget.achievementTitle,
-      style: EstilosTextoEmocional.celebracion.copyWith(
+      style: GymType.display.copyWith(
         fontSize: 32,
         color: Colors.white,
         fontWeight: FontWeight.bold,
@@ -300,7 +300,7 @@ class _EpicCelebrationWidgetState extends State<EpicCelebrationWidget>
       ),
       child: Text(
         widget.achievementDescription,
-        style: EstilosTextoEmocional.aliento.copyWith(
+        style: GymType.section.copyWith(
           fontSize: 18,
           color: Colors.white,
           height: 1.4,
@@ -341,7 +341,7 @@ class _EpicCelebrationWidgetState extends State<EpicCelebrationWidget>
         const SizedBox(height: 8),
         Text(
           value,
-          style: EstilosTextoEmocional.logro.copyWith(
+          style: GymType.display.copyWith(
             fontSize: 20,
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -400,7 +400,7 @@ class _EpicCelebrationWidgetState extends State<EpicCelebrationWidget>
                 const SizedBox(width: 12),
                 Text(
                   '¡CONTINUAR!',
-                  style: EstilosTextoEmocional.motivacional.copyWith(
+                  style: GymType.display.copyWith(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: context.gym.xpInk,
