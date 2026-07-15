@@ -231,74 +231,57 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
     );
   }
 
-  /// Construye el efecto de carga shimmer con diseño emocional
+  /// Construye el efecto de carga shimmer coherente con la tarjeta real.
   Widget _buildShimmerLoadingEffect() {
+    final g = context.gym;
     return Shimmer.fromColors(
-      baseColor: context.gym.surface2,
-      highlightColor: context.gym.surface2,
+      baseColor: g.surface2,
+      highlightColor: g.surface,
       child: ListView.builder(
         itemCount: 8,
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         itemBuilder: (context, i) {
           return Container(
-            margin: const EdgeInsets.symmetric(vertical: 6.0),
+            margin: const EdgeInsets.only(bottom: 10),
             decoration: BoxDecoration(
-              color: context.gym.surface2,
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  color: context.gym.brand.withValues(alpha: 0.05),
-                  blurRadius: 8,
-                  offset: const Offset(0, 2),
-                ),
-              ],
+              color: g.surface2,
+              borderRadius: GymRadius.rMd,
             ),
             child: Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(12),
               child: Row(
                 children: [
-                  // Avatar placeholder
                   Container(
-                    width: 64,
-                    height: 64,
+                    width: 56,
+                    height: 56,
                     decoration: BoxDecoration(
-                      color: context.gym.surface2,
-                      borderRadius: BorderRadius.circular(16),
+                      color: g.surface,
+                      borderRadius: GymRadius.rSm,
                     ),
                   ),
-                  const SizedBox(width: 20),
-                  // Texto placeholder
+                  const SizedBox(width: 14),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          height: 18.0,
+                          height: 16,
                           width: double.infinity,
                           decoration: BoxDecoration(
-                            color: context.gym.surface2,
+                            color: g.surface,
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
                         const SizedBox(height: 8),
                         Container(
-                          height: 14.0,
+                          height: 12,
                           width: 150,
                           decoration: BoxDecoration(
-                            color: context.gym.surface2,
+                            color: g.surface,
                             borderRadius: BorderRadius.circular(6),
                           ),
                         ),
                       ],
-                    ),
-                  ),
-                  // Indicador placeholder
-                  Container(
-                    width: 42,
-                    height: 42,
-                    decoration: BoxDecoration(
-                      color: context.gym.surface2,
-                      borderRadius: BorderRadius.circular(12),
                     ),
                   ),
                 ],
@@ -310,8 +293,43 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
     );
   }
 
-  /// Construye la lista de músculos con diseño emocional coherente
+  /// Chip de icono 56×56 alineado a [RoutineCard]: fondo suave de marca +
+  /// imagen SVG tintada o foto recortada, con respaldo si falla la carga.
+  Widget _chipImagen(GymColors g, String ruta, bool isSvg) {
+    return Container(
+      width: 56,
+      height: 56,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: g.brandSoft,
+        borderRadius: GymRadius.rSm,
+      ),
+      child: isSvg
+          ? SvgPicture.asset(
+              ruta,
+              width: 30,
+              height: 30,
+              colorFilter: ColorFilter.mode(g.brand, BlendMode.srcIn),
+              placeholderBuilder: (_) =>
+                  Icon(IconsaxPlusLinear.weight, color: g.brand, size: 28),
+            )
+          : ClipRRect(
+              borderRadius: GymRadius.rSm,
+              child: Image.asset(
+                ruta,
+                width: 56,
+                height: 56,
+                fit: BoxFit.cover,
+                errorBuilder: (_, __, ___) =>
+                    Icon(IconsaxPlusLinear.weight, color: g.brand, size: 28),
+              ),
+            ),
+    );
+  }
+
+  /// Construye la lista de músculos con tarjetas del sistema de diseño.
   Widget _buildMusculoList(BuildContext context, MusculoLoaded state) {
+    final g = context.gym;
     return SlideInUp(
       duration: const Duration(milliseconds: 600),
       child: ListView.builder(
@@ -324,104 +342,58 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
           return FadeInUp(
             duration: Duration(milliseconds: 300 + (i * 100)),
             child: Container(
-              margin: const EdgeInsets.symmetric(vertical: 6.0),
+              margin: const EdgeInsets.only(bottom: 10),
               decoration: BoxDecoration(
-                color: context.gym.surface,
-                borderRadius: BorderRadius.circular(16),
+                color: g.surface,
+                borderRadius: GymRadius.rMd,
+                border: Border.all(color: g.line),
                 boxShadow: [
                   BoxShadow(
-                    color: context.gym.brand.withValues(alpha: 0.08),
-                    blurRadius: 12,
-                    offset: const Offset(0, 4),
+                    color: Colors.black.withValues(alpha: 0.04),
+                    blurRadius: 10,
+                    offset: const Offset(0, 3),
                   ),
                 ],
               ),
               child: Material(
                 color: Colors.transparent,
                 child: InkWell(
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: GymRadius.rMd,
                   onTap: () => _navegarAListaEjercicios(
                       context, musculo.id, musculo.nombre),
                   child: Padding(
-                    padding: const EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.all(12),
                     child: Row(
                       children: [
-                        // Avatar del músculo con diseño emocional
-                        Container(
-                          width: 64,
-                          height: 64,
-                          decoration: BoxDecoration(
-                            color: const Color(
-                                0xFFEEEEEE), // Fondo #EEEEEE solicitado
-                            borderRadius: BorderRadius.circular(16),
-                            boxShadow: [
-                              BoxShadow(
-                                color:
-                                    context.gym.brand.withValues(alpha: 0.1),
-                                blurRadius: 8,
-                                offset: const Offset(0, 2),
-                              ),
-                            ],
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(15),
-                            child: isSvg
-                                ? Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: SvgPicture.asset(
-                                      musculo.imagenDirecion,
-                                      fit: BoxFit.contain,
-                                      colorFilter: ColorFilter.mode(
-                                        context.gym.brand,
-                                        BlendMode.srcIn,
-                                      ),
-                                    ),
-                                  )
-                                : Image.asset(
-                                    musculo.imagenDirecion,
-                                    fit: BoxFit.cover,
-                                    width: 64,
-                                    height: 64,
-                                  ),
-                          ),
-                        ),
-                        const SizedBox(width: 20),
-                        // Información del músculo con tipografía emocional
+                        _chipImagen(g, musculo.imagenDirecion, isSvg),
+                        const SizedBox(width: 14),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
                                 capitalizarPrimeraLetra(musculo.nombre),
-                                style: GymType.section.copyWith(
-                                  color: context.gym.ink,
-                                  letterSpacing: 1.2,
-                                  height: 1.1,
-                                ),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: GymType.section.copyWith(color: g.ink),
                               ),
-                              const SizedBox(height: 6),
+                              const SizedBox(height: 3),
                               Text(
                                 '¡Vamos a entrenar este grupo!',
-                                style: GymType.body.copyWith(
-                                  color: context.gym.faint,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: GymType.label.copyWith(
+                                  color: g.muted,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        // Indicador de acción con diseño emocional
-                        Container(
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            color: context.gym.xpInk.withValues(alpha: 0.15),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Icon(
-                            IconsaxPlusLinear.arrow_right_3,
-                            size: 18,
-                            color: context.gym.xpInk,
-                          ),
-                        ),
+                        const SizedBox(width: 8),
+                        Icon(IconsaxPlusLinear.arrow_right_3,
+                            size: 18, color: g.faint),
                       ],
                     ),
                   ),
