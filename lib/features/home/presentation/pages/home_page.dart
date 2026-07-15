@@ -69,7 +69,7 @@ class _HomePageState extends State<HomePage> {
       nombreUsuario: nombre,
     );
     return ListView(
-      padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
+      padding: const EdgeInsets.fromLTRB(12, 12, 12, 24),
       children: [
         Text(saludo, style: GymType.display.copyWith(color: c.ink)),
         Text('Tu rata está lista para entrenar',

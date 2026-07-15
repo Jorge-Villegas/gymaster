@@ -80,7 +80,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
           borderSide: BorderSide(color: color, width: ancho),
         );
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+      padding: const EdgeInsets.fromLTRB(12, 12, 12, 8),
       child: TextField(
         onChanged: (query) {
           setState(() => _searchQuery = query);
@@ -118,7 +118,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
             duration: const Duration(milliseconds: 600),
             delay: const Duration(milliseconds: 400),
             child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -297,7 +297,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
             child: FadeIn(
               duration: const Duration(milliseconds: 400),
               child: ListView.builder(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 12),
                 itemCount: 8,
                 itemBuilder: (context, index) => FadeInUp(
                   duration: const Duration(milliseconds: 400),
@@ -375,7 +375,7 @@ class _ExerciseCatalogPageState extends State<ExerciseCatalogPage>
 
           return Expanded(
             child: ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 12),
               itemCount: state.exercises.length,
               itemBuilder: (context, index) {
                 return FadeInUp(

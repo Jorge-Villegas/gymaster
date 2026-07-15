@@ -24,7 +24,7 @@ class ListaRutinasPage extends StatelessWidget {
         color: context.gym.bg,
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
             child: Column(
               children: [
                 const SizedBox(height: 12),
@@ -68,7 +68,7 @@ class ListaRutinasPage extends StatelessWidget {
 
   Widget _buildSearchBar(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 8),
+      margin: EdgeInsets.zero,
       child: BlocBuilder<RoutineCubit, RoutineState>(
         builder: (context, state) {
           if (state is RoutineError) {
@@ -151,17 +151,8 @@ class ListaRutinasPage extends StatelessWidget {
 
   Widget _buildRoutineList(BuildContext context) {
     return Expanded(
-      child: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Colors.transparent,
-              Theme.of(context).scaffoldBackgroundColor.withValues(alpha: 0.3),
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
+      child: SizedBox(
+        width: double.infinity,
         child: BlocBuilder<RoutineCubit, RoutineState>(
           builder: (context, state) {
             if (state is RoutineLoading) {
@@ -470,7 +461,7 @@ class ListaRutinasPage extends StatelessWidget {
 
               // Lista de rutinas existentes con animaciones mejoradas
               return Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
+                padding: EdgeInsets.zero,
                 child: ListView.separated(
                   physics: const BouncingScrollPhysics(),
                   itemCount: state.routines.length,
@@ -486,19 +477,7 @@ class ListaRutinasPage extends StatelessWidget {
 
                     return FadeInLeft(
                       delay: delay,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          boxShadow: [
-                            BoxShadow(
-                              color: context.gym.brand.withValues(alpha: 0.1),
-                              offset: const Offset(0, 4),
-                              blurRadius: 12,
-                              spreadRadius: 0,
-                            ),
-                          ],
-                        ),
-                        child: RoutineCard(
+                      child: RoutineCard(
                           color: rutina.color,
                           title: rutina.name,
                           cantidadEjerciciosPorSeries: cantidadTexto,
@@ -521,7 +500,6 @@ class ListaRutinasPage extends StatelessWidget {
                             }
                           },
                         ),
-                      ),
                     );
                   },
                 ),

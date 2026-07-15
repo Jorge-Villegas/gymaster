@@ -86,7 +86,7 @@ class _SettingPageState extends State<SettingPage> {
           }
 
           return ListView(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
             children: [
               // Header con información del usuario
               BlocBuilder<OnboardingUsuarioCubit, OnboardingUsuarioState>(

@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
-import 'package:gymaster/core/theme/espaciado.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
+import 'package:gymaster/core/theme/gym_typography.dart';
 import 'package:gymaster/shared/utils/text_formatter.dart';
 import 'package:gymaster/shared/utils/haptic_feedback_helper.dart';
 import 'package:gymaster/features/routine/presentation/widgets/delete_routine_dialog.dart';
+
+/// Acento de color normalizado a la paleta candy del tema. El color guardado
+/// por rutina (un `int` arbitrario) se mapea al tono más cercano para que todas
+/// las tarjetas se vean de la misma familia y se adapten a claro/oscuro.
+enum _Acento { brand, coral, xp, info, plum }
 
 class RoutineCard extends StatefulWidget {
   final VoidCallback onTap;
@@ -71,205 +76,199 @@ class _RoutineCardState extends State<RoutineCard>
   }
 
   void _onTapDown(TapDownDetails details) {
-    setState(() {
-      _isPressed = true;
-    });
+    setState(() => _isPressed = true);
     HapticFeedbackHelper.vibracionSeleccion();
   }
 
   void _onTapUp(TapUpDetails details) {
-    setState(() {
-      _isPressed = false;
-    });
+    setState(() => _isPressed = false);
     widget.onTap();
   }
 
-  void _onTapCancel() {
-    setState(() {
-      _isPressed = false;
-    });
-  }
+  void _onTapCancel() => setState(() => _isPressed = false);
 
   void _handleMenuAction(String action) {
-    switch (action) {
-      case 'delete':
-        _showDeleteDialog();
-        break;
-    }
+    if (action == 'delete') _showDeleteDialog();
   }
 
   void _showDeleteDialog() {
     if (widget.routineId == null) return;
-
     HapticFeedbackHelper.vibracionSeleccion();
-
     showDialog(
       context: context,
       builder: (context) => DeleteRoutineDialog(
         routineName: widget.title,
         routineId: widget.routineId!,
-        onDeleted: () {
-          if (widget.onDeleted != null) {
-            widget.onDeleted!();
-          }
-        },
+        onDeleted: () => widget.onDeleted?.call(),
       ),
     );
   }
 
+  /// Mapea el color arbitrario de la rutina al tono de paleta más cercano
+  /// (por matiz). Los grises caen a la marca. Estable: mismo color → mismo tono.
+  _Acento _acentoDe(Color c) {
+    final hsv = HSVColor.fromColor(c);
+    if (hsv.saturation < 0.12) return _Acento.brand; // gris/neutro → marca
+    const anclas = <_Acento, double>{
+      _Acento.coral: 13,
+      _Acento.xp: 45,
+      _Acento.brand: 136,
+      _Acento.info: 200,
+      _Acento.plum: 252,
+    };
+    _Acento mejor = _Acento.brand;
+    double menor = 360;
+    anclas.forEach((acento, hue) {
+      final d = (hsv.hue - hue).abs();
+      final dist = d > 180 ? 360 - d : d; // distancia circular
+      if (dist < menor) {
+        menor = dist;
+        mejor = acento;
+      }
+    });
+    return mejor;
+  }
+
+  /// Resuelve el trío (base, suave, tinta) del tema para un acento. Al leerse de
+  /// `context.gym`, se adapta automáticamente a claro/oscuro.
+  (Color, Color, Color) _coloresAcento(GymColors g, _Acento a) {
+    return switch (a) {
+      _Acento.brand => (g.brand, g.brandSoft, g.brandInk),
+      _Acento.coral => (g.coral, g.coralSoft, g.coralInk),
+      _Acento.xp => (g.xp, g.xpSoft, g.xpInk),
+      _Acento.info => (g.info, g.infoSoft, g.info),
+      _Acento.plum => (g.plum, g.plumSoft, g.plum),
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
+    final g = context.gym;
+    final (base, suave, tinta) = _coloresAcento(g, _acentoDe(Color(widget.color)));
+
     return AnimatedBuilder(
       animation: _slideAnimation,
       builder: (context, child) {
         return Transform.translate(
           offset: Offset(0, 30 * (1 - _slideAnimation.value)),
           child: Opacity(
-            opacity: (_slideAnimation.value).clamp(0.0, 1.0),
-            child: AnimatedScale(
-              scale: _isPressed ? 0.95 : 1.0,
-              duration: const Duration(milliseconds: 150),
-              curve: Curves.easeInOut,
-              child: GestureDetector(
-                onTapDown: _onTapDown,
-                onTapUp: _onTapUp,
-                onTapCancel: _onTapCancel,
-                child: Stack(
-                  children: <Widget>[
-                    _BotonGordoBackground(
-                      widget.imagenDireccion ?? 'assets/default.svg',
-                      Color(widget.color),
-                      Color(widget.color),
-                    ),
-                    Positioned.fill(
-                      child: Padding(
-                        padding: Espaciado.rellenoHorizontalLg,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              TextFormatter.capitalize(widget.title),
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                                color: context.gym.ink,
-                                height: 1.3,
-                              ),
-                            ),
-                            Text(
-                              widget.cantidadEjerciciosPorSeries,
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                                color: context.gym.ink,
-                                height: 1.3,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    // Botón de menú contextual
-                    if (widget.routineId != null)
-                      Positioned(
-                        top: 8,
-                        right: 8,
-                        child: PopupMenuButton<String>(
-                          onSelected: _handleMenuAction,
-                          icon: Icon(
-                            IconsaxPlusLinear.more,
-                            color: Colors.white.withValues(alpha: 0.8),
-                            size: 20,
-                          ),
-                          color: context.gym.surface,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          itemBuilder: (BuildContext context) => [
-                            PopupMenuItem<String>(
-                              value: 'delete',
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    IconsaxPlusLinear.trash,
-                                    color: context.gym.danger,
-                                    size: 18,
-                                  ),
-                                  const SizedBox(width: 12),
-                                  Text(
-                                    'Eliminar rutina',
-                                    style: TextStyle(
-                                      color: context.gym.danger,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                  ],
-                ),
-              ),
-            ),
+            opacity: _slideAnimation.value.clamp(0.0, 1.0),
+            child: child,
           ),
         );
       },
+      child: AnimatedScale(
+        scale: _isPressed ? 0.97 : 1.0,
+        duration: const Duration(milliseconds: 150),
+        curve: Curves.easeInOut,
+        child: GestureDetector(
+          onTapDown: _onTapDown,
+          onTapUp: _onTapUp,
+          onTapCancel: _onTapCancel,
+          child: Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: g.surface,
+              borderRadius: GymRadius.rMd,
+              border: Border.all(color: g.line),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.04),
+                  blurRadius: 10,
+                  offset: const Offset(0, 3),
+                ),
+              ],
+            ),
+            child: Row(
+              children: [
+                _chip(base, suave),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        TextFormatter.capitalize(widget.title),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: GymType.section.copyWith(color: g.ink),
+                      ),
+                      const SizedBox(height: 3),
+                      Text(
+                        widget.cantidadEjerciciosPorSeries,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: GymType.label.copyWith(
+                          color: g.muted,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 8),
+                _trailing(g, tinta),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
-}
 
-class _BotonGordoBackground extends StatelessWidget {
-  final String imagenDireccion;
-  final Color color1;
-  final Color color2;
-
-  const _BotonGordoBackground(this.imagenDireccion, this.color1, this.color2);
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(15),
-      child: Stack(
-        children: [
-          Container(
-            width: double.infinity,
-            height: 100,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(colors: [color1, color2]),
-            ),
-          ),
-          Positioned(
-            right: -20,
-            top: -20,
-            child: SvgPicture.asset(
-              imagenDireccion,
-              width: 150,
-              height: 150,
-              colorFilter: ColorFilter.mode(
-                color1.withAlpha((0.75 * 255).toInt()),
-                BlendMode.srcATop,
-              ),
-            ),
-          ),
-          Positioned.fill(
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withAlpha((0.1 * 255).toInt()),
-                    offset: const Offset(4, 6),
-                    blurRadius: 10,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
+  /// Chip de icono con el color de acento (fondo suave + imagen/ícono tintado).
+  Widget _chip(Color base, Color suave) {
+    final ruta = widget.imagenDireccion;
+    return Container(
+      width: 56,
+      height: 56,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: suave,
+        borderRadius: GymRadius.rSm,
       ),
+      child: ruta != null && ruta.isNotEmpty
+          ? SvgPicture.asset(
+              ruta,
+              width: 30,
+              height: 30,
+              colorFilter: ColorFilter.mode(base, BlendMode.srcIn),
+              placeholderBuilder: (_) =>
+                  Icon(IconsaxPlusLinear.weight, color: base, size: 28),
+            )
+          : Icon(IconsaxPlusLinear.weight, color: base, size: 28),
+    );
+  }
+
+  /// Zona derecha: chevron + menú contextual (eliminar) si aplica.
+  Widget _trailing(GymColors g, Color tinta) {
+    if (widget.routineId == null) {
+      return Icon(IconsaxPlusLinear.arrow_right_3, size: 18, color: g.faint);
+    }
+    return PopupMenuButton<String>(
+      onSelected: _handleMenuAction,
+      icon: Icon(IconsaxPlusLinear.more, color: g.faint, size: 20),
+      color: g.surface,
+      shape: RoundedRectangleBorder(borderRadius: GymRadius.rMd),
+      itemBuilder: (context) => [
+        PopupMenuItem<String>(
+          value: 'delete',
+          child: Row(
+            children: [
+              Icon(IconsaxPlusLinear.trash, color: g.danger, size: 18),
+              const SizedBox(width: 12),
+              Text(
+                'Eliminar rutina',
+                style: GymType.body.copyWith(
+                  color: g.danger,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
