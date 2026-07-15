@@ -36,6 +36,9 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
   late AnimationController _headerAnimationController;
   late TextEditingController _searchController;
 
+  /// Texto de búsqueda para filtrar la lista ya cargada.
+  String _query = '';
+
   @override
   void initState() {
     super.initState();
@@ -44,6 +47,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
       vsync: this,
     );
     _searchController = TextEditingController();
+    _cargarEjercicios();
     _loadInitialData();
   }
 
@@ -57,6 +61,13 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
   void _loadInitialData() async {
     await Future.delayed(const Duration(milliseconds: 200));
     _headerAnimationController.forward();
+  }
+
+  void _cargarEjercicios() {
+    context.read<EjercicioCubit>().setEjercicio(
+          musculoId: widget.idMusculo,
+          rutinaId: widget.idRutina,
+        );
   }
 
   /// Navega a la lista de ejercicios del músculo seleccionado
@@ -107,8 +118,7 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
             padding: const EdgeInsets.only(left: 8),
             child: TextField(
               controller: _searchController,
-              onChanged: _realizarBusqueda,
-              onSubmitted: _realizarBusqueda,
+              onChanged: (q) => setState(() => _query = q),
               style: GymType.body.copyWith(color: c.ink),
               decoration: InputDecoration(
                 hintText: 'Buscar ejercicios...',
@@ -131,34 +141,8 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
     );
   }
 
-  /// Realiza búsqueda con filtrado de músculos
-  void _realizarBusqueda(String query) {
-    // Aquí puedes implementar la lógica de filtrado de músculos
-    // Por ahora, se puede mostrar un mensaje o filtrar la lista
-    if (query.trim().isEmpty) {
-      context.read<EjercicioCubit>().setEjercicio(
-            musculoId: widget.idMusculo,
-            rutinaId: widget.idRutina,
-          );
-      return;
-    }
-
-    // TODO: Implementar búsqueda de ejercicios en el cubit si es necesario
-    context.read<EjercicioCubit>().setEjercicio(
-          musculoId: widget.idMusculo,
-          rutinaId: widget.idRutina,
-        );
-  }
-
-
   @override
   Widget build(BuildContext context) {
-    // Llama al método para cargar los ejercicios al construir el widget
-    context.read<EjercicioCubit>().setEjercicio(
-          musculoId: widget.idMusculo,
-          rutinaId: widget.idRutina,
-        );
-
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
@@ -359,7 +343,15 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
 
   /// Construye la lista de músculos con diseño emocional coherente
   Widget _buildEjercicioList(BuildContext context, List<dynamic> ejercicios) {
-    if (ejercicios.isEmpty) {
+    final q = _query.trim().toLowerCase();
+    final buscando = q.isNotEmpty;
+    final lista = buscando
+        ? ejercicios
+            .where((e) => (e.nombre as String).toLowerCase().contains(q))
+            .toList()
+        : ejercicios;
+
+    if (lista.isEmpty) {
       return Center(
         child: Padding(
           padding: const EdgeInsets.all(24),
@@ -374,21 +366,25 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Icon(
-                  IconsaxPlusLinear.weight,
+                  buscando
+                      ? IconsaxPlusLinear.search_normal
+                      : IconsaxPlusLinear.weight,
                   size: 40,
                   color: context.gym.brand,
                 ),
               ),
               const SizedBox(height: 16),
               Text(
-                'No hay ejercicios disponibles',
+                buscando ? 'Sin coincidencias' : 'No hay ejercicios disponibles',
                 style: GymType.section.copyWith(
                   color: context.gym.ink,
                 ),
               ),
               const SizedBox(height: 8),
               Text(
-                'Parece que no hay ejercicios para este grupo muscular.',
+                buscando
+                    ? 'No encontramos ejercicios para "${_query.trim()}".'
+                    : 'Parece que no hay ejercicios para este grupo muscular.',
                 textAlign: TextAlign.center,
                 style: GymType.body.copyWith(
                   color: context.gym.faint,
@@ -403,10 +399,10 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
     return SlideInUp(
       duration: const Duration(milliseconds: 600),
       child: ListView.builder(
-        itemCount: ejercicios.length,
+        itemCount: lista.length,
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         itemBuilder: (context, i) {
-          final ejercicio = ejercicios[i];
+          final ejercicio = lista[i];
           final isSvg =
               VerificadorTipoArchivo.esSvg(ejercicio.imagenDireccion ?? '');
 

@@ -27,6 +27,9 @@ class AgregarEjerciciosPage extends StatefulWidget {
 }
 
 class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
+  /// Texto de búsqueda para filtrar la lista ya cargada.
+  String _query = '';
+
   @override
   void initState() {
     super.initState();
@@ -42,28 +45,6 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
       BuildContext context, String musculoId, String musculoNombre) {
     context.push(
         '/listar-ejercicios/$musculoId/$musculoNombre/${widget.rutinaid}/${widget.sesionId}');
-  }
-
-  /// Realiza búsqueda de músculos
-  void _realizarBusqueda(String query) {
-    if (query.trim().isEmpty) {
-      // Si está vacío, mostrar todos los músculos
-      context.read<MusculoCubit>().getAllMusculo();
-      return;
-    }
-
-    // TODO: Implementar búsqueda filtrada en el cubit si es necesario
-    // Por ahora mantiene la funcionalidad existente
-    context.read<MusculoCubit>().getAllMusculo();
-
-    // Aquí puedes agregar lógica de filtrado local si es necesario
-    debugPrint('🔍 Buscando músculos: $query');
-  }
-
-  /// Limpia la búsqueda y recarga músculos
-  void _limpiarBusqueda() {
-    context.read<MusculoCubit>().getAllMusculo();
-    debugPrint('🧹 Búsqueda limpiada');
   }
 
   /// Header propio: botón de volver + búsqueda de músculos (sin barra de título).
@@ -103,8 +84,7 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
           Padding(
             padding: const EdgeInsets.only(left: 8),
             child: TextField(
-              onChanged: (q) =>
-                  q.trim().isEmpty ? _limpiarBusqueda() : _realizarBusqueda(q),
+              onChanged: (q) => setState(() => _query = q),
               style: GymType.body.copyWith(color: c.ink),
               decoration: InputDecoration(
                 hintText: 'Buscar músculos...',
@@ -129,9 +109,6 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
 
   @override
   Widget build(BuildContext context) {
-    // Llama al método para cargar los músculos al construir el widget
-    context.read<MusculoCubit>().getAllMusculo();
-
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
@@ -327,16 +304,63 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
     );
   }
 
+  /// Estado vacío cuando la búsqueda no arroja coincidencias.
+  Widget _buildSinResultados() {
+    final g = context.gym;
+    return FadeIn(
+      duration: const Duration(milliseconds: 300),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: 80,
+              height: 80,
+              decoration: BoxDecoration(
+                color: g.brand.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Icon(IconsaxPlusLinear.search_normal,
+                  size: 36, color: g.brand),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Sin coincidencias',
+              style: GymType.section.copyWith(color: g.ink),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'No encontramos músculos para "${_query.trim()}".',
+              textAlign: TextAlign.center,
+              style: GymType.body.copyWith(color: g.faint),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   /// Construye la lista de músculos con tarjetas del sistema de diseño.
   Widget _buildMusculoList(BuildContext context, MusculoLoaded state) {
     final g = context.gym;
+    final q = _query.trim().toLowerCase();
+    final musculos = q.isEmpty
+        ? state.musculos
+        : state.musculos
+            .where((m) => m.nombre.toLowerCase().contains(q))
+            .toList();
+
+    if (musculos.isEmpty) {
+      return _buildSinResultados();
+    }
+
     return SlideInUp(
       duration: const Duration(milliseconds: 600),
       child: ListView.builder(
-        itemCount: state.musculos.length,
+        itemCount: musculos.length,
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         itemBuilder: (context, i) {
-          final musculo = state.musculos[i];
+          final musculo = musculos[i];
           final isSvg = VerificadorTipoArchivo.esSvg(musculo.imagenDirecion);
 
           return FadeInUp(
