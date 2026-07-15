@@ -312,6 +312,21 @@ class _SettingPageState extends State<SettingPage> {
                 ),
                 const Divider(height: 1),
                 ListTile(
+                  leading: Container(
+                    width: 26,
+                    height: 26,
+                    decoration: BoxDecoration(
+                      color: state.accent.swatch,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                  title: const Text('Color de la app'),
+                  subtitle: Text(state.accent.etiqueta),
+                  trailing: const Icon(IconsaxPlusLinear.arrow_right_3, size: 16),
+                  onTap: () => _showAccentBottomSheet(context, state),
+                ),
+                const Divider(height: 1),
+                ListTile(
                   leading: const Icon(IconsaxPlusLinear.language_square),
                   title: const Text('Idioma'),
                   subtitle: Text(state.language),
@@ -502,6 +517,80 @@ class _SettingPageState extends State<SettingPage> {
   }
 
   // Bottom Sheets y Diálogos
+  void _showAccentBottomSheet(BuildContext context, SettingLoaded state) {
+    final c = context.gym;
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: c.surface,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) => Container(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 40,
+              height: 4,
+              margin: const EdgeInsets.only(bottom: 20),
+              decoration: BoxDecoration(
+                color: c.lineStrong,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            Text(
+              'Color de la app',
+              style: GymType.section.copyWith(color: c.ink),
+            ),
+            const SizedBox(height: 6),
+            Text(
+              'Elige el color de marca. Se aplica al instante.',
+              textAlign: TextAlign.center,
+              style: GymType.body.copyWith(color: c.faint),
+            ),
+            const SizedBox(height: 16),
+            ...GymAccent.values.map((accent) {
+              final seleccionado = state.accent == accent;
+              return ListTile(
+                leading: Container(
+                  width: 30,
+                  height: 30,
+                  decoration: BoxDecoration(
+                    color: accent.swatch,
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: accent.swatch.withValues(alpha: 0.4),
+                        blurRadius: 8,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                ),
+                title: Text(
+                  accent.etiqueta,
+                  style: GymType.body.copyWith(
+                    color: c.ink,
+                    fontWeight:
+                        seleccionado ? FontWeight.w800 : FontWeight.w600,
+                  ),
+                ),
+                trailing: seleccionado
+                    ? Icon(IconsaxPlusLinear.tick_circle, color: accent.swatch)
+                    : null,
+                onTap: () {
+                  context.read<SettingCubit>().setAccent(accent);
+                  Navigator.pop(context);
+                },
+              );
+            }),
+          ],
+        ),
+      ),
+    );
+  }
+
   void _showLanguageBottomSheet(BuildContext context, SettingLoaded state) {
     showModalBottomSheet(
       context: context,

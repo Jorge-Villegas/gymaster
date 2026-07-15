@@ -59,7 +59,6 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
       padding: const EdgeInsets.fromLTRB(4, 6, 12, 8),
       child: Column(
         children: [
-          // Encabezado simple: volver + título.
           Row(
             children: [
               IconButton(
@@ -127,8 +126,6 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
           child: Column(
             children: [
               _buildHeaderConBusqueda(context),
-
-              // Lista de músculos
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),

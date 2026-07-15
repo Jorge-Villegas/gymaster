@@ -15,16 +15,12 @@ import 'package:animate_do/animate_do.dart';
 import 'package:shimmer/shimmer.dart';
 
 class DetalleRutinaScreen extends StatelessWidget {
-  // Identificador de la rutina.
   final String rutinaId;
 
-  // Constructor de la clase, requiere el identificador de la rutina.
   const DetalleRutinaScreen({super.key, required this.rutinaId});
 
-  // Método que construye la interfaz de usuario de la pantalla.
   @override
   Widget build(BuildContext context) {
-    // Siempre recarga los ejercicios al entrar
     WidgetsBinding.instance.addPostFrameCallback((_) {
       BlocProvider.of<EjerciciosByRutinaCubit>(context, listen: false)
           .getAllEjercicios(idRutina: rutinaId);
@@ -46,7 +42,6 @@ class DetalleRutinaScreen extends StatelessWidget {
             state is! EjerciciosByRutinaCompleted;
         return Scaffold(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          // Acción principal (agregar ejercicios) como FAB en la zona del pulgar.
           floatingActionButton: puedeAgregar
               ? FloatingActionButton(
                   // Hero desactivado: esta pantalla puede coexistir consigo
@@ -134,7 +129,6 @@ class DetalleRutinaScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Mensaje motivacional de carga
             Container(
               padding: const EdgeInsets.all(20),
               margin: const EdgeInsets.only(bottom: 20),
@@ -160,7 +154,6 @@ class DetalleRutinaScreen extends StatelessWidget {
                 ],
               ),
             ),
-            // Shimmer loading mejorado
             Expanded(
               child: Shimmer.fromColors(
                 baseColor: context.gym.info.withValues(alpha: 0.1),
@@ -251,7 +244,6 @@ class DetalleRutinaScreen extends StatelessWidget {
       );
     }
 
-    // Estado por defecto
     return Container(
       padding: const EdgeInsets.all(24),
       child: Column(

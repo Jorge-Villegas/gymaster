@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart';
 
-/// =============================================================================
-/// TOKENS DE COLOR — paleta candy "Duolingo del gym" 🐀
-/// -----------------------------------------------------------------------------
-/// Fuente ÚNICA de verdad para el color. Se expone como [ThemeExtension] para
-/// que cualquier widget lea el color correcto según el tema (claro/oscuro) con
-/// `context.gym.brand`, sin hardcodear `Colors.white` ni pasar variables a mano.
-///
-/// Reemplaza a `AppColors` (que tenía ~40 colores, funciones muertas y no
-/// reaccionaba al tema → causa del dark mode roto).
-/// =============================================================================
+/// Fuente ÚNICA de verdad para el color, expuesta como [ThemeExtension]: los
+/// widgets leen el color del tema activo con `context.gym.brand`. La marca es
+/// seleccionable por el usuario ([GymAccent] + [GymColors.withAccent]); el
+/// verde queda reservado a `success`.
 @immutable
 class GymColors extends ThemeExtension<GymColors> {
-  // Superficies y neutros
   final Color bg;
   final Color panel;
   final Color surface;
@@ -23,9 +16,8 @@ class GymColors extends ThemeExtension<GymColors> {
   final Color line;
   final Color lineStrong;
 
-  // Marca y acentos
   final Color brand;
-  final Color brandInk; // sombra del botón 3D / texto sobre brandSoft
+  final Color brandInk;
   final Color brandSoft;
   final Color coral;
   final Color coralInk;
@@ -38,7 +30,8 @@ class GymColors extends ThemeExtension<GymColors> {
   final Color plum;
   final Color plumSoft;
 
-  // Semánticos
+  final Color success; // verde reservado: "hecho / completado / logro"
+  final Color successSoft;
   final Color danger;
 
   const GymColors({
@@ -64,25 +57,27 @@ class GymColors extends ThemeExtension<GymColors> {
     required this.infoSoft,
     required this.plum,
     required this.plumSoft,
+    required this.success,
+    required this.successSoft,
     required this.danger,
   });
 
   static const GymColors light = GymColors(
-    bg: Color(0xFFF4F5F2),
-    panel: Color(0xFFEAECE6),
+    bg: Color(0xFFF4F5F7),
+    panel: Color(0xFFE8EAEF),
     surface: Color(0xFFFFFFFF),
-    surface2: Color(0xFFF7F8F5),
-    ink: Color(0xFF14201A),
-    muted: Color(0xFF5F6F65),
-    faint: Color(0xFF6C7B71),
-    line: Color(0xFFE7E9E3),
-    lineStrong: Color(0xFFD2D6CD),
-    brand: Color(0xFF3FC55F),
-    brandInk: Color(0xFF2A9D48),
-    brandSoft: Color(0xFFE4F7E9),
-    coral: Color(0xFFFF6B4A),
-    coralInk: Color(0xFFE0492B),
-    coralSoft: Color(0xFFFFE7E0),
+    surface2: Color(0xFFF1F3F6),
+    ink: Color(0xFF15181D),
+    muted: Color(0xFF5C6470),
+    faint: Color(0xFF6C7480),
+    line: Color(0xFFE5E8ED),
+    lineStrong: Color(0xFFD1D6DE),
+    brand: Color(0xFF7C3AED),
+    brandInk: Color(0xFF5B21B6),
+    brandSoft: Color(0xFFEDE4FF),
+    coral: Color(0xFFFF5470),
+    coralInk: Color(0xFFE23457),
+    coralSoft: Color(0xFFFFE1E7),
     xp: Color(0xFFFFC531),
     xpInk: Color(0xFFE0A800),
     xpSoft: Color(0xFFFFF3D1),
@@ -90,25 +85,27 @@ class GymColors extends ThemeExtension<GymColors> {
     infoSoft: Color(0xFFDBF0FF),
     plum: Color(0xFF7B61FF),
     plumSoft: Color(0xFFEAE5FF),
+    success: Color(0xFF2FBF5B),
+    successSoft: Color(0xFFE0F6E7),
     danger: Color(0xFFFF4D5E),
   );
 
   static const GymColors dark = GymColors(
-    bg: Color(0xFF101210),
-    panel: Color(0xFF171A18),
-    surface: Color(0xFF1B1E1C),
-    surface2: Color(0xFF242725),
-    ink: Color(0xFFEAF2EA),
-    muted: Color(0xFF9AA79F),
-    faint: Color(0xFF869488),
-    line: Color(0xFF2C2F2D),
-    lineStrong: Color(0xFF3B3F3C),
-    brand: Color(0xFF4BD46B),
-    brandInk: Color(0xFF2F8F46),
-    brandSoft: Color(0xFF17301E),
-    coral: Color(0xFFFF7A5C),
-    coralInk: Color(0xFFC9432A),
-    coralSoft: Color(0xFF3A1E17),
+    bg: Color(0xFF0E1013),
+    panel: Color(0xFF171A1F),
+    surface: Color(0xFF1B1E24),
+    surface2: Color(0xFF24272E),
+    ink: Color(0xFFECEEF2),
+    muted: Color(0xFF9AA2AE),
+    faint: Color(0xFF858D99),
+    line: Color(0xFF2C3038),
+    lineStrong: Color(0xFF3B404A),
+    brand: Color(0xFF9366F0),
+    brandInk: Color(0xFF5B21B6),
+    brandSoft: Color(0xFF241A3D),
+    coral: Color(0xFFFF6A82),
+    coralInk: Color(0xFFC93A54),
+    coralSoft: Color(0xFF3A1A22),
     xp: Color(0xFFFFD24D),
     xpInk: Color(0xFFB8860B),
     xpSoft: Color(0xFF33290B),
@@ -116,6 +113,8 @@ class GymColors extends ThemeExtension<GymColors> {
     infoSoft: Color(0xFF12293A),
     plum: Color(0xFF9985FF),
     plumSoft: Color(0xFF241E42),
+    success: Color(0xFF3ED273),
+    successSoft: Color(0xFF12301E),
     danger: Color(0xFFFF6472),
   );
 
@@ -143,6 +142,8 @@ class GymColors extends ThemeExtension<GymColors> {
     Color? infoSoft,
     Color? plum,
     Color? plumSoft,
+    Color? success,
+    Color? successSoft,
     Color? danger,
   }) {
     return GymColors(
@@ -168,6 +169,8 @@ class GymColors extends ThemeExtension<GymColors> {
       infoSoft: infoSoft ?? this.infoSoft,
       plum: plum ?? this.plum,
       plumSoft: plumSoft ?? this.plumSoft,
+      success: success ?? this.success,
+      successSoft: successSoft ?? this.successSoft,
       danger: danger ?? this.danger,
     );
   }
@@ -199,10 +202,72 @@ class GymColors extends ThemeExtension<GymColors> {
       infoSoft: l(infoSoft, other.infoSoft),
       plum: l(plum, other.plum),
       plumSoft: l(plumSoft, other.plumSoft),
+      success: l(success, other.success),
+      successSoft: l(successSoft, other.successSoft),
       danger: l(danger, other.danger),
     );
   }
+
+  /// Devuelve la paleta con el trío de marca (brand/brandInk/brandSoft) del
+  /// [accent] elegido por el usuario. El resto de tokens (neutros, semánticos,
+  /// acentos de gamificación) no cambian. [dark] selecciona el tono adecuado
+  /// para el tema activo.
+  GymColors withAccent(GymAccent accent, {required bool dark}) {
+    final s = (dark ? _accentDark : _accentLight)[accent]!;
+    return copyWith(
+      brand: s.brand,
+      brandInk: s.brandInk,
+      brandSoft: s.brandSoft,
+    );
+  }
 }
+
+/// Acentos de marca seleccionables por el usuario en Ajustes.
+enum GymAccent { violeta, magenta, turquesa }
+
+/// Metadatos de cada acento para pintar el selector (nombre + swatch).
+extension GymAccentMeta on GymAccent {
+  String get etiqueta => switch (this) {
+        GymAccent.violeta => 'Violeta eléctrico',
+        GymAccent.magenta => 'Magenta fucsia',
+        GymAccent.turquesa => 'Turquesa profundo',
+      };
+
+  /// Color representativo para el swatch del selector (tono claro).
+  Color get swatch => _accentLight[this]!.brand;
+
+  /// Parseo tolerante desde el string persistido (default: violeta).
+  static GymAccent desde(String? nombre) => GymAccent.values.firstWhere(
+        (a) => a.name == nombre,
+        orElse: () => GymAccent.violeta,
+      );
+}
+
+/// Trío de marca (brand, brandInk, brandSoft) por acento.
+class _AccentSpec {
+  final Color brand;
+  final Color brandInk;
+  final Color brandSoft;
+  const _AccentSpec(this.brand, this.brandInk, this.brandSoft);
+}
+
+const Map<GymAccent, _AccentSpec> _accentLight = {
+  GymAccent.violeta:
+      _AccentSpec(Color(0xFF7C3AED), Color(0xFF5B21B6), Color(0xFFEDE4FF)),
+  GymAccent.magenta:
+      _AccentSpec(Color(0xFFE6007E), Color(0xFFB10062), Color(0xFFFFE0F0)),
+  GymAccent.turquesa:
+      _AccentSpec(Color(0xFF00BFA6), Color(0xFF00897B), Color(0xFFD6F7F1)),
+};
+
+const Map<GymAccent, _AccentSpec> _accentDark = {
+  GymAccent.violeta:
+      _AccentSpec(Color(0xFF9366F0), Color(0xFF5B21B6), Color(0xFF241A3D)),
+  GymAccent.magenta:
+      _AccentSpec(Color(0xFFFF3DA0), Color(0xFFB10062), Color(0xFF3A0F27)),
+  GymAccent.turquesa:
+      _AccentSpec(Color(0xFF1FDCC2), Color(0xFF00897B), Color(0xFF0C3330)),
+};
 
 /// Radios de esquina (estilo juguetón moderado).
 class GymRadius {

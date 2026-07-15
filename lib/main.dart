@@ -5,6 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:gymaster/app_router.dart';
 import 'package:gymaster/core/database/database_helper.dart';
 import 'package:gymaster/core/theme/gym_theme.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/features/record/presentation/cubit/record_cubit.dart';
 import 'package:gymaster/features/record/presentation/cubit/selected_routine/selected_routine_cubit.dart';
 import 'package:gymaster/features/routine/presentation/cubits/agregar_series/agregar_series_cubit.dart';
@@ -73,9 +74,11 @@ class MyApp extends StatelessWidget {
     return BlocBuilder<SettingCubit, SettingState>(
       builder: (context, state) {
         bool isDarkMode = false;
+        GymAccent accent = GymAccent.violeta;
 
         if (state is SettingLoaded) {
           isDarkMode = state.isDarkMode;
+          accent = state.accent;
         }
 
         return MaterialApp.router(
@@ -89,8 +92,8 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'GyMaster',
           routerConfig: router,
-          theme: GymTheme.light,
-          darkTheme: GymTheme.dark,
+          theme: GymTheme.light(accent),
+          darkTheme: GymTheme.dark(accent),
           themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
         );
       },

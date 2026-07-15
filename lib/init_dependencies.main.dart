@@ -157,6 +157,12 @@ void _initSettings() {
     ..registerFactory(
       () => SetThemeModeUseCase(serviceLocator()),
     )
+    ..registerFactory(
+      () => GetThemeAccentUseCase(serviceLocator()),
+    )
+    ..registerFactory(
+      () => SetThemeAccentUseCase(serviceLocator()),
+    )
 
     // Domain Layer - Use Cases - Configuración Usuario
     ..registerFactory(
@@ -203,6 +209,8 @@ void _initSettings() {
         setLanguageUseCase: serviceLocator(),
         getThemeModeUseCase: serviceLocator(),
         setThemeModeUseCase: serviceLocator(),
+        getThemeAccentUseCase: serviceLocator(),
+        setThemeAccentUseCase: serviceLocator(),
       ),
     )
     ..registerFactory(

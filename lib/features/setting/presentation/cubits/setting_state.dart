@@ -1,3 +1,5 @@
+import 'package:gymaster/core/theme/gym_tokens.dart';
+
 abstract class SettingState {}
 
 class SettingInitial extends SettingState {}
@@ -6,6 +8,7 @@ class SettingLoading extends SettingState {}
 
 class SettingLoaded extends SettingState {
   final bool isDarkMode;
+  final GymAccent accent;
   final bool isNotificationEnabled;
   final String language;
   final String theme;
@@ -19,6 +22,7 @@ class SettingLoaded extends SettingState {
 
   SettingLoaded({
     required this.isDarkMode,
+    this.accent = GymAccent.violeta,
     required this.isNotificationEnabled,
     required this.language,
     required this.theme,
@@ -33,6 +37,7 @@ class SettingLoaded extends SettingState {
 
   SettingLoaded copyWith({
     bool? isDarkMode,
+    GymAccent? accent,
     bool? isNotificationEnabled,
     String? language,
     String? theme,
@@ -46,6 +51,7 @@ class SettingLoaded extends SettingState {
   }) {
     return SettingLoaded(
       isDarkMode: isDarkMode ?? this.isDarkMode,
+      accent: accent ?? this.accent,
       isNotificationEnabled:
           isNotificationEnabled ?? this.isNotificationEnabled,
       language: language ?? this.language,

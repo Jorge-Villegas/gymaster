@@ -32,12 +32,12 @@ class _GraficoDistribucionMuscularWidgetState
 
   // Paleta candy categórica para las porciones del gráfico.
   static const List<Color> _coloresMusculares = [
-    Color(0xFF3FC55F), // verde marca
+    Color(0xFF3D5AFE), // cobalto marca
     Color(0xFFFFC531), // dorado XP
     Color(0xFF38B6FF), // azul info
-    Color(0xFFFF6B4A), // coral
+    Color(0xFFFF5470), // coral
     Color(0xFF7B61FF), // plum
-    Color(0xFF2A9D48), // verde oscuro
+    Color(0xFF2FBF5B), // verde éxito
     Color(0xFFE0A800), // dorado oscuro
     Color(0xFF54BEFF), // azul claro
   ];

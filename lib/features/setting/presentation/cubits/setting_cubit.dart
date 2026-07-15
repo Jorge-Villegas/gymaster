@@ -1,22 +1,29 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/usecase/usecase.dart';
 import 'package:gymaster/features/setting/presentation/cubits/setting_state.dart';
 import 'package:gymaster/features/setting/domain/usecases/get_language_usecase.dart';
 import 'package:gymaster/features/setting/domain/usecases/get_theme_mode_usecase.dart';
+import 'package:gymaster/features/setting/domain/usecases/get_theme_accent_usecase.dart';
 import 'package:gymaster/features/setting/domain/usecases/set_lenguage_usecase.dart';
 import 'package:gymaster/features/setting/domain/usecases/set_theme_mode_usecase.dart';
+import 'package:gymaster/features/setting/domain/usecases/set_theme_accent_usecase.dart';
 
 class SettingCubit extends Cubit<SettingState> {
   final GetLanguageUseCase getLanguageUseCase;
   final GetThemeModeUseCase getThemeModeUseCase;
+  final GetThemeAccentUseCase getThemeAccentUseCase;
   final SetLanguageUseCase setLanguageUseCase;
   final SetThemeModeUseCase setThemeModeUseCase;
+  final SetThemeAccentUseCase setThemeAccentUseCase;
 
   SettingCubit({
     required this.getLanguageUseCase,
     required this.getThemeModeUseCase,
+    required this.getThemeAccentUseCase,
     required this.setLanguageUseCase,
     required this.setThemeModeUseCase,
+    required this.setThemeAccentUseCase,
   }) : super(SettingInitial());
 
   Future<void> loadSettings() async {
@@ -25,6 +32,7 @@ class SettingCubit extends Cubit<SettingState> {
 
       final languageResult = await getLanguageUseCase(NoParams());
       final themeModeResult = await getThemeModeUseCase(NoParams());
+      final accentResult = await getThemeAccentUseCase(NoParams());
 
       final language = languageResult.fold(
         (failure) => 'Spanish',
@@ -36,11 +44,17 @@ class SettingCubit extends Cubit<SettingState> {
         (themeMode) => themeMode,
       );
 
+      final accent = accentResult.fold(
+        (failure) => GymAccent.violeta,
+        (nombre) => GymAccentMeta.desde(nombre),
+      );
+
       // Define the list of available languages
       final languages = ['English', 'Spanish', 'French'];
 
       emit(SettingLoaded(
         isDarkMode: themeMode,
+        accent: accent,
         isNotificationEnabled: false,
         language: language,
         theme: themeMode ? 'Oscuro' : 'Claro',
@@ -100,6 +114,14 @@ class SettingCubit extends Cubit<SettingState> {
       final newMode = !currentState.isDarkMode;
       emit(currentState.copyWith(isDarkMode: newMode));
       setThemeModeUseCase(newMode);
+    }
+  }
+
+  void setAccent(GymAccent accent) {
+    final currentState = state;
+    if (currentState is SettingLoaded) {
+      emit(currentState.copyWith(accent: accent));
+      setThemeAccentUseCase(accent.name);
     }
   }
 

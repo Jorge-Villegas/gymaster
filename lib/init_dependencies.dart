@@ -115,6 +115,8 @@ import 'package:gymaster/features/setting/domain/usecases/get_language_usecase.d
 import 'package:gymaster/features/setting/domain/usecases/get_theme_mode_usecase.dart';
 import 'package:gymaster/features/setting/domain/usecases/set_lenguage_usecase.dart';
 import 'package:gymaster/features/setting/domain/usecases/set_theme_mode_usecase.dart';
+import 'package:gymaster/features/setting/domain/usecases/get_theme_accent_usecase.dart';
+import 'package:gymaster/features/setting/domain/usecases/set_theme_accent_usecase.dart';
 import 'package:gymaster/features/setting/domain/repositories/repositories.dart';
 import 'package:gymaster/features/setting/domain/repositories/implements.dart';
 import 'package:gymaster/features/setting/data/datasources/config_local_data_source.dart';

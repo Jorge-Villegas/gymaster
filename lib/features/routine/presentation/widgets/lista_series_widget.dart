@@ -332,18 +332,17 @@ class _ListaSeriesWidgetState extends State<ListaSeriesWidget> {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      const Color(0xFF3FC55F).withAlpha((0.1 * 255).toInt()),
-                      const Color(0xFF2A9D48).withAlpha((0.05 * 255).toInt()),
+                      context.gym.brand.withValues(alpha: 0.1),
+                      context.gym.brandInk.withValues(alpha: 0.05),
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
-                  border: Border.all(color: const Color(0xFF3FC55F), width: 2),
+                  border: Border.all(color: context.gym.brand, width: 2),
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFF3FC55F)
-                          .withAlpha((0.2 * 255).toInt()),
+                      color: context.gym.brand.withValues(alpha: 0.2),
                       blurRadius: 8,
                       offset: const Offset(0, 2),
                     ),

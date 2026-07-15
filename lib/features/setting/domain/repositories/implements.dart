@@ -52,4 +52,28 @@ class SettingRepositoryImp implements SettingRepository {
       );
     }
   }
+
+  @override
+  Future<Either<Failure, String>> getThemeAccent() async {
+    try {
+      final accent = await localDataSource.getAccent();
+      return Right(accent);
+    } catch (e) {
+      return Left(
+        CacheFailure(errorMessage: 'Error al obtener el acento: $e'),
+      );
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> setThemeAccent(String accent) async {
+    try {
+      await localDataSource.setAccent(accent);
+      return const Right(null);
+    } catch (e) {
+      return Left(
+        CacheFailure(errorMessage: 'Error al establecer el acento: $e'),
+      );
+    }
+  }
 }

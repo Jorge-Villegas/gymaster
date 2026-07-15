@@ -90,8 +90,8 @@ class _CrearRutinaFormState extends State<CrearRutinaForm> {
 
   // Acentos = los 5 tonos de la paleta candy (la tarjeta normaliza por matiz).
   static const List<Color> _paleta = [
-    Color(0xFF3FC55F), // brand
-    Color(0xFFFF6B4A), // coral
+    Color(0xFF3D5AFE), // brand (cobalto)
+    Color(0xFFFF5470), // coral
     Color(0xFFFFC531), // xp
     Color(0xFF38B6FF), // info
     Color(0xFF7B61FF), // plum

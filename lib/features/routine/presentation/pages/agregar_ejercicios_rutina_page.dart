@@ -257,7 +257,6 @@ class _AgregarEjercicioRutinaPageState
     );
   }
 
-  // Encabezado simple: volver + título centrado.
   Widget _construirHeaderEmocional() {
     final c = context.gym;
     return Padding(
@@ -285,7 +284,6 @@ class _AgregarEjercicioRutinaPageState
     );
   }
 
-  // Widget del botón guardar motivacional
   Widget _construirBotonGuardar() {
     return FadeInUp(
       duration: const Duration(milliseconds: 600),
@@ -299,7 +297,6 @@ class _AgregarEjercicioRutinaPageState
     );
   }
 
-  // Widget de estado de carga emocional
   Widget _construirEstadoCarga() {
     return FadeIn(
       duration: const Duration(milliseconds: 600),

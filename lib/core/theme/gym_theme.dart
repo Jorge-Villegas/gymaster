@@ -15,8 +15,10 @@ import 'package:gymaster/core/theme/gym_typography.dart';
 class GymTheme {
   const GymTheme._();
 
-  static ThemeData get light => _build(GymColors.light, Brightness.light);
-  static ThemeData get dark => _build(GymColors.dark, Brightness.dark);
+  static ThemeData light(GymAccent accent) =>
+      _build(GymColors.light.withAccent(accent, dark: false), Brightness.light);
+  static ThemeData dark(GymAccent accent) =>
+      _build(GymColors.dark.withAccent(accent, dark: true), Brightness.dark);
 
   static ThemeData _build(GymColors c, Brightness brightness) {
     final baseText = TextTheme(

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/physics.dart';
+import 'package:flutter/services.dart';
 import 'package:gymaster/core/theme/gym_tokens.dart';
 import 'package:gymaster/core/theme/gym_typography.dart';
 
@@ -9,11 +11,9 @@ enum GymButtonVariant { primary, secondary, ghost }
 /// preserve el layout de los botones chicos (p.ej. los +/− del entreno).
 enum GymButtonSize { small, medium, large }
 
-/// Botón 3D presionable (estilo "chiclet" Duolingo), theme-aware.
-///
-/// Sistema ÚNICO de botones: reemplaza a `ChicletButton`,
-/// `DuolingoActionButton` y `CustomElevatedButton` (que hardcodeaban colores
-/// y duplicaban la sombra/animación). Usa los tokens del tema.
+/// Botón único de la app, theme-aware. Al presionar se encoge y al soltar
+/// rebota con física real (`SpringSimulation`), con háptica en capas: contacto
+/// al presionar + confirmación al soltar según el peso de la acción.
 class GymButton extends StatefulWidget {
   final String label;
   final VoidCallback? onPressed;
@@ -36,8 +36,23 @@ class GymButton extends StatefulWidget {
   State<GymButton> createState() => _GymButtonState();
 }
 
-class _GymButtonState extends State<GymButton> {
-  bool _down = false;
+class _GymButtonState extends State<GymButton>
+    with SingleTickerProviderStateMixin {
+  /// `value` ES la escala del botón (1.0 en reposo). Unbounded para que el
+  /// resorte pueda sobrepasar 1.0 y asentarse (rebote gomoso).
+  late final AnimationController _scale =
+      AnimationController.unbounded(vsync: this, value: 1.0);
+
+  static const double _pressedScale = 0.93;
+
+  static const SpringDescription _spring =
+      SpringDescription(mass: 1, stiffness: 520, damping: 17);
+
+  @override
+  void dispose() {
+    _scale.dispose();
+    super.dispose();
+  }
 
   double get _vPad => switch (widget.size) {
         GymButtonSize.small => 9,
@@ -62,6 +77,32 @@ class _GymButtonState extends State<GymButton> {
         GymButtonSize.medium => 20,
         GymButtonSize.large => 22,
       };
+
+  void _hapticTouch() => HapticFeedback.selectionClick();
+
+  /// Confirmación al soltar, más intensa cuanto mayor es el peso de la acción.
+  void _hapticConfirm() {
+    final esPrimaria = widget.variant == GymButtonVariant.primary;
+    if (esPrimaria && widget.size == GymButtonSize.large) {
+      HapticFeedback.heavyImpact();
+    } else if (esPrimaria || widget.size == GymButtonSize.large) {
+      HapticFeedback.mediumImpact();
+    } else {
+      HapticFeedback.lightImpact();
+    }
+  }
+
+  void _pressDown() {
+    _hapticTouch();
+    _scale.animateTo(_pressedScale,
+        duration: const Duration(milliseconds: 90), curve: Curves.easeOutCubic);
+  }
+
+  void _springBack() {
+    _scale.animateWith(
+      SpringSimulation(_spring, _scale.value, 1.0, _scale.velocity),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -102,46 +143,62 @@ class _GymButtonState extends State<GymButton> {
     return Opacity(
       opacity: enabled ? 1 : 0.7,
       child: GestureDetector(
-        onTapDown: enabled ? (_) => setState(() => _down = true) : null,
-        onTapUp: enabled ? (_) => setState(() => _down = false) : null,
-        onTapCancel: () => setState(() => _down = false),
-        onTap: widget.onPressed,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 60),
-          transform: Matrix4.translationValues(0, _down ? 4 : 0, 0),
-          width: widget.expand ? double.infinity : null,
-          padding: EdgeInsets.symmetric(vertical: _vPad, horizontal: _hPad),
-          decoration: BoxDecoration(
-            color: bg,
-            borderRadius: BorderRadius.circular(16),
-            border: border,
-            boxShadow: [
-              BoxShadow(color: shadow, offset: Offset(0, _down ? 1 : 5)),
-            ],
+        onTapDown: enabled ? (_) => _pressDown() : null,
+        onTapUp: enabled
+            ? (_) {
+                _springBack();
+                _hapticConfirm();
+                widget.onPressed?.call();
+              }
+            : null,
+        onTapCancel: enabled ? _springBack : null,
+        child: AnimatedBuilder(
+          animation: _scale,
+          builder: (context, child) => Transform.scale(
+            scale: _scale.value,
+            child: child,
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (widget.icon != null)
-                Icon(widget.icon, color: fg, size: _iconSize),
-              // Solo reservamos hueco + texto si hay label (botones icono-solo
-              // como los +/− no deben ensanchar la caja).
-              if (widget.icon != null && widget.label.isNotEmpty)
-                const SizedBox(width: 8),
-              if (widget.label.isNotEmpty)
-                Flexible(
-                  child: Text(
-                    widget.label,
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                    style: GymType.bodyStrong.copyWith(
-                        color: fg,
-                        fontSize: _fontSize,
-                        fontWeight: FontWeight.w800),
+          child: Container(
+            width: widget.expand ? double.infinity : null,
+            padding: EdgeInsets.symmetric(vertical: _vPad, horizontal: _hPad),
+            decoration: BoxDecoration(
+              color: bg,
+              borderRadius: BorderRadius.circular(16),
+              border: border,
+              boxShadow: enabled
+                  ? [
+                      BoxShadow(
+                        color: shadow.withValues(alpha: 0.38),
+                        blurRadius: 16,
+                        spreadRadius: -3,
+                        offset: const Offset(0, 8),
+                      ),
+                    ]
+                  : null,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (widget.icon != null)
+                  Icon(widget.icon, color: fg, size: _iconSize),
+                // Sin label (icono-solo) no reservamos hueco ni texto.
+                if (widget.icon != null && widget.label.isNotEmpty)
+                  const SizedBox(width: 8),
+                if (widget.label.isNotEmpty)
+                  Flexible(
+                    child: Text(
+                      widget.label,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      style: GymType.bodyStrong.copyWith(
+                          color: fg,
+                          fontSize: _fontSize,
+                          fontWeight: FontWeight.w800),
+                    ),
                   ),
-                ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
