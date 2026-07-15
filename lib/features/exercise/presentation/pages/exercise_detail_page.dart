@@ -472,6 +472,7 @@ class _ExerciseDetailPageState extends State<ExerciseDetailPage>
                 favoritosCubit.esEjercicioFavoritoSync(widget.exercise.id);
 
             return FloatingActionButton.extended(
+              heroTag: 'fab-exercise-detail',
               elevation: 0,
               backgroundColor:
                   esFavorito ? context.gym.xpInk : context.gym.brand,

@@ -49,6 +49,9 @@ class DetalleRutinaScreen extends StatelessWidget {
           // Acción principal (agregar ejercicios) como FAB en la zona del pulgar.
           floatingActionButton: puedeAgregar
               ? FloatingActionButton(
+                  // Hero desactivado: esta pantalla puede coexistir consigo
+                  // misma en la pila y un tag compartido colisionaría.
+                  heroTag: null,
                   backgroundColor: context.gym.brand,
                   foregroundColor: Colors.white,
                   tooltip: 'Agregar ejercicios',

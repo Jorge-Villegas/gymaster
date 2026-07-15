@@ -123,21 +123,24 @@ class _GymButtonState extends State<GymButton> {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              if (widget.icon != null) ...[
+              if (widget.icon != null)
                 Icon(widget.icon, color: fg, size: _iconSize),
+              // Solo reservamos hueco + texto si hay label (botones icono-solo
+              // como los +/− no deben ensanchar la caja).
+              if (widget.icon != null && widget.label.isNotEmpty)
                 const SizedBox(width: 8),
-              ],
-              Flexible(
-                child: Text(
-                  widget.label,
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  style: GymType.bodyStrong.copyWith(
-                      color: fg,
-                      fontSize: _fontSize,
-                      fontWeight: FontWeight.w800),
+              if (widget.label.isNotEmpty)
+                Flexible(
+                  child: Text(
+                    widget.label,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    style: GymType.bodyStrong.copyWith(
+                        color: fg,
+                        fontSize: _fontSize,
+                        fontWeight: FontWeight.w800),
+                  ),
                 ),
-              ),
             ],
           ),
         ),

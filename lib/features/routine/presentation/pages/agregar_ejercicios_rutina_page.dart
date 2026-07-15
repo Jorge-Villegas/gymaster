@@ -44,6 +44,10 @@ class _AgregarEjercicioRutinaPageState
   final List<TextEditingController> _controladoresPeso = [];
   final List<TextEditingController> _controladoresRepeticiones = [];
 
+  /// Tag único por instancia: evita el choque de Hero con el mismo ejercicio
+  /// abierto en el catálogo/detalle o en un doble push de esta pantalla.
+  final String _heroTag = 'agregar-serie-${UniqueKey()}';
+
   @override
   void initState() {
     super.initState();
@@ -184,8 +188,7 @@ class _AgregarEjercicioRutinaPageState
                   child: BlocBuilder<AgregarSeriesCubit, AgregarSeriesState>(
                     builder: (context, state) {
                       if (state is AgregarSeriesLoaded) {
-                        final etiquetaHero =
-                            'exercise-image-${widget.idEjercicio}';
+                        final etiquetaHero = _heroTag;
                         return FadeInUp(
                           duration: const Duration(milliseconds: 600),
                           child: Form(

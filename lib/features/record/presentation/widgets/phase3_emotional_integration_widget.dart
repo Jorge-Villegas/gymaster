@@ -582,6 +582,7 @@ class _Phase3EmotionalIntegrationWidgetState
     return ScaleTransition(
       scale: _fabScaleAnimation,
       child: FloatingActionButton.extended(
+        heroTag: 'fab-celebracion',
         onPressed: _showEpicCelebrationDialog,
         backgroundColor: context.gym.xpInk,
         icon: const Icon(IconsaxPlusLinear.cup, color: Colors.white),

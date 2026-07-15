@@ -59,8 +59,8 @@ class EncabezadoEjercicioWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              width: 45,
-              height: 45,
+              width: 48,
+              height: 48,
               child: GymButton(
                 label: '',
                 icon: IconsaxPlusLinear.minus,
@@ -94,13 +94,13 @@ class EncabezadoEjercicioWidget extends StatelessWidget {
             ),
             const SizedBox(width: 15),
             SizedBox(
-              width: 45,
-              height: 45,
+              width: 48,
+              height: 48,
               child: GymButton(
                 label: '',
                 icon: IconsaxPlusLinear.add,
                 variant: GymButtonVariant.ghost,
-                size: GymButtonSize.medium,
+                size: GymButtonSize.small,
                 expand: false,
                 onPressed: onIncrement,
               ),
