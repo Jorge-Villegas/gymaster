@@ -9,7 +9,6 @@ import 'package:gymaster/shared/widgets/gym/gym.dart';
 import 'package:gymaster/features/routine/presentation/cubits/musculo/musculo_cubit.dart';
 import 'package:gymaster/shared/utils/string_utils.dart';
 import 'package:gymaster/shared/utils/verificador_tipo_archivo.dart';
-import 'package:gymaster/shared/widgets/cabecera_reutilizable.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -67,6 +66,67 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
     debugPrint('🧹 Búsqueda limpiada');
   }
 
+  /// Header propio: botón de volver + búsqueda de músculos (sin barra de título).
+  Widget _buildHeaderConBusqueda(BuildContext context) {
+    final c = context.gym;
+    OutlineInputBorder borde(Color color, [double ancho = 1]) =>
+        OutlineInputBorder(
+          borderRadius: GymRadius.rMd,
+          borderSide: BorderSide(color: color, width: ancho),
+        );
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(4, 6, 12, 8),
+      child: Column(
+        children: [
+          // Encabezado simple: volver + título.
+          Row(
+            children: [
+              IconButton(
+                icon: const Icon(IconsaxPlusLinear.arrow_left_1),
+                color: c.ink,
+                tooltip: 'Volver',
+                onPressed: () => context.canPop()
+                    ? context.pop()
+                    : context.go('/main?tab=1'),
+              ),
+              Expanded(
+                child: Text('Elige un músculo',
+                    textAlign: TextAlign.center,
+                    style: GymType.title.copyWith(color: c.ink),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis),
+              ),
+              const SizedBox(width: 48),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Padding(
+            padding: const EdgeInsets.only(left: 8),
+            child: TextField(
+              onChanged: (q) =>
+                  q.trim().isEmpty ? _limpiarBusqueda() : _realizarBusqueda(q),
+              style: GymType.body.copyWith(color: c.ink),
+              decoration: InputDecoration(
+                hintText: 'Buscar músculos...',
+                hintStyle: GymType.body.copyWith(color: c.faint),
+                prefixIcon: Icon(IconsaxPlusLinear.search_normal,
+                    color: c.muted, size: 20),
+                filled: true,
+                fillColor: c.surface,
+                isDense: true,
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
+                enabledBorder: borde(c.line),
+                border: borde(c.line),
+                focusedBorder: borde(c.brand, 1.5),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // Llama al método para cargar los músculos al construir el widget
@@ -89,19 +149,7 @@ class _AgregarEjerciciosPageState extends State<AgregarEjerciciosPage> {
         child: SafeArea(
           child: Column(
             children: [
-              CabeceraReutilizable(
-                titulo: '¡Elige tu enfoque!',
-                subtitulo: 'Selecciona el grupo muscular 💪',
-
-                // Botón de volver
-                botonIzquierdo: ConfiguracionBotonIzquierdo.volver(),
-
-                // 🔍 Búsqueda expandible de músculos
-                busqueda: ConfiguracionBusqueda.musculos(
-                  onBusqueda: _realizarBusqueda,
-                  onLimpiar: _limpiarBusqueda,
-                ),
-              ),
+              _buildHeaderConBusqueda(context),
 
               // Lista de músculos
               Expanded(

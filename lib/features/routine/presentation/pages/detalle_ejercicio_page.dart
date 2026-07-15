@@ -13,9 +13,7 @@ import 'package:gymaster/features/routine/domain/entities/ejercicios_de_rutina.d
 import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_rutina/ejercicios_by_rutina_cubit.dart';
 import 'package:gymaster/features/routine/presentation/widgets/rutina_cancelada_widget.dart';
 import 'package:gymaster/features/routine/presentation/widgets/rutina_completada_widget.dart';
-import 'package:gymaster/shared/utils/text_formatter.dart';
 import 'package:gymaster/shared/utils/verificador_tipo_archivo.dart';
-import 'package:gymaster/shared/widgets/cabecera_reutilizable.dart';
 import 'package:gymaster/shared/widgets/gym/gym.dart';
 import 'package:animate_do/animate_do.dart';
 // ignore: depend_on_referenced_packages
@@ -825,14 +823,31 @@ class DetalleEjercicioScreen extends StatelessWidget {
         child: SafeArea(
           child: Column(
             children: [
-              // Header usando CabeceraReutilizable para consistencia
-              CabeceraReutilizable(
-                titulo: TextFormatter.capitalize(ejercicio.nombre),
-                subtitulo:
-                    'Serie $serieActualIndex de $totalSeries • ${state.ejerciciosDeRutina.nombre}',
-                botonIzquierdo: ConfiguracionBotonIzquierdo.volver(),
-                colorFondo: context.gym.surface2,
-                relleno: Espaciado.rellenoMd,
+              // Encabezado simple: volver + nombre del ejercicio.
+              Padding(
+                padding: const EdgeInsets.fromLTRB(4, 6, 12, 6),
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(IconsaxPlusLinear.arrow_left_1),
+                      color: context.gym.ink,
+                      tooltip: 'Volver',
+                      onPressed: () => context.canPop()
+                          ? context.pop()
+                          : context.go('/main?tab=1'),
+                    ),
+                    Expanded(
+                      child: Text(
+                        ejercicio.nombre,
+                        textAlign: TextAlign.center,
+                        style: GymType.title.copyWith(color: context.gym.ink),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    const SizedBox(width: 48),
+                  ],
+                ),
               ),
 
               // Barra Motivacional

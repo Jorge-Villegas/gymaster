@@ -254,54 +254,30 @@ class _AgregarEjercicioRutinaPageState
     );
   }
 
-  // Widget del header emocional motivacional
+  // Encabezado simple: volver + título centrado.
   Widget _construirHeaderEmocional() {
-    return FadeInDown(
-      duration: const Duration(milliseconds: 800),
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        child: Row(
-          children: [
-            // Botón de volver minimalista
-            Container(
-              decoration: BoxDecoration(
-                color: context.gym.surface,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: context.gym.xpInk.withValues(alpha: 0.15),
-                    offset: const Offset(0, 2),
-                    blurRadius: 8,
-                  ),
-                ],
-              ),
-              child: IconButton(
-                onPressed: () => context.pop(),
-                icon: Icon(
-                  IconsaxPlusLinear.arrow_left_1,
-                  color: context.gym.xpInk,
-                  size: 20,
-                ),
-                padding: const EdgeInsets.all(12),
-              ),
+    final c = context.gym;
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(4, 6, 12, 8),
+      child: Row(
+        children: [
+          IconButton(
+            icon: const Icon(IconsaxPlusLinear.arrow_left_1),
+            color: c.ink,
+            tooltip: 'Volver',
+            onPressed: () => context.pop(),
+          ),
+          Expanded(
+            child: Text(
+              'Configura tu poder',
+              textAlign: TextAlign.center,
+              style: GymType.title.copyWith(color: c.ink),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
-            const SizedBox(width: 16),
-            // Título emocional simple
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '¡Configura tu poder!',
-                    style: GymType.section.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+          const SizedBox(width: 48),
+        ],
       ),
     );
   }

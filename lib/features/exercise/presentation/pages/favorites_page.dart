@@ -10,7 +10,6 @@ import 'package:gymaster/features/exercise/presentation/cubits/favorito_ejercici
 import 'package:gymaster/features/exercise/presentation/cubits/favorito_ejercicio_state.dart';
 import 'package:gymaster/shared/utils/string_utils.dart';
 import 'package:gymaster/shared/utils/verificador_tipo_archivo.dart';
-import 'package:gymaster/shared/widgets/cabecera_reutilizable.dart';
 import 'package:gymaster/shared/widgets/gym/gym.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:shimmer/shimmer.dart';
@@ -64,73 +63,47 @@ class _FavoritesPageState extends State<FavoritesPage>
 
   @override
   Widget build(BuildContext context) {
+    final c = context.gym;
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: CustomScrollView(
-        physics: const BouncingScrollPhysics(),
-        slivers: [
-          _buildSliverAppBar(),
-          _buildFavoritesContent(),
-        ],
-      ),
-    );
-  }
-
-  /// Header emocional con diseño consistente
-  Widget _buildSliverAppBar() {
-    return SliverToBoxAdapter(
-      child: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Theme.of(context).scaffoldBackgroundColor,
-              context.gym.surface,
-              Theme.of(context).scaffoldBackgroundColor.withValues(alpha: 0.8),
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            stops: const [0.0, 0.3, 1.0],
-          ),
-        ),
-        child: SafeArea(
-          child: _construirCabeceraReutilizable(context),
-        ),
-      ),
-    );
-  }
-
-  /// Construye la cabecera usando el componente reutilizable
-  Widget _construirCabeceraReutilizable(BuildContext context) {
-    // Obtener información dinámica del subtítulo
-    final cantidad = context.read<FavoritoEjercicioCubit>().cantidadFavoritos;
-    final subtitulo = cantidad == 0
-        ? '¡Agrega tus ejercicios favoritos! ❤️'
-        : '$cantidad favorito${cantidad != 1 ? 's' : ''} guardado${cantidad != 1 ? 's' : ''} ✨';
-
-    return CabeceraReutilizable(
-      titulo: 'Ejercicios Favoritos',
-      subtitulo: subtitulo,
-      botonIzquierdo: ConfiguracionBotonIzquierdo.menu(),
-      accionesDerecha: [
-        // Icono temático decorativo
-        Container(
-          width: 48,
-          height: 48,
-          decoration: BoxDecoration(
-            color: Colors.red.shade600.withValues(alpha: 0.1),
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: Colors.red.shade600.withValues(alpha: 0.3),
-              width: 1,
+      body: SafeArea(
+        child: Column(
+          children: [
+            // Encabezado simple: volver + título.
+            Padding(
+              padding: const EdgeInsets.fromLTRB(4, 6, 12, 6),
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: const Icon(IconsaxPlusLinear.arrow_left_1),
+                    color: c.ink,
+                    tooltip: 'Volver',
+                    onPressed: () => context.canPop()
+                        ? context.pop()
+                        : context.go('/main?tab=2'),
+                  ),
+                  Expanded(
+                    child: Text('Favoritos',
+                        textAlign: TextAlign.center,
+                        style: GymType.title.copyWith(color: c.ink),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis),
+                  ),
+                  const SizedBox(width: 48),
+                ],
+              ),
             ),
-          ),
-          child: Icon(
-            IconsaxPlusBold.heart,
-            color: Colors.red.shade600,
-            size: 24,
-          ),
+            Expanded(
+              child: CustomScrollView(
+                physics: const BouncingScrollPhysics(),
+                slivers: [
+                  _buildFavoritesContent(),
+                ],
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 

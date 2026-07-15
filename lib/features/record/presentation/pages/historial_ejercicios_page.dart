@@ -9,7 +9,6 @@ import 'package:gymaster/features/record/presentation/cubit/record_state.dart';
 import 'package:gymaster/features/record/presentation/pages/detalle_ejercicio_page.dart';
 import 'package:gymaster/shared/utils/snackbar_helper.dart';
 import 'package:gymaster/shared/utils/string_utils.dart';
-import 'package:gymaster/shared/widgets/cabecera_reutilizable.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -36,23 +35,6 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
     BlocProvider.of<RecordCubit>(context).getAllRutinas();
   }
 
-  /// Construye la cabecera usando el componente reutilizable
-  Widget _construirCabeceraReutilizable(BuildContext context) {
-    return CabeceraReutilizable(
-      titulo: 'Historial de Ejercicios',
-      subtitulo: 'Revisa tu progreso y entrenamientos',
-      botonIzquierdo: ConfiguracionBotonIzquierdo.menu(),
-      accionesDerecha: [
-        BotonAccionDerecha.actualizar(
-          onPressed: () {
-            BlocProvider.of<RecordCubit>(context).getAllRutinas();
-          },
-          tooltip: 'Actualizar historial',
-        ),
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +42,6 @@ class _HistorialEjerciciosPageState extends State<HistorialEjerciciosPage>
       body: SafeArea(
         child: Column(
           children: [
-            // _construirCabeceraReutilizable(context),
             SizedBox(height: Espaciado.md),
             Expanded(
               child: Container(

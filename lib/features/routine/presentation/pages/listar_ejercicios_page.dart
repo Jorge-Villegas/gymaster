@@ -34,19 +34,13 @@ class ListarEjerciciosPage extends StatefulWidget {
 class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
     with TickerProviderStateMixin {
   late AnimationController _headerAnimationController;
-  late AnimationController _searchAnimationController;
   late TextEditingController _searchController;
-  bool _isSearchExpanded = false;
 
   @override
   void initState() {
     super.initState();
     _headerAnimationController = AnimationController(
       duration: const Duration(milliseconds: 800),
-      vsync: this,
-    );
-    _searchAnimationController = AnimationController(
-      duration: const Duration(milliseconds: 400),
       vsync: this,
     );
     _searchController = TextEditingController();
@@ -56,7 +50,6 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
   @override
   void dispose() {
     _headerAnimationController.dispose();
-    _searchAnimationController.dispose();
     _searchController.dispose();
     super.dispose();
   }
@@ -77,210 +70,65 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
     );
   }
 
-  /// Construye el header emocional con búsqueda expandible
+  /// Encabezado simple: volver + título centrado + búsqueda temática.
   Widget _construirHeaderEmocional(BuildContext context) {
-    return FadeInDown(
-      duration: const Duration(milliseconds: 800),
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        child: AnimatedBuilder(
-          animation: _searchAnimationController,
-          builder: (context, child) {
-            return Row(
-              children: [
-                // Botón de volver
-                Container(
-                  decoration: BoxDecoration(
-                    color: context.gym.surface,
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                        color: context.gym.faint.withValues(alpha: 0.1),
-                        offset: const Offset(0, 2),
-                        blurRadius: 8,
-                      ),
-                    ],
-                  ),
-                  child: IconButton(
-                    onPressed: () => context.pop(),
-                    icon: Icon(
-                      IconsaxPlusLinear.arrow_left_1,
-                      color: context.gym.xpInk,
-                      size: 20,
-                    ),
-                    padding: const EdgeInsets.all(12),
-                  ),
-                ),
-                const SizedBox(width: 16),
-                // Contenido principal (título o búsqueda)
-                Expanded(
-                  child: _isSearchExpanded
-                      ? _buildExpandedSearchField()
-                      : _buildTitleSection(),
-                ),
-                const SizedBox(width: 16),
-                // Botón de búsqueda
-                _buildSearchButton(),
-              ],
-            );
-          },
-        ),
-      ),
-    );
-  }
-
-  /// Sección del título cuando no está en modo búsqueda
-  Widget _buildTitleSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          '¡Elige tu ejercicio!',
-          style: GymType.section.copyWith(
-            color: context.gym.ink,
-            height: 1.1,
-          ),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-        const SizedBox(height: 4),
-        Text(
-          TextFormatter.capitalize(widget.nombreMusculo),
-          style: GymType.body.copyWith(
-            color: context.gym.muted,
-          ),
-        ),
-      ],
-    );
-  }
-
-  /// Campo de búsqueda expandido con animación
-  Widget _buildExpandedSearchField() {
-    return SlideTransition(
-      position: Tween<Offset>(
-        begin: const Offset(1.0, 0.0),
-        end: Offset.zero,
-      ).animate(CurvedAnimation(
-        parent: _searchAnimationController,
-        curve: Curves.easeOutCubic,
-      )),
-      child: Container(
-        decoration: BoxDecoration(
-          color: context.gym.surface,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: context.gym.brand.withValues(alpha: 0.1),
-              offset: const Offset(0, 2),
-              blurRadius: 8,
-            ),
-          ],
-          border: Border.all(
-            color: context.gym.brand.withValues(alpha: 0.2),
-            width: 2,
-          ),
-        ),
-        child: TextField(
-          controller: _searchController,
-          autofocus: true,
-          style: GymType.body.copyWith(
-            color: context.gym.ink,
-          ),
-          decoration: InputDecoration(
-            hintText: 'Buscar ejercicios...',
-            hintStyle: GymType.body.copyWith(
-              color: context.gym.faint,
-            ),
-            border: InputBorder.none,
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 12,
-            ),
-            prefixIcon: Container(
-              margin: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: context.gym.brand.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(10),
+    final c = context.gym;
+    OutlineInputBorder borde(Color color, [double ancho = 1]) =>
+        OutlineInputBorder(
+          borderRadius: GymRadius.rMd,
+          borderSide: BorderSide(color: color, width: ancho),
+        );
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(4, 6, 12, 8),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              IconButton(
+                icon: const Icon(IconsaxPlusLinear.arrow_left_1),
+                color: c.ink,
+                tooltip: 'Volver',
+                onPressed: () => context.pop(),
               ),
-              child: Icon(
-                IconsaxPlusLinear.search_normal_1,
-                color: context.gym.brand,
-                size: 20,
+              Expanded(
+                child: Text(
+                  'Elige tu ejercicio',
+                  textAlign: TextAlign.center,
+                  style: GymType.title.copyWith(color: c.ink),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              const SizedBox(width: 48),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Padding(
+            padding: const EdgeInsets.only(left: 8),
+            child: TextField(
+              controller: _searchController,
+              onChanged: _realizarBusqueda,
+              onSubmitted: _realizarBusqueda,
+              style: GymType.body.copyWith(color: c.ink),
+              decoration: InputDecoration(
+                hintText: 'Buscar ejercicios...',
+                hintStyle: GymType.body.copyWith(color: c.faint),
+                prefixIcon: Icon(IconsaxPlusLinear.search_normal,
+                    color: c.muted, size: 20),
+                filled: true,
+                fillColor: c.surface,
+                isDense: true,
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
+                enabledBorder: borde(c.line),
+                border: borde(c.line),
+                focusedBorder: borde(c.brand, 1.5),
               ),
             ),
-            suffixIcon: _searchController.text.isNotEmpty
-                ? IconButton(
-                    icon: Container(
-                      padding: const EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                        color: context.gym.faint.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Icon(
-                        IconsaxPlusLinear.close_circle,
-                        color: context.gym.faint,
-                        size: 16,
-                      ),
-                    ),
-                    onPressed: _limpiarBusqueda,
-                  )
-                : null,
           ),
-          onChanged: _realizarBusqueda,
-          onSubmitted: _realizarBusqueda,
-        ),
+        ],
       ),
     );
-  }
-
-  /// Botón de búsqueda con animación
-  Widget _buildSearchButton() {
-    return GestureDetector(
-      onTap: _toggleSearch,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        width: 48,
-        height: 48,
-        decoration: BoxDecoration(
-          color: _isSearchExpanded ? context.gym.xpInk : context.gym.surface,
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: context.gym.xpInk.withValues(alpha: 0.2),
-              offset: const Offset(0, 2),
-              blurRadius: 8,
-            ),
-          ],
-        ),
-        child: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 200),
-          child: Icon(
-            _isSearchExpanded
-                ? IconsaxPlusLinear.close_circle
-                : IconsaxPlusLinear.search_normal_1,
-            key: ValueKey(_isSearchExpanded),
-            color: _isSearchExpanded ? Colors.white : context.gym.xpInk,
-            size: 20,
-          ),
-        ),
-      ),
-    );
-  }
-
-  /// Toggle del estado de búsqueda con animación
-  void _toggleSearch() {
-    setState(() {
-      _isSearchExpanded = !_isSearchExpanded;
-    });
-
-    if (_isSearchExpanded) {
-      _searchAnimationController.forward();
-    } else {
-      _searchAnimationController.reverse();
-      if (_searchController.text.isNotEmpty) {
-        _limpiarBusqueda();
-      }
-    }
   }
 
   /// Realiza búsqueda con filtrado de músculos
@@ -302,17 +150,6 @@ class _ListarEjerciciosPageState extends State<ListarEjerciciosPage>
         );
   }
 
-  /// Limpia la búsqueda
-  void _limpiarBusqueda() {
-    setState(() {
-      _searchController.clear();
-    });
-    context.read<EjercicioCubit>().setEjercicio(
-          musculoId: widget.idMusculo,
-          rutinaId: widget.idRutina,
-        );
-    FocusScope.of(context).unfocus();
-  }
 
   @override
   Widget build(BuildContext context) {

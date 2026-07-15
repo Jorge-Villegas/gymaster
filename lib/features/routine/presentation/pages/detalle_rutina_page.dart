@@ -9,10 +9,8 @@ import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_ruti
 import 'package:gymaster/features/routine/presentation/widgets/ejercicios_llenos_widget.dart';
 import 'package:gymaster/features/routine/presentation/widgets/ejercicios_vacios_widget.dart';
 import 'package:gymaster/features/routine/presentation/widgets/rutina_completada_widget.dart';
-import 'package:gymaster/shared/utils/text_formatter.dart';
 import 'package:gymaster/features/routine/presentation/widgets/rutina_cancelada_widget.dart';
 import 'package:gymaster/shared/widgets/gym/gym.dart';
-import 'package:gymaster/shared/widgets/cabecera_reutilizable.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -44,66 +42,70 @@ class DetalleRutinaScreen extends StatelessWidget {
           );
         }
 
+        final puedeAgregar = state is EjerciciosByRutinaSuccess &&
+            state is! EjerciciosByRutinaCompleted;
         return Scaffold(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          // Acción principal (agregar ejercicios) como FAB en la zona del pulgar.
+          floatingActionButton: puedeAgregar
+              ? FloatingActionButton(
+                  backgroundColor: context.gym.brand,
+                  foregroundColor: Colors.white,
+                  tooltip: 'Agregar ejercicios',
+                  onPressed: () {
+                    final sessionId = (state).ejerciciosDeRutina.session;
+                    context
+                        .push('/agregar-ejercicios/$rutinaId/$sessionId')
+                        .then((_) {
+                      if (context.mounted) {
+                        BlocProvider.of<EjerciciosByRutinaCubit>(
+                          context,
+                          listen: false,
+                        ).getAllEjercicios(idRutina: rutinaId);
+                      }
+                    });
+                  },
+                  child: const Icon(IconsaxPlusLinear.add),
+                )
+              : null,
           body: Container(
             color: Theme.of(context).scaffoldBackgroundColor,
             child: SafeArea(
               child: Column(
                 children: [
-                  // Header personalizado con diseño emocional
-                  _construirCabeceraReutilizable(context, state),
-                  // Cuerpo de la rutina
-                  Expanded(
-                    child: _buildBody(context, state),
+                  // Encabezado simple: volver + nombre de la rutina.
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(4, 6, 12, 6),
+                    child: Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(IconsaxPlusLinear.arrow_left_1),
+                          color: context.gym.ink,
+                          tooltip: 'Volver',
+                          onPressed: () => context.go('/main?tab=1'),
+                        ),
+                        Expanded(
+                          child: Text(
+                            state is EjerciciosByRutinaSuccess
+                                ? state.ejerciciosDeRutina.nombre
+                                : 'Mi Rutina',
+                            textAlign: TextAlign.center,
+                            style: GymType.title.copyWith(color: context.gym.ink),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        const SizedBox(width: 48),
+                      ],
+                    ),
                   ),
+                  Expanded(child: _buildBody(context, state)),
                 ],
               ),
             ),
           ),
         );
       },
-    );
-  }
-
-  /// Construye la cabecera usando el componente reutilizable
-  Widget _construirCabeceraReutilizable(
-      BuildContext context, EjerciciosByRutinaState state) {
-    // Determinar título y subtítulo basado en el estado
-    String titulo = 'Mi Rutina';
-    if (state is EjerciciosByRutinaSuccess) {
-      titulo = TextFormatter.capitalize(state.ejerciciosDeRutina.nombre);
-    }
-
-    // Configurar acciones del lado derecho
-    List<Widget> acciones = [];
-    if (state is EjerciciosByRutinaSuccess &&
-        state is! EjerciciosByRutinaCompleted) {
-      acciones.add(
-        BotonAccionDerecha.agregar(
-          onPressed: () {
-            final sessionId = state.ejerciciosDeRutina.session;
-            context.push('/agregar-ejercicios/$rutinaId/$sessionId').then((_) {
-              if (context.mounted) {
-                BlocProvider.of<EjerciciosByRutinaCubit>(
-                  context,
-                  listen: false,
-                ).getAllEjercicios(idRutina: rutinaId);
-              }
-            });
-          },
-          tooltip: 'Agregar ejercicios',
-        ),
-      );
-    }
-
-    return CabeceraReutilizable(
-      titulo: titulo,
-      subtitulo: '¡Hora de brillar!',
-      botonIzquierdo: ConfiguracionBotonIzquierdo.volver(
-        accionPersonalizada: () => context.go('/'),
-      ),
-      accionesDerecha: acciones.isNotEmpty ? acciones : null,
     );
   }
 
