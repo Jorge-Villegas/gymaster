@@ -8,6 +8,7 @@ import 'package:gymaster/features/routine/presentation/cubits/ejercicios_by_ruti
 import 'package:gymaster/features/routine/presentation/cubits/rutina/routine_cubit.dart';
 import 'package:gymaster/features/routine/presentation/pages/routine_search_delegate.dart';
 import 'package:gymaster/features/routine/presentation/widgets/routine_card.dart';
+import 'package:gymaster/features/routine/presentation/widgets/crear_rutina_form.dart';
 import 'package:gymaster/shared/widgets/gym/gym.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:lottie/lottie.dart';
@@ -61,9 +62,9 @@ class ListaRutinasPage extends StatelessWidget {
     );
   }
 
-  /// Navega a la página de agregar rutina
+  /// Abre la creación de rutina como bottom sheet (flujo quick-add).
   void _navegarAAgregarRutina(BuildContext context) {
-    context.go('/rutina/create');
+    mostrarCrearRutinaSheet(context);
   }
 
   Widget _buildSearchBar(BuildContext context) {
